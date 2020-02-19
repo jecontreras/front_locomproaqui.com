@@ -1,1 +1,90 @@
-/* You can add global styles to this file, and also import other style files */
+html, body {
+    height: 100%;
+    margin: 0;
+}
+.pointer {
+  cursor: pointer;
+}
+.icons {
+    margin: 5px 5px 5px 15px;
+}
+.logo{
+  height: 149px;
+}
+.views1 {
+  display: none;
+}
+.views2 {
+  display: none;
+}
+@media only screen and (max-width: 600px) {
+  .textInf {
+    font-size: 11px;
+  }
+  .views1 {
+    display: none;
+  }
+  .views2 {
+    display: none;
+  }
+}
+/* Small devices (portrait tablets and large phones, 600px and up) */
+@media only screen and (min-width: 420px) {
+  .views1 {
+    display: none;
+  }
+  .views2 {
+    display: none;
+  }
+}
+/* Small devices (portrait tablets and large phones, 600px and up) */
+@media only screen and (min-width: 600px) {
+  .textInf {
+    font-size: 12px;
+  }
+  .views1 {
+    display: inline;
+  }
+  .views2 {
+    display: none;
+  }
+}
+
+/* Medium devices (landscape tablets, 768px and up) */
+@media only screen and (min-width: 768px) {
+  .textInf {
+    font-size: 14px;
+  }
+  .views1 {
+    display: inline;
+  }
+  .views2 {
+    display: inline;
+  }
+}
+
+/* Large devices (laptops/desktops, 992px and up) */
+@media only screen and (min-width: 992px) {
+  .textInf {
+    font-size: 15px;
+  }
+  .views1 {
+    display: inline;
+  }
+  .views2 {
+    display: inline;
+  }
+}
+
+/* Extra large devices (large laptops and desktops, 1200px and up) */
+@media only screen and (min-width: 1200px) {
+  .textInf {
+    font-size: 16px;
+  }
+  .views1 {
+    display: inline;
+  }
+  .views2 {
+    display: inline;
+  }
+}

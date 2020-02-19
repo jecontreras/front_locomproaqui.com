@@ -1,0 +1,22 @@
+<div class="container">
+    <div class="row">
+        <div class="col-md-4 col-sm-6 col-lg-4 col-xs-6" *ngFor="let item of listProductos">
+            <div class="card" style="width: 18rem;">
+                <img [src]="item.foto || './assets/img/producto.jpg'" class="card-img-top">
+                 <div class="card-body">
+                    <div class="row">
+                        <div class="col-6">
+                            <span class="text-primary"> Descargar </span>
+                        </div>
+                        <div class="col-5">
+                            <h6>{{ ( item.pro_precio_venta_cliente || 0 ).toLocaleString('de-DE', { style: 'currency', currency: 'COP' }) }}</h6>
+                        </div>
+                        <div class= "col-12">
+                            <span> {{ item.pro_nombre }}</span>
+                        </div>
+                    </div>
+                 </div>
+            </div>
+        </div>
+    </div>
+</div>

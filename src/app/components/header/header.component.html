@@ -1,0 +1,61 @@
+<div
+  class="example-container"
+  [class.example-is-mobile]="mobileQuery.matches"
+>
+  <mat-toolbar
+    color="primary"
+    class="example-toolbar mat-elevation-z5"
+  >
+    <h5>locomproaqui.com</h5>
+    <button mat-icon-button (click)="snav.toggle()" translate="no">
+        <i class="material-icons">menu</i>
+    </button>
+  </mat-toolbar>
+
+  <mat-sidenav-container class="example-sidenav-container"
+                         [style.marginTop.px]="mobileQuery.matches ? 56 : 0">
+    <mat-sidenav
+      class="sidenav"
+      #snav
+      (window:resize)="onResize($event)"
+      [mode]="mobileQuery.ds ? 'over' : 'side'"
+      [fixedInViewport]="mobileQuery.matches"
+      fixedTopGap="56"
+    >
+    <div
+      style="width: 290px; height: 90px;"
+      fxLayout="column"
+    >
+      <ng-container class="row">
+        <div class="col-12">
+            <img class="logo" src="./assets/img/logo.png">
+        </div>
+        <mat-nav-list class="nav-list col-12">
+            <mat-list>
+                <mat-list-item *ngFor="let item of menus">
+                    <a mat-list-item [routerLink]="item.url" routerLinkActive="active" translate="false">
+                        <i class="material-icons">{{ item.icons }}</i>
+                        <span class="p textInf">{{ item.nombre}}</span>
+                    </a>
+                </mat-list-item>
+            </mat-list>
+        </mat-nav-list>
+        <mat-nav-list class="nav-list col-12">
+            <mat-list>
+                <mat-list-item class="column" *ngFor="let item of menus2">
+                    <a mat-list-item [routerLink]="item.url" routerLinkActive="active" translate="false" (click)="EventMenus(item)">
+                        <i class="material-icons">{{ item.icons }}</i>
+                        <span class="p textInf">{{ item.nombre}}</span>
+                    </a>
+                </mat-list-item>
+            </mat-list>
+        </mat-nav-list>
+      </ng-container>
+    </div>
+    </mat-sidenav>
+
+    <mat-sidenav-content>
+        <ng-content></ng-content>
+    </mat-sidenav-content>
+  </mat-sidenav-container>
+</div>
