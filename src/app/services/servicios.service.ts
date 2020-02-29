@@ -16,15 +16,19 @@ export class ServiciosService {
   public sock: any;
   public disable_reconect: boolean = false;
   public interval:any;
+  public dataUser:any = {};
 
   constructor(private http: HttpClient) { 
     //this.conectionSocket();
     //this.createsocket("emitir", {mensaje:"inicial"}); 
+    this.privateDataUser();
   }
 
-  private ejecutarQuery<T>(url: string, data, METODO){
-    console.log(this.http);
-    return this.http[METODO]<T>( url, data );
+  privateDataUser(){
+    this.dataUser = JSON.parse(localStorage.getItem('user'));
+  }
+  private ejecutarQuery(url: string, data, METODO){
+    return this.http[METODO]( url, data );
   }
 
   querys(query:string, datas:any, METODO:string){
@@ -33,7 +37,6 @@ export class ServiciosService {
     data.skip = datas.page ? datas.page : 1;
     data.limit = datas.limit ? datas.limit : 10;
     query = URL+`/${query}`;
-    console.log(query, data, METODO);
     return this.ejecutarQuery(query, data, METODO);
   }
 

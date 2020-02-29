@@ -1,3 +1,10 @@
+.anchos{
+  width: 304px !important;
+}
+.imgFoto{
+  height: 34px;
+  border-radius: 112px;
+}
 .example-container {
     display: flex;
     flex-direction: column;
@@ -15,6 +22,9 @@
   }
   .fondo {
     background: #3f51b5;
+  }
+  .paddingLeft {
+    padding-left: 11px;
   }
   #btn-actualizar {
     margin-left: 15px;
@@ -53,7 +63,7 @@
     padding: 10px;
   }
   .margin {
-    margin: 10%;
+    margin: 2%;
   }
   .perfil {
     border-radius: 35px;

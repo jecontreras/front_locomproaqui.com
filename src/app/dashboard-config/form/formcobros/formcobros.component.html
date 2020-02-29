@@ -1,0 +1,42 @@
+<h2 mat-dialog-title>DATOS NECESARIOS PARA REALIZAR EL COBRO</h2>
+<mat-dialog-content class="mat-typography">
+    <div class="form row">
+        <div class="form-group col-12">
+            <label for="exampleFormControlInput1">Monto</label>
+            <input type="number" [(ngModel)]="data.cob_monto" class="form-control form-control-sm">
+        </div>
+        <div class="form-group col-12">
+            <label for="exampleFormControlInput1">Número Cédula</label>
+            <input type="text" [(ngModel)]="data.cob_num_cedula" class="form-control form-control-sm">
+        </div>
+        <div class="form-group col-12">
+            <label for="exampleFormControlInput1">Número Celular</label>
+            <input type="text" [(ngModel)]="data.cob_num_celular" class="form-control form-control-sm">
+        </div>
+        <div class="form-group col-12">
+            <label for="exampleFormControlInput1">Número Cuenta Bancaria</label>
+            <input type="text" [(ngModel)]="data.cob_num_cuenta" class="form-control form-control-sm">
+        </div>
+        <div class="form-group col-12">
+            <label for="exampleFormControlInput1">Metodo de pago</label>
+            <select class="form-control form-control-sm" [(ngModel)]="data.cob_metodo">
+                <option value="nequi">NEQUI</option>
+                <option value="davi_plata">DAVI PLATA</option>
+                <option value="bancolombia">BANCOLOMBIA</option>
+                <option value="bbva">BBVA</option>
+                <option value="davivienda">DAVIVIENDA</option>
+            </select>
+        </div>
+        <div class="form-group col-12">
+            <label for="exampleFormControlInput1">Descripcion</label>
+            <textarea class="form-control" [(ngModel)]="data.cob_descripcion" rows="3"></textarea>
+        </div>
+    </div>
+</mat-dialog-content>
+<mat-dialog-actions align="end">
+  <button mat-button mat-dialog-close>Cerrar</button>
+  <button mat-button cdkFocusInitial (click)="submit()">
+      <span *ngIf="!id">Guardar Cambios</span>
+      <span *ngIf="id">Actulizar Cambios</span>
+  </button>
+</mat-dialog-actions>

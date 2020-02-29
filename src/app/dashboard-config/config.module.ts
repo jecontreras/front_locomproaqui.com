@@ -10,16 +10,45 @@ import { ProductosComponent } from './components/productos/productos.component';
 import { FormcategoriasComponent } from './form/formcategorias/formcategorias.component';
 import { MyOwnCustomMaterialModule } from '../app.material.module';
 import { NgxDropzoneModule } from 'ngx-dropzone';
+import { ProvedoresComponent } from './components/provedores/provedores.component';
+import { FormprovedoresComponent } from './form/formprovedores/formprovedores.component';
+import { FormproductosComponent } from './form/formproductos/formproductos.component';
+import { UsuariosComponent } from './components/usuarios/usuarios.component';
+import { FormusuariosComponent } from './form/formusuarios/formusuarios.component';
+import { VentasComponent } from './components/ventas/ventas.component';
+import { FormventasComponent } from './form/formventas/formventas.component';
+import { BancosComponent } from './components/bancos/bancos.component';
+import { CobrosComponent } from './components/cobros/cobros.component';
+import { PerfilComponent } from './components/perfil/perfil.component';
+import { FormbancosComponent } from './form/formbancos/formbancos.component';
+import { FormcobrosComponent } from './form/formcobros/formcobros.component';
 
 @NgModule({
   entryComponents: [
-    FormcategoriasComponent
+    FormcategoriasComponent,
+    FormprovedoresComponent,
+    FormproductosComponent,
+    FormusuariosComponent,
+    FormventasComponent,
+    FormcobrosComponent
   ],
   declarations: [
     MainComponent,
     CategoriasComponent,
     ProductosComponent,
-    FormcategoriasComponent
+    FormcategoriasComponent,
+    ProvedoresComponent,
+    FormprovedoresComponent,
+    FormproductosComponent,
+    UsuariosComponent,
+    FormusuariosComponent,
+    VentasComponent,
+    FormventasComponent,
+    BancosComponent,
+    CobrosComponent,
+    PerfilComponent,
+    FormbancosComponent,
+    FormcobrosComponent
   ],
   imports: [
     CommonModule,
@@ -32,7 +61,12 @@ import { NgxDropzoneModule } from 'ngx-dropzone';
     NgxDropzoneModule
   ],
   exports: [
-    FormcategoriasComponent
+    FormcategoriasComponent,
+    FormprovedoresComponent,
+    FormproductosComponent,
+    FormusuariosComponent,
+    FormventasComponent,
+    FormcobrosComponent
   ],
   providers: [
   ],

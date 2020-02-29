@@ -16,4 +16,10 @@ export class CategoriasService {
   create(query:any){
     return this._model.querys('tblcategorias',query, 'post');
   }
+  update(query:any){
+    return this._model.querys('tblcategorias/'+query.id, query, 'put');
+  }
+  delete(query:any){
+    return this._model.querys('tblcategorias/'+query.id, query, 'delete');
+  }
 }

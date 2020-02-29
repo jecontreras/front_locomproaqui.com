@@ -1,4 +1,4 @@
 export const environment = {
   production: true,
-  url: "http://localhost:1338"
+  url: "https://backlocomproaqui.herokuapp.com"
 };

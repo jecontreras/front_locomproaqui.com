@@ -1,4 +1,11 @@
 import { Component, OnInit } from '@angular/core';
+import { UsuariosService } from 'src/app/servicesComponents/usuarios.service';
+import { ToolsService } from 'src/app/services/tools.service';
+import { Router } from '@angular/router';
+import { MatDialog } from '@angular/material';
+import { UserAction } from 'src/app/redux/app.actions';
+import { STORAGES } from 'src/app/interfaces/sotarage';
+import { Store } from '@ngrx/store';
 
 @Component({
   selector: 'app-login',
@@ -6,10 +13,34 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./login.component.scss']
 })
 export class LoginComponent implements OnInit {
+  
+  data:any = {};
 
-  constructor() { }
+  constructor(
+    private _user: UsuariosService,
+    private _tools: ToolsService,
+    private _router: Router,
+    public dialog: MatDialog,
+    private _store: Store<STORAGES>,
+  ) { }
 
   ngOnInit() {
+  }
+
+  submit(){
+    this._user.login(this.data).subscribe((res:any)=>{
+      console.log("user", res);
+      if(res.success){
+        localStorage.setItem('user', JSON.stringify(res.data));
+        let accion = new UserAction( res.data, 'post');
+        this._store.dispatch(accion);
+        this._router.navigate(['/config']);
+        this.dialog.closeAll();
+        location.reload();
+      }else{
+        this._tools.presentToast("Error de sesión")
+      }
+    },(error)=>{ console.error(error); this._tools.presentToast("Error de servidor")});
   }
 
 }

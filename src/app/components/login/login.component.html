@@ -1,1 +1,21 @@
-<p>login works!</p>
+<h2 mat-dialog-title>Iniciar Sesión en locomproaqui.com</h2>
+
+<mat-dialog-content class="mat-typography">
+    <div class="form row">
+        <div class="form-group col-12">
+            <label for="exampleFormControlInput1">Correo electrónico</label>
+            <input type="text" [(ngModel)]="data.usu_email" class="form-control form-control-sm" placeholder="Correo electrónico">
+        </div>
+        <div class="form-group col-12">
+            <label for="exampleFormControlInput1">Contraseña</label>
+            <input type="password" [(ngModel)]="data.usu_clave" class="form-control form-control-sm" placeholder="Contraseña">
+        </div>
+    </div>
+</mat-dialog-content>
+
+<mat-dialog-actions align="end">
+    <button mat-button mat-dialog-close>Cerrar</button>
+    <button mat-button cdkFocusInitial (click)="submit()">
+        <span>Iniciar Seccion</span>
+    </button>
+  </mat-dialog-actions>

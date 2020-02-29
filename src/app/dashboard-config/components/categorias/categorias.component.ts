@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { CategoriasService } from 'src/app/servicesComponents/categorias.service';
 import { MatDialog } from '@angular/material';
 import { FormcategoriasComponent } from '../../form/formcategorias/formcategorias.component';
+import { error } from 'protractor';
+import { ToolsService } from 'src/app/services/tools.service';
 
 declare interface DataTable {
   headerRow: string[];
@@ -30,19 +32,28 @@ export class CategoriasComponent implements OnInit {
 
   constructor(
     private _categorias: CategoriasService,
-    public dialog: MatDialog
+    public dialog: MatDialog,
+    private _tools: ToolsService
   ) { }
 
   ngOnInit() {
     this.cargarTodos();
   }
 
-  crear(){
-    const dialogRef = this.dialog.open(FormcategoriasComponent);
+  crear(obj:any){
+    const dialogRef = this.dialog.open(FormcategoriasComponent,{
+      data: {datos: obj || {}}
+    });
 
     dialogRef.afterClosed().subscribe(result => {
       console.log(`Dialog result: ${result}`);
     });
+  }
+  delete(obj:any, idx:any){
+    this._categorias.delete(obj).subscribe((res:any)=>{
+      this.dataTable.dataRows.splice(idx, 1);
+      this._tools.presentToast("Eliminado")
+    },(error)=>{console.error(error); this._tools.presentToast("Error de servidor") })
   }
 
 

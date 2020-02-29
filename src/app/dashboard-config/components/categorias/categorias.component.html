@@ -30,7 +30,7 @@
                         class="btn btn-primary btn-just-icon btn-round">
                         <i class="material-icons">search</i>
                     </button>
-                    <button (click)="crear()" class="btn btn-primary btn-just-icon btn-round">
+                    <button (click)="crear(false)" class="btn btn-primary btn-just-icon btn-round" mat-raised-button mat-min-fab>
                         <i class="material-icons">add_circle_outline</i>
                     </button>
                 </div>
@@ -50,15 +50,18 @@
                     </tr>
                   </tfoot>
                   <tbody>
-                    <tr *ngFor="let row of dataTable.dataRows">
+                    <tr *ngFor="let row of dataTable.dataRows; let idx=index">
                       
                       <td>
-                        <button type="button" (click)="open(row, 'retiro')" class="btn btn-link btn-warning btn-just-icon edit"
-                          data-toggle="modal" data-target=".bd-example-modal-lg"><i
-                            class="material-icons">remove_red_eye</i></button>
+                        <button (click)="crear(row)" class="btn btn-primary btn-just-icon btn-round">
+                          <i class="material-icons">remove_red_eye</i>
+                        </button>
+                        <button (click)="delete(row, idx)" class="btn btn-danger btn-just-icon btn-round">
+                          <i class="material-icons">delete_forever</i>
+                        </button>
                       </td>
                       <td>
-                        <img [src]="row.cat_imagen" alt="">
+                        <img [src]="row.cat_imagen" class="foto">
                       </td>
                       <td>{{row['cat_nombre']}}</td>
                       <td>{{row['cat_descripcion']}}</td>

@@ -1,22 +1,76 @@
-<div class="container">
+<div class="content anchos">
     <div class="row">
-        <div class="col-md-4 col-sm-6 col-lg-4 col-xs-6" *ngFor="let item of listProductos">
-            <div class="card" style="width: 18rem;">
-                <img [src]="item.foto || './assets/img/producto.jpg'" class="card-img-top">
-                 <div class="card-body">
-                    <div class="row">
-                        <div class="col-6">
-                            <span class="text-primary"> Descargar </span>
-                        </div>
-                        <div class="col-5">
-                            <h6>{{ ( item.pro_precio_venta_cliente || 0 ).toLocaleString('de-DE', { style: 'currency', currency: 'COP' }) }}</h6>
-                        </div>
-                        <div class= "col-12">
-                            <span> {{ item.pro_nombre }}</span>
-                        </div>
-                    </div>
-                 </div>
+        <div class="row col-12">
+            <div class="form-group col">
+                <label for="exampleFormControlInput1">Buscar Productos</label>
+                <input type="text" [(ngModel)]="seartxt" (change)="buscar()" class="form-control form-control-sm"
+                    id="exampleFormControlInput1">
             </div>
+            <div class="pbutton">
+                <button (click)="buscar()" [disabled]="loader" mat-raised-button mat-min-fab
+                    class="btn btn-primary btn-just-icon btn-round">
+                    <i class="material-icons">search</i>
+                </button>
+            </div>
+        </div>
+        <div class="col-12">
+            <ng-image-slider [images]="imageObject" [infinite]="sliderInfinite" [imagePopup]="sliderImagePopup"
+                [showArrow]="sliderArrowShow" [imageSize]="{width: sliderImageWidth, height: sliderImageHeight}"
+                [autoSlide]="sliderAutoSlide ? 1 : 0" [slideImage]="sliderSlideImage"
+                [animationSpeed]="sliderAnimationSpeed" (imageClick)="imageOnClick($event)"
+                (arrowClick)="arrowOnClick($event)" (lightboxArrowClick)="lightboxArrowClick($event)" #nav>
+            </ng-image-slider>
+        </div>
+        <div class="search-results col-12 row" infiniteScroll [infiniteScrollDistance]="3" [infiniteScrollThrottle]="50"
+            (scrolled)="onScroll()">
+            <div class="col-md-4 col-sm-6 col-lg-3 col-xs-6 col-12" *ngFor="let item of listProductos">
+                <mat-card class="example-card">
+                    <img mat-card-image class="imgProductos" [src]="item.foto || './assets/img/producto.jpg'"
+                        alt="Photo of a Shiba Inu" (click)="agregar(item)">
+                    <mat-card-actions>
+                        <div class="row">
+                            <div class="col-12">
+                                <span class="text-primary pointer"> Descargar </span>
+                                <p><span> {{ item.pro_nombre | slice: 0: 20 }}</span></p>
+                            </div>
+                            <div class="col-12">
+                                <h6>{{ ( item.pro_uni_venta || 0 ).toLocaleString('de-DE', { style: 'currency', currency: 'COP' }) }}
+                                </h6>
+                            </div>
+                            <div class="col-7">
+                                <input type="number" [(ngModel)]="item.cantidadAdquirir"
+                                    class="form-control form-control-sm">
+                            </div>
+                            <div class="col-5">
+                                <div>
+                                    <button (click)="AgregarCart(item)" type="button" class="btn btn-primary">
+                                        Agregar
+                                    </button>
+                                </div>
+                            </div>
+                            <div class="p-1 col-12 bg-primary text-white subButtons pointer">
+                                <a (click)="masInfo(item)" class="list-group-item list-group-item-action active"><i
+                                        class="material-icons">smartphone</i> Más Informacion</a>
+                            </div>
+                            <div class="p-2 col-12 text-danger">
+                                Pagas cuando recibes!
+                            </div>
+                        </div>
+                    </mat-card-actions>
+                </mat-card>
+            </div>
+            <!-- sinner -->
+            <div class="row pb-5">
+                <div class="col-md-12 p-5">
+                    <ngx-spinner bdOpacity=0.9 bdColor="" size="default" color="#581f87" type="ball-pulse-sync"
+                        [fullScreen]="false">
+                    </ngx-spinner>
+                </div>
+            </div>
+        </div>
+
+        <div class="mx-auto" style="width: 200px;" *ngIf="listProductos.length === 0">
+            No Hay Datos
         </div>
     </div>
 </div>

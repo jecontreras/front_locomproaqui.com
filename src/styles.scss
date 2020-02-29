@@ -11,13 +11,54 @@ html, body {
 .logo{
   height: 149px;
 }
+.imgFoto{
+  height: 371px;
+}
+.imgProductos{
+  max-height: 269px;
+  min-height: 269px;
+}
 .views1 {
   display: none;
 }
 .views2 {
   display: none;
 }
+.foto {
+  height: 43px;
+}
+.ng-image-slider-lightbox{
+  display: none !important;
+}
+/*.ng-star-inserted{
+  color: #3f51b5 !important;
+}*/
+/* Extra small devices (phones, 600px and down) */
+@media only screen and (max-width: 320px) {
+  .mat-toolbar, .mat-toolbar h1, .mat-toolbar h2, .mat-toolbar h3, .mat-toolbar h4, .mat-toolbar h5, .mat-toolbar h6 {
+    font: 300 18px/22px Roboto,"Helvetica Neue",sans-serif;
+    margin-top: 10px;
+  }
+  .divisor {
+    margin-top: 10px;
+  }
+}
+/* Small devices (portrait tablets and large phones, 600px and up) */
+@media only screen and (min-width: 420px) {
+  .imgFoto{
+    height: 238px;
+  }
+  .views1 {
+    display: none;
+  }
+  .views2 {
+    display: none;
+  }
+}
 @media only screen and (max-width: 600px) {
+  .imgFoto{
+    height: 171px;
+  }
   .textInf {
     font-size: 11px;
   }
@@ -29,16 +70,10 @@ html, body {
   }
 }
 /* Small devices (portrait tablets and large phones, 600px and up) */
-@media only screen and (min-width: 420px) {
-  .views1 {
-    display: none;
-  }
-  .views2 {
-    display: none;
-  }
-}
-/* Small devices (portrait tablets and large phones, 600px and up) */
 @media only screen and (min-width: 600px) {
+  .imgFoto{
+    height: 193px;
+  }
   .textInf {
     font-size: 12px;
   }
@@ -52,6 +87,9 @@ html, body {
 
 /* Medium devices (landscape tablets, 768px and up) */
 @media only screen and (min-width: 768px) {
+  .imgFoto{
+    height: 238px;
+  }
   .textInf {
     font-size: 14px;
   }
@@ -65,6 +103,9 @@ html, body {
 
 /* Large devices (laptops/desktops, 992px and up) */
 @media only screen and (min-width: 992px) {
+  .imgFoto{
+    height: 307px;
+  }
   .textInf {
     font-size: 15px;
   }
@@ -78,6 +119,9 @@ html, body {
 
 /* Extra large devices (large laptops and desktops, 1200px and up) */
 @media only screen and (min-width: 1200px) {
+  .imgFoto{
+    height: 300px;
+  }
   .textInf {
     font-size: 16px;
   }

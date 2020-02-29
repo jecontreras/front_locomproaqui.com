@@ -1,0 +1,90 @@
+<h2 mat-dialog-title>{{ titulo }} Ventas</h2>
+<mat-dialog-content class="mat-typography">
+    <div class="form row">
+        <div class="form-group col-md-6 col-sm-4 col-lg-4 col-xs-6">
+            <label for="exampleFormControlSelect1">Tipo de Documento</label>
+            <select class="form-control form-control-sm" [(ngModel)]="data.ven_tipo">
+                <option value="carrito">Carrito</option>
+                <option value="whatsapp">Whatsapp</option>
+            </select>
+        </div>
+        <div class="form-group col-md-12" *ngIf="data.ven_imagen_producto && id">
+            <img [src]="data.ven_imagen_producto" class="imgFoto">
+        </div>
+        <div class="form-group col-12" *ngIf="data.ven_tipo == 'whatsapp'">
+            <div class="row">
+                <label class="col" >Subir Imagen</label>
+                <button class="btn btn-primary btn-just-icon btn-round" (click)="subirFile()" *ngIf="files.length > 0">
+                    Subir Imagen
+                </button>
+            </div>
+            <ngx-dropzone (change)="onSelect($event)">
+                <ngx-dropzone-label>Abrir archivos</ngx-dropzone-label>
+                <ngx-dropzone-image-preview ngProjectAs="ngx-dropzone-preview" *ngFor="let f of files"
+                    [file]="f" [removable]="true" (removed)="onRemove(f)" multiple="false">
+                    <ngx-dropzone-label>{{ f.name }} ({{ f.type }})</ngx-dropzone-label>
+                </ngx-dropzone-image-preview>
+            </ngx-dropzone>
+        </div>
+        <div class="form-group col-md-6 col-sm-4 col-lg-4 col-xs-6">
+            <label for="exampleFormControlInput1">Nombre Cliente</label>
+            <input type="text" [(ngModel)]="data.ven_nombre_cliente" class="form-control form-control-sm">
+        </div>
+        <div class="form-group col-md-6 col-sm-4 col-lg-4 col-xs-6">
+            <label for="exampleFormControlInput1">Teléfono cliente</label>
+            <input type="text" [(ngModel)]="data.ven_telefono_cliente" class="form-control form-control-sm">
+        </div>
+        <div class="form-group col-md-6 col-sm-4 col-lg-4 col-xs-6">
+            <label for="exampleFormControlInput1">Dirección cliente</label>
+            <input type="text" [(ngModel)]="data.ven_direccion_cliente" class="form-control form-control-sm">
+        </div>
+        <div class="form-group col-md-6 col-sm-4 col-lg-4 col-xs-6">
+            <label for="exampleFormControlInput1">Fecha venta</label>
+            <div class="input-group">
+                <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
+                <input type="date" class="form-control"
+                    [(ngModel)]="data.ven_fecha_venta">
+            </div>
+        </div>
+        <div class="form-group col-md-6 col-sm-4 col-lg-4 col-xs-6" *ngIf="data.ven_tipo == 'carrito'">
+            <label for="exampleFormControlSelect1">Productos</label>
+            <select class="form-control form-control-sm" [(ngModel)]="data.pro_clave_int" (change)="PrecioPush(); suma();">
+                <option [value]="item.id" *ngFor="let item of listProductos"> {{ item.pro_nombre }} </option>
+            </select>
+        </div>
+        <div class="form-group col-md-6 col-sm-4 col-lg-4 col-xs-6">
+            <label for="exampleFormControlInput1">Cantidad</label>
+            <input type="number" [(ngModel)]="data.ven_cantidad" class="form-control form-control-sm" (change)="suma()">
+        </div>
+        <div class="form-group col-md-6 col-sm-4 col-lg-4 col-xs-6">
+            <label for="exampleFormControlInput1">Tallas</label>
+            <input type="text" [(ngModel)]="data.ven_tallas" class="form-control form-control-sm">
+        </div>
+        <div class="form-group col-md-6 col-sm-4 col-lg-4 col-xs-6">
+            <label for="exampleFormControlInput1">Vr.Unidad: </label>
+            <span> {{ data.ven_precio || 0 }}</span>
+        </div>
+        <div class="form-group col-md-6 col-sm-4 col-lg-4 col-xs-6">
+            <label for="exampleFormControlInput1">Precio Total: </label>
+            <span> {{ data.ven_total || 0 }}</span>
+        </div>
+        <div class="form-group col-md-6 col-sm-4 col-lg-4 col-xs-6">
+            <label for="exampleFormControlInput1">Recompensa 7%: </label>
+            <span> {{ data.ven_ganancias || 0 }}</span>
+        </div>
+        <div class="form-group col-12">
+            <label for="exampleFormControlInput1">Observación</label>
+            <textarea class="form-control" [(ngModel)]="data.prv_observacion" id="exampleFormControlTextarea1" rows="3"></textarea>
+        </div>
+    </div>
+</mat-dialog-content>
+<mat-dialog-actions align="end">
+  <button mat-button mat-dialog-close>Cerrar</button>
+  <span *ngIf="( data.ven_tipo == 'whatsapp' && !data.ven_imagen_producto)">
+    Primero debes subir una imagen
+  </span>
+  <button mat-button cdkFocusInitial (click)="submit()" *ngIf="( data.ven_tipo == 'whatsapp' && data.ven_imagen_producto) || data.ven_tipo == 'carrito'">
+      <span *ngIf="!id">Guardar Cambios</span>
+      <span *ngIf="id">Actulizar Cambios</span>
+  </button>
+</mat-dialog-actions>

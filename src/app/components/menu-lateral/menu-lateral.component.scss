@@ -1,0 +1,81 @@
+.social-bar {
+	position: fixed;
+	right: 15px;
+	top: 35%;
+	font-size: 1.5rem;
+	display: flex;
+	flex-direction: column;
+	align-items: flex-end;
+	z-index: 100;
+}
+
+.icon {
+	color: white;
+	text-decoration: none;
+	padding: .7rem;
+    display: flex;
+	transition: all .5s;
+}
+.altosIcons {
+	height: 19px;
+}
+.fab {
+    width: 20px !important;
+
+}
+.icon-flecha {
+    background: orange;
+    width: 42px;
+    cursor: pointer;
+
+}
+.fa-angle-right {
+    color: white;
+}
+.fa-grin-beam {
+    color: white;
+}
+.feed {
+	color: white !important;
+	cursor: pointer;
+}
+.icon-facebook {
+	background: #2E406E;
+}
+
+.icon-twitter {
+	background: #339DC5;
+}
+
+.icon-youtube {
+	background: #E83028;
+}
+
+.icon-instagram {
+	background: #3F60A5;
+}
+.icon-whattsapp {
+	background: mediumseagreen;
+}
+.icon-feedback {
+    background: green;
+    writing-mode: vertical-lr;
+    font-size: 14.5px;
+}
+.icono-feed {
+    margin-bottom: 5px;
+}
+
+.icon:first-child {
+	border-radius: 1rem 0 0 0;
+}
+
+.icon:last-child {
+	border-radius: 0 0 0 1rem;
+}
+
+.icon:hover {
+	padding-right: 3rem;
+	border-radius: 1rem 0 0 1rem;
+	box-shadow: 0 0 .5rem rgba(0, 0, 0, 0.42);
+}

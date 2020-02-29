@@ -1,0 +1,163 @@
+<div class="main-content">
+    <div class="container-fluid">
+      <div class="row">
+        <div class="col-md-12">
+          <div class="card" style="overflow-x: scroll;">
+            <br>
+            <br>
+            <div class="card-header card-header-primary card-header-icon">
+              <div class="card-icon">
+                <i class="material-icons">assignment</i>
+              </div>
+              <h4 class="card-title">Mi cuenta</h4>
+            </div>
+            <div class="card-header card-header-primary card-header-icon">
+                <div class="card-icon">
+                  <h5>{{ data.usu_nombre }}</h5>
+                </div>
+                <div class="row">
+                    <h6 class="card-title">
+                        Este es el Link de su tienda:
+                    </h6>
+                    <div>
+                        <button class="btn btn-primary btn-just-icon btn-round">Copiar link de su tienda</button>
+                        <button class="btn btn-primary btn-just-icon btn-round">Copiar link de registro</button>
+                        <button class="btn btn-primary btn-just-icon btn-round">Abrir tienda en una pestaña nueva</button>
+                    </div>
+                </div>
+            </div>
+            <div class="row p-3">
+                <div class="col-12 mx-auto">
+                    <div class="mx-auto" style="width: 200px;">
+                        <img [src]="data.usu_imagen" class="imgPerfil">
+                    </div>
+                </div>
+                <div class="col-12">
+                    <div class="row">
+                        <label>Subir Foto de Perfil</label>
+                        <button class="btn btn-primary btn-just-icon btn-round" (click)="subirFile('usu_imagen')" *ngIf="files.length > 0">
+                            Subir Imagen
+                        </button>
+                    </div>
+                    <ngx-dropzone (change)="onSelect($event)">
+                        <ngx-dropzone-label>Abrir archivos</ngx-dropzone-label>
+                        <ngx-dropzone-image-preview ngProjectAs="ngx-dropzone-preview" *ngFor="let f of files"
+                            [file]="f" [removable]="true" (removed)="onRemove(f)" multiple="false">
+                            <ngx-dropzone-label>{{ f.name }} ({{ f.type }})</ngx-dropzone-label>
+                        </ngx-dropzone-image-preview>
+                    </ngx-dropzone>
+                </div>
+                <div class="col-6">
+                    <label>Nombre(s)</label>
+                    <input type="text" [(ngModel)]="data.usu_nombre" class="form-control form-control-sm">
+                </div>
+                <div class="col-6">
+                    <label>Apellido(s)</label>
+                    <input type="text" [(ngModel)]="data.usu_apellido" class="form-control form-control-sm">
+                </div>
+                <div class="col-6">
+                    <label>Pais</label>
+                    <input type="text" [(ngModel)]="data.usu_pais" class="form-control form-control-sm">
+                </div>
+                <div class="col-6">
+                    <label>Celular</label>
+                    <input type="text" [(ngModel)]="data.usu_telefono" class="form-control form-control-sm">
+                </div>
+                <div class="col-6">
+                    <label>Ciudad</label>
+                    <input type="text" [(ngModel)]="data.usu_ciudad" class="form-control form-control-sm">
+                </div>
+                <div class="col-6">
+                    <label>Dirección</label>
+                    <input type="text" [(ngModel)]="data.usu_direccion" class="form-control form-control-sm">
+                </div>
+                <div class="col-6">
+                    <label>Correo Electronico</label>
+                    <input type="text" [(ngModel)]="data.usu_email" class="form-control form-control-sm">
+                </div>
+                <div class="col-6">
+                    <label>Url de Facebook</label>
+                    <input type="text" [(ngModel)]="data.url_facebook" class="form-control form-control-sm">
+                </div>
+                <div class="col-6">
+                    <label>Url de Instagram</label>
+                    <input type="text" [(ngModel)]="data.url_instagram" class="form-control form-control-sm">
+                </div>
+                <div class="col-6">
+                    <label>Url de youtube</label>
+                    <input type="text" [(ngModel)]="data.url_youtube" class="form-control form-control-sm">
+                </div>
+                <div class="col-6">
+                    <label>Fecha Nacimiento(s)</label>
+                    <div class="input-group">
+                        <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
+                        <input type="date" class="form-control"
+                            [(ngModel)]="data.usu_fec_nacimiento">
+                    </div>
+                </div>
+                <div class="col-6">
+                    <label>Genero</label>
+                    <select class="form-control form-control-sm" [(ngModel)]="data.usu_genero">
+                        <option value="masculino">Masculino</option>
+                        <option value="feminino">Feminino</option>
+                    </select>
+                </div>
+                <div class="col-6">
+                    <br>
+                    <div class="mx-auto" style="width: 200px;">
+                        <img [src]="data.usu_cedula" class="imgPerfil">
+                    </div>
+                    <div class="row">
+                        <label>Cédula</label>
+                        <button class="btn btn-primary btn-just-icon btn-round" (click)="subirFile('usu_cedula')" *ngIf="files.length > 0">
+                            Subir Imagen
+                        </button>
+                    </div>
+                    <ngx-dropzone (change)="onSelect($event)">
+                        <ngx-dropzone-label>Cédula Subir archivos</ngx-dropzone-label>
+                        <ngx-dropzone-image-preview ngProjectAs="ngx-dropzone-preview" *ngFor="let f of files"
+                            [file]="f" [removable]="true" (removed)="onRemove(f)" multiple="false">
+                            <ngx-dropzone-label>{{ f.name }} ({{ f.type }})</ngx-dropzone-label>
+                        </ngx-dropzone-image-preview>
+                    </ngx-dropzone>
+                </div>
+                <div class="col-6">
+                    <br>
+                    <div class="mx-auto" style="width: 200px;">
+                        <img [src]="data.usu_servicios_publicos" class="imgPerfil">
+                    </div>
+                    <div class="row">
+                        <label>Cuenta de Servicio públicos</label>
+                        <button class="btn btn-primary btn-just-icon btn-round" (click)="subirFile('usu_servicios_publicos')" *ngIf="files.length > 0">
+                            Subir Imagen
+                        </button>
+                    </div>
+                    <ngx-dropzone (change)="onSelect($event)">
+                        <ngx-dropzone-label>Cuenta de Servicios Públicos Subir archivos</ngx-dropzone-label>
+                        <ngx-dropzone-image-preview ngProjectAs="ngx-dropzone-preview" *ngFor="let f of files"
+                            [file]="f" [removable]="true" (removed)="onRemove(f)" multiple="false">
+                            <ngx-dropzone-label>{{ f.name }} ({{ f.type }})</ngx-dropzone-label>
+                        </ngx-dropzone-image-preview>
+                    </ngx-dropzone>
+                </div>
+                <!--<div class="col-12">
+                    <label>Confirmar Contraseña Para Actualizar</label>
+                    <input type="text" [(ngModel)]="data.cat_nombre" class="form-control form-control-sm">
+                </div>-->
+                <div class="col-6">
+                    <button class="p-2 btn btn-primary btn-just-icon btn-round" (click)="Actualizar()">
+                        Actualizar Datos
+                    </button>
+                </div>
+                <div class="col-6">
+                    <button class="p-2 btn btn-primary btn-just-icon btn-round" (click)="CambiarPassword()">
+                        Cambiar Contraseña
+                    </button>
+                </div>
+            </div>
+          </div>
+        </div>
+        <div></div>
+      </div>
+    </div>
+</div>

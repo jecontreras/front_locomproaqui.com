@@ -13,5 +13,13 @@ export class ProductoService {
   get(query:any){
     return this._model.querys('tblproductos/querys',query, 'post');
   }
-
+  create(query:any){
+    return this._model.querys('tblproductos',query, 'post');
+  }
+  update(query:any){
+    return this._model.querys('tblproductos/'+query.id, query, 'put');
+  }
+  delete(query:any){
+    return this._model.querys('tblproductos/'+query.id, query, 'delete');
+  }
 }
