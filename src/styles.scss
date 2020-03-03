@@ -9,14 +9,16 @@ html, body {
     margin: 5px 5px 5px 15px;
 }
 .logo{
-  height: 149px;
+  height: 127px;
 }
 .imgFoto{
   height: 371px;
 }
 .imgProductos{
+  height: 193px;
   max-height: 269px;
-  min-height: 269px;
+  min-height: 190px;
+  max-width: 628px;
 }
 .views1 {
   display: none;
@@ -54,19 +56,28 @@ html, body {
   .views2 {
     display: none;
   }
+  .ancho {
+    width: 85%;
+  }
+  .textInf {
+    font-size: 11px;
+  }
 }
 @media only screen and (max-width: 600px) {
   .imgFoto{
     height: 171px;
-  }
-  .textInf {
-    font-size: 11px;
   }
   .views1 {
     display: none;
   }
   .views2 {
     display: none;
+  }
+  .ancho {
+    width: 85%;
+  }
+  .textInf {
+    font-size: 13px;
   }
 }
 /* Small devices (portrait tablets and large phones, 600px and up) */
@@ -74,14 +85,17 @@ html, body {
   .imgFoto{
     height: 193px;
   }
-  .textInf {
-    font-size: 12px;
-  }
   .views1 {
     display: inline;
   }
   .views2 {
     display: none;
+  }
+  .ancho {
+    width: 65%;
+  }
+  .textInf {
+    font-size: 12px;
   }
 }
 
@@ -90,14 +104,17 @@ html, body {
   .imgFoto{
     height: 238px;
   }
-  .textInf {
-    font-size: 14px;
-  }
   .views1 {
     display: inline;
   }
   .views2 {
     display: inline;
+  }
+  .ancho {
+    width: 45%;
+  }
+  .textInf {
+    font-size: 13px;
   }
 }
 
@@ -115,6 +132,9 @@ html, body {
   .views2 {
     display: inline;
   }
+  .ancho {
+    width: 60%;
+  }
 }
 
 /* Extra large devices (large laptops and desktops, 1200px and up) */
@@ -122,13 +142,16 @@ html, body {
   .imgFoto{
     height: 300px;
   }
-  .textInf {
-    font-size: 16px;
-  }
   .views1 {
     display: inline;
   }
   .views2 {
     display: inline;
+  }
+  .ancho {
+    width: 60%;
+  }
+  .textInf {
+    font-size: 15px;
   }
 }

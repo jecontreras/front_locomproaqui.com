@@ -8,6 +8,8 @@ import { ServiciosService } from 'src/app/services/servicios.service';
 import { Store } from '@ngrx/store';
 import { CART } from 'src/app/interfaces/sotarage';
 import { CartAction, UserAction } from 'src/app/redux/app.actions';
+import { UsuariosService } from 'src/app/servicesComponents/usuarios.service';
+import * as _ from 'lodash';
 
 @Component({
   selector: 'app-header',
@@ -33,6 +35,8 @@ export class HeaderComponent implements OnInit {
   urlwhat:string;
   userId:any;
   opened:boolean;
+  dataInfo:any = {};
+  isHandset$:any;
 
   constructor(
     public changeDetectorRef: ChangeDetectorRef,
@@ -40,6 +44,7 @@ export class HeaderComponent implements OnInit {
     public dialog: MatDialog,
     private _model: ServiciosService,
     private _store: Store<CART>,
+    private _user: UsuariosService
 
   ) { 
 
@@ -65,7 +70,10 @@ export class HeaderComponent implements OnInit {
   ngOnInit() {
     this.breakpoint = (window.innerWidth <= 400) ? 1 : 6;
     this.onResize(null);
-    if(Object.keys(this.dataUser).length > 0 ) this.rolUser = this.dataUser.usu_perfil.prf_descripcion;
+    if(Object.keys(this.dataUser).length > 0 ) {
+      this.rolUser = this.dataUser.usu_perfil.prf_descripcion;
+      this.getInfoUser();
+    }
     else this.rolUser = 'visitante';
     this.listMenus();
   }
@@ -73,13 +81,16 @@ export class HeaderComponent implements OnInit {
   getCarrito(){
     
   }
+
   deleteCart(idx:any, item:any){
     this.listCart.splice(idx, 1);
     let accion = new CartAction(item, 'delete');
     this._store.dispatch(accion);
   }
+
   submitChat(){
     let texto:string;
+    this.data.total = 0;
     for(let row of this.listCart){
       texto+= ` productos: ${ row.titulo } codigo: ${ row.codigo } foto: ${ row.foto } cantidad: ${ row.cantidad }`;
       this.data.total+= row.costoTotal || 0;
@@ -94,6 +105,10 @@ export class HeaderComponent implements OnInit {
 
   ngOnDestroy(): void {
     this.mobileQuery.removeListener(this._mobileQueryListener);
+  }
+
+  getInfoUser(){
+    this._user.getInfo({where:{id:this.dataUser.id}}).subscribe((res:any)=>this.dataInfo = res.data);
   }
 
   onResize(event:any) {
@@ -205,6 +220,9 @@ export class HeaderComponent implements OnInit {
         submenus:[]
       },*/
     ];
+    
+    this.menus = _.filter(this.menus, row=>row.disable);
+    
     this.menus2 = [
       {
         icons: 'account_circle',
@@ -229,6 +247,7 @@ export class HeaderComponent implements OnInit {
       },
 
     ];
+    this.menus2 = _.filter(this.menus2, row=>row.disable);
   }
 
   login(){

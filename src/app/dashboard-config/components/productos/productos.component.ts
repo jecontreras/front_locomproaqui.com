@@ -25,7 +25,12 @@ export class ProductosComponent implements OnInit {
   pagina = 10;
   paginas = 0;
   loader = true;
-  query:any = {};
+  query:any = {
+    where:{
+      pro_activo: 0
+    },
+    limit: 10
+  };
   Header:any = [ 'Acciones','Foto','Nombre','Codigo','Categoria','Estado'];
   $:any;
   public datoBusqueda = '';
@@ -50,10 +55,18 @@ export class ProductosComponent implements OnInit {
     });
   }
   delete(obj:any, idx:any){
-    this._productos.delete(obj).subscribe((res:any)=>{
-      this.dataTable.dataRows.splice(idx, 1);
-      this._tools.presentToast("Eliminado")
-    },(error)=>{console.error(error); this._tools.presentToast("Error de servidor") })
+    let datos = {
+      id: obj.id,
+      pro_activo: 1
+    }
+    this._tools.confirm({title:"Eliminar", detalle:"Deseas Eliminar Dato", confir:"Si Eliminar"}).then((opt)=>{
+      if(opt.value){
+        this._productos.update(obj).subscribe((res:any)=>{
+          this.dataTable.dataRows.splice(idx, 1);
+          this._tools.presentToast("Eliminado")
+        },(error)=>{console.error(error); this._tools.presentToast("Error de servidor") })
+      }
+    });
   }
 
 

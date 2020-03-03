@@ -44,11 +44,6 @@ export class PedidosComponent implements OnInit {
   mySlideImages = [];
   imageObject:any = [];
 
-  sum = 100;
-  throttle = 300;
-  scrollDistance = 1;
-  scrollUpDistance = 2;
-  direction = '';
   notscrolly:boolean=true;
   notEmptyPost:boolean = true;
 
@@ -103,7 +98,7 @@ export class PedidosComponent implements OnInit {
         console.log("res", res);
         this.loader = false;
         this.spinner.hide();
-        this.listProductos=_.unionBy(this.listProductos || [], res.data, 'id');
+        this.listProductos = _.unionBy(this.listProductos || [], res.data, 'id');
         
         if (res.data.length === 0 ) {
           this.notEmptyPost =  false;
@@ -116,8 +111,11 @@ export class PedidosComponent implements OnInit {
     //console.log(this.seartxt);
     this.loader = true;
     this.seartxt = this.seartxt.trim();
+    this.listProductos = [];
+    this.notscrolly = true; 
+    this.notEmptyPost = true;
     if (this.seartxt === '') {
-      this.query.where = {where:{pro_activo: 0},limit: 15, page: 0};
+      this.query = {where:{pro_activo: 0},limit: 15, page: 0};
       this.cargarProductos();
     } else {
       this.query.where.or = [
@@ -147,6 +145,8 @@ export class PedidosComponent implements OnInit {
   }
   agregar(obj){
     const dialogRef = this.dialog.open(ViewProductosComponent,{
+      width: '855px',
+      maxHeight: "665px",
       data: { datos: obj }
     });
 
@@ -155,11 +155,12 @@ export class PedidosComponent implements OnInit {
     }); 
   }
   masInfo(obj:any){
-    if(this.userId) this.urlwhat = `https://wa.me/${ this.userId.usu_indicativo }${ this.userId.usu_telefono }?text=Hola Servicio al cliente, como esta, saludo cordial, estoy interesad@ en mas informacion ${obj.pro_nombre}`;
+    if(this.userId) this.urlwhat = `https://wa.me/${ this.userId.usu_indicativo || 57 }${ this.userId.usu_telefono || '3148487506'}?text=Hola Servicio al cliente, como esta, saludo cordial, estoy interesad@ en mas informacion ${obj.pro_nombre}`;
     else this.urlwhat = `https://wa.me/573148487506?text=Hola Servicio al cliente, como esta, saludo cordial, estoy interesad@ en mas informacion ${obj.pro_nombre}`;
     window.open(this.urlwhat);
   }
   AgregarCart(item:any){
+    console.log(item);
     let data:any = {
       articulo: item.id,
       codigo: item.pro_codigo,
@@ -167,7 +168,7 @@ export class PedidosComponent implements OnInit {
       foto: item.foto,
       cantidad: item.cantidadAdquirir || 1,
       costo: item.pro_uni_venta,
-      costoTotal: item.costo,
+      costoTotal: ( item.pro_uni_venta*( item.cantidadAdquirir || 1 ) ),
       id: this.codigo()
     };
     let accion = new CartAction(data, 'post');
@@ -178,6 +179,9 @@ export class PedidosComponent implements OnInit {
   imageOnClick(index) {
       //console.log('index', index, this.imageObject[index]);
       this.query = { where:{ pro_activo: 0, pro_categoria: this.imageObject[index].id }, limit: 100 };
+      this.listProductos = [];
+      this.notscrolly = true; 
+      this.notEmptyPost = true;
       this.cargarProductos();
   }
 
@@ -198,12 +202,11 @@ export class PedidosComponent implements OnInit {
   }
 
   onScroll(){
-   console.log("hey");
    if (this.notscrolly && this.notEmptyPost) {
-    this.notscrolly = false;
-    this.query.page++;
-    this.cargarProductos();
-  }
+      this.notscrolly = false;
+      this.query.page++;
+      this.cargarProductos();
+    }
   }
   
   codigo(){

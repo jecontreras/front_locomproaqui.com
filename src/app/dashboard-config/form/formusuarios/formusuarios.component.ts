@@ -16,6 +16,7 @@ export class FormusuariosComponent implements OnInit {
   titulo:string = "Crear";
   files: File[] = [];
   list_files: any = [];
+  restaure:any = {};
 
   constructor(
     public dialog: MatDialog,
@@ -28,10 +29,11 @@ export class FormusuariosComponent implements OnInit {
   ngOnInit() {
     if(Object.keys(this.datas.datos).length > 0) {
       this.data = _.clone(this.datas.datos);
+      console.log(this.data);
       this.id = this.data.id;
       this.titulo = "Actualizar";
       if(this.data.cat_activo === 0) this.data.cat_activo = true;
-      this.data.usu_perfil = this.data.usu_perfil.id;
+      this.data.usu_perfil = this.data.usu_perfil.prf_descripcion;
     }else{this.id = ""}
   }
   
@@ -62,6 +64,12 @@ export class FormusuariosComponent implements OnInit {
     this._usuarios.update(this.data).subscribe((res:any)=>{
       this._tools.presentToast("Actualizado");
     },(error)=>{console.error(error); this._tools.presentToast("Error de servidor")});
+  }
+
+  CambiarPassword(){
+    this._usuarios.cambioPass({ id: this.data.id, password: this.restaure.passNew })
+    .subscribe( (res:any)=>{console.log(res); this.restaure = {}; this._tools.presentToast("Actualizado Password"); },
+    (error)=> { console.error(error); this._tools.presentToast("Error Servidor"); } );
   }
 
 }

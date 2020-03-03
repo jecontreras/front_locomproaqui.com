@@ -6,11 +6,27 @@
     border-radius: 10px;
 }
 
+.textInfo {
+    font-size: 11px;
+}
+
 .search-results {
     height: 100%;
 }
 
 .anchos {
-    padding: 5px 42px;
+    padding: 5px 38px;
 }
 
+
+.example-card {
+    max-width: 400px;
+}
+
+.example-header-image {
+    background-size: cover;
+}
+
+.marginEspacios {
+    margin: 11px !important;
+}

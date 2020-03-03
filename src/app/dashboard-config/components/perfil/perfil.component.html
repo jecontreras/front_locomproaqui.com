@@ -20,9 +20,9 @@
                         Este es el Link de su tienda:
                     </h6>
                     <div>
-                        <button class="btn btn-primary btn-just-icon btn-round">Copiar link de su tienda</button>
-                        <button class="btn btn-primary btn-just-icon btn-round">Copiar link de registro</button>
-                        <button class="btn btn-primary btn-just-icon btn-round">Abrir tienda en una pestaña nueva</button>
+                        <button (click)="copiarLink()" class="btn btn-primary btn-just-icon btn-round">Copiar link de su tienda</button>
+                        <!--<button class="btn btn-primary btn-just-icon btn-round">Copiar link de registro</button>-->
+                        <button (click)="abrrirTienda()" class="btn btn-primary btn-just-icon btn-round">Abrir tienda en una pestaña nueva</button>
                     </div>
                 </div>
             </div>
@@ -145,13 +145,23 @@
                     <input type="text" [(ngModel)]="data.cat_nombre" class="form-control form-control-sm">
                 </div>-->
                 <div class="col-6">
+                    <br>
                     <button class="p-2 btn btn-primary btn-just-icon btn-round" (click)="Actualizar()">
                         Actualizar Datos
                     </button>
                 </div>
                 <div class="col-6">
-                    <button class="p-2 btn btn-primary btn-just-icon btn-round" (click)="CambiarPassword()">
+                    <br>
+                    <div class="col-6" *ngIf="disableRestaure">
+                        <label>Clave Nueva</label>
+                        <input type="password" [(ngModel)]="restaure.passNew" class="form-control form-control-sm">
+                        <br>
+                    </div>
+                    <button class="p-2 btn btn-primary btn-just-icon btn-round" (click)="disableRestaure = true;" *ngIf="!disableRestaure">
                         Cambiar Contraseña
+                    </button>
+                    <button class="p-2 btn btn-primary btn-just-icon btn-round" (click)="CambiarPassword()" *ngIf="disableRestaure">
+                        Actualizar Contraseña
                     </button>
                 </div>
             </div>

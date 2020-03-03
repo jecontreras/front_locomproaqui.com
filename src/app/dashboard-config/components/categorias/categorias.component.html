@@ -23,7 +23,7 @@
               </div>
               <div id="datatables_filter" class="dataTables_filter row">
                 <label class="form-group col">
-                  <input [(ngModel)]="datoBusqueda" type="search" class="form-control form-control-sm"
+                  <input [(ngModel)]="datoBusqueda" (change)="buscar()" type="search" class="form-control form-control-sm"
                     placeholder="Buscar Retiros" aria-controls="datatables"></label>
                 <div>
                     <button (click)="buscar()" [disabled]="loader" mat-raised-button mat-min-fab

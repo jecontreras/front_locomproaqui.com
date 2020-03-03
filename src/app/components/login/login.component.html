@@ -1,4 +1,7 @@
-<h2 mat-dialog-title>Iniciar Sesión en locomproaqui.com</h2>
+<h2 mat-dialog-title>
+    <span *ngIf="disableRestarure"> Iniciar Sesión en locomproaqui.com </span>
+    <span *ngIf="!disableRestarure"> Recuperacion Contraseña en locomproaqui.com </span>
+</h2>
 
 <mat-dialog-content class="mat-typography">
     <div class="form row">
@@ -6,16 +9,22 @@
             <label for="exampleFormControlInput1">Correo electrónico</label>
             <input type="text" [(ngModel)]="data.usu_email" class="form-control form-control-sm" placeholder="Correo electrónico">
         </div>
-        <div class="form-group col-12">
+        <div class="form-group col-12" *ngIf="disableRestarure">
             <label for="exampleFormControlInput1">Contraseña</label>
             <input type="password" [(ngModel)]="data.usu_clave" class="form-control form-control-sm" placeholder="Contraseña">
+        </div>
+        <div class="form-group col-12">
+            <p class="text-primary" *ngIf="disableRestarure" (click)="disableRestarure = false;">¿Olvidaste tu constraseña?</p>
+            <p class="text-primary" *ngIf="!disableRestarure" (click)="disableRestarure = true;">¿Iniciar sección?</p>
+            <p class="text-primary" (click)="registre()">Registrate</p>
         </div>
     </div>
 </mat-dialog-content>
 
 <mat-dialog-actions align="end">
     <button mat-button mat-dialog-close>Cerrar</button>
-    <button mat-button cdkFocusInitial (click)="submit()">
+    <button mat-button cdkFocusInitial (click)="submit()" *ngIf="disableRestarure">
         <span>Iniciar Seccion</span>
     </button>
+    <a cdkFocusInitial target="_blank" class="pointer" *ngIf="!disableRestarure" [href]="'https://wa.me/573148487506?text=Hola Servicio al cliente, como esta, saludo cordial, necesito recuperar las credenciales de mi cuenta ' + data.usu_email "><span>Recuperar Cuenta</span></a>
   </mat-dialog-actions>

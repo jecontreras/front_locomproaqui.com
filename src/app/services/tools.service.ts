@@ -13,8 +13,8 @@ export class ToolsService {
     private snackBar: MatSnackBar
   ) { }
  
-  async presentToast(mensaje:string) {
-    this.snackBar.open(mensaje);
+  async presentToast(mensaje:string, type='completado') {
+    this.snackBar.open(mensaje, type, {duration: 5000});
   }
 
   openSnack(message: string, type: string, config: any) {

@@ -14,58 +14,50 @@
             </div>
         </div>
         <div class="col-12">
-            <ng-image-slider [images]="imageObject" [infinite]="sliderInfinite" [imagePopup]="sliderImagePopup"
+            <mat-chip-list aria-label="Fish selection">
+                <mat-chip color="primary" selected (click)="imageOnClick(idx)" *ngFor="let item of imageObject;let idx=index">{{ item.title }}</mat-chip>
+              </mat-chip-list>
+            <!--<ng-image-slider [images]="imageObject" [infinite]="sliderInfinite" [imagePopup]="sliderImagePopup"
                 [showArrow]="sliderArrowShow" [imageSize]="{width: sliderImageWidth, height: sliderImageHeight}"
                 [autoSlide]="sliderAutoSlide ? 1 : 0" [slideImage]="sliderSlideImage"
                 [animationSpeed]="sliderAnimationSpeed" (imageClick)="imageOnClick($event)"
                 (arrowClick)="arrowOnClick($event)" (lightboxArrowClick)="lightboxArrowClick($event)" #nav>
-            </ng-image-slider>
+            </ng-image-slider>-->
         </div>
         <div class="search-results col-12 row" infiniteScroll [infiniteScrollDistance]="3" [infiniteScrollThrottle]="50"
             (scrolled)="onScroll()">
-            <div class="col-md-4 col-sm-6 col-lg-3 col-xs-6 col-12" *ngFor="let item of listProductos">
-                <mat-card class="example-card">
-                    <img mat-card-image class="imgProductos" [src]="item.foto || './assets/img/producto.jpg'"
+            <div class="row">
+                <mat-card style="width:10rem;" class="marginEspacios" *ngFor="let item of listProductos">
+                    <picture>
+                        <img mat-card-image class="imgProductos pointer" [src]="item.foto || './assets/img/producto.jpg'"
                         alt="Photo of a Shiba Inu" (click)="agregar(item)">
+                    </picture>
                     <mat-card-actions>
                         <div class="row">
                             <div class="col-12">
-                                <span class="text-primary pointer"> Descargar </span>
-                                <p><span> {{ item.pro_nombre | slice: 0: 20 }}</span></p>
+                                <span class="text-primary pointer"> {{ item.pro_nombre | slice: 0: 20 }} </span>
+                                <p><span>{{ ( item.pro_uni_venta || 0 ).toLocaleString('de-DE', { style: 'currency', currency: 'COP' }) }}
+                                </span></p>
+                            </div>
+                            <div class="col-8">
+                                <input type="number" [(ngModel)]="item.cantidadAdquirir" class="form-control form-control-sm">
+                            </div>
+                            <div class="col-4">
+                                <i (click)="AgregarCart(item)" class="material-icons pointer text-primary">add_shopping_cart</i>
                             </div>
                             <div class="col-12">
-                                <h6>{{ ( item.pro_uni_venta || 0 ).toLocaleString('de-DE', { style: 'currency', currency: 'COP' }) }}
-                                </h6>
-                            </div>
-                            <div class="col-7">
-                                <input type="number" [(ngModel)]="item.cantidadAdquirir"
-                                    class="form-control form-control-sm">
-                            </div>
-                            <div class="col-5">
-                                <div>
-                                    <button (click)="AgregarCart(item)" type="button" class="btn btn-primary">
-                                        Agregar
-                                    </button>
-                                </div>
-                            </div>
-                            <div class="p-1 col-12 bg-primary text-white subButtons pointer">
-                                <a (click)="masInfo(item)" class="list-group-item list-group-item-action active"><i
-                                        class="material-icons">smartphone</i> Más Informacion</a>
-                            </div>
-                            <div class="p-2 col-12 text-danger">
-                                Pagas cuando recibes!
+                                <span (click)="masInfo(item)" class="pointer"> <i class="material-icons" style="padding: 1px;">smartphone</i> <span>Informacion</span> </span>
+                                <p><span class="text-danger textInfo"> Pagas cuando recibes! </span></p>
                             </div>
                         </div>
                     </mat-card-actions>
                 </mat-card>
             </div>
             <!-- sinner -->
-            <div class="row pb-5">
-                <div class="col-md-12 p-5">
-                    <ngx-spinner bdOpacity=0.9 bdColor="" size="default" color="#581f87" type="ball-pulse-sync"
-                        [fullScreen]="false">
-                    </ngx-spinner>
-                </div>
+            <div class="col-md-12 p-5">
+                <ngx-spinner bdOpacity=0.9 bdColor="" size="default" color="#581f87" type="ball-pulse-sync"
+                    [fullScreen]="false">
+                </ngx-spinner>
             </div>
         </div>
 

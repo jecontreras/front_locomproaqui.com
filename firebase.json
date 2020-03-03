@@ -1,0 +1,10 @@
+{
+  "hosting": {
+    "public": "dist/locomproAqui",
+    "ignore": [
+      "firebase.json",
+      "**/.*",
+      "**/node_modules/**"
+    ]
+  }
+}

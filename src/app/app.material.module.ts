@@ -29,7 +29,8 @@ import {MatButtonModule,
    MatSnackBarModule,
    MatRippleModule,
    MatPaginatorModule,
-   MatMenuModule} from '@angular/material';
+   MatMenuModule,
+   MatBadgeModule} from '@angular/material';
    import {ScrollDispatchModule} from '@angular/cdk/scrolling';
 import { NgModule } from '@angular/core';
 
@@ -42,6 +43,7 @@ import { NgModule } from '@angular/core';
     MatDialogModule,
     MatNativeDateModule,
     MatRadioModule,
+    MatBadgeModule,
     MatSliderModule,
     MatSlideToggleModule,
     MatSortModule,
@@ -77,6 +79,7 @@ import { NgModule } from '@angular/core';
     MatDialogModule,
     MatNativeDateModule,
     MatRadioModule,
+    MatBadgeModule,
     MatSliderModule,
     MatSlideToggleModule,
     MatSortModule,

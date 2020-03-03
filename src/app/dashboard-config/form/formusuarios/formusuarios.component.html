@@ -21,11 +21,11 @@
             <label for="exampleFormControlInput1">Email</label>
             <input type="text" [(ngModel)]="data.usu_email" class="form-control form-control-sm">
         </div>
-        <div class="form-group col-md-6 col-sm-4 col-lg-4 col-xs-6">
+        <div class="form-group col-md-6 col-sm-4 col-lg-4 col-xs-6" *ngIf="!id">
             <label for="exampleFormControlInput1">Contraseña</label>
             <input type="password" [(ngModel)]="data.usu_clave" class="form-control form-control-sm">
         </div>
-        <div class="form-group col-md-6 col-sm-4 col-lg-4 col-xs-6">
+        <div class="form-group col-md-6 col-sm-4 col-lg-4 col-xs-6" *ngIf="!id">
             <label for="exampleFormControlInput1">Verificar Contraseña</label>
             <input type="password" [(ngModel)]="data.usu_confir" class="form-control form-control-sm">
         </div>
@@ -35,12 +35,30 @@
         </div>
         <div class="form-group col-md-6 col-sm-4 col-lg-4 col-xs-6">
             <label for="exampleFormControlSelect1">Perfil</label>
-            <select class="form-control form-control-sm" [(ngModel)]="data.prv_tipo_docum">
+            <select class="form-control form-control-sm" [(ngModel)]="data.usu_perfil">
                 <option value="administrador">Administrador</option>
                 <option value="vendedor">Vendedor</option>
+                <option value="usuario">Usuario</option>
             </select>
         </div>
-        <div class="form-group col-12">
+        <div class="form-group col-12" *ngIf="id">
+            <div class="p-3 mb-2 bg-info text-white">
+                Cambiar Password
+            </div>
+        </div>
+        <div class="form-group col-5" *ngIf="id">
+            <label for="exampleFormControlInput1">Contraseña</label>
+            <input type="password" [(ngModel)]="restaure.passNew" class="form-control form-control-sm">
+        </div>
+        <div class="form-group col-5" *ngIf="id">
+            <div>
+                <br>
+                <button class="p-2 btn btn-primary btn-just-icon btn-round" (click)="CambiarPassword()">
+                    Actualizar Contraseña
+                </button>
+            </div>
+        </div>
+        <!-- <div class="form-group col-12">
             <ngx-dropzone (change)="onSelect($event)">
                 <ngx-dropzone-label>Abrir archivos</ngx-dropzone-label>
                 <ngx-dropzone-image-preview ngProjectAs="ngx-dropzone-preview" *ngFor="let f of files"
@@ -48,7 +66,7 @@
                     <ngx-dropzone-label>{{ f.name }} ({{ f.type }})</ngx-dropzone-label>
                 </ngx-dropzone-image-preview>
             </ngx-dropzone>
-        </div>
+        </div> -->
         <div class="form-group col-12">
             <input class="form-check-input" type="radio" name="exampleRadios" [(ngModel)]="data.prv_activo">
             <label class="form-check-label" for="exampleRadios2">

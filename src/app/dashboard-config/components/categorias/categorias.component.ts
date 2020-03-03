@@ -25,7 +25,10 @@ export class CategoriasComponent implements OnInit {
   pagina = 10;
   paginas = 0;
   loader = true;
-  query:any = {};
+  query:any = {
+    where:{},
+    limit: 100
+  };
   Header:any = [ 'Acciones','Imagen','Categorias','Descripcion','Categoria Padre','Estado' ];
   $:any;
   public datoBusqueda = '';
@@ -132,6 +135,7 @@ export class CategoriasComponent implements OnInit {
     this.loader = true;
     //console.log(this.datoBusqueda);
     this.datoBusqueda = this.datoBusqueda.trim();
+    this.query.where = {};
     if (this.datoBusqueda === '') {
       this.cargarTodos();
     } else {

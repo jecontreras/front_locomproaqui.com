@@ -24,6 +24,7 @@ import { MenuLateralComponent } from './components/menu-lateral/menu-lateral.com
 import { NgImageSliderModule } from 'ng-image-slider';
 import { InfiniteScrollModule } from 'ngx-infinite-scroll';
 import { NgxSpinnerModule } from "ngx-spinner";
+import { ServiceWorkerModule } from '@angular/service-worker';
 
 @NgModule({
   entryComponents:[
@@ -58,6 +59,7 @@ import { NgxSpinnerModule } from "ngx-spinner";
       maxAge: 25, // Retains last 25 states
       logOnly: environment.production, // Restrict extension to log-only mode
     }),
+    ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production }),
   ],
   exports: [
     LoginComponent,

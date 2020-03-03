@@ -34,7 +34,7 @@ export class ServiciosService {
   querys(query:string, datas:any, METODO:string){
     let data = datas;
     if(!datas.where) datas.where = {};
-    data.skip = datas.page ? datas.page : 1;
+    data.skip = datas.page ? datas.page : 0;
     data.limit = datas.limit ? datas.limit : 10;
     query = URL+`/${query}`;
     return this.ejecutarQuery(query, data, METODO);

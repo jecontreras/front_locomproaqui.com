@@ -2,8 +2,14 @@
   width: 304px !important;
 }
 .imgFoto{
-  height: 34px;
-  border-radius: 112px;
+  width: 70px !important;
+  height: 70px !important;
+}
+.colorMenu{
+  color: black !important;
+}
+.toolbar{
+  height: 45px !important;
 }
 .example-container {
     display: flex;
@@ -24,7 +30,7 @@
     background: #3f51b5;
   }
   .paddingLeft {
-    padding-left: 11px;
+    padding: 9px;
   }
   #btn-actualizar {
     margin-left: 15px;
@@ -89,55 +95,6 @@
     }
     .divisor {
       margin-top: 10px;
-    }
-  }
-  /* Extra small devices (phones, 600px and down) */
-  @media only screen and (max-width: 600px) {
-    .ancho {
-      width: 85%;
-    }
-    .textInf {
-      font-size: 11px;
-    }
-  }
-  
-  /* Small devices (portrait tablets and large phones, 600px and up) */
-  @media only screen and (min-width: 600px) {
-    .ancho {
-      width: 65%;
-    }
-    .textInf {
-      font-size: 12px;
-    }
-  }
-  
-  /* Medium devices (landscape tablets, 768px and up) */
-  @media only screen and (min-width: 768px) {
-    .ancho {
-      width: 45%;
-    }
-    .textInf {
-      font-size: 14px;
-    }
-  }
-  
-  /* Large devices (laptops/desktops, 992px and up) */
-  @media only screen and (min-width: 992px) {
-    .ancho {
-      width: 60%;
-    }
-    .textInf {
-      font-size: 15px;
-    }
-  }
-  
-  /* Extra large devices (large laptops and desktops, 1200px and up) */
-  @media only screen and (min-width: 1200px) {
-    .ancho {
-      width: 60%;
-    }
-    .textInf {
-      font-size: 16px;
     }
   }
   

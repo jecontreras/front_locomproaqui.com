@@ -23,6 +23,9 @@ import { PerfilComponent } from './components/perfil/perfil.component';
 import { FormbancosComponent } from './form/formbancos/formbancos.component';
 import { FormcobrosComponent } from './form/formcobros/formcobros.component';
 
+import { InfiniteScrollModule } from 'ngx-infinite-scroll';
+import { NgxSpinnerModule } from "ngx-spinner";
+
 @NgModule({
   entryComponents: [
     FormcategoriasComponent,
@@ -57,6 +60,8 @@ import { FormcobrosComponent } from './form/formcobros/formcobros.component';
     ReactiveFormsModule,
     MainConfigRoutingModule,
     MyOwnCustomMaterialModule,
+    InfiniteScrollModule,
+    NgxSpinnerModule,
     FormsModule,
     NgxDropzoneModule
   ],

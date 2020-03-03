@@ -11,6 +11,8 @@ import { Store } from '@ngrx/store';
 import { UserAction } from 'src/app/redux/app.actions';
 
 const URL = environment.url;
+const URLFRON = environment.urlFront;
+
 @Component({
   selector: 'app-perfil',
   templateUrl: './perfil.component.html',
@@ -21,6 +23,9 @@ export class PerfilComponent implements OnInit {
   data:any = {};
   files: File[] = [];
   list_files: any = [];
+  urlTienda:string = `${ URLFRON }/pedidos/`;
+  restaure:any = {};
+  disableRestaure:boolean = false;
 
   constructor(
     private _model: ServiciosService,
@@ -39,7 +44,7 @@ export class PerfilComponent implements OnInit {
   ngOnInit() {
     //this.data = this._model.dataUser || {};
     if(this.data.usu_fec_nacimiento) this.data.usu_fec_nacimiento = moment(this.data.usu_fec_nacimiento).format('DD/MM/YYYY');
-    console.log(this.data);
+    this.urlTienda+=this.data.id;
   }
 
   onSelect(event:any) {
@@ -66,7 +71,9 @@ export class PerfilComponent implements OnInit {
   }
 
   CambiarPassword(){
-
+    this._user.cambioPass({ id: this.data.id, password: this.restaure.passNew })
+    .subscribe( (res:any)=>{console.log(res); this.disableRestaure = false; this.restaure = {}; this._tools.presentToast("Actualizado Password"); },
+    (error)=> { console.error(error); this._tools.presentToast("Error Servidor"); } );
   }
 
   Actualizar(){
@@ -77,6 +84,25 @@ export class PerfilComponent implements OnInit {
       let accion = new UserAction(res, 'put');
       this._store.dispatch(accion);
     },(error)=>{console.error(error); this._tools.presentToast("Error de Servidor")})
+  }
+  
+  abrrirTienda(){
+    window.open(this.urlTienda);
+  }
+
+  copiarLink(){
+    const selBox = document.createElement('textarea');
+    selBox.style.position = 'fixed';
+    selBox.style.left = '0';
+    selBox.style.top = '0';
+    selBox.style.opacity = '0';
+    selBox.value = this.urlTienda;
+    document.body.appendChild(selBox);
+    selBox.focus();
+    selBox.select();
+    document.execCommand('copy');
+    document.body.removeChild(selBox);
+    this._tools.openSnack('Copiado:' + ' ' + this.urlTienda, 'completado', false);
   }
 
 }

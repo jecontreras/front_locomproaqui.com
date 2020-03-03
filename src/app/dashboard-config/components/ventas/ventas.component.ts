@@ -3,6 +3,10 @@ import { FormventasComponent } from '../../form/formventas/formventas.component'
 import { MatDialog } from '@angular/material';
 import { ToolsService } from 'src/app/services/tools.service';
 import { VentasService } from 'src/app/servicesComponents/ventas.service';
+import { NgxSpinnerService } from 'ngx-spinner';
+import * as _ from 'lodash';
+import { STORAGES } from 'src/app/interfaces/sotarage';
+import { Store } from '@ngrx/store';
 
 declare interface DataTable {
   headerRow: string[];
@@ -27,19 +31,37 @@ export class VentasComponent implements OnInit {
   query:any = {
     where:{
       ven_sw_eliminado: 0
-    }
+    },
+    page: 0
   };
   Header:any = [ 'Acciones','Tipo Venta','Vendedor','Nombre Cliente','Teléfono Cliente','Fecha Venta','Productos','Cantidad','Precio','Imagen Producto','Estado', 'Motivo Rechazo', 'Tallas' ];
   $:any;
   public datoBusqueda = '';
 
+  notscrolly:boolean=true;
+  notEmptyPost:boolean = true;
+  dataUser:any = {};
+
   constructor(
     public dialog: MatDialog,
     private _tools: ToolsService,
-    private _ventas: VentasService
-  ) { }
+    private _ventas: VentasService,
+    private spinner: NgxSpinnerService,
+    private _store: Store<STORAGES>,
+  ) {
+    this._store.subscribe((store: any) => {
+      store = store.name;
+      this.dataUser = store.user || {};
+      if(this.dataUser.usu_perfil.prf_descripcion != 'administrador') this.query.where.usu_clave_int = this.dataUser.id;
+    });
+   }
 
   ngOnInit() {
+    this.dataTable = {
+      headerRow: this.Header,
+      footerRow: this.Header,
+      dataRows: []
+    };
     this.cargarTodos();
   }
 
@@ -52,105 +74,85 @@ export class VentasComponent implements OnInit {
       console.log(`Dialog result: ${result}`);
     });
   }
+
   delete(obj:any, idx:any){
     let data:any = {
       id: obj.id,
       ven_sw_eliminado: 1
     };
-    this._ventas.update(data).subscribe((res:any)=>{
-      this.dataTable.dataRows.splice(idx, 1);
-      this._tools.presentToast("Eliminado")
-    },(error)=>{console.error(error); this._tools.presentToast("Error de servidor") })
+    this._tools.confirm({title:"Eliminar", detalle:"Deseas Eliminar Dato", confir:"Si Eliminar"}).then((opt)=>{
+      if(opt.value){
+        if(obj.ven_estado == 1) { this._tools.presentToast("Error no puedes ya Eliminar la venta ya esta aprobada"); return false; }
+        this._ventas.update(data).subscribe((res:any)=>{
+          this.dataTable.dataRows.splice(idx, 1);
+          this._tools.presentToast("Eliminado")
+        },(error)=>{console.error(error); this._tools.presentToast("Error de servidor") })
+      }
+    });
   }
 
-
-
+  onScroll(){
+    if (this.notscrolly && this.notEmptyPost) {
+       this.notscrolly = false;
+       this.query.page++;
+       this.cargarTodos();
+     }
+  }
 
   cargarTodos() {
+    this.spinner.show();
     this._ventas.get(this.query)
     .subscribe(
       (response: any) => {
-        console.log(response);
-        this.dataTable = {
-          headerRow: this.Header,
-          footerRow: this.Header,
-          dataRows: []
-        };
         this.dataTable.headerRow = this.dataTable.headerRow;
         this.dataTable.footerRow = this.dataTable.footerRow;
-        this.dataTable.dataRows = response.data;
-        this.paginas = Math.ceil(response.count/10);
+        this.dataTable.dataRows.push(... response.data)
+        this.dataTable.dataRows = _.unionBy(this.dataTable.dataRows || [], this.dataTable.dataRows, 'id');
         this.loader = false;
-        setTimeout(() => {
-          this.config();
-          console.log("se cumplio el intervalo");
-        }, 1000);
+          this.spinner.hide();
+          
+          if (response.data.length === 0 ) {
+            this.notEmptyPost =  false;
+          }
+          this.notscrolly = true;
       },
       error => {
         console.log('Error', error);
       });
   }
-  config() {
-    if(!this.$)return false;
-    $('#datatables').DataTable({
-      "pagingType": "full_numbers",
-      "lengthMenu": [
-        [10, 25, 50, -1],
-        [10, 25, 50, "All"]
-      ],
-      responsive: true,
-      language: {
-        search: "_INPUT_",
-        searchPlaceholder: "Buscar",
-      }
 
-    });
-
-    const table = $('#datatables').DataTable();
-
-    /* // Edit record
-    table.on('click', '.edit', function (e) {
-      let $tr = $(this).closest('tr');
-      if ($($tr).hasClass('child')) {
-        $tr = $tr.prev('.parent');
-      }
-
-      var data = table.row($tr).data();
-      alert('You press on Row: ' + data[0] + ' ' + data[1] + ' ' + data[2] + '\'s row.');
-      e.preventDefault();
-    }); */
-
-    /* // Delete a record
-    table.on('click', '.remove', function (e) {
-      const $tr = $(this).closest('tr');
-      table.row($tr).remove().draw();
-      e.preventDefault();
-    }); */
-
-    //Like record
-    table.on('click', '.like', function (e) {
-      alert('You clicked on Like button');
-      e.preventDefault();
-    });
-
-    $('.card .material-datatables label').addClass('form-group');
-  }
   buscar() {
     this.loader = true;
     //console.log(this.datoBusqueda);
     this.datoBusqueda = this.datoBusqueda.trim();
     if (this.datoBusqueda === '') {
       this.query.where = {ven_sw_eliminado: 0};
+      if(this.dataUser.usu_perfil.prf_descripcion != 'administrador') this.query.where.usu_clave_int = this.dataUser.id;
       this.cargarTodos();
     } else {
       this.query.where.or = [
         {
-          cat_nombre: {
+          ven_nombre_cliente: {
             contains: this.datoBusqueda|| ''
           }
         },
         {
-          cat_descripcion: {
+          ven_telefono_cliente: {
+            contains: this.datoBusqueda|| ''
+          }
+        },
+        {
+          ven_direccion_cliente: {
+            contains: this.datoBusqueda|| ''
+          }
+        },
+        {
+          ven_fecha_venta: {
+            contains: this.datoBusqueda|| ''
+          }
+        },
+        {
+          ven_tallas: {
             contains: this.datoBusqueda|| ''
           }
         },

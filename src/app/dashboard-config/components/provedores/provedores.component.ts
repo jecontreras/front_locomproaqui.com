@@ -25,7 +25,12 @@ export class ProvedoresComponent implements OnInit {
   pagina = 10;
   paginas = 0;
   loader = true;
-  query:any = {};
+  query:any = { 
+    where:{
+      prv_activo: 0
+    },
+    limit:100
+  };
   Header:any = [ 'Acciones','Nombre','Tipo','Documento','Telefonos','Email','Dirección','Observación','Estado' ];
   $:any;
   public datoBusqueda = '';
@@ -133,16 +138,22 @@ export class ProvedoresComponent implements OnInit {
     //console.log(this.datoBusqueda);
     this.datoBusqueda = this.datoBusqueda.trim();
     if (this.datoBusqueda === '') {
+      this.query.where = {};
       this.cargarTodos();
     } else {
       this.query.where.or = [
         {
-          cat_nombre: {
+          prv_nro_docum: {
             contains: this.datoBusqueda|| ''
           }
         },
         {
-          cat_descripcion: {
+          prv_nombre: {
+            contains: this.datoBusqueda|| ''
+          }
+        },
+        {
+          prv_email: {
             contains: this.datoBusqueda|| ''
           }
         },

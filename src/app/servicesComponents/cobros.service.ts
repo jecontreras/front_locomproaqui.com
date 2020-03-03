@@ -14,7 +14,7 @@ export class CobrosService {
     return this._model.querys('tblcobrar/querys',query, 'post');
   }
   create(query:any){
-    return this._model.querys('tblcobrar',query, 'post');
+    return this._model.querys('tblcobrar/create',query, 'post');
   }
   update(query:any){
     return this._model.querys('tblcobrar/'+query.id, query, 'put');

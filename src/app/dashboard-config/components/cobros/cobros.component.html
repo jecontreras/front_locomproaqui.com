@@ -15,19 +15,19 @@
               <div class="col row p-2">
                 <div class="col-md-3 col-sm-4 col-lg-3 col-xs-3">
                   <span>Total Ganado</span>
-                  <p>$0.00 COP</p>
+                  <p>{{ ( dataInfo.ganancias || 0 ).toLocaleString('de-DE', { style: 'currency', currency: 'COP' }) }}</p>
                 </div>
                 <div class="col-md-3 col-sm-4 col-lg-3 col-xs-3">
                   <span>Total Cobrado</span>
-                  <p>$0.00 COP</p>
+                  <p>{{ ( dataInfo.cobrado || 0 ).toLocaleString('de-DE', { style: 'currency', currency: 'COP' }) }}</p>
                 </div>
                 <div class="col-md-3 col-sm-4 col-lg-3 col-xs-3">
                   <span>Total Pagado</span>
-                  <p>$0.00 COP</p>
+                  <p>{{ ( dataInfo.pagado || 0 ).toLocaleString('de-DE', { style: 'currency', currency: 'COP' }) }}</p>
                 </div>
                 <div class="col-md-3 col-sm-6 col-lg-3 col-xs-3">
                   <span>Por Cobrar</span>
-                  <p>$0.00 COP</p>
+                  <p>{{ ( dataInfo.porcobrado || 0 ).toLocaleString('de-DE', { style: 'currency', currency: 'COP' }) }}</p>
                 </div>
               </div>
             </div>
@@ -44,53 +44,67 @@
               <div id="datatables_filter" class="dataTables_filter row">
                 <label class="form-group col">
                   <input [(ngModel)]="datoBusqueda" type="search" class="form-control form-control-sm"
-                    placeholder="Buscar Retiros" aria-controls="datatables"></label>
+                    placeholder="Buscar Retiros" aria-controls="datatables" (change)="buscar()"></label>
                 <div>
                     <button (click)="buscar()" [disabled]="loader" mat-raised-button mat-min-fab
                         class="btn btn-primary btn-just-icon btn-round">
                         <i class="material-icons">search</i>
                     </button>
-                    <button (click)="crear(false)" class="btn btn-primary btn-just-icon btn-round" mat-raised-button mat-min-fab>
+                    <button (click)="crear(false)" class="btn btn-primary btn-just-icon btn-round" mat-raised-button mat-min-fab [disabled]="!btnDisableRetiro">
                         <i class="material-icons">add_circle_outline</i>
                     </button>
                 </div>
 
               </div>
-              <div class="material-datatables" *ngIf="!loader">
-                <table id="datatables" class="table table-striped table-no-bordered table-hover" cellspacing="0"
-                  width="100%" style="width:100%">
-                  <thead>
-                    <tr>
-                      <th *ngFor="let row of dataTable.headerRow">{{ row }}</th>
-                    </tr>
-                  </thead>
-                  <tfoot>
-                    <tr>
-                      <th *ngFor="let row of dataTable.headerRow">{{ row }}</th>
-                    </tr>
-                  </tfoot>
-                  <tbody>
-                    <tr *ngFor="let row of dataTable.dataRows; let idx=index">
-                      
-                      <td>
-                        <button (click)="crear(row)" class="btn btn-primary btn-just-icon btn-round">
-                          <i class="material-icons">remove_red_eye</i>
-                        </button>
-                        <button (click)="delete(row, idx)" class="btn btn-danger btn-just-icon btn-round">
-                          <i class="material-icons">delete_forever</i>
-                        </button>
-                      </td>
-                      <td>{{row['cob_monto']}}</td>
-                      <td>{{row['cob_metodo']}}</td>
-                      <td>{{row['createdAt']}}</td>
-                      <td>{{row['cob_num_cedula']}}</td>
-                      <td>{{row['cob_num_celular']}}</td>
-                      <td>{{row['cob_num_cuenta']}}</td>
-                      <td>{{row['cob_fecha_pago']}}</td>
-                      <td>{{ row['cob_estado'] == 0 ? 'Activo' : 'Inactivo' }}</td>
-                    </tr>
-                  </tbody>
-                </table>
+              <div class="search-results col-12 row" infiniteScroll [infiniteScrollDistance]="3" [infiniteScrollThrottle]="50"
+                  (scrolled)="onScroll()"
+              >
+                <div class="material-datatables" *ngIf="!loader">
+                  <table id="datatables" class="table table-striped table-no-bordered table-hover" cellspacing="0"
+                    width="100%" style="width:100%">
+                    <thead>
+                      <tr>
+                        <th *ngFor="let row of dataTable.headerRow">{{ row }}</th>
+                      </tr>
+                    </thead>
+                    <tfoot>
+                      <tr>
+                        <th *ngFor="let row of dataTable.headerRow">{{ row }}</th>
+                      </tr>
+                    </tfoot>
+                    <tbody>
+                      <tr *ngFor="let row of dataTable.dataRows; let idx=index">
+                        
+                        <td>
+                          <button (click)="crear(row)" class="btn btn-primary btn-just-icon btn-round">
+                            <i class="material-icons">remove_red_eye</i>
+                          </button>
+                          <button (click)="delete(row, idx)" class="btn btn-danger btn-just-icon btn-round">
+                            <i class="material-icons">delete_forever</i>
+                          </button>
+                        </td>
+                        <td>{{ ( row['cob_monto'] || 0 ).toLocaleString('de-DE', { style: 'currency', currency: 'COP' }) }}</td>
+                        <td>{{ row['cob_metodo'] }}</td>
+                        <td>{{ row['createdAt'] }}</td>
+                        <td>{{ row['usu_clave_int']?.usu_email }}</td>
+                        <td>{{ row['cob_num_cedula'] }}</td>
+                        <td>{{ row['cob_num_celular'] }}</td>
+                        <td>{{ row['cob_num_cuenta'] }}</td>
+                        <td>{{ row['cob_fecha_pago'] }}</td>
+                        <td>
+                          <span *ngIf="row['cob_estado'] == 0">Activo</span>
+                          <span *ngIf="row['cob_estado'] == 1">Aprovado</span>
+                          <span *ngIf="row['cob_estado'] == 2">Rechazado</span>
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
+                  <div class="col-md-12 p-5">
+                    <ngx-spinner bdOpacity=0.9 bdColor="" size="default" color="#581f87" type="ball-pulse-sync"
+                        [fullScreen]="false">
+                    </ngx-spinner>
+                  </div>
+                </div>
               </div>
             </div>
           </div>

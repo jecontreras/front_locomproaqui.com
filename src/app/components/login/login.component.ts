@@ -6,6 +6,7 @@ import { MatDialog } from '@angular/material';
 import { UserAction } from 'src/app/redux/app.actions';
 import { STORAGES } from 'src/app/interfaces/sotarage';
 import { Store } from '@ngrx/store';
+import { RegistroComponent } from '../registro/registro.component';
 
 @Component({
   selector: 'app-login',
@@ -15,6 +16,7 @@ import { Store } from '@ngrx/store';
 export class LoginComponent implements OnInit {
   
   data:any = {};
+  disableRestarure:boolean = true;
 
   constructor(
     private _user: UsuariosService,
@@ -41,6 +43,17 @@ export class LoginComponent implements OnInit {
         this._tools.presentToast("Error de sesión")
       }
     },(error)=>{ console.error(error); this._tools.presentToast("Error de servidor")});
+  }
+
+  registre(){
+    const dialogRef = this.dialog.open(RegistroComponent,{
+      width: '461px',
+      data: { datos: {} }
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      console.log(`Dialog result: ${result}`);
+    });
   }
 
 }
