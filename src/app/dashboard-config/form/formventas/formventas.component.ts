@@ -89,7 +89,7 @@ export class FormventasComponent implements OnInit {
     this._tools.ProcessTime({});
     this._archivos.create(form).subscribe((res:any)=>{
       console.log(res);
-      this.data.ven_imagen_producto = URL+`/${res}`;
+      this.data.ven_imagen_producto = res.files;//URL+`/${res}`;
       this._tools.presentToast("Exitoso");
       if(this.id)this.submit();
       else{
@@ -134,7 +134,7 @@ export class FormventasComponent implements OnInit {
     this.dialog.closeAll();
   }
   OrderWhatsapp(res){
-    let mensaje:string = `https://wa.me/573148487506?text=info del cliente ${ res.ven_nombre_cliente } telefono ${ res.ven_telefono_cliente || '' } direccion ${ res.usu_direccion } fecha del pedido ${ res.ven_fecha_venta } Hola Servicio al cliente, 
+    let mensaje:string = `https://wa.me/573148487506?text=info del cliente ${ res.ven_nombre_cliente } telefono ${ res.ven_telefono_cliente || '' } direccion ${ res.ven_direccion_cliente } fecha del pedido ${ res.ven_fecha_venta } Hola Servicio al cliente, 
     como esta, cordial saludo. Sería tan amable despachar este pedido a continuación datos de la venta:� producto: `;
     if(res.ven_tipo == 'whatsapp'){
       mensaje+= `${ res.nombreProducto } imagen: ${ res.ven_imagen_producto } talla: ${ res.ven_tallas }`

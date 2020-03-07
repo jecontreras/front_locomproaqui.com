@@ -63,7 +63,7 @@ export class PerfilComponent implements OnInit {
     this._tools.ProcessTime({});
     this._archivos.create(form).subscribe((res:any)=>{
       console.log(res);
-      this.data[opt] = URL+`/${res}`;
+      this.data[opt] = res.files; //URL+`/${res}`;
       this._tools.presentToast("Exitoso");
       this.Actualizar();
     },(error)=>{console.error(error); this._tools.presentToast("Error de servidor")});

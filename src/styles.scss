@@ -14,6 +14,15 @@ html, body {
 .imgFoto{
   height: 371px;
 }
+.mat-toolbar-row, .mat-toolbar-single-row {
+  display: flex !important;
+  box-sizing: border-box !important;
+  padding: 0 16px !important;
+  width: auto !important;
+  flex-direction: row !important;
+  align-items: center !important;
+  white-space: nowrap !important;
+}
 .imgProductos{
   height: 193px;
   max-height: 269px;

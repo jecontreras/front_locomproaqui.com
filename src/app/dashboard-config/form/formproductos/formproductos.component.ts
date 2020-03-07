@@ -76,9 +76,9 @@ export class FormproductosComponent implements OnInit {
     form.append('file', this.files[0]);
     this._tools.ProcessTime({});
     //this._archivos.create( this.files[0] );
-    this._archivos.create( this.files[0] ).subscribe((res:any)=>{
+    this._archivos.create( form ).subscribe((res:any)=>{
       console.log(res);
-      this.data.foto = URL+`/${res}`;
+      this.data.foto = res.files;//URL+`/${res}`;
       this._tools.presentToast("Exitoso");
       if(this.id)this.submit();
     },(error)=>{console.error(error); this._tools.presentToast("Error de servidor")});

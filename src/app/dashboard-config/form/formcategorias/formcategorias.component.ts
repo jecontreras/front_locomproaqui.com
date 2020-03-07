@@ -62,8 +62,8 @@ export class FormcategoriasComponent implements OnInit {
     form.append('file', this.files[0]);
     this._tools.ProcessTime({});
     this._archivos.create(form).subscribe((res:any)=>{
-      console.log(res);
-      this.data.cat_imagen = URL+`/${res}`;
+      //console.log(res);
+      this.data.cat_imagen = res.files;//URL+`/${res}`;
       this._tools.presentToast("Exitoso");
       if(this.id)this.submit();
     },(error)=>{console.error(error); this._tools.presentToast("Error de servidor")});
