@@ -71,8 +71,9 @@ export class FormcategoriasComponent implements OnInit {
   }
 
   submit(){
-    if(this.data.cat_activo) this.data.cat_activo = 0;
-    else this.data.cat_activo = 1;
+    console.log(this.data.cat_activo)
+    // if(this.data.cat_activo) this.data.cat_activo = 0;
+    // else this.data.cat_activo = 1;
     if(this.id) {
       this.updates();
     }

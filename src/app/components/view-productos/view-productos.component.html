@@ -1,7 +1,17 @@
 <h2 mat-dialog-title>Info Producto</h2>
 <mat-dialog-content class="mat-typography">
     <div class="row">
-        <img class="imgProducto col-md-6 col-sm-8 col-lg-6 col-xs-6" [src]="data.foto || './assets/img/producto.jpg'">
+        <div class="col-md-6 col-sm-8 col-lg-6 col-xs-6">
+            <!-- <lib-ngx-image-zoom
+                [thumbImage]=data.foto
+                [fullImage]=data.foto
+                [magnification]="1"
+                [enableScrollZoom]="true"
+                [enableLens]="true"
+                [lensWidth]="200"
+                [lensHeight]="200"
+            ></lib-ngx-image-zoom> -->
+        </div>
         <div class="col-md-6 col-sm-4 col-lg-6 col-xs-6 content row">
             <div class="col-12">
                 <h3 class="text-primary">${{ ( data.pro_uni_venta || 0).toLocaleString('de-DE', { style: 'currency', currency: 'COP' }) }}</h3>

@@ -1,0 +1,33 @@
+<div class="container">
+    <br><br>
+    <p class="text-left">
+        <a [routerLink]="[ '/pedidos' ]">Volver Productos</a>
+    </p>
+    <div class="row">
+        <div class="col-md-6 col-sm-8 col-lg-6 col-xs-6">
+            <!-- <lib-ngx-image-zoom
+                [thumbImage]=data.foto
+                [fullImage]=data.foto
+                [magnification]="1"
+                [enableScrollZoom]="true"
+                [enableLens]="true"
+                [lensWidth]="200"
+                [lensHeight]="200"
+            ></lib-ngx-image-zoom> -->
+        </div>
+        <!-- <img class="imgProducto col-md-6 col-sm-8 col-lg-6 col-xs-6" [src]="data.foto || './assets/img/producto.jpg'"> -->
+        <div class="col-md-6 col-sm-4 col-lg-6 col-xs-6 content row">
+            <div class="col-12">
+                <h3 class="text-primary">${{ ( data.pro_uni_venta || 0).toLocaleString('de-DE', { style: 'currency', currency: 'COP' }) }}</h3>
+                <h4>{{ data.pro_nombre }}</h4>
+                <p>{{ data.pro_descripcion | slice: 0: rango }}</p>
+                <p *ngIf="rango == 100" (click)="rango = 5000" class="text-primary">leer mas..</p>
+                <p *ngIf="rango != 100" (click)="rango = 100" class="text-primary">leer menos..</p>
+                <input type="number" [(ngModel)]="data.cantidadAdquirir" class="form-control form-control-sm">
+                <button (click)="AgregarCart()" type="button" class="btn btn-primary">
+                    Agregar
+                </button>
+            </div>
+        </div>
+    </div>
+</div>

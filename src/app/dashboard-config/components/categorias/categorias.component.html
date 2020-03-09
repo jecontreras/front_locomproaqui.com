@@ -65,8 +65,8 @@
                       </td>
                       <td>{{row['cat_nombre']}}</td>
                       <td>{{row['cat_descripcion']}}</td>
-                      <td>{{row['cat_padre']}}</td>
-                      <td>{{row['cat_activo']}}</td>
+                      <td>{{row['cat_padre']?.cat_nombre}}</td>
+                      <td>{{ row['cat_activo'] == 0 ? 'Activo' : 'Eliminado' }}</td>
                       
                     </tr>
                   </tbody>

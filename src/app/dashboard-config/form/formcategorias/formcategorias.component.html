@@ -15,6 +15,7 @@
             <textarea class="form-control" [(ngModel)]="data.cat_descripcion" rows="3"></textarea>
         </div>
         <div class="form-group col-12">
+            <label for="exampleFormControlInput1">Categoria padre</label>
             <select class="form-control form-control-sm" [(ngModel)]="data.cat_padre">
                 <option [value]="item.id" *ngFor="let item of listCategorias">{{ item.cat_nombre }}</option>
             </select>
@@ -37,10 +38,11 @@
             </ngx-dropzone>
         </div>
         <div class="form-group col-12">
-            <input class="form-check-input" type="radio" name="exampleRadios" [(ngModel)]="data.cat_activo">
-            <label class="form-check-label" for="exampleRadios2">
-                Activo
-            </label>
+            <label for="exampleFormControlInput1">Categoria padre</label>
+            <select class="form-control form-control-sm" [(ngModel)]="data.cat_activo">
+                <option type="number" value="0">Activo</option>
+                <option type="number" value="1">Eliminado</option>
+            </select>
         </div>
     </div>
 </mat-dialog-content>

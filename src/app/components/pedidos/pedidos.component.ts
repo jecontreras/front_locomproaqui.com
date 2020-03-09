@@ -155,10 +155,29 @@ export class PedidosComponent implements OnInit {
     }); 
   }
   masInfo(obj:any){
-    if(this.userId) this.urlwhat = `https://wa.me/${ this.userId.usu_indicativo || 57 }${ this.userId.usu_telefono || '3148487506'}?text=Hola Servicio al cliente, como esta, saludo cordial, estoy interesad@ en mas informacion ${obj.pro_nombre}`;
-    else this.urlwhat = `https://wa.me/573148487506?text=Hola Servicio al cliente, como esta, saludo cordial, estoy interesad@ en mas informacion ${obj.pro_nombre}`;
+    if(this.userId) this.urlwhat = `https://wa.me/${ this.userId.usu_indicativo || 57 }${ this.userId.usu_telefono || '3148487506'}?text=Hola Servicio al cliente, como esta, saludo cordial, estoy interesad@ en mas informacion ${obj.pro_nombre} codigo ${obj.pro_codigo}`;
+    else this.urlwhat = `https://wa.me/573148487506?text=Hola Servicio al cliente, como esta, saludo cordial, estoy interesad@ en mas informacion ${obj.pro_nombre} codigo ${obj.pro_codigo}`;
     window.open(this.urlwhat);
   }
+  
+  maxCantidad(obj:any){
+    if(!obj.cantidadAdquirir) obj.cantidadAdquirir = 1;
+    obj.cantidadAdquirir++;
+    obj.pro_uni_ventaEdit = ( obj.cantidadAdquirir * obj.pro_uni_venta );
+  }
+  
+  manualCantidad(obj:any){
+    if(!obj.cantidadAdquirir) obj.cantidadAdquirir = 1;
+    obj.pro_uni_ventaEdit = ( obj.cantidadAdquirir * obj.pro_uni_venta );
+  }
+
+  menosCantidad(obj){
+    if(!obj.cantidadAdquirir) obj.cantidadAdquirir = 1;
+    obj.cantidadAdquirir = obj.cantidadAdquirir-1;
+    if(obj.cantidadAdquirir <= -1 ) obj.cantidadAdquirir = 0;
+    obj.pro_uni_ventaEdit = ( obj.cantidadAdquirir * obj.pro_uni_venta );
+  }
+
   AgregarCart(item:any){
     console.log(item);
     let data:any = {

@@ -66,7 +66,7 @@
         </div>
       </div>
     </mat-sidenav>
-    <mat-sidenav class="sidenav" #snav (window:resize)="onResize($event)" [mode]="mobileQuery.ds ? 'over' : 'side'"
+    <mat-sidenav class="sidenav" #snav (window:resize)="onResize($event)" [mode]="mobileQuery.ds ? 'over' : 'over'"
       [fixedInViewport]="true" fixedTopGap="56"
       [opened]="(isHandset$ | async) === false"
       >

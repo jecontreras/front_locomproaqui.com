@@ -15,8 +15,10 @@
         </div>
         <div class="col-12">
             <mat-chip-list aria-label="Fish selection">
-                <mat-chip color="primary" selected (click)="imageOnClick(idx)" *ngFor="let item of imageObject;let idx=index">{{ item.title }}</mat-chip>
-              </mat-chip-list>
+                <mat-chip color="primary" selected (click)="imageOnClick(idx)"
+                    *ngFor="let item of imageObject;let idx=index">{{ item.title }}</mat-chip>
+            </mat-chip-list>
+            <br>
             <!--<ng-image-slider [images]="imageObject" [infinite]="sliderInfinite" [imagePopup]="sliderImagePopup"
                 [showArrow]="sliderArrowShow" [imageSize]="{width: sliderImageWidth, height: sliderImageHeight}"
                 [autoSlide]="sliderAutoSlide ? 1 : 0" [slideImage]="sliderSlideImage"
@@ -27,31 +29,89 @@
         <div class="search-results col-12 row" infiniteScroll [infiniteScrollDistance]="3" [infiniteScrollThrottle]="50"
             (scrolled)="onScroll()">
             <div class="row">
-                <mat-card style="width:10rem;" class="marginEspacios" *ngFor="let item of listProductos">
-                    <picture>
-                        <img mat-card-image class="imgProductos pointer" [src]="item.foto || './assets/img/producto.jpg'"
-                        alt="Photo of a Shiba Inu" (click)="agregar(item)">
-                    </picture>
-                    <mat-card-actions>
-                        <div class="row">
-                            <div class="col-12">
-                                <span class="text-primary pointer"> {{ item.pro_nombre | slice: 0: 20 }} </span>
-                                <p><span>{{ ( item.pro_uni_venta || 0 ).toLocaleString('de-DE', { style: 'currency', currency: 'COP' }) }}
-                                </span></p>
+
+                <li class="col-md-3 col-sm-4 col-lg-2 col-xs-6 col-6 item-producto data-row thumbnail " id="producto-item-25"
+                    data-placement="top" data-toggle="tooltip"
+                    *ngFor="let item of listProductos">
+                    <div class="ui-ribbon-wrapper hide" *ngIf="item.descuento">
+                        <div class="ui-ribbon">
+                            {{ item.descuento }}% Off
+                        </div>
+                    </div>
+                    <figure data-toggle="modal" id="figura" data-target="#modalinfo" class="img-contenedor">
+                        <img class="img-responsive btn-block imgProductos pointer "
+                                        [src]="item.foto" (click)="agregar(item)">
+                    </figure>
+                    <div class="col-md-12 col-xs-12" style="height: 80px !important; max-height: 80px">
+                        <a [href]="item.foto" download="Tommy negro" id="descargar" target="_blank"
+                            class="fa fa-cloud-download">DESCARGAR</a>
+                        <small class="pricesmalloferta currency2 hide"></small>
+                        <!--id="precio_25" data-name="product_name"-->
+                        <span>
+                            <small style="display: inline-block;" class="pricesmall currency2"
+                            id="pricesmall_25">{{ ( item.pro_uni_ventaEdit || item.pro_uni_venta || 0 ).toLocaleString('de-DE', { style: 'currency', currency: 'COP' }) }}</small><br>
+                            <span>{{ item.pro_nombre | slice: 0: 20 }}</span>
+                        </span>
+
+                        <p style="display: none" data-name="product_desc"></p>
+                        <em id="emestimado_25" class="peso-estimado  hide" style="display: inline;"><span
+                                id="esti_25"></span></em>
+                    </div>
+                    <div class="" data-idp="25">
+
+                        <div class="caption">
+
+                            <div class="row">
+                                <div class="col-md-8 col-xs-8 col-lg-8">
+                                    <div class="plusminus2 horiz" data-after="UND">
+                                        <button type="button" class="btn-number" data-type="minus" (click)="menosCantidad(item)"
+                                            data-field="product_quantity_25"></button>
+                                        <input (change)="manualCantidad(item)" data-clasificacion=""
+                                             data-un="UND" type="number"
+                                            name="product_quantity2" id="product_quantity_25" min="1" [(ngModel)]="item.cantidadAdquirir"
+                                            class="input-number ">
+                                        <span class="hide" *ngIf="!item.cantidadAdquirir">1</span>
+                                        <button type="button" class="btn-number" data-type="plus" (click)="maxCantidad(item)"
+                                            data-field="product_quantity_25"></button>
+                                    </div>
+                                </div>
+
+                                <div class="col-md-4 col-xs-4 col-lg-4">
+                                    <button type="button" data-toggle="tooltip" data-placement="right"
+                                        class="sc-logout btn btn-success btn-sm pull-right buttonAncho" title=""
+                                        (click)="AgregarCart(item)"
+                                        data-original-title="Añadir al carro">Agregar</button>
+                                    <input name="product_price2" id="product_price2_25" value="89900" type="hidden">
+                                    <input class="sc-product-id" name="product_id2" value="25" type="hidden">
+                                </div>
                             </div>
-                            <div class="col-8">
-                                <input type="number" [(ngModel)]="item.cantidadAdquirir" class="form-control form-control-sm">
-                            </div>
-                            <div class="col-4">
-                                <i (click)="AgregarCart(item)" class="material-icons pointer text-primary">add_shopping_cart</i>
-                            </div>
-                            <div class="col-12">
-                                <span (click)="masInfo(item)" class="pointer"> <i class="material-icons" style="padding: 1px;">smartphone</i> <span>Informacion</span> </span>
-                                <p><span class="text-danger textInfo"> Pagas cuando recibes! </span></p>
+
+                            <div class="row">
+                                <div class="col-md-12 col-xs-12 col-lg-12">
+                                    <button type="button" data-toggle="tooltip" data-placement="bottom"
+                                        class="sc-logout btn btn-success btn-sm pull-right col-md-12" title=""
+                                        (click)="masInfo(item)"
+                                        data-original-title="PAGAS CUANDO RECIBES: Más Información por Whatsapp">
+                                        Más Información <img src="./assets/icons/whatsapp.png"
+                                            style="width: 15%; float: right">
+                                    </button>
+                                    <label style="color:red;cursor: pointer" data-toggle="tooltip"
+                                        data-placement="bottom" title=""
+                                        data-original-title="PAGAS CUANDO RECIBES: Más Información por Whatsapp">Pagas
+                                        cuando recibes!</label>
+                                        <div class="mx-auto" style="width: 200px;">
+                                            <a href="https://www.facebook.com/sharer/sharer.php?kid_directed_site=0&amp;u=https%3A%2F%2Flocomproaqui-e5fb7.firebaseapp.com%2Fproductos%2F{{ item.id }}&amp;display=popup&amp;ref=plugin&amp;src=share_button"
+                                                target="_blank">
+                                                <img src="./assets/icons/compartir.jpg">
+                                            </a>
+                                        </div>
+                                </div>
                             </div>
                         </div>
-                    </mat-card-actions>
-                </mat-card>
+                    </div>
+                </li>
+
+
             </div>
             <!-- sinner -->
             <div class="col-md-12 p-5">

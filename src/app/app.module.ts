@@ -25,6 +25,9 @@ import { NgImageSliderModule } from 'ng-image-slider';
 import { InfiniteScrollModule } from 'ngx-infinite-scroll';
 import { NgxSpinnerModule } from "ngx-spinner";
 import { ServiceWorkerModule } from '@angular/service-worker';
+import { ProductoViewComponent } from './components/producto-view/producto-view.component';
+
+import { NgxImageZoomModule } from 'ngx-image-zoom';
 
 @NgModule({
   entryComponents:[
@@ -40,7 +43,8 @@ import { ServiceWorkerModule } from '@angular/service-worker';
     LoginComponent,
     RegistroComponent,
     ViewProductosComponent,
-    MenuLateralComponent
+    MenuLateralComponent,
+    ProductoViewComponent
   ],
   imports: [
     BrowserModule,
@@ -54,6 +58,7 @@ import { ServiceWorkerModule } from '@angular/service-worker';
     FormsModule,
     NgImageSliderModule,
     ConfigModule,
+    NgxImageZoomModule,
     StoreModule.forRoot({ name: appReducer }),
     StoreDevtoolsModule.instrument({
       maxAge: 25, // Retains last 25 states
