@@ -23,7 +23,7 @@ export class ViewProductosComponent implements OnInit {
   ngOnInit() {
   
     if(Object.keys(this.datas.datos).length > 0) {
-      console.log(this.datas)
+      //console.log(this.datas)
       this.data = this.datas.datos;
       //this.data.cantidadAdquirir = 1;
     }
@@ -41,13 +41,18 @@ export class ViewProductosComponent implements OnInit {
   suma(){
     this.data.costo = this.data.cantidadAdquirir * this.data.pro_uni_venta;
   }
+  cambioImgs(){
+    this.data.foto = this.data.color;
+  }
 
   AgregarCart(){
+    this.data.color = this.data.listColor.find(row=>row.foto = this.data.foto) || {};
     this.suma();
     let data = {
       articulo: this.data.id,
       codigo: this.data.pro_codigo,
       titulo: this.data.pro_nombre,
+      color: this.data.color.talla,
       foto: this.data.foto,
       cantidad: this.data.cantidadAdquirir || 1,
       costo: this.data.pro_uni_venta,

@@ -2,7 +2,7 @@
 <mat-dialog-content class="mat-typography">
     <div class="row">
         <div class="col-md-6 col-sm-8 col-lg-6 col-xs-6">
-            <!-- <lib-ngx-image-zoom
+            <lib-ngx-image-zoom
                 [thumbImage]=data.foto
                 [fullImage]=data.foto
                 [magnification]="1"
@@ -10,11 +10,14 @@
                 [enableLens]="true"
                 [lensWidth]="200"
                 [lensHeight]="200"
-            ></lib-ngx-image-zoom> -->
+            ></lib-ngx-image-zoom>
         </div>
         <div class="col-md-6 col-sm-4 col-lg-6 col-xs-6 content row">
             <div class="col-12">
                 <h3 class="text-primary">${{ ( data.pro_uni_venta || 0).toLocaleString('de-DE', { style: 'currency', currency: 'COP' }) }}</h3>
+                <select class="form-control form-control-sm" [(ngModel)]="data.color" (change)="cambioImgs()" *ngIf="data.listColor?.length">
+                    <option [value]="item.foto" *ngFor="let item of data.listColor">{{ item.talla }}</option>
+                </select>
                 <h4>{{ data.pro_nombre }}</h4>
                 <p>{{ data.pro_descripcion | slice: 0: rango }}</p>
                 <p *ngIf="rango == 100" (click)="rango = 5000" class="text-primary">leer mas..</p>

@@ -14,9 +14,9 @@
             <input type="password" [(ngModel)]="data.usu_clave" class="form-control form-control-sm" placeholder="Contraseña">
         </div>
         <div class="form-group col-12">
-            <p class="text-primary" *ngIf="disableRestarure" (click)="disableRestarure = false;">¿Olvidaste tu constraseña?</p>
-            <p class="text-primary" *ngIf="!disableRestarure" (click)="disableRestarure = true;">¿Iniciar sección?</p>
-            <p class="text-primary" (click)="registre()">Registrate</p>
+            <p class="text-primary pointer" *ngIf="disableRestarure" (click)="disableRestarure = false;">¿Olvidaste tu constraseña?</p>
+            <p class="text-primary pointer" *ngIf="!disableRestarure" (click)="disableRestarure = true;">¿Iniciar sección?</p>
+            <p class="text-primary pointer" (click)="registre()">Registrate</p>
         </div>
     </div>
 </mat-dialog-content>

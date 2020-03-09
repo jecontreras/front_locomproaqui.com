@@ -3,17 +3,18 @@
   [class.example-is-mobile]="mobileQuery.matches"
 >
   <mat-toolbar color="primary" class="example-toolbar mat-elevation-z5 row toolbar">
-    <h5 class="textInf"><span class="textInf">locomproaqui.com</span></h5>
     <button mat-icon-button (click)="snav.toggle()" translate="no">
       <i class="material-icons">menu</i>
     </button>
+    <h5 class="textInf"><span class="textInf">locomproaqui.com</span></h5>
     <div class="row col">
       <div class="col"></div>
       <div>
-        <span class="textInf">{{ ( dataInfo?.porcobrado || 0 ).toLocaleString('de-DE', { style: 'currency', currency: 'COP' }) }}</span>
+        <span *ngIf="dataUser.id" class="textInf">{{ ( dataInfo?.porcobrado || 0 ).toLocaleString('de-DE', { style: 'currency', currency: 'COP' }) }}</span>
         <span (click)="sidenav.toggle();" class="p-1 pointer" [matBadge]="listCart.length" > <i class="material-icons">shopping_cart</i> </span>
 
-        <span [routerLink]="[ '/config/perfil' ]" class="p-1 pointer" > <i class="material-icons">person_pin</i> </span>
+        <span *ngIf="!dataUser.id" [routerLink]="[ '/login' ]" class="p-1 pointer" > <i class="material-icons">person_pin</i> </span>
+        <span *ngIf="dataUser.id" [routerLink]="[ '/config/perfil' ]" class="p-1 pointer" > <i class="material-icons">person_pin</i> </span>
       </div>
     </div>
   </mat-toolbar>

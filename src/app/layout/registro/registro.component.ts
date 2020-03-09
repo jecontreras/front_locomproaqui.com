@@ -1,13 +1,14 @@
 import { Component, OnInit } from '@angular/core';
+import { Indicativo } from 'src/app/JSON/indicativo';
 import { UsuariosService } from 'src/app/servicesComponents/usuarios.service';
 import { ToolsService } from 'src/app/services/tools.service';
 import { Router } from '@angular/router';
-import { MatDialog } from '@angular/material';
-import { Indicativo } from 'src/app/JSON/indicativo';
-import { STORAGES } from 'src/app/interfaces/sotarage';
 import { Store } from '@ngrx/store';
+import { STORAGES } from 'src/app/interfaces/sotarage';
 import { UserAction } from 'src/app/redux/app.actions';
-import { TerminosComponent } from 'src/app/layout/terminos/terminos.component';
+import { AuthService } from 'src/app/services/auth.service';
+import { MatDialog } from '@angular/material';
+import { TerminosComponent } from '../terminos/terminos.component';
 
 const indicativos = Indicativo;
 
@@ -16,8 +17,8 @@ const indicativos = Indicativo;
   templateUrl: './registro.component.html',
   styleUrls: ['./registro.component.scss']
 })
-export class RegistroComponent implements OnInit {
-
+export class RegistrosComponent implements OnInit {
+  
   data:any = {};
   listIndicativos = indicativos;
 
@@ -25,11 +26,13 @@ export class RegistroComponent implements OnInit {
     private _user: UsuariosService,
     private _tools: ToolsService,
     private _router: Router,
-    public dialog: MatDialog,
     private _store: Store<STORAGES>,
+    private _authSrvice: AuthService,
+    public dialog: MatDialog,
   ) { }
 
-  ngOnInit() {
+  ngOnInit(): void {
+    if (this._authSrvice.isLoggedIn()) this._router.navigate(['/config']);
   }
 
   submit(){
@@ -41,7 +44,6 @@ export class RegistroComponent implements OnInit {
         this._store.dispatch(accion);
         this._router.navigate(['/config']);
         location.reload();
-        this.dialog.closeAll();
       }
     },(error)=>{ console.error(error); this._tools.presentToast("Error de servidor")});
   }
@@ -58,4 +60,3 @@ export class RegistroComponent implements OnInit {
   }
 
 }
-

@@ -42,14 +42,19 @@ export class ProductoViewComponent implements OnInit {
   suma(){
     this.data.costo = this.data.cantidadAdquirir * this.data.pro_uni_venta;
   }
+  cambioImgs(){
+    this.data.foto = this.data.color;
+  }
 
   AgregarCart(){
+    this.data.color = this.data.listColor.find(row=>row.foto = this.data.foto) || {};
     this.suma();
     let data = {
       articulo: this.data.id,
       codigo: this.data.pro_codigo,
       titulo: this.data.pro_nombre,
       foto: this.data.foto,
+      color: this.data.color.talla,
       cantidad: this.data.cantidadAdquirir || 1,
       costo: this.data.pro_uni_venta,
       costoTotal: this.data.costo,

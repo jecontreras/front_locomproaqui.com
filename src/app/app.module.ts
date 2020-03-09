@@ -28,20 +28,27 @@ import { ServiceWorkerModule } from '@angular/service-worker';
 import { ProductoViewComponent } from './components/producto-view/producto-view.component';
 
 import { NgxImageZoomModule } from 'ngx-image-zoom';
+import { LoginsComponent } from './layout/login/login.component';
+import { RegistrosComponent } from './layout/registro/registro.component';
+import { TerminosComponent } from './layout/terminos/terminos.component';
 
 @NgModule({
   entryComponents:[
     LoginComponent,
     RegistroComponent,
-    ViewProductosComponent
+    ViewProductosComponent,
+    TerminosComponent
   ],
   declarations: [
     AppComponent,
     HeaderComponent,
     PedidosComponent,
+    LoginsComponent,
+    RegistrosComponent,
     ContenidoComponent,
     LoginComponent,
     RegistroComponent,
+    TerminosComponent,
     ViewProductosComponent,
     MenuLateralComponent,
     ProductoViewComponent

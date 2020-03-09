@@ -24,6 +24,7 @@ export class FormproductosComponent implements OnInit {
   list_files: any = [];
   listCategorias:any = [];
   listTipoTallas:any = [];
+  listColor:any = [];
 
   constructor(
     public dialog: MatDialog,
@@ -41,7 +42,7 @@ export class FormproductosComponent implements OnInit {
       this.data = _.clone(this.datas.datos);
       this.id = this.data.id;
       this.titulo = "Actualizar";
-      if(this.data.cat_activo === 0) this.data.cat_activo = true;
+      this.listColor = this.data.listColor || [];
     }else{this.id = ""; this.data.pro_codigo = this.codigo();}
     this.getCategorias();
     this.getTipoTallas();
@@ -71,18 +72,32 @@ export class FormproductosComponent implements OnInit {
     return (Date.now().toString(20).substr(2, 3) + Math.random().toString(20).substr(2, 3)).toUpperCase();
   }
 
-  subirFile(){
+  subirFile(item:any){
     let form:any = new FormData();
     form.append('file', this.files[0]);
     this._tools.ProcessTime({});
     //this._archivos.create( this.files[0] );
     this._archivos.create( form ).subscribe((res:any)=>{
       console.log(res);
-      this.data.foto = res.files;//URL+`/${res}`;
+      if( item == false ){
+        this.data.foto = res.files;//URL+`/${res}`;
+        if(this.id)this.submit();
+      }
+      else item.foto = res.files;
       this._tools.presentToast("Exitoso");
-      if(this.id)this.submit();
     },(error)=>{console.error(error); this._tools.presentToast("Error de servidor")});
 
+  }
+
+  guardarColor(item:any){
+    item.check = true;
+    this.data.listColor = this.listColor;
+    if(this.id) this.submit();
+  }
+  EliminarColor(idx:any){
+    this.listColor.splice(idx, 1);
+    this.data.listColor = this.listColor;
+    if(this.id) this.submit();
   }
 
   submit(){
@@ -94,6 +109,12 @@ export class FormproductosComponent implements OnInit {
     else { this.guardar(); }
   }
   
+  TallaPush(){
+    this.listColor.push({
+      codigo: this.codigo()
+    });
+  }
+
   guardar(){
     this._productos.create(this.data).subscribe((res:any)=>{
       //console.log(res);

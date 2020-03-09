@@ -92,7 +92,7 @@ export class HeaderComponent implements OnInit {
     let texto:string;
     this.data.total = 0;
     for(let row of this.listCart){
-      texto+= ` productos: ${ row.titulo } codigo: ${ row.codigo } foto: ${ row.foto } cantidad: ${ row.cantidad }`;
+      texto+= ` productos: ${ row.titulo } codigo: ${ row.codigo } foto: ${ row.foto } cantidad: ${ row.cantidad } color ${ row.color || 'default'}`;
       this.data.total+= row.costoTotal || 0;
     }
     if(this.dataUser.id){
