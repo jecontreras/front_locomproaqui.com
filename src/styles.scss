@@ -46,7 +46,9 @@ html, body {
 .ngxImageZoomThumbnail {
   max-height: 425px !important;
   max-width: 407px !important;
+  height: 219px !important;
 }
+
 /*.ng-star-inserted{
   color: #3f51b5 !important;
 }*/
@@ -77,6 +79,11 @@ html, body {
   .textInf {
     font-size: 11px;
   }
+  .ngxImageZoomThumbnail{
+    max-height: 425px !important;
+    max-width: 407px !important;
+    height: 351px !important;
+  }
 }
 @media only screen and (max-width: 600px) {
   .imgFoto{
@@ -93,6 +100,11 @@ html, body {
   }
   .textInf {
     font-size: 13px;
+  }
+  .ngxImageZoomThumbnail{
+    max-height: 425px !important;
+    max-width: 407px !important;
+    height: 351px !important;
   }
 }
 /* Small devices (portrait tablets and large phones, 600px and up) */
@@ -112,10 +124,39 @@ html, body {
   .textInf {
     font-size: 12px;
   }
+  .ngxImageZoomThumbnail{
+    max-height: 425px !important;
+    max-width: 407px !important;
+    height: 287px !important;
+  }
+}
+
+/* Small devices (portrait tablets and large phones, 600px and up) */
+@media only screen and (min-width: 768px) {
+  .imgFoto{
+    height: 193px;
+  }
+  .views1 {
+    display: inline;
+  }
+  .views2 {
+    display: none;
+  }
+  .ancho {
+    width: 65%;
+  }
+  .textInf {
+    font-size: 12px;
+  }
+  .ngxImageZoomThumbnail{
+    max-height: 425px !important;
+    max-width: 407px !important;
+    height: 285px !important;
+  }
 }
 
 /* Medium devices (landscape tablets, 768px and up) */
-@media only screen and (min-width: 768px) {
+@media only screen and (min-width: 800px) {
   .imgFoto{
     height: 238px;
   }
@@ -130,6 +171,11 @@ html, body {
   }
   .textInf {
     font-size: 13px;
+  }
+  .ngxImageZoomThumbnail{
+    max-height: 425px !important;
+    max-width: 407px !important;
+    height: 289px !important;
   }
 }
 
@@ -150,6 +196,11 @@ html, body {
   .ancho {
     width: 60%;
   }
+  .ngxImageZoomThumbnail{
+    max-height: 425px !important;
+    max-width: 407px !important;
+    height: 367px !important;
+  }
 }
 
 /* Extra large devices (large laptops and desktops, 1200px and up) */
@@ -168,5 +219,10 @@ html, body {
   }
   .textInf {
     font-size: 15px;
+  }
+  .ngxImageZoomThumbnail{
+    max-height: 425px !important;
+    max-width: 407px !important;
+    height: 425px !important;
   }
 }
