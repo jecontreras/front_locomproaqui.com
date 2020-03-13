@@ -33,13 +33,14 @@ export class RegistroComponent implements OnInit {
   }
 
   submit(){
+    this.data.cabeza = 1;
     this._user.create(this.data).subscribe((res:any)=>{
       console.log("user", res);
       if(res.success){
         localStorage.setItem('user', JSON.stringify(res.data));
         let accion = new UserAction( res.data, 'post');
         this._store.dispatch(accion);
-        this._router.navigate(['/config']);
+        this._router.navigate(['/pedidos']);
         location.reload();
         this.dialog.closeAll();
       }
