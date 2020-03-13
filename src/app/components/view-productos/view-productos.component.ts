@@ -3,6 +3,7 @@ import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
 import { Store } from '@ngrx/store';
 import { CartAction } from 'src/app/redux/app.actions';
 import { CART } from 'src/app/interfaces/sotarage';
+import * as _ from 'lodash';
 
 @Component({
   selector: 'app-view-productos',
@@ -24,7 +25,9 @@ export class ViewProductosComponent implements OnInit {
   
     if(Object.keys(this.datas.datos).length > 0) {
       //console.log(this.datas)
-      this.data = this.datas.datos;
+      this.data = _.clone(this.datas.datos);
+      this.data.cantidadAdquirir = 1;
+      console.log(this.data)
       //this.data.cantidadAdquirir = 1;
     }
 

@@ -25,6 +25,7 @@ import { FormcobrosComponent } from './form/formcobros/formcobros.component';
 
 import { InfiniteScrollModule } from 'ngx-infinite-scroll';
 import { NgxSpinnerModule } from "ngx-spinner";
+import { ReferidosComponent } from './components/referidos/referidos.component';
 
 @NgModule({
   entryComponents: [
@@ -51,7 +52,8 @@ import { NgxSpinnerModule } from "ngx-spinner";
     CobrosComponent,
     PerfilComponent,
     FormbancosComponent,
-    FormcobrosComponent
+    FormcobrosComponent,
+    ReferidosComponent
   ],
   imports: [
     CommonModule,

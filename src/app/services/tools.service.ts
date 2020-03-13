@@ -47,7 +47,7 @@ export class ToolsService {
       position: text.position || 'top-end',
       icon: text.icon || 'success',
       title: text.title || 'Your work has been saved',
-      showConfirmButton: false,
+      showConfirmButton: text.show || false,
       timer: 1500
     });
   }

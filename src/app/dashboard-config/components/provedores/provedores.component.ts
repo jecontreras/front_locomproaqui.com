@@ -135,6 +135,7 @@ export class ProvedoresComponent implements OnInit {
   }
   buscar() {
     this.loader = true;
+    this.dataTable.dataRows = [];
     //console.log(this.datoBusqueda);
     this.datoBusqueda = this.datoBusqueda.trim();
     if (this.datoBusqueda === '') {

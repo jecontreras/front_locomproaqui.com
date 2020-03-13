@@ -33,6 +33,7 @@ export class FormventasComponent implements OnInit {
   superSub:boolean = false;
   dataUser:any = {};
   disabledButton:boolean = false;
+  disabled:boolean = false;
 
   constructor(
     public dialog: MatDialog,
@@ -63,7 +64,7 @@ export class FormventasComponent implements OnInit {
       this.titulo = "Actualizar";
       if(this.data.cat_activo === 0) this.data.cat_activo = true;
       if(this.data.pro_clave_int) this.data.pro_clave_int = this.data.pro_clave_int.id;
-    }else{ this.id = ""; this.data.usu_clave_int = this.dataUser.id }
+    }else{ this.id = ""; this.data.usu_clave_int = this.dataUser.id; this.data.ven_usu_creacion = this.dataUser.usu_email; }
     this.getArticulos();
     console.log(this.data)
   }
@@ -85,18 +86,20 @@ export class FormventasComponent implements OnInit {
   }
   
   subirFile(opt:boolean){
+    this.disabled = true;
     let form:any = new FormData();
     form.append('file', this.files[0]);
     this._tools.ProcessTime({});
     this._archivos.create(form).subscribe((res:any)=>{
       console.log(res);
       this.data.ven_imagen_producto = res.files;//URL+`/${res}`;
-      this._tools.presentToast("Exitoso");
+      //this._tools.presentToast("Exitoso");
+      this.disabled = false;
       if(this.id)this.submit();
       else{
         if(opt) if(this.data.ven_tipo == 'whatsapp' && this.data.ven_imagen_producto) this.submit();
       }
-    },(error)=>{console.error(error); this._tools.presentToast("Error de servidor")});
+    },(error)=>{console.error(error); this._tools.presentToast("Error de servidor al subir una imagen")});
 
   }
 
@@ -114,6 +117,7 @@ export class FormventasComponent implements OnInit {
   }
 
   submit(){
+    this.disabled = true;
     this.suma();
     this.disabledButton = true;
     if(this.id) {
@@ -125,16 +129,28 @@ export class FormventasComponent implements OnInit {
   }
 
   guardar(){
+
     this.data.ven_estado = 0;
     this.data.create = moment().format('DD-MM-YYYY');
+    this._ventas.get({ where:{ cob_num_cedula_cliente: this.data.cob_num_cedula_cliente, ven_estado:0 }}).subscribe((res:any)=>{
+      res = res.data[0];
+      if(res) this._tools.basicIcons({header: "Este cliente tiene una venta activa!", subheader: "Esta venta sera vereficada por posible confuciones"});
+      this.guardarVenta();
+    });
+    
+  }
+
+  guardarVenta(){
     this._ventas.create(this.data).subscribe((res:any)=>{
       //console.log(res);
       this.OrderWhatsapp(res);
       this.disabledButton = false;
-      this._tools.presentToast("Exitoso");
-    }, (error)=>{ this._tools.presentToast("Error"); this.disabledButton = false; });
+      this.disabled = false;
+      this._tools.presentToast("Exitoso Estare en Modo Pendiente");
+    }, (error)=>{ this._tools.presentToast("Error al crear la venta"); this.disabledButton = false; });
     this.dialog.closeAll();
   }
+
   OrderWhatsapp(res){
     let mensaje:string = `https://wa.me/573148487506?text=info del cliente ${ res.ven_nombre_cliente } telefono ${ res.ven_telefono_cliente || '' } direccion ${ res.ven_direccion_cliente } fecha del pedido ${ res.ven_fecha_venta } Hola Servicio al cliente, 
     como esta, cordial saludo. Sería tan amable despachar este pedido a continuación datos de la venta:� producto: `;
@@ -145,11 +161,13 @@ export class FormventasComponent implements OnInit {
     }
     window.open(mensaje);
   }
+
   updates(){
     this.data = _.omit(this.data, ['usu_clave_int']);
     this._ventas.update(this.data).subscribe((res:any)=>{
       this._tools.presentToast("Actualizado");
       this.disabledButton = false;
+      this.disabled = false;
     },(error)=>{console.error(error); this._tools.presentToast("Error de servidor"); this.disabledButton = false;});
   }
 

@@ -78,8 +78,10 @@
           </div>
           <ul class="nav nav-pills nav-stacked row margin">
             <li class="active col-12 paddingLeft">
+              <!-- <span *ngIf="dataUser.id"> USUARIO {{ dataInfo.usu_nombre }} </span><br> -->
               <p> MENU PRINCIPAL </p>
-              <p *ngIf="dataUser.id"> NIVEL {{ dataInfo['nivel']?.categorias }} </p>
+              <span *ngIf="dataUser.id"> NIVEL {{ dataInfo['nivel']?.categorias }} </span>
+              <!-- <button *ngIf="dataUser.id" type="button" class="btn btn-success btn-block" (click)="copiarLinkRegistro()">Invitar Persona</button> -->
             </li>
           </ul>
           <ul class="nav nav-pills nav-stacked row margin">

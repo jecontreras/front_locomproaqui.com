@@ -2,7 +2,7 @@
 <mat-dialog-content class="mat-typography">
     <div class="form row">
         <div class="form-group col-md-6 col-sm-4 col-lg-4 col-xs-6">
-            <label for="exampleFormControlSelect1">Tipo de Documento</label>
+            <label for="exampleFormControlSelect1">Tipo de Venta</label>
             <select class="form-control form-control-sm" [(ngModel)]="data.ven_tipo">
                 <option value="carrito">Carrito</option>
                 <option value="whatsapp">Whatsapp</option>
@@ -36,6 +36,10 @@
                     <ngx-dropzone-label>{{ f.name }} ({{ f.type }})</ngx-dropzone-label>
                 </ngx-dropzone-image-preview>
             </ngx-dropzone>
+        </div>
+        <div class="form-group col-md-6 col-sm-4 col-lg-4 col-xs-6">
+            <label for="exampleFormControlInput1">Número Cédula</label>
+            <input type="text" [(ngModel)]="data.cob_num_cedula_cliente" class="form-control form-control-sm">
         </div>
         <div class="form-group col-md-6 col-sm-4 col-lg-4 col-xs-6">
             <label for="exampleFormControlInput1">Nombre Cliente</label>
@@ -95,14 +99,14 @@
 </mat-dialog-content>
 <mat-dialog-actions align="end">
   <button mat-button mat-dialog-close>Cerrar</button>
-  <button class="btn btn-primary btn-just-icon btn-round" (click)="subirFile(true)" *ngIf="( data.ven_tipo == 'whatsapp' && !data.ven_imagen_producto) && files.length > 0">
-        Subir Imagen
+  <button [disabled]="disabled" class="btn btn-primary btn-just-icon btn-round" (click)="subirFile(true)" *ngIf="( data.ven_tipo == 'whatsapp' && !data.ven_imagen_producto) && files.length > 0">
+        Guardar Venta
   </button>
   <span *ngIf="( data.ven_tipo == 'whatsapp' && !data.ven_imagen_producto) && files.length == 0">
     Primero debes subir una imagen 
   </span>
   <button mat-button cdkFocusInitial (click)="submit()" *ngIf="( data.ven_tipo == 'whatsapp' && data.ven_imagen_producto ) || data.ven_tipo == 'carrito'" [disabled]="disabledButton">
-      <span *ngIf="!id">Guardar Cambios</span>
+      <span *ngIf="!id">Guardar Ventas</span>
       <span *ngIf="id">Actulizar Cambios</span>
   </button>
 </mat-dialog-actions>

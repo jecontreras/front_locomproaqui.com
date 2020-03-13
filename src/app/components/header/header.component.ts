@@ -10,6 +10,10 @@ import { CART } from 'src/app/interfaces/sotarage';
 import { CartAction, UserAction } from 'src/app/redux/app.actions';
 import { UsuariosService } from 'src/app/servicesComponents/usuarios.service';
 import * as _ from 'lodash';
+import { environment } from 'src/environments/environment';
+import { ToolsService } from 'src/app/services/tools.service';
+
+const URLFRON = environment.urlFront;
 
 @Component({
   selector: 'app-header',
@@ -37,6 +41,7 @@ export class HeaderComponent implements OnInit {
   opened:boolean;
   dataInfo:any = {};
   isHandset$:any;
+  urlRegistro:string = `${ URLFRON }/registro/`;
 
   constructor(
     public changeDetectorRef: ChangeDetectorRef,
@@ -44,7 +49,8 @@ export class HeaderComponent implements OnInit {
     public dialog: MatDialog,
     private _model: ServiciosService,
     private _store: Store<CART>,
-    private _user: UsuariosService
+    private _user: UsuariosService,
+    private _tools: ToolsService
 
   ) { 
 
@@ -72,6 +78,7 @@ export class HeaderComponent implements OnInit {
     this.onResize(null);
     if(Object.keys(this.dataUser).length > 0 ) {
       this.rolUser = this.dataUser.usu_perfil.prf_descripcion;
+      this.urlRegistro+=this.dataUser.id;
       this.getInfoUser();
     }
     else this.rolUser = 'visitante';
@@ -179,6 +186,13 @@ export class HeaderComponent implements OnInit {
         url: '/config/ventas',
         submenus:[]
       },
+      {
+        icons: 'people_alt',
+        nombre: 'Mis Referidos',
+        disable: this.rolUser !== 'visitante',
+        url: '/config/referidos',
+        submenus:[]
+      },
       /*{
         icons: 'security',
         nombre: 'Seguridad',
@@ -248,6 +262,21 @@ export class HeaderComponent implements OnInit {
 
     ];
     this.menus2 = _.filter(this.menus2, row=>row.disable);
+  }
+
+  copiarLinkRegistro(){
+    const selBox = document.createElement('textarea');
+    selBox.style.position = 'fixed';
+    selBox.style.left = '0';
+    selBox.style.top = '0';
+    selBox.style.opacity = '0';
+    selBox.value = this.urlRegistro;
+    document.body.appendChild(selBox);
+    selBox.focus();
+    selBox.select();
+    document.execCommand('copy');
+    document.body.removeChild(selBox);
+    this._tools.openSnack('Copiado:' + ' ' + this.urlRegistro, 'completado', false);
   }
 
   login(){

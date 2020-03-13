@@ -133,6 +133,7 @@ export class CategoriasComponent implements OnInit {
   }
   buscar() {
     this.loader = true;
+    this.dataTable.dataRows = [];
     //console.log(this.datoBusqueda);
     this.datoBusqueda = this.datoBusqueda.trim();
     this.query.where = {};

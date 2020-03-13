@@ -123,17 +123,31 @@ export class VentasComponent implements OnInit {
   }
 
   buscar() {
-    this.loader = true;
+    this.loader = false;
+    this.notscrolly = true 
+    this.notEmptyPost = true;
+    this.dataTable.dataRows = [];
     //console.log(this.datoBusqueda);
     this.datoBusqueda = this.datoBusqueda.trim();
     if (this.datoBusqueda === '') {
-      this.query.where = {ven_sw_eliminado: 0};
+      this.query = {
+        where:{
+          ven_sw_eliminado: 0,
+          ven_estado: { '!=': 4 }
+        },
+        page: 0
+      }
       if(this.dataUser.usu_perfil.prf_descripcion != 'administrador') this.query.where.usu_clave_int = this.dataUser.id;
       this.cargarTodos();
     } else {
       this.query.where.or = [
         {
           ven_nombre_cliente: {
+            contains: this.datoBusqueda|| ''
+          }
+        },
+        {
+          ven_usu_creacion: {
             contains: this.datoBusqueda|| ''
           }
         },

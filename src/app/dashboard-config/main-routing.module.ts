@@ -10,6 +10,7 @@ import { VentasComponent } from './components/ventas/ventas.component';
 import { CobrosComponent } from './components/cobros/cobros.component';
 import { BancosComponent } from './components/bancos/bancos.component';
 import { PerfilComponent } from './components/perfil/perfil.component';
+import { ReferidosComponent } from './components/referidos/referidos.component';
 
 const dashboardRoutes: Routes = [
  {
@@ -26,6 +27,7 @@ const dashboardRoutes: Routes = [
      {path: 'cobros', component: CobrosComponent},
      {path: 'bancos', component: BancosComponent},
      {path: 'perfil', component: PerfilComponent},
+     {path: 'referidos', component: ReferidosComponent},
      {path: '**', redirectTo: 'categorias', pathMatch: 'full'}
    ]
   }

@@ -77,6 +77,7 @@ export class CobrosComponent implements OnInit {
     if(this.dataUser.usu_perfil.prf_descripcion == 'administrador') return this.btnDisableRetiro = true;
     this._cobros.validador({}).subscribe((res:any)=>{
       this.btnDisableRetiro = res.data;
+      if(!res.data) this._tools.basicIcons({header: "En estos momento no esta disponible retirar dinero!", subheader: "los días hábiles habiles de retiros son el día 15 - 18 de cada mes y 30 - 3 del siguiente mes en fin cada 15 días se habilita"});
     },(error)=>console.error(error));
   }
 
@@ -119,6 +120,7 @@ export class CobrosComponent implements OnInit {
    }
 
   cargarTodos() {
+    this.spinner.show();
     this._cobros.get(this.query)
     .subscribe(
       (response: any) => {
@@ -188,7 +190,10 @@ export class CobrosComponent implements OnInit {
   }
 
   buscar() {
-    this.loader = true;
+    this.loader = false;
+    this.notscrolly = true 
+    this.notEmptyPost = true;
+    this.dataTable.dataRows = [];
     //console.log(this.datoBusqueda);
     this.datoBusqueda = this.datoBusqueda.trim();
     if (this.datoBusqueda === '') {

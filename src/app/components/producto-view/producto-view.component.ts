@@ -32,7 +32,7 @@ export class ProductoViewComponent implements OnInit {
   }
 
   getProducto(){
-    this._producto.get({ where: { id: this.id}}).subscribe((res:any)=>{ this.data = res.data[0] || {}; }, error=> { console.error(error); this._tools.presentToast('Error de servidor'); });
+    this._producto.get({ where: { id: this.id}}).subscribe((res:any)=>{ this.data = res.data[0] || {}; this.data.cantidadAdquirir = 1; }, error=> { console.error(error); this._tools.presentToast('Error de servidor'); });
   }
 
   descargar(){
