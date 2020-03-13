@@ -75,16 +75,9 @@ export class CobrosComponent implements OnInit {
 
   disabledRetiro(){
     if(this.dataUser.usu_perfil.prf_descripcion == 'administrador') return this.btnDisableRetiro = true;
-    this._cobros.get({ where:{ usu_clave_int: this.dataUser.id }, sort: 'createdAt desc' }).subscribe((res:any)=>{ 
-      res = res.data[0];
-      if(res) {
-        let
-          fecha1 = new Date(res.createdAt), fecha2 = new Date(), diasDif = fecha2.getTime() - fecha1.getTime(), dias = Math.round(diasDif / (1000 * 60 * 60 * 24))
-        ;
-        if(dias < 15) this.btnDisableRetiro = false;
-      }
-      else this.btnDisableRetiro = true;
-     },(error)=>{ console.error(error); this._tools.presentToast("Error de Servidor") });
+    this._cobros.validador({}).subscribe((res:any)=>{
+      this.btnDisableRetiro = res.data;
+    },(error)=>console.error(error));
   }
 
   getInfoUser(){

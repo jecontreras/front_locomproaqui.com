@@ -16,6 +16,9 @@ export class CobrosService {
   create(query:any){
     return this._model.querys('tblcobrar/create',query, 'post');
   }
+  validador(query:any){
+    return this._model.querys('tblcobrar/fechasDisponibles',query, 'post');
+  }
   update(query:any){
     return this._model.querys('tblcobrar/'+query.id, query, 'put');
   }
