@@ -36,7 +36,7 @@ export class LoginComponent implements OnInit {
         localStorage.setItem('user', JSON.stringify(res.data));
         let accion = new UserAction( res.data, 'post');
         this._store.dispatch(accion);
-        this._router.navigate(['/config']);
+        this._router.navigate(['/pedidos']);
         this.dialog.closeAll();
         location.reload();
       }else{

@@ -35,9 +35,11 @@ export class RegistrosComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    this.cabeza = (this.activate.snapshot.paramMap.get('id'));
-    this.getCabeza();
-    if (this._authSrvice.isLoggedIn()) this._router.navigate(['/config']);
+    if(this.activate.snapshot.paramMap.get('id')){
+      this.cabeza = ( this.activate.snapshot.paramMap.get('id') );
+      this.getCabeza();
+    }else this.data.cabeza = 1;
+    if (this._authSrvice.isLoggedIn()) this._router.navigate(['/pedidos']);
   }
 
   getCabeza(){
@@ -51,7 +53,7 @@ export class RegistrosComponent implements OnInit {
         localStorage.setItem('user', JSON.stringify(res.data));
         let accion = new UserAction( res.data, 'post');
         this._store.dispatch(accion);
-        this._router.navigate(['/config']);
+        this._router.navigate(['/pedidos']);
         location.reload();
       }
     },(error)=>{ console.error(error); this._tools.presentToast("Error de servidor")});
