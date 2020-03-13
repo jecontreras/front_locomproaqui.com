@@ -6,7 +6,7 @@
             <br>
             <br>
             <div class="card-header card-header-primary card-header-icon row">
-              <div class="">
+              <div class="col-12">
                 <div class="card-icon">
                   <i class="material-icons">assignment</i>
                 </div>
@@ -29,6 +29,10 @@
                   <span>Por Cobrar</span>
                   <p>{{ ( dataInfo.porcobrado || 0 ).toLocaleString('de-DE', { style: 'currency', currency: 'COP' }) }}</p>
                 </div>
+                <!-- <div class="col-md-3 col-sm-4 col-lg-3 col-xs-3">
+                  <span>Ganancias Por Mis Referidos</span>
+                  <p>{{ ( dataInfo.gananciasRefereridos || 0 ).toLocaleString('de-DE', { style: 'currency', currency: 'COP' }) }}</p>
+                </div> -->
               </div>
             </div>
             <div class="card-body">

@@ -30,7 +30,8 @@ export class VentasComponent implements OnInit {
   loader = true;
   query:any = {
     where:{
-      ven_sw_eliminado: 0
+      ven_sw_eliminado: 0,
+      ven_estado: { '!=': 4 }
     },
     page: 0
   };

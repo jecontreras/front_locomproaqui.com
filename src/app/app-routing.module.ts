@@ -13,6 +13,7 @@ const routes: Routes = [
   { path: 'productos/:id', component: ProductoViewComponent },
   { path: 'login', component: LoginsComponent },
   { path: 'registro', component: RegistrosComponent },
+  { path: 'registro/:id', component: RegistrosComponent },
   //{path: '**', redirectTo: 'pedidos', pathMatch: 'full'},
   {
     path: 'config', 

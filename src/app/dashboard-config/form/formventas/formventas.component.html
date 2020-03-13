@@ -11,10 +11,10 @@
         <div class="form-group col-md-6 col-sm-4 col-lg-4 col-xs-6" *ngIf="data.id && superSub">
             <label for="exampleFormControlSelect1">Estado de la Venta</label>
             <select class="form-control form-control-sm" [(ngModel)]="data.ven_estado">
-                <option type="number" value="0">Activa</option>
-                <option type="number" value="1">Apraboda</option>
+                <option type="number" value="0">Pendiente</option>
+                <option type="number" value="1">Venta exitosa</option>
                 <option type="number" value="2">Rechazada</option>
-                <option type="number" value="3">Eliminado</option>
+                <option type="number" value="3">Despachado</option>
             </select>
         </div>
         <div class="form-group col-md-12" *ngIf="data.ven_imagen_producto && id">
@@ -77,15 +77,15 @@
         </div>
         <div class="form-group col-md-6 col-sm-4 col-lg-4 col-xs-6" *ngIf="data.ven_tipo != 'whatsapp'">
             <label for="exampleFormControlInput1">Vr.Unidad: </label>
-            <span> {{ data.ven_precio || 0 }}</span>
+            <span> {{ ( data.ven_precio || 0 ).toLocaleString('de-DE', { style: 'currency', currency: 'COP' }) }}</span>
         </div>
         <div class="form-group col-md-6 col-sm-4 col-lg-4 col-xs-6">
             <label for="exampleFormControlInput1">Precio Total: </label>
-            <span> {{ data.ven_total || 0 }}</span>
+            <span> {{ ( data.ven_total || 0 ).toLocaleString('de-DE', { style: 'currency', currency: 'COP' }) }}</span>
         </div>
         <div class="form-group col-md-6 col-sm-4 col-lg-4 col-xs-6">
             <label for="exampleFormControlInput1">Recompensa 7%: </label>
-            <span> {{ data.ven_ganancias || 0 }}</span>
+            <span> {{ ( data.ven_ganancias || 0 ).toLocaleString('de-DE', { style: 'currency', currency: 'COP' }) }}</span>
         </div>
         <div class="form-group col-12">
             <label for="exampleFormControlInput1">Observación</label>

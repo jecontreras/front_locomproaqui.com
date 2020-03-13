@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Indicativo } from 'src/app/JSON/indicativo';
 import { UsuariosService } from 'src/app/servicesComponents/usuarios.service';
 import { ToolsService } from 'src/app/services/tools.service';
-import { Router } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { STORAGES } from 'src/app/interfaces/sotarage';
 import { UserAction } from 'src/app/redux/app.actions';
@@ -21,6 +21,8 @@ export class RegistrosComponent implements OnInit {
   
   data:any = {};
   listIndicativos = indicativos;
+  dataUser:any = {};
+  cabeza:any;
 
   constructor(
     private _user: UsuariosService,
@@ -29,10 +31,17 @@ export class RegistrosComponent implements OnInit {
     private _store: Store<STORAGES>,
     private _authSrvice: AuthService,
     public dialog: MatDialog,
+    private activate: ActivatedRoute,
   ) { }
 
   ngOnInit(): void {
+    this.cabeza = (this.activate.snapshot.paramMap.get('id'));
+    this.getCabeza();
     if (this._authSrvice.isLoggedIn()) this._router.navigate(['/config']);
+  }
+
+  getCabeza(){
+    this._user.get({where:{ id: this.cabeza }}).subscribe((res:any)=>{ console.log(res); this.dataUser = res.data[0]; this.data.cabeza = this.dataUser.id; }, (error)=>console.error(error) );
   }
 
   submit(){

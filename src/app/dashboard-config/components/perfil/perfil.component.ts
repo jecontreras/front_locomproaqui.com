@@ -24,6 +24,7 @@ export class PerfilComponent implements OnInit {
   files: File[] = [];
   list_files: any = [];
   urlTienda:string = `${ URLFRON }/pedidos/`;
+  urlRegistro:string = `${ URLFRON }/registro/`;
   restaure:any = {};
   disableRestaure:boolean = false;
 
@@ -45,6 +46,7 @@ export class PerfilComponent implements OnInit {
     //this.data = this._model.dataUser || {};
     if(this.data.usu_fec_nacimiento) this.data.usu_fec_nacimiento = moment(this.data.usu_fec_nacimiento).format('DD/MM/YYYY');
     this.urlTienda+=this.data.id;
+    this.urlRegistro+=this.data.id;
   }
 
   onSelect(event:any) {
@@ -103,6 +105,21 @@ export class PerfilComponent implements OnInit {
     document.execCommand('copy');
     document.body.removeChild(selBox);
     this._tools.openSnack('Copiado:' + ' ' + this.urlTienda, 'completado', false);
+  }
+
+  copiarLinkRegistro(){
+    const selBox = document.createElement('textarea');
+    selBox.style.position = 'fixed';
+    selBox.style.left = '0';
+    selBox.style.top = '0';
+    selBox.style.opacity = '0';
+    selBox.value = this.urlRegistro;
+    document.body.appendChild(selBox);
+    selBox.focus();
+    selBox.select();
+    document.execCommand('copy');
+    document.body.removeChild(selBox);
+    this._tools.openSnack('Copiado:' + ' ' + this.urlRegistro, 'completado', false);
   }
 
 }

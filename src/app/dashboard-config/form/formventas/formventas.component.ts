@@ -3,6 +3,7 @@ import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
 import { UsuariosService } from 'src/app/servicesComponents/usuarios.service';
 import { ToolsService } from 'src/app/services/tools.service';
 import * as _ from 'lodash';
+import * as moment from 'moment';
 import { ProductoService } from 'src/app/servicesComponents/producto.service';
 import { VentasService } from 'src/app/servicesComponents/ventas.service';
 import { ServiciosService } from 'src/app/services/servicios.service';
@@ -125,6 +126,7 @@ export class FormventasComponent implements OnInit {
 
   guardar(){
     this.data.ven_estado = 0;
+    this.data.create = moment().format('DD-MM-YYYY');
     this._ventas.create(this.data).subscribe((res:any)=>{
       //console.log(res);
       this.OrderWhatsapp(res);

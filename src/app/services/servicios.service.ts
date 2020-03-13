@@ -23,7 +23,6 @@ export class ServiciosService {
     //this.createsocket("emitir", {mensaje:"inicial"}); 
     this.privateDataUser();
   }
-
   privateDataUser(){
     this.dataUser = JSON.parse(localStorage.getItem('user'));
   }

@@ -70,12 +70,15 @@
                         <td>{{ row['ven_fecha_venta'] }}</td>
                         <td>{{ row['pro_clave_int']?.pro_nombre }}</td>
                         <td>{{ row['ven_cantidad'] }}</td>
-                        <td>{{ row['ven_precio'] }}</td>
+                        <td>{{ ( row['ven_precio'] || 0 ).toLocaleString('de-DE', { style: 'currency', currency: 'COP' }) }}</td>
                         <td> 
                           <img *ngIf="row.ven_tipo === 'whatsapp'" [src]="row['ven_imagen_producto']" class="foto">
                           <img *ngIf="row.ven_tipo === 'carrito'" [src]="row['pro_clave_int']?.foto" class="foto">
                         </td>
-                        <td>{{ row['ven_estado'] == 0 ? 'Activo' : 'Inactivo' }}</td>
+                        <td *ngIf="row['ven_estado'] == 0">Pendiente</td>
+                        <td *ngIf="row['ven_estado'] == 1">Venta Exitosa</td>
+                        <td *ngIf="row['ven_estado'] == 2">Rechazada</td>
+                        <td *ngIf="row['ven_estado'] == 3">Despachado</td>
                         <td>{{ row['ven_motivo_rechazo'] }}</td>
                         <td>{{ row['ven_tallas'] }}</td>
                       </tr>
