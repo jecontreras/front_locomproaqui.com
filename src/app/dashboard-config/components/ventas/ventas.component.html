@@ -33,6 +33,10 @@
                   class="btn btn-primary btn-just-icon btn-round">
                   <i class="material-icons">search</i>
                 </button>
+                <button *ngIf="activando" (click)="darPuntos()" class="btn btn-primary btn-just-icon btn-round" mat-raised-button
+                  mat-min-fab>
+                  <i class="material-icons">redeem</i>
+                </button>
                 <button (click)="crear(false)" class="btn btn-primary btn-just-icon btn-round" mat-raised-button
                   mat-min-fab>
                   <i class="material-icons">add_circle_outline</i>

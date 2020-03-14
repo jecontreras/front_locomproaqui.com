@@ -7,6 +7,7 @@ import { NgxSpinnerService } from 'ngx-spinner';
 import * as _ from 'lodash';
 import { STORAGES } from 'src/app/interfaces/sotarage';
 import { Store } from '@ngrx/store';
+import { FormpuntosComponent } from '../../form/formpuntos/formpuntos.component';
 
 declare interface DataTable {
   headerRow: string[];
@@ -42,6 +43,7 @@ export class VentasComponent implements OnInit {
   notscrolly:boolean=true;
   notEmptyPost:boolean = true;
   dataUser:any = {};
+  activando:boolean = false;
 
   constructor(
     public dialog: MatDialog,
@@ -53,7 +55,9 @@ export class VentasComponent implements OnInit {
     this._store.subscribe((store: any) => {
       store = store.name;
       this.dataUser = store.user || {};
+      this.activando = false;
       if(this.dataUser.usu_perfil.prf_descripcion != 'administrador') this.query.where.usu_clave_int = this.dataUser.id;
+      if(this.dataUser.usu_perfil.prf_descripcion == 'administrador') this.activando = true;
     });
    }
 
@@ -69,6 +73,16 @@ export class VentasComponent implements OnInit {
   crear(obj:any){
     const dialogRef = this.dialog.open(FormventasComponent,{
       data: {datos: obj || {}}
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      console.log(`Dialog result: ${result}`);
+    });
+  }
+
+  darPuntos(){
+    const dialogRef = this.dialog.open(FormpuntosComponent,{
+      data: { datos: {} }
     });
 
     dialogRef.afterClosed().subscribe(result => {

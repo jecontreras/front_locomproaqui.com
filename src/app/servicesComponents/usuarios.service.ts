@@ -17,6 +17,10 @@ export class UsuariosService {
   getInfo(query:any){
     return this._model.querys('tblusuario/infoUser',query, 'post');
   }
+
+  darPuntos(query:any){
+    return this._model.querys('tblusuario/guardarPunto',query, 'post');
+  }
   
   getNivel(query:any){
     return this._model.querys('tblusuario/nivelUser',query, 'post');

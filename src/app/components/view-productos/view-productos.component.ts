@@ -49,13 +49,14 @@ export class ViewProductosComponent implements OnInit {
   }
 
   AgregarCart(){
-    this.data.color = this.data.listColor.find(row=>row.foto = this.data.foto) || {};
+    let color = '';
+    if( this.data.listColor ) { this.data.color = this.data.listColor.find(row=>row.foto = this.data.foto) || {}; color = this.data.color.talla }
     this.suma();
     let data = {
       articulo: this.data.id,
       codigo: this.data.pro_codigo,
       titulo: this.data.pro_nombre,
-      color: this.data.color.talla,
+      color: color,
       foto: this.data.foto,
       cantidad: this.data.cantidadAdquirir || 1,
       costo: this.data.pro_uni_venta,

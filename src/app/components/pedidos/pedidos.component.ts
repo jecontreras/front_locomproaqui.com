@@ -36,7 +36,7 @@ export class PedidosComponent implements OnInit {
     page: 0,
     limit: 15
   };
-  seartxt:string;
+  seartxt:string = '';
   listProductos:any = [];
   loader:boolean = false;
   urlwhat:string
@@ -82,7 +82,8 @@ export class PedidosComponent implements OnInit {
     this._store.dispatch(accion);
   }
   getCategorias(){
-    this._categorias.get( { where:{ cat_activo: 0 } } ).subscribe((res:any)=>{ for(let row of res.data){
+    this._categorias.get( { where:{ cat_activo: 0 } } ).subscribe((res:any)=>{ 
+    for(let row of res.data){
       this.imageObject.push({
         image: row.cat_imagen || './assets/categoria.jpeg',
         thumbImage: row.cat_imagen,
@@ -90,7 +91,15 @@ export class PedidosComponent implements OnInit {
         id: row.id,
         title: row.cat_nombre
       });
-    }})
+    }
+    this.imageObject.unshift({
+      image: './assets/categoria.jpeg',
+      thumbImage: './assets/categoria.jpeg',
+      alt: '',
+      id: 0,
+      title: "Todos"
+    });
+  });
   }
   cargarProductos(){
     this.spinner.show();
@@ -197,7 +206,8 @@ export class PedidosComponent implements OnInit {
   
   imageOnClick(index) {
       //console.log('index', index, this.imageObject[index]);
-      this.query = { where:{ pro_activo: 0, pro_categoria: this.imageObject[index].id }, limit: 100 };
+      this.query = { where:{ pro_activo: 0 }, page: 0, limit: 10 };
+      if( this.imageObject[index].id >0 ) this.query = { where:{ pro_activo: 0, pro_categoria: this.imageObject[index].id }, page: 0, limit: 10 };
       this.listProductos = [];
       this.notscrolly = true; 
       this.notEmptyPost = true;

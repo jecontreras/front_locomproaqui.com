@@ -26,6 +26,7 @@ import { FormcobrosComponent } from './form/formcobros/formcobros.component';
 import { InfiniteScrollModule } from 'ngx-infinite-scroll';
 import { NgxSpinnerModule } from "ngx-spinner";
 import { ReferidosComponent } from './components/referidos/referidos.component';
+import { FormpuntosComponent } from './form/formpuntos/formpuntos.component';
 
 @NgModule({
   entryComponents: [
@@ -34,7 +35,8 @@ import { ReferidosComponent } from './components/referidos/referidos.component';
     FormproductosComponent,
     FormusuariosComponent,
     FormventasComponent,
-    FormcobrosComponent
+    FormcobrosComponent,
+    FormpuntosComponent
   ],
   declarations: [
     MainComponent,
@@ -53,7 +55,8 @@ import { ReferidosComponent } from './components/referidos/referidos.component';
     PerfilComponent,
     FormbancosComponent,
     FormcobrosComponent,
-    ReferidosComponent
+    ReferidosComponent,
+    FormpuntosComponent
   ],
   imports: [
     CommonModule,
