@@ -75,7 +75,7 @@ export class FormcobrosComponent implements OnInit {
     this._cobros.create(this.data).subscribe((res:any)=>{
       //console.log(res);
       this.disabledButton = false;
-      this._tools.presentToast("Exitoso");
+      this._tools.basicIcons({header: "En estos momentos su retiro está en estado pendiente!", subheader: "Su retiro puede tardar 3 días hábiles no incluye festivos! horario de oficina!"});
     }, (error)=>{ this._tools.presentToast(error.error.mensaje); console.error(error); this.disabledButton = false; });
     this.dialog.closeAll();
   }
