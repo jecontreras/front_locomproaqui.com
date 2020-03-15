@@ -79,7 +79,6 @@ export class CobrosComponent implements OnInit {
       this.btnDisableRetiro = res.data;
       if(!res.data) {
         if(res.mensaje) this._tools.basicIcons({header: "Retiro Pendiente!", subheader: res.mensaje});
-        else this._tools.basicIcons({header: "En estos momento no esta disponible retirar dinero!", subheader: "los días hábiles de retiros son el día 12-13-14-15 y 27-28-29-30 del mes se habilita la opcion de retiro mas informacion +573148487506"});
       }
     },(error)=>console.error(error));
   }
@@ -89,7 +88,11 @@ export class CobrosComponent implements OnInit {
   }
 
   crear(obj:any){
-    if( !this.btnDisableRetiro && !obj ) return false;
+    //console.log(this.btnDisableRetiro, obj)
+    if( !this.btnDisableRetiro && !obj ) { 
+      this._tools.basicIcons({header: `Hola ${ this.dataUser.usu_nombre } cordial saludo`, subheader: "Te informamos que los días habilitados para solicitar retiro son los días 12,13,14,15 y 27,28,29,30 de cada mes y la empresa te pagara dentro de los 3 días hábiles siguientes después de la quincena mas informacion +573148487506"});
+      return false; 
+    }
     const dialogRef = this.dialog.open(FormcobrosComponent,{
       width: '461px',
       data: {datos: obj || {}}
@@ -146,52 +149,6 @@ export class CobrosComponent implements OnInit {
       });
   }
 
-  config() {
-    if(!this.$)return false;
-    $('#datatables').DataTable({
-      "pagingType": "full_numbers",
-      "lengthMenu": [
-        [10, 25, 50, -1],
-        [10, 25, 50, "All"]
-      ],
-      responsive: true,
-      language: {
-        search: "_INPUT_",
-        searchPlaceholder: "Buscar",
-      }
-
-    });
-
-    const table = $('#datatables').DataTable();
-
-    /* // Edit record
-    table.on('click', '.edit', function (e) {
-      let $tr = $(this).closest('tr');
-      if ($($tr).hasClass('child')) {
-        $tr = $tr.prev('.parent');
-      }
-
-      var data = table.row($tr).data();
-      alert('You press on Row: ' + data[0] + ' ' + data[1] + ' ' + data[2] + '\'s row.');
-      e.preventDefault();
-    }); */
-
-    /* // Delete a record
-    table.on('click', '.remove', function (e) {
-      const $tr = $(this).closest('tr');
-      table.row($tr).remove().draw();
-      e.preventDefault();
-    }); */
-
-    //Like record
-    table.on('click', '.like', function (e) {
-      alert('You clicked on Like button');
-      e.preventDefault();
-    });
-
-    $('.card .material-datatables label').addClass('form-group');
-  }
-
   buscar() {
     this.loader = false;
     this.notscrolly = true 
@@ -202,7 +159,7 @@ export class CobrosComponent implements OnInit {
     if (this.datoBusqueda === '') {
       this.query={
         where:{
-          cob_estado: 0
+          cob_estado: { '!=' : 3}
         },
         page: 0
       };

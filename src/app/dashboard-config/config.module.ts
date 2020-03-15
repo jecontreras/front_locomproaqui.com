@@ -28,6 +28,9 @@ import { NgxSpinnerModule } from "ngx-spinner";
 import { ReferidosComponent } from './components/referidos/referidos.component';
 import { FormpuntosComponent } from './form/formpuntos/formpuntos.component';
 
+//settings
+import { AngularEditorModule } from '@kolkov/angular-editor';
+
 @NgModule({
   entryComponents: [
     FormcategoriasComponent,
@@ -68,7 +71,8 @@ import { FormpuntosComponent } from './form/formpuntos/formpuntos.component';
     InfiniteScrollModule,
     NgxSpinnerModule,
     FormsModule,
-    NgxDropzoneModule
+    NgxDropzoneModule,
+    AngularEditorModule
   ],
   exports: [
     FormcategoriasComponent,

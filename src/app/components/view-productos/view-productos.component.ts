@@ -13,7 +13,7 @@ import * as _ from 'lodash';
 export class ViewProductosComponent implements OnInit {
 
   data:any = {};
-  rango:number = 100;
+  rango:number = 250;
 
   constructor(
     public dialogRef: MatDialogRef<ViewProductosComponent>,

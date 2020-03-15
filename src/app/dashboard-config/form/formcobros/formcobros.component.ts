@@ -50,7 +50,12 @@ export class FormcobrosComponent implements OnInit {
       this.id = this.data.id;
       this.titulo = "Actualizar";
       if(this.data.cat_activo === 0) this.data.cat_activo = true;
-    }else{ this.id = ""; this.data.usu_clave_int = this.dataUser.id; }
+    }else{ 
+      this.id = ""; 
+      this.data.usu_clave_int = this.dataUser.id; 
+      this.data.cob_num_cedula = this.dataUser.usu_documento;
+      this.data.cob_num_celular = this.dataUser.usu_telefono;
+    }
   }
 
   onSelect(event:any) {
@@ -62,6 +67,7 @@ export class FormcobrosComponent implements OnInit {
     //console.log(event);
     this.files.splice(this.files.indexOf(event), 1);
   }
+  
   submit(){
     this.disabledButton = true;
     if(this.id) { 
@@ -70,15 +76,19 @@ export class FormcobrosComponent implements OnInit {
     }
     else this.guardar();
   }
+  
   guardar(){
     this.data.cat_activo = 0;
     this._cobros.create(this.data).subscribe((res:any)=>{
       //console.log(res);
+      res = res.data[0];
       this.disabledButton = false;
-      this._tools.basicIcons({header: "En estos momentos su retiro está en estado pendiente!", subheader: "Su retiro puede tardar 3 días hábiles no incluye festivos! horario de oficina!"});
+      this._tools.basicIcons({header: `hola ${ this.dataUser.usu_nombre } cordial saludo`, subheader: `Te informamos que tu solicitud de retiro ha Sido recibida de manera satisfactoria y está en proceso de validación la empresa te pagara dentro de los 3 días hábiles siguientes después de la quincena!`});
+      this.procesoWhat( res );
     }, (error)=>{ this._tools.presentToast(error.error.mensaje); console.error(error); this.disabledButton = false; });
     this.dialog.closeAll();
   }
+
   updates(){
     this.data = _.omit( this.data, ['usu_clave_int'] );
     if(this.data.cob_estado == 1) this.data.cob_fecha_pago = moment().format('DD-MM-YYYY HH:MM:SS');
@@ -86,6 +96,11 @@ export class FormcobrosComponent implements OnInit {
       this.disabledButton = false;
       this._tools.presentToast("Actualizado");
     },(error)=>{console.error(error); this._tools.presentToast("Error de servidor"); this.disabledButton = false});
+  }
+
+  procesoWhat( res:any ){
+    let mensaje:string = `https://wa.me/573148487506?text=info del cliente ${ this.dataUser.usu_nombre } cedula ${ res.cob_num_cedula } telefono ${ this.dataUser.usu_telefono || '' }  fecha de retiro ${ moment(res.createdAt).format('DD-MM-YYYY HH:MM:SS') } Tipo de Banco ${ res.cob_metodo } Numero cuenta ${ res.cob_num_cuenta } Hola Servicio al cliente, como esta, cordial saludo. Sería tan amable de solicitarme este retiro monto $ ${ ( res.cob_monto || 0 ).toLocaleString('de-DE', { style: 'currency', currency: 'COP' }) } gracias por su tiempo ...`;
+    window.open(mensaje);
   }
 
 }
