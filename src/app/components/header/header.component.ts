@@ -60,7 +60,6 @@ export class HeaderComponent implements OnInit {
     private _venta: VentasService,
 
   ) { 
-    this.getCarrito();
     this._store.subscribe((store: any) => {
       console.log(store);
       store = store.name;
@@ -89,14 +88,15 @@ export class HeaderComponent implements OnInit {
     }
     else this.rolUser = 'visitante';
     this.listMenus();
+    if(this.rolUser === 'administrador') this.getCarrito();
   }
 
   getVentas(){
-    console.log("***")
-    let data:any = { where:{ view:false },limit: 100 }
+    //console.log("***")
+    let data:any = { where:{ view:0 },limit: 100 }
     //if(this.dataUser.usu_perfil.prf_descripcion != 'administrador') data.where.user=this.dataUser.id,
     this._notificaciones.get( data ).subscribe((res:any)=>{
-      console.log(res);
+      //console.log(res);
       if(res.data.length > this.notificando) this.audioNotificando('./assets/sonidos/notificando.mp3');
       this.notificando = res.data.length;
       this.listNotificaciones = res.data;
@@ -105,7 +105,7 @@ export class HeaderComponent implements OnInit {
 
   audioNotificando(obj:string){
     let sonido = new Audio();
-    sonido.src = obj;
+    sonido.src = './assets/sonidos/notificando.mp3';
     sonido.load();
     sonido.play();
   }
@@ -136,7 +136,7 @@ export class HeaderComponent implements OnInit {
   estadoNotificaciones(obj:any){
     let data:any ={
       id: obj.id,
-      view: true
+      view: 1
     };
     this._notificaciones.update(data).subscribe((res:any)=>{});
   }

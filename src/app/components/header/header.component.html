@@ -9,9 +9,9 @@
     <h5 class="textInf"><span class="textInf">locomproaqui.com</span></h5>
     <div class="row col">
       <div class="col"></div>
-      <div>
-        <span *ngIf="dataUser.id" class="textInf">{{ ( ( dataInfo?.porcobrado ) || 0 ).toLocaleString('de-DE', { style: 'currency', currency: 'COP' }) }}</span>
-        <span (click)="this.opcionoView = 'notificaciones'; sidenav.toggle();" class="p-1 pointer" [matBadge]="notificando" > <i class="material-icons">notification_important</i> </span>
+      <div style="margin-top: 7px;">
+        <span [routerLink]="[ '/config/cobros' ]" *ngIf="dataUser.id" class="textInf pointer">{{ ( ( dataInfo?.porcobrado ) || 0 ).toLocaleString(1) }}</span>
+        <label><span *ngIf="rolUser === 'administrador'" (click)="this.opcionoView = 'notificaciones'; sidenav.toggle();" class="p-1 pointer" [matBadge]="notificando" > <i class="material-icons">notification_important</i> </span></label>
         <span (click)="this.opcionoView = 'carro'; sidenav.toggle();" class="p-1 pointer" [matBadge]="listCart.length" > <i class="material-icons">shopping_cart</i> </span>
 
         <span *ngIf="!dataUser.id" [routerLink]="[ '/login' ]" class="p-1 pointer" > <i class="material-icons">person_pin</i> </span>

@@ -4,6 +4,7 @@ import { Store } from '@ngrx/store';
 import { CartAction } from 'src/app/redux/app.actions';
 import { CART } from 'src/app/interfaces/sotarage';
 import * as _ from 'lodash';
+import { ToolsService } from 'src/app/services/tools.service';
 
 @Component({
   selector: 'app-view-productos',
@@ -19,6 +20,7 @@ export class ViewProductosComponent implements OnInit {
     public dialogRef: MatDialogRef<ViewProductosComponent>,
     @Inject(MAT_DIALOG_DATA) public datas: any,
     private _store: Store<CART>,
+    private _tools: ToolsService,
   ) { }
 
   ngOnInit() {
@@ -65,6 +67,7 @@ export class ViewProductosComponent implements OnInit {
     };
     let accion = new CartAction(data, 'post');
     this._store.dispatch(accion);
+    this._tools.presentToast("Agregado al Carro");
   }
   
   codigo(){
