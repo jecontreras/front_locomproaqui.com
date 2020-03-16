@@ -55,7 +55,7 @@ export class HeaderComponent implements OnInit {
   ) { 
 
     this._store.subscribe((store: any) => {
-      console.log(store);
+      //console.log(store);
       store = store.name;
       if(!store) return false;
       this.listCart = store.cart || [];
@@ -104,9 +104,9 @@ export class HeaderComponent implements OnInit {
     }
     console.log(this.dataUser, this.userId)
     if(this.dataUser.id){
-        this.urlwhat = `https://wa.me/${ this.dataUser.usu_indicativo }${ this.dataUser.usu_telefono }?text=Hola Servicio al cliente, como esta, saludo cordial, estoy interesad@ en comprar los siguientes ${texto}`
+        this.urlwhat = `https://wa.me/${ this.dataUser.usu_indicativo || 57 }${ this.dataUser.usu_telefono || 3148487506 }?text=Hola Servicio al cliente, como esta, saludo cordial, estoy interesad@ en comprar los siguientes ${texto}`
     }else{
-      if(this.userId.id) this.urlwhat = `https://wa.me/${ this.userId.usu_indicativo }${ this.userId.usu_telefono }?text=Hola Servicio al cliente, como esta, saludo cordial, estoy interesad@ en comprar los siguientes ${texto}`
+      if(this.userId.id) this.urlwhat = `https://wa.me/${ this.userId.usu_indicativo || 57 }${ this.userId.usu_telefono || 3148487506 }?text=Hola Servicio al cliente, como esta, saludo cordial, estoy interesad@ en comprar los siguientes ${texto}`
       else this.urlwhat = `https://wa.me/573148487506?text=Hola Servicio al cliente, como esta, saludo cordial, estoy interesad@ en comprar los siguientes ${texto}`
     }
   }

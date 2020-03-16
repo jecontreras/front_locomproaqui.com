@@ -43,6 +43,9 @@ export class FormpuntosComponent implements OnInit {
       ganancias: this.data.ganancias
     }).subscribe((res:any)=>{
       console.log(res);
+      this._tools.presentToast("Puntos asignados");
+      this.data = {};
+      this.info = {};
     },(error)=> this._tools.presentToast("Error de servidor"));
   }
 
