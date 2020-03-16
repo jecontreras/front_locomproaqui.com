@@ -7,6 +7,7 @@ import { CategoriasService } from 'src/app/servicesComponents/categorias.service
 import { TipoTallasService } from 'src/app/servicesComponents/tipo-tallas.service';
 import { ArchivosService } from 'src/app/servicesComponents/archivos.service';
 import { environment } from 'src/environments/environment';
+import { AngularEditorConfig } from '@kolkov/angular-editor';
 
 const URL = environment.url;
 
@@ -25,6 +26,8 @@ export class FormproductosComponent implements OnInit {
   listCategorias:any = [];
   listTipoTallas:any = [];
   listColor:any = [];
+  editorConfig: any;
+
 
   constructor(
     public dialog: MatDialog,
@@ -35,7 +38,9 @@ export class FormproductosComponent implements OnInit {
     public dialogRef: MatDialogRef<FormproductosComponent>,
     @Inject(MAT_DIALOG_DATA) public datas: any,
     private _archivos: ArchivosService
-  ) { }
+  ) { 
+    this.editor();
+  }
 
   ngOnInit() {
     if(Object.keys(this.datas.datos).length > 0) {
@@ -126,6 +131,57 @@ export class FormproductosComponent implements OnInit {
     this._productos.update(this.data).subscribe((res:any)=>{
       this._tools.presentToast("Actualizado");
     },(error)=>{console.error(error); this._tools.presentToast("Error de servidor")});
+  }
+  editor(){
+    let config:AngularEditorConfig = {
+          editable: true,
+          spellcheck: true,
+          height: 'auto',
+          minHeight: '0',
+          maxHeight: 'auto',
+          width: 'auto',
+          minWidth: '0',
+          translate: 'yes',
+          enableToolbar: true,
+          showToolbar: true,
+          placeholder: 'Enter text here...',
+          defaultParagraphSeparator: '',
+          defaultFontName: '',
+          defaultFontSize: '',
+          fonts: [
+            {class: 'arial', name: 'Arial'},
+            {class: 'times-new-roman', name: 'Times New Roman'},
+            {class: 'calibri', name: 'Calibri'},
+            {class: 'comic-sans-ms', name: 'Comic Sans MS'}
+          ],
+          customClasses: [
+          {
+            name: 'quote',
+            class: 'quote',
+          },
+          {
+            name: 'redText',
+            class: 'redText'
+          },
+          {
+            name: 'titleText',
+            class: 'titleText',
+            tag: 'h1',
+          },
+        ],
+        uploadUrl: 'v1/image',
+        uploadWithCredentials: false,
+        sanitize: true,
+        toolbarPosition: 'top',
+        toolbarHiddenButtons: [
+          ['bold', 'italic'],
+          ['fontSize']
+        ]
+    };
+    this.editorConfig = config;
+  }
+  eventoDescripcion(){
+    console.log("HP")
   }
 
 }

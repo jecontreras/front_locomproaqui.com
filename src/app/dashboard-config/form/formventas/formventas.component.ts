@@ -11,6 +11,7 @@ import { environment } from 'src/environments/environment';
 import { ArchivosService } from 'src/app/servicesComponents/archivos.service';
 import { STORAGES } from 'src/app/interfaces/sotarage';
 import { Store } from '@ngrx/store';
+import { NotificacionesService } from 'src/app/servicesComponents/notificaciones.service';
 
 const URL = environment.url;
 
@@ -38,6 +39,7 @@ export class FormventasComponent implements OnInit {
   constructor(
     public dialog: MatDialog,
     private _ventas: VentasService,
+    private _notificacion: NotificacionesService,
     private _tools: ToolsService,
     private _productos: ProductoService,
     private _model: ServiciosService,
@@ -70,7 +72,7 @@ export class FormventasComponent implements OnInit {
   }
 
   getArticulos(){
-    this._productos.get({pro_activo: 0}).subscribe((res:any)=>{
+    this._productos.get({where:{pro_activo: 0},limit: 10000}).subscribe((res:any)=>{
       this.listProductos = res.data;
     },(error)=>{console.error(error); this._tools.presentToast("Error de servidor")});
   }
@@ -132,7 +134,7 @@ export class FormventasComponent implements OnInit {
 
     this.data.ven_estado = 0;
     this.data.create = moment().format('DD-MM-YYYY');
-    this._ventas.get({ where:{ cob_num_cedula_cliente: this.data.cob_num_cedula_cliente, ven_estado:0 }}).subscribe((res:any)=>{
+    this._ventas.get({ where:{ cob_num_cedula_cliente: this.data.cob_num_cedula_cliente, ven_estado:0, ven_sw_eliminado:1 }}).subscribe((res:any)=>{
       res = res.data[0];
       if(res) this._tools.basicIcons({header: "Este cliente tiene una venta activa!", subheader: "Esta venta sera vereficada por posible confuciones"});
       this.guardarVenta();
@@ -142,13 +144,15 @@ export class FormventasComponent implements OnInit {
 
   guardarVenta(){
     this._ventas.create(this.data).subscribe((res:any)=>{
-      //console.log(res);
+      console.log(res);
       this.OrderWhatsapp(res);
+      this.crearNotificacion(res);
       this.disabledButton = false;
       this.disabled = false;
       this._tools.presentToast("Exitoso Estare en Modo Pendiente");
-    }, (error)=>{ this._tools.presentToast("Error al crear la venta"); this.disabledButton = false; });
-    this.dialog.closeAll();
+      this.dialog.closeAll();
+    }, (error)=>{ this._tools.presentToast("Error al crear la venta"); this.disabledButton = false; this.dialog.closeAll();});
+    
   }
 
   OrderWhatsapp(res){
@@ -169,6 +173,18 @@ export class FormventasComponent implements OnInit {
       this.disabledButton = false;
       this.disabled = false;
     },(error)=>{console.error(error); this._tools.presentToast("Error de servidor"); this.disabledButton = false;});
+  }
+
+  crearNotificacion(valuesToSet:any){
+    let data = {
+        titulo: "Nueva venta de "+ valuesToSet.ven_nombre_cliente,
+        descripcion: "Nueva venta de "+ valuesToSet.ven_nombre_cliente,
+        venta: valuesToSet.id,
+        user: valuesToSet.usu_clave_int.id
+    };
+    this._notificacion.create(data).subscribe((res:any)=>{
+      console.log(res);
+    },(error)=>this._tools.presentToast("Error de servidor"));
   }
 
 }

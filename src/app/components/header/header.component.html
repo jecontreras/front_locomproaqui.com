@@ -9,9 +9,10 @@
     <h5 class="textInf"><span class="textInf">locomproaqui.com</span></h5>
     <div class="row col">
       <div class="col"></div>
-      <div>
-        <span *ngIf="dataUser.id" class="textInf">{{ ( ( dataInfo?.porcobrado ) || 0 ).toLocaleString('de-DE', { style: 'currency', currency: 'COP' }) }}</span>
-        <span (click)="sidenav.toggle();" class="p-1 pointer" [matBadge]="listCart.length" > <i class="material-icons">shopping_cart</i> </span>
+      <div style="margin-top: 7px;">
+        <span [routerLink]="[ '/config/cobros' ]" *ngIf="dataUser.id" class="textInf pointer">{{ ( ( dataInfo?.porcobrado ) || 0 ).toLocaleString(1) }}</span>
+        <label><span *ngIf="rolUser === 'administrador'" (click)="this.opcionoView = 'notificaciones'; sidenav.toggle();" class="p-1 pointer" [matBadge]="notificando" > <i class="material-icons">notification_important</i> </span></label>
+        <span (click)="this.opcionoView = 'carro'; sidenav.toggle();" class="p-1 pointer" [matBadge]="listCart.length" > <i class="material-icons">shopping_cart</i> </span>
 
         <span *ngIf="!dataUser.id" [routerLink]="[ '/login' ]" class="p-1 pointer" > <i class="material-icons">person_pin</i> </span>
         <span *ngIf="dataUser.id" [routerLink]="[ '/config/perfil' ]" class="p-1 pointer" > <i class="material-icons">person_pin</i> </span>
@@ -23,45 +24,79 @@
     <mat-sidenav
         position="end" #sidenav mode="side" [(opened)]="opened" [mode]="'over'" (opened)="events.push('open!')"
         (closed)="events.push('close!')" class="sidenav anchos">
-      <mat-toolbar>
-        <mat-toolbar-row>
-          <div class="row">
-            <div class="">
-              <a class="pointer" (click)="sidenav.toggle()">
-                <i class="material-icons" aria-hidden="true">close</i>
-              </a>
+      <div *ngIf="opcionoView == 'carro'">
+        <mat-toolbar>
+          <mat-toolbar-row>
+            <div class="row">
+              <div class="">
+                <a class="pointer" (click)="sidenav.toggle()">
+                  <i class="material-icons" aria-hidden="true">close</i>
+                </a>
+              </div>
+              <div class="col">
+                Productos Seleccionados
+              </div>
             </div>
-            <div class="col">
-              Productos Seleccionados
+          </mat-toolbar-row>
+        </mat-toolbar>
+        <div class="content row">
+          <div class="col-12">
+            <mat-list>
+              <mat-list-item *ngFor="let item of listCart;let idx=index">
+                <img class="imgFoto pointer" [src]="item.foto || './assets/img/producto.jpg'" mat-list-icon>
+                <h4 mat-line>{{ item.titulo }}</h4>
+                <p mat-line>{{ 'Cantidad: '+item.cantidad }} </p>
+                <p mat-line>Precio:{{ ( item.costoTotal || 0).toLocaleString('de-DE', { style: 'currency', currency: 'COP' }) }}</p>
+                <p mat-line><span (click)="deleteCart(idx, item)" class="p-1 pointer d-flex justify-content-end"><i class="material-icons">delete</i></span> </p>
+              </mat-list-item>
+            </mat-list>
+          </div>
+        </div>
+        <div class="cart-bg-overlay"></div>
+  
+        <div class="right-side-cart-area">
+          
+          <div class="cart-content d-flex p-2">
+            <div class="cart-amount-summary">
+              <h2>Resumen</h2>
+              <ul class="summary-table">
+                <li><span>total:</span> <span>${{ ( data.total || 0 ) | currency:'COP':true}}</span></li>
+              </ul>
+              <div class="d-flex justify-content-end">
+                <a class="list-group-item list-group-item-action active" target="_blank" [href]="urlwhat">Hacer Pedido</a> 
+              </div>
             </div>
           </div>
-        </mat-toolbar-row>
-      </mat-toolbar>
-      <div class="content row">
-        <div class="col-12">
-          <mat-list>
-            <mat-list-item *ngFor="let item of listCart;let idx=index">
-              <img class="imgFoto pointer" [src]="item.foto || './assets/img/producto.jpg'" mat-list-icon>
-              <h4 mat-line>{{ item.titulo }}</h4>
-              <p mat-line>{{ 'Cantidad: '+item.cantidad }} </p>
-              <p mat-line>Precio:{{ ( item.costoTotal || 0).toLocaleString('de-DE', { style: 'currency', currency: 'COP' }) }}</p>
-              <p mat-line><span (click)="deleteCart(idx, item)" class="p-1 pointer d-flex justify-content-end"><i class="material-icons">delete</i></span> </p>
-            </mat-list-item>
-          </mat-list>
         </div>
       </div>
-      <div class="cart-bg-overlay"></div>
-
-      <div class="right-side-cart-area">
-        
-        <div class="cart-content d-flex p-2">
-          <div class="cart-amount-summary">
-            <h2>Resumen</h2>
-            <ul class="summary-table">
-              <li><span>total:</span> <span>${{ ( data.total || 0 ) | currency:'COP':true}}</span></li>
-            </ul>
-            <div class="d-flex justify-content-end">
-              <a class="list-group-item list-group-item-action active" target="_blank" [href]="urlwhat">Hacer Pedido</a> 
+      <div *ngIf="opcionoView == 'notificaciones'">
+        <mat-toolbar>
+          <mat-toolbar-row>
+            <div class="row">
+              <div class="">
+                <a class="pointer" (click)="sidenav.toggle()">
+                  <i class="material-icons" aria-hidden="true">close</i>
+                </a>
+              </div>
+              <div class="col">
+                Notificaciones
+              </div>
+            </div>
+          </mat-toolbar-row>
+        </mat-toolbar>
+        <div class="content row">
+          <div class="col-12">
+            <mat-list>
+              <mat-list-item *ngFor="let item of listNotificaciones;let idx=index" (click)="clickNotificando( item )" class="pointer">
+                <img class="imgFoto pointer" [src]="item.foto || './assets/icons/notificacion.png'" mat-list-icon>
+                <h4 mat-line>{{ item.titulo }}</h4>
+                <p mat-line>{{ item.descripcion }} </p>
+              </mat-list-item>
+            </mat-list>
+          </div>
+          <div class="col-12" *ngIf="listNotificaciones.length === 0">
+            <div class="mx-auto" style="width: 200px;">
+                No Hay Notificaciones
             </div>
           </div>
         </div>

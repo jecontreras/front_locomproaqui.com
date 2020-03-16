@@ -23,7 +23,7 @@
                     <option [value]="item.foto" *ngFor="let item of data.listColor">{{ item.talla }}</option>
                 </select>
                 <h4>{{ data.pro_nombre }}</h4>
-                <p>{{ data.pro_descripcion | slice: 0: rango }}</p>
+                <p [innerHtml]="data.pro_descripcion | slice: 0: rango"></p>
                 <p *ngIf="rango == 100" (click)="rango = 5000" class="text-primary">leer mas..</p>
                 <p *ngIf="rango != 100" (click)="rango = 100" class="text-primary">leer menos..</p>
                 <label>Cantidad Adquirir</label>

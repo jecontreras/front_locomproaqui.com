@@ -14,13 +14,13 @@ import { ToolsService } from 'src/app/services/tools.service';
 export class ViewProductosComponent implements OnInit {
 
   data:any = {};
-  rango:number = 100;
+  rango:number = 250;
 
   constructor(
     public dialogRef: MatDialogRef<ViewProductosComponent>,
     @Inject(MAT_DIALOG_DATA) public datas: any,
     private _store: Store<CART>,
-    private _tools: ToolsService
+    private _tools: ToolsService,
   ) { }
 
   ngOnInit() {

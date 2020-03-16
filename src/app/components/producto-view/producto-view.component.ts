@@ -14,7 +14,7 @@ import { Store } from '@ngrx/store';
 export class ProductoViewComponent implements OnInit {
 
   data:any = {};
-  rango:number = 100;
+  rango:number = 250;
   id:any;
 
   constructor(

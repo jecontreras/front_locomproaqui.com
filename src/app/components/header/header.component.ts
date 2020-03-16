@@ -12,6 +12,9 @@ import { UsuariosService } from 'src/app/servicesComponents/usuarios.service';
 import * as _ from 'lodash';
 import { environment } from 'src/environments/environment';
 import { ToolsService } from 'src/app/services/tools.service';
+import { VentasService } from 'src/app/servicesComponents/ventas.service';
+import { NotificacionesService } from 'src/app/servicesComponents/notificaciones.service';
+import { FormventasComponent } from 'src/app/dashboard-config/form/formventas/formventas.component';
 
 const URLFRON = environment.urlFront;
 
@@ -42,18 +45,21 @@ export class HeaderComponent implements OnInit {
   dataInfo:any = {};
   isHandset$:any;
   urlRegistro:string = `${ URLFRON }/registro/`;
+  notificando:number = 0;
+  opcionoView:string = 'carro';
+  listNotificaciones:any =[];
 
   constructor(
     public changeDetectorRef: ChangeDetectorRef,
     public media: MediaMatcher, private router: Router,
     public dialog: MatDialog,
-    private _model: ServiciosService,
     private _store: Store<CART>,
     private _user: UsuariosService,
-    private _tools: ToolsService
+    private _tools: ToolsService,
+    private _notificaciones: NotificacionesService,
+    private _venta: VentasService,
 
   ) { 
-
     this._store.subscribe((store: any) => {
       //console.log(store);
       store = store.name;
@@ -63,13 +69,12 @@ export class HeaderComponent implements OnInit {
       this.dataUser = store.user || {};
       this.submitChat();
     });
-
+    //this.getVentas();
     this.mobileQuery = media.matchMedia('(max-width: 290px)');
     this._mobileQueryListener = () => changeDetectorRef.detectChanges();
     this.mobileQuery.addListener(this._mobileQueryListener);
     // tslint:disable-next-line:no-unused-expression
     this.mobileQuery.ds;
-
 
   }
 
@@ -83,10 +88,57 @@ export class HeaderComponent implements OnInit {
     }
     else this.rolUser = 'visitante';
     this.listMenus();
+    if(this.rolUser === 'administrador') this.getCarrito();
+  }
+
+  getVentas(){
+    //console.log("***")
+    let data:any = { where:{ view:0 },limit: 100 }
+    //if(this.dataUser.usu_perfil.prf_descripcion != 'administrador') data.where.user=this.dataUser.id,
+    this._notificaciones.get( data ).subscribe((res:any)=>{
+      //console.log(res);
+      if(res.data.length > this.notificando) this.audioNotificando('./assets/sonidos/notificando.mp3');
+      this.notificando = res.data.length;
+      this.listNotificaciones = res.data;
+    },(error)=>this._tools.presentToast("error de servidor"));
+  }
+
+  audioNotificando(obj:string){
+    let sonido = new Audio();
+    sonido.src = './assets/sonidos/notificando.mp3';
+    sonido.load();
+    sonido.play();
   }
 
   getCarrito(){
-    
+    setInterval(()=>{ 
+      this.getVentas();
+    }, 5000);
+  }
+
+  clickNotificando( obj:any ){
+    console.log(obj);
+    this.estadoNotificaciones(obj);
+    if(obj.venta){
+      this._venta.get({ where:{ id: obj.venta } }).subscribe((res:any)=>{
+        res = res.data[0];
+        if(!res) return this._tools.presentToast("No se encontro la venta!");
+        const dialogRef = this.dialog.open(FormventasComponent,{
+          data: {datos: res }
+        });
+        dialogRef.afterClosed().subscribe(result => {
+          console.log(`Dialog result: ${result}`);
+        });
+      });
+    }
+  }
+
+  estadoNotificaciones(obj:any){
+    let data:any ={
+      id: obj.id,
+      view: 1
+    };
+    this._notificaciones.update(data).subscribe((res:any)=>{});
   }
 
   deleteCart(idx:any, item:any){

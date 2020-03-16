@@ -22,6 +22,7 @@
     "@angular/platform-browser-dynamic": "~9.0.5",
     "@angular/router": "~9.0.5",
     "@angular/service-worker": "~9.0.5",
+    "@kolkov/angular-editor": "^1.1.1",
     "@ngrx/store": "^8.6.0",
     "@ngrx/store-devtools": "github:ngrx/store-devtools-builds",
     "add": "^2.0.6",
