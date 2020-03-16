@@ -49,7 +49,7 @@
                         <!--id="precio_25" data-name="product_name"-->
                         <span>
                             <small style="display: inline-block;" class="pricesmall currency2"
-                            id="pricesmall_25">{{ ( item.pro_uni_ventaEdit || item.pro_uni_venta || 0 ).toLocaleString('de-DE', { style: 'currency', currency: 'COP' }) }}</small><br>
+                            id="pricesmall_25">$ {{ ( item.pro_uni_ventaEdit || item.pro_uni_venta || 0 ).toLocaleString(1) }}</small><br>
                             <span>{{ item.pro_nombre | slice: 0: 20 }}</span>
                         </span>
 

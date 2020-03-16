@@ -35,7 +35,7 @@ export class CobrosComponent implements OnInit {
     },
     page: 0
   };
-  Header:any = [ 'Acciones','Monto','Método de pago','Fecha Cobro','Email','Cédula','Celular','Cuenta Bancaria','Fecha Pago','Estado' ];
+  Header:any = [ 'Acciones', 'Pais', 'Monto','Método de pago','Fecha Cobro','Email','Cédula','Celular','Cuenta Bancaria','Fecha Pago','Estado' ];
   $:any;
   public datoBusqueda = '';
   dataUser:any = {};

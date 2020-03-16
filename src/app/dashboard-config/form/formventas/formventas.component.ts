@@ -1,4 +1,4 @@
-import { Component, OnInit, Inject } from '@angular/core';
+import { Component, OnInit, Inject, HostListener } from '@angular/core';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
 import { UsuariosService } from 'src/app/servicesComponents/usuarios.service';
 import { ToolsService } from 'src/app/services/tools.service';
@@ -12,6 +12,7 @@ import { ArchivosService } from 'src/app/servicesComponents/archivos.service';
 import { STORAGES } from 'src/app/interfaces/sotarage';
 import { Store } from '@ngrx/store';
 import { NotificacionesService } from 'src/app/servicesComponents/notificaciones.service';
+import { TipoTallasService } from 'src/app/servicesComponents/tipo-tallas.service';
 
 const URL = environment.url;
 
@@ -35,6 +36,7 @@ export class FormventasComponent implements OnInit {
   dataUser:any = {};
   disabledButton:boolean = false;
   disabled:boolean = false;
+  listTallas:any = [];
 
   constructor(
     public dialog: MatDialog,
@@ -47,6 +49,7 @@ export class FormventasComponent implements OnInit {
     @Inject(MAT_DIALOG_DATA) public datas: any,
     private _archivos: ArchivosService,
     private _store: Store<STORAGES>,
+    private _tallas: TipoTallasService
   ) { 
 
     this._store.subscribe((store: any) => {
@@ -66,13 +69,18 @@ export class FormventasComponent implements OnInit {
       this.titulo = "Actualizar";
       if(this.data.cat_activo === 0) this.data.cat_activo = true;
       if(this.data.pro_clave_int) this.data.pro_clave_int = this.data.pro_clave_int.id;
-    }else{ this.id = ""; this.data.usu_clave_int = this.dataUser.id; this.data.ven_usu_creacion = this.dataUser.usu_email; }
+    }else{ 
+      this.id = ""; 
+      this.data.usu_clave_int = this.dataUser.id; 
+      this.data.ven_usu_creacion = this.dataUser.usu_email; 
+      this.data.ven_fecha_venta =  moment().format('YYYY-MM-DD');
+    }
     this.getArticulos();
     console.log(this.data)
   }
 
   getArticulos(){
-    this._productos.get({where:{pro_activo: 0},limit: 10000}).subscribe((res:any)=>{
+    this._productos.get({where:{pro_activo: 0},limit: 100}).subscribe((res:any)=>{
       this.listProductos = res.data;
     },(error)=>{console.error(error); this._tools.presentToast("Error de servidor")});
   }
@@ -109,7 +117,15 @@ export class FormventasComponent implements OnInit {
     let idx = _.findIndex(this.listProductos, ['id', Number(this.data.pro_clave_int)])
     if(idx >= 0) {
       this.data.ven_precio = this.listProductos[idx].pro_uni_venta;
+      this.productoTallas(this.listProductos[idx]);
     }
+  }
+
+  productoTallas(item:any){
+    if(!item.pro_sw_tallas) return false;
+    this._tallas.getTalla( { tal_tipo: item.pro_sw_tallas } ).subscribe((res:any)=>{
+      this.listTallas = res.data;
+    });
   }
 
   suma(){

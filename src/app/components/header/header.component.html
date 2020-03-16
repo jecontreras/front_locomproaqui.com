@@ -10,7 +10,7 @@
     <div class="row col">
       <div class="col"></div>
       <div style="margin-top: 7px;">
-        <span [routerLink]="[ '/config/cobros' ]" *ngIf="dataUser.id" class="textInf pointer">{{ ( ( dataInfo?.porcobrado ) || 0 ).toLocaleString(1) }}</span>
+        <span [routerLink]="[ '/config/cobros' ]" *ngIf="dataUser.id" class="textInf pointer">$ {{ ( ( dataInfo?.porcobrado ) || 0 ).toLocaleString(1) }} COP</span>
         <label><span *ngIf="rolUser === 'administrador'" (click)="this.opcionoView = 'notificaciones'; sidenav.toggle();" class="p-1 pointer" [matBadge]="notificando" > <i class="material-icons">notification_important</i> </span></label>
         <span (click)="this.opcionoView = 'carro'; sidenav.toggle();" class="p-1 pointer" [matBadge]="listCart.length" > <i class="material-icons">shopping_cart</i> </span>
 
@@ -46,7 +46,7 @@
                 <img class="imgFoto pointer" [src]="item.foto || './assets/img/producto.jpg'" mat-list-icon>
                 <h4 mat-line>{{ item.titulo }}</h4>
                 <p mat-line>{{ 'Cantidad: '+item.cantidad }} </p>
-                <p mat-line>Precio:{{ ( item.costoTotal || 0).toLocaleString('de-DE', { style: 'currency', currency: 'COP' }) }}</p>
+                <p mat-line>Precio:$ {{ ( item.costoTotal || 0).toLocaleString(1) }}</p>
                 <p mat-line><span (click)="deleteCart(idx, item)" class="p-1 pointer d-flex justify-content-end"><i class="material-icons">delete</i></span> </p>
               </mat-list-item>
             </mat-list>
