@@ -3,7 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import * as moment from 'moment';
 import { tap } from 'rxjs/operators';
 import {Router, CanActivate } from '@angular/router';
-
+import { UsuariosService } from '../servicesComponents/usuarios.service';
 export interface User {
   heroesUrl: string;
   textfile: string;
@@ -18,6 +18,7 @@ export class AuthService implements CanActivate {
   constructor(
     private http: HttpClient,
     private router: Router,
+    private _usuario: UsuariosService
     // private route: ActivatedRoute
   ) {}
 
@@ -51,9 +52,8 @@ export class AuthService implements CanActivate {
         return moment(expiresAt);
     }
     canActivate() {
-      const identity = localStorage.getItem('user');
+      let identity:any = localStorage.getItem('user');
       // console.log(this.route._routerState.snapshot.url);
-      // console.log(identity);
       // return false;
       if (identity) {
         return true;
@@ -61,5 +61,6 @@ export class AuthService implements CanActivate {
         this.router.navigate(['/']);
         return false;
       }
+      
     }
 }

@@ -78,7 +78,7 @@
                       <td>{{ row['pro_clave_int']?.pro_nombre }}</td>
                       <td>{{ row['ven_cantidad'] }}</td>
                       <td>
-                        {{ ( row['ven_precio'] || 0 ).toLocaleString('de-DE', { style: 'currency', currency: 'COP' }) }}
+                        $ {{ ( row['ven_precio'] || 0 ).toLocaleString(1) }} COP
                       </td>
                       <td>
                         <img *ngIf="row.ven_tipo === 'whatsapp'" [src]="row['ven_imagen_producto']" class="foto">

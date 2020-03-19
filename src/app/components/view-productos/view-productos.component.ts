@@ -67,7 +67,7 @@ export class ViewProductosComponent implements OnInit {
     };
     let accion = new CartAction(data, 'post');
     this._store.dispatch(accion);
-    this._tools.presentToast("Agregado al Carro");
+    this._tools.presentToast("Producto agregado al carro");
   }
   
   codigo(){

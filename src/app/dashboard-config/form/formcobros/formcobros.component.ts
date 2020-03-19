@@ -6,6 +6,7 @@ import * as _ from 'lodash';
 import { STORAGES } from 'src/app/interfaces/sotarage';
 import { Store } from '@ngrx/store';
 import * as moment from 'moment';
+import { UsuariosService } from 'src/app/servicesComponents/usuarios.service';
 
 @Component({
   selector: 'app-formcobros',
@@ -32,6 +33,7 @@ export class FormcobrosComponent implements OnInit {
     public dialogRef: MatDialogRef<FormcobrosComponent>,
     @Inject(MAT_DIALOG_DATA) public datas: any,
     private _store: Store<STORAGES>,
+    private _user: UsuariosService
   ) { 
 
     this._store.subscribe((store: any) => {
@@ -55,7 +57,13 @@ export class FormcobrosComponent implements OnInit {
       this.data.usu_clave_int = this.dataUser.id; 
       this.data.cob_num_cedula = this.dataUser.usu_documento;
       this.data.cob_num_celular = this.dataUser.usu_telefono;
+      this.data.cob_pais = 'colombia';
+      this.getInfoUser();
     }
+  }
+
+  getInfoUser(){
+    this._user.getInfo({where:{id:this.dataUser.id}}).subscribe((res:any)=>this.data.cob_monto = res.data.porcobrado);
   }
 
   onSelect(event:any) {
@@ -99,7 +107,23 @@ export class FormcobrosComponent implements OnInit {
   }
 
   procesoWhat( res:any ){
-    let mensaje:string = `https://wa.me/573148487506?text=info del cliente ${ this.dataUser.usu_nombre } cedula ${ res.cob_num_cedula } telefono ${ this.dataUser.usu_telefono || '' }  fecha de retiro ${ moment(res.createdAt).format('DD-MM-YYYY HH:MM:SS') } Tipo de Banco ${ res.cob_metodo } Numero cuenta ${ res.cob_num_cuenta } Hola Servicio al cliente, como esta, cordial saludo. Sería tan amable de solicitarme este retiro monto $ ${ ( res.cob_monto || 0 ).toLocaleString('de-DE', { style: 'currency', currency: 'COP' }) } gracias por su tiempo ...`;
+    let mensaje:string;
+
+    if(res.cob_pais === 'colombia'){
+      mensaje = `https://wa.me/573148487506?text=info del cliente ${ this.dataUser.usu_nombre } Pais ${ res.cob_pais } cedula ${ res.cob_num_cedula } telefono ${ this.dataUser.usu_telefono || '' }  fecha de retiro ${ moment(res.createdAt).format('DD-MM-YYYY HH:MM:SS') } Tipo de Banco ${ res.cob_metodo } Numero cuenta ${ res.cob_num_cuenta } Hola Servicio al cliente, como esta, cordial saludo. Sería tan amable de solicitarme este retiro monto $ ${ ( res.cob_monto || 0 ).toLocaleString(1) } COP gracias por su tiempo ...`;
+    }else{
+      mensaje = `https://wa.me/573148487506?text=info del cliente ${ this.dataUser.usu_nombre } 
+      Pais ${ res.cob_pais }
+      Numero Cedula Bancario ${ res.cob_numero_cedula || 'nulo' }
+      Ciudad o corregimiento donde deseas retirar ${ res.cob_ciudad_corregimiento || 'nulo' }
+      Nombre del banco Correctamente ${ res.cob_nombre_banco || 'nulo' }
+      Numero de cuenta ${ res.cob_num_cuenta || 'nulo' }
+      cedula ${ res.cob_num_cedula } telefono ${ this.dataUser.usu_telefono || '' }  
+      fecha de retiro ${ moment(res.createdAt).format('DD-MM-YYYY HH:MM:SS') } 
+      Tipo de Banco ${ res.cob_metodo || 'nulo' } 
+      Numero cuenta ${ res.cob_num_cuenta } Hola Servicio al cliente, como esta, cordial saludo. Sería tan amable de solicitarme este retiro monto $ ${ ( res.cob_monto || 0 ).toLocaleString(1) } COP gracias por su tiempo ...`;
+    }
+    
     window.open(mensaje);
   }
 

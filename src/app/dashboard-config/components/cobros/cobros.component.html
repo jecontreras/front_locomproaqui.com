@@ -15,23 +15,23 @@
               <div class="col row p-2">
                 <div class="col-md-3 col-sm-4 col-lg-3 col-xs-3">
                   <span>Total Ganado</span>
-                  <p>{{ ( dataInfo.ganancias || 0 ).toLocaleString('de-DE', { style: 'currency', currency: 'COP' }) }}</p>
+                  <p>$ {{ ( dataInfo.ganancias || 0 ).toLocaleString(1) }} COP</p>
                 </div>
                 <div class="col-md-3 col-sm-4 col-lg-3 col-xs-3">
                   <span>Total Cobrado</span>
-                  <p>{{ ( dataInfo.cobrado || 0 ).toLocaleString('de-DE', { style: 'currency', currency: 'COP' }) }}</p>
+                  <p>$ {{ ( dataInfo.cobrado || 0 ).toLocaleString(1) }} COP</p>
                 </div>
                 <div class="col-md-3 col-sm-4 col-lg-3 col-xs-3">
                   <span>Total Pagado</span>
-                  <p>{{ ( dataInfo.pagado || 0 ).toLocaleString('de-DE', { style: 'currency', currency: 'COP' }) }}</p>
+                  <p>$ {{ ( dataInfo.pagado || 0 ).toLocaleString(1) }} COP</p>
                 </div>
                 <div class="col-md-3 col-sm-6 col-lg-3 col-xs-3">
                   <span>Por Cobrar</span>
-                  <p>{{ ( dataInfo.porcobrado || 0 ).toLocaleString('de-DE', { style: 'currency', currency: 'COP' }) }}</p>
+                  <p>$ {{ ( dataInfo.porcobrado || 0 ).toLocaleString(1) }} COP</p>
                 </div>
                 <!-- <div class="col-md-3 col-sm-4 col-lg-3 col-xs-3">
                   <span>Ganancias Por Mis Referidos</span>
-                  <p>{{ ( dataInfo.gananciasRefereridos || 0 ).toLocaleString('de-DE', { style: 'currency', currency: 'COP' }) }}</p>
+                  <p>$ {{ ( dataInfo.gananciasRefereridos || 0 ).toLocaleString(1) }}</p>
                 </div> -->
               </div>
             </div>
@@ -91,8 +91,9 @@
                             <i class="material-icons">delete_forever</i>
                           </button>
                         </td>
-                        <td>{{ ( row['cob_monto'] || 0 ).toLocaleString('de-DE', { style: 'currency', currency: 'COP' }) }}</td>
+                        <td>$ {{ ( row['cob_monto'] || 0 ).toLocaleString(1) }} COP</td>
                         <td>{{ row['cob_metodo'] }}</td>
+                        <td>{{ row['cob_pais'] }}</td>
                         <td>{{ row['createdAt'] }}</td>
                         <td>{{ row['usu_clave_int']?.usu_email }}</td>
                         <td>{{ row['cob_num_cedula'] }}</td>

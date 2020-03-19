@@ -1,6 +1,11 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { environment } from 'src/environments/environment';
+import { USER } from '../interfaces/sotarage';
+import { Store } from '@ngrx/store';
+import { Router } from '@angular/router';
+import { UserAction } from '../redux/app.actions';
+import { ToolsService } from './tools.service';
 
 declare var io: any;
 const headers = new HttpHeaders({
@@ -18,13 +23,39 @@ export class ServiciosService {
   public interval:any;
   public dataUser:any = {};
 
-  constructor(private http: HttpClient) { 
+  constructor(
+    private http: HttpClient,
+    private _store: Store<USER>,
+    private Router: Router,
+    private _tools: ToolsService
+  ) { 
     //this.conectionSocket();
     //this.createsocket("emitir", {mensaje:"inicial"}); 
     this.privateDataUser();
   }
   privateDataUser(){
-    this.dataUser = JSON.parse(localStorage.getItem('user'));
+    this._store.subscribe((store: any) => {
+      store = store.name;
+      if(!store) return false;
+      this.dataUser = store.user || {};
+    });
+    if(Object.keys(this.dataUser).length >0 ){
+      this.querys('tblusuario/querys',{
+        where:{
+          id: this.dataUser.id
+        }
+      }, 'post').subscribe((res:any)=>{
+        res = res.data[0];
+        if(!res) {
+          let accion = new UserAction(this.dataUser,'delete')
+          this._store.dispatch(accion);
+          localStorage.removeItem('user');
+          this._tools.presentToast("Tu sesión ha expirado")
+          this.Router.navigate(['/login']);
+          setTimeout(function(){ location.reload(); }, 3000);
+        }
+      });
+    }
   }
   private ejecutarQuery(url: string, data, METODO){
     return this.http[METODO]( url, data );

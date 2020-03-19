@@ -38,16 +38,20 @@
             </ngx-dropzone>
         </div>
         <div class="form-group col-md-6 col-sm-4 col-lg-4 col-xs-6">
-            <label for="exampleFormControlInput1">Número Cédula</label>
+            <label for="exampleFormControlInput1">Número Cédula del cliente</label>
             <input type="text" [(ngModel)]="data.cob_num_cedula_cliente" class="form-control form-control-sm">
         </div>
         <div class="form-group col-md-6 col-sm-4 col-lg-4 col-xs-6">
-            <label for="exampleFormControlInput1">Nombre Cliente</label>
+            <label for="exampleFormControlInput1">Nombre y apellidos Cliente</label>
             <input type="text" [(ngModel)]="data.ven_nombre_cliente" class="form-control form-control-sm">
         </div>
         <div class="form-group col-md-6 col-sm-4 col-lg-4 col-xs-6">
-            <label for="exampleFormControlInput1">Teléfono cliente</label>
+            <label for="exampleFormControlInput1">Numero de llamada cliente</label>
             <input type="text" [(ngModel)]="data.ven_telefono_cliente" class="form-control form-control-sm">
+        </div>
+        <div class="form-group col-md-6 col-sm-4 col-lg-4 col-xs-6">
+            <label for="exampleFormControlInput1">Ciudad</label>
+            <input type="text" [(ngModel)]="data.ven_ciudad" class="form-control form-control-sm">
         </div>
         <div class="form-group col-md-6 col-sm-4 col-lg-4 col-xs-6">
             <label for="exampleFormControlInput1">Dirección cliente</label>
@@ -72,8 +76,11 @@
             <input type="number" [(ngModel)]="data.ven_cantidad" class="form-control form-control-sm" (change)="suma()">
         </div>
         <div class="form-group col-md-6 col-sm-4 col-lg-4 col-xs-6">
-            <label for="exampleFormControlInput1">Tallas</label>
-            <input type="text" [(ngModel)]="data.ven_tallas" class="form-control form-control-sm">
+            <label for="exampleFormControlInput1">Talla</label>
+            <input type="text" [(ngModel)]="data.ven_tallas" class="form-control form-control-sm" *ngIf="listTallas.length == 0">
+            <select class="form-control form-control-sm" [(ngModel)]="data.ven_tallas" *ngIf="listTallas.length">
+                <option [value]="item.tal_descripcion" *ngFor="let item of listTallas"> {{ item.tal_descripcion }} Talla</option>
+            </select>
         </div>
         <div class="form-group col-md-6 col-sm-4 col-lg-4 col-xs-6" *ngIf="data.ven_tipo == 'whatsapp'">
             <label for="exampleFormControlInput1">Vr.Unidad:</label>
@@ -81,15 +88,15 @@
         </div>
         <div class="form-group col-md-6 col-sm-4 col-lg-4 col-xs-6" *ngIf="data.ven_tipo != 'whatsapp'">
             <label for="exampleFormControlInput1">Vr.Unidad: </label>
-            <span> {{ ( data.ven_precio || 0 ).toLocaleString('de-DE', { style: 'currency', currency: 'COP' }) }}</span>
+            <span>$ {{ ( data.ven_precio || 0 ).toLocaleString(1) }} COP</span>
         </div>
         <div class="form-group col-md-6 col-sm-4 col-lg-4 col-xs-6">
             <label for="exampleFormControlInput1">Precio Total: </label>
-            <span> {{ ( data.ven_total || 0 ).toLocaleString('de-DE', { style: 'currency', currency: 'COP' }) }}</span>
+            <span>$ {{ ( data.ven_total || 0 ).toLocaleString(1) }} COP</span>
         </div>
         <div class="form-group col-md-6 col-sm-4 col-lg-4 col-xs-6">
             <label for="exampleFormControlInput1">Recompensa 7%: </label>
-            <span> {{ ( data.ven_ganancias || 0 ).toLocaleString('de-DE', { style: 'currency', currency: 'COP' }) }}</span>
+            <span>$ {{ ( data.ven_ganancias || 0 ).toLocaleString(1) }} COP</span>
         </div>
         <div class="form-group col-12">
             <label for="exampleFormControlInput1">Observación</label>

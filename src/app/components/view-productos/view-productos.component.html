@@ -14,7 +14,7 @@
         </div>
         <div class="col-md-6 col-sm-12 col-lg-6 col-xs-6 content row">
             <div class="col-12">
-                <h3 class="text-primary">${{ ( data.pro_uni_venta || 0).toLocaleString('de-DE', { style: 'currency', currency: 'COP' }) }}</h3>
+                <h3 class="text-primary">$ {{ ( data.pro_uni_venta || 0).toLocaleString(1) }} COP</h3>
                 <label *ngIf="data.listColor?.length">Colores</label>
                 <select class="form-control form-control-sm" [(ngModel)]="data.color" (change)="cambioImgs()" *ngIf="data.listColor?.length">
                     <option [value]="item.foto" *ngFor="let item of data.listColor">{{ item.talla }}</option>

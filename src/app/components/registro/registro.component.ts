@@ -20,6 +20,7 @@ export class RegistroComponent implements OnInit {
 
   data:any = {};
   listIndicativos = indicativos;
+  disableSubmit:boolean = true;
 
   constructor(
     private _user: UsuariosService,
@@ -34,8 +35,11 @@ export class RegistroComponent implements OnInit {
 
   submit(){
     this.data.cabeza = 1;
+    if(!this.disableSubmit)return false;
+    this.disableSubmit = false;
     this._user.create(this.data).subscribe((res:any)=>{
       console.log("user", res);
+      this.disableSubmit = true;
       if(res.success){
         localStorage.setItem('user', JSON.stringify(res.data));
         let accion = new UserAction( res.data, 'post');
@@ -44,7 +48,7 @@ export class RegistroComponent implements OnInit {
         location.reload();
         this.dialog.closeAll();
       }
-    },(error)=>{ console.error(error); this._tools.presentToast("Error de servidor")});
+    },(error)=>{ console.error(error); this.disableSubmit = true; this._tools.presentToast("Error de servidor")});
   }
   
   terminos(){

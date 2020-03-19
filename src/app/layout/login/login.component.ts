@@ -16,6 +16,7 @@ export class LoginsComponent implements OnInit {
 
   data:any = {};
   disableRestarure:boolean = true;
+  disableSubmit:boolean = true;
 
   constructor(
     private _user: UsuariosService,
@@ -30,8 +31,11 @@ export class LoginsComponent implements OnInit {
   }
 
   submit(){
+    if(!this.disableSubmit) return false;
+    this.disableSubmit = false;
     this._user.login(this.data).subscribe((res:any)=>{
       console.log("user", res);
+      this.disableSubmit = true;
       if(res.success){
         localStorage.setItem('user', JSON.stringify(res.data));
         let accion = new UserAction( res.data, 'post');
@@ -41,7 +45,7 @@ export class LoginsComponent implements OnInit {
       }else{
         this._tools.presentToast("Error de sesión")
       }
-    },(error)=>{ console.error(error); this._tools.presentToast("Error de servidor")});
+    },(error)=>{ console.error(error);this.disableSubmit = true; this._tools.presentToast("Error de servidor")});
   }
 
   registre(){

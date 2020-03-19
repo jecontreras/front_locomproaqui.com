@@ -13,6 +13,11 @@ export class TipoTallasService {
   get(query:any){
     return this._model.querys('tbltipotalla/querys',query, 'post');
   }
+
+  getTalla(query:any){
+    return this._model.querys('tbltallas/querys',query, 'post');
+  }
+
   create(query:any){
     return this._model.querys('tbltipotalla',query, 'post');
   }

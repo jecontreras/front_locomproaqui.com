@@ -136,7 +136,7 @@ export class FormproductosComponent implements OnInit {
     let config:AngularEditorConfig = {
           editable: true,
           spellcheck: true,
-          height: 'auto',
+          height: '300px',
           minHeight: '0',
           maxHeight: 'auto',
           width: 'auto',
