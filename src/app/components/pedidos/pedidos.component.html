@@ -14,10 +14,16 @@
             </div>
         </div>
         <div class="col-12">
-            <mat-chip-list aria-label="Fish selection">
-                <mat-chip color="primary" selected (click)="imageOnClick(idx)"
-                    *ngFor="let item of imageObject;let idx=index">{{ item.title }}</mat-chip>
-            </mat-chip-list>
+            <div class="contenedor">
+                <div class="table-responsive">
+                    <div style="width: 4000px">
+                        <mat-chip-list aria-label="Fish selection">
+                            <mat-chip color="primary" selected (click)="imageOnClick(idx)"
+                                *ngFor="let item of imageObject;let idx=index">{{ item.title }}</mat-chip>
+                        </mat-chip-list>
+                    </div>
+                </div>
+            </div>
             <br>
             <!--<ng-image-slider [images]="imageObject" [infinite]="sliderInfinite" [imagePopup]="sliderImagePopup"
                 [showArrow]="sliderArrowShow" [imageSize]="{width: sliderImageWidth, height: sliderImageHeight}"
@@ -42,7 +48,7 @@
                         <img class="img-responsive btn-block imgProductos pointer "
                                         [src]="item.foto" (click)="agregar(item)">
                     </figure>
-                    <div class="col-md-12 col-xs-12" style="height: 80px !important; max-height: 80px">
+                    <div class="col-md-12 col-xs-12">
                         <a [href]="item.foto" download="Tommy negro" id="descargar" target="_blank"
                             class="fa fa-cloud-download">DESCARGAR</a>
                         <small class="pricesmalloferta currency2 hide"></small>

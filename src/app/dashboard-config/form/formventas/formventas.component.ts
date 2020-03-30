@@ -131,7 +131,7 @@ export class FormventasComponent implements OnInit {
   suma(){
     if(!this.data.ven_precio || !this.data.ven_cantidad) return false;
     this.data.ven_total = ( Number(this.data.ven_precio) * Number(this.data.ven_cantidad) );
-    this.data.ven_ganancias = (  this.data.ven_total * 7.777  / 100 ); 
+    this.data.ven_ganancias = (  this.data.ven_total * ( this.dataUser.porcentaje || 7.777 )  / 100 ); 
   }
 
   submit(){

@@ -4,7 +4,8 @@
 
 export const environment = {
   production: false,
-  url: "http://localhost:1338",
+  //url: "//http://localhost:1338",
+  url: "https://backlocomproaqui.herokuapp.com",
   urlFront: "http://localhost:4200"
 };
 

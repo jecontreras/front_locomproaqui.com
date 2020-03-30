@@ -82,7 +82,7 @@ export class PedidosComponent implements OnInit {
     this._store.dispatch(accion);
   }
   getCategorias(){
-    this._categorias.get( { where:{ cat_activo: 0 } } ).subscribe((res:any)=>{ 
+    this._categorias.get( { where:{ cat_activo: 0 }, limit: 100 } ).subscribe((res:any)=>{ 
     for(let row of res.data){
       this.imageObject.push({
         image: row.cat_imagen || './assets/categoria.jpeg',
