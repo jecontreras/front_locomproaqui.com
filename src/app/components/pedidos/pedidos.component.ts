@@ -96,6 +96,7 @@ export class PedidosComponent implements OnInit {
       image: './assets/categoria.jpeg',
       thumbImage: './assets/categoria.jpeg',
       alt: '',
+      check: true,
       id: 0,
       title: "Todos"
     });
@@ -204,8 +205,10 @@ export class PedidosComponent implements OnInit {
     this._tools.presentToast("Agregado al Carro");
   }
   
-  imageOnClick(index) {
+  imageOnClick(index:any, obj:any) {
       //console.log('index', index, this.imageObject[index]);
+      for(let row of this.imageObject) row.check = false;
+      obj.check = true;
       this.query = { where:{ pro_activo: 0 }, page: 0, limit: 10 };
       if( this.imageObject[index].id >0 ) this.query = { where:{ pro_activo: 0, pro_categoria: this.imageObject[index].id }, page: 0, limit: 10 };
       this.listProductos = [];

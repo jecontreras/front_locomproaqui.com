@@ -16,11 +16,13 @@
         <div class="col-12">
             <div class="contenedor">
                 <div class="table-responsive">
-                    <div style="width: 4000px">
-                        <mat-chip-list aria-label="Fish selection">
-                            <mat-chip color="primary" selected (click)="imageOnClick(idx)"
-                                *ngFor="let item of imageObject;let idx=index">{{ item.title }}</mat-chip>
-                        </mat-chip-list>
+                    <div style="width: 1077px; height: 35px;">
+                        <a *ngFor="let item of imageObject;let idx=index" href="#" (click)="imageOnClick(idx, item);" 
+                            class="estiloCategoria"
+                            [ngClass]="{ 'cambiaColor': item.check == true }"
+                        >
+                            {{ item.title }}
+                        </a>
                     </div>
                 </div>
             </div>

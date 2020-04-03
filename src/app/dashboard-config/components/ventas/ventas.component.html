@@ -71,7 +71,12 @@
                         </button>
                       </td>
                       <td>{{ row['ven_tipo'] }}</td>
-                      <td>{{ row['ven_usu_creacion'] }}</td>
+                      <td>
+                        <p>{{ row['ven_usu_creacion'] }}</p>
+                        <p>{{ row['usu_clave_int']?.usu_nombre }}</p>
+                        <p>+{{ row['usu_clave_int']?.usu_indicativo }} {{ row['usu_clave_int']?.usu_telefono }}</p>
+                        <p>{{ row['usu_clave_int']?.usu_ciudad }}</p>
+                      </td>
                       <td>{{ row['ven_nombre_cliente'] }}</td>
                       <td>{{ row['ven_telefono_cliente'] }}</td>
                       <td>{{ row['ven_fecha_venta'] }}</td>

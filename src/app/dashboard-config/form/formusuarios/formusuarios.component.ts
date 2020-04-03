@@ -61,6 +61,8 @@ export class FormusuariosComponent implements OnInit {
     this.dialog.closeAll();
   }
   updates(){
+    this.data = _.omitBy(this.data, _.isNull);
+    this.data = _.omit( this.data, ['usu_perfil']);
     this._usuarios.update(this.data).subscribe((res:any)=>{
       this._tools.presentToast("Actualizado");
     },(error)=>{console.error(error); this._tools.presentToast("Error de servidor")});
