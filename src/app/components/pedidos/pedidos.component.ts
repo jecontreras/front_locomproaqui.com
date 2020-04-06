@@ -61,7 +61,7 @@ export class PedidosComponent implements OnInit {
 
     this.cargarProductos();
     this._store.subscribe((store: any) => {
-      console.log(store);
+      //console.log(store);
       store = store.name;
       if(!store) return false;
       this.userId = store.usercabeza;

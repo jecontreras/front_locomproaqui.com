@@ -74,14 +74,14 @@ export class PerfilComponent implements OnInit {
 
   CambiarPassword(){
     this._user.cambioPass({ id: this.data.id, password: this.restaure.passNew })
-    .subscribe( (res:any)=>{console.log(res); this.disableRestaure = false; this.restaure = {}; this._tools.presentToast("Actualizado Password"); },
+    .subscribe( (res:any)=>{ this.disableRestaure = false; this.restaure = {}; this._tools.presentToast("Actualizado Password"); },
     (error)=> { console.error(error); this._tools.presentToast("Error Servidor"); } );
   }
 
   Actualizar(){
-    this.data = _.omit(this.data, ['usu_perfil']);
+    this.data = _.omit(this.data, ['usu_perfil', 'cabeza', 'nivel']);
     this._user.update(this.data).subscribe((res:any)=>{
-      console.log(res);
+      //console.log(res);
       this._tools.presentToast("Actualizado");
       let accion = new UserAction(res, 'put');
       this._store.dispatch(accion);
