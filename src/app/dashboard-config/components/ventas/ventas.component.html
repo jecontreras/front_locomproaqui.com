@@ -79,7 +79,7 @@
                       </td>
                       <td>{{ row['ven_nombre_cliente'] }}</td>
                       <td>{{ row['ven_telefono_cliente'] }}</td>
-                      <td>{{ row['ven_fecha_venta'] }}</td>
+                      <td>{{ row['createdAt'] | date:'medium' }}</td>
                       <td>{{ row['pro_clave_int']?.pro_nombre }}</td>
                       <td>{{ row['ven_cantidad'] }}</td>
                       <td>

@@ -34,7 +34,7 @@ export class ProductosComponent implements OnInit {
     page: 0,
     limit: 10
   };
-  Header:any = [ 'Acciones','Foto','Nombre','Codigo','Categoria','Estado'];
+  Header:any = [ 'Acciones','Foto','Nombre','Codigo', 'Precio', 'Categoria','Estado', 'Creado'];
   $:any;
   public datoBusqueda = '';
   notscrolly:boolean=true;

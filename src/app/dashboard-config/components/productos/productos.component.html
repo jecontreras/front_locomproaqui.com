@@ -72,9 +72,10 @@
                       </td>
                       <td>{{ row['pro_nombre'] }}</td>
                       <td>{{ row['pro_codigo'] }}</td>
+                      <td>{{ ( row['pro_uni_venta'] || 0 ).toLocaleString(1) }} COP</td>
                       <td>{{ row['pro_categoria']?.cat_nombre }}</td>
                       <td>{{ row['pro_estado'] == 0 ? 'Activo' : 'Inactivo' }}</td>
-
+                      <td>{{ row['createdAt'] | date:'medium' }}</td>
                     </tr>
                   </tbody>
                 </table>
