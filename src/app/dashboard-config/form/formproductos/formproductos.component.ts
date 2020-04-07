@@ -47,6 +47,7 @@ export class FormproductosComponent implements OnInit {
       this.data = _.clone(this.datas.datos);
       this.id = this.data.id;
       this.titulo = "Actualizar";
+      if( this.data.pro_categoria ) if(this.data.pro_categoria.id) this.data.pro_categoria = this.data.pro_categoria.id;
       this.listColor = this.data.listColor || [];
     }else{this.id = ""; this.data.pro_codigo = this.codigo();}
     this.getCategorias();
@@ -83,7 +84,7 @@ export class FormproductosComponent implements OnInit {
     this._tools.ProcessTime({});
     //this._archivos.create( this.files[0] );
     this._archivos.create( form ).subscribe((res:any)=>{
-      console.log(res);
+      // console.log(res);
       if( item == false ){
         this.data.foto = res.files;//URL+`/${res}`;
         if(this.id)this.submit();
@@ -128,6 +129,7 @@ export class FormproductosComponent implements OnInit {
     this.dialog.closeAll();
   }
   updates(){
+    // this.data = _.omit(this.data, [ ''])
     this._productos.update(this.data).subscribe((res:any)=>{
       this._tools.presentToast("Actualizado");
     },(error)=>{console.error(error); this._tools.presentToast("Error de servidor")});
@@ -181,7 +183,7 @@ export class FormproductosComponent implements OnInit {
     this.editorConfig = config;
   }
   eventoDescripcion(){
-    console.log("HP")
+    // console.log("HP")
   }
 
 }

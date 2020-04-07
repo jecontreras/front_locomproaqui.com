@@ -72,7 +72,7 @@
                       </td>
                       <td>{{ row['pro_nombre'] }}</td>
                       <td>{{ row['pro_codigo'] }}</td>
-                      <td>{{ row['pro_categoria'] }}</td>
+                      <td>{{ row['pro_categoria']?.cat_nombre }}</td>
                       <td>{{ row['pro_estado'] == 0 ? 'Activo' : 'Inactivo' }}</td>
 
                     </tr>
