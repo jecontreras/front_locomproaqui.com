@@ -40,8 +40,11 @@ export class LoginComponent implements OnInit {
         let accion = new UserAction( res.data, 'post');
         this._store.dispatch(accion);
         this._router.navigate(['/pedidos']);
+        this._tools.basicIcons({header: "Hola Bienvenido!", subheader: `Hola ${ res.data.usu_nombre } Que tengas un buen dia`});
+        setTimeout(()=>{ 
+          location.reload();
+        }, 3000);
         this.dialog.closeAll();
-        location.reload();
       }else{
         this._tools.presentToast("Error de sesión")
       }

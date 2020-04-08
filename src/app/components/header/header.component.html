@@ -18,6 +18,12 @@
         <span *ngIf="dataUser.id" [routerLink]="[ '/config/perfil' ]" class="p-1 pointer" > <i class="material-icons">person_pin</i> </span>
       </div>
     </div>
+    <div class="col-12">
+      <h4> 
+        <p *ngIf="dataUser.id" class="text-center">BIENVENIDO A TU OFICINA VIRTUAL " {{ dataUser.usu_nombre }} "</p> 
+        <p *ngIf="!dataUser.id" class="text-center">BIENVENIDO A LOCOMPROAQUI.COM {{ userId.usu_nombre }} </p>
+      </h4>
+    </div>
   </mat-toolbar>
 
   <mat-sidenav-container class="example-sidenav-container" [style.marginTop.px]="mobileQuery.matches ? 56 : 0">

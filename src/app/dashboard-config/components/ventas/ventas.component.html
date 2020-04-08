@@ -25,22 +25,57 @@
               </ngx-spinner>
             </div>
             <div id="datatables_filter" class="dataTables_filter row">
-              <label class="form-group col">
-                <input [(ngModel)]="datoBusqueda" type="search" class="form-control form-control-sm" (change)="buscar()"
-                  placeholder="Buscar Retiros" aria-controls="datatables"></label>
-              <div>
-                <button (click)="buscar()" [disabled]="loader" mat-raised-button mat-min-fab
-                  class="btn btn-primary btn-just-icon btn-round">
-                  <i class="material-icons">search</i>
-                </button>
-                <button *ngIf="activando" (click)="darPuntos()" class="btn btn-primary btn-just-icon btn-round" mat-raised-button
-                  mat-min-fab>
-                  <i class="material-icons">redeem</i>
-                </button>
-                <button (click)="crear(false)" class="btn btn-primary btn-just-icon btn-round" mat-raised-button
-                  mat-min-fab>
-                  SUBE TU VENTA <i class="material-icons">add_circle_outline</i>
-                </button>
+              <div class="col-12 row">
+                <label class="form-group col">
+                  <input [(ngModel)]="datoBusqueda" type="search" class="form-control form-control-sm" (change)="buscar()"
+                    placeholder="Buscar Retiros" aria-controls="datatables"></label>
+                <div>
+                  <button (click)="buscar()" [disabled]="loader" mat-raised-button mat-min-fab
+                    class="btn btn-primary btn-just-icon btn-round">
+                    <i class="material-icons">search</i>
+                  </button>
+                  <button *ngIf="activando" (click)="darPuntos()" class="btn btn-primary btn-just-icon btn-round"
+                    mat-raised-button mat-min-fab>
+                    <i class="material-icons">redeem</i>
+                  </button>
+                  <button (click)="crear(false)" class="btn btn-primary btn-just-icon btn-round" mat-raised-button
+                    mat-min-fab>
+                    SUBE TU VENTA <i class="material-icons">add_circle_outline</i>
+                  </button>
+                </div>
+              </div>
+              <div class="col-12 row">
+                <div class="col-md-6 col-sm-4 col-lg-4 col-xs-6">
+                  <label>Estado de la venta</label>
+                  <select class="form-control form-control-sm" [(ngModel)]="filtro.ven_estado" placeholder="Estado de la Venta"
+                    (change)="buscarEstado()">
+                    <option type="number" value="5">Todos</option>
+                    <option type="number" value="0">Pendiente</option>
+                    <option type="number" value="1">Venta exitosa</option>
+                    <option type="number" value="2">Rechazada</option>
+                    <option type="number" value="3">Despachado</option>
+                  </select>
+                </div>
+                <div class="col-md-5 col-sm-3 col-lg-3 col-xs-5">
+                  <label>Fecha Inicial</label>
+                  <div class="input-group">
+                    <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
+                    <input type="date" class="form-control" [(ngModel)]="filtro.fechaInicio" (keyup)="validandoFecha()" (change)="validandoFecha()">
+                  </div>
+                </div>
+                <div class="col-md-5 col-sm-3 col-lg-3 col-xs-5">
+                  <label>Fecha Final</label>
+                  <div class="input-group">
+                    <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
+                    <input type="date" class="form-control" [(ngModel)]="filtro.fechaFinal" (keyup)="validandoFecha()" (change)="validandoFecha()">
+                  </div>
+                </div>
+                <div class="col-2">
+                  <button (click)="borrarFiltro()" [disabled]="loader" mat-raised-button mat-min-fab
+                    class="btn btn-danger btn-just-icon btn-round">
+                    borrar Filtros
+                  </button>
+                </div>
               </div>
 
             </div>

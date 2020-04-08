@@ -49,6 +49,20 @@ html, body {
   height: 219px !important;
 }
 
+footer {
+  background-color: #3f51b5;
+  position: fixed;
+  bottom: 0px;
+  width:  100%;
+  left: 0px;
+  box-shadow: 5px 3px 5px 5px rgba(0,0,0,.14), 0 5px 8px 0 rgba(0,0,0,.14), 0 1px 14px 0 rgba(0,0,0,.12);
+  padding: 0.5em;
+  font-size: 11px;
+  height: 6%;
+}
+
+
+
 /*.ng-star-inserted{
   color: #3f51b5 !important;
 }*/
@@ -84,6 +98,9 @@ html, body {
     max-width: 407px !important;
     height: 258px !important;
   }
+  footer {
+    font-size: 10px;
+  }
 }
 @media only screen and (max-width: 600px) {
   .imgFoto{
@@ -105,6 +122,9 @@ html, body {
     max-height: 425px !important;
     max-width: 407px !important;
     height: 258px !important;
+  }
+  footer {
+    font-size: 10px;
   }
 }
 /* Small devices (portrait tablets and large phones, 600px and up) */
@@ -128,6 +148,9 @@ html, body {
     max-height: 425px !important;
     max-width: 407px !important;
     height: 287px !important;
+  }
+  footer {
+    font-size: 11px;
   }
 }
 
@@ -153,6 +176,9 @@ html, body {
     max-width: 407px !important;
     height: 285px !important;
   }
+  footer {
+    font-size: 11px;
+  }
 }
 
 /* Medium devices (landscape tablets, 768px and up) */
@@ -176,6 +202,9 @@ html, body {
     max-height: 425px !important;
     max-width: 407px !important;
     height: 289px !important;
+  }
+  footer {
+    font-size: 11px;
   }
 }
 
@@ -201,6 +230,9 @@ html, body {
     max-width: 407px !important;
     height: 367px !important;
   }
+  footer {
+    font-size: 11px;
+  }
 }
 
 /* Extra large devices (large laptops and desktops, 1200px and up) */
@@ -224,5 +256,8 @@ html, body {
     max-height: 425px !important;
     max-width: 407px !important;
     height: 425px !important;
+  }
+  footer {
+    font-size: 11px;
   }
 }

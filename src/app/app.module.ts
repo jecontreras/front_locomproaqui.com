@@ -31,6 +31,7 @@ import { NgxImageZoomModule } from 'ngx-image-zoom';
 import { LoginsComponent } from './layout/login/login.component';
 import { RegistrosComponent } from './layout/registro/registro.component';
 import { TerminosComponent } from './layout/terminos/terminos.component';
+import { FooterComponent } from './components/footer/footer.component';
 
 @NgModule({
   entryComponents:[
@@ -51,7 +52,8 @@ import { TerminosComponent } from './layout/terminos/terminos.component';
     TerminosComponent,
     ViewProductosComponent,
     MenuLateralComponent,
-    ProductoViewComponent
+    ProductoViewComponent,
+    FooterComponent
   ],
   imports: [
     BrowserModule,

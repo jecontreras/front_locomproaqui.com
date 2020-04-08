@@ -8,6 +8,7 @@ import * as _ from 'lodash';
 import { STORAGES } from 'src/app/interfaces/sotarage';
 import { Store } from '@ngrx/store';
 import { FormpuntosComponent } from '../../form/formpuntos/formpuntos.component';
+import * as moment from 'moment';
 
 declare interface DataTable {
   headerRow: string[];
@@ -44,6 +45,7 @@ export class VentasComponent implements OnInit {
   notEmptyPost:boolean = true;
   dataUser:any = {};
   activando:boolean = false;
+  filtro:any = {};
 
   constructor(
     public dialog: MatDialog,
@@ -188,6 +190,53 @@ export class VentasComponent implements OnInit {
       ];
       this.cargarTodos();
     }
+  }
+
+  buscarEstado(){
+    this.loader = false;
+    this.notscrolly = true 
+    this.notEmptyPost = true;
+    this.dataTable.dataRows = [];
+
+    this.query.page =  0;
+    if( Number( this.filtro.ven_estado ) == 5 ) { this.query.where.ven_estado = { '!=': 4 }; }
+    else this.query.where.ven_estado = Number( this.filtro.ven_estado );
+    this.cargarTodos();
+  }
+
+  validandoFecha(){
+    var dateFormat = 'YYYY-MM-DD';
+    if( !( moment(moment( this.filtro.fechaInicio ).format(dateFormat),dateFormat ).isValid() ) ) return false;
+    if( !( moment(moment( this.filtro.fechaFinal ).format(dateFormat),dateFormat ).isValid() ) ) return false;
+
+    this.loader = false;
+    this.notscrolly = true 
+    this.notEmptyPost = true;
+    this.dataTable.dataRows = [];
+
+    this.query.page =  0;
+    this.query.where.createdAt = {
+      ">=": moment( this.filtro.fechaInicio ),
+      "<=": moment( this.filtro.fechaFinal )
+    };
+    this.cargarTodos();
+
+  }
+
+  borrarFiltro(){
+    this.filtro = {
+      fechaInicio: moment().format("YYYY-MM-DD"),
+      fechaFinal: moment().add(30, 'days').format("YYY-MM-DD")
+    };
+    this.datoBusqueda = "";
+    this.query= {
+      where: {
+        ven_sw_eliminado: 0,
+        ven_estado: { '!=': 4 }
+      },
+      page: 0
+    };
+    this.cargarTodos();
   }
 
 }
