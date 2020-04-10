@@ -27,4 +27,9 @@ export class FooterComponent implements OnInit {
     });
   }
 
+  openaVenta(){
+    let url:string = `https://publihazclickcom.wixsite.com/misitio`;
+    window.open( url );
+  }
+
 }
