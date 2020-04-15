@@ -17,9 +17,15 @@
                 <option type="number" value="3">Despachado</option>
             </select>
         </div>
+        <div class="form-group col-md-6 col-sm-4 col-lg-4 col-xs-6" *ngIf="data.id && superSub">
+            <label for="exampleFormControlInput1">número de Rastreo de guía</label>
+            <input type="text" [(ngModel)]="data.ven_numero_guia" class="form-control form-control-sm">
+        </div>
         <div class="form-group col-md-12" *ngIf="data.ven_imagen_producto && id">
             <div class="mx-auto" style="width: 200px;">
-                <img [src]="data.ven_imagen_producto" class="imgFoto">
+                <a [href]="data.ven_imagen_producto" target="_blank">
+                    <img [src]="data.ven_imagen_producto" class="imgFoto">
+                </a>
             </div>
         </div>
         <div class="form-group col-12" *ngIf="data.ven_tipo == 'whatsapp'">
@@ -50,8 +56,12 @@
             <input type="text" [(ngModel)]="data.ven_telefono_cliente" class="form-control form-control-sm">
         </div>
         <div class="form-group col-md-6 col-sm-4 col-lg-4 col-xs-6">
-            <label for="exampleFormControlInput1">Ciudad</label>
+            <label for="exampleFormControlInput1">Ciudad del Cliente</label>
             <input type="text" [(ngModel)]="data.ven_ciudad" class="form-control form-control-sm">
+        </div>
+        <div class="form-group col-md-6 col-sm-4 col-lg-4 col-xs-6">
+        <label for="exampleFormControlInput1">Barrio del Cliente</label>
+            <input type="text" [(ngModel)]="data.ven_barrio" class="form-control form-control-sm">
         </div>
         <div class="form-group col-md-6 col-sm-4 col-lg-4 col-xs-6">
             <label for="exampleFormControlInput1">Dirección cliente</label>
@@ -68,7 +78,7 @@
         <div class="form-group col-md-6 col-sm-4 col-lg-4 col-xs-6" *ngIf="data.ven_tipo == 'carrito'">
             <label for="exampleFormControlSelect1">Productos</label>
             <select class="form-control form-control-sm" [(ngModel)]="data.pro_clave_int" (change)="PrecioPush(); suma();">
-                <option [value]="item.id" *ngFor="let item of listProductos"> {{ item.pro_nombre }} </option>
+                <option [value]="item.id" *ngFor="let item of listProductos"> {{ item.pro_codigo }} || {{ item.pro_nombre }} </option>
             </select>
         </div>
         <div class="form-group col-md-6 col-sm-4 col-lg-4 col-xs-6">
@@ -97,6 +107,28 @@
         <div class="form-group col-md-6 col-sm-4 col-lg-4 col-xs-6">
             <label for="exampleFormControlInput1">Recompensa 7%: </label>
             <span>$ {{ ( data.ven_ganancias || 0 ).toLocaleString(1) }} COP</span>
+        </div>
+        <div class="form-group col-md-6 col-sm-4 col-lg-4 col-xs-6" *ngIf="data.id && superSub && data.ven_imagen_guia">
+            <div class="mx-auto" style="width: 200px;">
+                <a [href]="data.ven_imagen_guia" target="_blank">
+                    <img [src]="data.ven_imagen_guia" class="imgFoto">
+                </a>
+            </div>
+        </div>
+        <div class="form-group col-md-6 col-sm-4 col-lg-4 col-xs-6" *ngIf="data.id && superSub && data.ven_estado == 3">
+            <div class="row">
+                <div class="col"></div>
+                <button class="btn btn-primary btn-just-icon btn-round" (click)="subirFileGuias()" *ngIf="filesGuias.length > 0">
+                    Subir Foto Guia
+                </button>
+            </div>
+            <ngx-dropzone (change)="onSelectGuias($event)">
+                <ngx-dropzone-label>Subir foto de la guía</ngx-dropzone-label>
+                <ngx-dropzone-image-preview ngProjectAs="ngx-dropzone-preview" *ngFor="let f of filesGuias"
+                    [file]="f" [removable]="true" (removed)="onRemoveGuias(f)" multiple="false">
+                    <ngx-dropzone-label>{{ f.name }} ({{ f.type }})</ngx-dropzone-label>
+                </ngx-dropzone-image-preview>
+            </ngx-dropzone>
         </div>
         <div class="form-group col-12">
             <label for="exampleFormControlInput1">Observación</label>

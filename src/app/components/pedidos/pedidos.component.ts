@@ -46,6 +46,7 @@ export class PedidosComponent implements OnInit {
 
   notscrolly:boolean=true;
   notEmptyPost:boolean = true;
+  dataUser: any = {};
 
 
   constructor(
@@ -65,6 +66,7 @@ export class PedidosComponent implements OnInit {
       store = store.name;
       if(!store) return false;
       this.userId = store.usercabeza;
+      this.dataUser = store.user || {};
     });
 
   }
@@ -165,8 +167,19 @@ export class PedidosComponent implements OnInit {
     }); 
   }
   masInfo(obj:any){
-    if(this.userId) this.urlwhat = `https://wa.me/${ this.userId.usu_indicativo || 57 }${ this.userId.usu_telefono || '3148487506'}?text=Hola Servicio al cliente, como esta, saludo cordial, estoy interesad@ en mas informacion ${obj.pro_nombre} codigo ${obj.pro_codigo}`;
-    else this.urlwhat = `https://wa.me/573148487506?text=Hola Servicio al cliente, como esta, saludo cordial, estoy interesad@ en mas informacion ${obj.pro_nombre} codigo ${obj.pro_codigo}`;
+    let cerialNumero:any = ''; 
+    let numeroSplit:any;
+    let cabeza:any = this.dataUser.cabeza;
+    if( cabeza ){
+      numeroSplit = _.split( cabeza.usu_telefono, "+57", 2);
+      if( numeroSplit[1] ) cabeza.usu_telefono = numeroSplit[1];
+      if( cabeza.usu_perfil == 3 ) cerialNumero = ( cabeza.usu_indicativo || '57' ) + ( cabeza.usu_telefono || '3148487506' );
+      else cerialNumero = "573148487506";
+    }else cerialNumero = "573148487506";
+    if(this.userId.id) this.urlwhat = `https://wa.me/${ this.userId.usu_indicativo || 57 }${ ( (_.split( this.userId.usu_telefono , "+57", 2))[1] ) || '3148487506'}?text=Hola Servicio al cliente, como esta, saludo cordial, estoy interesad@ en mas informacion ${obj.pro_nombre} codigo ${obj.pro_codigo}`;
+    else {
+      this.urlwhat = `https://wa.me/${ cerialNumero }?text=Hola Servicio al cliente, como esta, saludo cordial, estoy interesad@ en mas informacion ${obj.pro_nombre} codigo ${obj.pro_codigo}`;
+    }
     window.open(this.urlwhat);
   }
   

@@ -8,7 +8,8 @@ import * as _ from 'lodash';
 import { STORAGES } from 'src/app/interfaces/sotarage';
 import { Store } from '@ngrx/store';
 import { FormpuntosComponent } from '../../form/formpuntos/formpuntos.component';
-import * as moment from 'moment';
+import * as moment from 'moment'; 
+import { UsuariosService } from 'src/app/servicesComponents/usuarios.service'
 
 declare interface DataTable {
   headerRow: string[];
@@ -53,6 +54,7 @@ export class VentasComponent implements OnInit {
     private _ventas: VentasService,
     private spinner: NgxSpinnerService,
     private _store: Store<STORAGES>,
+    private _user: UsuariosService
   ) {
     this._store.subscribe((store: any) => {
       store = store.name;
@@ -69,7 +71,18 @@ export class VentasComponent implements OnInit {
       footerRow: this.Header,
       dataRows: []
     };
-    this.cargarTodos();
+    if(this.dataUser.usu_perfil.prf_descripcion == "subAdministrador") this.getUserCabeza();
+    else this.cargarTodos();
+  }
+
+  getUserCabeza(){
+    this._user.get({ where: { cabeza: this.dataUser.id } }).subscribe((res:any)=>{
+      res = res.data;
+      if( res.length > 0 ) this.query.where.usu_clave_int = _.map(res, 'id');
+      else this.query.where.usu_clave_int = [];
+      this.query.where.usu_clave_int.push( this.dataUser.id );
+      this.cargarTodos();
+    });
   }
 
   crear(obj:any){
