@@ -1,5 +1,6 @@
 import { Component, OnInit, Inject } from '@angular/core';
 import { UsuariosService } from 'src/app/servicesComponents/usuarios.service';
+import { PerfilService } from 'src/app/servicesComponents/perfil.service';
 import { ToolsService } from 'src/app/services/tools.service';
 import { MatDialogRef, MAT_DIALOG_DATA, MatDialog } from '@angular/material';
 import * as _ from 'lodash';
@@ -17,10 +18,12 @@ export class FormusuariosComponent implements OnInit {
   files: File[] = [];
   list_files: any = [];
   restaure:any = {};
+  listPerfil:any = [];
 
   constructor(
     public dialog: MatDialog,
     private _usuarios: UsuariosService,
+    private _perfil: PerfilService,
     private _tools: ToolsService,
     public dialogRef: MatDialogRef<FormusuariosComponent>,
     @Inject(MAT_DIALOG_DATA) public datas: any
@@ -33,8 +36,9 @@ export class FormusuariosComponent implements OnInit {
       this.id = this.data.id;
       this.titulo = "Actualizar";
       if(this.data.cat_activo === 0) this.data.cat_activo = true;
-      this.data.usu_perfil = this.data.usu_perfil.prf_descripcion;
+      this.data.usu_perfil = this.data.usu_perfil.id;
     }else{this.id = ""}
+    this.getPerfil();
   }
   
   onSelect(event:any) {
@@ -45,6 +49,10 @@ export class FormusuariosComponent implements OnInit {
   onRemove(event) {
     //console.log(event);
     this.files.splice(this.files.indexOf(event), 1);
+  }
+
+  getPerfil(){
+    this._perfil.get({ where: {} }).subscribe((res:any)=> this.listPerfil = res.data );
   }
 
   submit(){
@@ -62,7 +70,7 @@ export class FormusuariosComponent implements OnInit {
   }
   updates(){
     this.data = _.omitBy(this.data, _.isNull);
-    this.data = _.omit( this.data, ['usu_perfil']);
+    this.data = _.omit( this.data, ['cabeza', 'nivel', 'createdAt', 'updatedAt']);
     this._usuarios.update(this.data).subscribe((res:any)=>{
       this._tools.presentToast("Actualizado");
     },(error)=>{console.error(error); this._tools.presentToast("Error de servidor")});

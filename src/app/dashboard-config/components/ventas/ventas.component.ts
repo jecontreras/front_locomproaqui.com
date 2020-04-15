@@ -71,8 +71,7 @@ export class VentasComponent implements OnInit {
       footerRow: this.Header,
       dataRows: []
     };
-    if(this.dataUser.usu_perfil.prf_descripcion == "subAdministrador") this.getUserCabeza();
-    else this.cargarTodos();
+    this.borrarFiltro();
   }
 
   getUserCabeza(){
@@ -158,6 +157,7 @@ export class VentasComponent implements OnInit {
     this.dataTable.dataRows = [];
     //console.log(this.datoBusqueda);
     this.datoBusqueda = this.datoBusqueda.trim();
+    if(this.dataUser.usu_perfil.prf_descripcion != 'administrador') this.query.where.usu_clave_int = this.dataUser.id;
     if (this.datoBusqueda === '') {
       this.query = {
         where:{
@@ -166,8 +166,6 @@ export class VentasComponent implements OnInit {
         },
         page: 0
       }
-      if(this.dataUser.usu_perfil.prf_descripcion != 'administrador') this.query.where.usu_clave_int = this.dataUser.id;
-      this.cargarTodos();
     } else {
       this.query.where.or = [
         {
@@ -201,8 +199,9 @@ export class VentasComponent implements OnInit {
           }
         },
       ];
-      this.cargarTodos();
     }
+    if(this.dataUser.usu_perfil.prf_descripcion == "subAdministrador") this.getUserCabeza();
+    else this.cargarTodos();
   }
 
   buscarEstado(){
@@ -249,7 +248,9 @@ export class VentasComponent implements OnInit {
       },
       page: 0
     };
-    this.cargarTodos();
+    if(this.dataUser.usu_perfil.prf_descripcion != 'administrador') this.query.where.usu_clave_int = this.dataUser.id;
+    if(this.dataUser.usu_perfil.prf_descripcion == "subAdministrador") this.getUserCabeza();
+    else this.cargarTodos();
   }
 
 }

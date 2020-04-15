@@ -48,9 +48,7 @@
         <div class="form-group col-md-6 col-sm-4 col-lg-4 col-xs-6">
             <label for="exampleFormControlSelect1">Perfil</label>
             <select class="form-control form-control-sm" [(ngModel)]="data.usu_perfil">
-                <option value="administrador">Administrador</option>
-                <option value="vendedor">Vendedor</option>
-                <option value="usuario">Usuario</option>
+                <option *ngFor="let item of listPerfil" [value]="item.id">{{ item.prf_descripcion }}</option>
             </select>
         </div>
         <div class="form-group col-12" *ngIf="id">
