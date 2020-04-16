@@ -189,12 +189,7 @@ export class VentasComponent implements OnInit {
           }
         },
         {
-          ven_fecha_venta: {
-            contains: this.datoBusqueda|| ''
-          }
-        },
-        {
-          ven_tallas: {
+          ven_numero_guia: {
             contains: this.datoBusqueda|| ''
           }
         },

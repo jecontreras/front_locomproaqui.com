@@ -173,7 +173,7 @@ export class FormventasComponent implements OnInit {
 
   }
 
-  OrderWhatsapp(res) {
+  OrderWhatsapp( res:any ) {
     let cerialNumero:any = ''; 
     let cabeza:any = this.dataUser.cabeza || {};
     let numeroSplit = _.split( cabeza.usu_telefono, "+57", 2);
@@ -190,6 +190,18 @@ export class FormventasComponent implements OnInit {
     window.open(mensaje);
   }
 
+  OrdenValidadWhatsapp( res:any ){
+    let cerialNumero:any = `${ res.usu_clave_int.usu_indicativo }${ res.usu_clave_int.usu_telefono }`; 
+    let mensaje: string = `https://wa.me/${ cerialNumero }?text=info del cliente ${res.ven_nombre_cliente} telefono ${res.ven_telefono_cliente || ''} fecha del pedido ${res.ven_fecha_venta} Hola Vendedor, 
+    como esta, cordial saludo. su pedido ya fue despachado numero guia ${ res.ven_numero_guia } Foto de guia ${ res.ven_imagen_guia }`;
+    console.log( "el puto mensaje", mensaje);
+    window.open(mensaje);
+    cerialNumero = `57${ res.ven_telefono_cliente }`; 
+    mensaje = `https://wa.me/${ cerialNumero }?text=info del cliente ${res.ven_nombre_cliente} telefono ${res.ven_telefono_cliente || ''} fecha del pedido ${res.ven_fecha_venta} Hola Vendedor, 
+    como esta, cordial saludo. su pedido ya fue despachado numero guia ${ res.ven_numero_guia } Foto de guia ${ res.ven_imagen_guia }`;
+    window.open(mensaje);
+  }
+
   updates() {
     this.data = _.omit(this.data, ['usu_clave_int']);
     this.data = _.omitBy( this.data, _.isNull);
@@ -197,6 +209,7 @@ export class FormventasComponent implements OnInit {
       this._tools.presentToast("Actualizado");
       this.disabledButton = false;
       this.disabled = false;
+      if( res.ven_estado == 3 ) this.OrdenValidadWhatsapp( res );
     }, (error) => { console.error(error); this._tools.presentToast("Error de servidor"); this.disabledButton = false; });
   }
 
