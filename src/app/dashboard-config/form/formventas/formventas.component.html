@@ -148,4 +148,7 @@
       <span *ngIf="!id">Guardar Ventas</span>
       <span *ngIf="id">Actulizar Cambios</span>
   </button>
+  <button mat-button (click)="OrdenValidadWhatsapp( data )" *ngIf="data.id && superSub && data.ven_estado == 3">
+    <span>Enviar Guia Whatsapp</span>
+</button>
 </mat-dialog-actions>
