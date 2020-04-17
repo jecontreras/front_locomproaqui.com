@@ -110,7 +110,7 @@ export class FormventasComponent implements OnInit {
       this.disabled = false;
       if (this.id) this.submit();
       else {
-        if (opt) if (this.data.ven_tipo == 'whatsapp' && this.data.ven_imagen_producto) this.submit();
+        if (opt) if ( ( this.data.ven_tipo == 'whatsapp' || this.data.ven_tipo == 'WHATSAPP' ) && this.data.ven_imagen_producto) this.submit();
       }
     }, (error) => { console.error(error); this._tools.presentToast("Error de servidor al subir una imagen") });
 
@@ -228,7 +228,7 @@ export class FormventasComponent implements OnInit {
       this.disabledButton = false;
       this.disabled = false;
       //if( res.ven_estado == 3 ) this.OrdenValidadWhatsapp( res );
-    }, (error) => { console.error(error); this._tools.presentToast("Error de servidor"); this.disabledButton = false; });
+    }, (error) => { console.error(error); this._tools.presentToast("Error de servidor"); this.disabledButton = false; this.disabled = false; });
   }
 
   crearNotificacion(valuesToSet: any) {

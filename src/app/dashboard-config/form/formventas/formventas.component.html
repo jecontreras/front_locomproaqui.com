@@ -28,7 +28,7 @@
                 </a>
             </div>
         </div>
-        <div class="form-group col-12" *ngIf="data.ven_tipo == 'whatsapp'">
+        <div class="form-group col-12" *ngIf="( data.ven_tipo == 'whatsapp' || data.ven_tipo == 'WHATSAPP' )">
             <div class="row">
                 <label class="col" >Subir Imagen</label>
                 <button class="btn btn-primary btn-just-icon btn-round" (click)="subirFile(false)" *ngIf="files.length > 0">
@@ -75,7 +75,7 @@
                     [(ngModel)]="data.ven_fecha_venta">
             </div>
         </div>
-        <div class="form-group col-md-6 col-sm-4 col-lg-4 col-xs-6" *ngIf="data.ven_tipo == 'carrito'">
+        <div class="form-group col-md-6 col-sm-4 col-lg-4 col-xs-6" *ngIf="( data.ven_tipo == 'carrito' || data.ven_tipo == 'CARRITO' )">
             <label for="exampleFormControlSelect1">Productos</label>
             <select class="form-control form-control-sm" [(ngModel)]="data.pro_clave_int" (change)="PrecioPush(); suma();">
                 <option [value]="item.id" *ngFor="let item of listProductos"> {{ item.pro_codigo }} || {{ item.pro_nombre }} </option>
@@ -92,11 +92,11 @@
                 <option [value]="item.tal_descripcion" *ngFor="let item of listTallas"> {{ item.tal_descripcion }} Talla</option>
             </select>
         </div>
-        <div class="form-group col-md-6 col-sm-4 col-lg-4 col-xs-6" *ngIf="data.ven_tipo == 'whatsapp'">
+        <div class="form-group col-md-6 col-sm-4 col-lg-4 col-xs-6" *ngIf="( data.ven_tipo == 'whatsapp' || data.ven_tipo == 'WHATSAPP' )">
             <label for="exampleFormControlInput1">Vr.Unidad:</label>
             <input type="number" [(ngModel)]="data.ven_precio" class="form-control form-control-sm" (change)="suma()">
         </div>
-        <div class="form-group col-md-6 col-sm-4 col-lg-4 col-xs-6" *ngIf="data.ven_tipo != 'whatsapp'">
+        <div class="form-group col-md-6 col-sm-4 col-lg-4 col-xs-6" *ngIf="( data.ven_tipo == 'carrito' || data.ven_tipo == 'CARRITO' )">
             <label for="exampleFormControlInput1">Vr.Unidad: </label>
             <span>$ {{ ( data.ven_precio || 0 ).toLocaleString(1) }} COP</span>
         </div>
@@ -138,13 +138,13 @@
 </mat-dialog-content>
 <mat-dialog-actions align="end">
   <button mat-button mat-dialog-close>Cerrar</button>
-  <button [disabled]="disabled" class="btn btn-primary btn-just-icon btn-round" (click)="subirFile(true)" *ngIf="( data.ven_tipo == 'whatsapp' && !data.ven_imagen_producto) && files.length > 0">
+  <button [disabled]="disabled" class="btn btn-primary btn-just-icon btn-round" (click)="subirFile(true)" *ngIf="( ( data.ven_tipo == 'whatsapp' || data.ven_tipo == 'WHATSAPP' ) && !data.ven_imagen_producto) && files.length > 0">
         Guardar Venta
   </button>
-  <span *ngIf="( data.ven_tipo == 'whatsapp' && !data.ven_imagen_producto) && files.length == 0">
+  <span *ngIf="( ( data.ven_tipo == 'whatsapp' || data.ven_tipo == 'WHATSAPP' ) && !data.ven_imagen_producto) && files.length == 0">
     Primero debes subir una imagen 
   </span>
-  <button mat-button cdkFocusInitial (click)="submit()" *ngIf="( data.ven_tipo == 'whatsapp' && data.ven_imagen_producto ) || data.ven_tipo == 'carrito'" [disabled]="disabledButton">
+  <button mat-button cdkFocusInitial (click)="submit()" *ngIf="( ( data.ven_tipo == 'whatsapp' || data.ven_tipo == 'WHATSAPP' ) && data.ven_imagen_producto ) || ( data.ven_tipo == 'carrito' || data.ven_tipo == 'CARRITO' )" [disabled]="disabledButton">
       <span *ngIf="!id">Guardar Ventas</span>
       <span *ngIf="id">Actulizar Cambios</span>
   </button>
