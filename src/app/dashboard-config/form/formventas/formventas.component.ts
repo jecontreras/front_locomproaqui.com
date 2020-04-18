@@ -72,6 +72,8 @@ export class FormventasComponent implements OnInit {
       this.titulo = "Actualizar";
       if (this.data.cat_activo === 0) this.data.cat_activo = true;
       if (this.data.pro_clave_int) this.data.pro_clave_int = this.data.pro_clave_int.id;
+      if ( this.data.ven_tipo == "WHATSAPP" ) { if( !this.data.ven_imagen_producto ) this.data.ven_imagen_producto = "./assets/noimagen.jpg"; this.data.ven_tipo = "whatsapp"; }
+      if ( this.data.ven_tipo == "CARRITO" ) { this.data.ven_tipo = "carrito"; }
     } else {
       this.id = "";
       this.data.usu_clave_int = this.dataUser.id;
