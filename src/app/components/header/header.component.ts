@@ -219,6 +219,13 @@ export class HeaderComponent implements OnInit {
         submenus:[]
       },
       {
+        icons: 'announcement',
+        nombre: 'Testimonios',
+        disable: true,
+        url: '/testimonio',
+        submenus:[]
+      },
+      {
         icons: 'account_circle',
         nombre: 'Mi Cuenta',
         disable: this.rolUser !== 'visitante',

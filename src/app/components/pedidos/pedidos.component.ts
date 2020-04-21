@@ -253,6 +253,18 @@ export class PedidosComponent implements OnInit {
       this.cargarProductos();
     }
   }
+
+  openShare( obj:any ){
+    if (navigator['share']) {
+      navigator['share']({
+        title: obj.pro_nombre,
+        text: obj.foto +" "+ obj.pro_descripcion + `link del producto ---> https://www.locomproaqui.com/productos/${ obj.id } }`,
+        url: obj.foto,
+      })
+        .then(() => console.log('Successful share'))
+        .catch((error) => console.log('Error sharing', error));
+    }else console.log("no se pudo compartir porque no se soporta");
+  }
   
   codigo(){
     return (Date.now().toString(20).substr(2, 3) + Math.random().toString(20).substr(2, 3)).toUpperCase();

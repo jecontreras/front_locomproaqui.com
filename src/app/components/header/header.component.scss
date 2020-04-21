@@ -11,7 +11,18 @@
 }
 .toolbar{
   height: 80px !important;
-  width: 101% !important;
+  width: 101.1% !important;
+}
+
+.nav-pills>li.active>a, .nav-pills>li.active>a:focus, .nav-pills>li.active>a:hover {
+  color: #fff;
+  background-color: #fff !important;
+}
+
+.nav>li>a {
+  position: relative;
+  display: block;
+  padding: 0px !important;
 }
 
 mat-sidenav {

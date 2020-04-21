@@ -4,6 +4,7 @@ import { PedidosComponent } from './components/pedidos/pedidos.component';
 import { ProductoViewComponent } from './components/producto-view/producto-view.component';
 import { LoginsComponent } from './layout/login/login.component';
 import { RegistrosComponent } from './layout/registro/registro.component';
+import { TestimoniosComponent } from './components/testimonios/testimonios.component';
 
 
 const routes: Routes = [
@@ -14,6 +15,7 @@ const routes: Routes = [
   { path: 'login', component: LoginsComponent },
   { path: 'registro', component: RegistrosComponent },
   { path: 'registro/:id', component: RegistrosComponent },
+  { path: 'testimonio', component: TestimoniosComponent },
   //{path: '**', redirectTo: 'pedidos', pathMatch: 'full'},
   {
     path: 'config', 

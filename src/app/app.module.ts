@@ -32,6 +32,7 @@ import { LoginsComponent } from './layout/login/login.component';
 import { RegistrosComponent } from './layout/registro/registro.component';
 import { TerminosComponent } from './layout/terminos/terminos.component';
 import { FooterComponent } from './components/footer/footer.component';
+import { TestimoniosComponent } from './components/testimonios/testimonios.component';
 
 @NgModule({
   entryComponents:[
@@ -53,7 +54,8 @@ import { FooterComponent } from './components/footer/footer.component';
     ViewProductosComponent,
     MenuLateralComponent,
     ProductoViewComponent,
-    FooterComponent
+    FooterComponent,
+    TestimoniosComponent
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'serverApp' }),
