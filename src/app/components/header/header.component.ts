@@ -273,6 +273,11 @@ export class HeaderComponent implements OnInit {
         submenus:[
           {
             icons: 'settings',
+            nombre: 'Testimonios',
+            url: '/config/testimonios',
+          },
+          {
+            icons: 'settings',
             nombre: 'Categorias',
             url: '/config/categorias',
           },

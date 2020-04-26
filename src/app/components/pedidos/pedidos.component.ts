@@ -176,9 +176,9 @@ export class PedidosComponent implements OnInit {
       if( cabeza.usu_perfil == 3 ) cerialNumero = ( cabeza.usu_indicativo || '57' ) + ( cabeza.usu_telefono || '3148487506' );
       else cerialNumero = "573148487506";
     }else cerialNumero = "573148487506";
-    if(this.userId.id) this.urlwhat = `https://wa.me/${ this.userId.usu_indicativo || 57 }${ ( (_.split( this.userId.usu_telefono , "+57", 2))[1] ) || '3148487506'}?text=Hola Servicio al cliente, como esta, saludo cordial, estoy interesad@ en mas informacion ${obj.pro_nombre} codigo ${obj.pro_codigo}`;
+    if(this.userId.id) this.urlwhat = `https://wa.me/${ this.userId.usu_indicativo || 57 }${ ( (_.split( this.userId.usu_telefono , "+57", 2))[1] ) || '3148487506'}?text=Hola Servicio al cliente, como esta, saludo cordial, estoy interesad@ en mas informacion ${obj.pro_nombre} codigo ${obj.pro_codigo} foto ==> ${ obj.foto }`;
     else {
-      this.urlwhat = `https://wa.me/${ cerialNumero }?text=Hola Servicio al cliente, como esta, saludo cordial, estoy interesad@ en mas informacion ${obj.pro_nombre} codigo ${obj.pro_codigo}`;
+      this.urlwhat = `https://wa.me/${ cerialNumero }?text=Hola Servicio al cliente, como esta, saludo cordial, estoy interesad@ en mas informacion ${obj.pro_nombre} codigo ${obj.pro_codigo} foto ==> ${ obj.foto }`;
     }
     window.open(this.urlwhat);
   }
@@ -263,7 +263,11 @@ export class PedidosComponent implements OnInit {
       })
         .then(() => console.log('Successful share'))
         .catch((error) => console.log('Error sharing', error));
-    }else console.log("no se pudo compartir porque no se soporta");
+    }else {
+      console.log("no se pudo compartir porque no se soporta");
+      let url = `https://www.facebook.com/sharer/sharer.php?kid_directed_site=0&u=https://www.locomproaqui.com/productos/15?u=https://www.locomproaqui.com/productos/${ obj.id }`;
+      window.open( url );
+    }
   }
   
   codigo(){

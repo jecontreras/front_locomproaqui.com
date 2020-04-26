@@ -7,6 +7,7 @@ import { STORAGES } from 'src/app/interfaces/sotarage';
 import { Store } from '@ngrx/store';
 import * as moment from 'moment';
 import { UsuariosService } from 'src/app/servicesComponents/usuarios.service';
+import { FormtestimoniosComponent } from '../formtestimonios/formtestimonios.component';
 
 @Component({
   selector: 'app-formcobros',
@@ -93,8 +94,9 @@ export class FormcobrosComponent implements OnInit {
       this.disabledButton = false;
       this._tools.basicIcons({header: `hola ${ this.dataUser.usu_nombre } cordial saludo`, subheader: `Te informamos que tu solicitud de retiro ha Sido recibida de manera satisfactoria y está en proceso de validación la empresa te pagara dentro de los 3 días hábiles siguientes después de la quincena!`});
       this.procesoWhat( res );
-    }, (error)=>{ this._tools.presentToast(error.error.mensaje); console.error(error); this.disabledButton = false; });
-    this.dialog.closeAll();
+      this.openTestimonios();
+      this.dialog.closeAll();
+    }, (error)=>{ this._tools.presentToast(error.error.mensaje); console.error(error); this.disabledButton = false; this.dialog.closeAll(); });
   }
 
   updates(){
@@ -108,11 +110,12 @@ export class FormcobrosComponent implements OnInit {
 
   procesoWhat( res:any ){
     let mensaje:string;
+    let numero:string = "573232523235";
 
     if(res.cob_pais === 'colombia'){
-      mensaje = `https://wa.me/573148487506?text=info del cliente ${ this.dataUser.usu_nombre } Pais ${ res.cob_pais } cedula ${ res.cob_num_cedula } telefono ${ this.dataUser.usu_telefono || '' }  fecha de retiro ${ moment(res.createdAt).format('DD-MM-YYYY HH:MM:SS') } Tipo de Banco ${ res.cob_metodo } Numero cuenta ${ res.cob_num_cuenta } Hola Servicio al cliente, como esta, cordial saludo. Sería tan amable de solicitarme este retiro monto $ ${ ( res.cob_monto || 0 ).toLocaleString(1) } COP gracias por su tiempo ...`;
+      mensaje = `https://wa.me/${ numero }?text=info del cliente ${ this.dataUser.usu_nombre } Pais ${ res.cob_pais } cedula ${ res.cob_num_cedula } telefono ${ this.dataUser.usu_telefono || '' }  fecha de retiro ${ moment(res.createdAt).format('DD-MM-YYYY HH:MM:SS') } Tipo de Banco ${ res.cob_metodo } Numero cuenta ${ res.cob_num_cuenta } Hola Servicio al cliente, como esta, cordial saludo. Sería tan amable de solicitarme este retiro monto $ ${ ( res.cob_monto || 0 ).toLocaleString(1) } COP gracias por su tiempo ...`;
     }else{
-      mensaje = `https://wa.me/573148487506?text=info del cliente ${ this.dataUser.usu_nombre } 
+      mensaje = `https://wa.me/${ numero }?text=info del cliente ${ this.dataUser.usu_nombre } 
       Pais ${ res.cob_pais }
       Numero Cedula Bancario ${ res.cob_numero_cedula || 'nulo' }
       Ciudad o corregimiento donde deseas retirar ${ res.cob_ciudad_corregimiento || 'nulo' }
@@ -125,6 +128,17 @@ export class FormcobrosComponent implements OnInit {
     }
     
     window.open(mensaje);
+  }
+
+  openTestimonios(){
+    const dialogRef = this.dialog.open(FormtestimoniosComponent,{
+      width: '731px',
+      data: {}
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      console.log(`Dialog result: ${result}`);
+    });
   }
 
 }

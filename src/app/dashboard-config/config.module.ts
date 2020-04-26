@@ -30,6 +30,8 @@ import { FormpuntosComponent } from './form/formpuntos/formpuntos.component';
 
 //settings
 import { AngularEditorModule } from '@kolkov/angular-editor';
+import { FormtestimoniosComponent } from './form/formtestimonios/formtestimonios.component';
+import { TestimonioComponent } from './components/testimonios/testimonios.component';
 
 @NgModule({
   entryComponents: [
@@ -39,7 +41,8 @@ import { AngularEditorModule } from '@kolkov/angular-editor';
     FormusuariosComponent,
     FormventasComponent,
     FormcobrosComponent,
-    FormpuntosComponent
+    FormpuntosComponent,
+    FormtestimoniosComponent
   ],
   declarations: [
     MainComponent,
@@ -59,7 +62,9 @@ import { AngularEditorModule } from '@kolkov/angular-editor';
     FormbancosComponent,
     FormcobrosComponent,
     ReferidosComponent,
-    FormpuntosComponent
+    FormpuntosComponent,
+    FormtestimoniosComponent,
+    TestimonioComponent
   ],
   imports: [
     CommonModule,

@@ -41,6 +41,8 @@ export class FormventasComponent implements OnInit {
   filesGuias:File[] = [];
   mensajeWhat:string;
 
+  disableBtnFile:boolean = false;
+
   constructor(
     public dialog: MatDialog,
     private _ventas: VentasService,
@@ -102,6 +104,8 @@ export class FormventasComponent implements OnInit {
 
   subirFile(opt: boolean) {
     this.disabled = true;
+    this.disableBtnFile = true;
+    this.disabledButton = true;
     let form: any = new FormData();
     form.append('file', this.files[0]);
     this._tools.ProcessTime({});
@@ -110,11 +114,13 @@ export class FormventasComponent implements OnInit {
       this.data.ven_imagen_producto = res.files;//URL+`/${res}`;
       //this._tools.presentToast("Exitoso");
       this.disabled = false;
+      this.disableBtnFile = false;
+      this.disabledButton = false;
       if (this.id) this.submit();
       else {
         if (opt) if ( ( this.data.ven_tipo == 'whatsapp' || this.data.ven_tipo == 'WHATSAPP' ) && this.data.ven_imagen_producto) this.submit();
       }
-    }, (error) => { console.error(error); this._tools.presentToast("Error de servidor al subir una imagen") });
+    }, (error) => { console.error(error); this._tools.presentToast("Error de servidor al subir una imagen"); this.disableBtnFile = false; this.disabledButton = false; });
 
   }
 
@@ -154,7 +160,7 @@ export class FormventasComponent implements OnInit {
 
     this.data.ven_estado = 0;
     this.data.create = moment().format('DD-MM-YYYY');
-    if( this.dataUser.cabeza.usu_perfil == 3 ) this.data.ven_subVendedor = 1;
+    if( this.dataUser.cabeza ) if( this.dataUser.cabeza.usu_perfil == 3 ) this.data.ven_subVendedor = 1;
     this._ventas.get({ where: { cob_num_cedula_cliente: this.data.cob_num_cedula_cliente, ven_estado: 0, ven_sw_eliminado: 1 } }).subscribe((res: any) => {
       res = res.data[0];
       if (res) this._tools.basicIcons({ header: "Este cliente tiene una venta activa!", subheader: "Esta venta sera vereficada por posible confuciones" });
