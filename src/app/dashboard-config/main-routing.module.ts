@@ -13,6 +13,7 @@ import { PerfilComponent } from './components/perfil/perfil.component';
 import { ReferidosComponent } from './components/referidos/referidos.component';
 
 import { TestimonioComponent } from './components/testimonios/testimonios.component';
+import { VentastableComponent } from './table/ventastable/ventastable.component';
 
 const dashboardRoutes: Routes = [
  {
@@ -31,6 +32,7 @@ const dashboardRoutes: Routes = [
      {path: 'perfil', component: PerfilComponent},
      {path: 'referidos', component: ReferidosComponent},
      {path: 'testimonios', component: TestimonioComponent},
+     {path: 'tablaventas', component: VentastableComponent},
      {path: '**', redirectTo: 'categorias', pathMatch: 'full'}
    ]
   }

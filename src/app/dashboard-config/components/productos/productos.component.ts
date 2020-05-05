@@ -72,7 +72,7 @@ export class ProductosComponent implements OnInit {
     }
     this._tools.confirm({title:"Eliminar", detalle:"Deseas Eliminar Dato", confir:"Si Eliminar"}).then((opt)=>{
       if(opt.value){
-        this._productos.update(obj).subscribe((res:any)=>{
+        this._productos.update(datos).subscribe((res:any)=>{
           this.dataTable.dataRows.splice(idx, 1);
           this._tools.presentToast("Eliminado")
         },(error)=>{console.error(error); this._tools.presentToast("Error de servidor") })

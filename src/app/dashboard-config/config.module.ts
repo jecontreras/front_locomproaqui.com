@@ -33,6 +33,7 @@ import { AngularEditorModule } from '@kolkov/angular-editor';
 import { FormtestimoniosComponent } from './form/formtestimonios/formtestimonios.component';
 import { TestimonioComponent } from './components/testimonios/testimonios.component';
 import { VentastableComponent } from './table/ventastable/ventastable.component';
+import { Ng2SmartTableModule } from 'ng2-smart-table';
 
 @NgModule({
   entryComponents: [
@@ -80,7 +81,8 @@ import { VentastableComponent } from './table/ventastable/ventastable.component'
     NgxSpinnerModule,
     FormsModule,
     NgxDropzoneModule,
-    AngularEditorModule
+    AngularEditorModule,
+    Ng2SmartTableModule
   ],
   exports: [
     FormcategoriasComponent,

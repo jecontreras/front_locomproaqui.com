@@ -112,7 +112,7 @@ export class HeaderComponent implements OnInit {
 
   getCarrito(){
     setInterval(()=>{ 
-      this.getVentas();
+      // this.getVentas();
     }, 5000);
   }
 

@@ -11,6 +11,7 @@ import { FormpuntosComponent } from '../../form/formpuntos/formpuntos.component'
 import * as moment from 'moment'; 
 import { UsuariosService } from 'src/app/servicesComponents/usuarios.service'
 import { VentastableComponent } from '../../table/ventastable/ventastable.component';
+import { Router } from '@angular/router';
 
 declare interface DataTable {
   headerRow: string[];
@@ -55,7 +56,8 @@ export class VentasComponent implements OnInit {
     private _ventas: VentasService,
     private spinner: NgxSpinnerService,
     private _store: Store<STORAGES>,
-    private _user: UsuariosService
+    private _user: UsuariosService,
+    private Router: Router
   ) {
     this._store.subscribe((store: any) => {
       store = store.name;
@@ -96,13 +98,7 @@ export class VentasComponent implements OnInit {
   }
 
   verTable(){
-    const dialogRef = this.dialog.open(VentastableComponent,{
-      data: {datos: {}}
-    });
-
-    dialogRef.afterClosed().subscribe(result => {
-      console.log(`Dialog result: ${result}`);
-    });
+    this.Router.navigate(['/config/tablaventas'])
   }
 
   darPuntos(){
