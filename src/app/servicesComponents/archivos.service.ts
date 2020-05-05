@@ -17,6 +17,15 @@ export class ArchivosService {
     return this._model.querys('archivos/file',query, 'post');
   }
 
+  getBase64(file) {
+    return new Promise((resolve, reject) => {
+      const reader = new FileReader();
+      reader.readAsDataURL(file);
+      reader.onload = () => resolve(reader.result);
+      reader.onerror = error => reject(error);
+    });
+  }
+
   FileFirebase( ev:any ){
     var firebaseConfig = {
       apiKey: "AIzaSyB5D8M8DRxmHU_Awwo7Yk41ei_Me0RU5Io",

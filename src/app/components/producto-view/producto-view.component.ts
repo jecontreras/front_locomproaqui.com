@@ -39,25 +39,30 @@ export class ProductoViewComponent implements OnInit {
 
   }
 
-  suma(){
-    this.data.costo = this.data.cantidadAdquirir * this.data.pro_uni_venta;
+  suma( numero:any, cantidad:any ){
+    this.data.costo = Number( cantidad ) * Number( numero );
   }
+  
   cambioImgs(){
     this.data.foto = this.data.color;
   }
 
-  AgregarCart(){
+  AgregarCart( opt ){
     let color = '';
+    let cantidad = this.data.cantidadAdquirir || 1;
+    let precio = this.data.pro_uni_venta;
     if( this.data.listColor ) { this.data.color = this.data.listColor.find(row=>row.foto = this.data.foto) || {}; color = this.data.color.talla }
-    this.suma();
+    if(opt) { opt.selecciono = true; this.suma( opt.precios , opt.cantidad ); cantidad = opt.cantidad; precio = opt.precios; }
+    else this.suma( this.data.pro_uni_venta , this.data.cantidadAdquirir );
     let data = {
       articulo: this.data.id,
       codigo: this.data.pro_codigo,
       titulo: this.data.pro_nombre,
-      foto: this.data.foto,
       color: color,
-      cantidad: this.data.cantidadAdquirir || 1,
-      costo: this.data.pro_uni_venta,
+      talla: this.data.tallas || 'default',
+      foto: this.data.foto,
+      cantidad: cantidad,
+      costo: precio,
       costoTotal: this.data.costo,
       id: this.codigo()
     };

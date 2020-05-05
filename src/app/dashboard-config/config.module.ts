@@ -32,6 +32,7 @@ import { FormpuntosComponent } from './form/formpuntos/formpuntos.component';
 import { AngularEditorModule } from '@kolkov/angular-editor';
 import { FormtestimoniosComponent } from './form/formtestimonios/formtestimonios.component';
 import { TestimonioComponent } from './components/testimonios/testimonios.component';
+import { VentastableComponent } from './table/ventastable/ventastable.component';
 
 @NgModule({
   entryComponents: [
@@ -42,7 +43,8 @@ import { TestimonioComponent } from './components/testimonios/testimonios.compon
     FormventasComponent,
     FormcobrosComponent,
     FormpuntosComponent,
-    FormtestimoniosComponent
+    FormtestimoniosComponent,
+    VentastableComponent
   ],
   declarations: [
     MainComponent,
@@ -64,7 +66,8 @@ import { TestimonioComponent } from './components/testimonios/testimonios.compon
     ReferidosComponent,
     FormpuntosComponent,
     FormtestimoniosComponent,
-    TestimonioComponent
+    TestimonioComponent,
+    VentastableComponent
   ],
   imports: [
     CommonModule,

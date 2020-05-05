@@ -27,7 +27,7 @@ export class FormproductosComponent implements OnInit {
   listTipoTallas:any = [];
   listColor:any = [];
   editorConfig: any;
-
+  listPrecios:any = [];
 
   constructor(
     public dialog: MatDialog,
@@ -47,9 +47,11 @@ export class FormproductosComponent implements OnInit {
       this.data = _.clone(this.datas.datos);
       this.id = this.data.id;
       this.titulo = "Actualizar";
+      if(this.data.checkMayor) this.data.checkMayor = true;
+      this.listPrecios = this.data.listPrecios || [];
       if( this.data.pro_categoria ) if(this.data.pro_categoria.id) this.data.pro_categoria = this.data.pro_categoria.id;
       this.listColor = this.data.listColor || [];
-    }else{this.id = ""; this.data.pro_codigo = this.codigo();}
+    }else{this.id = ""; this.data.pro_codigo = this.codigo(); this.data.pro_sw_tallas = 1; }
     this.getCategorias();
     this.getTipoTallas();
   }
@@ -109,6 +111,8 @@ export class FormproductosComponent implements OnInit {
   submit(){
     if(this.data.cat_activo) this.data.cat_activo = 0;
     else this.data.cat_activo = 1;
+    if(this.data.checkMayor) this.data.checkMayor = 1;
+    else this.data.checkMayor = 0;
     if(this.id) {
       this.updates();
     }
@@ -119,6 +123,24 @@ export class FormproductosComponent implements OnInit {
     this.listColor.push({
       codigo: this.codigo()
     });
+  }
+
+  PrecioPush(){
+    this.listPrecios.push({
+      codigo: this.codigo()
+    });
+  }
+
+  guardarTalla( item:any ){
+    item.check = true;
+    this.data.listPrecios = this.listPrecios;
+    if(this.id) this.submit();
+  }
+
+  EliminarTalla(idx:any){
+    this.listPrecios.splice(idx, 1);
+    this.data.listPrecios = this.listPrecios;
+    if(this.id) this.submit();
   }
 
   guardar(){

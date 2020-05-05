@@ -30,15 +30,16 @@
         </div>
         <div class="form-group col-12" *ngIf="( data.ven_tipo == 'whatsapp' || data.ven_tipo == 'WHATSAPP' )">
             <div class="row">
-                <label class="col" >Subir Imagen</label>
-                <button class="btn btn-primary btn-just-icon btn-round" [disabled]="disableBtnFile" (click)="subirFile(false)" *ngIf="files.length > 0">
+                <label class="col">Subir Imagen</label>
+                <button class="btn btn-primary btn-just-icon btn-round" [disabled]="disableBtnFile"
+                    (click)="subirFile(false)" *ngIf="files.length > 0">
                     Subir Imagen
                 </button>
             </div>
             <ngx-dropzone (change)="onSelect($event)">
                 <ngx-dropzone-label>Abrir archivos</ngx-dropzone-label>
-                <ngx-dropzone-image-preview ngProjectAs="ngx-dropzone-preview" *ngFor="let f of files"
-                    [file]="f" [removable]="true" (removed)="onRemove(f)" multiple="false">
+                <ngx-dropzone-image-preview ngProjectAs="ngx-dropzone-preview" *ngFor="let f of files" [file]="f"
+                    [removable]="true" (removed)="onRemove(f)" multiple="false">
                     <ngx-dropzone-label>{{ f.name }} ({{ f.type }})</ngx-dropzone-label>
                 </ngx-dropzone-image-preview>
             </ngx-dropzone>
@@ -60,7 +61,7 @@
             <input type="text" [(ngModel)]="data.ven_ciudad" class="form-control form-control-sm">
         </div>
         <div class="form-group col-md-6 col-sm-4 col-lg-4 col-xs-6">
-        <label for="exampleFormControlInput1">Barrio del Cliente</label>
+            <label for="exampleFormControlInput1">Barrio del Cliente</label>
             <input type="text" [(ngModel)]="data.ven_barrio" class="form-control form-control-sm">
         </div>
         <div class="form-group col-md-6 col-sm-4 col-lg-4 col-xs-6">
@@ -71,14 +72,16 @@
             <label for="exampleFormControlInput1">Fecha venta</label>
             <div class="input-group">
                 <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
-                <input type="date" class="form-control"
-                    [(ngModel)]="data.ven_fecha_venta">
+                <input type="date" class="form-control" [(ngModel)]="data.ven_fecha_venta">
             </div>
         </div>
-        <div class="form-group col-md-6 col-sm-4 col-lg-4 col-xs-6" *ngIf="( data.ven_tipo == 'carrito' || data.ven_tipo == 'CARRITO' )">
+        <div class="form-group col-md-6 col-sm-4 col-lg-4 col-xs-6"
+            *ngIf="( data.ven_tipo == 'carrito' || data.ven_tipo == 'CARRITO' )">
             <label for="exampleFormControlSelect1">Productos</label>
-            <select class="form-control form-control-sm" [(ngModel)]="data.pro_clave_int" (change)="PrecioPush(); suma();">
-                <option [value]="item.id" *ngFor="let item of listProductos"> {{ item.pro_codigo }} || {{ item.pro_nombre }} </option>
+            <select class="form-control form-control-sm" [(ngModel)]="data.pro_clave_int"
+                (change)="PrecioPush(); suma();">
+                <option [value]="item.id" *ngFor="let item of listProductos"> {{ item.pro_codigo }} ||
+                    {{ item.pro_nombre }} </option>
             </select>
         </div>
         <div class="form-group col-md-6 col-sm-4 col-lg-4 col-xs-6">
@@ -87,16 +90,20 @@
         </div>
         <div class="form-group col-md-6 col-sm-4 col-lg-4 col-xs-6">
             <label for="exampleFormControlInput1">Talla</label>
-            <input type="text" [(ngModel)]="data.ven_tallas" class="form-control form-control-sm" *ngIf="listTallas.length == 0">
+            <input type="text" [(ngModel)]="data.ven_tallas" class="form-control form-control-sm"
+                *ngIf="listTallas.length == 0">
             <select class="form-control form-control-sm" [(ngModel)]="data.ven_tallas" *ngIf="listTallas.length">
-                <option [value]="item.tal_descripcion" *ngFor="let item of listTallas"> {{ item.tal_descripcion }} Talla</option>
+                <option [value]="item.tal_descripcion" *ngFor="let item of listTallas"> {{ item.tal_descripcion }} Talla
+                </option>
             </select>
         </div>
-        <div class="form-group col-md-6 col-sm-4 col-lg-4 col-xs-6" *ngIf="( data.ven_tipo == 'whatsapp' || data.ven_tipo == 'WHATSAPP' )">
+        <div class="form-group col-md-6 col-sm-4 col-lg-4 col-xs-6"
+            *ngIf="( data.ven_tipo == 'whatsapp' || data.ven_tipo == 'WHATSAPP' )">
             <label for="exampleFormControlInput1">Vr.Unidad:</label>
             <input type="number" [(ngModel)]="data.ven_precio" class="form-control form-control-sm" (change)="suma()">
         </div>
-        <div class="form-group col-md-6 col-sm-4 col-lg-4 col-xs-6" *ngIf="( data.ven_tipo == 'carrito' || data.ven_tipo == 'CARRITO' )">
+        <div class="form-group col-md-6 col-sm-4 col-lg-4 col-xs-6"
+            *ngIf="( data.ven_tipo == 'carrito' || data.ven_tipo == 'CARRITO' )">
             <label for="exampleFormControlInput1">Vr.Unidad: </label>
             <span>$ {{ ( data.ven_precio || 0 ).toLocaleString(1) }} COP</span>
         </div>
@@ -118,37 +125,42 @@
         <div class="form-group col-md-6 col-sm-4 col-lg-4 col-xs-6" *ngIf="data.id && superSub && data.ven_estado == 3">
             <div class="row">
                 <div class="col"></div>
-                <button class="btn btn-primary btn-just-icon btn-round" (click)="subirFileGuias()" *ngIf="filesGuias.length > 0">
+                <button class="btn btn-primary btn-just-icon btn-round" (click)="subirFileGuias()"
+                    *ngIf="filesGuias.length > 0">
                     Subir Foto Guia
                 </button>
             </div>
             <ngx-dropzone (change)="onSelectGuias($event)">
                 <ngx-dropzone-label>Subir foto de la guía</ngx-dropzone-label>
-                <ngx-dropzone-image-preview ngProjectAs="ngx-dropzone-preview" *ngFor="let f of filesGuias"
-                    [file]="f" [removable]="true" (removed)="onRemoveGuias(f)" multiple="false">
+                <ngx-dropzone-image-preview ngProjectAs="ngx-dropzone-preview" *ngFor="let f of filesGuias" [file]="f"
+                    [removable]="true" (removed)="onRemoveGuias(f)" multiple="false">
                     <ngx-dropzone-label>{{ f.name }} ({{ f.type }})</ngx-dropzone-label>
                 </ngx-dropzone-image-preview>
             </ngx-dropzone>
         </div>
         <div class="form-group col-12">
             <label for="exampleFormControlInput1">Observación</label>
-            <textarea class="form-control" [(ngModel)]="data.prv_observacion" id="exampleFormControlTextarea1" rows="3"></textarea>
+            <textarea class="form-control" [(ngModel)]="data.prv_observacion" id="exampleFormControlTextarea1"
+                rows="3"></textarea>
         </div>
     </div>
 </mat-dialog-content>
 <mat-dialog-actions align="end">
-  <button mat-button mat-dialog-close>Cerrar</button>
-  <button [disabled]="disabled" class="btn btn-primary btn-just-icon btn-round" (click)="subirFile(true)" *ngIf="( ( data.ven_tipo == 'whatsapp' || data.ven_tipo == 'WHATSAPP' ) && !data.ven_imagen_producto) && files.length > 0">
+    <button mat-button mat-dialog-close>Cerrar</button>
+    <button [disabled]="disabled" class="btn btn-primary btn-just-icon btn-round" (click)="subirFile(true)"
+        *ngIf="( data.ven_tipo == 'whatsapp' && !data.ven_imagen_producto) && files.length > 0">
         Guardar Venta
-  </button>
-  <span *ngIf="( ( data.ven_tipo == 'whatsapp' || data.ven_tipo == 'WHATSAPP' ) && !data.ven_imagen_producto) && files.length == 0">
-    Primero debes subir una imagen 
-  </span>
-  <button mat-button cdkFocusInitial (click)="submit()" *ngIf="( ( data.ven_tipo == 'whatsapp' || data.ven_tipo == 'WHATSAPP' ) && data.ven_imagen_producto ) || ( data.ven_tipo == 'carrito' || data.ven_tipo == 'CARRITO' )" [disabled]="disabledButton">
-      <span *ngIf="!id">Guardar Ventas</span>
-      <span *ngIf="id">Actulizar Cambios</span>
-  </button>
-  <button mat-button (click)="OrdenValidadWhatsapp( data )" *ngIf="data.id && superSub && data.ven_estado == 3">
-    <span>Enviar Guia Whatsapp</span>
-</button>
+    </button>
+    <span *ngIf="( data.ven_tipo == 'whatsapp' && !data.ven_imagen_producto) && files.length == 0 && !data.id">
+        Primero debes subir una imagen
+    </span>
+    <button mat-button cdkFocusInitial (click)="submit()"
+        *ngIf="( data.ven_tipo == 'whatsapp' && data.ven_imagen_producto ) || data.ven_tipo == 'carrito' || data.id"
+        [disabled]="disabledButton">
+        <span *ngIf="!id">Guardar Ventas</span>
+        <span *ngIf="id">Actulizar Cambios</span>
+    </button>
+    <button mat-button (click)="OrdenValidadWhatsapp( data )" *ngIf="data.id && superSub && data.ven_estado == 3">
+        <span>Enviar Guia Whatsapp</span>
+    </button>
 </mat-dialog-actions>

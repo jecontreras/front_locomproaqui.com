@@ -42,6 +42,7 @@ export class FormventasComponent implements OnInit {
   mensajeWhat:string;
 
   disableBtnFile:boolean = false;
+  urlImagen:any;
 
   constructor(
     public dialog: MatDialog,
@@ -101,6 +102,24 @@ export class FormventasComponent implements OnInit {
     //console.log(event);
     this.files.splice(this.files.indexOf(event), 1);
   }
+  
+  // async subirFile(opt: boolean) {
+  //   this.disabled = true;
+  //   this.disableBtnFile = true;
+  //   this.disabledButton = true;
+  //   let form: any = new FormData();
+  //   form.append('file', this.files[0]);
+  //   this._tools.ProcessTime({});
+  //   this.urlImagen = await this._archivos.getBase64(this.files[0]);
+  //   this.disabled = false;
+  //   this.disableBtnFile = false;
+  //   this.disabledButton = false;
+  //   if (this.id) this.submit();
+  //   else {
+  //     if (opt) if ( ( this.data.ven_tipo == 'whatsapp' || this.data.ven_tipo == 'WHATSAPP' ) && this.urlImagen) this.submit();
+  //   }
+
+  // }
 
   subirFile(opt: boolean) {
     this.disabled = true;
@@ -110,9 +129,7 @@ export class FormventasComponent implements OnInit {
     form.append('file', this.files[0]);
     this._tools.ProcessTime({});
     this._archivos.create(form).subscribe((res: any) => {
-      console.log(res);
-      this.data.ven_imagen_producto = res.files;//URL+`/${res}`;
-      //this._tools.presentToast("Exitoso");
+      this.data.ven_imagen_producto = res.files;
       this.disabled = false;
       this.disableBtnFile = false;
       this.disabledButton = false;
@@ -171,7 +188,6 @@ export class FormventasComponent implements OnInit {
 
   guardarVenta() {
     this._ventas.create(this.data).subscribe((res: any) => {
-      console.log(res);
       this.OrderWhatsapp(res);
       this.crearNotificacion(res);
       this.disabledButton = false;
@@ -192,7 +208,7 @@ export class FormventasComponent implements OnInit {
     let mensaje: string = `https://wa.me/${ cerialNumero }?text=info del cliente ${res.ven_nombre_cliente} telefono ${res.ven_telefono_cliente || ''} direccion ${res.ven_direccion_cliente} fecha del pedido ${res.ven_fecha_venta} Hola Servicio al cliente, 
     como esta, cordial saludo. Sería tan amable despachar este pedido a continuación datos de la venta:� producto: `;
     if (res.ven_tipo == 'whatsapp') {
-      mensaje += `${res.nombreProducto} imagen: ${res.ven_imagen_producto} talla: ${res.ven_tallas}`
+      mensaje += `${ ( res.nombreProducto ) } imagen: ${res.ven_imagen_producto} talla: ${res.ven_tallas}`
     } else {
       mensaje += `${res.pro_clave_int.pro_nombre} imagen: ${res.pro_clave_int.foto} codigo: ${res.pro_clave_int.pro_codigo} talla: ${res.ven_tallas} `
     }

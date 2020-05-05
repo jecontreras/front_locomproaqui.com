@@ -148,10 +148,10 @@ export class HeaderComponent implements OnInit {
   }
 
   submitChat(){
-    let texto:string;
+    let texto:string = "";
     this.data.total = 0;
     for(let row of this.listCart){
-      texto+= ` productos: ${ row.titulo } codigo: ${ row.codigo } foto: ${ row.foto } cantidad: ${ row.cantidad } color ${ row.color || 'default'}`;
+      texto+= ` productos: ${ row.titulo } codigo: ${ row.codigo } talla: ${ row.talla } cantidad: ${ row.cantidad } precio: ${ row.costo } precio Total: ${ row.costoTotal } foto: ${ row.foto } color ${ row.color || 'default'}`;
       this.data.total+= row.costoTotal || 0;
     }
     

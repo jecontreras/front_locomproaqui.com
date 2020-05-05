@@ -10,6 +10,7 @@ import { Store } from '@ngrx/store';
 import { FormpuntosComponent } from '../../form/formpuntos/formpuntos.component';
 import * as moment from 'moment'; 
 import { UsuariosService } from 'src/app/servicesComponents/usuarios.service'
+import { VentastableComponent } from '../../table/ventastable/ventastable.component';
 
 declare interface DataTable {
   headerRow: string[];
@@ -87,6 +88,16 @@ export class VentasComponent implements OnInit {
   crear(obj:any){
     const dialogRef = this.dialog.open(FormventasComponent,{
       data: {datos: obj || {}}
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      console.log(`Dialog result: ${result}`);
+    });
+  }
+
+  verTable(){
+    const dialogRef = this.dialog.open(VentastableComponent,{
+      data: {datos: {}}
     });
 
     dialogRef.afterClosed().subscribe(result => {
