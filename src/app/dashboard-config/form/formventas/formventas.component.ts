@@ -24,7 +24,7 @@ const URL = environment.url;
 export class FormventasComponent implements OnInit {
 
   data: any = {
-    ven_tipo: 'carrito'
+    ven_tipo: 'whatsapp'
   };
   clone: any = {};
   id: any;

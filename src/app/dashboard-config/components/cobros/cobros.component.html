@@ -94,17 +94,17 @@
                         <td>$ {{ ( row['cob_monto'] || 0 ).toLocaleString(1) }} COP</td>
                         <td>{{ row['cob_metodo'] }}</td>
                         <td>{{ row['cob_pais'] }}</td>
+                        <td>
+                          <span *ngIf="row['cob_estado'] == 0">Activo</span>
+                          <span *ngIf="row['cob_estado'] == 1">Aprovado</span>
+                          <span *ngIf="row['cob_estado'] == 2">Rechazado</span>
+                        </td>
                         <td>{{ row['createdAt'] }}</td>
                         <td>{{ row['usu_clave_int']?.usu_email }}</td>
                         <td>{{ row['cob_num_cedula'] }}</td>
                         <td>{{ row['cob_num_celular'] }}</td>
                         <td>{{ row['cob_num_cuenta'] }}</td>
                         <td>{{ row['cob_fecha_pago'] }}</td>
-                        <td>
-                          <span *ngIf="row['cob_estado'] == 0">Activo</span>
-                          <span *ngIf="row['cob_estado'] == 1">Aprovado</span>
-                          <span *ngIf="row['cob_estado'] == 2">Rechazado</span>
-                        </td>
                       </tr>
                     </tbody>
                   </table>
