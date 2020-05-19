@@ -176,7 +176,8 @@ export class FormventasComponent implements OnInit {
   guardar() {
 
     this.data.ven_estado = 0;
-    this.data.create = moment().format('DD-MM-YYYY');
+    this.data.create = moment().format('DD-MM-YYYY'); 
+    if( !this.validarPrecio() ) { this.disabledButton = false; this.disabled = false; return this._tools.presentToast("el Valorde producto debe contener 5 numeros ejemplo 80000, 90000"); }
     if( this.dataUser.cabeza ) if( this.dataUser.cabeza.usu_perfil == 3 ) this.data.ven_subVendedor = 1;
     this._ventas.get({ where: { cob_num_cedula_cliente: this.data.cob_num_cedula_cliente, ven_estado: 0, ven_sw_eliminado: 1 } }).subscribe((res: any) => {
       res = res.data[0];
@@ -184,6 +185,11 @@ export class FormventasComponent implements OnInit {
       this.guardarVenta();
     });
 
+  }
+
+  validarPrecio(){
+    if( 10000 > this.data.ven_precio) return false;
+    else return true;
   }
 
   guardarVenta() {
