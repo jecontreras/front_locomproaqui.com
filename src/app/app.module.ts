@@ -1,7 +1,7 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 //config
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -33,6 +33,8 @@ import { RegistrosComponent } from './layout/registro/registro.component';
 import { TerminosComponent } from './layout/terminos/terminos.component';
 import { FooterComponent } from './components/footer/footer.component';
 import { TestimoniosComponent } from './components/testimonios/testimonios.component';
+import { ServerStateInterceptor } from './services/serverstate.interceptor';
+import { BrowserStateInterceptor } from './services/browserstate.interceptor';
 
 @NgModule({
   entryComponents:[
@@ -82,7 +84,18 @@ import { TestimoniosComponent } from './components/testimonios/testimonios.compo
     RegistroComponent,
     ViewProductosComponent
   ],
-  providers: [],
+  providers: [
+    // {
+    //   provide: HTTP_INTERCEPTORS,
+    //   useClass: ServerStateInterceptor,
+    //   multi: true
+    // },
+    // {
+    //   provide: HTTP_INTERCEPTORS,
+    //   useClass: BrowserStateInterceptor,
+    //   multi: true,
+    // }
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

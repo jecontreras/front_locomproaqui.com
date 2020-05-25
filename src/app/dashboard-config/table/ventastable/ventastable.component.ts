@@ -3,6 +3,8 @@ import { VentasService } from 'src/app/servicesComponents/ventas.service';
 import { Subject } from 'rxjs';
 import * as _ from 'lodash';
 import { NgxSpinnerService } from 'ngx-spinner';
+import { STORAGES } from 'src/app/interfaces/sotarage';
+import { Store } from '@ngrx/store';
 
 
 class DataTablesResponse {
@@ -95,11 +97,18 @@ export class VentastableComponent implements OnInit {
     }
   };
   data = [];
+  dataUser:any = {};
 
   constructor(
     private _ventas: VentasService,
     private spinner: NgxSpinnerService,
-  ) { }
+    private _store: Store<STORAGES>,
+  ) { 
+    this._store.subscribe((store: any) => {
+      store = store.name;
+      this.dataUser = store.user || {};
+    });
+  }
 
   ngOnInit(): void {
     this.getRow();
@@ -112,6 +121,7 @@ export class VentastableComponent implements OnInit {
 
   getRow(){
     this.spinner.show();
+    if(this.dataUser.usu_perfil.prf_descripcion == 'administrador') this.query.where.ven_subVendedor = 0;
     this._ventas.get(this.query).subscribe((res:DataTablesResponse)=>{
       this.data = _.map(res.data, (row:any)=>{
         return {

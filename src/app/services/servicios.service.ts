@@ -46,13 +46,17 @@ export class ServiciosService {
         }
       }, 'post').subscribe((res:any)=>{
         res = res.data[0];
+        localStorage.removeItem('user');
         if(!res) {
           let accion = new UserAction(this.dataUser,'delete')
           this._store.dispatch(accion);
-          localStorage.removeItem('user');
           this._tools.presentToast("Tu sesión ha expirado")
           this.Router.navigate(['/login']);
           setTimeout(function(){ location.reload(); }, 3000);
+        }else{
+          let accion = new UserAction( res, 'post');
+          this._store.dispatch( accion );
+          localStorage.setItem('user', JSON.stringify(res));
         }
       });
     }
