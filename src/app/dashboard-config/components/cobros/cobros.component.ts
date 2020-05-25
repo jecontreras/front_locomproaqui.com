@@ -94,7 +94,6 @@ export class CobrosComponent implements OnInit {
       return false; 
     }
     const dialogRef = this.dialog.open(FormcobrosComponent,{
-      width: '461px',
       data: {datos: obj || {}}
     });
 

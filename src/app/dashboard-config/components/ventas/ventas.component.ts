@@ -68,7 +68,7 @@ export class VentasComponent implements OnInit {
       if(this.dataUser.usu_perfil.prf_descripcion != 'administrador') this.query.where.usu_clave_int = this.dataUser.id;
       if(this.dataUser.usu_perfil.prf_descripcion == 'administrador') this.activando = true;
     });
-    if(this.dataUser.usu_perfil.prf_descripcion != 'subAdministrador') this.getUserCabeza();
+    //if(this.dataUser.usu_perfil.prf_descripcion != 'subAdministrador') this.getUserCabeza();
    }
 
   ngOnInit() {

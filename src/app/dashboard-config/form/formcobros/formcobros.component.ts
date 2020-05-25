@@ -8,6 +8,7 @@ import { Store } from '@ngrx/store';
 import * as moment from 'moment';
 import { UsuariosService } from 'src/app/servicesComponents/usuarios.service';
 import { FormtestimoniosComponent } from '../formtestimonios/formtestimonios.component';
+import { ArchivosService } from 'src/app/servicesComponents/archivos.service';
 
 @Component({
   selector: 'app-formcobros',
@@ -34,7 +35,8 @@ export class FormcobrosComponent implements OnInit {
     public dialogRef: MatDialogRef<FormcobrosComponent>,
     @Inject(MAT_DIALOG_DATA) public datas: any,
     private _store: Store<STORAGES>,
-    private _user: UsuariosService
+    private _user: UsuariosService,
+    private _archivos: ArchivosService
   ) { 
 
     this._store.subscribe((store: any) => {
@@ -76,6 +78,20 @@ export class FormcobrosComponent implements OnInit {
     //console.log(event);
     this.files.splice(this.files.indexOf(event), 1);
   }
+
+  subirFile(item:any){
+    let form:any = new FormData();
+    form.append('file', this.files[0]);
+    this._tools.ProcessTime({});
+    //this._archivos.create( this.files[0] );
+    this._archivos.create( form ).subscribe((res:any)=>{
+      // console.log(res);
+      this.data.fotoPago = res.files;//URL+`/${res}`;
+      if( this.id )this.submit();
+      this._tools.presentToast("Exitoso");
+    },(error)=>{console.error(error); this._tools.presentToast("Error de servidor")});
+
+  }
   
   submit(){
     this.disabledButton = true;
@@ -100,9 +116,9 @@ export class FormcobrosComponent implements OnInit {
   }
 
   updates(){
-    this.data = _.omit( this.data, ['usu_clave_int'] );
-    if(this.data.cob_estado == 1) this.data.cob_fecha_pago = moment().format('DD-MM-YYYY HH:MM:SS');
-    this._cobros.update(this.data).subscribe((res:any)=>{
+    let data:any = _.omit( this.data, ['usu_clave_int'] );
+    if( data.cob_estado == 1 )  data.cob_fecha_pago = moment().format('DD-MM-YYYY HH:MM:SS');
+    this._cobros.update( data ).subscribe((res:any)=>{
       this.disabledButton = false;
       this._tools.presentToast("Actualizado");
     },(error)=>{console.error(error); this._tools.presentToast("Error de servidor"); this.disabledButton = false});
@@ -133,7 +149,7 @@ export class FormcobrosComponent implements OnInit {
   openTestimonios(){
     const dialogRef = this.dialog.open(FormtestimoniosComponent,{
       width: '731px',
-      data: {}
+      data: {datos: {}}
     });
 
     dialogRef.afterClosed().subscribe(result => {

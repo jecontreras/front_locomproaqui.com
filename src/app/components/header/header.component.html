@@ -161,6 +161,16 @@
     </mat-sidenav>
 
     <mat-sidenav-content>
+
+      <div class="alert alert-warning alert-dismissible fade show" role="alert" *ngFor="let item of listAlert">
+        <img class="foto" *ngIf="item.foto" [src]="item.foto" > <strong>{{ item.titulo }}!</strong> {{ item.descripcion }}.
+        ---> <button *ngIf="item.tipoDe == 1" (click)="crear()" class="btn btn-primary btn-just-icon btn-round" mat-raised-button
+        mat-min-fab>Crear Comentario</button>
+        <button type="button" class="close" data-dismiss="alert" (click)="closeAlert( item )" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+
       <ng-content></ng-content>
     </mat-sidenav-content>
   </mat-sidenav-container>

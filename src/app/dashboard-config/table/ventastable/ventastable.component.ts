@@ -5,6 +5,8 @@ import * as _ from 'lodash';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { STORAGES } from 'src/app/interfaces/sotarage';
 import { Store } from '@ngrx/store';
+import { EmpresaService } from 'src/app/servicesComponents/empresa.service';
+import { UsuariosService } from 'src/app/servicesComponents/usuarios.service';
 
 
 class DataTablesResponse {
@@ -25,7 +27,7 @@ export class VentastableComponent implements OnInit {
   //dtOptions: DataTables.Settings = {};
   query:any = {
     where:{},
-    limit: -1
+    limit: 30
   };
 
   dtTrigger: any = new Subject();
@@ -103,6 +105,8 @@ export class VentastableComponent implements OnInit {
     private _ventas: VentasService,
     private spinner: NgxSpinnerService,
     private _store: Store<STORAGES>,
+    private _empresa: EmpresaService,
+    private _user: UsuariosService
   ) { 
     this._store.subscribe((store: any) => {
       store = store.name;
@@ -111,12 +115,39 @@ export class VentastableComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.getRow();
+    this.query= {
+      where: {
+        ven_sw_eliminado: 0,
+        ven_estado: { '!=': 4 }
+      },
+      page: 0,
+      limit: -1
+    };
+    if(this.dataUser.usu_perfil.prf_descripcion != 'administrador') this.query.where.usu_clave_int = this.dataUser.id;
+    if(this.dataUser.usu_perfil.prf_descripcion == "subAdministrador") this.getUserCabeza();
+    else this.getRow();
+
+    // this.getRow();
   }
 
   ngOnDestroy(): void {
     // Do not forget to unsubscribe the event
     this.dtTrigger.unsubscribe();
+  }
+
+  getUserCabeza(){
+    if( !this.dataUser.empresa ) return false;
+    this._empresa.get( { where: {id: this.dataUser.empresa.id  } } ).subscribe(( res:any )=>{
+      res = res.data[0];
+      if( !res ) return false;
+      this._user.get({ where: { empresa: res.id } }).subscribe((res:any)=>{
+        res = res.data;
+        if( res.length > 0 ) this.query.where.usu_clave_int = _.map(res, 'id');
+        else this.query.where.usu_clave_int = [];
+        this.query.where.usu_clave_int.push( this.dataUser.id );
+        this.getRow();
+      });
+    });
   }
 
   getRow(){

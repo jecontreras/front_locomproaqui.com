@@ -15,6 +15,7 @@ import { ToolsService } from 'src/app/services/tools.service';
 import { VentasService } from 'src/app/servicesComponents/ventas.service';
 import { NotificacionesService } from 'src/app/servicesComponents/notificaciones.service';
 import { FormventasComponent } from 'src/app/dashboard-config/form/formventas/formventas.component';
+import { FormtestimoniosComponent } from 'src/app/dashboard-config/form/formtestimonios/formtestimonios.component';
 
 const URLFRON = environment.urlFront;
 
@@ -48,6 +49,7 @@ export class HeaderComponent implements OnInit {
   notificando:number = 0;
   opcionoView:string = 'carro';
   listNotificaciones:any =[];
+  listAlert:any = [];
 
   constructor(
     public changeDetectorRef: ChangeDetectorRef,
@@ -89,6 +91,7 @@ export class HeaderComponent implements OnInit {
     else this.rolUser = 'visitante';
     this.listMenus();
     if(this.rolUser === 'administrador') this.getCarrito();
+    this.getAlert();
   }
 
   getVentas(){
@@ -253,6 +256,13 @@ export class HeaderComponent implements OnInit {
         submenus:[]
       },
       {
+        icons: 'local_grocery_store',
+        nombre: 'Ventas de Subvendedor',
+        disable: this.rolUser == 'administrador',
+        url: '/config/ventasLider',
+        submenus:[]
+      },
+      {
         icons: 'people_alt',
         nombre: 'Mis Referidos',
         disable: this.rolUser !== 'visitante',
@@ -370,6 +380,28 @@ export class HeaderComponent implements OnInit {
     dialogRef.afterClosed().subscribe(result => {
       console.log(`Dialog result: ${result}`);
     });
+  }
+
+  getAlert(){
+    this._notificaciones.get( { where: { user: this.dataUser.id, tipoDe: 1, view: false }}).subscribe(( res:any ) =>{
+      res = res.data;
+      this.listAlert = res;
+    });
+  }
+
+  crear(){
+    const dialogRef = this.dialog.open(FormtestimoniosComponent,{
+      width: '731px',
+      data: {datos: {}}
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      console.log(`Dialog result: ${result}`);
+    });
+  }
+
+  closeAlert( item ){
+    this.listAlert = this.listAlert.find( ( row:any ) => row.id !== item.id );
   }
 
   salir(){
