@@ -267,7 +267,8 @@ export class FormventasComponent implements OnInit {
       titulo: "Nueva venta de " + valuesToSet.ven_nombre_cliente,
       descripcion: "Nueva venta de " + valuesToSet.ven_nombre_cliente,
       venta: valuesToSet.id,
-      user: valuesToSet.usu_clave_int.id
+      user: valuesToSet.usu_clave_int.id,
+      tipoDe: 0
     };
     this._notificacion.create(data).subscribe(() => {}, (error) => this._tools.presentToast("Error de servidor"));
   }

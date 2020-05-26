@@ -389,14 +389,15 @@ export class HeaderComponent implements OnInit {
     });
   }
 
-  crear(){
+  crear( obj:any ){
     const dialogRef = this.dialog.open(FormtestimoniosComponent,{
       width: '731px',
-      data: {datos: {}}
+      data: {datos: { vista: "ver", ...obj }}
     });
 
     dialogRef.afterClosed().subscribe(result => {
       console.log(`Dialog result: ${result}`);
+      this.listAlert = this.listAlert.find((row:any) => row.id !== obj.id );
     });
   }
 

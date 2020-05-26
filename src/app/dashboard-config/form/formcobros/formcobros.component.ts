@@ -9,6 +9,7 @@ import * as moment from 'moment';
 import { UsuariosService } from 'src/app/servicesComponents/usuarios.service';
 import { FormtestimoniosComponent } from '../formtestimonios/formtestimonios.component';
 import { ArchivosService } from 'src/app/servicesComponents/archivos.service';
+import { NotificacionesService } from 'src/app/servicesComponents/notificaciones.service';
 
 @Component({
   selector: 'app-formcobros',
@@ -36,7 +37,8 @@ export class FormcobrosComponent implements OnInit {
     @Inject(MAT_DIALOG_DATA) public datas: any,
     private _store: Store<STORAGES>,
     private _user: UsuariosService,
-    private _archivos: ArchivosService
+    private _archivos: ArchivosService,
+    private _notifacion: NotificacionesService
   ) { 
 
     this._store.subscribe((store: any) => {
@@ -87,7 +89,7 @@ export class FormcobrosComponent implements OnInit {
     this._archivos.create( form ).subscribe((res:any)=>{
       // console.log(res);
       this.data.fotoPago = res.files;//URL+`/${res}`;
-      if( this.id )this.submit();
+      if( this.id ) { this.submit(); this.crearNotificacion(); }
       this._tools.presentToast("Exitoso");
     },(error)=>{console.error(error); this._tools.presentToast("Error de servidor")});
 
@@ -122,6 +124,17 @@ export class FormcobrosComponent implements OnInit {
       this.disabledButton = false;
       this._tools.presentToast("Actualizado");
     },(error)=>{console.error(error); this._tools.presentToast("Error de servidor"); this.disabledButton = false});
+  }
+
+  crearNotificacion(){
+    let data:any = {
+      titulo: "Retiro Completado",
+      descripcion: "Estimado Usuario tu retiro ya fue enviado a tu cuenta",
+      user: this.data.usu_clave_int.id,
+      tipoDe: 1,
+      foto: this.data.fotoPago
+    };
+    this._notifacion.update(data).subscribe((res:any)=>console.log(res));
   }
 
   procesoWhat( res:any ){
