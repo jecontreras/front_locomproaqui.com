@@ -109,10 +109,8 @@ export class VentasLiderComponent implements OnInit {
     //console.log(this.datoBusqueda);
     this.datoBusqueda = this.datoBusqueda.trim();
     this.dataTable.dataRows = [];
-    if (this.datoBusqueda === '') {
-      this.query = {where:{},page: 0};
-      this.cargarTodos();
-    } else {
+    this.query = { where:{ usu_perfil: 3 }, page: 0 };
+    if (this.datoBusqueda !== '') {
       this.query.page = 0;
       this.query.where.or = [
         {
@@ -136,8 +134,8 @@ export class VentasLiderComponent implements OnInit {
           }
         },
       ];
-      this.cargarTodos();
     }
+    this.cargarTodos();
   }
 
 }

@@ -4,7 +4,7 @@ import { ToolsService } from 'src/app/services/tools.service';
 import { Router } from '@angular/router';
 import { STORAGES } from 'src/app/interfaces/sotarage';
 import { Store } from '@ngrx/store';
-import { UserAction } from 'src/app/redux/app.actions';
+import { UserAction, TokenAction } from 'src/app/redux/app.actions';
 import { AuthService } from 'src/app/services/auth.service';
 
 @Component({
@@ -40,6 +40,8 @@ export class LoginsComponent implements OnInit {
         localStorage.setItem('user', JSON.stringify(res.data));
         let accion = new UserAction( res.data, 'post');
         this._store.dispatch(accion);
+        accion = new TokenAction( { token: res.data.tokens }, 'post');
+        this._store.dispatch( accion );
         this._router.navigate(['/pedidos']);
         this._tools.basicIcons({header: "Hola Bienvenido!", subheader: `Hola ${ res.data.usu_nombre } Que tengas un buen dia`});
         setTimeout(()=>{ 

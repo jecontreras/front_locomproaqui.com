@@ -43,6 +43,7 @@ export class ServiciosService {
       this.querys('tblusuario/querys',{
         where:{
           id: this.dataUser.id
+          //id: 505
         }
       }, 'post').subscribe((res:any)=>{
         res = res.data[0];

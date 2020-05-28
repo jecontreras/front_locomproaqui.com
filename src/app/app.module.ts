@@ -1,5 +1,5 @@
 import { BrowserModule } from '@angular/platform-browser';
-import { NgModule } from '@angular/core';
+import { NgModule, ErrorHandler } from '@angular/core';
 //config
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 
@@ -35,6 +35,8 @@ import { FooterComponent } from './components/footer/footer.component';
 import { TestimoniosComponent } from './components/testimonios/testimonios.component';
 import { ServerStateInterceptor } from './services/serverstate.interceptor';
 import { BrowserStateInterceptor } from './services/browserstate.interceptor';
+import { AuthInterceptor } from './services/authInterceptor';
+import { GlobalErrorHandler } from './services/globalErrorHandler';
 
 @NgModule({
   entryComponents:[
@@ -86,6 +88,17 @@ import { BrowserStateInterceptor } from './services/browserstate.interceptor';
   ],
   providers: [
     // {
+    //   provide : HTTP_INTERCEPTORS,
+    //   useClass: AuthInterceptor,
+    //   multi   : true,
+    // },
+    // {
+    //   provide: ErrorHandler, 
+    //   useClass: GlobalErrorHandler
+    // }
+  ],
+  /*providers: [
+    // {
     //   provide: HTTP_INTERCEPTORS,
     //   useClass: ServerStateInterceptor,
     //   multi: true
@@ -95,7 +108,7 @@ import { BrowserStateInterceptor } from './services/browserstate.interceptor';
     //   useClass: BrowserStateInterceptor,
     //   multi: true,
     // }
-  ],
+  ],*/
   bootstrap: [AppComponent]
 })
 export class AppModule { }

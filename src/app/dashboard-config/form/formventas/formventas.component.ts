@@ -200,7 +200,8 @@ export class FormventasComponent implements OnInit {
       this.disabledButton = false;
       this.disabled = false;
       this._tools.presentToast("Exitoso Estare en Modo Pendiente");
-      this.dialog.closeAll();
+      //this.dialog.closeAll();
+      this.dialogRef.close('creo');
     }, (error) => { this._tools.presentToast("Error al crear la venta"); this.disabledButton = false; this.dialog.closeAll(); });
 
   }

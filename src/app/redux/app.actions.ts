@@ -3,6 +3,7 @@ import { Action } from "@ngrx/store";
 export let CART          = '[App] Cart';
 export let USER          = '[App] User';
 export let USERCABEZA    = '[App] UserCabeza';
+export let TOKEN         = '[App] Token';
 
 export class CartAction implements Action {
     readonly type = CART;
@@ -19,6 +20,12 @@ export class UserCabezaAction implements Action {
     constructor( public payload: object,  public opt: string){}
 }
 
+export class TokenAction implements Action {
+    readonly type = TOKEN;
+    constructor( public payload: object,  public opt: string){}
+}
+
 export type actions = CartAction         |
                       UserAction         |
-                      UserCabezaAction   ;
+                      UserCabezaAction   |
+                      TokenAction         ;

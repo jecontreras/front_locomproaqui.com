@@ -86,7 +86,10 @@ export class FormventasLiderComponent implements OnInit {
 
   getUserCabeza() {
     if (!this.datas.empresa) return false;
-    this._empresa.get({ where: { id: this.datas.empresa.id } }).subscribe((res: any) => {
+    delete this.query.where.usu_clave_int;
+    this.query.where.ven_empresa = this.datas.empresa.id;
+    this.cargarTodos();
+    /*this._empresa.get({ where: { id: this.datas.empresa.id } }).subscribe((res: any) => {
       res = res.data[0];
       if (!res) return false;
       this._user.get({ where: { empresa: res.id } }).subscribe((res: any) => {
@@ -96,7 +99,7 @@ export class FormventasLiderComponent implements OnInit {
         this.query.where.usu_clave_int.push(this.datas.id);
         this.cargarTodos();
       });
-    });
+    });*/
   }
 
   verTable() {

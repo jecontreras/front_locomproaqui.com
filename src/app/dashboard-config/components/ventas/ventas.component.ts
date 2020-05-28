@@ -65,9 +65,9 @@ export class VentasComponent implements OnInit {
       store = store.name;
       this.dataUser = store.user || {};
       this.activando = false;
-      if(this.dataUser.usu_perfil.prf_descripcion != 'administrador') this.query.where.usu_clave_int = this.dataUser.id;
       if(this.dataUser.usu_perfil.prf_descripcion == 'administrador') this.activando = true;
     });
+    if(this.dataUser.usu_perfil.prf_descripcion != 'administrador') this.query.where.usu_clave_int = this.dataUser.id;
     //if(this.dataUser.usu_perfil.prf_descripcion != 'subAdministrador') this.getUserCabeza();
    }
 
@@ -82,7 +82,10 @@ export class VentasComponent implements OnInit {
 
   getUserCabeza(){
     if( !this.dataUser.empresa ) return false;
-    this._empresa.get( { where: {id: this.dataUser.empresa.id  } } ).subscribe(( res:any )=>{
+    delete this.query.where.usu_clave_int;
+    this.query.where.ven_empresa = this.dataUser.empresa.id;
+    this.cargarTodos();
+    /*this._empresa.get( { where: {id: this.dataUser.empresa.id  } } ).subscribe(( res:any )=>{
       res = res.data[0];
       if( !res ) return false;
       this._user.get({ where: { empresa: res.id } }).subscribe((res:any)=>{
@@ -92,7 +95,7 @@ export class VentasComponent implements OnInit {
         this.query.where.usu_clave_int.push( this.dataUser.id );
         this.cargarTodos();
       });
-    });
+    });*/
   }
 
   crear(obj:any){
@@ -102,6 +105,7 @@ export class VentasComponent implements OnInit {
 
     dialogRef.afterClosed().subscribe(result => {
       console.log(`Dialog result: ${result}`);
+      if(result == 'creo') this.cargarTodos();
     });
   }
 
