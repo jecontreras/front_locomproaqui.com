@@ -79,7 +79,7 @@ export class PerfilComponent implements OnInit {
   }
 
   Actualizar(){
-    this.data = _.omit(this.data, ['usu_perfil', 'cabeza', 'nivel']);
+    this.data = _.omit(this.data, ['usu_perfil', 'cabeza', 'nivel', 'empresa', 'createdAt', 'updatedAt',]);
     this._user.update(this.data).subscribe((res:any)=>{
       //console.log(res);
       this._tools.presentToast("Actualizado");

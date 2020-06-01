@@ -70,7 +70,7 @@ export class FormusuariosComponent implements OnInit {
   }
   updates(){
     this.data = _.omitBy(this.data, _.isNull);
-    this.data = _.omit( this.data, ['cabeza', 'nivel', 'createdAt', 'updatedAt']);
+    this.data = _.omit( this.data, ['cabeza', 'nivel', 'createdAt', 'updatedAt', 'empresa', 'usu_perfil']);
     this._usuarios.update(this.data).subscribe((res:any)=>{
       this._tools.presentToast("Actualizado");
     },(error)=>{console.error(error); this._tools.presentToast("Error de servidor")});
