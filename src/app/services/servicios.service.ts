@@ -108,7 +108,7 @@ export class ServiciosService {
     try {
       if (io) {
         io.sails.autoConnect = false;
-        this.sock = io.sails.connect('http://localhost:1337');
+        this.sock = io.sails.connect(URL);
         this.scoket_global();
       }
     } catch (error) {
