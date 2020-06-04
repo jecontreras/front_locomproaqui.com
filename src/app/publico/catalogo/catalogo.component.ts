@@ -43,12 +43,17 @@ export class CatalogoComponent implements OnInit {
       this.spinner.hide();
     });
   }
-
+  
   async descargarFoto(){
     console.log( this.listGaleria );
     for( let row of this.listGaleria ){
       await this._tools.descargarFoto(row.base64, ( row.producto.pro_nombre || row.producto.pro_codigo ));
     }
+  }
+
+  async descargarFotoUna( row:any ){
+    console.log( this.listGaleria );
+    await this._tools.descargarFoto(row.base64, ( row.producto.pro_nombre || row.producto.pro_codigo ));
   }
 
 }

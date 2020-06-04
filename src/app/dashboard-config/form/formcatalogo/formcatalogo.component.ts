@@ -5,6 +5,7 @@ import { ToolsService } from 'src/app/services/tools.service';
 import * as _ from 'lodash';
 import { ProductoService } from 'src/app/servicesComponents/producto.service';
 import { CatalogoService } from 'src/app/servicesComponents/catalogo.service';
+import { NgxSpinnerService } from 'ngx-spinner';
 
 @Component({
   selector: 'app-formcatalogo',
@@ -23,11 +24,14 @@ export class FormcatalogoComponent implements OnInit {
       pro_activo: 0
     },
     page: 0,
+    sort: "createdAt DESC",
     limit: 10
   };
   lisProductos:any = [];
   disableEliminar:boolean = false;
   loader:boolean = false;
+
+  count:Number = 0;
 
   constructor(
     public dialog: MatDialog,
@@ -35,23 +39,24 @@ export class FormcatalogoComponent implements OnInit {
     private _tools: ToolsService,
     public dialogRef: MatDialogRef<FormcatalogoComponent>,
     @Inject(MAT_DIALOG_DATA) public datas: any,
-    private _productos: ProductoService
+    private _productos: ProductoService,
+    private spinner: NgxSpinnerService
   ) { }
 
   ngOnInit() {
+    this.cargarTodos();
     if(Object.keys(this.datas.datos).length > 0) {
       this.data = _.clone(this.datas.datos);
       this.id = this.data.id;
       this.titulo = "Actualizar";
-      console.log(this.data, this.id);
       this.getArticuloAsignados();
     }else{this.id = ""}
-    this.cargarTodos();
   }
 
   cargarTodos() {
     this._productos.get( this.query ).subscribe(
       (response: any) => {
+        this.count = response.count;
         this.lisProductos.push(... response.data);
         this.lisProductos =_.unionBy(this.lisProductos || [], response.data, 'id');
         this.cambiarEstadoProducto();
@@ -61,38 +66,49 @@ export class FormcatalogoComponent implements OnInit {
   cambiarEstadoProducto(){
     for( let row of this.lisProductos ){
       let filtro = this.listGaleria.find( ( item:any ) => item.producto == row.id );
-      if(filtro ) { row.check = true; row.producto = row.id; row.id = filtro.id; }
+      row.producto = row.id;
+      if(filtro ) { row.check = true; row.id = filtro.id; }
     }
   }
 
+  pageEvent(ev:any){
+    //console.log(ev);
+    this.query.page = ev.pageIndex;
+    this.query.limit = ev.pageSize;
+    this.cargarTodos();
+  }
+
   getArticuloAsignados(){
-    this._catalogo.getDetallado({ where: { catalago: this.id }}).subscribe((res:any)=> this.listGaleria = _.map( res.data, (row)=>{
-      return {
-        id: row.id,
-        foto: row.producto.foto,
-        producto: row.producto.id,
-        pro_nombre: row.producto.pro_nombre,
-        check: true
-      };
-    }));
-    this.cambiarEstadoProducto();
+    this.spinner.show();
+    this._catalogo.getDetallado({ where: { catalago: this.id }, limit: -1 }).subscribe((res:any)=> {
+      this.listGaleria = _.map( res.data, (row)=>{
+        return {
+          id: row.id,
+          foto: row.producto.foto,
+          producto: row.producto.id,
+          pro_nombre: row.producto.pro_nombre,
+          check: true
+        };
+      });
+      this.spinner.hide();
+      this.cambiarEstadoProducto();
+      });
   }
 
   seleccionArticulo( item:any ){
     if(!item.check) { if( this.id ) this.guardarSeleccion( item ); this.listGaleria.push( item );}
     else { if( this.id ) this.eliminarSeleccion( item ); this.listGaleria = this.listGaleria.filter( (row:any )=> row.id !== item.id ); }
-    item.check = !item.check;
   }
 
   guardarSeleccion( item:any ){
-    console.log(item);
+    //console.log(item);
+    item.check = !item.check;
     return new Promise( resolve=>{
       this.disableEliminar = true;
       let data:any = {
         catalago: this.id,
-        producto: item.id
+        producto: item.producto
       };
-      delete item.id;
       this._catalogo.createDetallado(data).subscribe((res:any)=>{
         this.disableEliminar = false;
         item.id = res.id;
@@ -103,15 +119,18 @@ export class FormcatalogoComponent implements OnInit {
   }
 
   eliminarSeleccion( item:any ){
-    console.log(item);
+    //console.log(item);
+    item.check = !item.check;
     this.listGaleria = this.listGaleria.filter( (row:any )=> row.id !== item.id );
     if( !item.id || !this.id ) return true;
+    if( !item.producto ) return false;
     let data:any = {
       id: item.id
     };
     this.disableEliminar = true;
-    let filtro:any = _.findIndex( this.lisProductos, [ 'id', item.producto]);
-    if( filtro > 0 ) this.lisProductos[filtro].check = !this.lisProductos[filtro].check;
+    let filtro:any = _.findIndex( this.lisProductos, [ 'producto', item.producto]);
+    //console.log(filtro);
+    if( filtro > 0 ) this.lisProductos[filtro].check = false;
     this._catalogo.deleteDetallado( data ).subscribe((res:any)=>{
       this.disableEliminar = false;
        this._tools.presentToast("Eliminado");

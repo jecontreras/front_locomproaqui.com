@@ -3,6 +3,7 @@ import { MatDialog } from '@angular/material';
 import { ToolsService } from 'src/app/services/tools.service';
 import { CatalogoService } from 'src/app/servicesComponents/catalogo.service';
 import { FormcatalogoComponent } from '../../form/formcatalogo/formcatalogo.component';
+import { environment } from 'src/environments/environment';
 
 declare interface DataTable {
   headerRow: string[];
@@ -12,6 +13,8 @@ declare interface DataTable {
 
 declare const swal: any;
 declare const $: any;
+
+const URLFRON = environment.urlFront;
 
 @Component({
   selector: 'app-catalogo',
@@ -31,6 +34,7 @@ export class CatalogoComponent implements OnInit {
   Header:any = [ 'Acciones','Titulo','Estado','creado' ];
   $:any;
   public datoBusqueda = '';
+  urlCatalago:string = `${ URLFRON }/catalogo/`;
 
   constructor(
     private _catalago: CatalogoService,
@@ -53,11 +57,27 @@ export class CatalogoComponent implements OnInit {
       console.log(`Dialog result: ${result}`);
     });
   }
+
   delete(obj:any, idx:any){
     this._catalago.delete(obj).subscribe((res:any)=>{
       this.dataTable.dataRows.splice(idx, 1);
       this._tools.presentToast("Eliminado")
     },(error)=>{console.error(error); this._tools.presentToast("Error de servidor") })
+  }
+
+  copiarLink(row){
+    const selBox = document.createElement('textarea');
+    selBox.style.position = 'fixed';
+    selBox.style.left = '0';
+    selBox.style.top = '0';
+    selBox.style.opacity = '0';
+    selBox.value = this.urlCatalago + row.id;
+    document.body.appendChild(selBox);
+    selBox.focus();
+    selBox.select();
+    document.execCommand('copy');
+    document.body.removeChild(selBox);
+    this._tools.openSnack('Copiado:' + ' ' + this.urlCatalago+row.id, 'completado', false);
   }
   
   cargarTodos() {

@@ -23,7 +23,7 @@
             </div>
             <div class="d-flex flex-row-reverse bd-highlight">
                 <div class="p-2 bd-highlight">
-                    <button type="button" class="btn btn-success" (click)="descargarFoto()">Descargar todas las
+                    <button type="button" class="btn btn-success" [disabled]="listGaleria.length == 0" (click)="descargarFoto()">Descargar todas las
                         foto</button>
                 </div>
             </div>
@@ -31,6 +31,12 @@
         <div class="col-12 col-sm-4 col-md-3 col-lg-3" *ngFor="let item of listGaleria">
             <mat-card class="example-card">
                 <img mat-card-image style="width: 100%;" [src]="item.producto.foto" alt="Photo of a Shiba Inu">
+                <mat-card-actions>
+                    <button mat-button color="primary"
+                        (click)="descargarFotoUna( item )">
+                        <span>Descargar</span>
+                    </button>
+                </mat-card-actions>
             </mat-card>
         </div>
         <div class="d-flex justify-content-center">
