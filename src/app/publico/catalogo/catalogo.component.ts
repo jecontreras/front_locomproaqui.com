@@ -1,5 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { CatalogoService } from 'src/app/servicesComponents/catalogo.service';
+import { ActivatedRoute } from '@angular/router';
+import { ToolsService } from 'src/app/services/tools.service';
+import { NgxSpinnerService } from 'ngx-spinner';
 
 @Component({
   selector: 'app-catalogo',
@@ -9,19 +12,43 @@ import { CatalogoService } from 'src/app/servicesComponents/catalogo.service';
 export class CatalogoComponent implements OnInit {
   
   listGaleria:any = [];
-  
+  id:any = {};
+  query:any = { where: { /*catalago: ,*/ estado: 0 }, limit: -1 }
+  data:any = {};
+
   constructor(
-    private _catalago: CatalogoService
+    private _catalago: CatalogoService,
+    private activate: ActivatedRoute,
+    private _tools: ToolsService,
+    private spinner: NgxSpinnerService
   ) { }
 
   ngOnInit(): void {
     this.getList();
+    if(this.activate.snapshot.paramMap.get('id')){
+      this.id = ( this.activate.snapshot.paramMap.get('id') );
+      this.query.where.catalago = this.id;
+      this.getCatalago();
+    }
+  }
+
+  getCatalago(){
+    this._catalago.get( { where: { estado: 0, id: this.id }, limit: 1 }).subscribe((res:any)=> this.data = res.data[0] || {} );
   }
 
   getList(){
-    this._catalago.getDetallado( { where: { /*catalago: ,*/ estado: 0 }, limit: -1 } ).subscribe(( res:any )=>{
+    this.spinner.show();
+    this._catalago.getDetallado( this.query ).subscribe(( res:any )=>{
       this.listGaleria = res.data;
+      this.spinner.hide();
     });
+  }
+
+  async descargarFoto(){
+    console.log( this.listGaleria );
+    for( let row of this.listGaleria ){
+      await this._tools.descargarFoto(row.base64, ( row.producto.pro_nombre || row.producto.pro_codigo ));
+    }
   }
 
 }

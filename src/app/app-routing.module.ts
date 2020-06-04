@@ -18,6 +18,7 @@ const routes: Routes = [
   { path: 'registro/:id', component: RegistrosComponent },
   { path: 'testimonio', component: TestimoniosComponent },
   { path: 'catalogo', component: CatalogoComponent },
+  { path: 'catalogo/:id', component: CatalogoComponent },
   //{path: '**', redirectTo: 'pedidos', pathMatch: 'full'},
   {
     path: 'config', 
