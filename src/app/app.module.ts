@@ -37,6 +37,7 @@ import { ServerStateInterceptor } from './services/serverstate.interceptor';
 import { BrowserStateInterceptor } from './services/browserstate.interceptor';
 import { AuthInterceptor } from './services/authInterceptor';
 import { GlobalErrorHandler } from './services/globalErrorHandler';
+import { CatalogoComponent } from './publico/catalogo/catalogo.component';
 
 @NgModule({
   entryComponents:[
@@ -59,7 +60,8 @@ import { GlobalErrorHandler } from './services/globalErrorHandler';
     MenuLateralComponent,
     ProductoViewComponent,
     FooterComponent,
-    TestimoniosComponent
+    TestimoniosComponent,
+    CatalogoComponent
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'serverApp' }),

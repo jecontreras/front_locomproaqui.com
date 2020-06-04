@@ -36,6 +36,8 @@ import { VentastableComponent } from './table/ventastable/ventastable.component'
 import { Ng2SmartTableModule } from 'ng2-smart-table';
 import { VentasLiderComponent } from './components/ventas-lider/ventas-lider.component';
 import { FormventasLiderComponent } from './form/formventas-lider/formventas-lider.component';
+import { CatalogoComponent } from './components/catalogo/catalogo.component';
+import { FormcatalogoComponent } from './form/formcatalogo/formcatalogo.component';
 
 @NgModule({
   entryComponents: [
@@ -48,7 +50,8 @@ import { FormventasLiderComponent } from './form/formventas-lider/formventas-lid
     FormpuntosComponent,
     FormtestimoniosComponent,
     VentastableComponent,
-    FormventasLiderComponent
+    FormventasLiderComponent,
+    FormcatalogoComponent
   ],
   declarations: [
     MainComponent,
@@ -73,7 +76,9 @@ import { FormventasLiderComponent } from './form/formventas-lider/formventas-lid
     TestimonioComponent,
     VentastableComponent,
     VentasLiderComponent,
-    FormventasLiderComponent
+    FormventasLiderComponent,
+    CatalogoComponent,
+    FormcatalogoComponent
   ],
   imports: [
     CommonModule,

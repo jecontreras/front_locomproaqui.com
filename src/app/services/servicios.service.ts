@@ -42,8 +42,8 @@ export class ServiciosService {
     if(Object.keys(this.dataUser).length >0 ){
       this.querys('tblusuario/querys',{
         where:{
-          id: this.dataUser.id
-          //id: 505
+           id: this.dataUser.id
+          //id: 1016
         }
       }, 'post').subscribe((res:any)=>{
         res = res.data[0];

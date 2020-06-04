@@ -283,6 +283,11 @@ export class HeaderComponent implements OnInit {
         submenus:[
           {
             icons: 'settings',
+            nombre: 'Catalago',
+            url: '/config/catalago',
+          },
+          {
+            icons: 'settings',
             nombre: 'Testimonios',
             url: '/config/testimonios',
           },

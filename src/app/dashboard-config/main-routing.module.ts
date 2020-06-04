@@ -15,6 +15,7 @@ import { ReferidosComponent } from './components/referidos/referidos.component';
 import { TestimonioComponent } from './components/testimonios/testimonios.component';
 import { VentastableComponent } from './table/ventastable/ventastable.component';
 import { VentasLiderComponent } from './components/ventas-lider/ventas-lider.component';
+import { CatalogoComponent } from './components/catalogo/catalogo.component';
 
 const dashboardRoutes: Routes = [
  {
@@ -27,6 +28,7 @@ const dashboardRoutes: Routes = [
      {path: 'provedores', component: ProvedoresComponent},
      {path: 'productos', component: ProductosComponent},
      {path: 'usuarios', component: UsuariosComponent},
+     {path: 'catalago', component: CatalogoComponent},
      {path: 'ventas', component: VentasComponent},
      {path: 'ventasLider', component: VentasLiderComponent},
      {path: 'cobros', component: CobrosComponent},
