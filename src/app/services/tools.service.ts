@@ -90,6 +90,7 @@ export class ToolsService {
   }
 
   async descargarFoto(url: string, nombre:string) {
+    console.log(nombre)
     return new Promise(resolve=>{
       let urlFormato = _.split(url, ";base64,", 10);
       let byteCharacters = atob(urlFormato[1]);
