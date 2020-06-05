@@ -41,8 +41,11 @@ export class CatalogoComponent implements OnInit {
 
   getList(){
     this.spinner.show();
-    this._catalago.getDetallado( this.query ).subscribe(( res:any )=>{
+    this._catalago.getDetallado( this.query ).subscribe(async( res:any )=>{
       this.listGaleria = res.data;
+      // for( let row of this.listGaleria ){
+      //   row.base64 = await this._catalago.FormatoBase64( row.producto.foto );
+      // }
       this.spinner.hide();
       this.estadosList = true;
       this.descargarFoto();
@@ -52,12 +55,21 @@ export class CatalogoComponent implements OnInit {
   async descargarFoto(){
     //console.log( this.listGaleria );
     for( let row of this.listGaleria ){
+      await this.sleep(2);
+      if( !row.base64 ) row.base64 = await this._catalago.FormatoBase64( row.producto.foto );
       await this._tools.descargarFoto(row.base64, ( row.producto.pro_nombre || row.producto.pro_codigo ));
     }
   }
 
+  async sleep(segundos) {
+    return new Promise(resolve => {
+      setTimeout(async () => { resolve(true) }, segundos * 1000)
+    })
+  }
+
   async descargarFotoUna( row:any ){
     //console.log( this.listGaleria );
+    if( !row.base64 ) row.base64 = await this._catalago.FormatoBase64( row.producto.foto );
     await this._tools.descargarFoto(row.base64, ( row.producto.pro_nombre || row.producto.pro_codigo ));
   }
 

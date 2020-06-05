@@ -34,6 +34,7 @@
     "@nguniversal/express-engine": "^9.0.1",
     "@types/memory-cache": "^0.2.1",
     "add": "^2.0.6",
+    "base64-img": "^1.0.4",
     "bootstrap": "^4.4.1",
     "express": "^4.17.1",
     "firebase": "^7.9.3",
