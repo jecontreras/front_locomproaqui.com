@@ -71,7 +71,7 @@ export class CatalogoComponent implements OnInit {
     selBox.style.left = '0';
     selBox.style.top = '0';
     selBox.style.opacity = '0';
-    selBox.value = this.urlCatalago + +"/"+row.id;
+    selBox.value = this.urlCatalago + row.id;
     document.body.appendChild(selBox);
     selBox.focus();
     selBox.select();
