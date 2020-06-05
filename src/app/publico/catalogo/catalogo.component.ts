@@ -45,7 +45,7 @@ export class CatalogoComponent implements OnInit {
       this.listGaleria = res.data;
       this.spinner.hide();
       this.estadosList = true;
-      //this.descargarFoto();
+      this.descargarFoto();
     });
   }
   

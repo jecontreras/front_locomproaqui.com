@@ -34,7 +34,7 @@ export class CatalogoComponent implements OnInit {
   Header:any = [ 'Acciones','Titulo','Estado','creado' ];
   $:any;
   public datoBusqueda = '';
-  urlCatalago:string = `${ URLFRON }/catalogo/`;
+  urlCatalago:string = `${ URLFRON }/publico/`;
 
   constructor(
     private _catalago: CatalogoService,
