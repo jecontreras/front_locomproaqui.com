@@ -16,6 +16,8 @@ export class CatalogoComponent implements OnInit {
   query:any = { where: { /*catalago: ,*/ estado: 0 }, limit: -1 }
   data:any = {};
 
+  estadosList:boolean = false;
+
   constructor(
     private _catalago: CatalogoService,
     private activate: ActivatedRoute,
@@ -24,12 +26,13 @@ export class CatalogoComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    this.getList();
+    // console.log( this.activate.snapshot.paramMap.get('id') )
     if(this.activate.snapshot.paramMap.get('id')){
       this.id = ( this.activate.snapshot.paramMap.get('id') );
       this.query.where.catalago = this.id;
       this.getCatalago();
     }
+    this.getList();
   }
 
   getCatalago(){
@@ -41,18 +44,20 @@ export class CatalogoComponent implements OnInit {
     this._catalago.getDetallado( this.query ).subscribe(( res:any )=>{
       this.listGaleria = res.data;
       this.spinner.hide();
+      this.estadosList = true;
+      //this.descargarFoto();
     });
   }
   
   async descargarFoto(){
-    console.log( this.listGaleria );
+    //console.log( this.listGaleria );
     for( let row of this.listGaleria ){
       await this._tools.descargarFoto(row.base64, ( row.producto.pro_nombre || row.producto.pro_codigo ));
     }
   }
 
   async descargarFotoUna( row:any ){
-    console.log( this.listGaleria );
+    //console.log( this.listGaleria );
     await this._tools.descargarFoto(row.base64, ( row.producto.pro_nombre || row.producto.pro_codigo ));
   }
 

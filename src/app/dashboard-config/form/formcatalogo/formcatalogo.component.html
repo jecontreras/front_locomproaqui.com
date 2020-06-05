@@ -82,6 +82,18 @@
                         </div>
                     </div>
                 </mat-tab>
+                <mat-tab label="Subir Imagenes">
+                    <ngx-dropzone (change)="onSelect($event)">
+                        <ngx-dropzone-label>Abrir archivos</ngx-dropzone-label>
+                        <ngx-dropzone-image-preview ngProjectAs="ngx-dropzone-preview" *ngFor="let f of files"
+                            [file]="f" [removable]="true" (removed)="onRemove(f)" multiple="false">
+                            <ngx-dropzone-label>{{ f.name }} ({{ f.type }})</ngx-dropzone-label>
+                        </ngx-dropzone-image-preview>
+                    </ngx-dropzone>
+                    <div class="d-flex justify-content-center">
+                        <button type="button" class="btn btn-success" (click)="subirFile()" [disabled]="btnDisabled">Subir Imagen</button>
+                    </div>
+                </mat-tab>
             </mat-tab-group>
         </div>
     </div>

@@ -38,7 +38,7 @@ import { VentasLiderComponent } from './components/ventas-lider/ventas-lider.com
 import { FormventasLiderComponent } from './form/formventas-lider/formventas-lider.component';
 import { CatalogoComponent } from './components/catalogo/catalogo.component';
 import { FormcatalogoComponent } from './form/formcatalogo/formcatalogo.component';
-
+import { ExtraModule } from '../extra/extra.module';
 @NgModule({
   entryComponents: [
     FormcategoriasComponent,
@@ -78,7 +78,7 @@ import { FormcatalogoComponent } from './form/formcatalogo/formcatalogo.componen
     VentasLiderComponent,
     FormventasLiderComponent,
     CatalogoComponent,
-    FormcatalogoComponent
+    FormcatalogoComponent,
   ],
   imports: [
     CommonModule,
@@ -92,7 +92,8 @@ import { FormcatalogoComponent } from './form/formcatalogo/formcatalogo.componen
     FormsModule,
     NgxDropzoneModule,
     AngularEditorModule,
-    Ng2SmartTableModule
+    Ng2SmartTableModule,
+    ExtraModule
   ],
   exports: [
     FormcategoriasComponent,

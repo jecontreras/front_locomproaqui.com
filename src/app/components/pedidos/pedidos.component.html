@@ -17,8 +17,8 @@
             <div class="contenedor">
                 <div class="table-responsive">
                     <div style="width: 1077px; height: 35px;">
-                        <a *ngFor="let item of imageObject;let idx=index" href="#" (click)="imageOnClick(idx, item);" 
-                            class="estiloCategoria"
+                        <a *ngFor="let item of imageObject;let idx=index" (click)="imageOnClick(idx, item);" 
+                            class="estiloCategoria pointer"
                             [ngClass]="{ 'cambiaColor': item.check == true }"
                         >
                             {{ item.title }}

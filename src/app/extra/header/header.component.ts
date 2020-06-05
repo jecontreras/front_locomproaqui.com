@@ -2,8 +2,8 @@ import { Component, OnDestroy, ChangeDetectorRef, OnInit, VERSION, ViewChild } f
 import { MediaMatcher } from '@angular/cdk/layout';
 import { Router, ActivatedRoute } from '@angular/router';
 import { MatDialog } from '@angular/material';
-import { LoginComponent } from '../login/login.component';
-import { RegistroComponent } from '../registro/registro.component';
+import { LoginComponent } from '../../components/login/login.component';
+import { RegistroComponent } from '../../components/registro/registro.component';
 import { ServiciosService } from 'src/app/services/servicios.service';
 import { Store } from '@ngrx/store';
 import { CART } from 'src/app/interfaces/sotarage';
@@ -211,7 +211,7 @@ export class HeaderComponent implements OnInit {
         icons: 'home',
         nombre: 'Inicio',
         disable: true,
-        url: '.',
+        url: '/pedidos',
         submenus:[]
       },
       {
