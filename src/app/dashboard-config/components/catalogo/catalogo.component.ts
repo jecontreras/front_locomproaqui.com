@@ -48,7 +48,7 @@ export class CatalogoComponent implements OnInit {
 
   crear(obj:any){
     const dialogRef = this.dialog.open(FormcatalogoComponent,{
-      height:  '561px',
+      height:  '550px',
       width: '100%',
       data: {datos: obj || {}}
     });
