@@ -58,7 +58,9 @@ export class ProductosComponent implements OnInit {
 
   crear(obj:any){
     const dialogRef = this.dialog.open(FormproductosComponent,{
-      data: {datos: obj || {}}
+      data: {datos: obj || {}},
+      height:  '550px',
+      width: '100%'
     });
 
     dialogRef.afterClosed().subscribe(result => {

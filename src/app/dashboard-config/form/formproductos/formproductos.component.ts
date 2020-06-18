@@ -28,6 +28,10 @@ export class FormproductosComponent implements OnInit {
   listColor:any = [];
   editorConfig: any;
   listPrecios:any = [];
+  listGaleria:any = [];
+
+  btnDisabled:boolean = false;
+  disableEliminar:boolean = false;
 
   constructor(
     public dialog: MatDialog,
@@ -47,24 +51,31 @@ export class FormproductosComponent implements OnInit {
       this.data = _.clone(this.datas.datos);
       this.id = this.data.id;
       this.titulo = "Actualizar";
-      if(this.data.checkMayor) this.data.checkMayor = true;
-      this.listPrecios = this.data.listPrecios || [];
-      if( this.data.pro_categoria ) if(this.data.pro_categoria.id) this.data.pro_categoria = this.data.pro_categoria.id;
-      this.listColor = this.data.listColor || [];
+      this.procesoEdision();    
     }else{this.id = ""; this.data.pro_codigo = this.codigo(); this.data.pro_sw_tallas = 1; }
     this.getCategorias();
     this.getTipoTallas();
   }
+
+  procesoEdision(){
+    if(this.data.checkMayor) this.data.checkMayor = true;
+      this.listPrecios = this.data.listPrecios || [];
+      if( this.data.pro_categoria ) if(this.data.pro_categoria.id) this.data.pro_categoria = this.data.pro_categoria.id;
+      this.listColor = this.data.listColor || [];
+  }
+
   getCategorias(){
     this._categoria.get({where:{cat_activo: 0}}).subscribe((res:any)=>{
       this.listCategorias = res.data;
     }, error=> this._tools.presentToast("error servidor"));
   }
+
   getTipoTallas(){
     this._tipoTallas.get({}).subscribe((res:any)=>{
       this.listTipoTallas = res.data;
     }, error=> this._tools.presentToast("error servidor"));
   }
+
   onSelect(event:any) {
     //console.log(event, this.files);
     this.files=[event.addedFiles[0]]
@@ -144,18 +155,95 @@ export class FormproductosComponent implements OnInit {
   }
 
   guardar(){
-    this._productos.create(this.data).subscribe((res:any)=>{
-      //console.log(res);
-      this._tools.presentToast("Exitoso");
-    }, (error)=>this._tools.presentToast("Error"));
-    this.dialog.closeAll();
+    return new Promise(resolve=>{
+      this._productos.create(this.data).subscribe((res:any)=>{
+        //console.log(res);
+        this._tools.presentToast("Exitoso");
+        this.data.id = res.id;
+        resolve(res);
+      }, (error)=>{ this._tools.presentToast("Error"); resolve(false)});
+    });
+    //this.dialog.closeAll();
   }
   updates(){
     // this.data = _.omit(this.data, [ ''])
+    this.data = _.omitBy( this.data, _.isNull);
     this._productos.update(this.data).subscribe((res:any)=>{
       this._tools.presentToast("Actualizado");
     },(error)=>{console.error(error); this._tools.presentToast("Error de servidor")});
   }
+  onSelects(event: any) {
+    //console.log(event, this.files);
+    this.files.push(...event.addedFiles)
+  }
+
+
+  onRemoves(event) {
+    //console.log(event);
+    this.files.splice(this.files.indexOf(event), 1);
+  }
+
+  async seleccionandoImg( item:any ){
+    if( !item.id && this.btnDisabled == true ) return false;
+    for(let row of this.listGaleria ) row.check = false;
+    item.check = !item.check;
+    this.btnDisabled = true;
+    this.data = await this.getProducto( item );
+    this.id = this.data.id;
+    this.btnDisabled = false;
+    this.procesoEdision();
+  }
+
+  getProducto( obj:any ){
+    return new Promise( resolve=>{
+      this._productos.get({ where: { id: obj.id } }).subscribe((res:any)=>{
+        res = res.data[0];
+        if( !res ) resolve( false );
+        resolve( res );
+      },(error:any)=> resolve(false));
+    })
+  }
+
+  async subirFiles() {
+    this.btnDisabled = true;
+    for (let row of this.files) {
+      await this.fileSubmit( row );
+    }
+    this.files = [];
+    this.btnDisabled = false;
+    this._tools.presentToast("Exitoso");
+
+  }
+
+  fileSubmit(row) {
+    return new Promise(resolve => {
+      let form: any = new FormData();
+      form.append('file', row);
+      this._tools.ProcessTime({});
+      //this._archivos.create( this.files[0] );
+      this._archivos.create(form).subscribe(async (res: any) => {
+        //console.log(res);
+        this.data = {
+          "pro_nombre": this.codigo(),
+          "foto": res.files,
+          "pro_descripcion": `disponibles desde la talla 36 a la talla 43 echos en material sintético de muy buena calidad`,
+          "pro_codigo": "3DBG1F",
+          "pro_sw_tallas": 1,
+          "pro_categoria": "13",
+          "cat_activo": 1,
+          "checkMayor": 0,
+          "pro_uni_venta": 0
+        };
+        let result:any = await this.guardar();
+        if( !result ) resolve( false );
+        this.data.id = result.id;
+        this.id = result.id;
+        this.listGaleria.push( this.data );
+        resolve(true);
+      }, (error) => { console.error(error); this._tools.presentToast("Error de servidor"); });
+    });
+  }
+
   editor(){
     let config:AngularEditorConfig = {
           editable: true,
@@ -204,6 +292,21 @@ export class FormproductosComponent implements OnInit {
     };
     this.editorConfig = config;
   }
+  
+  eliminarSeleccion( item:any ){
+    let data:any = { id: item.id };
+    this.disableEliminar = true;
+    this._productos.delete( data ).subscribe((res:any)=>{
+      this.disableEliminar = false;
+      this.listGaleria = this.listGaleria.filter((row:any) => row.id !== item.id );
+      this.data = {
+        pro_codigo: this.codigo(),
+        pro_sw_tallas: 1
+      };
+      this._tools.presentToast("Eliminado Exitos");
+    },(error:any)=> { this._tools.presentToast("Error de servidor"); this.disableEliminar = false; })
+  }
+
   eventoDescripcion(){
     // console.log("HP")
   }
