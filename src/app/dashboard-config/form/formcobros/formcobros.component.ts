@@ -104,7 +104,9 @@ export class FormcobrosComponent implements OnInit {
     else this.guardar();
   }
   
-  guardar(){
+  async guardar(){
+    let validador:any = await this.validador();
+    if( !validador ) return this.disabledButton = false;
     this.data.cat_activo = 0;
     this._cobros.create(this.data).subscribe((res:any)=>{
       //console.log(res);
@@ -112,9 +114,19 @@ export class FormcobrosComponent implements OnInit {
       this.disabledButton = false;
       this._tools.basicIcons({header: `hola ${ this.dataUser.usu_nombre } cordial saludo`, subheader: `Te informamos que tu solicitud de retiro ha Sido recibida de manera satisfactoria y está en proceso de validación la empresa te pagara dentro de los 3 días hábiles siguientes después de la quincena!`});
       this.procesoWhat( res );
-      this.openTestimonios();
+      setTimeout(()=> this.openTestimonios(), 3000);
       this.dialog.closeAll();
     }, (error)=>{ this._tools.presentToast(error.error.mensaje); console.error(error); this.disabledButton = false; this.dialog.closeAll(); });
+  }
+
+  async validador(){
+    if( !this.data.cob_pais ) { this._tools.presentToast( "Error no has seleccionado pais"); return false; }
+    if( !this.data.cob_num_cedula ) { this._tools.presentToast( "Error no has introducido tu Cedula"); return false; }
+    if( !this.data.cob_num_celular ) { this._tools.presentToast( "Error no has introducido tu Celular por si necesitamos mas informacion"); return false; }
+    if( !this.data.cob_num_cuenta ) { this._tools.presentToast( "Error no has introducido tu Numero de la cuenta "); return false; }
+    if( this.data.cob_pais == "venezuela" ) if( !this.data.usu_email ) { this._tools.presentToast( "Error no has introducido tu Email de la cuenta "); return false; }
+    if( !this.data.cob_monto || ( Number( this.data.cob_monto ) < 5000 ) ) { this._tools.presentToast( "Error no tienes suficiente monto a retirar "); return false; }
+    return true;
   }
 
   updates(){
