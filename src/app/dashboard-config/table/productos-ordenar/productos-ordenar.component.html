@@ -1,0 +1,64 @@
+<h2 mat-dialog-title>Ordenar Productos</h2>
+<mat-dialog-content class="mat-typography">
+    <div cdkDropListGroup>
+        <div class="example-container">
+            <h2>Lista Ordenando</h2>
+
+            <div cdkDropList [cdkDropListData]="listGaleria2" class="example-list" (cdkDropListDropped)="drop($event)">
+                <div class="example-box" *ngFor="let item of listGaleria2" cdkDrag>
+                    <img mat-card-image class="anchosImg" [src]="item.foto" alt="Photo of a Shiba Inu">
+                    {{ item.pro_nombre }}
+                </div>
+            </div>
+        </div>
+
+        <!-- <div class="example-container">
+            <h2>Lista de productos</h2>
+
+            <div cdkDropList [cdkDropListData]="listGaleria" class="example-list" (cdkDropListDropped)="drop($event)">
+                <div class="example-box" *ngFor="let item of listGaleria" cdkDrag>
+                    <img mat-card-image class="anchosImg" [src]="item.foto" alt="Photo of a Shiba Inu">
+                    {{ item.pro_nombre }}
+                </div>
+            </div>
+        </div> -->
+    </div>
+    <!-- <div cdkDropList [cdkDropListData]="listGaleria" class="example-list" (cdkDropListDropped)="drop($event)">
+        <div class="example-box" *ngFor="let item of listGaleria" cdkDrag>
+            <div class="example-custom-placeholder" *cdkDragPlaceholder></div>
+            <mat-card class="example-card anchosImg">
+                <img mat-card-image style="width: 100%;" [src]="item.foto" alt="Photo of a Shiba Inu">
+                <mat-card-content>
+                    <h6>{{ item.pro_nombre }}</h6>
+                </mat-card-content>
+            </mat-card>
+        </div>
+    </div> -->
+    <!-- <div class="row">
+
+        <div class="col" cdkDropListGroup>
+            <div cdkDropList [cdkDropListData]="listGaleria" class="row example-list"
+                (cdkDropListDropped)="drop($event)">
+                <div class="col-12 col-sm-12 example-box" *ngFor="let item of listGaleria" cdkDrag>
+                    <mat-card class="example-card">
+                        <img mat-card-image style="width: 100%;" [src]="item.foto" alt="Photo of a Shiba Inu">
+                        <mat-card-content>
+                            <h6>{{ item.pro_nombre }}</h6>
+                        </mat-card-content>
+                    </mat-card>
+                </div>
+                <div class="d-flex justify-content-center">
+                    <div class="d-flex justify-content-center" *ngIf="listGaleria.length == 0">
+                        <span>No hay items</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div> -->
+</mat-dialog-content>
+<mat-dialog-actions align="end">
+    <button mat-button mat-dialog-close>Cerrar</button>
+    <button mat-button cdkFocusInitial (click)="actualizarOrden()" [disabled]="btndisabled">
+        Actualizar
+    </button>
+</mat-dialog-actions>

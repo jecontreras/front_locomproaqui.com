@@ -39,6 +39,7 @@ import { FormventasLiderComponent } from './form/formventas-lider/formventas-lid
 import { CatalogoComponent } from './components/catalogo/catalogo.component';
 import { FormcatalogoComponent } from './form/formcatalogo/formcatalogo.component';
 import { ExtraModule } from '../extra/extra.module';
+import { ProductosOrdenarComponent } from './table/productos-ordenar/productos-ordenar.component';
 @NgModule({
   entryComponents: [
     FormcategoriasComponent,
@@ -51,7 +52,8 @@ import { ExtraModule } from '../extra/extra.module';
     FormtestimoniosComponent,
     VentastableComponent,
     FormventasLiderComponent,
-    FormcatalogoComponent
+    FormcatalogoComponent,
+    ProductosOrdenarComponent
   ],
   declarations: [
     MainComponent,
@@ -79,6 +81,7 @@ import { ExtraModule } from '../extra/extra.module';
     FormventasLiderComponent,
     CatalogoComponent,
     FormcatalogoComponent,
+    ProductosOrdenarComponent
   ],
   imports: [
     CommonModule,
@@ -101,7 +104,8 @@ import { ExtraModule } from '../extra/extra.module';
     FormproductosComponent,
     FormusuariosComponent,
     FormventasComponent,
-    FormcobrosComponent
+    FormcobrosComponent,
+    ProductosOrdenarComponent
   ],
   providers: [
   ],

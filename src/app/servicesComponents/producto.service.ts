@@ -22,4 +22,7 @@ export class ProductoService {
   delete(query:any){
     return this._model.querys('tblproductos/'+query.id, query, 'delete');
   }
+  ordenar(query:any){
+    return this._model.querys('tblproductos/ordenar', query, 'post');
+  }
 }

@@ -5,6 +5,7 @@ import { ProductoService } from 'src/app/servicesComponents/producto.service';
 import { FormproductosComponent } from '../../form/formproductos/formproductos.component';
 import { NgxSpinnerService } from 'ngx-spinner';
 import * as _ from 'lodash';
+import { ProductosOrdenarComponent } from '../../table/productos-ordenar/productos-ordenar.component';
 
 declare interface DataTable {
   headerRow: string[];
@@ -61,6 +62,17 @@ export class ProductosComponent implements OnInit {
       data: {datos: obj || {}},
       height:  '550px',
       width: '100%'
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      console.log(`Dialog result: ${result}`);
+    });
+  }
+  ordenarProductos(){
+    const dialogRef = this.dialog.open(ProductosOrdenarComponent,{
+      data: {datos: {}},
+      height:  '550px',
+      width: '100%',
     });
 
     dialogRef.afterClosed().subscribe(result => {

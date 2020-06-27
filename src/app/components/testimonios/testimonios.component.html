@@ -83,7 +83,7 @@
                 <div style="border:1px solid #ddd;padding:20px;">
                     <span style="font-size:1.65em;color:#000;">Video muestra la estrategia EXACTA que utilicé para ganar
                         mis primeras Ventas.</span><br />
-                    <a href="https://www.youtube.com/watch?v=WAr95LFER3M" target="_blank" class="btn btn-success"
+                    <a href="https://www.youtube.com/watch?v=stBQMhA3Rxo" target="_blank" class="btn btn-success"
                         style="margin-top:10px;">CLIC AQUÍ PARA VER LA PRESENTACIÓN</a>
                 </div>
             </div>
@@ -122,8 +122,7 @@
                     <div class="testimony">
                         <div class="photo">
 
-                            <img
-                                [src]="item.usuario.usu_imagen" />
+                            <img [src]="item.usuario.usu_imagen || './assets/noimagen.jpg'" />
 
                         </div>
 
@@ -133,12 +132,15 @@
                             </p>
 
                             <p>
-                                <span class="label">WhatsApp</span> <span class="value">+{{ item.usuario.usu_indicativo }} {{ item.usuario.usu_telefono }}</span>
+                                <span class="label">WhatsApp</span> <span
+                                    class="value">+{{ item.usuario.usu_indicativo }}
+                                    {{ item.usuario.usu_telefono }}</span>
                             </p>
 
 
                             <p>
-                                <span class="label">Ciudad</span> <span class="value">{{ item.usuario.usu_ciudad }}</span>
+                                <span class="label">Ciudad</span> <span
+                                    class="value">{{ item.usuario.usu_ciudad }}</span>
                             </p>
 
                             <p>
@@ -158,6 +160,11 @@
                             </p>
                         </div>
                     </div>
+                </div>
+                <div class="col-12">
+                    <ngx-spinner bdOpacity=0.9 bdColor="" size="default" color="#581f87" type="ball-pulse-sync"
+                        [fullScreen]="false">
+                    </ngx-spinner>
                 </div>
             </div>
         </div>

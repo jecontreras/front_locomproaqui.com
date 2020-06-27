@@ -79,7 +79,7 @@ export class CatalogoComponent implements OnInit {
       // }
       this.spinner.hide();
       this.estadosList = true;
-      this.descargarFoto();
+      //this.descargarFoto();
     });
   }
   

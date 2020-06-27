@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { environment } from 'src/environments/environment';
 import { TestimoniosService } from 'src/app/servicesComponents/testimonios.service';
+import { NgxSpinnerService } from 'ngx-spinner';
 
 
 const URLFRON = environment.urlFront;
@@ -24,7 +25,8 @@ export class TestimoniosComponent implements OnInit {
   dataUser:any = {};
 
   constructor(
-    private _testimonios: TestimoniosService
+    private _testimonios: TestimoniosService,
+    private spinner: NgxSpinnerService
   ) { 
   }
 
@@ -33,8 +35,10 @@ export class TestimoniosComponent implements OnInit {
   }
 
   getRow(){
+    this.spinner.show();
     this._testimonios.get( this.query ).subscribe(( res:any )=>{
       this.listRow = res.data;
+      this.spinner.hide();
     });
   }
 

@@ -33,6 +33,7 @@ import {MatButtonModule,
    MatBadgeModule} from '@angular/material';
    import {ScrollDispatchModule} from '@angular/cdk/scrolling';
 import { NgModule } from '@angular/core';
+import {DragDropModule} from '@angular/cdk/drag-drop';
 
 @NgModule({
   imports: [
@@ -69,7 +70,8 @@ import { NgModule } from '@angular/core';
     MatPaginatorModule,
     MatTabsModule,
     MatSelectModule,
-    ScrollDispatchModule
+    ScrollDispatchModule,
+    DragDropModule
   ],
   exports: [
     MatButtonModule,
@@ -105,7 +107,8 @@ import { NgModule } from '@angular/core';
     MatPaginatorModule,
     MatTabsModule,
     MatSelectModule,
-    ScrollDispatchModule
+    ScrollDispatchModule,
+    DragDropModule
   ],
 })
 export class MyOwnCustomMaterialModule { }
