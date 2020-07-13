@@ -33,8 +33,7 @@ export class CatalogoComponent implements OnInit {
       this.id = ( this.activate.snapshot.paramMap.get('id') );
       this.query.where.catalago = this.id;
       this.getCatalago();
-    }
-    this.getList();
+    }else this.getList();
     this.detectarZona();
   }
 
@@ -64,9 +63,12 @@ export class CatalogoComponent implements OnInit {
 
   getCatalago(){
     this._catalago.get( { where: { estado: 0, id: this.id }, limit: 1 }).subscribe((res:any)=> {
-      this.data = res.data[0] || {}
+      res = res.data[0];
+      if( !res ) return this._tools.error( { mensaje: "Lo sentimos este catalogo no esta disponible", footer: "404" });
+      this.data = res;
       this.data.precio = this._tools.monedaChange( 3, 2, this.data.precio );
       this.data.preciomayor = this._tools.monedaChange( 3, 2, ( this.data.preciomayor || this.data.precio ) );
+      this.getList();
     } );
   }
 
@@ -79,7 +81,7 @@ export class CatalogoComponent implements OnInit {
       // }
       this.spinner.hide();
       this.estadosList = true;
-      //this.descargarFoto();
+      if( this.data.descargar )this.descargarFoto();
     });
   }
   

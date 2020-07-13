@@ -9,13 +9,27 @@
                             <label for="exampleFormControlInput1">Nombre del catalago</label>
                             <input type="text" [(ngModel)]="data.titulo" class="form-control form-control-sm">
                         </div>
-                        <div class="col-12">
+                        <div class="col-6">
+                            <label for="exampleFormControlInput1">Descargar Automatico</label>
+                            <select class="custom-select custom-select-sm" [(ngModel)]="data.descargar">
+                                <option value="false">No</option>
+                                <option value="true">Si</option>
+                              </select>
+                        </div>
+                        <div class="col-6">
                             <label for="exampleFormControlInput1">Precio Cucuta</label>
                             <input type="number" [(ngModel)]="data.precio" class="form-control form-control-sm">
                         </div>
-                        <div class="col-12">
+                        <div class="col-6">
                             <label for="exampleFormControlInput1">Precio Fuera Cucuta</label>
                             <input type="number" [(ngModel)]="data.preciomayor" class="form-control form-control-sm">
+                        </div>
+                        <div class="col-6">
+                            <label for="exampleFormControlInput1">Estado del Catalogo</label>
+                            <select class="form-control form-control-sm" [(ngModel)]="data.estado">
+                                <option type="number" value="0">Avilitar</option>
+                                <option type="number" value="1">Desabilitar</option>
+                            </select>
                             <br><br>
                         </div>
                         <div class="col-12">

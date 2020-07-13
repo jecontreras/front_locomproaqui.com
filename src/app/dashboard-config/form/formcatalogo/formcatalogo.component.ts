@@ -188,6 +188,9 @@ export class FormcatalogoComponent implements OnInit {
   }
 
   submit() {
+    console.log( this.data.descargar )
+    if( this.data.descargar == "true" ) this.data.descargar = Boolean( this.data.descargar );
+    else this.data.descargar = false;
     if (this.id) {
       this.updates();
     }
