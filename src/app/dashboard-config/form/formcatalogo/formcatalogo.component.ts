@@ -87,6 +87,7 @@ export class FormcatalogoComponent implements OnInit {
     this.spinner.show();
     this._catalogo.getDetallado({ where: { catalago: this.id }, limit: -1 }).subscribe((res: any) => {
       this.listGaleria = _.map(res.data, (row) => {
+        this.spinner.hide();
         return {
           id: row.id,
           foto: row.producto.foto,
@@ -95,7 +96,6 @@ export class FormcatalogoComponent implements OnInit {
           check: true
         };
       });
-      this.spinner.hide();
       this.cambiarEstadoProducto();
     });
   }
@@ -187,34 +187,36 @@ export class FormcatalogoComponent implements OnInit {
     this.cargarTodos();
   }
 
-  submit() {
+  async submit() {
     console.log( this.data.descargar )
     if( this.data.descargar == "true" ) this.data.descargar = Boolean( this.data.descargar );
     else this.data.descargar = false;
     if (this.id) {
-      this.updates();
+      await this.updates();
     }
-    else { this.guardar(); }
-  }
-
-  guardar() {
-    this._catalogo.create(this.data).subscribe(async (res: any) => {
-      //console.log(res);
-      this._tools.presentToast("Exitoso");
-      this.id = res.id;
-      if (Object.keys(this.listGaleria).length > 0) {
-        for (let row of this.listGaleria) {
-          await this.guardarSeleccion(row);
-        }
-      }
-    }, (error) => this._tools.presentToast("Error"));
+    else { await this.guardar(); }
     this.dialog.closeAll();
   }
 
-  updates() {
-    this._catalogo.update(this.data).subscribe((res: any) => {
-      this._tools.presentToast("Actualizado");
-    }, (error) => { console.error(error); this._tools.presentToast("Error de servidor") });
+  async guardar() {
+    return new Promise( resolve => {
+      this._catalogo.create(this.data).subscribe(async (res: any) => {
+        //console.log(res);
+        this._tools.presentToast("Exitoso");
+        this.id = res.id;
+        if (Object.keys(this.listGaleria).length > 0) for (let row of this.listGaleria) await this.guardarSeleccion(row);
+        resolve( true );
+      }, (error) => { this._tools.presentToast("Error"); resolve( false ); });
+    })
+  }
+
+  async updates() {
+    return new Promise( resolve => {
+      this._catalogo.update(this.data).subscribe((res: any) => {
+        this._tools.presentToast("Actualizado");
+        resolve( true );
+      }, (error) => { console.error(error); this._tools.presentToast("Error de servidor"); resolve( false ); });
+    });
   }
 
   onSelect(event: any) {
@@ -230,9 +232,9 @@ export class FormcatalogoComponent implements OnInit {
 
   async subirFile() {
     this.btnDisabled = true;
-    for (let row of this.files) {
-      await this.fileSubmit( row );
-    }
+    if( !this.id ) await this.guardar();
+    if( !this.id ) return false;
+    for (let row of this.files) await this.fileSubmit( row );
     this.files = [];
     this.btnDisabled = false;
     this._tools.presentToast("Exitoso");
