@@ -21,11 +21,13 @@ import { ServiceWorkerModule } from '@angular/service-worker';
 import { NgxImageZoomModule } from 'ngx-image-zoom';
 import { TiendaModule } from './tienda/tienda.module';
 import { PublicoModule } from './publico/publico.module';
+import { IntroduccionComponent } from './components/introduccion/introduccion.component';
 
 @NgModule({
   entryComponents:[],
   declarations: [
-    AppComponent
+    AppComponent,
+    IntroduccionComponent
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'serverApp' }),

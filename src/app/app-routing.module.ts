@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
+import { IntroduccionComponent } from './components/introduccion/introduccion.component';
 
 const routes: Routes = [
   { path: '', 
@@ -22,6 +23,10 @@ const routes: Routes = [
       loadChildren: () => import('./publico/publico.module').then(m => m.PublicoModule)
     }], 
     pathMatch: 'full' 
+  },
+  {
+    path: "introduccion",
+    component: IntroduccionComponent
   },
   { path: '', redirectTo: "pedidos", pathMatch: 'full' }
 ];
