@@ -18,9 +18,12 @@ const indicativos = Indicativo;
 })
 export class RegistroComponent implements OnInit {
 
-  data:any = {};
+  data:any = {
+    usu_indicativo: "57"
+  };
   listIndicativos = indicativos;
   disableSubmit:boolean = true;
+  isLinear:boolean = true;
 
   constructor(
     private _user: UsuariosService,
@@ -37,6 +40,8 @@ export class RegistroComponent implements OnInit {
     this.data.cabeza = 1;
     if(!this.disableSubmit)return false;
     this.disableSubmit = false;
+    let valid: boolean = this.validando();
+    if( !valid ) return false;
     this._user.create(this.data).subscribe((res:any)=>{
       console.log("user", res);
       this.disableSubmit = true;
@@ -54,6 +59,22 @@ export class RegistroComponent implements OnInit {
         this.dialog.closeAll();
       }
     },(error)=>{ console.error(error); this.disableSubmit = true; this._tools.presentToast("Error de servidor")});
+  }
+
+  validando(){
+    if( !this.data.usu_nombre ) { this._tools.tooast( { title: "Error falta el nombre", icon: "error" }); return false; }
+    if( !this.data.usu_apellido ) { this._tools.tooast( { title: "Error falta el Apellido", icon: "error" }); return false; }
+    if( !this.data.usu_indicativo ) { this._tools.tooast( { title: "Error falta el Indicativo", icon: "error" }); return false; }
+    if( !this.data.usu_telefono ) { this._tools.tooast( { title: "Error falta el Telefono", icon: "error" }); return false; }
+    if( !this.data.usu_ciudad ) { this._tools.tooast( { title: "Error falta la Ciudad", icon: "error" }); return false; }
+    if( !this.data.usu_direccion ) { this._tools.tooast( { title: "Error falta el Direccion", icon: "error" }); return false; }
+    if( !this.data.usu_email ) { this._tools.tooast( { title: "Error falta la Email", icon: "error" }); return false; }
+    if( !this.data.usu_emailReper ) { this._tools.tooast( { title: "Error falta el Email repetir", icon: "error" }); return false; }
+    if( this.data.usu_emailReper != this.data.usu_email ) { this._tools.tooast( { title: "Error los Emails no son iguales", icon: "error" }); return false; }
+    if( !this.data.usu_clave ) { this._tools.tooast( { title: "Error falta la clave", icon: "error" }); return false; }
+    if( !this.data.usu_confir ) { this._tools.tooast( { title: "Error falta la clave de confirmar", icon: "error" }); return false; }
+    if( this.data.usu_confir !=  this.data.usu_clave ) { this._tools.tooast( { title: "Error las claves no son correctas", icon: "error" }); return false; }
+    return true;
   }
   
   terminos(){

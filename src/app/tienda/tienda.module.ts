@@ -3,7 +3,6 @@ import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { TiendaComponent } from './tienda.component';
 import { PedidosComponent } from '../components/pedidos/pedidos.component';
-import { RegistroComponent } from '../components/registro/registro.component';
 import { LoginComponent } from '../components/login/login.component';
 import { ViewProductosComponent } from '../components/view-productos/view-productos.component';
 import { TerminosComponent } from '../layout/terminos/terminos.component';
@@ -24,7 +23,6 @@ import { ExtraModule } from '../extra/extra.module';
 
 @NgModule({
   entryComponents:[
-    RegistroComponent,
     LoginComponent,
     ViewProductosComponent,
     TerminosComponent
@@ -32,7 +30,6 @@ import { ExtraModule } from '../extra/extra.module';
   declarations: [
     TiendaComponent,
     PedidosComponent,
-    RegistroComponent,
     LoginComponent,
     ViewProductosComponent,
     TerminosComponent,
@@ -58,7 +55,6 @@ import { ExtraModule } from '../extra/extra.module';
   ],
   exports: [
     LoginComponent,
-    RegistroComponent,
     ViewProductosComponent
   ],
   bootstrap: [TiendaComponent]

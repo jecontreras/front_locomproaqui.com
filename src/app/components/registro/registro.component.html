@@ -1,16 +1,16 @@
-<h2 mat-dialog-title>Registrate y gana un 7% de tus ventas</h2>
+<!-- <h2 mat-dialog-title>Registrate y gana un 7% de tus ventas</h2>
 
 <mat-dialog-content class="mat-typography">
     <div class="form row">
-        <div class="form-group col-12">
+        <div class="form-group col-sm-6 col-12">
             <label for="exampleFormControlInput1">Nombre</label>
             <input type="text" [(ngModel)]="data.usu_nombre" class="form-control form-control-sm" placeholder="Ingrese tu nombre">
         </div>
-        <div class="form-group col-12">
+        <div class="form-group col-sm-6 col-12">
             <label for="exampleFormControlInput1">Apellido</label>
             <input type="text" [(ngModel)]="data.usu_apellido" class="form-control form-control-sm" placeholder="Ingrese tu Apellido">
         </div>
-        <div class="form-group col-12">
+        <div class="form-group col-sm-6 col-12">
             <label for="exampleFormControlInput1">Fecha de nacimiento</label>
             <div class="input-group">
                 <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
@@ -18,37 +18,37 @@
                     [(ngModel)]="data.usu_fec_nacimiento">
             </div>
         </div>
-        <div class="form-group col-12">
+        <div class="form-group col-sm-6 col-12">
             <label for="exampleFormControlInput1">Indicativo</label>
             <select class="form-control form-control-sm" [(ngModel)]="data.usu_indicativo">
                 <option [value]="item.phone_code" *ngFor="let item of listIndicativos" >{{ item.nombre }} +{{ item.phone_code }}</option>
             </select>
         </div>
-        <div class="form-group col-12">
+        <div class="form-group col-sm-6 col-12">
             <label for="exampleFormControlInput1">Celular</label>
             <input type="text" [(ngModel)]="data.usu_telefono" class="form-control form-control-sm" placeholder="Ingrese tu Celular">
         </div>
-        <div class="form-group col-12">
+        <div class="form-group col-sm-6 col-12">
             <label for="exampleFormControlInput1">Ciudad</label>
             <input type="text" [(ngModel)]="data.usu_ciudad" class="form-control form-control-sm" placeholder="Ingrese tu Ciudad">
         </div>
-        <div class="form-group col-12">
+        <div class="form-group col-sm-6 col-12">
             <label for="exampleFormControlInput1">Dirección</label>
             <input type="text" [(ngModel)]="data.usu_direccion" class="form-control form-control-sm" placeholder="Ingrese tu Dirección">
         </div>
-        <div class="form-group col-12">
+        <div class="form-group col-sm-6 col-12">
             <label for="exampleFormControlInput1">Email</label>
             <input type="text" [(ngModel)]="data.usu_email" class="form-control form-control-sm" placeholder="Ingrese tu Email">
         </div>
-        <div class="form-group col-12">
+        <div class="form-group col-sm-6 col-12">
             <label for="exampleFormControlInput1">Contraseña</label>
             <input type="password" [(ngModel)]="data.usu_clave" class="form-control form-control-sm" placeholder=" Ingrese tu Contraseña">
         </div>
-        <div class="form-group col-12">
+        <div class="form-group col-sm-6 col-12">
             <label for="exampleFormControlInput1">Repetir Contraseña</label>
             <input type="password" [(ngModel)]="data.usu_confir" (change)="submit()" class="form-control form-control-sm" placeholder="Confirmar Contraseña">
         </div>
-        <div class="form-group col-12">
+        <div class="form-group col-sm-6 col-12">
             <input class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios2" [(ngModel)]="data.cat_activo">
             <label class="form-check-label pointer" for="exampleRadios2" (click)="terminos()">
                 Estoy de acuerdo con los terminos de privacidad
@@ -62,4 +62,101 @@
     <button mat-button cdkFocusInitial (click)="submit()">
         <span>Registrarse</span>
     </button>
-  </mat-dialog-actions>
+  </mat-dialog-actions> -->
+
+
+<div class="content">
+    <mat-horizontal-stepper [linear]="isLinear" #stepper>
+        <mat-step>
+            <ng-template matStepLabel>Primer Paso</ng-template>
+            <div class="form row">
+                <div class="form-group col-sm-6 col-12">
+                    <label for="exampleFormControlInput1">Nombre</label>
+                    <input type="text" [(ngModel)]="data.usu_nombre" required class="form-control form-control-sm"
+                        placeholder="Ingrese tu nombre">
+                </div>
+                <div class="form-group col-sm-6 col-12">
+                    <label for="exampleFormControlInput1">Apellido</label>
+                    <input type="text" [(ngModel)]="data.usu_apellido" class="form-control form-control-sm"
+                        placeholder="Ingrese tu Apellido">
+                </div>
+                <div class="form-group col-sm-6 col-12">
+                    <label for="exampleFormControlInput1">Indicativo</label>
+                    <select class="form-control form-control-sm" [(ngModel)]="data.usu_indicativo" required>
+                        <option [value]="item.phone_code" *ngFor="let item of listIndicativos">{{ item.nombre }}
+                            +{{ item.phone_code }}</option>
+                    </select>
+                </div>
+                <div class="form-group col-sm-6 col-12">
+                    <label for="exampleFormControlInput1">Celular</label>
+                    <input type="text" [(ngModel)]="data.usu_telefono" required class="form-control form-control-sm"
+                        placeholder="Ingrese tu Celular">
+                </div>
+            </div>
+            <div class="d-flex flex-row-reverse bd-highlight">
+                <div class="p-2 bd-highlight">
+                    <button mat-raised-button color="primary" matStepperNext>Siguiente</button>
+                </div>
+            </div>
+        </mat-step>
+        <mat-step>
+            <ng-template matStepLabel>Segundo Paso</ng-template>
+            <div class="form row">
+                <div class="form-group col-sm-6 col-12">
+                    <label for="exampleFormControlInput1">Ciudad</label>
+                    <input type="text" [(ngModel)]="data.usu_ciudad" class="form-control form-control-sm"
+                        placeholder="Ingrese tu Ciudad">
+                </div>
+                <div class="form-group col-sm-6 col-12">
+                    <label for="exampleFormControlInput1">Dirección</label>
+                    <input type="text" [(ngModel)]="data.usu_direccion" class="form-control form-control-sm"
+                        placeholder="Ingrese tu Dirección">
+                </div>
+            </div>
+            <div class="d-flex flex-row-reverse bd-highlight">
+                <div class="p-2 bd-highlight">
+                    <button mat-raised-button color="warn" matStepperPrevious>Atras</button>
+                    <button mat-raised-button color="primary" matStepperNext>Siguiente</button>
+                </div>
+            </div>
+        </mat-step>
+        <mat-step>
+            <ng-template matStepLabel>Terser Paso</ng-template>
+            <div class="form row">
+                <div class="form-group col-sm-6 col-12">
+                    <label for="exampleFormControlInput1">Email</label>
+                    <input type="text" [(ngModel)]="data.usu_email" class="form-control form-control-sm"
+                        placeholder="Ingrese tu Email">
+                </div>
+                <div class="form-group col-sm-6 col-12">
+                    <label for="exampleFormControlInput1">Email Repetir</label>
+                    <input type="text" [(ngModel)]="data.usu_emailReper" class="form-control form-control-sm"
+                        placeholder="Ingrese tu Email">
+                </div>
+                <div class="form-group col-sm-6 col-12">
+                    <label for="exampleFormControlInput1">Contraseña</label>
+                    <input type="password" [(ngModel)]="data.usu_clave" class="form-control form-control-sm"
+                        placeholder=" Ingrese tu Contraseña">
+                </div>
+                <div class="form-group col-sm-6 col-12">
+                    <label for="exampleFormControlInput1">Repetir Contraseña</label>
+                    <input type="password" [(ngModel)]="data.usu_confir"
+                        class="form-control form-control-sm" placeholder="Confirmar Contraseña">
+                </div>
+                <div class="form-group col-sm-6 col-12">
+                    <input class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios2"
+                        [(ngModel)]="data.cat_activo">
+                    <label class="form-check-label pointer" for="exampleRadios2" (click)="terminos()">
+                        Estoy de acuerdo con los terminos de privacidad
+                    </label>
+                </div>
+            </div>
+            <div class="d-flex flex-row-reverse bd-highlight">
+                <div class="p-2 bd-highlight">
+                    <button mat-raised-button color="warn" matStepperPrevious>Atras</button>
+                    <button mat-raised-button color="primary" (click)="submit()">Registrarse</button>
+                </div>
+            </div>
+        </mat-step>
+    </mat-horizontal-stepper>
+</div>

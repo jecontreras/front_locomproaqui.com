@@ -22,11 +22,14 @@ import { NgxImageZoomModule } from 'ngx-image-zoom';
 import { TiendaModule } from './tienda/tienda.module';
 import { PublicoModule } from './publico/publico.module';
 import { IntroduccionComponent } from './components/introduccion/introduccion.component';
+import { MatVideoModule } from 'mat-video';
+import { RegistroComponent } from './components/registro/registro.component';
 
 @NgModule({
   entryComponents:[],
   declarations: [
     AppComponent,
+    RegistroComponent,
     IntroduccionComponent
   ],
   imports: [
@@ -48,7 +51,8 @@ import { IntroduccionComponent } from './components/introduccion/introduccion.co
     }),
     ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production }),
     TiendaModule,
-    PublicoModule
+    PublicoModule,
+    MatVideoModule
   ],
   providers: [
     // {
