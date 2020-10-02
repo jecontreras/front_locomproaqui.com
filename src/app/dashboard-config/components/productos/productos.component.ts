@@ -60,7 +60,7 @@ export class ProductosComponent implements OnInit {
   crear(obj:any){
     const dialogRef = this.dialog.open(FormproductosComponent,{
       data: {datos: obj || {}},
-      height:  '550px',
+      // height:  '550px',
       width: '100%'
     });
 
@@ -71,7 +71,7 @@ export class ProductosComponent implements OnInit {
   ordenarProductos(){
     const dialogRef = this.dialog.open(ProductosOrdenarComponent,{
       data: {datos: {}},
-      height:  '550px',
+      // height:  '550px',
       width: '100%',
     });
 

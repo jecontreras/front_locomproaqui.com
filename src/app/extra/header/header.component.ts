@@ -90,13 +90,16 @@ export class HeaderComponent implements OnInit {
     }
     else this.rolUser = 'visitante';
     this.listMenus();
-    if(this.rolUser === 'administrador') this.getCarrito();
+    if( this.dataUser.id )this.getCarrito();
     this.getAlert();
   }
 
   getVentas(){
-    //console.log("***")
-    let data:any = { where:{ view:0 },limit: 100 }
+    //console.log("***") 
+    let data:any = { where:{ view:0, admin: 1 },limit: 100 };
+    if( this.rolUser === 'administrador' ) data.where.admin = 1;
+    else data.where.user = this.dataUser.id;
+    
     //if(this.dataUser.usu_perfil.prf_descripcion != 'administrador') data.where.user=this.dataUser.id,
     this._notificaciones.get( data ).subscribe((res:any)=>{
       //console.log(res);
@@ -115,7 +118,7 @@ export class HeaderComponent implements OnInit {
 
   getCarrito(){
     setInterval(()=>{ 
-      // this.getVentas();
+      this.getVentas();
     }, 5000);
   }
 
@@ -310,7 +313,12 @@ export class HeaderComponent implements OnInit {
             icons: 'settings',
             nombre: 'Usuarios',
             url: '/config/usuarios',
-          }
+          },
+          // {
+          //   icons: 'settings',
+          //   nombre: 'Configuraciones',
+          //   url: '/config/admin',
+          // },
         ]
       },
       /*{

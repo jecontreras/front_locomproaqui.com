@@ -16,6 +16,7 @@ import { TestimonioComponent } from './components/testimonios/testimonios.compon
 import { VentastableComponent } from './table/ventastable/ventastable.component';
 import { VentasLiderComponent } from './components/ventas-lider/ventas-lider.component';
 import { CatalogoComponent } from './components/catalogo/catalogo.component';
+import { AdminComponent } from './components/admin/admin.component';
 
 const dashboardRoutes: Routes = [
  {
@@ -37,6 +38,7 @@ const dashboardRoutes: Routes = [
      {path: 'referidos', component: ReferidosComponent},
      {path: 'testimonios', component: TestimonioComponent},
      {path: 'tablaventas', component: VentastableComponent},
+     {path: 'admin', component: AdminComponent},
      {path: '**', redirectTo: 'categorias', pathMatch: 'full'}
    ]
   }

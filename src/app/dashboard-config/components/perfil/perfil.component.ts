@@ -1,14 +1,15 @@
 import { Component, OnInit } from '@angular/core';
 import { ServiciosService } from 'src/app/services/servicios.service';
-import { UsuariosService } from 'src/app/servicesComponents/usuarios.service';
 import { ToolsService } from 'src/app/services/tools.service';
 import * as moment from  'moment';
 import * as _ from 'lodash';
-import { ArchivosService } from 'src/app/servicesComponents/archivos.service';
 import { environment } from 'src/environments/environment';
 import { STORAGES } from 'src/app/interfaces/sotarage';
 import { Store } from '@ngrx/store';
 import { UserAction } from 'src/app/redux/app.actions';
+import { Indicativo } from 'src/app/JSON/indicativo';
+import { UsuariosService } from 'src/app/servicesComponents/usuarios.service';
+import { ArchivosService } from 'src/app/servicesComponents/archivos.service';
 
 const URL = environment.url;
 const URLFRON = environment.urlFront;
@@ -20,13 +21,16 @@ const URLFRON = environment.urlFront;
 })
 export class PerfilComponent implements OnInit {
 
-  data:any = {};
+  data:any = {
+    usu_indicativo: "57"
+  };
   files: File[] = [];
   list_files: any = [];
   urlTienda:string = `${ URLFRON }/pedidos/`;
   urlRegistro:string = `${ URLFRON }/registro/`;
   restaure:any = {};
   disableRestaure:boolean = false;
+  listIndicativos = Indicativo;
 
   constructor(
     private _model: ServiciosService,

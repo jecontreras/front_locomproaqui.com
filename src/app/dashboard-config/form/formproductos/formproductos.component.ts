@@ -33,6 +33,8 @@ export class FormproductosComponent implements OnInit {
   btnDisabled:boolean = false;
   disableEliminar:boolean = false;
 
+  opcionCurrencys:any = {};
+
   constructor(
     public dialog: MatDialog,
     private _productos: ProductoService,
@@ -44,6 +46,7 @@ export class FormproductosComponent implements OnInit {
     private _archivos: ArchivosService
   ) { 
     this.editor();
+    this.opcionCurrencys = this._tools.currency;
   }
 
   ngOnInit() {
@@ -232,7 +235,7 @@ export class FormproductosComponent implements OnInit {
           "pro_categoria": "13",
           "cat_activo": 1,
           "checkMayor": 0,
-          "pro_uni_venta": 0
+          "pro_uni_venta": 90000
         };
         let result:any = await this.guardar();
         if( !result ) resolve( false );

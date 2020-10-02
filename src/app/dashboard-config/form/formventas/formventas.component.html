@@ -30,7 +30,7 @@
         </div>
         <div class="form-group col-12" *ngIf="( data.ven_tipo == 'whatsapp' || data.ven_tipo == 'WHATSAPP' )">
             <div class="row">
-                <label class="col">Subir Imagen</label>
+                <label class="col">Subir Foto del Producto</label>
                 <button class="btn btn-primary btn-just-icon btn-round" [disabled]="disableBtnFile"
                     (click)="subirFile(false)" *ngIf="files.length > 0">
                     Subir Imagen
@@ -53,8 +53,8 @@
             <input type="text" [(ngModel)]="data.ven_nombre_cliente" class="form-control form-control-sm">
         </div>
         <div class="form-group col-md-6 col-sm-4 col-lg-4 col-xs-6">
-            <label for="exampleFormControlInput1">Numero de llamada cliente</label>
-            <input type="text" [(ngModel)]="data.ven_telefono_cliente" class="form-control form-control-sm">
+            <label for="exampleFormControlInput1">Numero de llamada cliente o whatsapp</label>
+            <input type="text" [(ngModel)]="data.ven_telefono_cliente" class="form-control form-control-sm" required>
         </div>
         <div class="form-group col-md-6 col-sm-4 col-lg-4 col-xs-6">
             <label for="exampleFormControlInput1">Ciudad del Cliente</label>
@@ -100,7 +100,8 @@
         <div class="form-group col-md-6 col-sm-4 col-lg-4 col-xs-6"
             *ngIf="( data.ven_tipo == 'whatsapp' || data.ven_tipo == 'WHATSAPP' )">
             <label for="exampleFormControlInput1">Vr.Unidad:</label>
-            <input type="number" [(ngModel)]="data.ven_precio" class="form-control form-control-sm" (change)="suma()">
+            <input currencyMask [(ngModel)]="data.ven_precio" class="form-control form-control-sm" [options]="opcionCurrencys" (ngModelChange)="suma()"/>
+            <!-- <input type="number" [(ngModel)]="data.ven_precio" class="form-control form-control-sm" (change)="suma()"> -->
         </div>
         <div class="form-group col-md-6 col-sm-4 col-lg-4 col-xs-6"
             *ngIf="( data.ven_tipo == 'carrito' || data.ven_tipo == 'CARRITO' )">
@@ -149,7 +150,7 @@
     <button mat-button mat-dialog-close>Cerrar</button>
     <button [disabled]="disabled" class="btn btn-primary btn-just-icon btn-round" (click)="subirFile(true)"
         *ngIf="( data.ven_tipo == 'whatsapp' && !data.ven_imagen_producto) && files.length > 0">
-        Guardar Venta
+        Subir tu orden
     </button>
     <span *ngIf="( data.ven_tipo == 'whatsapp' && !data.ven_imagen_producto) && files.length == 0 && !data.id">
         Primero debes subir una imagen
@@ -157,7 +158,7 @@
     <button mat-button cdkFocusInitial (click)="submit()"
         *ngIf="( data.ven_tipo == 'whatsapp' && data.ven_imagen_producto ) || data.ven_tipo == 'carrito' || data.id"
         [disabled]="disabledButton">
-        <span *ngIf="!id">Guardar Ventas</span>
+        <span *ngIf="!id">Subir tu orden</span>
         <span *ngIf="id">Actulizar Cambios</span>
     </button>
     <button mat-button (click)="OrdenValidadWhatsapp( data )" *ngIf="data.id && superSub && data.ven_estado == 3">

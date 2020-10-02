@@ -41,7 +41,7 @@ export class VentasComponent implements OnInit {
     },
     page: 0
   };
-  Header:any = [ 'Acciones','Tipo Venta','Vendedor','Nombre Cliente','Teléfono Cliente','Fecha Venta','Productos','Cantidad','Precio','Imagen Producto','Estado', 'Motivo Rechazo', 'Tallas' ];
+  Header:any = [ 'Acciones','Tipo Venta','Vendedor','Nombre Cliente','Teléfono Cliente','Fecha Venta','Cantidad','Precio','Imagen Producto','Estado', 'Motivo Rechazo', 'Tallas' ];
   $:any;
   public datoBusqueda = '';
 
@@ -126,6 +126,7 @@ export class VentasComponent implements OnInit {
   delete(obj:any, idx:any){
     let data:any = {
       id: obj.id,
+      ven_estado: 1,
       ven_sw_eliminado: 1
     };
     this._tools.confirm({title:"Eliminar", detalle:"Deseas Eliminar Dato", confir:"Si Eliminar"}).then((opt)=>{
@@ -265,6 +266,14 @@ export class VentasComponent implements OnInit {
     if(this.dataUser.usu_perfil.prf_descripcion != 'administrador') this.query.where.usu_clave_int = this.dataUser.id;
     if(this.dataUser.usu_perfil.prf_descripcion == "subAdministrador") this.getUserCabeza();
     else this.cargarTodos();
+  }
+
+  openUrl( numero:any, cliente:string ){
+    window.open( `https://wa.me/57${ numero }?text=Hola Cliente ${ cliente }`);
+  }
+
+  openFoto( foto: string ){
+    window.open( foto );
   }
 
 }

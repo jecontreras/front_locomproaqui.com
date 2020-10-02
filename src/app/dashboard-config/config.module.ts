@@ -40,6 +40,11 @@ import { CatalogoComponent } from './components/catalogo/catalogo.component';
 import { FormcatalogoComponent } from './form/formcatalogo/formcatalogo.component';
 import { ExtraModule } from '../extra/extra.module';
 import { ProductosOrdenarComponent } from './table/productos-ordenar/productos-ordenar.component';
+import { AdminComponent } from './components/admin/admin.component';
+
+import { NgxCurrencyModule } from "ngx-currency";
+
+
 @NgModule({
   entryComponents: [
     FormcategoriasComponent,
@@ -81,7 +86,8 @@ import { ProductosOrdenarComponent } from './table/productos-ordenar/productos-o
     FormventasLiderComponent,
     CatalogoComponent,
     FormcatalogoComponent,
-    ProductosOrdenarComponent
+    ProductosOrdenarComponent,
+    AdminComponent
   ],
   imports: [
     CommonModule,
@@ -96,7 +102,8 @@ import { ProductosOrdenarComponent } from './table/productos-ordenar/productos-o
     NgxDropzoneModule,
     AngularEditorModule,
     Ng2SmartTableModule,
-    ExtraModule
+    ExtraModule,
+    NgxCurrencyModule
   ],
   exports: [
     FormcategoriasComponent,

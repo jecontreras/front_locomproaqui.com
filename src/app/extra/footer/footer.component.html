@@ -2,33 +2,22 @@
     <div class="container">
         <div class="row">
             <div class="col-12 fondoFoto pointer" (click)="openaVenta()">
+                <ng-image-slider [images]="imageObject" [infinite]="sliderInfinite" [imagePopup]="sliderImagePopup"
+                    [showArrow]="sliderArrowShow" [imageSize]="{width: sliderImageWidth, height: sliderImageHeight}"
+                    [autoSlide]="sliderAutoSlide ? 1 : 0" [slideImage]="sliderSlideImage"
+                    [animationSpeed]="sliderAnimationSpeed" (imageClick)="imageOnClick($event)"
+                    (arrowClick)="arrowOnClick($event)" (lightboxArrowClick)="lightboxArrowClick($event)" #nav>
+                </ng-image-slider>
             </div>
             <div class="col">
-                <p class="text-white nav-link">Copyright © 2017-2020 todos los derechos reservados LOCOMPROAQUI.COM soporte software <a href="https://dilisoftgroup.com/" target="_blank" class="text-white">Dilisoft Software</a></p>
+                <p class="text-white nav-link">Copyright © 2017-2020 todos los derechos reservados FABRICAS Y BODEGAS
+                    soporte software <a href="https://dilisoftgroup.com/" target="_blank" class="text-white">Dilisoft
+                        Software</a></p>
             </div>
             <div>
-                <a href="https://wa.me/573148487506?text=Hola Servicio al cliente, como esta, saludo cordial" class="text-white nav-link" target="_blank">Contactos</a>
+                <a href="https://wa.me/573148487506?text=Hola Servicio al cliente, como esta, saludo cordial"
+                    class="text-white nav-link" target="_blank">Contactos</a>
             </div>
         </div>
     </div>
-  </footer>
-
-  <!-- <footer>
-    <div class="container">
-        <div class="row">
-            <div class="col-xs-12">
-                <span class="copyright">Copyright © 2020 | Locomproaqui.com | Software <a href="https://dilisoftgroup.com/" target="_blank">Dilisoft</a>.. Todos los derechos
-                    reservados.</span>
-            </div>
-            <div class="col-xs-12">
-                <ul class="list-inline menu-footer">
-                    <li><a href="/es/nosotros/">Nosotros</a></li>
-                    <li><a href="/es/preguntas-frecuentes/">Ayuda</a></li>
-                    <li><a href="/es/terminos-y-condiciones/">Términos y condiciones</a></li>
-                    <li><a href="/es/politica-de-privacidad/">Política de privacidad</a></li>
-                    <li><a href="/es/politica-anti-spam/">Política Anti-Spam</a></li>
-                </ul>
-            </div>
-        </div>
-    </div>
-</footer> -->
+</footer>

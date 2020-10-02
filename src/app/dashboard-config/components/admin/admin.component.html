@@ -1,0 +1,56 @@
+<div class="container">
+    <div class="row">
+        <div class="col-12">
+            <div class="d-flex justify-content-center">
+                <h2 class="text-dark">Configurar Introduccion</h2>
+            </div>
+            <br><br><br>
+        </div>
+        <div class="col-12">
+            <div class="d-flex justify-content-center">
+                <h3 class="text-dark">Primer Paso</h3>
+            </div>
+        </div>
+        <div class="col-6">
+            <label for="exampleFormControlInput1">Titulo</label>
+            <input type="text" [(ngModel)]="data.tituloPrimero" class="form-control form-control-sm">
+        </div>
+        <div class="col-6">
+            <label for="exampleFormControlInput1">Video</label>
+            <!-- <iframe *ngIf="data.urlPrimero" [src]="data.urlPrimero" frameborder="0"></iframe> -->
+            <input type="file" class="form-control form-control-sm" (blur)="datafiles('urlPrimero', $event)">
+            <button type="button" class="btn btn-primary" [disabled]="btnDisableFile" (click)="subirFile('urlPrimero')">Subir</button>
+            <!-- <button type="button" class="btn btn-primary">Ver</button> -->
+        </div>
+        <div class="col-12">
+            <div class="d-flex justify-content-center">
+                <h3 class="text-dark">Segundo Paso</h3>
+            </div>
+        </div>
+        <div class="col-6">
+            <label for="exampleFormControlInput1">Titulo</label>
+            <input type="text" [(ngModel)]="data.tituloSegundo" class="form-control form-control-sm">
+        </div>
+        <div class="col-6">
+            <label for="exampleFormControlInput1">Video</label>
+            <input type="file" [(ngModel)]="data.urlSegundo" class="form-control form-control-sm" (blur)="datafiles('urlSegundo', $event)">
+            <!-- <button type="button" class="btn btn-primary">Ver</button> -->
+            <button type="button" class="btn btn-primary" [disabled]="btnDisableFile" (click)="subirFile('urlSegundo')">Subir</button>
+        </div>
+        <div class="col-12">
+            <div class="d-flex justify-content-center">
+                <h3 class="text-dark">Tersero Paso</h3>
+            </div>
+        </div>
+        <div class="col-6">
+            <label for="exampleFormControlInput1">Titulo</label>
+            <input type="text" [(ngModel)]="data.tituloTercero" class="form-control form-control-sm">
+        </div>
+        <div class="col-6">
+            <label for="exampleFormControlInput1">Video</label>
+            <input type="file" [(ngModel)]="data.urlTercero" class="form-control form-control-sm" (blur)="datafiles('urlTercero', $event)">
+            <!-- <button type="button" class="btn btn-primary">Ver</button> -->
+            <button type="button" class="btn btn-primary" [disabled]="btnDisableFile" (click)="subirFile('urlTercero')">Subir</button>
+        </div>
+    </div>
+</div>

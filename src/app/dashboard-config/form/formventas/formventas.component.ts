@@ -43,6 +43,7 @@ export class FormventasComponent implements OnInit {
 
   disableBtnFile:boolean = false;
   urlImagen:any;
+  opcionCurrencys:any = {};
 
   constructor(
     public dialog: MatDialog,
@@ -57,7 +58,8 @@ export class FormventasComponent implements OnInit {
     private _store: Store<STORAGES>,
     private _tallas: TipoTallasService
   ) {
-
+    this.opcionCurrencys = this._tools.currency;
+    console.log( this.opcionCurrencys );
     this._store.subscribe((store: any) => {
       store = store.name;
       this.dataUser = store.user || {};
@@ -127,7 +129,7 @@ export class FormventasComponent implements OnInit {
     this.disabledButton = true;
     let form: any = new FormData();
     form.append('file', this.files[0]);
-    this._tools.ProcessTime({});
+    this._tools.ProcessTime({ tiempo: 7000, title: "Esperar mientras carga la imagen"});
     this._archivos.create(form).subscribe((res: any) => {
       this.data.ven_imagen_producto = res.files;
       this.disabled = false;
@@ -157,6 +159,7 @@ export class FormventasComponent implements OnInit {
   }
 
   suma() {
+    // console.log( this.data );
     if (!this.data.ven_precio || !this.data.ven_cantidad) return false;
     this.data.ven_total = (Number(this.data.ven_precio) * Number(this.data.ven_cantidad));
     this.data.ven_ganancias = (this.data.ven_total * (this.dataUser.porcentaje || 7.777) / 100);
@@ -183,7 +186,7 @@ export class FormventasComponent implements OnInit {
       if( this.dataUser.empresa.id != 1 ) this.data.ven_subVendedor = 1;
       this.data.empresa = this.dataUser.empresa.id;
     }else this.data.empresa = 1;
-    this._ventas.get({ where: { cob_num_cedula_cliente: this.data.cob_num_cedula_cliente, ven_estado: 0, ven_sw_eliminado: 1 } }).subscribe((res: any) => {
+    this._ventas.get({ where: { cob_num_cedula_cliente: this.data.cob_num_cedula_cliente, ven_estado: 0, ven_sw_eliminado: 0 } }).subscribe((res: any) => {
       res = res.data[0];
       if (res) this._tools.basicIcons({ header: "Este cliente tiene una venta activa!", subheader: "Esta venta sera vereficada por posible confuciones" });
       this.guardarVenta();
@@ -199,7 +202,21 @@ export class FormventasComponent implements OnInit {
   guardarVenta() {
     this._ventas.create(this.data).subscribe((res: any) => {
       this.OrderWhatsapp(res);
-      this.crearNotificacion(res);
+      this.crearNotificacion( {
+        titulo: "Nueva venta de " + res.ven_nombre_cliente,
+        descripcion: "Nueva venta de " + res.ven_nombre_cliente,
+        venta: res.id,
+        user: res.usu_clave_int.id,
+        admin: 1,
+        tipoDe: 0
+      } );
+      this.crearNotificacion( {
+        titulo: " VENTA PENDIENTE " + res.ven_nombre_cliente,
+        descripcion: "SIGNIFICA QUE AUN NO HA SIDO DESPACHADO",
+        venta: res.id,
+        user: res.usu_clave_int.id,
+        tipoDe: 0
+      } );
       this.disabledButton = false;
       this.disabled = false;
       this._tools.presentToast("Exitoso Estare en Modo Pendiente");
@@ -262,18 +279,26 @@ export class FormventasComponent implements OnInit {
       this._tools.presentToast("Actualizado");
       this.disabledButton = false;
       this.disabled = false;
+      if( this.clone.ven_estado != this.data.ven_estado ){
+        let armando = { 
+          titulo: "VENTA DESPACHADO " + res.ven_nombre_cliente,
+          descripcion: "SIGNIFICA QUE YA TU PAQUETE ESTA EN CAMINO",
+          venta: res.id,
+          user: res.usu_clave_int.id,
+          tipoDe: 0
+        };
+        if( this.data.ven_estado == 2 ) { 
+          armando.titulo = `VENTA RECHAZADA ${ res.ven_nombre_cliente }`; 
+          armando.descripcion = `SIGNIFICA QUE TU VENTA FUE RECHAZADA POR EL ADMINISTRADOR POR FAVOR COMUNICARTE CON SOPORTE`;
+        }
+        this.crearNotificacion( armando );
+      }
       //if( res.ven_estado == 3 ) this.OrdenValidadWhatsapp( res );
     }, (error) => { console.error(error); this._tools.presentToast("Error de servidor"); this.disabledButton = false; this.disabled = false; });
   }
 
   crearNotificacion(valuesToSet: any) {
-    let data = {
-      titulo: "Nueva venta de " + valuesToSet.ven_nombre_cliente,
-      descripcion: "Nueva venta de " + valuesToSet.ven_nombre_cliente,
-      venta: valuesToSet.id,
-      user: valuesToSet.usu_clave_int.id,
-      tipoDe: 0
-    };
+    let data = valuesToSet;
     this._notificacion.create(data).subscribe(() => {}, (error) => this._tools.presentToast("Error de servidor"));
   }
 

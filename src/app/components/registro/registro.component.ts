@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { UsuariosService } from 'src/app/servicesComponents/usuarios.service';
 import { ToolsService } from 'src/app/services/tools.service';
 import { Router } from '@angular/router';
 import { MatDialog } from '@angular/material';
@@ -8,6 +7,7 @@ import { STORAGES } from 'src/app/interfaces/sotarage';
 import { Store } from '@ngrx/store';
 import { UserAction, TokenAction } from 'src/app/redux/app.actions';
 import { TerminosComponent } from 'src/app/layout/terminos/terminos.component';
+import { UsuariosService } from 'src/app/servicesComponents/usuarios.service';
 
 const indicativos = Indicativo;
 
@@ -57,7 +57,7 @@ export class RegistroComponent implements OnInit {
           location.reload();
         }, 3000);
         this.dialog.closeAll();
-      }
+      }else this._tools.tooast( { title: res.data, icon: "error" } );
     },(error)=>{ console.error(error); this.disableSubmit = true; this._tools.presentToast("Error de servidor")});
   }
 

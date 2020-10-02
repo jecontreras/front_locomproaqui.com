@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { Indicativo } from 'src/app/JSON/indicativo';
-import { UsuariosService } from 'src/app/servicesComponents/usuarios.service';
 import { ToolsService } from 'src/app/services/tools.service';
 import { Router, ActivatedRoute } from '@angular/router';
 import { Store } from '@ngrx/store';
@@ -9,21 +8,26 @@ import { UserAction, TokenAction } from 'src/app/redux/app.actions';
 import { AuthService } from 'src/app/services/auth.service';
 import { MatDialog } from '@angular/material';
 import { TerminosComponent } from '../terminos/terminos.component';
+import { UsuariosService } from 'src/app/servicesComponents/usuarios.service';
 
 const indicativos = Indicativo;
 
 @Component({
-  selector: 'app-registro',
+  selector: 'app-registros',
   templateUrl: './registro.component.html',
   styleUrls: ['./registro.component.scss']
 })
 export class RegistrosComponent implements OnInit {
   
-  data:any = {};
+  data:any = {
+    usu_indicativo: "57"
+  };
   listIndicativos = indicativos;
+  disableSubmit:boolean = true;
+  isLinear:boolean = true;
+
   dataUser:any = {};
   cabeza:any;
-  disableSubmit:boolean = true;
 
   constructor(
     private _user: UsuariosService,
@@ -50,6 +54,8 @@ export class RegistrosComponent implements OnInit {
   submit(){
     if(!this.disableSubmit) return false;
     this.disableSubmit = false;
+    let valid: boolean = this.validando();
+    if( !valid ) return false;
     this._user.create(this.data).subscribe((res:any)=>{
       console.log("user", res);
       this.disableSubmit = true;
@@ -64,8 +70,24 @@ export class RegistrosComponent implements OnInit {
         setTimeout(()=>{ 
           location.reload();
         }, 3000);
-      }
+      }else this._tools.tooast( { title: res.data, icon: "error" } );
     },(error)=>{ console.error(error); this.disableSubmit = true; this._tools.presentToast("Error de servidor")});
+  }
+
+  validando(){
+    if( !this.data.usu_nombre ) { this._tools.tooast( { title: "Error falta el nombre", icon: "error" }); return false; }
+    if( !this.data.usu_apellido ) { this._tools.tooast( { title: "Error falta el Apellido", icon: "error" }); return false; }
+    if( !this.data.usu_indicativo ) { this._tools.tooast( { title: "Error falta el Indicativo", icon: "error" }); return false; }
+    if( !this.data.usu_telefono ) { this._tools.tooast( { title: "Error falta el Telefono", icon: "error" }); return false; }
+    if( !this.data.usu_ciudad ) { this._tools.tooast( { title: "Error falta la Ciudad", icon: "error" }); return false; }
+    if( !this.data.usu_direccion ) { this._tools.tooast( { title: "Error falta el Direccion", icon: "error" }); return false; }
+    if( !this.data.usu_email ) { this._tools.tooast( { title: "Error falta la Email", icon: "error" }); return false; }
+    if( !this.data.usu_emailReper ) { this._tools.tooast( { title: "Error falta el Email repetir", icon: "error" }); return false; }
+    if( this.data.usu_emailReper != this.data.usu_email ) { this._tools.tooast( { title: "Error los Emails no son iguales", icon: "error" }); return false; }
+    if( !this.data.usu_clave ) { this._tools.tooast( { title: "Error falta la clave", icon: "error" }); return false; }
+    if( !this.data.usu_confir ) { this._tools.tooast( { title: "Error falta la clave de confirmar", icon: "error" }); return false; }
+    if( this.data.usu_confir !=  this.data.usu_clave ) { this._tools.tooast( { title: "Error las claves no son correctas", icon: "error" }); return false; }
+    return true;
   }
   
   terminos(){

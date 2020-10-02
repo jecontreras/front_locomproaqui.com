@@ -1,0 +1,14 @@
+.imgFondo{
+    background-image: url('/assets/img/introduccion.jpg');
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    background-size: 100% 100%;
+    height: -webkit-fill-available;
+}
+
+.efectButton{
+    border: 1px solid black;
+    padding: 10px;
+    border-radius: 10px;
+    background: darkgreen;
+}

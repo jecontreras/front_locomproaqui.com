@@ -258,7 +258,7 @@ export class PedidosComponent implements OnInit {
     if (navigator['share']) {
       navigator['share']({
         title: obj.pro_nombre,
-        text: obj.foto +" "+ obj.pro_descripcion + `link del producto ---> https://www.locomproaqui.com/productos/${ obj.id } }`,
+        text: obj.foto + `link del producto $${ obj.pro_uni_venta.toLocaleString(1) } COP ---> https://www.locomproaqui.com/productos/${ obj.id } }`,
         url: obj.foto,
       })
         .then(() => console.log('Successful share'))

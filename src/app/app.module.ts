@@ -24,6 +24,7 @@ import { PublicoModule } from './publico/publico.module';
 import { IntroduccionComponent } from './components/introduccion/introduccion.component';
 import { MatVideoModule } from 'mat-video';
 import { RegistroComponent } from './components/registro/registro.component';
+import { NgxCurrencyModule } from 'ngx-currency';
 
 @NgModule({
   entryComponents:[],
@@ -52,7 +53,8 @@ import { RegistroComponent } from './components/registro/registro.component';
     ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production }),
     TiendaModule,
     PublicoModule,
-    MatVideoModule
+    MatVideoModule,
+    NgxCurrencyModule
   ],
   providers: [
     // {

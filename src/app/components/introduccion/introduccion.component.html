@@ -1,19 +1,22 @@
 <div class="imgFondo">
     <div class="container mb-3 cpr  d-flex justify-content-center">
-        <div class="row">
+        <div class="row" style="width: 113%;">
             <div class="col-12">
                 <br><br>
                 <div class="d-flex justify-content-center">
-                    <h2 class="text-white">BIENVENIDOS A LOCOMPROAQUI</h2>
+                    <h2 class="text-dark">BIENVENIDOS A LOCOMPROAQUI.COM</h2>
                 </div>
             </div>
             <div class="col-12">
                 <mat-horizontal-stepper [linear]="isLinear" #stepper>
                     <mat-step [stepControl]="firstFormGroup">
-                        <ng-template matStepLabel>Que es Locomproaqui</ng-template>
+                        <!-- <ng-template matStepLabel>Que es Locomproaqui</ng-template> -->
+                        <div class="d-flex justify-content-center">
+                            <h2 class="text-dark">¿Que es Locomproaqui.com?</h2>
+                        </div>
                         <mat-video #video1
-                            src="https://ecomercedilisap.s3.amazonaws.com/video.mp4"
-                            title="Que es locomproAqui" 
+                            src="https://ecomercedilisap.s3.amazonaws.com/Trabaja+con+nosotros+gana+dinero+publicando+nuestros+productos+en+las+redes+sociales.mp4"
+                            title="¿Que es locomproAqui.com?" 
                             [autoplay]="true" 
                             [preload]="true" 
                             [fullscreen]="true" 
@@ -30,10 +33,13 @@
                         </div>
                     </mat-step>
                     <mat-step [stepControl]="firstFormGroup">
-                        <ng-template matStepLabel>Como promosionar tu negocio</ng-template>
+                        <!-- <ng-template matStepLabel>Como promosionar tu negocio</ng-template> -->
+                        <div class="d-flex justify-content-center">
+                            <h2 class="text-dark">¿Como promocionar tu negocio?</h2>
+                        </div>
                         <mat-video #video2
-                            src="https://ecomercedilisap.s3.amazonaws.com/video.mp4"
-                            title="Que es locomproAqui" 
+                            src="https://ecomercedilisap.s3.amazonaws.com/videoplayback.mp4"
+                            title="¿Como promocionar tu negocio?" 
                             [autoplay]="false" 
                             [preload]="true" 
                             [fullscreen]="true" 
@@ -50,10 +56,13 @@
                         </div>
                     </mat-step>
                     <mat-step>
-                        <ng-template matStepLabel>Como subir tus ordenes</ng-template>
+                        <!-- <ng-template matStepLabel>Como subir tus ordenes</ng-template> -->
+                        <div class="d-flex justify-content-center">
+                            <h2 class="text-dark">¿Como subir tus órdenes?</h2>
+                        </div>
                         <mat-video #video3
-                            src="https://ecomercedilisap.s3.amazonaws.com/video.mp4"
-                            title="Que es locomproAqui" 
+                            src="https://ecomercedilisap.s3.amazonaws.com/como+subir+ventas-hacer+pedidos+en+locomproaqui.com.mp4"
+                            title="¿Como subir tus órdenes?" 
                             [autoplay]="false" 
                             [preload]="true" 
                             [fullscreen]="true" 
@@ -71,7 +80,10 @@
                         </div>
                     </mat-step>
                     <mat-step>
-                        <ng-template matStepLabel>Registrarse</ng-template>
+                        <!-- <ng-template matStepLabel>Registrarse</ng-template> -->
+                        <div class="d-flex justify-content-center">
+                            <h2 class="text-dark">Únete a nosotros</h2>
+                        </div>
                         <app-registro></app-registro>
                         <div class="d-flex flex-row-reverse bd-highlight">
                             <div class="p-2 bd-highlight">

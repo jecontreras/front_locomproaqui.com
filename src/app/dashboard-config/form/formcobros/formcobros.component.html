@@ -125,7 +125,7 @@
 <mat-dialog-actions align="end">
     <button mat-button mat-dialog-close>Cerrar</button>
     <button mat-button cdkFocusInitial (click)="submit()" [disabled]="disabledButton">
-        <span *ngIf="!id">Guardar Cambios</span>
+        <span *ngIf="!id">Enviar solicitud</span>
         <span *ngIf="id">Actulizar Cambios</span>
     </button>
 </mat-dialog-actions>

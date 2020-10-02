@@ -7,6 +7,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ExtraRoutingModule } from './extra-routing.module';
 import { RouterModule } from '@angular/router';
 import { CommonModule } from '@angular/common';
+import { NgImageSliderModule } from 'ng-image-slider';
 
 @NgModule({
   declarations: [
@@ -20,7 +21,8 @@ import { CommonModule } from '@angular/common';
     ReactiveFormsModule,
     ExtraRoutingModule,
     RouterModule,
-    CommonModule
+    CommonModule,
+    NgImageSliderModule
   ],
   exports: [
     HeaderComponent,

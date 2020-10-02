@@ -11,6 +11,8 @@ export class ToolsService {
   loading: any;
   intervalo:number = 0;
 
+  currency:any = { prefix: '$ ',align: 'left', thousands: '.', decimal: ',', precision: 0 };
+
   constructor(
     private snackBar: MatSnackBar
   ) { }
@@ -68,7 +70,7 @@ export class ToolsService {
     let timerInterval
     Swal.fire({
       title: text.title || 'Auto close alert!',
-      html: 'I will close in <b></b> milliseconds.',
+      html: '',
       timer: text.tiempo || 3000,
       timerProgressBar: true,
       onBeforeOpen: () => {

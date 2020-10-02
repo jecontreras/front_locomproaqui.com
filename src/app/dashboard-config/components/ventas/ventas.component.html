@@ -119,15 +119,19 @@
                         <p>{{ row['usu_clave_int']?.usu_ciudad }}</p>
                       </td>
                       <td>{{ row['ven_nombre_cliente'] }}</td>
-                      <td>{{ row['ven_telefono_cliente'] }}</td>
+                      <td>
+                        <span>
+                          {{ row['ven_telefono_cliente'] }} <img src="./assets/icons/whatsapp.png" class="pointer" style="width: 35px;" (click)="openUrl( row.ven_telefono_cliente, row.ven_nombre_cliente )">
+                        </span>
+                      </td>
                       <td>{{ row['createdAt'] | date:'medium' }}</td>
-                      <td>{{ row['pro_clave_int']?.pro_nombre }}</td>
+                      <!-- <td>{{ row['pro_clave_int']?.pro_nombre }}</td> -->
                       <td>{{ row['ven_cantidad'] }}</td>
                       <td>
-                        $ {{ ( row['ven_precio'] || 0 ).toLocaleString(1) }} COP
+                        $ {{ ( row['ven_precio'] || 0 ).toLocaleString(1) }}
                       </td>
                       <td>
-                        <img *ngIf="row.ven_tipo === 'whatsapp'" [src]="row['ven_imagen_producto']" class="foto">
+                        <img *ngIf="row.ven_tipo === 'whatsapp'" [src]="row['ven_imagen_producto']" class="foto pointer" (click)="openFoto( row['ven_imagen_producto'] )" >
                         <img *ngIf="row.ven_tipo === 'carrito'" [src]="row['pro_clave_int']?.foto" class="foto">
                       </td>
                       <td *ngIf="row['ven_estado'] == 0">Pendiente</td>
