@@ -24,6 +24,7 @@ export class RegistroComponent implements OnInit {
   listIndicativos = indicativos;
   disableSubmit:boolean = true;
   isLinear:boolean = true;
+  error:string;
 
   constructor(
     private _user: UsuariosService,
@@ -34,6 +35,17 @@ export class RegistroComponent implements OnInit {
   ) { }
 
   ngOnInit() {
+  }
+
+  validadorEmail( email:string ){
+    let validador:any = email.split("@");
+    validador = validador[1];
+    if( validador ){
+      validador = validador.toLowerCase();
+      console.log( validador );
+      if( ( validador == "gmail.com" ) || ( validador == "hotmail.com" ) || ( validador == "hotmail.es" ) || ( validador == "outlook.com" ) || ( validador == "outlook.es" ) ) { this.error = ""; return true; }
+      else this.error = "Error el dominio tiene que ser gmail o hotmail o outlook";
+    }
   }
 
   submit(){

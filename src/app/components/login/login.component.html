@@ -26,5 +26,5 @@
     <button mat-button cdkFocusInitial (click)="submit()" *ngIf="disableRestarure">
         <span>Iniciar Seccion</span>
     </button>
-    <a cdkFocusInitial target="_blank" class="pointer" *ngIf="!disableRestarure" [href]="'https://wa.me/573148487506?text=Hola Servicio al cliente, como esta, saludo cordial, necesito recuperar las credenciales de mi cuenta ' + data.usu_email "><span>Recuperar Cuenta</span></a>
+    <a cdkFocusInitial class="pointer" *ngIf="!disableRestarure" (click)="openRecuperacion( data )"><span>Recuperar Cuenta</span></a>
   </mat-dialog-actions>

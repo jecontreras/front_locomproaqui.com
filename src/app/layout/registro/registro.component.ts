@@ -28,6 +28,7 @@ export class RegistrosComponent implements OnInit {
 
   dataUser:any = {};
   cabeza:any;
+  error:string;
 
   constructor(
     private _user: UsuariosService,
@@ -47,6 +48,17 @@ export class RegistrosComponent implements OnInit {
     if (this._authSrvice.isLoggedIn()) this._router.navigate(['/pedidos']);
   }
 
+  validadorEmail( email:string ){
+    let validador:any = email.split("@");
+    validador = validador[1];
+    if( validador ){
+      validador = validador.toLowerCase();
+      console.log( validador );
+      if( ( validador == "gmail.com" ) || ( validador == "hotmail.com" ) || ( validador == "hotmail.es" ) || ( validador == "outlook.com" ) || ( validador == "outlook.es" ) ) { this.error = ""; return true; }
+      else this.error = "Error el dominio tiene que ser gmail o hotmail o outlook";
+    }
+  }
+
   getCabeza(){
     this._user.get({where:{ id: this.cabeza }}).subscribe((res:any)=>{ console.log(res); this.dataUser = res.data[0]; this.data.cabeza = this.dataUser.id; }, (error)=>console.error(error) );
   }
@@ -55,7 +67,7 @@ export class RegistrosComponent implements OnInit {
     if(!this.disableSubmit) return false;
     this.disableSubmit = false;
     let valid: boolean = this.validando();
-    if( !valid ) return false;
+    if( !valid && this.error ) return false;
     this._user.create(this.data).subscribe((res:any)=>{
       console.log("user", res);
       this.disableSubmit = true;

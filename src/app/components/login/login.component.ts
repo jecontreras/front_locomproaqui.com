@@ -18,12 +18,16 @@ export class LoginComponent implements OnInit {
   data:any = {};
   disableRestarure:boolean = true;
   disableSubmit: boolean = true;
+  disabled:boolean = false;
+  ocultar:boolean = false;
+
   constructor(
     private _user: UsuariosService,
     private _tools: ToolsService,
     private _router: Router,
     public dialog: MatDialog,
     private _store: Store<STORAGES>,
+    private Router: Router
   ) { }
 
   ngOnInit() {
@@ -62,6 +66,19 @@ export class LoginComponent implements OnInit {
     dialogRef.afterClosed().subscribe(result => {
       console.log(`Dialog result: ${result}`);
     });
+  }
+
+  openRecuperacion( data:any ){
+    //let ulr:string = 'https://wa.me/573148487506?text=Hola Servicio al cliente, como esta, saludo cordial, necesito recuperar las credenciales de mi cuenta ' + data.usu_email ;
+    this._user.recuperacion( { usu_email: this.data.usu_email } ).subscribe(( res:any )=>{
+      this._tools.tooast( { title: "Contraseña cambiada por favor revisar el correo electronico ", timer: 5000 } );
+      this.disabled = false;
+      this.ocultar = true;
+      this.disableRestarure = true;
+    },( error:any ) =>{ 
+      console.log( error); 
+      let errors = error.error.data || "";
+      this._tools.tooast( { title: "Tenemos problemas con el restablecimiento de la contraseña "+ errors, icon: "error", timer: 5000 } ); this.disabled = false; } );
   }
 
 }

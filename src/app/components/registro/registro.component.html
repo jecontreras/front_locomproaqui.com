@@ -58,8 +58,9 @@
             <div class="form row">
                 <div class="form-group col-sm-6 col-12">
                     <label for="exampleFormControlInput1">Email</label>
-                    <input type="text" [(ngModel)]="data.usu_email" class="form-control form-control-sm"
+                    <input type="text" [(ngModel)]="data.usu_email" class="form-control form-control-sm" (blur)="validadorEmail( data.usu_email )"
                         placeholder="Ingrese tu Email">
+                    <span class="text-danger">{{ error }}</span>
                 </div>
                 <div class="form-group col-sm-6 col-12">
                     <label for="exampleFormControlInput1">Email Repetir</label>
