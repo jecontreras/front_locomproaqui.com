@@ -26,14 +26,18 @@
                 <p [innerHtml]="data.pro_descripcion | slice: 0: rango"></p>
                 <p *ngIf="rango == 100" (click)="rango = 5000" class="text-primary">leer mas..</p>
                 <p *ngIf="rango != 100" (click)="rango = 100" class="text-primary">leer menos..</p>
-                <div *ngIf="data.listTallas">
-                    <label for="exampleFormControlSelect1">Tipo de medida:</label>
-                    <select class="form-control form-control-sm" [(ngModel)]="data.tallas">
-                        <option [value]="item.tal_descripcion" *ngFor="let item of data.listTallas">{{ item.tal_descripcion }}</option>
-                    </select>
+                <div class="d-flex justify-content-center">
+                    <div>
+                        <div *ngIf="data.listTallas">
+                            <label for="exampleFormControlSelect1">Tipo de medida:</label>
+                            <select class="form-control form-control-sm" [(ngModel)]="data.tallas">
+                                <option [value]="item.tal_descripcion" *ngFor="let item of data.listTallas">{{ item.tal_descripcion }}</option>
+                            </select>
+                        </div>
+                        <label>Cantidad Adquirir</label>
+                        <input type="number" [(ngModel)]="data.cantidadAdquirir" class="form-control form-control-sm">
+                    </div>
                 </div>
-                <label>Cantidad Adquirir</label>
-                <input type="number" [(ngModel)]="data.cantidadAdquirir" class="form-control form-control-sm">
                 <br>
                 <div *ngIf="data.checkMayor == 1">
                     <mat-list>

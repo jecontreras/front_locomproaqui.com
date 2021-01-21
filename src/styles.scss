@@ -68,6 +68,10 @@ footer {
   max-width: 100% !important;
 }
 
+.anchos {
+  padding: 5px 90px;
+}
+
 
 
 /*.ng-star-inserted{
@@ -82,9 +86,15 @@ footer {
   .divisor {
     margin-top: 10px;
   }
+  .anchos {
+    padding: 5px 20px;
+}
 }
 /* Small devices (portrait tablets and large phones, 600px and up) */
 @media only screen and (min-width: 420px) {
+  .anchos {
+    padding: 5px 23px;
+}
   .imgFoto{
     height: 238px;
   }
@@ -110,6 +120,9 @@ footer {
   }
 }
 @media only screen and (max-width: 600px) {
+  .anchos {
+    padding: 5px 25px;
+}
   .imgFoto{
     height: 171px;
   }
@@ -136,6 +149,9 @@ footer {
 }
 /* Small devices (portrait tablets and large phones, 600px and up) */
 @media only screen and (min-width: 600px) {
+  .anchos {
+    padding: 5px 30px;
+}
   .imgFoto{
     height: 193px;
   }
@@ -163,6 +179,9 @@ footer {
 
 /* Small devices (portrait tablets and large phones, 600px and up) */
 @media only screen and (min-width: 768px) {
+  .anchos {
+    padding: 5px 30px;
+}
   .imgFoto{
     height: 193px;
   }
@@ -190,6 +209,9 @@ footer {
 
 /* Medium devices (landscape tablets, 768px and up) */
 @media only screen and (min-width: 800px) {
+  .anchos {
+    padding: 5px 90px;
+}
   .imgFoto{
     height: 238px;
   }
@@ -217,6 +239,9 @@ footer {
 
 /* Large devices (laptops/desktops, 992px and up) */
 @media only screen and (min-width: 992px) {
+  .anchos {
+    padding: 5px 70px;
+}
   .imgFoto{
     height: 307px;
   }
@@ -244,6 +269,9 @@ footer {
 
 /* Extra large devices (large laptops and desktops, 1200px and up) */
 @media only screen and (min-width: 1200px) {
+  .anchos {
+    padding: 5px 115px;
+}
   .imgFoto{
     height: 300px;
   }

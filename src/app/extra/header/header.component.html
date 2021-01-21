@@ -6,7 +6,7 @@
     <button mat-icon-button (click)="snav.toggle()" translate="no">
       <i class="material-icons">menu</i>
     </button>
-    <h5 class="textInf"><span class="textInf">locomproaqui.com</span></h5>
+    <h5 class="textInf"><span class="textInf pointer" [routerLink]="['/pedidos']">locomproaqui.com</span></h5>
     <div class="row col">
       <div class="col"></div>
       <div style="margin-top: 7px;">
@@ -18,12 +18,6 @@
         <span *ngIf="dataUser.id" [routerLink]="[ '/config/perfil' ]" class="p-1 pointer" > <i class="material-icons">person_pin</i> </span>
       </div>
     </div>
-    <div class="col-12">
-      <h4> 
-        <p *ngIf="dataUser.id" class="text-center textInf">BIENVENIDO A TU OFICINA VIRTUAL " {{ dataUser.usu_nombre }} "</p> 
-        <p *ngIf="!dataUser.id" class="text-center textInf">BIENVENIDO A LOCOMPROAQUI.COM {{ userId.usu_nombre }} </p>
-      </h4>
-    </div>
   </mat-toolbar>
 
   <mat-sidenav-container class="example-sidenav-container" [style.marginTop.px]="mobileQuery.matches ? 56 : 0">
@@ -33,14 +27,15 @@
       <div *ngIf="opcionoView == 'carro'">
         <mat-toolbar>
           <mat-toolbar-row>
-            <div class="row">
-              <div class="">
-                <a class="pointer" (click)="sidenav.toggle()">
+            <div class="d-flex justify-content-between">
+              <div>
+                <a class="pointer text-danger" (click)="sidenav.toggle()">
                   <i class="material-icons" aria-hidden="true">close</i>
                 </a>
               </div>
-              <div class="col">
-                Productos Seleccionados
+              <div></div>
+              <div>
+                <h5>Productos Seleccionados</h5>
               </div>
             </div>
           </mat-toolbar-row>
@@ -64,12 +59,12 @@
           
           <div class="cart-content d-flex p-2">
             <div class="cart-amount-summary">
-              <h2>Resumen</h2>
+              <h2>Resumen &nbsp;</h2>
               <ul class="summary-table">
-                <li><span>total:</span> <span>${{ ( data.total || 0 ) | currency:'COP':true}}</span></li>
+                <li><span>Total: &nbsp;</span> <span>{{ ( data.total || 0 ) | currency:'':true}}</span></li>
               </ul>
               <div class="d-flex justify-content-end">
-                <a class="list-group-item list-group-item-action active" target="_blank" [href]="urlwhat">Hacer Pedido</a> 
+                <a class="list-group-item list-group-item-action active pointer" (click)="pedidosSubmit()">Hacer Pedido</a> 
               </div>
             </div>
           </div>
@@ -137,7 +132,6 @@
                 <a class="dropdown-toggle pointer colorMenu" *ngIf="item.submenus.length >0" (click)="item.disabled = !item.disabled">
                   <i class="material-icons textInf">{{ item.icons }}</i>
                   <span class="p textInf">{{ item.nombre }}</span>
-                  <i class="fa fa-angle-right drop-icon"></i>
                 </a>
 
                 <ul class="submenu colorMenu" *ngIf="item.submenus.length >0 && item.disabled">
@@ -161,10 +155,19 @@
     </mat-sidenav>
 
     <mat-sidenav-content>
-
+      <div>
+        <div class="d-flex justify-content-center">
+          <h4 *ngIf="dataUser.id" class="text-center textInf text-primary altos"> 
+            BIENVENIDO A TU OFICINA VIRTUAL " {{ dataUser.usu_nombre }} "
+          </h4>
+          <h4 *ngIf="!dataUser.id" class="text-center textInf text-primary altos"> 
+            BIENVENIDO A LOCOMPROAQUI.COM {{ userId.usu_nombre }}
+          </h4>
+        </div>
+      </div>
       <div class="alert alert-warning alert-dismissible fade show" role="alert" *ngFor="let item of listAlert">
         <img class="foto" *ngIf="item.foto" [src]="item.foto" > <strong>{{ item.titulo }}!</strong> {{ item.descripcion }}.
-        ---> <button *ngIf="item.tipoDe == 1" (click)="crear( item )" class="btn btn-primary btn-just-icon btn-round" mat-raised-button
+        <button *ngIf="item.tipoDe == 1" (click)="crear( item )" class="btn btn-primary btn-just-icon btn-round" mat-raised-button
         mat-min-fab>Crear Comentario</button>
         <button type="button" class="close" data-dismiss="alert" (click)="closeAlert( item )" aria-label="Close">
           <span aria-hidden="true">&times;</span>

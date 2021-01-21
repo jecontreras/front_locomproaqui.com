@@ -16,6 +16,7 @@ import { VentasService } from 'src/app/servicesComponents/ventas.service';
 import { NotificacionesService } from 'src/app/servicesComponents/notificaciones.service';
 import { FormventasComponent } from 'src/app/dashboard-config/form/formventas/formventas.component';
 import { FormtestimoniosComponent } from 'src/app/dashboard-config/form/formtestimonios/formtestimonios.component';
+import { CategoriasService } from 'src/app/servicesComponents/categorias.service';
 
 const URLFRON = environment.urlFront;
 
@@ -60,6 +61,7 @@ export class HeaderComponent implements OnInit {
     private _tools: ToolsService,
     private _notificaciones: NotificacionesService,
     private _venta: VentasService,
+    private _categorias: CategoriasService
 
   ) { 
     this._store.subscribe((store: any) => {
@@ -120,6 +122,19 @@ export class HeaderComponent implements OnInit {
     setInterval(()=>{ 
       this.getVentas();
     }, 5000);
+  }
+
+  pedidosSubmit(){
+    if( !this.dataUser.id ) return window.open( this.urlwhat );
+    else{
+      const dialogRef = this.dialog.open(FormventasComponent,{
+        data: { datos: {} }
+      });
+  
+      dialogRef.afterClosed().subscribe(result => {
+        console.log(`Dialog result: ${result}`);
+      });
+    }
   }
 
   clickNotificando( obj:any ){
@@ -208,7 +223,9 @@ export class HeaderComponent implements OnInit {
 
   }
   
-  listMenus(){
+  async listMenus(){
+    let submenus = await this.getCategorias();
+    console.log( submenus );
     this.menus = [
       {
         icons: 'home',
@@ -222,7 +239,7 @@ export class HeaderComponent implements OnInit {
         nombre: 'Productos',
         disable: true,
         url: '/pedidos',
-        submenus:[]
+        submenus: submenus
       },
       {
         icons: 'announcement',
@@ -356,6 +373,21 @@ export class HeaderComponent implements OnInit {
 
     ];
     this.menus2 = _.filter(this.menus2, row=>row.disable);
+  }
+
+  getCategorias(){
+    return new Promise( resolve =>{
+      this._categorias.get( { where: {} } ).subscribe(( res:any )=>{
+        let maps = _.map( res.data,( row )=>{
+          return {
+            'nombre': row['cat_nombre'],
+            icons: "settings",
+            url: [ "/pedido", row['id'] ]
+          }
+        })
+        resolve( maps )
+      },( error )=> resolve( [] ) );
+    });
   }
 
   copiarLinkRegistro(){

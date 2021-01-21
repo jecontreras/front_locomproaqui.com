@@ -15,6 +15,7 @@ const routes: Routes = [
       { path: '', component: PedidosComponent, pathMatch: 'full' },
       { path: 'pedidos', component: PedidosComponent },
       { path: 'pedidos/:id', component: PedidosComponent },
+      { path: 'pedido/:categoria', component: PedidosComponent },
       { path: 'productos/:id', component: ProductoViewComponent },
       { path: 'testimonio', component: TestimoniosComponent },
       { path: 'login', component: LoginsComponent },

@@ -47,7 +47,7 @@ export class PedidosComponent implements OnInit {
   notscrolly:boolean=true;
   notEmptyPost:boolean = true;
   dataUser: any = {};
-
+  idCategoria:any = "";
 
   constructor(
     private _productos: ProductoService,
@@ -59,8 +59,6 @@ export class PedidosComponent implements OnInit {
     private _categorias: CategoriasService,
     private spinner: NgxSpinnerService
   ) { 
-
-    this.cargarProductos();
     this._store.subscribe((store: any) => {
       //console.log(store);
       store = store.name;
@@ -73,7 +71,11 @@ export class PedidosComponent implements OnInit {
 
   ngOnInit() {
     if((this.activate.snapshot.paramMap.get('id'))) { this.userId = (this.activate.snapshot.paramMap.get('id')); this.getUser(); }
+    this.idCategoria = this.activate.snapshot.paramMap.get('categoria');
+    console.log( "***", this.idCategoria)
+    if( this.idCategoria ) this.query.where.pro_categoria = this.idCategoria;
     this.getCategorias();
+    this.cargarProductos();
   }
   
   getUser(){
@@ -86,19 +88,21 @@ export class PedidosComponent implements OnInit {
   getCategorias(){
     this._categorias.get( { where:{ cat_activo: 0 }, limit: 100 } ).subscribe((res:any)=>{ 
     for(let row of res.data){
-      this.imageObject.push({
+      let datos:any = {
         image: row.cat_imagen || './assets/categoria.jpeg',
         thumbImage: row.cat_imagen,
         alt: '',
         id: row.id,
         title: row.cat_nombre
-      });
+      };
+      if( row.id == this.idCategoria ) datos.check = true;
+      this.imageObject.push( datos );
     }
     this.imageObject.unshift({
       image: './assets/categoria.jpeg',
       thumbImage: './assets/categoria.jpeg',
       alt: '',
-      check: true,
+      check: !this.idCategoria ? true : false,
       id: 0,
       title: "Todos"
     });
@@ -170,15 +174,16 @@ export class PedidosComponent implements OnInit {
     let cerialNumero:any = ''; 
     let numeroSplit:any;
     let cabeza:any = this.dataUser.cabeza;
+    if( !obj.tallasSelect ) return this._tools.tooast( { title: "Por Favor debes seleccionar una talla", icon: "warning" } );
     if( cabeza ){
       numeroSplit = _.split( cabeza.usu_telefono, "+57", 2);
       if( numeroSplit[1] ) cabeza.usu_telefono = numeroSplit[1];
       if( cabeza.usu_perfil == 3 ) cerialNumero = ( cabeza.usu_indicativo || '57' ) + ( cabeza.usu_telefono || '3148487506' );
       else cerialNumero = "573148487506";
     }else cerialNumero = "573148487506";
-    if(this.userId.id) this.urlwhat = `https://wa.me/${ this.userId.usu_indicativo || 57 }${ ( (_.split( this.userId.usu_telefono , "+57", 2))[1] ) || '3148487506'}?text=Hola Servicio al cliente, como esta, saludo cordial, estoy interesad@ en mas informacion ${obj.pro_nombre} codigo ${obj.pro_codigo} foto ==> ${ obj.foto }`;
+    if(this.userId.id) this.urlwhat = `https://wa.me/${ this.userId.usu_indicativo || 57 }${ ( (_.split( this.userId.usu_telefono , "+57", 2))[1] ) || '3148487506'}?text=Hola Servicio al cliente, como esta, saludo cordial, estoy interesad@ en mas informacion ${obj.pro_nombre} codigo ${obj.pro_codigo} codigo: ${obj.pro_codigo} talla: ${ obj.tallasSelect } foto ==> ${ obj.foto }`;
     else {
-      this.urlwhat = `https://wa.me/${ cerialNumero }?text=Hola Servicio al cliente, como esta, saludo cordial, estoy interesad@ en mas informacion ${obj.pro_nombre} codigo ${obj.pro_codigo} foto ==> ${ obj.foto }`;
+      this.urlwhat = `https://wa.me/${ cerialNumero }?text=Hola Servicio al cliente, como esta, saludo cordial, estoy interesad@ en mas informacion ${obj.pro_nombre} codigo: ${obj.pro_codigo} talla: ${ obj.tallasSelect } foto ==> ${ obj.foto }`;
     }
     window.open(this.urlwhat);
   }
@@ -203,10 +208,12 @@ export class PedidosComponent implements OnInit {
 
   AgregarCart(item:any){
     console.log(item);
+    if( !item.tallasSelect ) return this._tools.tooast( { title: "Por Favor debes seleccionar una talla", icon: "warning" } );
     let data:any = {
       articulo: item.id,
       codigo: item.pro_codigo,
       titulo: item.pro_nombre,
+      tallaSelect: item.tallasSelect,
       foto: item.foto,
       cantidad: item.cantidadAdquirir || 1,
       costo: item.pro_uni_venta,

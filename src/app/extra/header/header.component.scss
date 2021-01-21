@@ -1,7 +1,13 @@
+
 .anchos{
   width: 304px !important;
   top: 0px !important;
 }
+
+.altos {
+  padding-top: 0.5%;
+}
+
 .foto {
   height: 43px;
   border-radius: 19px;
@@ -15,7 +21,7 @@
   color: black !important;
 }
 .toolbar{
-  height: 80px !important;
+  height: 50px !important;
   width: 101.1% !important;
 }
 
@@ -32,6 +38,7 @@
 
 mat-sidenav {
   top: 46px !important;
+  padding: 1% !important;
   bottom: 0px;
   transform: none;
   visibility: visible;

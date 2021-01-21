@@ -13,6 +13,8 @@ import { STORAGES } from 'src/app/interfaces/sotarage';
 import { Store } from '@ngrx/store';
 import { NotificacionesService } from 'src/app/servicesComponents/notificaciones.service';
 import { TipoTallasService } from 'src/app/servicesComponents/tipo-tallas.service';
+import { VentasProductosService } from 'src/app/servicesComponents/ventas-productos.service';
+import { CartAction } from 'src/app/redux/app.actions';
 
 const URL = environment.url;
 
@@ -45,24 +47,27 @@ export class FormventasComponent implements OnInit {
   urlImagen:any;
   opcionCurrencys:any = {};
 
+  listCarrito:any = [];
+
   constructor(
     public dialog: MatDialog,
     private _ventas: VentasService,
     private _notificacion: NotificacionesService,
     private _tools: ToolsService,
     private _productos: ProductoService,
-    private _model: ServiciosService,
     public dialogRef: MatDialogRef<FormventasComponent>,
     @Inject(MAT_DIALOG_DATA) public datas: any,
     private _archivos: ArchivosService,
     private _store: Store<STORAGES>,
-    private _tallas: TipoTallasService
+    private _tallas: TipoTallasService,
+    private _ventasProducto: VentasProductosService
   ) {
     this.opcionCurrencys = this._tools.currency;
-    console.log( this.opcionCurrencys );
     this._store.subscribe((store: any) => {
       store = store.name;
+      if( !store ) return false;
       this.dataUser = store.user || {};
+      if( !this.id ) this.listCarrito = store.cart || [];
       if (this.dataUser.usu_perfil.prf_descripcion == 'administrador' || this.dataUser.usu_perfil.prf_descripcion == 'subAdministrador') this.superSub = true;
       else this.superSub = false;
     });
@@ -79,20 +84,30 @@ export class FormventasComponent implements OnInit {
       if (this.data.pro_clave_int) this.data.pro_clave_int = this.data.pro_clave_int.id;
       if ( this.data.ven_tipo == "WHATSAPP" ) { if( !this.data.ven_imagen_producto ) this.data.ven_imagen_producto = "./assets/noimagen.jpg"; this.data.ven_tipo = "whatsapp"; }
       if ( this.data.ven_tipo == "CARRITO" ) { this.data.ven_tipo = "carrito"; }
+      this.getArticulos();
     } else {
       this.id = "";
       this.data.usu_clave_int = this.dataUser.id;
       this.data.ven_usu_creacion = this.dataUser.usu_email;
       this.data.ven_fecha_venta = moment().format('YYYY-MM-DD');
     }
-    this.getArticulos();
-    console.log(this.data)
+    this.suma();
   }
 
   getArticulos() {
-    this._productos.get({ where: { pro_activo: 0 }, limit: 10000 }).subscribe((res: any) => {
-      this.listProductos = res.data;
-    }, (error) => { console.error(error); this._tools.presentToast("Error de servidor") });
+    this._ventasProducto.get({ where: { ventas: this.id }, limit: 10000 }).subscribe((res: any) => {
+      this.listCarrito = _.map( res.data, ( item:any )=>{
+        return {
+          foto: item.producto.foto,
+          cantidad: item.cantidad,
+          tallaSelect: item.tallaSelect,
+          costo: item.precio,
+          id: item.id,
+          demas: item
+        };
+      });
+      this.suma();
+    }, (error) => { console.error(error); this._tools.presentToast("Error de servidor"); this.listCarrito = []; });
   }
 
   onSelect(event: any) {
@@ -160,9 +175,14 @@ export class FormventasComponent implements OnInit {
 
   suma() {
     // console.log( this.data );
-    if (!this.data.ven_precio || !this.data.ven_cantidad) return false;
-    this.data.ven_total = (Number(this.data.ven_precio) * Number(this.data.ven_cantidad));
-    this.data.ven_ganancias = (this.data.ven_total * (this.dataUser.porcentaje || 7.777) / 100);
+    let total:number = 0;
+    for( let row of this.listCarrito ){
+      if ( !row.costo || !row.cantidad ) continue;
+      total+= ( Number( row.costo ) * Number( row.cantidad ) );
+      row.comision = ( row.costo * ( this.dataUser.porcentaje || 7.777 ) / 100 );
+    }
+    this.data.ven_total = total;
+    this.data.ven_ganancias = ( total * ( this.dataUser.porcentaje || 7.777 ) / 100 );
   }
 
   submit() {
@@ -200,6 +220,8 @@ export class FormventasComponent implements OnInit {
   }
 
   guardarVenta() {
+    if( this.listCarrito.length == 0 ) return this._tools.tooast( { title: "Tiene que existir almenos un articulo seleccionado", icon: "warning" } );
+    this.data.listaArticulo = this.listCarrito;
     this._ventas.create(this.data).subscribe((res: any) => {
       this.OrderWhatsapp(res);
       this.crearNotificacion( {
@@ -221,6 +243,8 @@ export class FormventasComponent implements OnInit {
       this.disabled = false;
       this._tools.presentToast("Exitoso Estare en Modo Pendiente");
       //this.dialog.closeAll();
+      let accion:any = new CartAction( {}, 'drop');
+      this._store.dispatch( accion );
       this.dialogRef.close('creo');
     }, (error) => { this._tools.presentToast("Error al crear la venta"); this.disabledButton = false; this.dialog.closeAll(); });
 
@@ -234,12 +258,7 @@ export class FormventasComponent implements OnInit {
     if( cabeza.usu_perfil == 3 ) cerialNumero = ( cabeza.usu_indicativo || '57' ) + ( cabeza.usu_telefono || '3148487506' );
     else cerialNumero = "573148487506";
     let mensaje: string = `https://wa.me/${ cerialNumero }?text=info del cliente ${res.ven_nombre_cliente} telefono ${res.ven_telefono_cliente || ''} direccion ${res.ven_direccion_cliente} fecha del pedido ${res.ven_fecha_venta} Hola Servicio al cliente, 
-    como esta, cordial saludo. Sería tan amable despachar este pedido a continuación datos de la venta:� producto: `;
-    if (res.ven_tipo == 'whatsapp') {
-      mensaje += `${ ( res.nombreProducto ) } imagen: ${res.ven_imagen_producto} talla: ${res.ven_tallas}`
-    } else {
-      mensaje += `${res.pro_clave_int.pro_nombre} imagen: ${res.pro_clave_int.foto} codigo: ${res.pro_clave_int.pro_codigo} talla: ${res.ven_tallas} `
-    }
+    como esta, cordial saludo. Sería tan amable despachar este pedido a continuación datos de la venta:� fecha: ${ res.ven_fecha_venta } codigo: ${ res.codigo.id }`;
     window.open(mensaje);
   }
 

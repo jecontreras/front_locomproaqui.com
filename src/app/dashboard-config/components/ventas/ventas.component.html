@@ -26,23 +26,23 @@
             </div>
             <div id="datatables_filter" class="dataTables_filter row">
               <div class="col-12 row">
-                <label class="form-group col">
+                <label class="form-group col espaciosL">
                   <input [(ngModel)]="datoBusqueda" type="search" class="form-control form-control-sm" (change)="buscar()"
                     placeholder="Buscar Ventas" aria-controls="datatables"></label>
                 <div>
                   <button (click)="buscar()" [disabled]="loader" mat-raised-button mat-min-fab
-                    class="btn btn-primary btn-just-icon btn-round">
+                    class="btn btn-primary btn-just-icon btn-round espaciosL">
                     <i class="material-icons">search</i>
                   </button>
-                  <button (click)="verTable()" [disabled]="loader" mat-raised-button mat-min-fab
-                    class="btn btn-primary btn-just-icon btn-round">
+                  <!-- <button (click)="verTable()" [disabled]="loader" mat-raised-button mat-min-fab
+                    class="btn btn-primary btn-just-icon btn-round espaciosL">
                     <i class="material-icons">outdoor_grill</i>
-                  </button>
-                  <button *ngIf="activando" (click)="darPuntos()" class="btn btn-primary btn-just-icon btn-round"
+                  </button> -->
+                  <button *ngIf="activando" (click)="darPuntos()" class="btn btn-primary btn-just-icon btn-round espaciosL"
                     mat-raised-button mat-min-fab>
                     <i class="material-icons">redeem</i>
                   </button>
-                  <button (click)="crear(false)" class="btn btn-primary btn-just-icon btn-round" mat-raised-button
+                  <button (click)="crear(false)" class="btn btn-primary btn-just-icon btn-round espaciosL" mat-raised-button
                     mat-min-fab>
                     SUBE TU VENTA <i class="material-icons">add_circle_outline</i>
                   </button>
@@ -126,20 +126,20 @@
                       </td>
                       <td>{{ row['createdAt'] | date:'medium' }}</td>
                       <!-- <td>{{ row['pro_clave_int']?.pro_nombre }}</td> -->
-                      <td>{{ row['ven_cantidad'] }}</td>
-                      <td>
+                      <!-- <td>{{ row['ven_cantidad'] }}</td> -->
+                      <!-- <td>
                         $ {{ ( row['ven_precio'] || 0 ).toLocaleString(1) }}
-                      </td>
-                      <td>
+                      </td> -->
+                      <!-- <td>
                         <img *ngIf="row.ven_tipo === 'whatsapp'" [src]="row['ven_imagen_producto']" class="foto pointer" (click)="openFoto( row['ven_imagen_producto'] )" >
                         <img *ngIf="row.ven_tipo === 'carrito'" [src]="row['pro_clave_int']?.foto" class="foto">
-                      </td>
+                      </td> -->
                       <td *ngIf="row['ven_estado'] == 0">Pendiente</td>
                       <td *ngIf="row['ven_estado'] == 1">Venta Exitosa</td>
                       <td *ngIf="row['ven_estado'] == 2">Rechazada</td>
                       <td *ngIf="row['ven_estado'] == 3">Despachado</td>
                       <td>{{ row['ven_motivo_rechazo'] }}</td>
-                      <td>{{ row['ven_tallas'] }}</td>
+                      <!-- <td>{{ row['ven_tallas'] }}</td> -->
                     </tr>
                   </tbody>
                 </table>

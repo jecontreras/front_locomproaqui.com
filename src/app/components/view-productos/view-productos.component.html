@@ -14,7 +14,7 @@
         </div>
         <div class="col-md-6 col-sm-12 col-lg-6 col-xs-6 content row">
             <div class="col-12">
-                <h3 class="text-primary">$ {{ ( data.pro_uni_venta || 0).toLocaleString(1) }} COP</h3>
+                <h3 class="text-primary">Precio $ {{ ( data.pro_uni_venta || 0).toLocaleString(1) }} COP</h3>
                 <label *ngIf="data.listColor?.length">Colores</label>
                 <select class="form-control form-control-sm" [(ngModel)]="data.color" (change)="cambioImgs()" *ngIf="data.listColor?.length">
                     <option [value]="item.foto" *ngFor="let item of data.listColor">{{ item.talla }}</option>
@@ -23,14 +23,22 @@
                 <p [innerHtml]="data.pro_descripcion | slice: 0: rango"></p>
                 <p *ngIf="rango == 100" (click)="rango = 5000" class="text-primary">leer mas..</p>
                 <p *ngIf="rango != 100" (click)="rango = 100" class="text-primary">leer menos..</p>
-                <div *ngIf="data.listTallas">
-                    <label for="exampleFormControlSelect1">Tipo de medida:</label>
-                    <select class="form-control form-control-sm" [(ngModel)]="data.tallas">
-                        <option [value]="item.tal_descripcion" *ngFor="let item of data.listTallas">{{ item.tal_descripcion }}</option>
-                    </select>
+                <div class="d-flex justify-content-center">
+                    <div class="row">
+                        <div class="col">
+                            <div *ngIf="data.listTallas">
+                                <label for="exampleFormControlSelect1">Tipo de medida:</label>
+                                <select class="form-control form-control-sm" [(ngModel)]="data.tallas">
+                                    <option [value]="item.tal_descripcion" *ngFor="let item of data.listTallas">{{ item.tal_descripcion }}</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col">
+                            <label>Cantidad Adquirir</label>
+                            <input type="number" [(ngModel)]="data.cantidadAdquirir" class="form-control form-control-sm">
+                        </div>
+                    </div>
                 </div>
-                <label>Cantidad Adquirir</label>
-                <input type="number" [(ngModel)]="data.cantidadAdquirir" class="form-control form-control-sm">
                 <br>
                 <div *ngIf="data.checkMayor == 1">
                     <mat-list>
