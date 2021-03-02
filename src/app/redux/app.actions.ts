@@ -4,6 +4,7 @@ export let CART          = '[App] Cart';
 export let USER          = '[App] User';
 export let USERCABEZA    = '[App] UserCabeza';
 export let TOKEN         = '[App] Token';
+export let BUSCAR        = '[App] Buscar';
 
 export class CartAction implements Action {
     readonly type = CART;
@@ -25,7 +26,13 @@ export class TokenAction implements Action {
     constructor( public payload: object,  public opt: string){}
 }
 
+export class BuscarAction implements Action {
+    readonly type = BUSCAR;
+    constructor( public payload: string,  public opt: string){}
+}
+
 export type actions = CartAction         |
                       UserAction         |
                       UserCabezaAction   |
-                      TokenAction         ;
+                      TokenAction        |
+                      BuscarAction       ;

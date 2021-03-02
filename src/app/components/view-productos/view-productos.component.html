@@ -27,7 +27,7 @@
                     <div class="row">
                         <div class="col">
                             <div *ngIf="data.listTallas">
-                                <label for="exampleFormControlSelect1">Tipo de medida:</label>
+                                <label for="exampleFormControlSelect1">Tallas disponibles:</label>
                                 <select class="form-control form-control-sm" [(ngModel)]="data.tallas">
                                     <option [value]="item.tal_descripcion" *ngFor="let item of data.listTallas">{{ item.tal_descripcion }}</option>
                                 </select>

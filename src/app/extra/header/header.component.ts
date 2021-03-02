@@ -7,7 +7,7 @@ import { RegistroComponent } from '../../components/registro/registro.component'
 import { ServiciosService } from 'src/app/services/servicios.service';
 import { Store } from '@ngrx/store';
 import { CART } from 'src/app/interfaces/sotarage';
-import { CartAction, UserAction } from 'src/app/redux/app.actions';
+import { BuscarAction, CartAction, UserAction } from 'src/app/redux/app.actions';
 import { UsuariosService } from 'src/app/servicesComponents/usuarios.service';
 import * as _ from 'lodash';
 import { environment } from 'src/environments/environment';
@@ -51,6 +51,8 @@ export class HeaderComponent implements OnInit {
   opcionoView:string = 'carro';
   listNotificaciones:any =[];
   listAlert:any = [];
+  seartxt:string = "";
+  disabledSearch:boolean = true;
 
   constructor(
     public changeDetectorRef: ChangeDetectorRef,
@@ -71,6 +73,11 @@ export class HeaderComponent implements OnInit {
       this.listCart = store.cart || [];
       this.userId = store.usercabeza || {};
       this.dataUser = store.user || {};
+      if( store.buscar ) { 
+        this.seartxt = store.buscar; 
+      }
+      console.log( window.innerWidth )
+      this.disabledSearch = window.innerWidth <= 600 ? true : false;
       this.submitChat();
     });
     //this.getVentas();
@@ -94,6 +101,15 @@ export class HeaderComponent implements OnInit {
     this.listMenus();
     if( this.dataUser.id )this.getCarrito();
     this.getAlert();
+  }
+
+  activarSearch(){
+    this.disabledSearch = !this.disabledSearch;
+  }
+
+  buscar(){
+    let accion:any = new BuscarAction( this.seartxt, 'post');
+    this._store.dispatch( accion );
   }
 
   getVentas(){
@@ -238,6 +254,7 @@ export class HeaderComponent implements OnInit {
         icons: 'menu_book',
         nombre: 'Productos',
         disable: true,
+        disabled: true,
         url: '/pedidos',
         submenus: submenus
       },
@@ -358,7 +375,7 @@ export class HeaderComponent implements OnInit {
       },
       {
         icons: 'supervisor_account',
-        nombre: 'Vende para nosotros',
+        nombre: 'Inicia tu propio negocio',
         disable: this.rolUser === 'visitante',
         url: 'registrar()',
         submenus:[]

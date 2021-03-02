@@ -3,7 +3,12 @@ export interface STORAGES {
     user?: USER;
     usercabeza?: USERCABEZA;
     token?: TOKEN;
+    buscar?: BUSCAR;
 };
+
+export interface BUSCAR {
+    
+}
 
 export interface TOKEN {
     

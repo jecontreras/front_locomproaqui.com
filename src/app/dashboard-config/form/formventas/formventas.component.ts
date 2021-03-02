@@ -258,7 +258,7 @@ export class FormventasComponent implements OnInit {
     if( cabeza.usu_perfil == 3 ) cerialNumero = ( cabeza.usu_indicativo || '57' ) + ( cabeza.usu_telefono || '3148487506' );
     else cerialNumero = "573148487506";
     let mensaje: string = `https://wa.me/${ cerialNumero }?text=info del cliente ${res.ven_nombre_cliente} telefono ${res.ven_telefono_cliente || ''} direccion ${res.ven_direccion_cliente} fecha del pedido ${res.ven_fecha_venta} Hola Servicio al cliente, 
-    como esta, cordial saludo. Sería tan amable despachar este pedido a continuación datos de la venta:� fecha: ${ res.ven_fecha_venta } codigo: ${ res.codigo.id }`;
+    como esta, cordial saludo. Sería tan amable despachar este pedido a continuación datos de la venta:� fecha: ${ res.ven_fecha_venta } codigo: ${ res.codigo }`;
     window.open(mensaje);
   }
 

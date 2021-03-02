@@ -12,7 +12,7 @@ export class FooterComponent implements OnInit {
 
   @ViewChild('nav', { static: true }) ds: NgImageSliderComponent;
   sliderWidth: Number = 1204;
-  sliderImageWidth: Number = 618;
+  sliderImageWidth: Number = 650;
   sliderImageHeight: Number = 44;
   sliderArrowShow: Boolean = true;
   sliderInfinite: Boolean = true;
@@ -25,7 +25,8 @@ export class FooterComponent implements OnInit {
   constructor(
     public dialog: MatDialog,
   ) { 
-    if( (window.innerWidth >= 1000) ) this.sliderImageWidth = 700;
+    console.log("**",window.innerWidth)
+    if( (window.innerWidth >= 1000) ) this.sliderImageWidth = 900;
     if( (window.innerWidth <= 1000) ) this.sliderImageWidth = 700;
     if( (window.innerWidth <= 770) ) this.sliderImageWidth = 460;
     if( (window.innerWidth <= 520) ) this.sliderImageWidth = 420;

@@ -143,6 +143,29 @@ export function appReducer(state: STORAGES = APP, action: _action.actions) {
         break;
       }
     }
+    case _action.BUSCAR: {
+      switch(action.opt) {
+        case 'post' :
+          if(!state.buscar) state.buscar = "";
+            state.buscar = action.payload;
+            return local_Storage(state);
+        break;
+        case 'put': {
+          state.buscar = action.payload;
+        }
+        return local_Storage(state);
+        break;
+        case 'delete': 
+          state.buscar = {};
+          return local_Storage(state);
+        break;
+        case 'drop': {
+          state.buscar = {};
+          return local_Storage(state);
+        }
+        break;
+      }
+    }
     
     /*case _action.ARTICULOS:{
       switch (action.opt){

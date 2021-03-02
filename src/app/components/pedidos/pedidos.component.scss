@@ -14,7 +14,22 @@
     margin: 10px 0;
     border-radius: 10px;
 }
+.anchandoPr{
+  width: 60% !important;
+}
 
+@media only screen and (max-width: 600px) {
+  .anchandoPr{
+    width: 50% !important;
+  }
+}
+
+/* Extra large devices (large laptops and desktops, 1200px and up) */
+@media only screen and (min-width: 1300px) {
+  .anchandoPr{
+    width: 2 0% !important;
+  }
+}
 .textInfo {
     font-size: 11px;
 }
@@ -28,7 +43,7 @@
 }
 
 .paddinButtom {
-  padding-bottom: 11px;
+  padding: 25px;
 }
 .example-card {
     max-width: 400px;

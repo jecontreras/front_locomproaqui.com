@@ -1,7 +1,67 @@
+
 html, body {
     height: 100%;
     margin: 0;
 }
+
+.headerColor{
+  background-color: #02a0e3 !important;
+}
+
+.colorNuevo{
+  color: #02a0e3 !important;
+}
+
+.anchandoPr{
+  width: 60% !important;
+}
+
+@font-face {
+  font-family: 'Geomanist';
+  src: url("./assets/font/Geomanist-Regular-Italic.otf");
+  font-weight: 300;
+  font-style: normal;
+  font-size: 115%;
+}
+
+@font-face {
+  font-family: 'Geomanist2';
+  src: url("./assets/font/Geomanist-Black.otf");
+  font-weight: 300;
+  font-style:normal;
+}
+
+@font-face {
+  font-family: 'Geomanist3';
+  src: url("./assets/font/Geomanist-Regular_0.otf");
+  font-weight: 300;
+  font-style:normal;
+}
+
+
+.titulo1{
+  font-family: Geomanist;
+  color: #17a8e5;
+}
+
+.titulo2{
+  font-family: Geomanist2;
+  font-size: 110%;
+  color: #6c6c6c;
+}
+
+.titulo3{
+  font-family: Geomanist2;
+  font-size: 110%;
+  color: #fff;
+}
+
+.scrooll{
+  position: inherit;
+}
+
+
+
 .pointer {
   cursor: pointer;
 }
@@ -50,10 +110,10 @@ html, body {
 }
 
 footer {
-  background-color: #3f51b5;
+  background-color: #02a0e3 !important;
   position: fixed;
   bottom: 0px;
-  width:  100%;
+  width:  -webkit-fill-available;
   left: 0px;
   box-shadow: 5px 3px 5px 5px rgba(0,0,0,.14), 0 5px 8px 0 rgba(0,0,0,.14), 0 1px 14px 0 rgba(0,0,0,.12);
   padding: 0.5em;
@@ -92,9 +152,36 @@ footer {
 }
 /* Small devices (portrait tablets and large phones, 600px and up) */
 @media only screen and (min-width: 420px) {
+  .toolbar{
+    width: 103.1% !important;
+  }
+  .anchosCajaIcons{
+    width: 45%;
+  }
+  .buscadorOcultar {
+    display: none;
+    margin-top: 10px; 
+    width: 30%;
+  }
+  .ocultarGrande {
+    display: inline;
+  }
+    .buscadorOcultar2 {
+    display: none;
+    width: 30%;
+  }
+  .tallasEstilo{
+    width: 31%;
+    margin-top: 0;
+    padding-top: 0;
+    margin-left: 10px;
+  }
+  .iconCaja{
+    padding: 0 2%; width: 25%;
+  }
   .anchos {
     padding: 5px 23px;
-}
+  }
   .imgFoto{
     height: 238px;
   }
@@ -115,14 +202,38 @@ footer {
     max-width: 407px !important;
     height: 258px !important;
   }
+  .textFooter {
+    font-size: 20px;
+  }
   footer {
     font-size: 10px;
   }
 }
 @media only screen and (max-width: 600px) {
+  .buscadorOcultar {
+    display: none;
+    margin-top: 10px; 
+    width: 30%;
+  }
+  .ocultarGrande {
+    display: inline;
+  }
+    .buscadorOcultar2 {
+    display: none;
+    width: 30%;
+  }
+  .iconCaja{
+    padding: 0 2%; width: 25%;
+  }
+  .tallasEstilo{
+    width: 30%;
+    margin-top: 0;
+    padding-top: 0;
+    margin-left: 10px;
+  }
   .anchos {
     padding: 5px 25px;
-}
+  }
   .imgFoto{
     height: 171px;
   }
@@ -138,6 +249,9 @@ footer {
   .textInf {
     font-size: 13px;
   }
+  .textFooter {
+    font-size: 20px;
+  }
   .ngxImageZoomThumbnail{
     max-height: 425px !important;
     max-width: 407px !important;
@@ -149,6 +263,30 @@ footer {
 }
 /* Small devices (portrait tablets and large phones, 600px and up) */
 @media only screen and (min-width: 600px) {
+  .anchosCajaIcons{
+    width: 35%;
+  }
+  .buscadorOcultar {
+    display: inline;
+    margin-top: 10px; 
+    width: 30%;
+  }
+  .ocultarGrande {
+    display: none;
+  }
+    .buscadorOcultar2 {
+    display: inline;
+    width: 30%;
+  }
+  .iconCaja{
+    padding: 0 2%; width: 39%;
+  }
+  .tallasEstilo{
+    width: 48%;
+    margin-top: 0;
+    padding-top: 0;
+    margin-left: 10px;
+  }
   .anchos {
     padding: 5px 30px;
 }
@@ -172,8 +310,18 @@ footer {
     max-width: 407px !important;
     height: 287px !important;
   }
+  .textFooter {
+    font-size: 29px;
+  }
   footer {
     font-size: 11px;
+  }
+  .imgProductos{
+    height: 263px;
+    width: 170px;
+    max-height: 269px;
+    min-height: 190px;
+    max-width: 628px;
   }
 }
 
@@ -181,7 +329,31 @@ footer {
 @media only screen and (min-width: 768px) {
   .anchos {
     padding: 5px 30px;
-}
+  }
+  .buscadorOcultar {
+    display: inline;
+    margin-top: 10px; 
+    width: 30%;
+  }
+  .ocultarGrande {
+    display: none;
+  }
+    .buscadorOcultar2 {
+    display: inline;
+    width: 30%;
+  }
+  .iconCaja{
+    padding: 0 2%; width: 25%;
+  }
+  .tallasEstilo{
+    width: 31%;
+    margin-top: 0;
+    padding-top: 0;
+    margin-left: 10px;
+  }
+  .anchosCajaIcons{
+    width: 35%;
+  }
   .imgFoto{
     height: 193px;
   }
@@ -202,8 +374,18 @@ footer {
     max-width: 407px !important;
     height: 285px !important;
   }
+  .textFooter {
+    font-size: 20px;
+  }
   footer {
     font-size: 11px;
+  }
+  .imgProductos{
+    height: 263px;
+    width: 170px;
+    max-height: 269px;
+    min-height: 190px;
+    max-width: 628px;
   }
 }
 
@@ -211,7 +393,31 @@ footer {
 @media only screen and (min-width: 800px) {
   .anchos {
     padding: 5px 90px;
-}
+  }
+  .anchosCajaIcons{
+    width: 23%;
+  }
+  .tallasEstilo{
+    width: 31%;
+    margin-top: 0;
+    padding-top: 0;
+    margin-left: 10px;
+  }
+  .buscadorOcultar {
+    display: inline;
+    margin-top: 10px; 
+    width: 30%;
+  }
+  .ocultarGrande {
+    display: none;
+  }
+    .buscadorOcultar2 {
+    display: inline;
+    width: 30%;
+  }
+  .iconCaja{
+    padding: 0 2%; width: 25%;
+  }
   .imgFoto{
     height: 238px;
   }
@@ -232,8 +438,18 @@ footer {
     max-width: 407px !important;
     height: 289px !important;
   }
+  .textFooter {
+    font-size: 35px;
+  }
   footer {
     font-size: 11px;
+  }
+  .imgProductos{
+    height: 263px;
+    width: 170px;
+    max-height: 269px;
+    min-height: 190px;
+    max-width: 628px;
   }
 }
 
@@ -241,7 +457,31 @@ footer {
 @media only screen and (min-width: 992px) {
   .anchos {
     padding: 5px 70px;
-}
+  }
+  .anchosCajaIcons{
+    width: 19%;
+  }
+  .tallasEstilo{
+    width: 63%;
+    margin-top: 0;
+    padding-top: 0;
+    margin-left: 10px;
+  }
+  .buscadorOcultar {
+    display: inline;
+    margin-top: 10px; 
+    width: 30%;
+  }
+  .ocultarGrande {
+    display: none;
+  }
+    .buscadorOcultar2 {
+    display: inline;
+    width: 30%;
+  }
+  .iconCaja{
+    padding: 0 2%; width: 25%;
+  }
   .imgFoto{
     height: 307px;
   }
@@ -262,8 +502,18 @@ footer {
     max-width: 407px !important;
     height: 367px !important;
   }
+  .textFooter {
+    font-size: 45px;
+  }
   footer {
     font-size: 11px;
+  }
+  .imgProductos{
+    height: 263px;
+    width: 170px;
+    max-height: 269px;
+    min-height: 190px;
+    max-width: 628px;
   }
 }
 
@@ -271,7 +521,31 @@ footer {
 @media only screen and (min-width: 1200px) {
   .anchos {
     padding: 5px 115px;
-}
+  }
+  .anchosCajaIcons{
+    width: 16%;
+  }
+  .tallasEstilo{
+    width: 45%;
+    margin-top: 0;
+    padding-top: 0;
+    margin-left: 10px;
+  }
+  .buscadorOcultar {
+    display: inline;
+    margin-top: 10px; 
+    width: 30%;
+  }
+  .ocultarGrande {
+    display: none;
+  }
+    .buscadorOcultar2 {
+    display: inline;
+    width: 30%;
+  }
+  .iconCaja{
+    padding: 0 2%; width: 25%;
+  }
   .imgFoto{
     height: 300px;
   }
@@ -292,7 +566,82 @@ footer {
     max-width: 407px !important;
     height: 425px !important;
   }
+  .textFooter {
+    font-size: 47px;
+  }
   footer {
     font-size: 11px;
   }
+  .imgProductos{
+    height: 263px;
+    width: 170px;
+    max-height: 269px;
+    min-height: 190px;
+    max-width: 628px;
+  }
 }
+
+/* Extra large devices (large laptops and desktops, 1200px and up) */
+@media only screen and (min-width: 1300px) {
+  .anchos {
+    padding: 5px 115px;
+  }
+  .anchosCajaIcons{
+    width: 16%;
+  }
+  .tallasEstilo{
+    width: 59%;
+    margin-top: 0;
+    padding-top: 0;
+    margin-left: 10px;
+  }
+  .buscadorOcultar {
+    display: inline;
+    margin-top: 10px; 
+    width: 30%;
+  }
+  .ocultarGrande {
+    display: none;
+  }
+    .buscadorOcultar2 {
+    display: inline;
+    width: 30%;
+  }
+  .iconCaja{
+    padding: 0 2%; width: 25%;
+  }
+  .imgFoto{
+    height: 300px;
+  }
+  .views1 {
+    display: inline;
+  }
+  .views2 {
+    display: inline;
+  }
+  .ancho {
+    width: 60%;
+  }
+  .textInf {
+    font-size: 15px;
+  }
+  .ngxImageZoomThumbnail{
+    max-height: 425px !important;
+    max-width: 407px !important;
+    height: 425px !important;
+  }
+  .textFooter {
+    font-size: 47px;
+  }
+  footer {
+    font-size: 11px;
+  }
+  .imgProductos{
+    height: 263px;
+    width: 170px;
+    max-height: 269px;
+    min-height: 190px;
+    max-width: 628px;
+  }
+}
+
