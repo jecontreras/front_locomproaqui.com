@@ -1,25 +1,41 @@
-<h2 mat-dialog-title>Info Producto</h2>
+<h2 mat-dialog-title>
+    <div class="d-flex justify-content-between">
+        <div>
+            <h4>Info Producto</h4>
+        </div>
+        <div>
+
+        </div>
+        <div style="width: 15%;">
+            <img style="width: 100%;" src="./assets/img/gratis.jpg" alt="">
+        </div>
+    </div>
+
+</h2>
 <mat-dialog-content class="mat-typography">
     <div class="row">
         <div class="col-md-6 col-sm-12 col-lg-6 col-xs-6">
-            <lib-ngx-image-zoom
-                [thumbImage]=data.foto
-                [fullImage]=data.foto
-                [magnification]="1"
-                [enableScrollZoom]="true"
-                [enableLens]="true"
-                [lensWidth]="200"
-                [lensHeight]="200"
-            ></lib-ngx-image-zoom>
+            <lib-ngx-image-zoom [thumbImage]=data.foto [fullImage]=data.foto [magnification]="1"
+                [enableScrollZoom]="true" [enableLens]="true" [lensWidth]="200" [lensHeight]="200"></lib-ngx-image-zoom>
         </div>
         <div class="col-md-6 col-sm-12 col-lg-6 col-xs-6 content row">
             <div class="col-12">
                 <h3 class="text-primary">Precio $ {{ ( data.pro_uni_venta || 0).toLocaleString(1) }} COP</h3>
                 <label *ngIf="data.listColor?.length">Colores</label>
-                <select class="form-control form-control-sm" [(ngModel)]="data.color" (change)="cambioImgs()" *ngIf="data.listColor?.length">
+                <select class="form-control form-control-sm" [(ngModel)]="data.color" (change)="cambioImgs()"
+                    *ngIf="data.listColor?.length">
                     <option [value]="item.foto" *ngFor="let item of data.listColor">{{ item.talla }}</option>
                 </select>
-                <h4>{{ data.pro_nombre }}</h4>
+                <div class="d-flex justify-content-between">
+                    <div>
+                        <h4>{{ data.pro_nombre }}</h4>
+                    </div>
+                    <div></div>
+                    <div style="width:60%">
+                        <img (click)="masInfo( data )" class="pointer" src="./assets/icons/masinformacion.png"
+                            style="width: 100%;">
+                    </div>
+                </div>
                 <p [innerHtml]="data.pro_descripcion | slice: 0: rango"></p>
                 <p *ngIf="rango == 100" (click)="rango = 5000" class="text-primary">leer mas..</p>
                 <p *ngIf="rango != 100" (click)="rango = 100" class="text-primary">leer menos..</p>
@@ -29,13 +45,15 @@
                             <div *ngIf="data.listTallas">
                                 <label for="exampleFormControlSelect1">Tallas disponibles:</label>
                                 <select class="form-control form-control-sm" [(ngModel)]="data.tallas">
-                                    <option [value]="item.tal_descripcion" *ngFor="let item of data.listTallas">{{ item.tal_descripcion }}</option>
+                                    <option [value]="item.tal_descripcion" *ngFor="let item of data.listTallas">{{
+                                        item.tal_descripcion }}</option>
                                 </select>
                             </div>
                         </div>
                         <div class="col">
                             <label>Cantidad Adquirir</label>
-                            <input type="number" [(ngModel)]="data.cantidadAdquirir" class="form-control form-control-sm">
+                            <input type="number" [(ngModel)]="data.cantidadAdquirir"
+                                class="form-control form-control-sm">
                         </div>
                     </div>
                 </div>
@@ -43,20 +61,19 @@
                 <div *ngIf="data.checkMayor == 1">
                     <mat-list>
                         <div mat-subheader>Lista de precios al Mayor</div>
-                        <mat-list-item *ngFor="let item of data.listPrecios" class="pointer"  (click)="AgregarCart(item)"
-                        [ngClass]="{
+                        <mat-list-item *ngFor="let item of data.listPrecios" class="pointer" (click)="AgregarCart(item)"
+                            [ngClass]="{
                             'colorSeleccionado':item.selecciono == true
-                          }"
-                        >
-                          <div mat-line class="row">
-                              <div class="col-6">
-                                  <span>Cantidad: {{ item.cantidad }}</span>
-                                  &nbsp;&nbsp;
-                                  <span>Precios: {{ ( item.precios || 0 ).toLocaleString(1) }} COP</span>
-                              </div>
-                          </div>
+                          }">
+                            <div mat-line class="row">
+                                <div class="col-6">
+                                    <span>Cantidad: {{ item.cantidad }}</span>
+                                    &nbsp;&nbsp;
+                                    <span>Precios: {{ ( item.precios || 0 ).toLocaleString(1) }} COP</span>
+                                </div>
+                            </div>
                         </mat-list-item>
-                      </mat-list>
+                    </mat-list>
                 </div>
 
             </div>
@@ -69,4 +86,4 @@
         Agregar al carrito
     </button>
     <button mat-button mat-dialog-close>Cerrar</button>
-  </mat-dialog-actions>
+</mat-dialog-actions>

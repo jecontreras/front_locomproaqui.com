@@ -15,13 +15,25 @@ export class ViewProductosComponent implements OnInit {
 
   data:any = {};
   rango:number = 250;
+  urlwhat: string
+  userId: any;
+  dataUser:any = {};
 
   constructor(
     public dialogRef: MatDialogRef<ViewProductosComponent>,
     @Inject(MAT_DIALOG_DATA) public datas: any,
     private _store: Store<CART>,
     private _tools: ToolsService,
-  ) { }
+  ) { 
+
+    this._store.subscribe((store: any) => {
+      store = store.name;
+      //console.log(store);
+      if (!store) return false;
+      this.userId = store.usercabeza;
+      this.dataUser = store.user || {};
+    });
+  }
 
   ngOnInit() {
   
@@ -77,6 +89,25 @@ export class ViewProductosComponent implements OnInit {
   
   codigo(){
     return (Date.now().toString(20).substr(2, 3) + Math.random().toString(20).substr(2, 3)).toUpperCase();
+  }
+
+  masInfo(obj: any) {
+    console.log( obj );
+    let cerialNumero: any = '';
+    let numeroSplit: any;
+    let cabeza: any = this.dataUser.cabeza;
+    if (!obj.tallas) return this._tools.tooast({ title: "Por Favor debes seleccionar una talla", icon: "warning" });
+    if (cabeza) {
+      numeroSplit = _.split(cabeza.usu_telefono, "+57", 2);
+      if (numeroSplit[1]) cabeza.usu_telefono = numeroSplit[1];
+      if (cabeza.usu_perfil == 3) cerialNumero = (cabeza.usu_indicativo || '57') + (cabeza.usu_telefono || '3148487506');
+      else cerialNumero = "573148487506";
+    } else cerialNumero = "573148487506";
+    if (this.userId.id) this.urlwhat = `https://wa.me/${this.userId.usu_indicativo || 57}${((_.split(this.userId.usu_telefono, "+57", 2))[1]) || '3148487506'}?text=Hola Servicio al cliente, como esta, saludo cordial, estoy interesad@ en mas informacion ${obj.pro_nombre} codigo ${obj.pro_codigo} codigo: ${obj.pro_codigo} talla: ${obj.tallas} foto ==> ${obj.foto}`;
+    else {
+      this.urlwhat = `https://wa.me/${cerialNumero}?text=Hola Servicio al cliente, como esta, saludo cordial, estoy interesad@ en mas informacion ${obj.pro_nombre} codigo: ${obj.pro_codigo} talla: ${obj.tallas} foto ==> ${obj.foto}`;
+    }
+    window.open(this.urlwhat);
   }
 
 }
