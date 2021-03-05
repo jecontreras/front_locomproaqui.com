@@ -170,7 +170,7 @@ export class PedidosComponent implements OnInit {
   buscar() {
     //console.log(this.seartxt);
     this.loader = true;
-    this.seartxt = this.seartxt.trim();
+    try { this.seartxt = this.seartxt.trim(); } catch (error) { this.seartxt = ""; }
     this.listProductos = [];
     this.notscrolly = true;
     this.notEmptyPost = true;

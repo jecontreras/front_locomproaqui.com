@@ -1,15 +1,5 @@
 <h2 mat-dialog-title>
-    <div class="d-flex justify-content-between">
-        <div>
-            <h4>Info Producto</h4>
-        </div>
-        <div>
-
-        </div>
-        <div style="width: 15%;">
-            <img style="width: 100%;" src="./assets/img/gratis.jpg" alt="">
-        </div>
-    </div>
+    Datos del Productos {{ data.pro_nombre }}
 
 </h2>
 <mat-dialog-content class="mat-typography">
@@ -75,7 +65,11 @@
                         </mat-list-item>
                     </mat-list>
                 </div>
-
+                <div class="d-flex justify-content-center">
+                    <div>
+                        <img style="width: 100%;" src="./assets/img/gratis.jpg" alt="">
+                    </div>
+                </div>
             </div>
         </div>
     </div>

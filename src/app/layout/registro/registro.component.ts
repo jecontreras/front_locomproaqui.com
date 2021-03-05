@@ -99,6 +99,8 @@ export class RegistrosComponent implements OnInit {
     if( !this.data.usu_clave ) { this._tools.tooast( { title: "Error falta la clave", icon: "error" }); return false; }
     if( !this.data.usu_confir ) { this._tools.tooast( { title: "Error falta la clave de confirmar", icon: "error" }); return false; }
     if( this.data.usu_confir !=  this.data.usu_clave ) { this._tools.tooast( { title: "Error las claves no son correctas", icon: "error" }); return false; }
+    if( !this.data.usu_usuario ) { this._tools.tooast( { title: "Error falta Tu Nombre de tienda", icon: "error" }); return false; }
+    if( !this.data.usu_modo ) { this._tools.tooast( { title: "Error falta la descripcion de porque aceptarte como vendedor", icon: "error" }); return false; }
     return true;
   }
   
