@@ -1,4 +1,4 @@
-import { Component, OnDestroy, ChangeDetectorRef, OnInit, VERSION, ViewChild } from '@angular/core';
+import { Component, OnDestroy, ChangeDetectorRef, OnInit, VERSION, ViewChild, Input } from '@angular/core';
 import { MediaMatcher } from '@angular/cdk/layout';
 import { Router, ActivatedRoute } from '@angular/router';
 import { MatDialog } from '@angular/material';
@@ -27,6 +27,9 @@ const URLFRON = environment.urlFront;
 })
 export class HeaderComponent implements OnInit {
   showFiller = false;
+
+  @ViewChild('nav',{static: false} ) private nav: any
+
   public mobileQuery: any;
   breakpoint: number;
   private _mobileQueryListener: () => void;
@@ -53,7 +56,7 @@ export class HeaderComponent implements OnInit {
   listAlert:any = [];
   seartxt:string = "";
   disabledSearch:boolean = true;
-
+  urlLogo:string = "./assets/logo.png";
   constructor(
     public changeDetectorRef: ChangeDetectorRef,
     public media: MediaMatcher, private router: Router,
@@ -90,6 +93,10 @@ export class HeaderComponent implements OnInit {
   }
 
   ngOnInit() {
+    let color:string = ( this.dataUser.usu_color || "#02a0e3" );
+    if( this.userId.id ) color = this.userId.usu_color || "#02a0e3";
+    console.log( color )
+    setTimeout(()=> this.nav.nativeElement.style.backgroundColor = color, 100 );
     this.breakpoint = (window.innerWidth <= 400) ? 1 : 6;
     this.onResize(null);
     if(Object.keys(this.dataUser).length > 0 ) {
@@ -302,7 +309,7 @@ export class HeaderComponent implements OnInit {
       {
         icons: 'people_alt',
         nombre: 'Mis Referidos',
-        disable: this.rolUser !== 'visitante',
+        disable: this.rolUser == 'administrador' || this.rolUser == 'subAdministrador' || this.rolUser == 'lider',
         url: '/config/referidos',
         submenus:[]
       },

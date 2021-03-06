@@ -1,6 +1,8 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { MatDialog } from '@angular/material';
+import { Store } from '@ngrx/store';
 import { NgImageSliderComponent } from 'ng-image-slider';
+import { CART } from 'src/app/interfaces/sotarage';
 import { TerminosComponent } from 'src/app/layout/terminos/terminos.component';
 
 @Component({
@@ -9,8 +11,11 @@ import { TerminosComponent } from 'src/app/layout/terminos/terminos.component';
   styleUrls: ['./footer.component.scss']
 })
 export class FooterComponent implements OnInit {
-
+  @ViewChild('nav',{static: false} ) private nav: any
   @ViewChild('nav', { static: true }) ds: NgImageSliderComponent;
+  dataUser:any = {};
+  userId:any = {};
+
   sliderWidth: Number = 1204;
   sliderImageWidth: Number = 650;
   sliderImageHeight: Number = 44;
@@ -24,6 +29,7 @@ export class FooterComponent implements OnInit {
 
   constructor(
     public dialog: MatDialog,
+    private _store: Store<CART>,
   ) { 
     console.log("**",window.innerWidth)
     if( (window.innerWidth >= 1000) ) this.sliderImageWidth = 900;
@@ -32,9 +38,20 @@ export class FooterComponent implements OnInit {
     if( (window.innerWidth <= 520) ) this.sliderImageWidth = 420;
     if( (window.innerWidth <= 450) ) this.sliderImageWidth = 370;
     if( (window.innerWidth <= 420) ) this.sliderImageWidth = 300;
+    this._store.subscribe((store: any) => {
+      //console.log(store);
+      store = store.name;
+      if(!store) return false;
+      this.userId = store.usercabeza || {};
+      this.dataUser = store.user || {};
+    });
   }
 
   ngOnInit(): void {
+    let color:string = ( this.dataUser.usu_color || "#02a0e3" );
+    if( this.userId.id ) color = this.userId.usu_color || "#02a0e3";
+    console.log( color )
+    setTimeout(()=> this.nav.nativeElement.style.backgroundColor = color, 100 );
     this.listaBanner();
   }
 

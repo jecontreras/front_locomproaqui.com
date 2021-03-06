@@ -31,6 +31,7 @@ export class PerfilComponent implements OnInit {
   restaure:any = {};
   disableRestaure:boolean = false;
   listIndicativos = Indicativo;
+  disableBtn:boolean = false;
 
   constructor(
     private _model: ServiciosService,
@@ -43,6 +44,7 @@ export class PerfilComponent implements OnInit {
       console.log(store);
       store = store.name;
       this.data = store.user;
+      if( this.data.usu_perfil.prf_descripcion != 'subAdministrador' || this.data.usu_perfil.prf_descripcion != 'administrador' || this.data.usu_perfil.prf_descripcion != 'lider' ) this.disableBtn = true;
     });
   }
 
@@ -124,6 +126,10 @@ export class PerfilComponent implements OnInit {
     document.execCommand('copy');
     document.body.removeChild(selBox);
     this._tools.openSnack('Copiado:' + ' ' + this.urlRegistro, 'completado', false);
+  }
+
+  colorDato(){
+    console.log( this.data );
   }
 
 }

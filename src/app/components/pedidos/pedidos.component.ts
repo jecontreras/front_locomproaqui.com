@@ -35,7 +35,7 @@ export class PedidosComponent implements OnInit {
       pro_activo: 0
     },
     page: 0,
-    limit: 15
+    limit: 18
   };
   seartxt: string = '';
   listProductos: any = [];
@@ -175,7 +175,7 @@ export class PedidosComponent implements OnInit {
     this.notscrolly = true;
     this.notEmptyPost = true;
     if (this.seartxt === '') {
-      this.query = { where: { pro_activo: 0 }, limit: 15, page: 0 };
+      this.query = { where: { pro_activo: 0 }, limit: 18, page: 0 };
       this.cargarProductos();
     } else {
       this.query.where.or = [
@@ -273,7 +273,7 @@ export class PedidosComponent implements OnInit {
     //console.log('index', index, this.imageObject[index]);
     for (let row of this.imageObject) row.check = false;
     obj.check = true;
-    this.query = { where: { pro_activo: 0 }, page: 0, limit: 10 };
+    this.query = { where: { pro_activo: 0 }, page: 0, limit: 18 };
     if (this.imageObject[index].id > 0) this.query = { where: { pro_activo: 0, pro_categoria: this.imageObject[index].id }, page: 0, limit: 10 };
     this.listProductos = [];
     this.notscrolly = true;

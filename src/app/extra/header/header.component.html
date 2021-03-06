@@ -1,11 +1,11 @@
 <div>
-  <nav class="navbar navbar-expand-lg navbar-light bg-light headerColor scrooll">
+  <nav class="navbar navbar-expand-lg navbar-light headerColor scrooll" #nav>
     <div class="d-flex justify-content-between" style="width: 100%;">
       <div>
         <button mat-icon-button (click)="snav.toggle()" translate="no">
           <i class="material-icons icoss">menu</i>
         </button>
-        <img src="./assets/logo.png" style="width: 177px;" class="pointer" [routerLink]="[ '/pedidos' ]">
+        <img [src]="urlLogo" style="width: 177px;" class="pointer" [routerLink]="[ '/pedidos' ]">
       </div>
       <div class="buscadorOcultar">
         <input type="text" style="border-radius: 11px;" [(ngModel)]="seartxt" (change)="buscar()"
@@ -139,7 +139,7 @@
       <div style="width: 290px; height: 90px;" fxLayout="column">
         <ng-container class="row">
           <div class="col-12">
-            <img class="logo" src="./assets/logo.png">
+            <img class="logo" [src]="urlLogo">
           </div>
           <ul class="nav nav-pills nav-stacked row margin">
             <li class="active col-12 paddingLeft">
@@ -192,7 +192,7 @@
             BIENVENIDO A TU OFICINA VIRTUAL " {{ dataUser.usu_usuario }} "
           </h3>
           <h3 *ngIf="!dataUser.id" class="text-center textInf colorNuevo altos titulo1">
-            BIENVENIDO A LOCOMPROAQUI.COM {{ userId.usu_usuario }}
+            BIENVENIDO A LOkOMPROAQUI.COM {{ userId.usu_usuario }}
           </h3>
         </div>
       </div>

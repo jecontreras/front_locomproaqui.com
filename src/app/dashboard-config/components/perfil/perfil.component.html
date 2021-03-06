@@ -21,7 +21,7 @@
                     </h6>
                     <div>
                         <button (click)="copiarLink()" class="btn btn-primary btn-just-icon btn-round saltoButton">TRAER CLIENTES A MI TIENDA</button>
-                        <button (click)="copiarLinkRegistro()" class="btn btn-success btn-just-icon btn-round saltoButton">Invitar Personas</button>
+                        <button (click)="copiarLinkRegistro()" class="btn btn-success btn-just-icon btn-round saltoButton" *ngIf="disableBtn">Invitar Personas</button>
                         <button (click)="abrrirTienda()" class="btn btn-primary btn-just-icon btn-round saltoButton">Abrir tienda en una pestaña nueva</button>
                     </div>
                 </div>
@@ -32,9 +32,9 @@
                         <img [src]="data.usu_imagen" class="imgPerfil">
                     </div>
                 </div>
-                <div class="col-12">
+                <div class="col-12 container">
                     <div class="row">
-                        <label>Subir Foto de Perfil</label>
+                        <label>Subir Foto de Tienda</label>
                         <button class="btn btn-primary btn-just-icon btn-round" (click)="subirFile('usu_imagen')" *ngIf="files.length > 0">
                             Subir Imagen
                         </button>
@@ -104,6 +104,10 @@
                         <option value="masculino">Masculino</option>
                         <option value="feminino">Feminino</option>
                     </select>
+                </div>
+                <div class="col-6">
+                    <label>Color de tu tienda</label>
+                    <input type="color" [(ngModel)]="data.usu_color" class="form-control form-control-sm">
                 </div>
                 <!--<div class="col-12">
                     <label>Confirmar Contraseña Para Actualizar</label>
