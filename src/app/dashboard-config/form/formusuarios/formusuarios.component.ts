@@ -19,7 +19,8 @@ export class FormusuariosComponent implements OnInit {
   list_files: any = [];
   restaure:any = {};
   listPerfil:any = [];
-
+  opcionCurrencys:any = {};
+  
   constructor(
     public dialog: MatDialog,
     private _usuarios: UsuariosService,
@@ -30,6 +31,7 @@ export class FormusuariosComponent implements OnInit {
   ) { }
 
   ngOnInit() {
+    this.opcionCurrencys = this._tools.currency;
     if(Object.keys(this.datas.datos).length > 0) {
       this.data = _.clone(this.datas.datos);
       console.log(this.data);

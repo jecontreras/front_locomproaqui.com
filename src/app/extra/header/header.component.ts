@@ -57,6 +57,8 @@ export class HeaderComponent implements OnInit {
   seartxt:string = "";
   disabledSearch:boolean = true;
   urlLogo:string = "./assets/logo.png";
+  ultimoSer:string;
+
   constructor(
     public changeDetectorRef: ChangeDetectorRef,
     public media: MediaMatcher, private router: Router,
@@ -93,10 +95,11 @@ export class HeaderComponent implements OnInit {
   }
 
   ngOnInit() {
-    let color:string = ( this.dataUser.usu_color || "#02a0e3" );
-    if( this.userId.id ) color = this.userId.usu_color || "#02a0e3";
-    console.log( color )
-    setTimeout(()=> this.nav.nativeElement.style.backgroundColor = color, 100 );
+    setInterval(()=> {
+      let color:string = ( this.dataUser.usu_color || "#02a0e3" );
+      if( this.userId.id ) color = this.userId.usu_color || "#02a0e3";
+      this.nav.nativeElement.style.backgroundColor = color
+    }, 100 );
     this.breakpoint = (window.innerWidth <= 400) ? 1 : 6;
     this.onResize(null);
     if(Object.keys(this.dataUser).length > 0 ) {
@@ -115,8 +118,10 @@ export class HeaderComponent implements OnInit {
   }
 
   buscar(){
+    if( this.seartxt == this.ultimoSer ) return false;
     let accion:any = new BuscarAction( this.seartxt, 'post');
     this._store.dispatch( accion );
+    this.ultimoSer = this.seartxt;
   }
 
   getVentas(){

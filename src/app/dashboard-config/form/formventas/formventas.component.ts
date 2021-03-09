@@ -179,10 +179,10 @@ export class FormventasComponent implements OnInit {
     for( let row of this.listCarrito ){
       if ( !row.costo || !row.cantidad ) continue;
       total+= ( Number( row.costo ) * Number( row.cantidad ) );
-      row.comision = ( row.costo * ( this.dataUser.porcentaje || 7.777 ) / 100 );
+      row.comision = ( row.costo * ( this.dataUser.porcentaje || 10 ) / 100 );
     }
     this.data.ven_total = total;
-    this.data.ven_ganancias = ( total * ( this.dataUser.porcentaje || 7.777 ) / 100 );
+    this.data.ven_ganancias = ( total * ( this.dataUser.porcentaje || 10 ) / 100 );
   }
 
   submit() {
@@ -257,8 +257,31 @@ export class FormventasComponent implements OnInit {
     if( numeroSplit[1] ) cabeza.usu_telefono = numeroSplit[1];
     if( cabeza.usu_perfil == 3 ) cerialNumero = ( cabeza.usu_indicativo || '57' ) + ( cabeza.usu_telefono || '3148487506' );
     else cerialNumero = "573148487506";
-    let mensaje: string = `https://wa.me/${ cerialNumero }?text=info del cliente ${res.ven_nombre_cliente} telefono ${res.ven_telefono_cliente || ''} direccion ${res.ven_direccion_cliente} fecha del pedido ${res.ven_fecha_venta} Hola Servicio al cliente, 
-    como esta, cordial saludo. Sería tan amable despachar este pedido a continuación datos de la venta:� fecha: ${ res.ven_fecha_venta } codigo: ${ res.codigo }`;
+    let dataCarro:string = "";
+      for( let row of this.listCarrito ) {
+        dataCarro+= `Foto de el producto: ${ row.foto }
+        cantidad: ${ row.cantidad }
+        talla: ${ row.tallaSelect }
+        valor a cobrar: ${ ( row.costoTotal || 0 ).toLocaleString(1) } 
+        `;
+    }
+    let mensaje: string = ``;
+    mensaje = `https://web.whatsapp.com/send?phone=${ cerialNumero }&text=${ encodeURIComponent(`
+      Hola Servicio al cliente, como esta, saludo cordial,
+      estos son los datos de la venta realizada por ${ this.dataUser.usu_nombre }
+      
+      Nombre de cliente: ${ res.ven_nombre_cliente }
+      N'Cedula de cliente: ${ res.cob_num_cedula_cliente }
+      *celular:*${ res.ven_telefono_cliente }
+      Ciudad: ${ res.ven_ciudad }
+      ${ res.ven_barrio } 
+      Dirección: ${ res.ven_direccion_cliente }
+      ${ dataCarro }
+
+      TOTAL FACTURA ${ ( this.data.ven_total || 0 ).toLocaleString(1) }
+      🤝Gracias por su atención y quedo pendiente para recibir por este medio la imagen de la guía de despacho
+    `) }&source&data&app_absent`;
+    console.log( mensaje );
     window.open(mensaje);
   }
 

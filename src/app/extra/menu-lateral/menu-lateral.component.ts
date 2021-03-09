@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { STORAGES } from 'src/app/interfaces/sotarage';
 import { Store } from '@ngrx/store';
 
@@ -15,6 +15,10 @@ export class MenuLateralComponent implements OnInit {
   urlInstagram:string;
   urlYoutube:string;
   urlWhatsapp: string;
+  @ViewChild('color1',{ static: false } ) private color1: any
+  @ViewChild('color2',{ static: false } ) private color2: any
+  @ViewChild('color3',{ static: false } ) private color3: any
+  @ViewChild('color4',{ static: false } ) private color4: any
 
   constructor(
     private _store: Store<STORAGES>,
@@ -29,6 +33,15 @@ export class MenuLateralComponent implements OnInit {
   }
 
   ngOnInit() {
+
+    setInterval(()=> {
+      let color:string = ( this.dataUser.usu_color || "#02a0e3" );
+      if( this.userId.id ) color = this.userId.usu_color || "#02a0e3";
+      this.color1.nativeElement.style.backgroundColor = color
+      this.color2.nativeElement.style.backgroundColor = color
+      this.color3.nativeElement.style.backgroundColor = color
+      this.color4.nativeElement.style.backgroundColor = color
+    }, 100 );
 
   }
   rellenoRedes(){

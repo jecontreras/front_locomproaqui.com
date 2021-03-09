@@ -4,7 +4,7 @@ import { MatDialog } from '@angular/material';
 import { ViewProductosComponent } from '../view-productos/view-productos.component';
 import { CART } from 'src/app/interfaces/sotarage';
 import { Store } from '@ngrx/store';
-import { CartAction, UserCabezaAction } from 'src/app/redux/app.actions';
+import { BuscarAction, CartAction, UserCabezaAction } from 'src/app/redux/app.actions';
 import { ToolsService } from 'src/app/services/tools.service';
 import { ActivatedRoute } from '@angular/router';
 import { UsuariosService } from 'src/app/servicesComponents/usuarios.service';
@@ -38,6 +38,7 @@ export class PedidosComponent implements OnInit {
     limit: 18
   };
   seartxt: string = '';
+  ultimoSeartxt:string = '';
   listProductos: any = [];
   loader: boolean = false;
   urlwhat: string
@@ -67,13 +68,26 @@ export class PedidosComponent implements OnInit {
       if (!store) return false;
       this.userId = store.usercabeza;
       this.dataUser = store.user || {};
-      if( this.seartxt != store.buscar ) { this.seartxt = store.buscar; this.buscar(); }
+      if( this.seartxt != store.buscar && store.buscar ) { 
+        this.seartxt = store.buscar;
+      }
     });
 
   }
 
   ngOnInit() {
-    if ((this.activate.snapshot.paramMap.get('id'))) { this.userId = (this.activate.snapshot.paramMap.get('id')); this.getUser(); }
+    if ( ( this.activate.snapshot.paramMap.get('id') ) ) { this.userId = ( this.activate.snapshot.paramMap.get('id') ); this.getUser(); }
+    setInterval( ()=>{
+      //console.log( this.seartxt, this.ultimoSeartxt );
+      if( this.seartxt !== this.ultimoSeartxt ) this.buscar(); 
+    }, 1000 );
+  }
+
+  clearSearch(){
+    let accion:any = new BuscarAction( "", "drop" );
+    this._store.dispatch( accion );
+    this.seartxt = "";
+    this.ultimoSeartxt = "";
   }
 
   async descargarFoto( item:any ){
@@ -151,6 +165,8 @@ export class PedidosComponent implements OnInit {
   }
   cargarProductos(): void {
     this.spinner.show();
+    if( this.seartxt ) this.ultimoSeartxt = this.seartxt;
+    //console.log( this.ultimoSeartxt );
     this._productos.get(this.query).subscribe((res: any) => {
       console.log("res", res);
       this.loader = false;
@@ -161,7 +177,7 @@ export class PedidosComponent implements OnInit {
         this.notEmptyPost = false;
       }
       this.notscrolly = true;
-
+      this.clearSearch();
     },( error:any )=>{ 
       this.loader = false;
       this.spinner.hide();
@@ -270,10 +286,11 @@ export class PedidosComponent implements OnInit {
   }
 
   imageOnClick(index: any, obj: any) {
-    //console.log('index', index, this.imageObject[index]);
+    //con
     for (let row of this.imageObject) row.check = false;
     obj.check = true;
     this.query = { where: { pro_activo: 0 }, page: 0, limit: 18 };
+    this.seartxt = "";
     if (this.imageObject[index].id > 0) this.query = { where: { pro_activo: 0, pro_categoria: this.imageObject[index].id }, page: 0, limit: 10 };
     this.listProductos = [];
     this.notscrolly = true;

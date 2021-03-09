@@ -48,10 +48,11 @@ export class FooterComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    let color:string = ( this.dataUser.usu_color || "#02a0e3" );
-    if( this.userId.id ) color = this.userId.usu_color || "#02a0e3";
-    console.log( color )
-    setTimeout(()=> this.nav.nativeElement.style.backgroundColor = color, 100 );
+    setInterval(()=> {
+      let color:string = ( this.dataUser.usu_color || "#02a0e3" );
+      if( this.userId.id ) color = this.userId.usu_color || "#02a0e3";
+      this.nav.nativeElement.style.backgroundColor = color;
+    }, 100 );
     this.listaBanner();
   }
 

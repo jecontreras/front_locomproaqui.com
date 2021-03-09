@@ -156,11 +156,11 @@ export function appReducer(state: STORAGES = APP, action: _action.actions) {
         return local_Storage(state);
         break;
         case 'delete': 
-          state.buscar = {};
+          state.buscar = "";
           return local_Storage(state);
         break;
         case 'drop': {
-          state.buscar = {};
+          state.buscar = "";
           return local_Storage(state);
         }
         break;

@@ -1,211 +1,209 @@
-<div>
-  <nav class="navbar navbar-expand-lg navbar-light headerColor scrooll" #nav>
-    <div class="d-flex justify-content-between" style="width: 100%;">
-      <div>
-        <button mat-icon-button (click)="snav.toggle()" translate="no">
-          <i class="material-icons icoss">menu</i>
-        </button>
-        <img [src]="urlLogo" style="width: 177px;" class="pointer" [routerLink]="[ '/pedidos' ]">
-      </div>
-      <div class="buscadorOcultar">
-        <input type="text" style="border-radius: 11px;" [(ngModel)]="seartxt" (change)="buscar()"
-          class="form-control form-control-sm" placeholder="Buscar Productos">
-      </div>
-      <div class="anchosCajaIcons">
-        <div class="d-flex justify-content-center" style="margin-top: 15px;">
-          <div *ngIf="dataUser.id" style="margin-right: 10px;">
-            <label class="text-white" for="">$ {{ ( (
-              dataInfo?.porcobrado ) || 0 ).toLocaleString(1) }}</label>
-          </div>
-          <div class="anchosIcons ocultarGrande">
-            <span (click)="activarSearch()" class="p-1 pointer espacios" matBadgeColor="accent"> <i class="material-icons icoss">search</i> </span>
-          </div>
-          <div class="anchosIcons">
-            <span (click)="this.opcionoView = 'notificaciones'; sidenav.toggle();" class="p-1 pointer espacios"
-              [matBadge]="notificando" matBadgeColor="accent"> <i class="material-icons icoss">notification_important</i>
-            </span>
-          </div>
-          <div class="anchosIcons">
-            <span (click)="this.opcionoView = 'carro'; sidenav.toggle();" class="p-1 pointer espacios"
-              [matBadge]="listCart.length" matBadgeColor="accent"> <i class="material-icons icoss">shopping_cart</i> </span>
-          </div>
-          <div class="anchosIcons">
-            <span *ngIf="!dataUser.id" [routerLink]="[ '/login' ]" class="p-1 pointer espacios"> <i
-                class="material-icons icoss">person_pin</i> </span>
-          </div>
-          <div class="anchosIcons buscadorOcultar2 altoNull" *ngIf="dataUser.id">
-            <span [routerLink]="[ '/config/perfil' ]" class="p-1 pointer espacios"> <i
-                class="material-icons icoss">person_pin</i> </span>
-          </div>
+<nav class="navbar navbar-expand-lg navbar-light headerColor" #nav>
+  <div class="d-flex justify-content-between" style="width: 100%;">
+    <div>
+      <button mat-icon-button (click)="snav.toggle()" translate="no">
+        <i class="material-icons icoss">menu</i>
+      </button>
+      <img [src]="urlLogo" style="width: 177px;" class="pointer" [routerLink]="[ '/pedidos' ]">
+    </div>
+    <div class="buscadorOcultar">
+      <input type="text" style="border-radius: 11px;" [(ngModel)]="seartxt" (change)="buscar()"
+        class="form-control form-control-sm" placeholder="Buscar Productos">
+    </div>
+    <div class="anchosCajaIcons">
+      <div class="d-flex justify-content-center" style="margin-top: 15px;">
+        <div *ngIf="dataUser.id" style="margin-right: 10px;">
+          <label class="text-white" for="">$ {{ ( (
+            dataInfo?.porcobrado ) || 0 ).toLocaleString(1) }}</label>
+        </div>
+        <div class="anchosIcons ocultarGrande">
+          <span (click)="activarSearch()" class="p-1 pointer espacios" matBadgeColor="accent"> <i class="material-icons icoss">search</i> </span>
+        </div>
+        <div class="anchosIcons">
+          <span (click)="this.opcionoView = 'notificaciones'; sidenav.toggle();" class="p-1 pointer espacios"
+            [matBadge]="notificando" matBadgeColor="accent"> <i class="material-icons icoss">notification_important</i>
+          </span>
+        </div>
+        <div class="anchosIcons">
+          <span (click)="this.opcionoView = 'carro'; sidenav.toggle();" class="p-1 pointer espacios"
+            [matBadge]="listCart.length" matBadgeColor="accent"> <i class="material-icons icoss">shopping_cart</i> </span>
+        </div>
+        <div class="anchosIcons">
+          <span *ngIf="!dataUser.id" [routerLink]="[ '/login' ]" class="p-1 pointer espacios"> <i
+              class="material-icons icoss">person_pin</i> </span>
+        </div>
+        <div class="anchosIcons buscadorOcultar2 altoNull" *ngIf="dataUser.id">
+          <span [routerLink]="[ '/config/perfil' ]" class="p-1 pointer espacios"> <i
+              class="material-icons icoss">person_pin</i> </span>
         </div>
       </div>
     </div>
-    <div class="d-flex justify-content-between" style="width: 100%;" *ngIf="disabledSearch">
-      <div style="width: 100%;">
-        <input type="text" style="border-radius: 11px;" [(ngModel)]="seartxt" (change)="buscar()"
-          class="form-control form-control-sm" placeholder="Buscar Productos">
-      </div>
+  </div>
+  <div class="d-flex justify-content-between" style="width: 100%;" *ngIf="disabledSearch">
+    <div style="width: 100%;">
+      <input type="text" style="border-radius: 11px;" [(ngModel)]="seartxt" (change)="buscar()"
+        class="form-control form-control-sm" placeholder="Buscar Productos">
     </div>
-  </nav>
-  
-  
-  <mat-sidenav-container class="example-sidenav-container" [style.marginTop.px]="mobileQuery.matches ? 56 : 0">
-    <mat-sidenav position="end" #sidenav mode="side" [(opened)]="opened" [mode]="'over'" (opened)="events.push('open!')"
-      (closed)="events.push('close!')" class="sidenav anchos">
-      <div *ngIf="opcionoView == 'carro'">
-        <mat-toolbar>
-          <mat-toolbar-row>
-            <div class="d-flex justify-content-between">
-              <div>
-                <a class="pointer text-danger" (click)="sidenav.toggle()">
-                  <i class="material-icons" aria-hidden="true">close</i>
-                </a>
-              </div>
-              <div></div>
-              <div>
-                <h5>Productos Seleccionados</h5>
-              </div>
+  </div>
+</nav>
+
+
+<mat-sidenav-container class="example-sidenav-container" [style.marginTop.px]="mobileQuery.matches ? 56 : 0">
+  <mat-sidenav position="end" #sidenav mode="side" [(opened)]="opened" [mode]="'over'" (opened)="events.push('open!')"
+    (closed)="events.push('close!')" class="sidenav anchos">
+    <div *ngIf="opcionoView == 'carro'">
+      <mat-toolbar>
+        <mat-toolbar-row>
+          <div class="d-flex justify-content-between">
+            <div>
+              <a class="pointer text-danger" (click)="sidenav.toggle()">
+                <i class="material-icons" aria-hidden="true">close</i>
+              </a>
             </div>
-          </mat-toolbar-row>
-        </mat-toolbar>
-        <div class="content row">
-          <div class="col-12">
-            <mat-list>
-              <mat-list-item *ngFor="let item of listCart;let idx=index">
-                <img class="imgFoto pointer" [src]="item.foto || './assets/img/producto.jpg'" mat-list-icon>
-                <h4 mat-line>{{ item.titulo }}</h4>
-                <p mat-line>{{ 'Cantidad: '+item.cantidad }} </p>
-                <p mat-line>Precio:$ {{ ( item.costoTotal || 0).toLocaleString(1) }} COP</p>
-                <p mat-line><span (click)="deleteCart(idx, item)" class="p-1 pointer d-flex justify-content-end"><i
-                      class="material-icons">delete</i></span> </p>
-              </mat-list-item>
-            </mat-list>
+            <div></div>
+            <div>
+              <h5>Productos Seleccionados</h5>
+            </div>
+          </div>
+        </mat-toolbar-row>
+      </mat-toolbar>
+      <div class="content row">
+        <div class="col-12">
+          <mat-list>
+            <mat-list-item *ngFor="let item of listCart;let idx=index">
+              <img class="imgFoto pointer" [src]="item.foto || './assets/img/producto.jpg'" mat-list-icon>
+              <h4 mat-line>{{ item.titulo }}</h4>
+              <p mat-line>{{ 'Cantidad: '+item.cantidad }} </p>
+              <p mat-line>Precio:$ {{ ( item.costoTotal || 0).toLocaleString(1) }} COP</p>
+              <p mat-line><span (click)="deleteCart(idx, item)" class="p-1 pointer d-flex justify-content-end"><i
+                    class="material-icons">delete</i></span> </p>
+            </mat-list-item>
+          </mat-list>
+        </div>
+      </div>
+      <div class="cart-bg-overlay"></div>
+
+      <div class="right-side-cart-area">
+
+        <div class="cart-content d-flex p-2">
+          <div class="cart-amount-summary">
+            <h2>Resumen &nbsp;</h2>
+            <ul class="summary-table">
+              <li><span>Total: &nbsp;</span> <span>{{ ( data.total || 0 ) | currency:'':true}}</span></li>
+            </ul>
+            <div class="d-flex justify-content-end">
+              <a class="list-group-item list-group-item-action active pointer" (click)="pedidosSubmit()">Hacer
+                Pedido</a>
+            </div>
           </div>
         </div>
-        <div class="cart-bg-overlay"></div>
-  
-        <div class="right-side-cart-area">
-  
-          <div class="cart-content d-flex p-2">
-            <div class="cart-amount-summary">
-              <h2>Resumen &nbsp;</h2>
-              <ul class="summary-table">
-                <li><span>Total: &nbsp;</span> <span>{{ ( data.total || 0 ) | currency:'':true}}</span></li>
+      </div>
+    </div>
+    <div *ngIf="opcionoView == 'notificaciones'">
+      <mat-toolbar>
+        <mat-toolbar-row>
+          <div class="row">
+            <div class="">
+              <a class="pointer" (click)="sidenav.toggle()">
+                <i class="material-icons" aria-hidden="true">close</i>
+              </a>
+            </div>
+            <div class="col">
+              Notificaciones
+            </div>
+          </div>
+        </mat-toolbar-row>
+      </mat-toolbar>
+      <div class="content row">
+        <div class="col-12">
+          <mat-list>
+            <mat-list-item *ngFor="let item of listNotificaciones;let idx=index" (click)="clickNotificando( item )"
+              class="pointer">
+              <img class="imgFoto pointer" [src]="item.foto || './assets/icons/notificacion.png'" mat-list-icon>
+              <h4 mat-line>{{ item.titulo }}</h4>
+              <p mat-line>{{ item.descripcion }} </p>
+            </mat-list-item>
+          </mat-list>
+        </div>
+        <div class="col-12" *ngIf="listNotificaciones.length === 0">
+          <div class="mx-auto" style="width: 200px;">
+            No Hay Notificaciones
+          </div>
+        </div>
+      </div>
+    </div>
+  </mat-sidenav>
+  <mat-sidenav class="sidenav" #snav (window:resize)="onResize($event)" [mode]="mobileQuery.ds ? 'over' : 'over'"
+    [fixedInViewport]="true" fixedTopGap="56" [opened]="(isHandset$ | async) === false">
+    <div style="width: 290px; height: 90px;" fxLayout="column">
+      <ng-container class="row">
+        <div class="col-12">
+          <img class="logo" [src]="urlLogo">
+        </div>
+        <ul class="nav nav-pills nav-stacked row margin">
+          <li class="active col-12 paddingLeft">
+            <!-- <span *ngIf="dataUser.id"> USUARIO {{ dataInfo.usu_nombre }} </span><br> -->
+            <p> MENU PRINCIPAL </p>
+            <span *ngIf="dataUser.id"> NIVEL {{ dataInfo['nivel']?.categorias }} </span>
+            <!-- <button *ngIf="dataUser.id" type="button" class="btn btn-success btn-block" (click)="copiarLinkRegistro()">Invitar Persona</button> -->
+          </li>
+        </ul>
+        <ul class="nav nav-pills nav-stacked row margin">
+          <li *ngFor="let item of menus" class="active col-12 paddingLeft ">
+            <a *ngIf="item.disable" class="colorMenu">
+              <a [routerLink]="item.url" routerLinkActive="active" translate="false" *ngIf="item.submenus.length == 0"
+                class="pointer colorMenu">
+                <i class="material-icons textInf">{{ item.icons }}</i>
+                <span class="p textInf">{{ item.nombre}}</span>
+              </a>
+
+              <a class="dropdown-toggle pointer colorMenu" *ngIf="item.submenus.length >0"
+                (click)="item.disabled = !item.disabled">
+                <i class="material-icons textInf">{{ item.icons }}</i>
+                <span class="p textInf">{{ item.nombre }}</span>
+              </a>
+
+              <ul class="submenu colorMenu" *ngIf="item.submenus.length >0 && item.disabled">
+                <li *ngFor="let sub of item.submenus" class="pointer">
+                  <a [routerLink]="sub.url" class="p textInf colorMenu">
+                    {{ sub.nombre}}
+                  </a>
+                </li>
               </ul>
-              <div class="d-flex justify-content-end">
-                <a class="list-group-item list-group-item-action active pointer" (click)="pedidosSubmit()">Hacer
-                  Pedido</a>
-              </div>
-            </div>
-          </div>
-        </div>
+            </a>
+          </li>
+          <li class="active col-12 paddingLeft pointer" *ngFor="let item of menus2">
+            <a routerLinkActive="active" translate="false" (click)="EventMenus(item)" *ngIf="item.disable"
+              class="colorMenu">
+              <i class="material-icons colorList textInf">{{ item.icons }}</i>
+              <span class="p textInf colorList">{{ item.nombre}}</span>
+            </a>
+          </li>
+        </ul>
+      </ng-container>
+    </div>
+  </mat-sidenav>
+
+  <mat-sidenav-content>
+    <div>
+      <div class="d-flex justify-content-center">
+        <h3 *ngIf="dataUser.id" class="text-center textInf colorNuevo altos titulo1">
+          BIENVENIDO A TU OFICINA VIRTUAL " {{ dataUser.usu_usuario }} "
+        </h3>
+        <h3 *ngIf="!dataUser.id" class="text-center textInf colorNuevo altos titulo1">
+          BIENVENIDO A LOkOMPROAQUI.COM {{ userId.usu_usuario }}
+        </h3>
       </div>
-      <div *ngIf="opcionoView == 'notificaciones'">
-        <mat-toolbar>
-          <mat-toolbar-row>
-            <div class="row">
-              <div class="">
-                <a class="pointer" (click)="sidenav.toggle()">
-                  <i class="material-icons" aria-hidden="true">close</i>
-                </a>
-              </div>
-              <div class="col">
-                Notificaciones
-              </div>
-            </div>
-          </mat-toolbar-row>
-        </mat-toolbar>
-        <div class="content row">
-          <div class="col-12">
-            <mat-list>
-              <mat-list-item *ngFor="let item of listNotificaciones;let idx=index" (click)="clickNotificando( item )"
-                class="pointer">
-                <img class="imgFoto pointer" [src]="item.foto || './assets/icons/notificacion.png'" mat-list-icon>
-                <h4 mat-line>{{ item.titulo }}</h4>
-                <p mat-line>{{ item.descripcion }} </p>
-              </mat-list-item>
-            </mat-list>
-          </div>
-          <div class="col-12" *ngIf="listNotificaciones.length === 0">
-            <div class="mx-auto" style="width: 200px;">
-              No Hay Notificaciones
-            </div>
-          </div>
-        </div>
-      </div>
-    </mat-sidenav>
-    <mat-sidenav class="sidenav" #snav (window:resize)="onResize($event)" [mode]="mobileQuery.ds ? 'over' : 'over'"
-      [fixedInViewport]="true" fixedTopGap="56" [opened]="(isHandset$ | async) === false">
-      <div style="width: 290px; height: 90px;" fxLayout="column">
-        <ng-container class="row">
-          <div class="col-12">
-            <img class="logo" [src]="urlLogo">
-          </div>
-          <ul class="nav nav-pills nav-stacked row margin">
-            <li class="active col-12 paddingLeft">
-              <!-- <span *ngIf="dataUser.id"> USUARIO {{ dataInfo.usu_nombre }} </span><br> -->
-              <p> MENU PRINCIPAL </p>
-              <span *ngIf="dataUser.id"> NIVEL {{ dataInfo['nivel']?.categorias }} </span>
-              <!-- <button *ngIf="dataUser.id" type="button" class="btn btn-success btn-block" (click)="copiarLinkRegistro()">Invitar Persona</button> -->
-            </li>
-          </ul>
-          <ul class="nav nav-pills nav-stacked row margin">
-            <li *ngFor="let item of menus" class="active col-12 paddingLeft ">
-              <a *ngIf="item.disable" class="colorMenu">
-                <a [routerLink]="item.url" routerLinkActive="active" translate="false" *ngIf="item.submenus.length == 0"
-                  class="pointer colorMenu">
-                  <i class="material-icons textInf">{{ item.icons }}</i>
-                  <span class="p textInf">{{ item.nombre}}</span>
-                </a>
-  
-                <a class="dropdown-toggle pointer colorMenu" *ngIf="item.submenus.length >0"
-                  (click)="item.disabled = !item.disabled">
-                  <i class="material-icons textInf">{{ item.icons }}</i>
-                  <span class="p textInf">{{ item.nombre }}</span>
-                </a>
-  
-                <ul class="submenu colorMenu" *ngIf="item.submenus.length >0 && item.disabled">
-                  <li *ngFor="let sub of item.submenus" class="pointer">
-                    <a [routerLink]="sub.url" class="p textInf colorMenu">
-                      {{ sub.nombre}}
-                    </a>
-                  </li>
-                </ul>
-              </a>
-            </li>
-            <li class="active col-12 paddingLeft pointer" *ngFor="let item of menus2">
-              <a routerLinkActive="active" translate="false" (click)="EventMenus(item)" *ngIf="item.disable"
-                class="colorMenu">
-                <i class="material-icons colorList textInf">{{ item.icons }}</i>
-                <span class="p textInf colorList">{{ item.nombre}}</span>
-              </a>
-            </li>
-          </ul>
-        </ng-container>
-      </div>
-    </mat-sidenav>
-  
-    <mat-sidenav-content>
-      <div>
-        <div class="d-flex justify-content-center">
-          <h3 *ngIf="dataUser.id" class="text-center textInf colorNuevo altos titulo1">
-            BIENVENIDO A TU OFICINA VIRTUAL " {{ dataUser.usu_usuario }} "
-          </h3>
-          <h3 *ngIf="!dataUser.id" class="text-center textInf colorNuevo altos titulo1">
-            BIENVENIDO A LOkOMPROAQUI.COM {{ userId.usu_usuario }}
-          </h3>
-        </div>
-      </div>
-      <div class="alert alert-warning alert-dismissible fade show" role="alert" *ngFor="let item of listAlert">
-        <img class="foto" *ngIf="item.foto" [src]="item.foto"> <strong>{{ item.titulo }}!</strong> {{ item.descripcion
-        }}.
-        <button *ngIf="item.tipoDe == 1" (click)="crear( item )" class="btn btn-primary btn-just-icon btn-round"
-          mat-raised-button mat-min-fab>Crear Comentario</button>
-        <button type="button" class="close" data-dismiss="alert" (click)="closeAlert( item )" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div>
-      <ng-content> </ng-content>
-    </mat-sidenav-content>
-  </mat-sidenav-container>
-</div>
+    </div>
+    <div class="alert alert-warning alert-dismissible fade show" role="alert" *ngFor="let item of listAlert">
+      <img class="foto" *ngIf="item.foto" [src]="item.foto"> <strong>{{ item.titulo }}!</strong> {{ item.descripcion
+      }}.
+      <button *ngIf="item.tipoDe == 1" (click)="crear( item )" class="btn btn-primary btn-just-icon btn-round"
+        mat-raised-button mat-min-fab>Crear Comentario</button>
+      <button type="button" class="close" data-dismiss="alert" (click)="closeAlert( item )" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+    <ng-content> </ng-content>
+  </mat-sidenav-content>
+</mat-sidenav-container>
