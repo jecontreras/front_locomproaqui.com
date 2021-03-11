@@ -266,7 +266,7 @@ export class FormventasComponent implements OnInit {
         `;
     }
     let mensaje: string = ``;
-    mensaje = `https://web.whatsapp.com/send?phone=${ cerialNumero }&text=${ encodeURIComponent(`
+    mensaje = `https://wa.me/${ cerialNumero }&text=${ encodeURIComponent(`
       Hola Servicio al cliente, como esta, saludo cordial,
       estos son los datos de la venta realizada por ${ this.dataUser.usu_nombre }
       
@@ -279,8 +279,7 @@ export class FormventasComponent implements OnInit {
       ${ dataCarro }
 
       TOTAL FACTURA ${ ( this.data.ven_total || 0 ).toLocaleString(1) }
-      🤝Gracias por su atención y quedo pendiente para recibir por este medio la imagen de la guía de despacho
-    `) }&source&data&app_absent`;
+      🤝Gracias por su atención y quedo pendiente para recibir por este medio la imagen de la guía de despacho`) }`;
     console.log( mensaje );
     window.open(mensaje);
   }

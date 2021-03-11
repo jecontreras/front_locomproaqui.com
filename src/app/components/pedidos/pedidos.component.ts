@@ -51,6 +51,8 @@ export class PedidosComponent implements OnInit {
   dataUser: any = {};
   idCategoria: any = "";
   bandera: any = 0;
+  urlColor:string;
+
   constructor(
     private _productos: ProductoService,
     private _store: Store<CART>,
@@ -76,6 +78,12 @@ export class PedidosComponent implements OnInit {
   }
 
   ngOnInit() {
+    setInterval(()=> {
+      let color:string = ( this.dataUser.usu_color || "#02a0e3" );
+      if( this.userId.id ) color = this.userId.usu_color || "#02a0e3";
+      this.urlColor = color;
+    }, 100 );
+
     if ( ( this.activate.snapshot.paramMap.get('id') ) ) { this.userId = ( this.activate.snapshot.paramMap.get('id') ); this.getUser(); }
     setInterval( ()=>{
       //console.log( this.seartxt, this.ultimoSeartxt );
