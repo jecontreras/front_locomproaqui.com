@@ -51,7 +51,7 @@ html, body {
 }
 
 .titulo3{
-  font-family: Geomanist2;
+  font-family: Geomanist3;
   font-size: 110%;
   color: #fff;
 }
@@ -196,7 +196,9 @@ footer {
   margin-top: 42%;
 }
 
-
+.anchandoPr{
+  width: 46% !important;
+}
 
 /*.ng-star-inserted{
   color: #3f51b5 !important;
@@ -212,7 +214,13 @@ footer {
   }
   .anchos {
     padding: 5px 20px;
-}
+  }
+  .anchandoPr{
+    width: 29% !important;
+  }
+  .imgProductos {
+    height: 210px;
+  }
 }
 /* Small devices (portrait tablets and large phones, 600px and up) */
 @media only screen and (min-width: 420px) {
@@ -271,6 +279,12 @@ footer {
   }
   footer {
     font-size: 10px;
+  }
+  .anchandoPr{
+    width: 29% !important;
+  }
+  .imgProductos {
+    height: 210px !important;
   }
 }
 @media only screen and (max-width: 600px) {
@@ -579,6 +593,9 @@ footer {
     min-height: 190px;
     max-width: 628px;
   }
+  .anchandoPr{
+    width: 25% !important;
+  }
 }
 
 /* Extra large devices (large laptops and desktops, 1200px and up) */
@@ -643,6 +660,9 @@ footer {
     min-height: 190px;
     max-width: 628px;
   }
+  .anchandoPr{
+    width: 25% !important;
+  }
 }
 
 /* Extra large devices (large laptops and desktops, 1200px and up) */
@@ -701,11 +721,14 @@ footer {
     font-size: 11px;
   }
   .imgProductos{
-    height: 263px;
+    height: 257px !important;
     width: 170px;
     max-height: 269px;
     min-height: 190px;
     max-width: 628px;
+  }
+  .anchandoPr{
+    width: 20% !important;
   }
 }
 

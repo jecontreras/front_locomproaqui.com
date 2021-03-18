@@ -5,7 +5,7 @@
     </div>
     <div class="row" *ngIf="!disableSpinner">
         <div class="col" *ngIf="!id">
-            <ngx-dropzone (change)="onSelects($event)">
+            <ngx-dropzone (change)="onSelects($event, 'foto')">
                 <ngx-dropzone-label>Subir Fotos</ngx-dropzone-label>
                 <ngx-dropzone-image-preview ngProjectAs="ngx-dropzone-preview" *ngFor="let f of files"
                     [file]="f" [removable]="true" (removed)="onRemoves(f)" multiple="false">
@@ -182,6 +182,40 @@
                     <div class="row">
                         <div class="col-6 col-sm-4 col-md-3 col-xs-2 col-lg-4" *ngFor="let tallas of tallaSelect">
                             <mat-checkbox (ngModelChange)="tallaSeleccionando( tallas )" [disabled]="!data.activarBTN" [(ngModel)]="tallas.check" class="example-margin">{{ tallas.tal_descripcion }}</mat-checkbox>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group col-12">
+                    <label for="exampleFormControlSelect1">Galeria:</label>
+                    <div class="row">
+                        <div class="col-12">
+                            <ngx-dropzone (change)="onSelects($event, 'galeria')">
+                                <ngx-dropzone-label>Subir Fotos de galeria</ngx-dropzone-label>
+                                <ngx-dropzone-image-preview ngProjectAs="ngx-dropzone-preview" *ngFor="let f of files2"
+                                    [file]="f" [removable]="true" (removed)="onRemoves(f, 'galeria')" multiple="true">
+                                    <ngx-dropzone-label>{{ f.name }} ({{ f.type }})</ngx-dropzone-label>
+                                </ngx-dropzone-image-preview>
+                            </ngx-dropzone>
+                            <div class="row">
+                                <label class="col">Subir Imagen</label>
+                                <button class="btn btn-primary btn-just-icon btn-round" (click)="subirFile(false, 'galeria')" *ngIf="files2.length > 0">
+                                    Subir Imagen
+                                </button>
+                            </div>
+                        </div>
+                        <div class="col-2" *ngFor="let item of listFotos">
+                            <mat-card class="example-card">
+                                <img mat-card-image [src]="item.foto" alt="Photo of a Shiba Inu">
+                                <mat-card-actions>
+                                    <div class="d-flex justify-content-center">
+                                        <div>
+                                            <button type="button" class="btn btn-success" (click)="EliminarFoto( item )">
+                                                Eliminar
+                                            </button>
+                                        </div>
+                                    </div>
+                                </mat-card-actions>
+                              </mat-card>
                         </div>
                     </div>
                 </div>

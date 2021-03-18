@@ -36,7 +36,21 @@
                             <div class="form-group col-sm-6 col-12">
                                 <label for="exampleFormControlInput1">como quieres llamar tu tienda virtual</label>
                                 <input type="text" [(ngModel)]="data.usu_usuario" required
-                                    class="form-control form-control-sm" placeholder="Ejemplos ( dayanstore ) ( carolstore )">
+                                    class="form-control form-control-sm"
+                                    placeholder="Ejemplos ( dayanstore ) ( carolstore )">
+                            </div>
+                            <div class="form-group col-sm-6 col-12">
+                                <label for="exampleFormControlInput1">Subir logotipo de tu tienda</label>
+                                <div>
+                                    <ngx-dropzone (change)="onSelect($event)">
+                                        <ngx-dropzone-label>Mis archivos</ngx-dropzone-label>
+                                        <ngx-dropzone-image-preview ngProjectAs="ngx-dropzone-preview"
+                                            *ngFor="let f of files" [file]="f" [removable]="true" (removed)="onRemove(f)"
+                                            multiple="false">
+                                            <ngx-dropzone-label>{{ f.name }} ({{ f.type }})</ngx-dropzone-label>
+                                        </ngx-dropzone-image-preview>
+                                    </ngx-dropzone>
+                                </div>
                             </div>
                             <div class="form-group col-sm-6 col-12">
                                 <label for="exampleFormControlInput1">Indicativo</label>
@@ -54,7 +68,7 @@
                         </div>
                         <div class="d-flex flex-row-reverse bd-highlight">
                             <div class="p-2 bd-highlight">
-                                <button mat-raised-button color="primary" matStepperNext>Siguiente</button>
+                                <button mat-raised-button color="primary" (click)="subirFile()" matStepperNext>Siguiente</button>
                             </div>
                         </div>
                     </mat-step>
@@ -93,7 +107,8 @@
                                     class="form-control form-control-sm" placeholder="Confirmar Contraseña">
                             </div>
                             <div class="form-group col-sm-6 col-12">
-                                <label for="exampleFormControlInput1">Describenos porque aceptarte como uno de nuestros vendedores</label>
+                                <label for="exampleFormControlInput1">Describenos porque aceptarte como uno de nuestros
+                                    vendedores</label>
                                 <textarea class="form-control" [(ngModel)]="data.usu_modo" rows="3"></textarea>
                             </div>
                             <div class="form-group col-sm-6 col-12">

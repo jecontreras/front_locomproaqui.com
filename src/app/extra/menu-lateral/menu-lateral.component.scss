@@ -1,12 +1,17 @@
 .social-bar {
 	position: absolute;
-	right: 15px;
+	right: 15px;	
+    top: 115px;
 	//top: 35%;
 	font-size: 1.5rem;
 	display: flex;
 	flex-direction: column;
 	align-items: flex-end;
 	z-index: 100;
+}
+.anchos1{
+	width: 100%;
+	margin: 2px 0;
 }
 
 .icon {

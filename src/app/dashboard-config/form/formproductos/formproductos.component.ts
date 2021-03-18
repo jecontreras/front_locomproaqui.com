@@ -25,6 +25,7 @@ export class FormproductosComponent implements OnInit {
   id: any;
   titulo: string = "Crear";
   files: File[] = [];
+  files2: File[] = [];
   list_files: any = [];
   listCategorias: any = [];
   listTipoTallas: any = [];
@@ -41,6 +42,7 @@ export class FormproductosComponent implements OnInit {
 
   disableSpinner:boolean = false;
   dataUser:any = {};
+  listFotos:any = [];
 
   constructor(
     public dialog: MatDialog,
@@ -66,10 +68,11 @@ export class FormproductosComponent implements OnInit {
     if (Object.keys(this.datas.datos).length > 0) {
       this.data = _.clone(this.datas.datos);
       this.id = this.data.id;
+      this.listFotos = this.data.listaGaleria || [];
       this.titulo = "Actualizar";
-      this.tallaSelect = this.data.listaTallas || [],
+      this.tallaSelect = this.data.listaTallas || [];
       this.procesoEdision();
-    } else { this.id = ""; this.data.pro_codigo = this.codigo(); this.data.pro_sw_tallas = 1; this.disableSpinner = false; }
+    } else { this.id = ""; this.data.pro_codigo = this.codigo(); this.data.pro_sw_tallas = 1; this.disableSpinner = false; this.listFotos = []; }
     this.getCategorias();
     this.getTipoTallas();
     this.data.activarBTN = true;
@@ -130,21 +133,51 @@ export class FormproductosComponent implements OnInit {
     return (Date.now().toString(20).substr(2, 3) + Math.random().toString(20).substr(2, 3)).toUpperCase();
   }
 
-  subirFile(item: any) {
-    let form: any = new FormData();
-    form.append('file', this.files[0]);
-    this._tools.ProcessTime({});
-    //this._archivos.create( this.files[0] );
-    this._archivos.create(form).subscribe((res: any) => {
-      // console.log(res);
-      if (item == false) {
-        this.data.foto = res.files;//URL+`/${res}`;
-        if (this.id) this.submit();
-      }
-      else item.foto = res.files;
-      this._tools.presentToast("Exitoso");
-    }, (error) => { console.error(error); this._tools.presentToast("Error de servidor") });
+  async subirFile( item: any, opt:string = 'foto' ) {
+    let lista = this.files;
+    if( opt === 'galeria') lista = this.files2;
+    for( let row of lista ){
+      let form: any = new FormData();
+      form.append('file', row );
+      this._tools.ProcessTime({});
+      await this.fileNext( item, opt, form );
+      if( this.id ) if( opt == 'galeria' ) { this.data.listaGaleria = this.listFotos; this.updates(); }
+      //this._archivos.create( this.files[0] );
+      
+    }
 
+  }
+
+  fileNext( item, opt, form:any ){
+    return new Promise( resolve =>{
+      this._archivos.create( form ).subscribe( async ( res: any ) => {
+        // console.log(res);
+        if ( item == false ) {
+          if( opt !== 'galeria' ) this.data.foto = res.files;//URL+`/${res}`;
+          else await this.validadorGaleria( res.files );
+          if ( this.id ) this.submit();
+        }
+        else item.foto = res.files;
+        this._tools.presentToast("Exitoso");
+        resolve( true );
+      }, (error) => { console.error(error); this._tools.presentToast("Error de servidor"); resolve( false ); });
+    } );
+  }
+
+  async validadorGaleria( file:string ){
+    return new Promise( resolve =>{
+      this.listFotos.push( {
+        id: this._tools.codigo(),
+        foto: file
+      });
+      resolve( true );
+    });
+  }
+
+  EliminarFoto( item:any ){
+    this.data.listaGaleria = this.listFotos.filter( ( row:any )=> row.id != item.id );
+    this.listFotos = this.listFotos.filter( ( row:any )=> row.id != item.id );
+    this.updates();
   }
 
   guardarColor(item: any) {
@@ -229,15 +262,17 @@ export class FormproductosComponent implements OnInit {
       this._tools.presentToast("Actualizado");
     }, (error) => { console.error(error); this._tools.presentToast("Error de servidor") });
   }
-  onSelects(event: any) {
+  onSelects(event: any, opt:string = 'foto') {
     //console.log(event, this.files);
-    this.files.push(...event.addedFiles)
+    if( opt !== 'galeria') this.files.push( ...event.addedFiles );
+    else this.files2.push( ...event.addedFiles );
   }
 
 
-  onRemoves(event) {
+  onRemoves( event, opt:string = "foto" ) {
     //console.log(event);
-    this.files.splice(this.files.indexOf(event), 1);
+    if( opt !== 'galeria' ) this.files.splice( this.files.indexOf( event ), 1 );
+    else this.files2.splice( this.files.indexOf( event ), 1 );
   }
 
   async seleccionandoImg(item: any) {

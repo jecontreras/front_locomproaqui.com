@@ -52,7 +52,8 @@ export class PedidosComponent implements OnInit {
   idCategoria: any = "";
   bandera: any = 0;
   urlColor:string;
-
+  counts:number = 0;
+  
   constructor(
     private _productos: ProductoService,
     private _store: Store<CART>,
@@ -101,6 +102,17 @@ export class PedidosComponent implements OnInit {
   async descargarFoto( item:any ){
     item.base64 = await this._catalago.FormatoBase64( item.foto );
     await this._tools.descargarFoto( item.base64 );
+    try {
+      if( item.listaGaleria ){
+        for( let row of item.listaGaleria ){
+          this._tools.ProcessTime( { title: "Descargando..." } );
+          row.base64 = await this._catalago.FormatoBase64( row.foto );
+          await this._tools.descargarFoto( row.base64 );
+        }
+      }
+    } catch (error) {
+      
+    }
   }
 
   // ngOnChanges()  {
@@ -133,6 +145,13 @@ export class PedidosComponent implements OnInit {
       this.nextConsulta();
     }
   }
+
+  pageEvent(ev: any) {
+    this.query.page = ev.pageIndex;
+    this.query.limit = ev.pageSize;
+    this.cargarProductos();
+  }
+
 
   nextConsulta() {
     if (this.idCategoria) this.query.where.pro_categoria = this.idCategoria;
@@ -174,10 +193,12 @@ export class PedidosComponent implements OnInit {
   cargarProductos(): void {
     this.spinner.show();
     if( this.seartxt ) this.ultimoSeartxt = this.seartxt;
+    this.loader = true;
     //console.log( this.ultimoSeartxt );
     this._productos.get(this.query).subscribe((res: any) => {
       console.log("res", res);
       this.loader = false;
+      this.counts = res.count;
       this.spinner.hide();
       this.listProductos = _.unionBy(this.listProductos || [], res.data, 'id');
 
@@ -246,10 +267,10 @@ export class PedidosComponent implements OnInit {
     if (cabeza) {
       numeroSplit = _.split(cabeza.usu_telefono, "+57", 2);
       if (numeroSplit[1]) cabeza.usu_telefono = numeroSplit[1];
-      if (cabeza.usu_perfil == 3) cerialNumero = (cabeza.usu_indicativo || '57') + (cabeza.usu_telefono || '3148487506');
-      else cerialNumero = "573148487506";
-    } else cerialNumero = "573148487506";
-    if (this.userId.id) this.urlwhat = `https://wa.me/${this.userId.usu_indicativo || 57}${((_.split(this.userId.usu_telefono, "+57", 2))[1]) || '3148487506'}?text=Hola Servicio al cliente, como esta, saludo cordial, estoy interesad@ en mas informacion ${obj.pro_nombre} codigo ${obj.pro_codigo} codigo: ${obj.pro_codigo} talla: ${obj.tallasSelect} foto ==> ${obj.foto}`;
+      if (cabeza.usu_perfil == 3) cerialNumero = (cabeza.usu_indicativo || '57') + (cabeza.usu_telefono || '3212703587');
+      else cerialNumero = "573212703587";
+    } else cerialNumero = "573212703587";
+    if (this.userId.id) this.urlwhat = `https://wa.me/${this.userId.usu_indicativo || 57}${( this.userId.usu_telefono ) || '3212703587'}?text=Hola Servicio al cliente, como esta, saludo cordial, estoy interesad@ en mas informacion ${obj.pro_nombre} codigo ${obj.pro_codigo} codigo: ${obj.pro_codigo} talla: ${obj.tallasSelect} foto ==> ${obj.foto}`;
     else {
       this.urlwhat = `https://wa.me/${cerialNumero}?text=Hola Servicio al cliente, como esta, saludo cordial, estoy interesad@ en mas informacion ${obj.pro_nombre} codigo: ${obj.pro_codigo} talla: ${obj.tallasSelect} foto ==> ${obj.foto}`;
     }

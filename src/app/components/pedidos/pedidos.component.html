@@ -15,10 +15,10 @@
         </div>-->
         <div class="col-12">
             <div class="contenedor">
-                <div class="table-responsive">
-                    <div style="width: 1077px; height: 35px;">
+                <div class="">
+                    <div style="width: 1077px; height: 33px;">
                         <a *ngFor="let item of imageObject;let idx=index" (click)="imageOnClick(idx, item);"
-                            class="estiloCategoria pointer titulo2" [ngClass]="{ 'cambiaColor': item.check == true }">
+                            class="estiloCategoria pointer titulo3" [ngClass]="{ 'cambiaColor': item.check == true }">
                             {{ item.title }}
                         </a>
                     </div>
@@ -32,85 +32,109 @@
                 (arrowClick)="arrowOnClick($event)" (lightboxArrowClick)="lightboxArrowClick($event)" #nav>
             </ng-image-slider>-->
         </div>
-        <div class="col-12 d-flex justify-content-center" infiniteScroll [infiniteScrollDistance]="10" [infiniteScrollThrottle]="60"
-            (scrolled)="onScroll()">
+        <div class="col-12 d-flex justify-content-center">
             <div class="row">
-                <mat-card class="example-card col-md-3 col-sm-4 col-lg-2 col-xs-6 col-6 anchandoPr"
-                    *ngFor="let item of listProductos">
-                    <div class="ui-ribbon-wrapper hide" *ngIf="item.descuento">
-                        <div class="ui-ribbon">
-                            {{ item.descuento }}% Off
-                        </div>
-                    </div>
-                    <figure data-toggle="modal" id="figura" data-target="#modalinfo" class="img-contenedor">
-                        <img class="img-responsive btn-block imgProductos pointer " [src]="item.foto"
-                            (click)="agregar(item)">
-                    </figure>
-                    <mat-card-content>
-                        <div class="row">
-                            <div class="col-12">
-                                <div class="d-flex justify-content-between">
-                                    <div>
-                                        <span class="titulo2">{{ item.pro_nombre | slice: 0: 20 }}</span>
-                                    </div>
-                                    <div>
-                                        <span class="titulo2">
-                                            <small style="display: inline-block;  font-size: 90% !important;"
-                                                class="pricesmall currency2" id="pricesmall_25">$ {{ (
-                                                item.pro_uni_ventaEdit || item.pro_uni_venta || 0 ).toLocaleString(1) }}
-                                            </small><br>
-                                        </span>
-                                    </div>
-                                </div>
+                <div class="col-12 row" infiniteScroll [infiniteScrollDistance]="50" [infiniteScrollThrottle]="60"
+                    (scrolled)="onScroll()">
+                    <mat-card class="example-card col-md-2 col-sm-4 col-lg-2 col-xs-6 col-6 anchandoPr"
+                        *ngFor="let item of listProductos">
+                        <div class="ui-ribbon-wrapper hide" *ngIf="item.descuento">
+                            <div class="ui-ribbon">
+                                {{ item.descuento }}% Off
                             </div>
-                            <div class="col-12">
-                                <div class="d-flex justify-content-between">
-                                    <div style="padding-top: 20px;">
-                                        <div class="plusminus2 horiz" data-after="UND">
-                                            <button type="button" class="btn-number" data-type="minus" [ngStyle]="{'background-color':urlColor }"
-                                                (click)="menosCantidad(item)" data-field="product_quantity_25"></button>
-                                            <input (change)="manualCantidad(item)" data-clasificacion="" data-un="UND"
-                                                type="number" name="product_quantity2" id="product_quantity_25" min="1"
-                                                [(ngModel)]="item.cantidadAdquirir" class="input-number ">
-                                            <span class="hide" *ngIf="!item.cantidadAdquirir">1</span>
-                                            <button type="button" class="btn-number" data-type="plus" [ngStyle]="{'background-color':urlColor }"
-                                                (click)="maxCantidad(item)" data-field="product_quantity_25"></button>
+                        </div>
+                        <figure data-toggle="modal" id="figura" data-target="#modalinfo" class="img-contenedor">
+                            <img class="img-responsive btn-block imgProductos pointer " [src]="item.foto"
+                                (click)="agregar(item)">
+                        </figure>
+                        <mat-card-content>
+                            <div class="row">
+                                <div class="col-12">
+                                    <div class="d-flex justify-content-between">
+                                        <div>
+                                            <h5 class="titulo1 color1">{{ item.pro_nombre | slice: 0: 20 }}</h5>
+                                        </div>
+                                        <div>
+                                            <h5 class="titulo1 color1">
+                                                <small style="display: inline-block;  font-size: 90% !important;"
+                                                    class="pricesmall currency2" id="pricesmall_25">$ {{ (
+                                                    item.pro_uni_ventaEdit || item.pro_uni_venta || 0
+                                                    ).toLocaleString(1) }}
+                                                </small><br>
+                                            </h5>
                                         </div>
                                     </div>
-                                    <div></div>
-                                    <div>
-                                        <mat-form-field *ngIf="item.listTallas"
-                                            class="tallasEstilo">
-                                            <mat-label>Tallas disponibles</mat-label>
-                                            <mat-select [(ngModel)]="item.tallasSelect" disableRipple>
-                                                <mat-option *ngFor="let row of item.listTallas"
-                                                    [value]="row.tal_descripcion">
-                                                    {{ row.tal_descripcion }}
-                                                </mat-option>
-                                            </mat-select>
-                                        </mat-form-field>
+                                </div>
+                                <div class="col-12">
+                                    <div class="d-flex justify-content-between">
+                                        <div style="padding-top: 20px;">
+                                            <div class="plusminus2 horiz" data-after="UND">
+                                                <button type="button" class="btn-number" data-type="minus"
+                                                    [ngStyle]="{'background-color':urlColor }"
+                                                    (click)="menosCantidad(item)"
+                                                    data-field="product_quantity_25"></button>
+                                                <input (change)="manualCantidad(item)" data-clasificacion=""
+                                                    data-un="UND" type="number" name="product_quantity2"
+                                                    id="product_quantity_25" min="1" [(ngModel)]="item.cantidadAdquirir"
+                                                    class="input-number ">
+                                                <span class="hide" *ngIf="!item.cantidadAdquirir">1</span>
+                                                <button type="button" class="btn-number" data-type="plus"
+                                                    [ngStyle]="{'background-color':urlColor }"
+                                                    (click)="maxCantidad(item)"
+                                                    data-field="product_quantity_25"></button>
+                                            </div>
+                                        </div>
+                                        <div></div>
+                                        <div>
+                                            <mat-form-field *ngIf="item.listTallas" class="tallasEstilo">
+                                                <mat-label>Tallas disponibles</mat-label>
+                                                <mat-select [(ngModel)]="item.tallasSelect" disableRipple>
+                                                    <mat-option *ngFor="let row of item.listTallas"
+                                                        [value]="row.tal_descripcion">
+                                                        {{ row.tal_descripcion }}
+                                                    </mat-option>
+                                                </mat-select>
+                                            </mat-form-field>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="col-12">
+                                    <button type="button" data-toggle="tooltip" data-placement="right"
+                                        style="width: 100%;"
+                                        class="sc-logout btn btn-success btn-sm pull-right buttonAncho"
+                                        [ngStyle]="{'background-color':urlColor }" (click)="AgregarCart(item)"
+                                        data-original-title="Añadir al carro">Agregar</button>
+                                </div>
+
+                                <div class="col-12 paddins1">
+                                    <img (click)="masInfo(item)" class="pointer" src="./assets/icons/masinformacion.png"
+                                        style="width: 100%;">
+                                </div>
+                                <div class="col-12">
+                                    <div class="d-flex justify-content-between">
+                                        <div>
+                                            <img src="./assets/icons/descargar.png" style="width: 100%;" class="pointer"
+                                            (click)="descargarFoto( item )">
+                                        </div>
+                                        <div>
+                                            <img src="./assets/icons/pagas.png" style="width: 100%;">
+                                        </div>
                                     </div>
                                 </div>
                             </div>
-    
-                            <div class="col-12">
-                                <button type="button" data-toggle="tooltip" data-placement="right" style="width: 100%;"
-                                    class="sc-logout btn btn-success btn-sm pull-right buttonAncho"
-                                    [ngStyle]="{'background-color':urlColor }"
-                                    (click)="AgregarCart(item)" data-original-title="Añadir al carro">Agregar</button>
-                            </div>
-    
-                            <div class="col-12">
-                                <img (click)="masInfo(item)" class="pointer" src="./assets/icons/masinformacion.png"
-                                    style="width: 100%;">
-                            </div>
-                            <div class="col-12">
-                                <img src="./assets/icons/descargar.png" style="width: 100%;" class="pointer"
-                                    (click)="descargarFoto( item )">
+                        </mat-card-content>
+                    </mat-card>
+                    <div class="col-12">
+                        <div class="d-flex flex-row-reverse bd-highlight">
+                            <div>
+                                <mat-paginator [length]="counts" [pageSize]="25"
+                                    [pageSizeOptions]="[5, 10, 25, 100]" (page)="pageEvent($event)">
+                                </mat-paginator>
                             </div>
                         </div>
-                    </mat-card-content>
-                </mat-card>
+                    </div>
+                </div>
                 <div class="col-12 p-5">
                     <ngx-spinner bdOpacity=0.9 bdColor="" size="default" color="#581f87" type="ball-pulse-sync"
                         [fullScreen]="false">
@@ -123,5 +147,4 @@
             No Hay Datos
         </div>
     </div>
-    <br><br>
 </div>

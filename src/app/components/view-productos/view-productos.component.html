@@ -5,8 +5,18 @@
 <mat-dialog-content class="mat-typography">
     <div class="row">
         <div class="col-md-6 col-sm-12 col-lg-6 col-xs-6">
-            <lib-ngx-image-zoom [thumbImage]=data.foto [fullImage]=data.foto [magnification]="1"
-                [enableScrollZoom]="true" [enableLens]="true" [lensWidth]="200" [lensHeight]="200"></lib-ngx-image-zoom>
+            <lib-ngx-image-zoom [thumbImage]=urlFoto [fullImage]=urlFoto [magnification]="1" [enableScrollZoom]="true"
+                [enableLens]="true" [lensWidth]="200" [lensHeight]="200"></lib-ngx-image-zoom>
+            <div class="container">
+                <br>
+                <div class="row" *ngIf="galeria.length">
+                    <div class="col-4 pointer" *ngFor="let item of galeria" (click)="seleccionFoto( item.foto )">
+                        <mat-card class="example-card">
+                            <img mat-card-image [src]="item.foto" alt="Photo of a Shiba Inu">
+                        </mat-card>
+                    </div>
+                </div>
+            </div>
         </div>
         <div class="col-md-6 col-sm-12 col-lg-6 col-xs-6 content row">
             <div class="col-12">
@@ -26,9 +36,6 @@
                             style="width: 100%;">
                     </div>
                 </div>
-                <p [innerHtml]="data.pro_descripcion | slice: 0: rango"></p>
-                <p *ngIf="rango == 100" (click)="rango = 5000" class="text-primary">leer mas..</p>
-                <p *ngIf="rango != 100" (click)="rango = 100" class="text-primary">leer menos..</p>
                 <div class="d-flex justify-content-center">
                     <div class="row">
                         <div class="col">
@@ -64,6 +71,16 @@
                             </div>
                         </mat-list-item>
                     </mat-list>
+                </div>
+                <div class="content">
+                    <div class="row">
+                        <div class="col-12">
+                            <h5>Descripcion: </h5>
+                        </div>
+                        <div class="col-12">
+                            <p [innerHtml]="data.pro_descripcion"></p>
+                        </div>
+                    </div>
                 </div>
                 <div class="d-flex justify-content-center">
                     <div>

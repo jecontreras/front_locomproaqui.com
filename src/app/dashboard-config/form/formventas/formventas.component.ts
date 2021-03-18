@@ -223,7 +223,7 @@ export class FormventasComponent implements OnInit {
     if( this.listCarrito.length == 0 ) return this._tools.tooast( { title: "Tiene que existir almenos un articulo seleccionado", icon: "warning" } );
     this.data.listaArticulo = this.listCarrito;
     this._ventas.create(this.data).subscribe((res: any) => {
-      this.OrderWhatsapp(res);
+      //this.OrderWhatsapp(res);
       this.crearNotificacion( {
         titulo: "Nueva venta de " + res.ven_nombre_cliente,
         descripcion: "Nueva venta de " + res.ven_nombre_cliente,
@@ -241,7 +241,8 @@ export class FormventasComponent implements OnInit {
       } );
       this.disabledButton = false;
       this.disabled = false;
-      this._tools.presentToast("Exitoso Estare en Modo Pendiente");
+      this._tools.tooast( { title: "Hemos Recibido tu Pedido de Manera Exitosa" } );
+      
       //this.dialog.closeAll();
       let accion:any = new CartAction( {}, 'drop');
       this._store.dispatch( accion );

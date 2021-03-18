@@ -18,6 +18,8 @@ export class ViewProductosComponent implements OnInit {
   urlwhat: string
   userId: any;
   dataUser:any = {};
+  urlFoto:string;
+  galeria:any = [];
 
   constructor(
     public dialogRef: MatDialogRef<ViewProductosComponent>,
@@ -40,11 +42,26 @@ export class ViewProductosComponent implements OnInit {
     if(Object.keys(this.datas.datos).length > 0) {
       //console.log(this.datas)
       this.data = _.clone(this.datas.datos);
+      this.galeria = _.clone( this.data.listaGaleria || [] );
       this.data.cantidadAdquirir = 1;
+      this.urlFoto = this.data.foto;
+      if( !this.galeria ) this.galeria || [];
+      this.galeria.push( {
+        id: this._tools.codigo(),
+        foto: this.data.foto
+      });
       console.log(this.data)
       //this.data.cantidadAdquirir = 1;
     }
 
+  }
+
+  ngOnDestroy(){
+    console.log("saliendo", this.data, this.datas.datos );
+  }
+
+  seleccionFoto( foto:string ){
+    this.urlFoto = foto;
   }
 
   getProducto(){

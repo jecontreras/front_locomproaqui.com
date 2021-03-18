@@ -69,7 +69,7 @@ export class ToolsService {
   ProcessTime(text: any) {
     let timerInterval
     Swal.fire({
-      title: text.title || 'Auto close alert!',
+      title: text.title || 'Cargando...',
       html: '',
       timer: text.tiempo || 3000,
       timerProgressBar: true,

@@ -19,6 +19,7 @@ import { NgImageSliderModule } from 'ng-image-slider';
 import { NgxImageZoomModule } from 'ngx-image-zoom';
 import { ConfigModule } from '../dashboard-config/config.module';
 import { ExtraModule } from '../extra/extra.module';
+import { NgxDropzoneModule } from 'ngx-dropzone';
 
 
 @NgModule({
@@ -49,6 +50,7 @@ import { ExtraModule } from '../extra/extra.module';
     InfiniteScrollModule,
     NgxSpinnerModule,
     NgImageSliderModule,
+    NgxDropzoneModule,
     NgxImageZoomModule,
     ConfigModule,
     ExtraModule

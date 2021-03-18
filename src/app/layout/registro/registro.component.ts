@@ -9,6 +9,7 @@ import { AuthService } from 'src/app/services/auth.service';
 import { MatDialog } from '@angular/material';
 import { TerminosComponent } from '../terminos/terminos.component';
 import { UsuariosService } from 'src/app/servicesComponents/usuarios.service';
+import { ArchivosService } from 'src/app/servicesComponents/archivos.service';
 
 const indicativos = Indicativo;
 
@@ -29,6 +30,8 @@ export class RegistrosComponent implements OnInit {
   dataUser:any = {};
   cabeza:any;
   error:string;
+  files: File[] = [];
+  list_files: any = [];
 
   constructor(
     private _user: UsuariosService,
@@ -38,6 +41,7 @@ export class RegistrosComponent implements OnInit {
     private _authSrvice: AuthService,
     public dialog: MatDialog,
     private activate: ActivatedRoute,
+    private _archivos: ArchivosService
   ) { }
 
   ngOnInit(): void {
@@ -46,6 +50,28 @@ export class RegistrosComponent implements OnInit {
       this.getCabeza();
     }else this.data.cabeza = 1;
     if (this._authSrvice.isLoggedIn()) this._router.navigate(['/pedidos']);
+  }
+
+  onSelect(event:any) {
+    //console.log(event, this.files);
+    this.files=[event.addedFiles[0]]
+  }
+  
+  onRemove(event) {
+    //console.log(event);
+    this.files.splice(this.files.indexOf(event), 1);
+  }
+
+  subirFile( ){
+    let form:any = new FormData();
+    form.append('file', this.files[0]);
+    this._tools.ProcessTime({ title: "Cargando..."});
+    this._archivos.create(form).subscribe((res:any)=>{
+      console.log(res);
+      this.data.usu_imagen = res.files; //URL+`/${res}`;
+      this._tools.presentToast("Exitoso");
+    },(error)=>{console.error(error); this._tools.presentToast("Error de servidor")});
+
   }
 
   validadorEmail( email:string ){

@@ -1,6 +1,6 @@
 
 .anchos{
-  width: 304px !important;
+  width: 375px !important;
   top: 0px !important;
 }
 
@@ -20,6 +20,10 @@
 .imgFoto{
   width: 70px !important;
   height: 70px !important;
+}
+
+.iconsPng{
+  width: 33% !important;
 }
 .colorMenu{
   color: black !important;
@@ -51,91 +55,145 @@ mat-sidenav {
 }
 
 .example-container {
-    display: flex;
-    flex-direction: column;
-    position: absolute;
-    top: 0;
-    bottom: 0;
-    left: 0;
-    right: 0;
-  }
-  .mat-toolbar {
-    margin-bottom: 0px !important;
-  }
-  .mat-card-image {
-    width: auto;
-  }
-  .fondo {
-    background: #3f51b5;
-  }
-  .paddingLeft {
-    padding: 9px;
-  }
-  #btn-actualizar {
-    margin-left: 15px;
-  }
-  .example-is-mobile .example-toolbar {
-    position: fixed;
-    z-index: 2;
-  }
-  
-  h1.example-app-name {
-    margin-left: 8px;
-  }
-  
-  .example-sidenav-container {
-    flex: 1;
-  }
-  
-  .example-is-mobile .example-sidenav-container {
-    flex: 1 0 auto;
-  }
-  .nav-list{
-    padding: 1em;
-  }
-  .menu2 {
-    text-align: end;
-    float: right;
-  }
-  .example-icon {
-    padding: 5px 1em;
-  }
-  
-  .example-spacer {
-    flex: 1 1 auto;
-  }
-  .p {
-    padding: 10px;
-  }
-  .margin {
-    margin: 2%;
-  }
-  .perfil {
-    border-radius: 35px;
-    width: 90px;
-    height: 90px;
-  }
-  .border {
-    border: 1px solid black;
-    background: #d8d3d3;
-  }
-  .marginLeft {
-    margin-left: 20px;
+  display: flex;
+  flex-direction: column;
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+}
+.mat-toolbar {
+  margin-bottom: 0px !important;
+}
+.mat-card-image {
+  width: auto;
+}
+.fondo {
+  background: #3f51b5;
+}
+#btn-actualizar {
+  margin-left: 15px;
+}
+.example-is-mobile .example-toolbar {
+  position: fixed;
+  z-index: 2;
+}
+
+h1.example-app-name {
+  margin-left: 8px;
+}
+
+.example-sidenav-container {
+  flex: 1;
+}
+
+.example-is-mobile .example-sidenav-container {
+  flex: 1 0 auto;
+}
+.nav-list{
+  padding: 1em;
+}
+.menu2 {
+  text-align: end;
+  float: right;
+}
+.example-icon {
+  padding: 5px 1em;
+}
+
+.example-spacer {
+  flex: 1 1 auto;
+}
+.p {
+  padding: 10px;
+}
+.padding2{
+  padding: 6% 0;
+}
+
+.padding2:hover{
+  background: #e2e2e2;
+}
+
+.margin {
+  margin: revert;
+}
+.perfil {
+  border-radius: 35px;
+  width: 90px;
+  height: 90px;
+}
+.border {
+  border: 1px solid black;
+  background: #d8d3d3;
+}
+.marginLeft {
+  margin-left: 20px;
+}
+.divisor {
+  margin-right: 15px;
+}
+
+/* Extra small devices (phones, 600px and down) */
+@media only screen and (max-width: 320px) {
+  .mat-toolbar, .mat-toolbar h1, .mat-toolbar h2, .mat-toolbar h3, .mat-toolbar h4, .mat-toolbar h5, .mat-toolbar h6 {
+    font: 300 18px/22px Roboto,"Helvetica Neue",sans-serif;
+    margin-top: 10px;
   }
   .divisor {
-    margin-right: 15px;
+    margin-top: 10px;
   }
-  
-  /* Extra small devices (phones, 600px and down) */
-  @media only screen and (max-width: 320px) {
-    .mat-toolbar, .mat-toolbar h1, .mat-toolbar h2, .mat-toolbar h3, .mat-toolbar h4, .mat-toolbar h5, .mat-toolbar h6 {
-      font: 300 18px/22px Roboto,"Helvetica Neue",sans-serif;
-      margin-top: 10px;
-    }
-    .divisor {
-      margin-top: 10px;
-    }
+}
+/* Extra small devices (phones, 600px and down) */
+@media only screen and (max-width: 600px) {
+  .ancho {
+    width: 85%;
   }
+  .textInf {
+    font-size: 11px;
+  }
+}
+
+/* Small devices (portrait tablets and large phones, 600px and up) */
+@media only screen and (min-width: 600px) {
+  .ancho {
+    width: 65%;
+  }
+  .textInf {
+    font-size: 11px;
+  }
+}
+
+/* Medium devices (landscape tablets, 768px and up) */
+@media only screen and (min-width: 768px) {
+  .ancho {
+    width: 45%;
+  }
+  .textInf {
+    font-size: 12px;
+  }
+}
+
+/* Large devices (laptops/desktops, 992px and up) */
+@media only screen and (min-width: 992px) {
+  .ancho {
+    width: 60%;
+  }
+  .textInf {
+    font-size: 13px;
+  }
+}
+
+/* Extra large devices (large laptops and desktops, 1200px and up) */
+@media only screen and (min-width: 1200px) {
+  .ancho {
+    width: 60%;
+  }
+  .textInf {
+    font-size: 13px;
+  }
+}
 
   .mat-drawer-content {
     /* position: relative; */
@@ -147,5 +205,5 @@ mat-sidenav {
 }
 
 .anchosIcons{
-  padding: 0 3px;
+  padding: 0 2%;
 }
