@@ -97,7 +97,10 @@ export class HeaderComponent implements OnInit {
   ngOnInit() {
     setInterval(()=> {
       let color:string = ( this.dataUser.usu_color || "#02a0e3" );
-      if( this.userId.id ) color = this.userId.usu_color || "#02a0e3";
+      if( this.userId.id ) {
+        color = this.userId.usu_color || "#02a0e3";
+        this.urlLogo = this.userId.usu_imagen;
+      }
       this.nav.nativeElement.style.backgroundColor = color
     }, 100 );
     this.breakpoint = (window.innerWidth <= 400) ? 1 : 6;

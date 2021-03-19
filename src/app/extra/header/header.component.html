@@ -1,6 +1,6 @@
 <div [class.example-is-mobile]="mobileQuery.matches">
   <nav class="navbar navbar-expand-lg navbar-light headerColor" #nav>
-    <div class="d-flex justify-content-between" style="width: 100%;">
+    <div class="d-flex justify-content-between col-12" style="width: 100%;">
       <div>
         <button mat-icon-button (click)="snav.toggle()" translate="no">
           <i class="material-icons icoss">menu</i>
@@ -11,41 +11,51 @@
         <input type="text" style="border-radius: 11px;" [(ngModel)]="seartxt" (change)="buscar()"
           class="form-control form-control-sm" placeholder="Buscar Productos">
       </div>
-      <div class="anchosCajaIcons">
-        <div class="d-flex justify-content-center" style="margin-top: 15px;">
-          <div *ngIf="dataUser.id" style="margin-right: 10px;">
-            <label class="text-white" for="">$ {{ ( (
-              dataInfo?.porcobrado ) || 0 ).toLocaleString(1) }} COP</label>
-          </div>
+      <div style="width: auto;">
+        <div class="d-flex flex-row-reverse bd-highlight" style="margin-top: 15px;">
           <!--<div class="anchosIcons ocultarGrande">
-            <span (click)="activarSearch()" class="p-1 pointer espacios" matBadgeColor="accent"> <i
-                class="material-icons icoss">search</i> </span>
-          </div>-->
-          <div class="d-flex justify-content-around">
-            <div class="">
-              <span (click)="this.opcionoView = 'notificaciones'; sidenav.toggle();" class="p-1 pointer espacios"
-                [matBadge]="notificando"  matBadgePosition="before" matBadgeColor="accent"> <img class="iconsPng" src="./assets/icons/Recurso2.png" alt="">
-              </span>
-            </div>
-            <div class="">
-              <span (click)="this.opcionoView = 'carro'; sidenav.toggle();" class="p-1 pointer espacios"
-                [matBadge]="listCart.length" matBadgePosition="before" matBadgeColor="accent"> <i class="material-icons icoss"><img class="iconsPng" src="./assets/icons/Recurso3.png" alt=""></i>
-              </span>
-            </div>
-            <div class="">
-              <span *ngIf="!dataUser.id" [routerLink]="[ '/login' ]" class="p-1 pointer espacios"> <img class="iconsPng" src="./assets/icons/Recurso4.png" alt=""> </span>
-            </div>
-            <div class="" >
-              <span *ngIf="dataUser.id" [routerLink]="[ '/config/perfil' ]" class=" altoNull buscadorOcultar2p-1 pointer espacios"> <img class="iconsPng" src="./assets/icons/Recurso4.png" alt=""> </span>
-            </div>
+          <span (click)="activarSearch()" class="p-1 pointer espacios" matBadgeColor="accent"> <i
+              class="material-icons icoss">search</i> </span>
+        </div>-->
+          <div class="anchoReal12" *ngIf="!dataUser.id">
+            <span [routerLink]="[ '/login' ]" class="p-1 pointer espacios"> <img class="iconsPng"
+                src="./assets/icons/Recurso4.png" alt=""> </span>
+          </div>
+          <div class="anchoReal12" *ngIf="dataUser.id">
+            <span [routerLink]="[ '/config/perfil' ]" class=" altoNull buscadorOcultar2p-1 pointer espacios"> <img
+                class="iconsPng" src="./assets/icons/Recurso4.png" alt=""> </span>
+          </div>
+          <div class="anchoReal12">
+            <span (click)="this.opcionoView = 'carro'; sidenav.toggle();" class="p-1 pointer espacios"
+              [matBadge]="listCart.length" matBadgePosition="before" matBadgeColor="accent"> <i
+                class="material-icons icoss"><img class="iconsPng" src="./assets/icons/Recurso3.png" alt=""></i>
+            </span>
+          </div>
+          <div class="anchoReal12">
+            <span (click)="this.opcionoView = 'notificaciones'; sidenav.toggle();" class="p-1 pointer espacios"
+              [matBadge]="notificando" matBadgePosition="before" matBadgeColor="accent"> <img class="iconsPng"
+                src="./assets/icons/Recurso2.png" alt="">
+            </span>
+          </div>
+          <div *ngIf="dataUser.id" style="margin-right: 4%;" class="buscadorOcultar">
+            <span class="text-white">
+              $ {{ ( ( dataInfo?.porcobrado ) || 0 ).toLocaleString(1) }} COP
+            </span>
           </div>
         </div>
       </div>
     </div>
-    <div class="d-flex justify-content-between" style="width: 100%;" *ngIf="disabledSearch">
+    <div class="d-flex justify-content-between col-12" style="width: 100%;" *ngIf="disabledSearch">
       <div style="width: 100%;">
         <input type="text" style="border-radius: 11px;" [(ngModel)]="seartxt" (change)="buscar()"
           class="form-control form-control-sm" placeholder="Buscar Productos">
+      </div>
+    </div>
+    <div class="d-flex flex-row-reverse bd-highlight col-12" style="width: 100%;" *ngIf="disabledSearch && dataUser.id">
+      <div>
+        <span class="text-white">
+          Ganancias $ {{ ( ( dataInfo?.porcobrado ) || 0 ).toLocaleString(1) }} COP
+        </span>
       </div>
     </div>
     <app-menu-lateral></app-menu-lateral>

@@ -200,6 +200,10 @@ footer {
   width: 46% !important;
 }
 
+.anchoReal12{
+  width: 10%;
+}
+
 /*.ng-star-inserted{
   color: #3f51b5 !important;
 }*/
@@ -211,6 +215,9 @@ footer {
   }
   .divisor {
     margin-top: 10px;
+  }
+  .anchoReal12{
+    width: 34%;
   }
   .anchos {
     padding: 5px 20px;
@@ -230,10 +237,16 @@ footer {
   .anchosCajaIcons{
     width: 45%;
   }
+  .anchoReal12{
+    width: 34%;
+  }
   .buscadorOcultar {
     display: none;
     margin-top: 10px; 
     width: 30%;
+  }
+  .anchoReal12{
+    width: 15%;
   }
   .ocultarGrande {
     display: inline;
@@ -298,6 +311,9 @@ footer {
   }
     .buscadorOcultar2 {
     display: none;
+    width: 30%;
+  }
+  .anchoReal12{
     width: 30%;
   }
   .iconCaja{
