@@ -11,6 +11,9 @@ import { AngularEditorConfig } from '@kolkov/angular-editor';
 import { ProductosOrdenarComponent } from '../../table/productos-ordenar/productos-ordenar.component';
 import { STORAGES } from 'src/app/interfaces/sotarage';
 import { Store } from '@ngrx/store';
+import { Fruit } from 'src/app/interfaces/interfaces';
+import {COMMA, ENTER} from '@angular/cdk/keycodes';
+import {MatChipInputEvent} from '@angular/material/chips';
 
 const URL = environment.url;
 
@@ -43,6 +46,13 @@ export class FormproductosComponent implements OnInit {
   disableSpinner:boolean = false;
   dataUser:any = {};
   listFotos:any = [];
+
+  visible = true;
+  selectable = true;
+  removable = true;
+  addOnBlur = true;
+  readonly separatorKeysCodes = [ENTER, COMMA] as const;
+  fruits: Fruit[] = [ ];
 
   constructor(
     public dialog: MatDialog,
@@ -118,9 +128,12 @@ export class FormproductosComponent implements OnInit {
     }, error => this._tools.presentToast("error servidor"));
   }
 
-  onSelect(event: any) {
+  onSelect( event: any, item:any ) {
     //console.log(event, this.files);
-    this.files = [event.addedFiles[0]]
+    this.files = [event.addedFiles[0]];
+    setTimeout(()=>{
+      this.subirFile( item );
+    }, 1000 );
   }
 
 
@@ -145,6 +158,7 @@ export class FormproductosComponent implements OnInit {
       //this._archivos.create( this.files[0] );
       
     }
+    this.files = [];
 
   }
 
@@ -157,8 +171,9 @@ export class FormproductosComponent implements OnInit {
           else await this.validadorGaleria( res.files );
           if ( this.id ) this.submit();
         }
-        else item.foto = res.files;
+        else { item.foto = res.files; this.submit(); }
         this._tools.presentToast("Exitoso");
+        console.log(item);
         resolve( true );
       }, (error) => { console.error(error); this._tools.presentToast("Error de servidor"); resolve( false ); });
     } );
@@ -181,7 +196,7 @@ export class FormproductosComponent implements OnInit {
   }
 
   guardarColor(item: any) {
-    item.check = true;
+    //item.check = true;
     this.data.listColor = this.listColor;
     if (this.id) this.submit();
   }
@@ -428,6 +443,33 @@ export class FormproductosComponent implements OnInit {
       resolve( false );
       // this._productos.updatePrecios( data ).subscribe((res:any)=>resolve( res ), (error:any)=> resolve( false ));
     })
+  }
+
+  add(event: MatChipInputEvent): void {
+    const value = (event.value || '').trim();
+
+    // Add our fruit
+    if (value) {
+      this.listColor.push({
+        talla: value,
+        id: this._tools.codigo(),
+        check: true,
+        tallaSelect: this.data.listaTallas
+      });
+    }
+    console.log( event )
+    event.value = "";
+    this.guardarColor( value );
+    // Clear the input value
+    //event['chipInput']!.clear();
+  }
+
+  remove(item: Fruit): void {
+    const index = this.listColor.indexOf( item );
+
+    if ( index >= 0 ) {
+      this.listColor.splice(index, 1);
+    }
   }
 
   editor() {

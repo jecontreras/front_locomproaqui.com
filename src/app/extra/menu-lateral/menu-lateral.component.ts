@@ -51,10 +51,10 @@ export class MenuLateralComponent implements OnInit {
       this.urlWhatsapp = `http://bit.ly/grupovende`;
       this.urlYoutube = `http://bit.ly/YOUTUBEZAFIRO`;
     }else{
-      this.urlFacebook = this.userId.url_facebook || `https://www.facebook.com/CLICKEAMEVICTORLANDAZURY?fref=search&__tn__=%2Cd%2CP-R&eid=ARBwh7n8hr6OUXCIoOSMGvfyrxPaixr69annbby3aYVJvFo0_NKpHRBDRYhNAdxpF5-prIsBz_6Lsush`;
-      this.urlInstagram = this.userId.url_instagram || `http://bit.ly/quieroempezaryamismo`;
-      this.urlWhatsapp = this.userId.usu_indicativo || `http://bit.ly/grupovende`;
-      this.urlYoutube = this.userId.url_youtube || `http://bit.ly/YOUTUBEZAFIRO`;
+      this.urlFacebook = this.userId.url_facebook || "";
+      this.urlInstagram = this.userId.url_instagram || "";
+      this.urlWhatsapp = `https://wa.me/${ this.userId.usu_indicativo }${ this.userId.usu_telefono }?text=Hola Servicio al cliente` || "";
+      this.urlYoutube = this.userId.url_youtube || "";
     }
   }
 

@@ -273,13 +273,13 @@ export class HeaderComponent implements OnInit {
         url: '/pedidos',
         submenus: submenus
       },
-      {
+      /*{
         icons: 'announcement',
         nombre: 'Testimonios',
         disable: true,
         url: '/testimonio',
         submenus:[]
-      },
+      },*/
       {
         icons: 'account_circle',
         nombre: 'Mi Cuenta',
@@ -338,11 +338,11 @@ export class HeaderComponent implements OnInit {
             nombre: 'Catalago',
             url: '/config/catalago',
           },
-          {
+          /*{
             icons: 'settings',
             nombre: 'Testimonios',
             url: '/config/testimonios',
-          },
+          },*/
           {
             icons: 'settings',
             nombre: 'Categorias',

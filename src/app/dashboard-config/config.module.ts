@@ -2,7 +2,7 @@ import { NgModule } from '@angular/core';
 import { MainComponent } from './main.component';
 import { MainConfigRoutingModule } from './main-routing.module';
 import { HttpClientModule } from '@angular/common/http';
-import { RouterModule, Routes } from '@angular/router';
+import { RouterModule } from '@angular/router';
 import { ReactiveFormsModule,  FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { CategoriasComponent } from './components/categorias/categorias.component';

@@ -80,9 +80,11 @@ export class PedidosComponent implements OnInit {
 
   ngOnInit() {
     setInterval(()=> {
-      let color:string = ( this.dataUser.usu_color || "#02a0e3" );
-      if( this.userId.id ) color = this.userId.usu_color || "#02a0e3";
-      this.urlColor = color;
+      try {
+        let color:string = ( this.dataUser.usu_color || "#02a0e3" );
+        if( this.userId.id ) color = this.userId.usu_color || "#02a0e3";
+        this.urlColor = color;
+      } catch (error) {}
     }, 100 );
 
     if ( ( this.activate.snapshot.paramMap.get('id') ) ) { this.userId = ( this.activate.snapshot.paramMap.get('id') ); this.getUser(); }
