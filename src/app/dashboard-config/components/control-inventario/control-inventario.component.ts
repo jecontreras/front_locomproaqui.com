@@ -7,6 +7,7 @@ import { ToolsService } from 'src/app/services/tools.service';
 import { ProductoService } from 'src/app/servicesComponents/producto.service';
 import { FormproductosComponent } from '../../form/formproductos/formproductos.component';
 import * as _ from 'lodash';
+import { ControlinventarioService } from 'src/app/servicesComponents/controlinventario.service';
 
 @Component({
   selector: 'app-control-inventario',
@@ -21,7 +22,6 @@ export class ControlInventarioComponent implements OnInit {
 
   listArticulos:any = [];
   opcionCurrencys:any = {};
-
 
   dataTable: DataTable;
   pagina = 10;
@@ -40,12 +40,14 @@ export class ControlInventarioComponent implements OnInit {
   notscrolly:boolean=true;
   notEmptyPost:boolean = true;
   seleccionoColor:any = [];
+  productosSlc:any = [];
 
   constructor(
     public dialog: MatDialog,
     private spinner: NgxSpinnerService,
     private _tools: ToolsService,
-    private _productos: ProductoService
+    private _productos: ProductoService,
+    private _controlInventario: ControlinventarioService
   ) { 
     this.opcionCurrencys = this._tools.currency;
   }
@@ -102,7 +104,7 @@ export class ControlInventarioComponent implements OnInit {
         this.listArticulos =_.unionBy(this.listArticulos || [], response.data, 'id');
         this.loader = false;
         this.spinner.hide();
-
+        this.checkSeleccionados();
         if (response.data.length === 0 ) {
           this.notEmptyPost =  false;
         }
@@ -111,6 +113,13 @@ export class ControlInventarioComponent implements OnInit {
       error => {
         console.log('Error', error);
       });
+  }
+
+  checkSeleccionados(){
+    for( let row of this.listArticulos ){
+      let filtro:any = this.productosSlc.find( item => item.id == row.id );
+      if( filtro ) row.check = true;
+    }
   }
 
   buscar() {
@@ -128,7 +137,7 @@ export class ControlInventarioComponent implements OnInit {
     }
     if ( this.datoBusqueda != '' ) {
       this.query.where.or = [
-        {
+        /*{
           pro_nombre: {
             contains: this.datoBusqueda|| ''
           }
@@ -142,7 +151,7 @@ export class ControlInventarioComponent implements OnInit {
           pro_descripcionbreve: {
             contains: this.datoBusqueda|| ''
           }
-        },
+        },*/
         {
           pro_codigo: {
             contains: this.datoBusqueda|| ''
@@ -152,8 +161,6 @@ export class ControlInventarioComponent implements OnInit {
     }
     this.cargarTodos();
   }
-
-
 
   colorSeleccionado( item:any ){
     try {
@@ -166,6 +173,30 @@ export class ControlInventarioComponent implements OnInit {
     try {
       item.detalleSeleccion = item.listSeleccionoColor.tallaSelect.find( ( row:any ) => row.tal_descripcion == item.tallaSltc );
     } catch (error) { }
+  }
+
+  seleccionPr( item:any ){
+    item.check =  !item.check;
+    let filtro = this.productosSlc.find( ( row:any ) => row.id == item.id );
+    if( !filtro ) this.productosSlc.push( item );
+    else this.productosSlc = this.productosSlc.filter( ( row:any ) => row.id != item.id );
+  }
+
+  submit(){
+    if( this.data.id ) this.update();
+    else this.guardar();
+  }
+
+  guardar(){
+    this._controlInventario.create( this.data ).subscribe(( res:any )=>{
+      this._tools.tooast( { title: "guardado exitoso" } );
+    });
+  }
+
+  update(){
+    this._controlInventario.update( this.data ).subscribe( ( res:any )=>{
+      this._tools.tooast( { title: "guardado exitoso" } );
+    });
   }
 
 }

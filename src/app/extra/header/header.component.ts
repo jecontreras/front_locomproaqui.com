@@ -81,7 +81,7 @@ export class HeaderComponent implements OnInit {
       if( store.buscar ) { 
         this.seartxt = store.buscar; 
       }
-      console.log( window.innerWidth )
+      //console.log( window.innerWidth )
       this.disabledSearch = window.innerWidth <= 600 ? true : false;
       this.submitChat();
     });
@@ -169,7 +169,7 @@ export class HeaderComponent implements OnInit {
   }
 
   clickNotificando( obj:any ){
-    console.log(obj);
+    //console.log(obj);
     this.estadoNotificaciones(obj);
     if(obj.venta){
       this._venta.get({ where:{ id: obj.venta } }).subscribe((res:any)=>{
@@ -211,7 +211,7 @@ export class HeaderComponent implements OnInit {
     let numeroSplit:any;
     let cabeza:any = this.dataUser.cabeza;
     if( cabeza ) {
-      console.log(cabeza)
+      //console.log(cabeza)
       numeroSplit = _.split( cabeza.usu_telefono, "+57", 2);
       if( numeroSplit[1] ) cabeza.usu_telefono = numeroSplit[1];
       if( cabeza.usu_perfil == 3 ) cerialNumero = ( cabeza.usu_indicativo || '57' ) + ( cabeza.usu_telefono || '3506700802' );

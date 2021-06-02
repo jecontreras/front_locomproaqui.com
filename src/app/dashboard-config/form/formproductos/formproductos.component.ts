@@ -146,6 +146,7 @@ export class FormproductosComponent implements OnInit {
   async onSelect2( event: any, item:any ) {
     //console.log(event, this.files);
     this.files3.push( ...event.addedFiles );
+    if( !item.galeriaList ) item.galeriaList = [];
     setTimeout( async ()=>{
       await this.subirFile( item, 'colorGaleria' );
     }, 1000 );
@@ -193,7 +194,6 @@ export class FormproductosComponent implements OnInit {
         else { 
           item.foto = res.files;
           if( opt == 'colorGaleria' ) { 
-            if( !item.galeriaList ) item.galeriaList = [];
             item.galeriaList.push( { id: this._tools.codigo( ), foto: res.files } );
           }
           this.submit(); 
@@ -303,6 +303,7 @@ export class FormproductosComponent implements OnInit {
     this.data = _.omitBy(this.data, _.isNull);
     this._productos.update(this.data).subscribe((res: any) => {
       this._tools.presentToast("Actualizado");
+      res.listColor = this.data.listColor;
       this.data = res;
       if( this.data.pro_sw_tallas ) this.data.pro_sw_tallas = this.data.pro_sw_tallas.id;
       console.log( this.data )
