@@ -37,10 +37,14 @@ export class MenuLateralComponent implements OnInit {
     setInterval(()=> {
       let color:string = ( this.dataUser.usu_color || "#02a0e3" );
       if( this.userId.id ) color = this.userId.usu_color || "#02a0e3";
-      this.color1.nativeElement.style.backgroundColor = color
-      this.color2.nativeElement.style.backgroundColor = color
-      this.color3.nativeElement.style.backgroundColor = color
-      this.color4.nativeElement.style.backgroundColor = color
+      try {
+        this.color1.nativeElement.style.backgroundColor = color
+        this.color2.nativeElement.style.backgroundColor = color
+        this.color3.nativeElement.style.backgroundColor = color
+        this.color4.nativeElement.style.backgroundColor = color 
+      } catch (error) {
+        
+      }
     }, 100 );
 
   }

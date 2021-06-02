@@ -166,6 +166,29 @@ export function appReducer(state: STORAGES = APP, action: _action.actions) {
         break;
       }
     }
+    case _action.CONFIGURACION:{
+      switch(action.opt) {
+        case 'post' :
+          if(!state.configuracion) state.configuracion = "";
+            state.configuracion = action.payload;
+            return local_Storage(state);
+        break;
+        case 'put': {
+          state.configuracion = action.payload;
+        }
+        return local_Storage(state);
+        break;
+        case 'delete': 
+          state.configuracion = "";
+          return local_Storage(state);
+        break;
+        case 'drop': {
+          state.configuracion = "";
+          return local_Storage(state);
+        }
+        break;
+      }
+    }
     
     /*case _action.ARTICULOS:{
       switch (action.opt){

@@ -1,10 +1,12 @@
-import { Component, OnInit, Inject } from '@angular/core';
+import { Component, OnInit, Inject, ViewChild } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
 import { Store } from '@ngrx/store';
 import { CartAction } from 'src/app/redux/app.actions';
 import { CART } from 'src/app/interfaces/sotarage';
 import * as _ from 'lodash';
 import { ToolsService } from 'src/app/services/tools.service';
+import { CatalogoService } from 'src/app/servicesComponents/catalogo.service';
+import { NgImageSliderComponent } from 'ng-image-slider';
 
 @Component({
   selector: 'app-view-productos',
@@ -20,12 +22,32 @@ export class ViewProductosComponent implements OnInit {
   dataUser:any = {};
   urlFoto:string;
   galeria:any = [];
+  seleccionoColor:any = {};
+  seleccionnTalla:any = {};
+  contador:number = 0;
+  disabledBtn:boolean = false;
+
+
+  mySlideImages = [];
+  imageObject: any = [];
+
+  @ViewChild('nav', { static: true }) ds: NgImageSliderComponent;
+  sliderWidth: Number = 962;
+  sliderImageWidth: Number = 264;
+  sliderImageHeight: Number = 200;
+  sliderArrowShow: Boolean = true;
+  sliderInfinite: Boolean = false;
+  sliderImagePopup: Boolean = true;
+  sliderAutoSlide: Number = 1;
+  sliderSlideImage: Number = 1;
+  sliderAnimationSpeed: any = 1;
 
   constructor(
     public dialogRef: MatDialogRef<ViewProductosComponent>,
     @Inject(MAT_DIALOG_DATA) public datas: any,
     private _store: Store<CART>,
     private _tools: ToolsService,
+    private _catalago: CatalogoService,
   ) { 
 
     this._store.subscribe((store: any) => {
@@ -50,14 +72,43 @@ export class ViewProductosComponent implements OnInit {
         id: this._tools.codigo(),
         foto: this.data.foto
       });
-      console.log(this.data)
+      console.log(this.data);
+      if( this.data.listColor ) if( this.data.listColor.length ) this.data.listColor = this.data.listColor.filter(( item:any )=> {
+        item.tallaSelect = item.tallaSelect.filter(( row:any ) => Number( row.cantidad ) > 0 );
+        if( item.galeriaList ) this.galeria.push( ... item.galeriaList );
+        return true;
+      } );
       //this.data.cantidadAdquirir = 1;
+      this.llenandoGaleria();
     }
+    for( let row of this.galeria ) this.imageObject.unshift({
+      image: row.foto,
+      thumbImage: row.foto,
+      alt: '',
+      check: true,
+      id: 0,
+    });
+    console.log( this.imageObject )
+
+    /*setTimeout(()=>{ 
+      try {
+        this.data.color = this.data.listColor[0].talla;
+        this.cambioImgs(); 
+        this.colorSeleccionado( ); 
+      } catch (error) { }
+     },2000 );*/
 
   }
 
+  llenandoGaleria(){
+    try {
+      for( let row of this.data.listColor )
+      this.galeria.push({ id: row.id, foto: row.foto });
+    } catch (error) {}
+  }
+
   ngOnDestroy(){
-    console.log("saliendo", this.data, this.datas.datos );
+   // console.log("saliendo", this.data, this.datas.datos );
   }
 
   seleccionFoto( foto:string ){
@@ -77,10 +128,14 @@ export class ViewProductosComponent implements OnInit {
   }
   
   cambioImgs(){
-    this.data.foto = this.data.color;
+    //console.log( this.seleccionoColor );
+    this.urlFoto = this.seleccionoColor.foto;
+    //console.log( this.urlFoto );
   }
 
   AgregarCart( opt:any ){
+    if(  this.seleccionnTalla.cantidad <= this.data.cantidadAdquirir ) return this._tools.tooast({ title: "Lo sentimos en estos momento no tenemos en stock", icon: "warning" });
+    if (!this.data.tallas) return this._tools.tooast({ title: "Por Favor debes seleccionar una talla", icon: "warning" });
     let color = '';
     let cantidad = this.data.cantidadAdquirir || 1;
     let precio = this.data.pro_uni_venta;
@@ -92,8 +147,8 @@ export class ViewProductosComponent implements OnInit {
       codigo: this.data.pro_codigo,
       titulo: this.data.pro_nombre,
       color: color,
-      talla: this.data.tallas || 'default',
-      foto: this.data.foto,
+      tallaSelect: this.data.tallas || 'default',
+      foto: this.urlFoto,
       cantidad: cantidad,
       costo: precio,
       costoTotal: this.data.costo,
@@ -103,13 +158,34 @@ export class ViewProductosComponent implements OnInit {
     this._store.dispatch(accion);
     this._tools.presentToast("Producto agregado al carro");
   }
+
+  async descargarFoto( item:any ){
+    if( this.disabledBtn ) return false;
+    this.disabledBtn = true;
+    item.base64 = await this._catalago.FormatoBase64( item.foto );
+    await this._tools.descargarFoto( item.base64 );
+    try {
+      let lista:any = item.listaGaleria;
+      lista.push(..._.map( item.listColor, ( row:any )=> { return { foto: row.foto, id: row.id }; } ) );
+      if( lista ){
+        for( let row of lista ){
+          this._tools.ProcessTime( { title: "Descargando..." } );
+          row.base64 = await this._catalago.FormatoBase64( row.foto );
+          await this._tools.descargarFoto( row.base64 );
+        }
+      }
+      this.disabledBtn = false;
+    } catch (error) {
+      this.disabledBtn = false;
+    }
+  }
   
   codigo(){
     return (Date.now().toString(20).substr(2, 3) + Math.random().toString(20).substr(2, 3)).toUpperCase();
   }
 
   masInfo(obj: any) {
-    console.log( obj );
+    //console.log( obj );
     let cerialNumero: any = '';
     let numeroSplit: any;
     let cabeza: any = this.dataUser.cabeza;
@@ -117,14 +193,69 @@ export class ViewProductosComponent implements OnInit {
     if (cabeza) {
       numeroSplit = _.split(cabeza.usu_telefono, "+57", 2);
       if (numeroSplit[1]) cabeza.usu_telefono = numeroSplit[1];
-      if (cabeza.usu_perfil == 3) cerialNumero = (cabeza.usu_indicativo || '57') + (cabeza.usu_telefono || '3148487506');
-      else cerialNumero = "573148487506";
-    } else cerialNumero = "573148487506";
-    if (this.userId.id) this.urlwhat = `https://wa.me/${this.userId.usu_indicativo || 57}${((_.split(this.userId.usu_telefono, "+57", 2))[1]) || '3148487506'}?text=Hola Servicio al cliente, como esta, saludo cordial, estoy interesad@ en mas informacion ${obj.pro_nombre} codigo ${obj.pro_codigo} codigo: ${obj.pro_codigo} talla: ${obj.tallas} foto ==> ${obj.foto}`;
+      if (cabeza.usu_perfil == 3) cerialNumero = (cabeza.usu_indicativo || '57') + (cabeza.usu_telefono || this._tools.dataConfig.clInformacion );
+      else cerialNumero = "57" + this._tools.dataConfig.clInformacion;
+    } else cerialNumero = "57" + this._tools.dataConfig.clInformacion;
+    if (this.userId.id) this.urlwhat = `https://wa.me/${this.userId.usu_indicativo || 57}${((_.split(this.userId.usu_telefono, "+57", 2))[1]) || this._tools.dataConfig.clInformacion }?text=Hola Servicio al cliente, como esta, saludo cordial, estoy interesad@ en mas informacion ${obj.pro_nombre} codigo ${obj.pro_codigo} codigo: ${obj.pro_codigo} talla: ${obj.tallas} foto ==> ${obj.this.urlFoto}`;
     else {
-      this.urlwhat = `https://wa.me/${cerialNumero}?text=Hola Servicio al cliente, como esta, saludo cordial, estoy interesad@ en mas informacion ${obj.pro_nombre} codigo: ${obj.pro_codigo} talla: ${obj.tallas} foto ==> ${obj.foto}`;
+      this.urlwhat = `https://wa.me/${cerialNumero}?text=Hola Servicio al cliente, como esta, saludo cordial, estoy interesad@ en mas informacion ${obj.pro_nombre} codigo: ${obj.pro_codigo} talla: ${obj.tallas} foto ==> ${obj.this.urlFoto}`;
     }
     window.open(this.urlwhat);
+  }
+
+  colorSeleccionado(){
+    try {
+      if( !this.data.color ) return false;
+      this.seleccionoColor = this.data.listColor.find( row => row.talla == this.data.color );
+      this.seleccionTalla();
+    } catch (error) {}
+  }
+
+  seleccionTalla(){
+    try {
+      //console.log( this.data );
+      if( !this.data.tallas ) return false;
+      this.seleccionnTalla = this.seleccionoColor.tallaSelect.find( row => row.tal_descripcion == this.data.tallas );
+      //console.log( this.seleccionnTalla );
+    } catch (error) { console.log( error ); }
+  }
+
+  previusFoto(){
+    try {
+      this.contador--;
+      if( Object.keys( this.galeria[ this.contador ] ).length < 1) return;
+      this.urlFoto = this.galeria[ this.contador ].foto;
+    } catch (error) { this.contador++; }
+  }
+
+  nextFoto(){
+    try {
+      this.contador++; 
+      if( Object.keys( this.galeria[ this.contador ] ).length < 1) return;
+      this.urlFoto = this.galeria[ this.contador ].foto;
+    } catch (error) {
+      this.contador--;
+    }
+  }
+
+  imageOnClick(index: any) {
+    //con
+  }
+
+  arrowOnClick(event) {
+    //console.log('arrow click event', event);
+  }
+
+  lightboxArrowClick(event) {
+    //console.log('popup arrow click', event);
+  }
+
+  prevImageClick() {
+    this.ds.prev();
+  }
+
+  nextImageClick() {
+    this.ds.next();
   }
 
 }

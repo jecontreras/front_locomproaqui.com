@@ -53,6 +53,8 @@ export class PedidosComponent implements OnInit {
   bandera: any = 0;
   urlColor:string;
   counts:number = 0;
+  disabledBtn:boolean = false;
+  dataConfig:any = {};
   
   constructor(
     private _productos: ProductoService,
@@ -71,6 +73,7 @@ export class PedidosComponent implements OnInit {
       if (!store) return false;
       this.userId = store.usercabeza;
       this.dataUser = store.user || {};
+      this.dataConfig = store.configuracion || {};
       if( this.seartxt != store.buscar && store.buscar ) { 
         this.seartxt = store.buscar;
       }
@@ -102,18 +105,23 @@ export class PedidosComponent implements OnInit {
   }
 
   async descargarFoto( item:any ){
+    if( this.disabledBtn ) return false;
+    this.disabledBtn = true;
     item.base64 = await this._catalago.FormatoBase64( item.foto );
     await this._tools.descargarFoto( item.base64 );
     try {
-      if( item.listaGaleria ){
-        for( let row of item.listaGaleria ){
+      let lista:any = item.listaGaleria;
+      lista.push(..._.map( item.listColor, ( row:any )=> { return { foto: row.foto, id: row.id }; } ) );
+      if( lista ){
+        for( let row of lista ){
           this._tools.ProcessTime( { title: "Descargando..." } );
           row.base64 = await this._catalago.FormatoBase64( row.foto );
           await this._tools.descargarFoto( row.base64 );
         }
       }
+      this.disabledBtn = false;
     } catch (error) {
-      
+      this.disabledBtn = false;
     }
   }
 
@@ -252,8 +260,8 @@ export class PedidosComponent implements OnInit {
   }
   agregar(obj) {
     const dialogRef = this.dialog.open(ViewProductosComponent, {
-      width: '855px',
-      maxHeight: "665px",
+      width: '100%',
+      maxHeight: "700%",
       data: { datos: obj }
     });
 
@@ -269,10 +277,10 @@ export class PedidosComponent implements OnInit {
     if (cabeza) {
       numeroSplit = _.split(cabeza.usu_telefono, "+57", 2);
       if (numeroSplit[1]) cabeza.usu_telefono = numeroSplit[1];
-      if (cabeza.usu_perfil == 3) cerialNumero = (cabeza.usu_indicativo || '57') + (cabeza.usu_telefono || '3212703587');
-      else cerialNumero = "573212703587";
-    } else cerialNumero = "573212703587";
-    if (this.userId.id) this.urlwhat = `https://wa.me/${this.userId.usu_indicativo || 57}${( this.userId.usu_telefono ) || '3212703587'}?text=Hola Servicio al cliente, como esta, saludo cordial, estoy interesad@ en mas informacion ${obj.pro_nombre} codigo ${obj.pro_codigo} codigo: ${obj.pro_codigo} talla: ${obj.tallasSelect} foto ==> ${obj.foto}`;
+      if (cabeza.usu_perfil == 3) cerialNumero = (cabeza.usu_indicativo || '57') + (cabeza.usu_telefono || this._tools.dataConfig.clInformacion );
+      else cerialNumero = "57"+ this._tools.dataConfig.clInformacion;
+    } else cerialNumero = "57"+ this._tools.dataConfig.clInformacion;
+    if (this.userId.id) this.urlwhat = `https://wa.me/${this.userId.usu_indicativo || 57}${( this.userId.usu_telefono ) || this._tools.dataConfig.clInformacion }?text=Hola Servicio al cliente, como esta, saludo cordial, estoy interesad@ en mas informacion ${obj.pro_nombre} codigo ${obj.pro_codigo} codigo: ${obj.pro_codigo} talla: ${obj.tallasSelect} foto ==> ${obj.foto}`;
     else {
       this.urlwhat = `https://wa.me/${cerialNumero}?text=Hola Servicio al cliente, como esta, saludo cordial, estoy interesad@ en mas informacion ${obj.pro_nombre} codigo: ${obj.pro_codigo} talla: ${obj.tallasSelect} foto ==> ${obj.foto}`;
     }
@@ -299,6 +307,8 @@ export class PedidosComponent implements OnInit {
 
   AgregarCart(item: any) {
     console.log(item);
+    this.agregar( item );
+    return false;
     if (!item.tallasSelect) return this._tools.tooast({ title: "Por Favor debes seleccionar una talla", icon: "warning" });
     let data: any = {
       articulo: item.id,

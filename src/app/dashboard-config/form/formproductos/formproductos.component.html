@@ -77,33 +77,33 @@
                 </div>
                 <div class="form-group col-md-6 col-sm-4 col-lg-4 col-xs-4">
                     <label>Codigo</label>
-                    <input type="text" [(ngModel)]="data.pro_codigo" [disabled]="!data.activarBTN"
+                    <input type="text" [(ngModel)]="data.pro_codigo" 
                         class="form-control form-control-sm">
                 </div>
                 <div class="form-group col-md-6 col-sm-8 col-lg-8 col-xs-8">
                     <label>Nombre</label>
-                    <input type="text" [(ngModel)]="data.pro_nombre" [disabled]="!data.activarBTN"
+                    <input type="text" [(ngModel)]="data.pro_nombre" 
                         class="form-control form-control-sm">
                 </div>
                 <div class="form-group col-md-6 col-sm-4 col-lg-4 col-xs-6">
                     <label for="exampleFormControlSelect1">Categoria:</label>
                     <select class="form-control form-control-sm" [(ngModel)]="data.pro_categoria"
-                        [disabled]="!data.activarBTN">
+                        >
                         <option [value]="item.id" *ngFor="let item of listCategorias">{{ item.cat_nombre }}</option>
                     </select>
                 </div>
                 <div class="form-group col-md-6 col-sm-4 col-lg-4 col-xs-6">
                     <br>
-                    <input type="checkbox" [(ngModel)]="data.checkMayor" [disabled]="!data.activarBTN"
+                    <input type="checkbox" [(ngModel)]="data.checkMayor" 
                         value="second_checkbox"> <label for="cbox2">Precios al Mayor</label>
                 </div>
                 <!-- <div class="form-group col-md-6 col-sm-4 col-lg-4 col-xs-6">
                     <label>Precio Vendedor</label>
-                    <input currencyMask class="form-control form-control-sm" [disabled]="!data.activarBTN" [(ngModel)]="data.precioFabrica" [options]="formatoMoneda" />
+                    <input currencyMask class="form-control form-control-sm"  [(ngModel)]="data.precioFabrica" [options]="formatoMoneda" />
                 </div> -->
                 <div class="form-group col-md-6 col-sm-4 col-lg-4 col-xs-6">
                     <label>Precio Clientes</label>
-                    <input currencyMask class="form-control form-control-sm" [disabled]="!data.activarBTN"
+                    <input currencyMask class="form-control form-control-sm" 
                         [(ngModel)]="data.pro_uni_venta" [options]="formatoMoneda" />
                 </div>
                 <div class="form-group col-md-6 col-sm-6 col-lg-6 col-xs-6" *ngIf="data.checkMayor">
@@ -180,7 +180,7 @@
                 </div>
                 <div class="form-group col-md-6 col-sm-4 col-lg-4 col-xs-6">
                     <label for="exampleFormControlSelect1">Tipo de medida:</label>
-                    <select class="form-control form-control-sm" [disabled]="!data.activarBTN"
+                    <select class="form-control form-control-sm" 
                         [(ngModel)]="data.pro_sw_tallas" (change)="blurTalla()">
                         <option [value]="item.id" *ngFor="let item of listTipoTallas">{{ item.tit_descripcion }}
                         </option>
@@ -202,7 +202,7 @@
                         </mat-chip-list>
                     </mat-form-field>
                 </div>
-                <div class="form-group col-12" *ngIf="data.activarBTN">
+                <div class="form-group col-12" *ngIf="data.listColor">
                     <header class="main-box-header clearfix col-12 row">
                         <h2 class="col">Lista Colores</h2>
                     </header>
@@ -217,7 +217,10 @@
                                     </div>
                                     <label for="exampleInputEmail1">Color</label>
                                     <input type="text" [(ngModel)]="item.talla" class="form-control"
-                                        aria-describedby="emailHelp" [disabled]="!data.activarBTN">
+                                        aria-describedby="emailHelp" >
+                                    <label for="exampleInputEmail1">Codigo</label>
+                                    <input type="text" [(ngModel)]="item.id" class="form-control"
+                                        aria-describedby="emailHelp" >
                                 </div>
                                 <div class="form-group col-12" *ngIf="!item.checkFoto && !item.foto">
                                     <div class="d-flex justify-content-center">
@@ -251,21 +254,67 @@
                                         <div class="col-6 col-sm-4 col-md-3 col-xs-2 col-lg-4"
                                             *ngFor="let tallas of item.tallaSelect">
                                             <mat-checkbox (ngModelChange)="tallaSeleccionando( tallas )"
-                                                [disabled]="!data.activarBTN" [(ngModel)]="tallas.check"
+                                                 [(ngModel)]="tallas.check"
                                                 class="example-margin">
                                                 {{ tallas.tal_descripcion }}
                                                 <input type="text" [(ngModel)]="tallas.cantidad" class="form-control"
                                                     aria-describedby="Tallas disponibles........"
                                                     placeholder="Tallas disponibles........"
-                                                    (ngModelChange)="guardarColor( item )">
+                                                    (ngModelChange)="guardarColor( )">
                                             </mat-checkbox>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group col-12" *ngIf="!item.checkFotoGaleri">
+                                    <div class="d-flex justify-content-center">
+                                        <div>
+                                            <button type="button" (click)="item.checkFotoGaleri = true"
+                                                class="btn btn-success">Agregar una foto</button>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group col-12" *ngIf="item.checkFotoGaleri">
+                                    <div class="row">
+                                        <label class="col">Subir Imagen</label>
+                                        <!--<button class="btn btn-primary btn-just-icon btn-round"
+                                            (click)="subirFile(item)" *ngIf="files.length > 0">
+                                            Subir Imagen
+                                        </button>-->
+                                        <button type="button" (click)="item.checkFotoGaleri = false"
+                                            class="btn btn-success">Ocultar</button>
+                                    </div>
+                                    <ngx-dropzone (change)="onSelect2( $event, item )">
+                                        <ngx-dropzone-label>Abrir archivos</ngx-dropzone-label>
+                                        <ngx-dropzone-image-preview ngProjectAs="ngx-dropzone-preview"
+                                            *ngFor="let f of files3" [file]="f" [removable]="true"
+                                            (removed)="onRemove( f )" mdivtiple="false">
+                                            <ngx-dropzone-label>{{ f.name }} ({{ f.type }})</ngx-dropzone-label>
+                                        </ngx-dropzone-image-preview>
+                                    </ngx-dropzone>
+                                </div>
+                                <div class="col-12" *ngIf="item.galeriaList">
+                                    <div class="row">
+                                        <div class="col-3" *ngFor="let row of item.galeriaList">
+                                            <mat-card class="example-card">
+                                                <img mat-card-image [src]="row.foto" alt="Photo of a Shiba Inu">
+                                                <mat-card-actions>
+                                                    <div class="d-flex justify-content-center">
+                                                        <div>
+                                                            <button type="button" class="btn btn-success"
+                                                                (click)="EliminarFoto( row, item )">
+                                                                Eliminar
+                                                            </button>
+                                                        </div>
+                                                    </div>
+                                                </mat-card-actions>
+                                            </mat-card>
                                         </div>
                                     </div>
                                 </div>
                                 <div class="form-group col-12">
                                     <div class="marginTop">
                                         <button *ngIf="!item.check" type="button" class="btn btn-success"
-                                            (click)="guardarColor(item)">
+                                            (click)="guardarColor()">
                                             <span>Agregar</span>
                                         </button>
                                         <button *ngIf="item.check" type="button" class="btn btn-danger"
@@ -282,7 +331,7 @@
                     <label for="exampleFormControlSelect1">Medidas Disponibles:</label>
                     <div class="row">
                         <div class="col-6 col-sm-4 col-md-3 col-xs-2 col-lg-4" *ngFor="let tallas of tallaSelect">
-                            <mat-checkbox (ngModelChange)="tallaSeleccionando( tallas )" [disabled]="!data.activarBTN" [(ngModel)]="tallas.check" class="example-margin">{{ tallas.tal_descripcion }}</mat-checkbox>
+                            <mat-checkbox (ngModelChange)="tallaSeleccionando( tallas )"  [(ngModel)]="tallas.check" class="example-margin">{{ tallas.tal_descripcion }}</mat-checkbox>
                         </div>
                     </div>
                 </div>-->
@@ -299,7 +348,8 @@
                             </ngx-dropzone>
                             <div class="row">
                                 <label class="col">Subir Imagen</label>
-                                <button class="btn btn-primary btn-just-icon btn-round" (click)="subirFile(false, 'galeria')" *ngIf="files2.length > 0">
+                                <button class="btn btn-primary btn-just-icon btn-round"
+                                    (click)="subirFile(false, 'galeria')" *ngIf="files2.length > 0">
                                     Subir Imagen
                                 </button>
                             </div>
@@ -310,19 +360,20 @@
                                 <mat-card-actions>
                                     <div class="d-flex justify-content-center">
                                         <div>
-                                            <button type="button" class="btn btn-success" (click)="EliminarFoto( item )">
+                                            <button type="button" class="btn btn-success"
+                                                (click)="EliminarFoto( item )">
                                                 Eliminar
                                             </button>
                                         </div>
                                     </div>
                                 </mat-card-actions>
-                              </mat-card>
+                            </mat-card>
                         </div>
                     </div>
                 </div>
                 <div class="form-group col-12">
                     <label>Descripción detallada</label>
-                    <angular-editor id="editor1" [disabled]="!data.activarBTN" [(ngModel)]="data.pro_descripcion"
+                    <angular-editor id="editor1"  [(ngModel)]="data.pro_descripcion"
                         [config]="editorConfig" (ngModelChange)="eventoDescripcion()"></angular-editor>
                 </div>
                 <div class="form-group col-12">
@@ -339,7 +390,7 @@
 <mat-dialog-actions align="end">
     <button mat-button mat-dialog-close>Cerrar</button>
     <button mat-button cdkFocusInitial (click)="submit()"
-        *ngIf="( titulo != 'Crear' || this.id ) && ( data.activarBTN )">
+        *ngIf="( this.id ) ">
         <span *ngIf="!id">Guardar Cambios</span>
         <span *ngIf="id">Actulizar Cambios</span>
     </button>

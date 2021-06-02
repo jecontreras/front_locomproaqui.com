@@ -214,10 +214,10 @@ export class HeaderComponent implements OnInit {
       console.log(cabeza)
       numeroSplit = _.split( cabeza.usu_telefono, "+57", 2);
       if( numeroSplit[1] ) cabeza.usu_telefono = numeroSplit[1];
-      if( cabeza.usu_perfil == 3 ) cerialNumero = ( cabeza.usu_indicativo || '57' ) + ( cabeza.usu_telefono || '3212703587' );
-      else cerialNumero = `${ this.userId.usu_indicativo || 57 }${ this.userId.usu_telefono || '3212703587'}`;
-    }else cerialNumero = "573212703587";
-    if( this.userId.id ) this.urlwhat = `https://wa.me/${ this.userId.usu_indicativo || 57 }${ ( this.userId.usu_telefono ) || 3212703587 }?text=Hola Servicio al cliente, como esta, saludo cordial, estoy interesad@ en comprar los siguientes ${texto}`
+      if( cabeza.usu_perfil == 3 ) cerialNumero = ( cabeza.usu_indicativo || '57' ) + ( cabeza.usu_telefono || '3506700802' );
+      else cerialNumero = `${ this.userId.usu_indicativo || 57 }${ this.userId.usu_telefono || '3506700802'}`;
+    }else cerialNumero = "573506700802";
+    if( this.userId.id ) this.urlwhat = `https://wa.me/${ this.userId.usu_indicativo || 57 }${ ( this.userId.usu_telefono ) || 3506700802 }?text=Hola Servicio al cliente, como esta, saludo cordial, estoy interesad@ en comprar los siguientes ${texto}`
     else this.urlwhat = `https://wa.me/${ cerialNumero  }?text=Hola Servicio al cliente, como esta, saludo cordial, estoy interesad@ en comprar los siguientes ${texto}`
   }
 
@@ -321,6 +321,13 @@ export class HeaderComponent implements OnInit {
         url: '/config/referidos',
         submenus:[]
       },
+      {
+        icons: 'people_alt',
+        nombre: 'Control Inventario',
+        disable: this.rolUser == 'administrador' || this.rolUser == 'proveedor',
+        url: '/config/controlInventario',
+        submenus:[]
+      },
       /*{
         icons: 'security',
         nombre: 'Seguridad',
@@ -362,6 +369,11 @@ export class HeaderComponent implements OnInit {
             icons: 'settings',
             nombre: 'Usuarios',
             url: '/config/usuarios',
+          },
+          {
+            icons: 'settings',
+            nombre: 'Configuracion',
+            url: '/config/configuracion',
           },
           // {
           //   icons: 'settings',

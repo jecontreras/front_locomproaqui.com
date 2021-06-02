@@ -43,6 +43,8 @@ import { ProductosOrdenarComponent } from './table/productos-ordenar/productos-o
 import { AdminComponent } from './components/admin/admin.component';
 
 import { NgxCurrencyModule } from "ngx-currency";
+import { ConfiguracionComponent } from './components/configuracion/configuracion.component';
+import { ControlInventarioComponent } from './components/control-inventario/control-inventario.component';
 
 
 @NgModule({
@@ -87,7 +89,9 @@ import { NgxCurrencyModule } from "ngx-currency";
     CatalogoComponent,
     FormcatalogoComponent,
     ProductosOrdenarComponent,
-    AdminComponent
+    AdminComponent,
+    ConfiguracionComponent,
+    ControlInventarioComponent
   ],
   imports: [
     CommonModule,

@@ -2,6 +2,8 @@ import { Injectable } from '@angular/core';
 import { MatSnackBar } from '@angular/material';
 import Swal from 'sweetalert2'
 import * as _ from 'lodash';
+import { CART } from '../interfaces/sotarage';
+import { Store } from '@ngrx/store';
 
 @Injectable({
   providedIn: 'root'
@@ -9,13 +11,23 @@ import * as _ from 'lodash';
 export class ToolsService {
 
   loading: any;
-  intervalo:number = 0;
+  intervalo: number = 0;
 
-  currency:any = { prefix: '$ ',align: 'left', thousands: '.', decimal: ',', precision: 0 };
+  currency: any = { prefix: '$ ', align: 'left', thousands: '.', decimal: ',', precision: 0 };
+  dataConfig:any = {};
 
   constructor(
-    private snackBar: MatSnackBar
-  ) { }
+    private snackBar: MatSnackBar,
+    private _store: Store<CART>,
+  ) {
+    this._store.subscribe((store: any) => {
+      store = store.name;
+      //console.log(store);
+      if (!store) return false;
+      this.dataConfig = store.configuracion || {};
+    }
+    );
+  }
 
   async presentToast(mensaje: string, type = 'completado') {
     this.snackBar.open(mensaje, type, { duration: 5000 });
@@ -94,9 +106,9 @@ export class ToolsService {
 
   async descargarFoto(url: string) {
     this.intervalo++;
-    let nombre = this.codigo()+this.intervalo;
+    let nombre = this.codigo() + this.intervalo;
     console.log(nombre)
-    return new Promise(resolve=>{
+    return new Promise(resolve => {
       let urlFormato = _.split(url, ";base64,", 10);
       let byteCharacters = atob(urlFormato[1]);
       let byteNumbers = new Array(byteCharacters.length);
@@ -127,20 +139,20 @@ export class ToolsService {
     })
   }
 
-  codigo(){
+  codigo() {
     return (Date.now().toString(20).substr(2, 3) + Math.random().toString(20).substr(2, 3)).toUpperCase();
   }
 
-  calcularDistancia( params:any ) {
+  calcularDistancia(params: any) {
 
-    let latitud1:any = params.latitud1;
-    let longitud1:any = params.longitud1;
-    let latitud2:any = params.latitud2;
-    let longitud2:any = params.longitud2;
-    let unidad_metrica:any = String();
+    let latitud1: any = params.latitud1;
+    let longitud1: any = params.longitud1;
+    let latitud2: any = params.latitud2;
+    let longitud2: any = params.longitud2;
+    let unidad_metrica: any = String();
 
-    let distancia:any = Number();
-    let radius:any = Number();
+    let distancia: any = Number();
+    let radius: any = Number();
     radius = 6378.137;
 
     let deg2radMultiplier = Number();
@@ -155,8 +167,8 @@ export class ToolsService {
     let dlongitud = Number();
     dlongitud = longitud2 - longitud1;
 
-        distancia = Math.acos(Math.sin(latitud1) * Math.sin(latitud2) + Math.cos(latitud1) *
-        Math.cos(latitud2) * Math.cos(dlongitud)) * radius;
+    distancia = Math.acos(Math.sin(latitud1) * Math.sin(latitud2) + Math.cos(latitud1) *
+      Math.cos(latitud2) * Math.cos(dlongitud)) * radius;
 
     if (unidad_metrica) unidad_metrica = 'M';
     distancia = distancia * 1000;
@@ -165,10 +177,10 @@ export class ToolsService {
 
   }
 
-  monedaChange( cif = 3, dec = 2, valor:any ){
+  monedaChange(cif = 3, dec = 2, valor: any) {
     // tomamos el valor que tiene el input
     //  console.log(valor, cif, dec)
-     if( !valor ) return 0;
+    if (!valor) return 0;
     let inputNum = valor;
     // Lo convertimos en texto
     inputNum = inputNum.toString()
@@ -176,30 +188,30 @@ export class ToolsService {
     inputNum = inputNum.split('.')
     // evaluamos si existen decimales
     if (!inputNum[1]) {
-        inputNum[1] = '00'
+      inputNum[1] = '00'
     }
 
     let separados
     // se calcula la longitud de la cadena
     if (inputNum[0].length > cif) {
-        let uno = inputNum[0].length % cif
-        if (uno === 0) {
-            separados = []
-        } else {
-            separados = [inputNum[0].substring(0, uno)]
-        }
-        let numero:number = Number(inputNum[0].length);
-        let posiciones = Number(numero / cif)
-        for (let i = 0; i < posiciones; i++) {
-            let pos = ((i * cif) + uno)
-            // console.log(uno, pos)
-            if(inputNum[0] == "") continue;
-            separados.push(inputNum[0].substring(pos, (pos + 3)))
-        }
+      let uno = inputNum[0].length % cif
+      if (uno === 0) {
+        separados = []
+      } else {
+        separados = [inputNum[0].substring(0, uno)]
+      }
+      let numero: number = Number(inputNum[0].length);
+      let posiciones = Number(numero / cif)
+      for (let i = 0; i < posiciones; i++) {
+        let pos = ((i * cif) + uno)
+        // console.log(uno, pos)
+        if (inputNum[0] == "") continue;
+        separados.push(inputNum[0].substring(pos, (pos + 3)))
+      }
     } else {
-        separados = [inputNum[0]]
+      separados = [inputNum[0]]
     }
-    separados = separados.filter( (row:any)=> row != "");
+    separados = separados.filter((row: any) => row != "");
     return '$' + separados.join(".") + ' COP'; //+ ',' + inputNum[1];
   }
 

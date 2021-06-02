@@ -29,6 +29,7 @@ export class FormproductosComponent implements OnInit {
   titulo: string = "Crear";
   files: File[] = [];
   files2: File[] = [];
+  files3: File[] = [];
   list_files: any = [];
   listCategorias: any = [];
   listTipoTallas: any = [];
@@ -75,17 +76,23 @@ export class FormproductosComponent implements OnInit {
 
   ngOnInit() {
     this.disableSpinner = true;
+    this.inicial();  
+  }
+  inicial(){
+    
     if (Object.keys(this.datas.datos).length > 0) {
+      if( this.id ) this.titulo = "Crear";
+      else this.titulo = "Actualizar";
       this.data = _.clone(this.datas.datos);
       this.id = this.data.id;
       this.listFotos = this.data.listaGaleria || [];
-      this.titulo = "Actualizar";
+      
       this.tallaSelect = this.data.listaTallas || [];
       this.procesoEdision();
     } else { this.id = ""; this.data.pro_codigo = this.codigo(); this.data.pro_sw_tallas = 1; this.disableSpinner = false; this.listFotos = []; }
     this.getCategorias();
     this.getTipoTallas();
-    this.data.activarBTN = true;
+    this.data.activarBTN = false;
   }
 
   ordenActualizar() {
@@ -128,13 +135,22 @@ export class FormproductosComponent implements OnInit {
     }, error => this._tools.presentToast("error servidor"));
   }
 
-  onSelect( event: any, item:any ) {
+  async onSelect( event: any, item:any ) {
     //console.log(event, this.files);
-    this.files = [event.addedFiles[0]];
-    setTimeout(()=>{
-      this.subirFile( item );
+    this.files = [ event.addedFiles[0] ];
+    setTimeout( async ()=>{
+      await this.subirFile( item );
     }, 1000 );
   }
+
+  async onSelect2( event: any, item:any ) {
+    //console.log(event, this.files);
+    this.files3.push( ...event.addedFiles );
+    setTimeout( async ()=>{
+      await this.subirFile( item, 'colorGaleria' );
+    }, 1000 );
+  }
+
 
 
   onRemove(event) {
@@ -149,6 +165,7 @@ export class FormproductosComponent implements OnInit {
   async subirFile( item: any, opt:string = 'foto' ) {
     let lista = this.files;
     if( opt === 'galeria') lista = this.files2;
+    if( opt === 'colorGaleria') lista = this.files3;
     for( let row of lista ){
       let form: any = new FormData();
       form.append('file', row );
@@ -159,7 +176,9 @@ export class FormproductosComponent implements OnInit {
       
     }
     this.files = [];
-
+    this.files2 = [];
+    this.files3 = [];
+    item.checkFotoGaleri = false;
   }
 
   fileNext( item, opt, form:any ){
@@ -171,7 +190,14 @@ export class FormproductosComponent implements OnInit {
           else await this.validadorGaleria( res.files );
           if ( this.id ) this.submit();
         }
-        else { item.foto = res.files; this.submit(); }
+        else { 
+          item.foto = res.files;
+          if( opt == 'colorGaleria' ) { 
+            if( !item.galeriaList ) item.galeriaList = [];
+            item.galeriaList.push( { id: this._tools.codigo( ), foto: res.files } );
+          }
+          this.submit(); 
+        }
         this._tools.presentToast("Exitoso");
         console.log(item);
         resolve( true );
@@ -189,13 +215,15 @@ export class FormproductosComponent implements OnInit {
     });
   }
 
-  EliminarFoto( item:any ){
+  EliminarFoto( item:any, key:any = {} ){
     this.data.listaGaleria = this.listFotos.filter( ( row:any )=> row.id != item.id );
     this.listFotos = this.listFotos.filter( ( row:any )=> row.id != item.id );
+    console.log( item, this.data  );
+    if( key.galeriaList ) if( key.galeriaList.length ) key.galeriaList = key.galeriaList.filter( ( row:any )=> row.id != item.id );
     this.updates();
   }
 
-  guardarColor(item: any) {
+  guardarColor() {
     //item.check = true;
     this.data.listColor = this.listColor;
     if (this.id) this.submit();
@@ -275,6 +303,10 @@ export class FormproductosComponent implements OnInit {
     this.data = _.omitBy(this.data, _.isNull);
     this._productos.update(this.data).subscribe((res: any) => {
       this._tools.presentToast("Actualizado");
+      this.data = res;
+      if( this.data.pro_sw_tallas ) this.data.pro_sw_tallas = this.data.pro_sw_tallas.id;
+      console.log( this.data )
+      this.procesoEdision();
     }, (error) => { console.error(error); this._tools.presentToast("Error de servidor") });
   }
   onSelects(event: any, opt:string = 'foto') {
@@ -374,7 +406,7 @@ export class FormproductosComponent implements OnInit {
   }
 
   tallaSeleccionando(t) {
-    this.data.listaTallas = this.data.listaTallas.filter(e => e.id !== t.id);
+    //this.data.listaTallas = _.clone( this.data.listaTallas.filter(e => e.id !== t.id) );
     this.editarTalla()
   }
 
@@ -445,23 +477,34 @@ export class FormproductosComponent implements OnInit {
     })
   }
 
-  add(event: MatChipInputEvent): void {
+  add(event: MatChipInputEvent) {
     const value = (event.value || '').trim();
-
+    let  listas:any = [];
+    let filtro = this.listColor.filter(( item:any ) => item.talla == value );
+    if( filtro ) if( filtro.length > 0 ) return false;
     // Add our fruit
+    for( let row of this.data.listaTallas ) listas.push( { tal_descripcion: row.tal_descripcion, id: row.id, tal_sw_activo: row.tal_sw_activo } );
+    console.log( listas );
     if (value) {
-      this.listColor.push({
+      let data:any = {
         talla: value,
         id: this._tools.codigo(),
         check: true,
-        tallaSelect: this.data.listaTallas
-      });
+        tallaSelect: [],
+        galeriaList: []
+      };
+      data.tallaSelect.push( ... _.clone( listas ) );
+      this.listColor.push( data );
     }
     console.log( event )
     event.value = "";
-    this.guardarColor( value );
+    this.guardarColor( );
     // Clear the input value
-    //event['chipInput']!.clear();
+    try {
+      event['chipInput']!.clear();
+    } catch (error) {
+      
+    }
   }
 
   remove(item: Fruit): void {

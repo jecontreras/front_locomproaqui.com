@@ -1,0 +1,84 @@
+<div class="container">
+    <div class="row">
+        <div class="col-12">
+            <h4 class="card-title">Entrada / Salida Inventario</h4>
+        </div>
+        <div class="col-3">
+            <label for="exampleFormControlInput1">Tipo de Entrada</label>
+            <select class="form-control form-control-sm" [(ngModel)]="data.tpEntrada">
+                <option value="1">Entrada</option>
+                <option value="2">Salida</option>
+                <option value="3">Devolucion</option>
+            </select>
+        </div>
+        <div class="col-3">
+            <label for="exampleFormControlInput1">Fecha</label>
+            <input type="date" [(ngModel)]="data.fecha" class="form-control form-control-sm">
+        </div>
+        <div class="col-12">
+            <h4 class="card-title">Lista Productos</h4>
+        </div>
+        <div class="col-12">
+            <label class="form-group col">
+                <input [(ngModel)]="datoBusqueda" type="search" class="form-control form-control-sm"
+                    placeholder="Buscar Productos" aria-controls="datatables">
+            </label>
+        </div>
+        <div class="col-12">
+            <div class="row">
+                <div class="col-6 col-md-4 col-sm-4 col-lg-3 col-xs-3" *ngFor="let item of listArticulos">
+                    <mat-card class="example-card">
+                        <mat-card-header>
+                            <mat-card-subtitle>Codigo: {{ item.pro_codigo }}</mat-card-subtitle>
+                        </mat-card-header>
+                        <img mat-card-image [src]="item.foto" alt="Photo of a Shiba Inu">
+                        <mat-card-actions>
+                            <div class="d-flex justify-content-between">
+                                <div style="width: 100%;">
+                                    <label for="exampleFormControlSelect1">Color disponibles:</label>
+                                    <select class="form-control form-control-sm" [(ngModel)]="item.colorSltc"
+                                        (change)="colorSeleccionado( item );">
+                                        <option [value]="key.talla" *ngFor="let key of item.listColor">{{
+                                            key.talla }}
+                                        </option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="d-flex justify-content-between" *ngIf="item.listSeleccionoColor">
+                                <div style="width: 100%;">
+                                    <label for="exampleFormControlSelect1">Tallas disponibles:</label>
+                                    <select class="form-control form-control-sm" [(ngModel)]="item.tallaSltc"
+                                        (change)="TallaSeleccionado( item );">
+                                        <option [value]="key.tal_descripcion" *ngFor="let key of item.listSeleccionoColor.tallaSelect">{{
+                                            key.tal_descripcion }}
+                                        </option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="d-flex justify-content-between" *ngIf="item.detalleSeleccion">
+                                <div>
+                                    <label for="exampleFormControlInput1">Disponible</label>
+                                    <input type="number" [(ngModel)]="item.detalleSeleccion.cantidad" disabled
+                                        class="form-control form-control-sm">
+                                </div>
+                                <div></div>
+                                <div>
+                                    <label for="exampleFormControlInput1">adquirir</label>
+                                    <input type="number" [(ngModel)]="item.cantidadAdquirir"
+                                        class="form-control form-control-sm">
+                                </div>
+                            </div>
+                            <!--<div class="d-flex justify-content-center">
+                                <div>
+                                    <label for="exampleFormControlInput1">Vr.Unidad:</label>
+                                    <input disabled currencyMask [(ngModel)]="item.pro_uni_venta"
+                                        class="form-control form-control-sm" [options]="opcionCurrencys" />
+                                </div>
+                            </div>-->
+                        </mat-card-actions>
+                    </mat-card>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

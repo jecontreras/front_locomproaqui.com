@@ -256,8 +256,8 @@ export class FormventasComponent implements OnInit {
     let cabeza:any = this.dataUser.cabeza || {};
     let numeroSplit = _.split( cabeza.usu_telefono, "+57", 2);
     if( numeroSplit[1] ) cabeza.usu_telefono = numeroSplit[1];
-    if( cabeza.usu_perfil == 3 ) cerialNumero = ( cabeza.usu_indicativo || '57' ) + ( cabeza.usu_telefono || '3148487506' );
-    else cerialNumero = "573148487506";
+    if( cabeza.usu_perfil == 3 ) cerialNumero = ( cabeza.usu_indicativo || '57' ) + ( cabeza.usu_telefono || '3506700802' );
+    else cerialNumero = "573506700802";
     let dataCarro:string = "";
       for( let row of this.listCarrito ) {
         dataCarro+= `Foto de el producto: ${ row.foto }

@@ -7,7 +7,8 @@ import {Router, CanActivate } from '@angular/router';
 import { USER } from '../interfaces/user';
 import { Store } from '@ngrx/store';
 import { UsuariosService } from '../servicesComponents/usuarios.service';
-import { UserAction, TokenAction } from '../redux/app.actions';
+import { UserAction, TokenAction, ConfiguracionAction } from '../redux/app.actions';
+import { AdminService } from '../servicesComponents/admin.service';
 
 export interface User {
   heroesUrl: string;
@@ -19,7 +20,12 @@ export interface User {
 })
 export class AuthService implements CanActivate {
   dataUser:any = {};
-  constructor(private http: HttpClient, private router: Router, private _store: Store<USER>, private _user: UsuariosService) {
+  constructor(
+    private router: Router, 
+    private _store: Store<USER>, 
+    private _user: UsuariosService,
+    private _admin: AdminService
+  ) {
     this._store.select("name")
     .subscribe((store:any)=>{
       //console.log(store);
@@ -88,10 +94,12 @@ export class AuthService implements CanActivate {
       //console.log(identity)
       if (Object.keys(identity).length >0) {
         this.validandoUser();
+        this.validandoConfig();
         (async ()=>{
           while (true){
             await this.sleep(300);
-            this.validandoUser()
+            this.validandoUser();
+            this.validandoConfig();
           }
         });
         return true;
@@ -125,5 +133,12 @@ export class AuthService implements CanActivate {
         }
         },(error)=> { this.deleteStorages() }
       );
+    }
+    validandoConfig(){
+      this._admin.get( {  } ).subscribe(( res:any )=>{
+        console.log("***", res)
+        let accion = new ConfiguracionAction( res.data[0], 'post' );
+        this._store.dispatch( accion );
+      });
     }
 }

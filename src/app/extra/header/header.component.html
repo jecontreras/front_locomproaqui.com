@@ -31,7 +31,7 @@
                 class="material-icons icoss"><img class="iconsPng" src="./assets/icons/Recurso3.png" alt=""></i>
             </span>
           </div>
-          <div class="anchoReal12">
+          <div class="anchoReal12" *ngIf="dataUser.id">
             <span (click)="this.opcionoView = 'notificaciones'; sidenav.toggle();" class="p-1 pointer espacios"
               [matBadge]="notificando" matBadgePosition="before" matBadgeColor="accent"> <img class="iconsPng"
                 src="./assets/icons/Recurso2.png" alt="">

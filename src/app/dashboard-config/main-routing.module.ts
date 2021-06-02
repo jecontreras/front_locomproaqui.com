@@ -17,6 +17,8 @@ import { VentastableComponent } from './table/ventastable/ventastable.component'
 import { VentasLiderComponent } from './components/ventas-lider/ventas-lider.component';
 import { CatalogoComponent } from './components/catalogo/catalogo.component';
 import { AdminComponent } from './components/admin/admin.component';
+import { ConfiguracionComponent } from './components/configuracion/configuracion.component';
+import { ControlInventarioComponent } from './components/control-inventario/control-inventario.component';
 
 const dashboardRoutes: Routes = [
  {
@@ -38,6 +40,8 @@ const dashboardRoutes: Routes = [
      {path: 'referidos', component: ReferidosComponent},
      {path: 'testimonios', component: TestimonioComponent},
      {path: 'tablaventas', component: VentastableComponent},
+     {path: 'configuracion', component: ConfiguracionComponent},
+     {path: 'controlInventario', component: ControlInventarioComponent },
      {path: 'admin', component: AdminComponent},
      {path: '**', redirectTo: 'categorias', pathMatch: 'full'}
    ]

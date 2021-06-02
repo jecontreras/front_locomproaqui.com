@@ -1,9 +1,128 @@
 <h2 mat-dialog-title>
-    Datos del Productos {{ data.pro_nombre }}
+    <div class="d-flex justify-content-between">
+        <div>
+            Datos del Productos {{ data.pro_nombre }}
+        </div>
+        <div>
+            <button (click)="descargarFoto( data )" type="button" class="btn btn-primary">
+                Descargar Foto
+            </button>
+        </div>
+        <div style=" width: 20%;">
+            <img (click)="masInfo( data )" class="pointer" src="./assets/icons/masinformacion.png" style="width: 80%;">
+        </div>
+    </div>
 
 </h2>
 <mat-dialog-content class="mat-typography">
-    <div class="row">
+    <div class="row content contentCenter">
+
+        <div class="col-12 col-sm-6" style="width: 100%;">
+            <!--<div>
+                <button type="button" class="btn btn-light sliderpasador" (click)="previusFoto()">
+                    <i class="material-icons">arrow_back</i>
+                </button>
+            </div>-->
+            <br><br>
+            <lib-ngx-image-zoom [thumbImage]=urlFoto [fullImage]=urlFoto [magnification]="1" [enableScrollZoom]="true"
+                [enableLens]="true" [lensWidth]="200" [lensHeight]="200">
+            </lib-ngx-image-zoom>
+            <br>
+            <div class="row">
+                <ng-image-slider [images]="imageObject" [infinite]="sliderInfinite" [imagePopup]="sliderImagePopup" style="width: 100%;"
+                    [showArrow]="sliderArrowShow" [imageSize]="{width: sliderImageWidth, height: sliderImageHeight}"
+                    [autoSlide]="sliderAutoSlide ? 1 : 0" [slideImage]="sliderSlideImage"
+                    [animationSpeed]="sliderAnimationSpeed" (imageClick)="imageOnClick($event)"
+                    (arrowClick)="arrowOnClick($event)" (lightboxArrowClick)="lightboxArrowClick($event)" #nav>
+                </ng-image-slider>
+                <!--<div class="col-4 pointer" *ngFor="let item of galeria" (click)="seleccionFoto( item.foto )">
+                    <mat-card class="example-card">
+                        <img mat-card-image [src]="item.foto" alt="Photo of a Shiba Inu">
+                    </mat-card>
+                </div>-->
+            </div>
+            <!--<div>
+                <button type="button" class="btn btn-light sliderpasador" (click)="nextFoto()">
+                    <i class="material-icons">arrow_forward</i>
+                </button>
+            </div>-->
+        </div>
+
+        <div class="col-12 col-sm-6" style="width: 100%;">
+            <div class="content">
+                <div class="row">
+                    <div class="col-12">
+                        <div class="d-flex justify-content-between">
+                            <div>
+                                <h3>{{ data.pro_nombre }}</h3>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-6 col-sm-4" *ngIf="data.listTallas">
+                        <label for="exampleFormControlSelect1">Color disponibles:</label>
+                        <select class="form-control form-control-sm" [(ngModel)]="data.color"
+                            (change)="colorSeleccionado( );  cambioImgs();">
+                            <option [value]="item.talla" *ngFor="let item of data.listColor">{{
+                                item.talla }}
+                            </option>
+                        </select>
+                    </div>
+                    <div class="col-6 col-sm-4" *ngIf="data.listTallas">
+                        <label for="exampleFormControlSelect1">Tallas disponibles:</label>
+                        <select class="form-control form-control-sm" [(ngModel)]="data.tallas"
+                            (change)="seleccionTalla()" [disabled]="!data.color">
+                            <option [value]="item.tal_descripcion" *ngFor="let item of seleccionoColor.tallaSelect">
+                                {{
+                                item.tal_descripcion }}</option>
+                        </select>
+                    </div>
+                    <div class="col-6 col-sm-4" *ngIf="seleccionnTalla">
+                        <label>Cantidad Disponibles</label>
+                        <input type="number" [(ngModel)]="seleccionnTalla.cantidad" disabled
+                            class="form-control form-control-sm">
+                    </div>
+                    <div class="col-6">
+                        <label>Cantidad Adquirir</label>
+                        <input type="number" [(ngModel)]="data.cantidadAdquirir" class="form-control form-control-sm">
+                    </div>
+                    <div class="col-6">
+                        <img style="width: 50%;" src="./assets/img/gratis.jpg" alt="">
+                    </div>
+                    <div class="col-12" *ngIf="data.checkMayor == 1">
+                        <mat-list>
+                            <div mat-subheader>Lista de precios al Mayor</div>
+                            <mat-list-item *ngFor="let item of data.listPrecios" class="pointer"
+                                (click)="AgregarCart(item)" [ngClass]="{
+                                'colorSeleccionado':item.selecciono == true
+                              }">
+                                <div mat-line class="row">
+                                    <div class="col-6">
+                                        <span>Cantidad: {{ item.cantidad }}</span>
+                                        &nbsp;&nbsp;
+                                        <span>Precios: {{ ( item.precios || 0 ).toLocaleString(1) }} COP</span>
+                                    </div>
+                                </div>
+                            </mat-list-item>
+                        </mat-list>
+                    </div>
+                    <div class="col-12 content container" style="height: 225px; overflow: scroll; overflow-x: hidden">
+                        <div class="row">
+                            <div class="col-12">
+                                <h5>Descripcion: </h5>
+                            </div>
+                            <div class="col-12">
+                                <p [innerHtml]="data.pro_descripcion"></p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+
+    <!--<div class="row">
         <div class="col-md-6 col-sm-12 col-lg-6 col-xs-6">
             <lib-ngx-image-zoom [thumbImage]=urlFoto [fullImage]=urlFoto [magnification]="1" [enableScrollZoom]="true"
                 [enableLens]="true" [lensWidth]="200" [lensHeight]="200"></lib-ngx-image-zoom>
@@ -89,7 +208,7 @@
                 </div>
             </div>
         </div>
-    </div>
+    </div>-->
 </mat-dialog-content>
 
 <mat-dialog-actions align="end">
