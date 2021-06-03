@@ -203,7 +203,7 @@
             BIENVENIDO A TU OFICINA VIRTUAL " {{ dataUser.usu_usuario }} "
           </h4>
           <h4 *ngIf="!dataUser.id" class="text-center text-dark altos titulo1">
-            BIENVENIDO A {{ userId.usu_usuario }}
+            BIENVENIDO A {{ userId.usu_usuario || 'LOKOMPROAQUI'}}
           </h4>
         </div>
       </div>

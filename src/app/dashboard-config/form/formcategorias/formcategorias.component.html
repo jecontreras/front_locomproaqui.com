@@ -15,19 +15,28 @@
             <textarea class="form-control" [(ngModel)]="data.cat_descripcion" rows="3"></textarea>
         </div>
         <div class="form-group col-12">
-            <label for="exampleFormControlInput1">Categoria padre</label>
-            <select class="form-control form-control-sm" [(ngModel)]="data.cat_padre">
-                <option [value]="item.id" *ngFor="let item of listCategorias">{{ item.cat_nombre }}</option>
-            </select>
+            <mat-form-field class="example-chip-list">
+                <mat-label>Categorias Hijas</mat-label>
+                <mat-chip-list #chipList aria-label="Colores">
+                    <mat-chip *ngFor="let item of listCategoria" [selectable]="selectable" [removable]="removable"
+                        (removed)="remove(item)">
+                        {{ item.categoria }}
+                        <mat-icon matChipRemove *ngIf="removable">cancel</mat-icon>
+                    </mat-chip>
+                    <input placeholder="Nueva categoria..." [matChipInputFor]="chipList"
+                        [matChipInputSeparatorKeyCodes]="separatorKeysCodes" [matChipInputAddOnBlur]="addOnBlur"
+                        (matChipInputTokenEnd)="add($event)">
+                </mat-chip-list>
+            </mat-form-field>
         </div>
         <div class="form-group col-12">
             <label for="exampleFormControlInput1">Ordenador</label>
             <input type="text" [(ngModel)]="data.ordenador" class="form-control form-control-sm">
         </div>
         <div class="form-group col-12">
-            
+
             <div class="row">
-                <label class="col" >Subir Imagen</label>
+                <label class="col">Subir Imagen</label>
                 <button class="btn btn-primary btn-just-icon btn-round" (click)="subirFile()" *ngIf="files.length > 0">
                     Subir Imagen
                 </button>
@@ -35,8 +44,8 @@
 
             <ngx-dropzone (change)="onSelect($event)">
                 <ngx-dropzone-label>Abrir archivos</ngx-dropzone-label>
-                <ngx-dropzone-image-preview ngProjectAs="ngx-dropzone-preview" *ngFor="let f of files"
-                    [file]="f" [removable]="true" (removed)="onRemove(f)" multiple="false">
+                <ngx-dropzone-image-preview ngProjectAs="ngx-dropzone-preview" *ngFor="let f of files" [file]="f"
+                    [removable]="true" (removed)="onRemove(f)" multiple="false">
                     <ngx-dropzone-label>{{ f.name }} ({{ f.type }})</ngx-dropzone-label>
                 </ngx-dropzone-image-preview>
             </ngx-dropzone>
@@ -51,9 +60,9 @@
     </div>
 </mat-dialog-content>
 <mat-dialog-actions align="end">
-  <button mat-button mat-dialog-close>Cerrar</button>
-  <button mat-button cdkFocusInitial (click)="submit()">
-      <span *ngIf="!id">Guardar Cambios</span>
-      <span *ngIf="id">Actulizar Cambios</span>
-  </button>
+    <button mat-button mat-dialog-close>Cerrar</button>
+    <button mat-button cdkFocusInitial (click)="submit()">
+        <span *ngIf="!id">Guardar Cambios</span>
+        <span *ngIf="id">Actulizar Cambios</span>
+    </button>
 </mat-dialog-actions>

@@ -136,7 +136,7 @@ export class FormproductosComponent implements OnInit {
   }
 
   async onSelect( event: any, item:any ) {
-    //console.log(event, this.files);
+    console.log(event, this.files);
     this.files = [ event.addedFiles[0] ];
     setTimeout( async ()=>{
       await this.subirFile( item );

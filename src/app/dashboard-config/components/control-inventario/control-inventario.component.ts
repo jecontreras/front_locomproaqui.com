@@ -96,6 +96,7 @@ export class ControlInventarioComponent implements OnInit {
 
   cargarTodos() {
     this.spinner.show();
+    console.log( this.listArticulos.length )
     this._productos.get(this.query)
     .subscribe(
       (response: any) => {
@@ -123,6 +124,8 @@ export class ControlInventarioComponent implements OnInit {
   }
 
   buscar() {
+    console.log( this.datoBusqueda.length, 1 >= this.datoBusqueda.length, this.datoBusqueda.length > 1 )
+    if( this.datoBusqueda.length < 1 ) return false;
     this.loader = false;
     this.notscrolly = true 
     this.notEmptyPost = true;

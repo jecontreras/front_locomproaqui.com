@@ -32,8 +32,8 @@ export class ViewProductosComponent implements OnInit {
   imageObject: any = [];
 
   @ViewChild('nav', { static: true }) ds: NgImageSliderComponent;
-  sliderWidth: Number = 962;
-  sliderImageWidth: Number = 264;
+  sliderWidth: Number = 800;
+  sliderImageWidth: Number = 230;
   sliderImageHeight: Number = 200;
   sliderArrowShow: Boolean = true;
   sliderInfinite: Boolean = false;
@@ -46,7 +46,7 @@ export class ViewProductosComponent implements OnInit {
     public dialogRef: MatDialogRef<ViewProductosComponent>,
     @Inject(MAT_DIALOG_DATA) public datas: any,
     private _store: Store<CART>,
-    private _tools: ToolsService,
+    public _tools: ToolsService,
     private _catalago: CatalogoService,
   ) { 
 
@@ -88,7 +88,6 @@ export class ViewProductosComponent implements OnInit {
       check: true,
       id: 0,
     });
-    console.log( this.imageObject )
 
     /*setTimeout(()=>{ 
       try {
@@ -206,9 +205,33 @@ export class ViewProductosComponent implements OnInit {
   colorSeleccionado(){
     try {
       if( !this.data.color ) return false;
+      this.data.tallas = "";
+      this.seleccionnTalla = {};
       this.seleccionoColor = this.data.listColor.find( row => row.talla == this.data.color );
+      this.llenadoGaleria();  
       this.seleccionTalla();
+      this.cambioImgs();
     } catch (error) {}
+  }
+
+  llenadoGaleria(){
+    this.imageObject = [];
+    this.imageObject.push( 
+      {
+        image: this.seleccionoColor.foto,
+        thumbImage: this.seleccionoColor.foto,
+        alt: '',
+        check: true,
+        id: 0,
+      }
+    );
+    for( let row of this.seleccionoColor.galeriaList ) this.imageObject.unshift({
+      image: row.foto,
+      thumbImage: row.foto,
+      alt: '',
+      check: true,
+      id: 0,
+    });
   }
 
   seleccionTalla(){

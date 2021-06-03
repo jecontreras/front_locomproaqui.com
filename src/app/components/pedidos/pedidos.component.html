@@ -1,4 +1,4 @@
-<div class="content anchos overflow-auto">
+<div class="anchos">
     <div class="row">
         <!--<div class="row col-12">
             <div class="form-group col">
@@ -52,16 +52,16 @@
                                 <div class="col-12">
                                     <div class="d-flex justify-content-between">
                                         <div>
-                                            <h5 class="titulo1 color1">{{ item.pro_nombre | slice: 0: 20 }}</h5>
+                                            <h6 class="titulo1 color1">{{ item.pro_nombre | slice: 0: 20 }}</h6>
                                         </div>
                                         <div>
-                                            <h5 class="titulo1 color1">
+                                            <h6 class="titulo1 color1">
                                                 <small style="display: inline-block;  font-size: 90% !important;"
                                                     class="pricesmall currency2" id="pricesmall_25">$ {{ (
                                                     item.pro_uni_ventaEdit || item.pro_uni_venta || 0
                                                     ).toLocaleString(1) }}
                                                 </small><br>
-                                            </h5>
+                                            </h6>
                                         </div>
                                     </div>
                                 </div>
@@ -85,7 +85,7 @@
                                             </div>
                                         </div>
                                         <div></div>
-                                        <div>
+                                        <div style="display: inline;">
                                             <mat-form-field *ngIf="item.listTallas" class="tallasEstilo">
                                                 <mat-label>Tallas disponibles</mat-label>
                                                 <mat-select [(ngModel)]="item.tallasSelect" disableRipple>

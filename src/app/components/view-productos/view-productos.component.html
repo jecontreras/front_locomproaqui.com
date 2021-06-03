@@ -1,7 +1,7 @@
 <h2 mat-dialog-title>
     <div class="d-flex justify-content-between">
         <div>
-            Datos del Productos {{ data.pro_nombre }}
+            Datos {{ data.pro_nombre }}
         </div>
         <div>
             <button (click)="descargarFoto( data )" type="button" class="btn btn-primary">
@@ -18,34 +18,23 @@
     <div class="row content contentCenter">
 
         <div class="col-12 col-sm-6" style="width: 100%;">
-            <!--<div>
-                <button type="button" class="btn btn-light sliderpasador" (click)="previusFoto()">
-                    <i class="material-icons">arrow_back</i>
-                </button>
-            </div>-->
-            <br><br>
-            <lib-ngx-image-zoom [thumbImage]=urlFoto [fullImage]=urlFoto [magnification]="1" [enableScrollZoom]="true"
-                [enableLens]="true" [lensWidth]="200" [lensHeight]="200">
-            </lib-ngx-image-zoom>
-            <br>
             <div class="row">
-                <ng-image-slider [images]="imageObject" [infinite]="sliderInfinite" [imagePopup]="sliderImagePopup" style="width: 100%;"
-                    [showArrow]="sliderArrowShow" [imageSize]="{width: sliderImageWidth, height: sliderImageHeight}"
-                    [autoSlide]="sliderAutoSlide ? 1 : 0" [slideImage]="sliderSlideImage"
-                    [animationSpeed]="sliderAnimationSpeed" (imageClick)="imageOnClick($event)"
-                    (arrowClick)="arrowOnClick($event)" (lightboxArrowClick)="lightboxArrowClick($event)" #nav>
-                </ng-image-slider>
-                <!--<div class="col-4 pointer" *ngFor="let item of galeria" (click)="seleccionFoto( item.foto )">
-                    <mat-card class="example-card">
-                        <img mat-card-image [src]="item.foto" alt="Photo of a Shiba Inu">
-                    </mat-card>
-                </div>-->
+                <div class="col-12">
+                    <br><br>
+                    <lib-ngx-image-zoom class="ocultacion" [thumbImage]=urlFoto [fullImage]=urlFoto [magnification]="1"
+                        [enableScrollZoom]="true" [enableLens]="true" [lensWidth]="200" [lensHeight]="200">
+                    </lib-ngx-image-zoom>
+                </div>
+                <div class="col-12">
+                    <ng-image-slider [images]="imageObject" [infinite]="sliderInfinite" [imagePopup]="sliderImagePopup"
+                        style="width: 100%;" [showArrow]="sliderArrowShow"
+                        [imageSize]="{width: sliderImageWidth, height: sliderImageHeight}"
+                        [autoSlide]="sliderAutoSlide ? 1 : 0" [slideImage]="sliderSlideImage"
+                        [animationSpeed]="sliderAnimationSpeed" (imageClick)="imageOnClick($event)"
+                        (arrowClick)="arrowOnClick($event)" (lightboxArrowClick)="lightboxArrowClick($event)" #nav>
+                    </ng-image-slider>
+                </div>
             </div>
-            <!--<div>
-                <button type="button" class="btn btn-light sliderpasador" (click)="nextFoto()">
-                    <i class="material-icons">arrow_forward</i>
-                </button>
-            </div>-->
         </div>
 
         <div class="col-12 col-sm-6" style="width: 100%;">
@@ -56,12 +45,15 @@
                             <div>
                                 <h3>{{ data.pro_nombre }}</h3>
                             </div>
+                            <div>
+                                <h3 class="precios">{{ _tools.monedaChange( 3, 2, data.pro_uni_venta ) }}</h3>
+                            </div>
                         </div>
                     </div>
                     <div class="col-6 col-sm-4" *ngIf="data.listTallas">
                         <label for="exampleFormControlSelect1">Color disponibles:</label>
                         <select class="form-control form-control-sm" [(ngModel)]="data.color"
-                            (change)="colorSeleccionado( );  cambioImgs();">
+                            (change)="colorSeleccionado( );">
                             <option [value]="item.talla" *ngFor="let item of data.listColor">{{
                                 item.talla }}
                             </option>
@@ -72,8 +64,8 @@
                         <select class="form-control form-control-sm" [(ngModel)]="data.tallas"
                             (change)="seleccionTalla()" [disabled]="!data.color">
                             <option [value]="item.tal_descripcion" *ngFor="let item of seleccionoColor.tallaSelect">
-                                {{
-                                item.tal_descripcion }}</option>
+                                talla: {{
+                                item.tal_descripcion }} cantidad: {{ item.cantidad }}</option>
                         </select>
                     </div>
                     <div class="col-6 col-sm-4" *ngIf="seleccionnTalla">

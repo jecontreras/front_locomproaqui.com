@@ -1,10 +1,12 @@
 import { Component, OnInit, Inject } from '@angular/core';
-import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
+import { MatChipInputEvent, MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
 import { CategoriasService } from 'src/app/servicesComponents/categorias.service';
 import { ToolsService } from 'src/app/services/tools.service';
 import * as _ from 'lodash';
 import { ArchivosService } from 'src/app/servicesComponents/archivos.service';
 import { environment } from 'src/environments/environment';
+import { Fruit } from 'src/app/interfaces/interfaces';
+import { COMMA, ENTER } from '@angular/cdk/keycodes';
 
 const URL = environment.url;
 
@@ -17,10 +19,19 @@ export class FormcategoriasComponent implements OnInit {
   
   files: File[] = [];
   list_files: any = [];
-  data:any = {};
+  data:any = {
+    cat_activo: 0
+  };
   listCategorias:any = [];
   id:any;
   titulo:string = "Crear";
+
+  listCategoria:any = [];
+  selectable = true;
+  removable = true;
+  addOnBlur = true;
+
+  readonly separatorKeysCodes = [ENTER, COMMA] as const;
 
   constructor(
     public dialog: MatDialog,
@@ -52,8 +63,14 @@ export class FormcategoriasComponent implements OnInit {
   }
   
   getCategorias(){
-    this._categoria.get({where:{cat_activo: 0}}).subscribe((res:any)=>{
-      this.listCategorias = res.data;
+    this._categoria.get( { where: { cat_activo: 0, cat_padre: this.data.id }, limit: 1000 } ).subscribe((res:any)=>{
+      this.listCategoria =_.map( res.data , ( row )=>{ 
+        return {
+          id: row.id,
+          categoria: row.categoria,
+          ... row
+        };
+      });
     }, error=> this._tools.presentToast("error servidor"));
   }
   
@@ -78,20 +95,66 @@ export class FormcategoriasComponent implements OnInit {
       this.updates();
     }
     else { this.guardar(); }
+    this.submitHijos();
   }
 
-  guardar(){
-    this._categoria.create(this.data).subscribe((res:any)=>{
+  guardar( item:any = this.data ){
+    this._categoria.create( item ).subscribe((res:any)=>{
       //console.log(res);
+      this.data.id = res.id;
       this._tools.presentToast("Exitoso");
     }, (error)=>this._tools.presentToast("Error"));
     this.dialog.closeAll();
   }
 
-  updates(){
-    this._categoria.update(this.data).subscribe((res:any)=>{
+  updates( item:any = this.data ){
+    this._categoria.update( item ).subscribe((res:any)=>{
       this._tools.presentToast("Actualizado");
     },(error)=>{console.error(error); this._tools.presentToast("Error de servidor")});
+  }
+
+  submitHijos(){
+    for ( let row of this.listCategoria ){
+      let data:any = {
+        id: row.id || null,
+        cat_padre: this.data.id,
+        cat_nombre: row.categoria,
+        cat_activo: "0",
+        cat_descripcion: row.categoria,
+        ordenador: "30"
+      };
+      data = _.omitBy( data, _.isNull);
+      if( row.id ) this.updates( data );
+      else  this.guardar( data );
+    }
+  }
+
+  add(event: MatChipInputEvent) {
+    const value = (event.value || '').trim();
+    let  listas:any = [];
+    let filtro = this.listCategoria.filter(( item:any ) => item.categoria == value );
+    if( filtro ) if( filtro.length > 0 ) return false;
+    if (value) {
+      let data:any = {
+        categoria: value,
+      };
+      this.listCategoria.push( data );
+    }
+    event.value = "";
+    // Clear the input value
+    try {
+      event['chipInput']!.clear();
+    } catch (error) {
+      
+    }
+  }
+
+  remove(item: Fruit): void {
+    const index = this.listCategoria.indexOf( item );
+
+    if ( index >= 0 ) {
+      this.listCategoria.splice(index, 1);
+    }
   }
 
 }

@@ -8,7 +8,7 @@
             <ngx-dropzone (change)="onSelects($event, 'foto')">
                 <ngx-dropzone-label>Subir Fotos</ngx-dropzone-label>
                 <ngx-dropzone-image-preview ngProjectAs="ngx-dropzone-preview" *ngFor="let f of files" [file]="f"
-                    [removable]="true" (removed)="onRemoves(f)" multiple="false">
+                    [removable]="true" (removed)="onRemoves(f)" multiple="false" accept="image/jpeg,image/jpg,image/png" maxFileSize="1500000">
                     <ngx-dropzone-label>{{ f.name }} ({{ f.type }})</ngx-dropzone-label>
                 </ngx-dropzone-image-preview>
             </ngx-dropzone>
@@ -38,7 +38,7 @@
                 </div>
             </div>
         </div>
-        <div class="col" *ngIf="id && titulo == 'Crear'">
+        <div class="col-4" *ngIf="id && titulo == 'Crear'">
             <div class="d-flex flex-row-reverse bd-highlight">
                 <div class="p-2 bd-highlight">
                     <button type="button" class="btn btn-success" (click)="ordenActualizar()">Actualizar orden de

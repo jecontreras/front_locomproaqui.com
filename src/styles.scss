@@ -228,9 +228,15 @@ footer {
   .imgProductos {
     height: 210px;
   }
+  .ocultacion{
+    display: none;
+  }
 }
 /* Small devices (portrait tablets and large phones, 600px and up) */
 @media only screen and (min-width: 420px) {
+  .ocultacion{
+    display: none;
+  }
   .toolbar{
     width: 103.1% !important;
   }
@@ -283,8 +289,8 @@ footer {
     font-size: 11px;
   }
   .ngxImageZoomContainer{
-    width: 384px !important;
-    height: 425px !important;
+    max-width: 384px !important;
+    max-height: 425px !important;
   }
   .ngxImageZoomThumbnail{
     max-height: 425px !important;
@@ -305,6 +311,9 @@ footer {
   }
 }
 @media only screen and (max-width: 600px) {
+  .ocultacion{
+    display: none;
+  }
   .buscadorOcultar {
     display: none;
     margin-top: 10px; 
@@ -361,6 +370,9 @@ footer {
 }
 /* Small devices (portrait tablets and large phones, 600px and up) */
 @media only screen and (min-width: 600px) {
+  .ocultacion{
+    display: inline;
+  }
   .anchosCajaIcons{
     width: 35%;
   }
@@ -425,6 +437,9 @@ footer {
 
 /* Small devices (portrait tablets and large phones, 600px and up) */
 @media only screen and (min-width: 768px) {
+  .ocultacion{
+    display: inline;
+  }
   .anchos {
     padding: 5px 30px;
   }
@@ -489,6 +504,9 @@ footer {
 
 /* Medium devices (landscape tablets, 768px and up) */
 @media only screen and (min-width: 800px) {
+  .ocultacion{
+    display: inline;
+  }
   .anchos {
     padding: 5px 90px;
   }
@@ -553,8 +571,11 @@ footer {
 
 /* Large devices (laptops/desktops, 992px and up) */
 @media only screen and (min-width: 992px) {
+  .ocultacion{
+    display: inline;
+  }
   .anchos {
-    padding: 5px 70px;
+    padding: 5px 43px;
   }
   .anchosCajaIcons{
     width: 19%;
@@ -614,14 +635,17 @@ footer {
     max-width: 628px;
   }
   .anchandoPr{
-    width: 25% !important;
+    width: 30% !important;
   }
 }
 
 /* Extra large devices (large laptops and desktops, 1200px and up) */
 @media only screen and (min-width: 1200px) {
+  .ocultacion{
+    display: inline;
+  }
   .anchos {
-    padding: 5px 115px;
+    padding: 5px 43px;
   }
   .anchosCajaIcons{
     width: 16%;
@@ -687,8 +711,11 @@ footer {
 
 /* Extra large devices (large laptops and desktops, 1200px and up) */
 @media only screen and (min-width: 1300px) {
+  .ocultacion{
+    display: inline;
+  }
   .anchos {
-    padding: 5px 115px;
+    padding: 5px 43px;
   }
   .anchosCajaIcons{
     width: 16%;
