@@ -13,6 +13,7 @@ import { CategoriasService } from 'src/app/servicesComponents/categorias.service
 import * as _ from 'lodash';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { CatalogoService } from 'src/app/servicesComponents/catalogo.service';
+import { resolve } from 'dns';
 
 @Component({
   selector: 'app-pedidos',
@@ -177,28 +178,43 @@ export class PedidosComponent implements OnInit {
     this._store.dispatch(accion);
   }
   getCategorias() {
-    this._categorias.get({ where: { cat_activo: 0 }, limit: 100 }).subscribe((res: any) => {
+    this._categorias.get({ where: { cat_activo: 0, cat_padre: null }, limit: 1000 }).subscribe( async (res: any) => {
       this.imageObject = [];
       for (let row of res.data) {
         let datos: any = {
-          image: row.cat_imagen || './assets/categoria.jpeg',
-          thumbImage: row.cat_imagen,
-          alt: '',
           id: row.id,
-          title: row.cat_nombre
+          title: row.cat_nombre,
+          subCategoria: await this.getSubcategoria( row.id )
         };
         if (row.id == this.idCategoria) datos.check = true;
         this.imageObject.push(datos);
       }
       this.imageObject.unshift({
-        image: './assets/categoria.jpeg',
-        thumbImage: './assets/categoria.jpeg',
-        alt: '',
-        check: !this.idCategoria ? true : false,
         id: 0,
-        title: "Todos"
+        title: "TODOS",
+        subCategoria: []
       });
+      console.log( this.imageObject );
     });
+  }
+  
+  eventorOver( item:any ){
+    console.log( item )
+    for( let row of this.imageObject ) row.check = false;
+    item.check = !item.check;
+  }
+
+  eventoDes( item:any ){
+    for( let row of this.imageObject ) row.check = false;
+  }
+
+  async getSubcategoria( id:any ){
+      return new Promise
+      ( resolve =>{
+        this._categorias.get( { where: { cat_padre: id, cat_activo: 0 }, limit: 1000 } ).subscribe(( res:any )=>{
+          resolve( res.data );
+        }, ()=> resolve( false ) );
+      });
   }
   cargarProductos(): void {
     this.spinner.show();
@@ -332,7 +348,7 @@ export class PedidosComponent implements OnInit {
     obj.check = true;
     this.query = { where: { pro_activo: 0 }, page: 0, limit: 18 };
     this.seartxt = "";
-    if (this.imageObject[index].id > 0) this.query = { where: { pro_activo: 0, pro_categoria: this.imageObject[index].id }, page: 0, limit: 10 };
+    if ( obj.id > 0) this.query = { where: { pro_activo: 0, pro_sub_categoria: obj.id }, page: 0, limit: 10 };
     this.listProductos = [];
     this.notscrolly = true;
     this.notEmptyPost = true;

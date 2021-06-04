@@ -54,6 +54,7 @@ export class FormproductosComponent implements OnInit {
   addOnBlur = true;
   readonly separatorKeysCodes = [ENTER, COMMA] as const;
   fruits: Fruit[] = [ ];
+  listSubCategorias:any = [];
 
   constructor(
     public dialog: MatDialog,
@@ -89,6 +90,7 @@ export class FormproductosComponent implements OnInit {
       
       this.tallaSelect = this.data.listaTallas || [];
       this.procesoEdision();
+      if( this.data.pro_categoria ) this.getSubCategorias( this.data.pro_categoria );
     } else { this.id = ""; this.data.pro_codigo = this.codigo(); this.data.pro_sw_tallas = 1; this.disableSpinner = false; this.listFotos = []; }
     this.getCategorias();
     this.getTipoTallas();
@@ -122,8 +124,16 @@ export class FormproductosComponent implements OnInit {
   }
 
   getCategorias() {
-    this._categoria.get({ where: { cat_activo: 0 }, limit: 100 }).subscribe((res: any) => {
+    this._categoria.get({ where: { cat_activo: 0, cat_padre: null }, limit: 100 }).subscribe((res: any) => {
       this.listCategorias = res.data;
+      this.disableSpinner = false;
+    }, error => this._tools.presentToast("error servidor"));
+  }
+
+  getSubCategorias( id ) {
+    this._categoria.get({ where: { cat_activo: 0, cat_padre: id }, limit: 100 }).subscribe((res: any) => {
+      console.log( res );
+      this.listSubCategorias = res.data;
       this.disableSpinner = false;
     }, error => this._tools.presentToast("error servidor"));
   }
@@ -306,6 +316,7 @@ export class FormproductosComponent implements OnInit {
       res.listColor = this.data.listColor;
       this.data = res;
       if( this.data.pro_sw_tallas ) this.data.pro_sw_tallas = this.data.pro_sw_tallas.id;
+      if ( this.data.pro_sub_categoria ) this.data.pro_sub_categoria = this.data.pro_sub_categoria.id;
       console.log( this.data )
       this.procesoEdision();
     }, (error) => { console.error(error); this._tools.presentToast("Error de servidor") });
@@ -346,6 +357,7 @@ export class FormproductosComponent implements OnInit {
   }
 
   async subirFiles() {
+    if( !this.data.pro_categoria ) return this._tools.tooast( { title: "Por favor debes seleccionar una categoria!!", icon: "error" } );
     this.btnDisabled = true;
     for (let row of this.files) {
       await this.fileSubmit(row);
@@ -353,6 +365,8 @@ export class FormproductosComponent implements OnInit {
     this.files = [];
     this.btnDisabled = false;
     this._tools.presentToast("Exitoso");
+    if( !this.data.id ) return false;
+    this.getSubCategorias( this.data.pro_categoria );
 
   }
 

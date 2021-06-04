@@ -7,6 +7,7 @@ import { ArchivosService } from 'src/app/servicesComponents/archivos.service';
 import { environment } from 'src/environments/environment';
 import { Fruit } from 'src/app/interfaces/interfaces';
 import { COMMA, ENTER } from '@angular/cdk/keycodes';
+import { resolve } from 'dns';
 
 const URL = environment.url;
 
@@ -47,9 +48,8 @@ export class FormcategoriasComponent implements OnInit {
       this.data = _.clone(this.datas.datos);
       this.id = this.data.id;
       this.titulo = "Actualizar";
-      if(this.data.cat_activo === 0) this.data.cat_activo = true;
+      this.getCategorias();
     }else{this.id = ""}
-    this.getCategorias();
   }
 
   onSelect(event:any) {
@@ -67,10 +67,11 @@ export class FormcategoriasComponent implements OnInit {
       this.listCategoria =_.map( res.data , ( row )=>{ 
         return {
           id: row.id,
-          categoria: row.categoria,
+          categoria: row.cat_nombre,
           ... row
         };
       });
+      console.log( this.listCategoria, res )
     }, error=> this._tools.presentToast("error servidor"));
   }
   
@@ -104,7 +105,6 @@ export class FormcategoriasComponent implements OnInit {
       this.data.id = res.id;
       this._tools.presentToast("Exitoso");
     }, (error)=>this._tools.presentToast("Error"));
-    this.dialog.closeAll();
   }
 
   updates( item:any = this.data ){
@@ -114,6 +114,7 @@ export class FormcategoriasComponent implements OnInit {
   }
 
   submitHijos(){
+    if( !this.data.id ) return false;
     for ( let row of this.listCategoria ){
       let data:any = {
         id: row.id || null,
@@ -149,12 +150,23 @@ export class FormcategoriasComponent implements OnInit {
     }
   }
 
-  remove(item: Fruit): void {
+  async remove(item: Fruit) {
     const index = this.listCategoria.indexOf( item );
 
     if ( index >= 0 ) {
-      this.listCategoria.splice(index, 1);
+      let data:any = this.listCategoria[ index ];
+      let result = await this.eliminarCategoria( data );
+      if( result ) this.listCategoria.splice(index, 1);
     }
+  }
+
+  async eliminarCategoria( item:any ){
+    return new Promise(resolve =>{
+      this._categoria.delete( item ).subscribe(( res:any )=>{
+        this._tools.tooast( { title: "Eliminado" });
+        resolve( true );
+      },()=> { this._tools.tooast( { title: "Error de servidor", icon:"error" } ); resolve( false ); } );
+    });
   }
 
 }

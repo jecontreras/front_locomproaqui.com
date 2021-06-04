@@ -421,7 +421,7 @@ export class HeaderComponent implements OnInit {
 
   getCategorias(){
     return new Promise( resolve =>{
-      this._categorias.get( { where: {} } ).subscribe(( res:any )=>{
+      this._categorias.get( { where: { cat_activo: 0, cat_padre: null }, limit: 1000 } ).subscribe(( res:any )=>{
         let maps = _.map( res.data,( row )=>{
           return {
             'nombre': row['cat_nombre'],

@@ -26,7 +26,9 @@ export class CategoriasComponent implements OnInit {
   paginas = 0;
   loader = true;
   query:any = {
-    where:{},
+    where:{
+      cat_padre: null
+    },
     limit: 100
   };
   Header:any = [ 'Acciones','Imagen','Categorias','Descripcion','Categoria Padre','Estado' ];
@@ -134,12 +136,16 @@ export class CategoriasComponent implements OnInit {
   buscar() {
     this.loader = true;
     this.dataTable.dataRows = [];
+    this.query = {};
     //console.log(this.datoBusqueda);
     this.datoBusqueda = this.datoBusqueda.trim();
-    this.query.where = {};
-    if (this.datoBusqueda === '') {
-      this.cargarTodos();
-    } else {
+    this.query = {
+      where:{
+        cat_padre: null
+      },
+      limit: 100      
+    };
+    if (this.datoBusqueda != '') {
       this.query.where.or = [
         {
           cat_nombre: {
@@ -152,8 +158,8 @@ export class CategoriasComponent implements OnInit {
           }
         },
       ];
-      this.cargarTodos();
-    }
+    } 
+    this.cargarTodos();
   }
 
 }

@@ -13,7 +13,7 @@
                 </button>
             </div>
         </div>-->
-        <div class="col-12">
+        <!--<div class="col-12">
             <div class="contenedor">
                 <div class="">
                     <div style="width: 1077px; height: 33px;">
@@ -25,25 +25,34 @@
                 </div>
             </div>
             <br>
-            <!--<ng-image-slider [images]="imageObject" [infinite]="sliderInfinite" [imagePopup]="sliderImagePopup"
-                [showArrow]="sliderArrowShow" [imageSize]="{width: sliderImageWidth, height: sliderImageHeight}"
-                [autoSlide]="sliderAutoSlide ? 1 : 0" [slideImage]="sliderSlideImage"
-                [animationSpeed]="sliderAnimationSpeed" (imageClick)="imageOnClick($event)"
-                (arrowClick)="arrowOnClick($event)" (lightboxArrowClick)="lightboxArrowClick($event)" #nav>
-            </ng-image-slider>-->
+        </div>-->
+        <div class="col.12">
+            <div class="row">
+                <span class="catEstilo" *ngFor="let item of imageObject" [ngClass]="{ 'cambiaColor': item.check == true }" (mouseover)="eventorOver( item )">
+                    <h5 class="titulo2">
+                        <span *ngIf="item.title =='TODOS'" (click)="imageOnClick(0, item);"> {{ item.title }} </span>
+                        <span *ngIf="item.title !=='TODOS'"> {{ item.title }} </span>
+                    </h5>
+                    <ul *ngIf="item.check">
+                        <li *ngFor="let key of item.subCategoria; let idx=index" (click)="imageOnClick(idx, key);">
+                            <h5 class="titulo3 estiloCategoria">{{ key.cat_nombre }}</h5>
+                        </li>
+                      </ul>
+                </span>
+            </div>
         </div>
-        <div class="col-12 d-flex justify-content-center">
+        <div class="col-12 d-flex justify-content-center" (mouseout)="eventoDes( {} )">
             <div class="row">
                 <div class="col-12 row" infiniteScroll [infiniteScrollDistance]="50" [infiniteScrollThrottle]="60"
                     (scrolled)="onScroll()">
                     <mat-card class="example-card col-md-2 col-sm-4 col-lg-2 col-xs-6 col-6 anchandoPr"
-                        *ngFor="let item of listProductos">
+                        *ngFor="let item of listProductos" (mouseout)="eventoDes( {} )">
                         <div class="ui-ribbon-wrapper hide" *ngIf="item.descuento">
                             <div class="ui-ribbon">
                                 {{ item.descuento }}% Off
                             </div>
                         </div>
-                        <figure data-toggle="modal" id="figura" data-target="#modalinfo" class="img-contenedor">
+                        <figure data-toggle="modal" id="figura" data-target="#modalinfo" class="img-contenedor" (mouseout)="eventoDes( {} )">
                             <img class="img-responsive btn-block imgProductos pointer " [src]="item.foto"
                                 (click)="agregar(item)">
                         </figure>
