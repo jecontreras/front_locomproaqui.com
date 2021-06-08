@@ -28,24 +28,24 @@
         </div>-->
         <div class="col.12">
             <div class="row">
-                <span class="catEstilo" *ngFor="let item of imageObject" [ngClass]="{ 'cambiaColor': item.check == true }" (mouseover)="eventorOver( item )">
-                    <h5 class="titulo2">
+                <span class="catEstilo" *ngFor="let item of imageObject" (click)="eventorOver( item )">
+                    <h5 class="titulo2 pointer" [ngClass]="{ 'cambiaColor': item.check == true }">
                         <span *ngIf="item.title =='TODOS'" (click)="imageOnClick(0, item);"> {{ item.title }} </span>
                         <span *ngIf="item.title !=='TODOS'"> {{ item.title }} </span>
                     </h5>
                     <ul *ngIf="item.check">
-                        <li *ngFor="let key of item.subCategoria; let idx=index" (click)="imageOnClick(idx, key);">
+                        <label class="pointer" *ngFor="let key of item.subCategoria; let idx=index" (click)="imageOnClick(idx, key);" [ngClass]="{ 'cambiaColor': key.check == true }">
                             <h5 class="titulo3 estiloCategoria">{{ key.cat_nombre }}</h5>
-                        </li>
+                        </label>
                       </ul>
                 </span>
             </div>
         </div>
         <div class="col-12 d-flex justify-content-center" (mouseout)="eventoDes( {} )">
             <div class="row">
-                <div class="col-12 row" infiniteScroll [infiniteScrollDistance]="50" [infiniteScrollThrottle]="60"
-                    (scrolled)="onScroll()">
-                    <mat-card class="example-card col-md-2 col-sm-4 col-lg-2 col-xs-6 col-6 anchandoPr"
+                <div class="col-12 row d-flex justify-content-center" infiniteScroll [infiniteScrollDistance]="50" [infiniteScrollThrottle]="60"
+                    (scrolled)="onScroll()" >
+                    <mat-card class="example-card col-md-2 col-sm-4 col-lg-2 col-xs-6 col-6 anchandoPr "
                         *ngFor="let item of listProductos" (mouseout)="eventoDes( {} )">
                         <div class="ui-ribbon-wrapper hide" *ngIf="item.descuento">
                             <div class="ui-ribbon">

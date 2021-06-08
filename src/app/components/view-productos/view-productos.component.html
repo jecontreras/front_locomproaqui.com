@@ -21,7 +21,7 @@
             <div class="row">
                 <div class="col-12">
                     <br><br>
-                    <lib-ngx-image-zoom class="ocultacion" [thumbImage]=urlFoto [fullImage]=urlFoto [magnification]="1"
+                    <lib-ngx-image-zoom  [thumbImage]=urlFoto [fullImage]=urlFoto [magnification]="1"
                         [enableScrollZoom]="true" [enableLens]="true" [lensWidth]="200" [lensHeight]="200">
                     </lib-ngx-image-zoom>
                 </div>
@@ -31,7 +31,8 @@
                         [imageSize]="{width: sliderImageWidth, height: sliderImageHeight}"
                         [autoSlide]="sliderAutoSlide ? 1 : 0" [slideImage]="sliderSlideImage"
                         [animationSpeed]="sliderAnimationSpeed" (imageClick)="imageOnClick($event)"
-                        (arrowClick)="arrowOnClick($event)" (lightboxArrowClick)="lightboxArrowClick($event)" #nav>
+                        (arrowClick)="arrowOnClick($event)" (lightboxArrowClick)="lightboxArrowClick($event)" #nav
+                        (mouseover)="eventoFoto($event)">
                     </ng-image-slider>
                 </div>
             </div>
@@ -54,6 +55,7 @@
                         <label for="exampleFormControlSelect1">Color disponibles:</label>
                         <select class="form-control form-control-sm" [(ngModel)]="data.color"
                             (change)="colorSeleccionado( );">
+                            <option value="null">Todos</option>
                             <option [value]="item.talla" *ngFor="let item of data.listColor">{{
                                 item.talla }}
                             </option>
@@ -65,7 +67,7 @@
                             (change)="seleccionTalla()" [disabled]="!data.color">
                             <option [value]="item.tal_descripcion" *ngFor="let item of seleccionoColor.tallaSelect">
                                 talla: {{
-                                item.tal_descripcion }} cantidad: {{ item.cantidad }}</option>
+                                item.tal_descripcion }} UND: {{ item.cantidad }}</option>
                         </select>
                     </div>
                     <div class="col-6 col-sm-4" *ngIf="seleccionnTalla">

@@ -32,12 +32,12 @@ export class ViewProductosComponent implements OnInit {
   imageObject: any = [];
 
   @ViewChild('nav', { static: true }) ds: NgImageSliderComponent;
-  sliderWidth: Number = 800;
-  sliderImageWidth: Number = 230;
-  sliderImageHeight: Number = 200;
+  sliderWidth: Number = 300;
+  sliderImageWidth: Number = 90;
+  sliderImageHeight: Number = 100;
   sliderArrowShow: Boolean = true;
   sliderInfinite: Boolean = false;
-  sliderImagePopup: Boolean = true;
+  sliderImagePopup: Boolean = false;
   sliderAutoSlide: Number = 1;
   sliderSlideImage: Number = 1;
   sliderAnimationSpeed: any = 1;
@@ -67,7 +67,22 @@ export class ViewProductosComponent implements OnInit {
       this.galeria = _.clone( this.data.listaGaleria || [] );
       this.data.cantidadAdquirir = 1;
       this.urlFoto = this.data.foto;
-      if( !this.galeria ) this.galeria || [];
+    }
+    this.procesoNext();
+
+    /*setTimeout(()=>{ 
+      try {
+        this.data.color = this.data.listColor[0].talla;
+        this.cambioImgs(); 
+        this.colorSeleccionado( ); 
+      } catch (error) { }
+     },2000 );*/
+
+  }
+
+  procesoNext(){
+    if( !this.galeria ) this.galeria || [];
+    this.galeria = [];
       this.galeria.push( {
         id: this._tools.codigo(),
         foto: this.data.foto
@@ -80,23 +95,13 @@ export class ViewProductosComponent implements OnInit {
       } );
       //this.data.cantidadAdquirir = 1;
       this.llenandoGaleria();
-    }
-    for( let row of this.galeria ) this.imageObject.unshift({
-      image: row.foto,
-      thumbImage: row.foto,
-      alt: '',
-      check: true,
-      id: 0,
-    });
-
-    /*setTimeout(()=>{ 
-      try {
-        this.data.color = this.data.listColor[0].talla;
-        this.cambioImgs(); 
-        this.colorSeleccionado( ); 
-      } catch (error) { }
-     },2000 );*/
-
+      for( let row of this.galeria ) this.imageObject.unshift({
+        //image: row.foto,
+        thumbImage: row.foto,
+        alt: '',
+        check: true,
+        id: 0,
+      });
   }
 
   llenandoGaleria(){
@@ -204,7 +209,8 @@ export class ViewProductosComponent implements OnInit {
 
   colorSeleccionado(){
     try {
-      if( !this.data.color ) return false;
+      if( !this.data.color ) return this.procesoNext();
+      if( this.data.color == 'null' ) return this.procesoNext();
       this.data.tallas = "";
       this.seleccionnTalla = {};
       this.seleccionoColor = this.data.listColor.find( row => row.talla == this.data.color );
@@ -218,7 +224,7 @@ export class ViewProductosComponent implements OnInit {
     this.imageObject = [];
     this.imageObject.push( 
       {
-        image: this.seleccionoColor.foto,
+        //image: this.seleccionoColor.foto,
         thumbImage: this.seleccionoColor.foto,
         alt: '',
         check: true,
@@ -226,7 +232,7 @@ export class ViewProductosComponent implements OnInit {
       }
     );
     for( let row of this.seleccionoColor.galeriaList ) this.imageObject.unshift({
-      image: row.foto,
+      //image: row.foto,
       thumbImage: row.foto,
       alt: '',
       check: true,
@@ -263,6 +269,7 @@ export class ViewProductosComponent implements OnInit {
 
   imageOnClick(index: any) {
     //con
+    this.urlFoto = this.imageObject[index].thumbImage;
   }
 
   arrowOnClick(event) {
@@ -279,6 +286,10 @@ export class ViewProductosComponent implements OnInit {
 
   nextImageClick() {
     this.ds.next();
+  }
+
+  eventoFoto( event ){
+    //console.log( event )
   }
 
 }

@@ -200,8 +200,8 @@ export class PedidosComponent implements OnInit {
   
   eventorOver( item:any ){
     console.log( item )
-    for( let row of this.imageObject ) row.check = false;
     item.check = !item.check;
+    for( let row of this.imageObject ) { if( row.id != item.id ) row.check = false; }
   }
 
   eventoDes( item:any ){
@@ -255,7 +255,7 @@ export class PedidosComponent implements OnInit {
             contains: this.seartxt || ''
           }
         },
-        {
+        /*{
           pro_descripcion: {
             contains: this.seartxt || ''
           }
@@ -264,7 +264,7 @@ export class PedidosComponent implements OnInit {
           pro_descripcionbreve: {
             contains: this.seartxt || ''
           }
-        },
+        },*/
         {
           pro_codigo: {
             contains: this.seartxt || ''
@@ -344,11 +344,11 @@ export class PedidosComponent implements OnInit {
 
   imageOnClick(index: any, obj: any) {
     //con
-    for (let row of this.imageObject) row.check = false;
+    for ( let row of this.imageObject ) { row.check = false; for( let key of row.subCategoria ) key.check = false; }
     obj.check = true;
     this.query = { where: { pro_activo: 0 }, page: 0, limit: 18 };
     this.seartxt = "";
-    if ( obj.id > 0) this.query = { where: { pro_activo: 0, pro_sub_categoria: obj.id }, page: 0, limit: 10 };
+    if ( obj.id > 0 ) this.query = { where: { pro_activo: 0, pro_sub_categoria: obj.id }, page: 0, limit: 10 };
     this.listProductos = [];
     this.notscrolly = true;
     this.notEmptyPost = true;

@@ -149,7 +149,7 @@ export class FormproductosComponent implements OnInit {
     console.log(event, this.files);
     this.files = [ event.addedFiles[0] ];
     setTimeout( async ()=>{
-      await this.subirFile( item );
+      await this.subirFile( item, 'fotoColor' );
     }, 1000 );
   }
 
@@ -190,6 +190,7 @@ export class FormproductosComponent implements OnInit {
     this.files2 = [];
     this.files3 = [];
     item.checkFotoGaleri = false;
+    item.item.checkFoto = false;
   }
 
   fileNext( item, opt, form:any ){
@@ -202,10 +203,9 @@ export class FormproductosComponent implements OnInit {
           if ( this.id ) this.submit();
         }
         else { 
-          item.foto = res.files;
           if( opt == 'colorGaleria' ) { 
             item.galeriaList.push( { id: this._tools.codigo( ), foto: res.files } );
-          }
+          }else item.foto = res.files;
           this.submit(); 
         }
         this._tools.presentToast("Exitoso");
