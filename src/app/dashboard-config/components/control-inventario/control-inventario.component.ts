@@ -2,12 +2,13 @@ import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material';
 import * as moment from 'moment';
 import { NgxSpinnerService } from 'ngx-spinner';
-import { DataTable } from 'src/app/interfaces/sotarage';
+import { DataTable, STORAGES } from 'src/app/interfaces/sotarage';
 import { ToolsService } from 'src/app/services/tools.service';
 import { ProductoService } from 'src/app/servicesComponents/producto.service';
 import { FormproductosComponent } from '../../form/formproductos/formproductos.component';
 import * as _ from 'lodash';
 import { ControlinventarioService } from 'src/app/servicesComponents/controlinventario.service';
+import { Store } from '@ngrx/store';
 
 @Component({
   selector: 'app-control-inventario',
@@ -40,16 +41,22 @@ export class ControlInventarioComponent implements OnInit {
   notscrolly:boolean=true;
   notEmptyPost:boolean = true;
   seleccionoColor:any = [];
-  productosSlc:any = [];
+  productosSlc:any = [];  
+  dataUser:any = {};
 
   constructor(
     public dialog: MatDialog,
     private spinner: NgxSpinnerService,
     private _tools: ToolsService,
     private _productos: ProductoService,
+    private _store: Store<STORAGES>,
     private _controlInventario: ControlinventarioService
   ) { 
     this.opcionCurrencys = this._tools.currency;
+    this._store.subscribe((store: any) => {
+      store = store.name;
+      this.dataUser = store.user;
+    });
   }
 
   ngOnInit(): void {
@@ -96,8 +103,8 @@ export class ControlInventarioComponent implements OnInit {
 
   cargarTodos() {
     this.spinner.show();
-    console.log( this.listArticulos.length )
-    this._productos.get(this.query)
+    this.query.where.pro_usu_creacion = this.dataUser.id;
+    this._productos.get( this.query )
     .subscribe(
       (response: any) => {
         console.log(response);
@@ -191,7 +198,11 @@ export class ControlInventarioComponent implements OnInit {
   }
 
   guardar(){
-    this._controlInventario.create( this.data ).subscribe(( res:any )=>{
+    let data:any = {
+      proveedor: this.data,
+      articulos: this.productosSlc
+    };
+    this._controlInventario.create( data ).subscribe(( res:any )=>{
       this._tools.tooast( { title: "guardado exitoso" } );
     });
   }

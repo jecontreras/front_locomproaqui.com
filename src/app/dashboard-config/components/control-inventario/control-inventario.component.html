@@ -1,7 +1,15 @@
 <div class="container">
     <div class="row">
         <div class="col-12">
-            <h4 class="card-title">Entrada / Salida Inventario</h4>
+            <div class="d-flex justify-content-between">
+                <div>
+                    <h4 class="card-title">Entrada / Salida Inventario</h4>
+                </div>
+                <div></div>
+                <div>
+                    <button type="button" class="btn btn-success" (click)="submit()">Guardar</button>
+                </div>
+            </div>
         </div>
         <div class="col-3">
             <label for="exampleFormControlInput1">Tipo de Entrada</label>
@@ -11,7 +19,7 @@
                 <option value="3">Devolucion</option>
             </select>
         </div>
-        <div class="col-3">
+        <div class="col-3"> 
             <label for="exampleFormControlInput1">Fecha</label>
             <input type="date" [(ngModel)]="data.fecha" class="form-control form-control-sm">
         </div>
@@ -68,8 +76,8 @@
                                                         [(ngModel)]="item.tallaSltc"
                                                         (change)="TallaSeleccionado( item );">
                                                         <option [value]="key.tal_descripcion"
-                                                            *ngFor="let key of item.listSeleccionoColor.tallaSelect">{{
-                                                            key.tal_descripcion }}
+                                                            *ngFor="let key of item.listSeleccionoColor.tallaSelect">
+                                                            {{ key.tal_descripcion }} UND: {{ item.cantidad }}
                                                         </option>
                                                     </select>
                                                 </div>
