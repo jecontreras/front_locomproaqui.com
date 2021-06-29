@@ -45,6 +45,7 @@ import { AdminComponent } from './components/admin/admin.component';
 import { NgxCurrencyModule } from "ngx-currency";
 import { ConfiguracionComponent } from './components/configuracion/configuracion.component';
 import { ControlInventarioComponent } from './components/control-inventario/control-inventario.component';
+import { ImageCropperModule } from 'ngx-image-cropper';
 
 
 @NgModule({
@@ -99,6 +100,7 @@ import { ControlInventarioComponent } from './components/control-inventario/cont
     RouterModule,
     ReactiveFormsModule,
     MainConfigRoutingModule,
+    ImageCropperModule,
     MyOwnCustomMaterialModule,
     InfiniteScrollModule,
     NgxSpinnerModule,
@@ -107,7 +109,7 @@ import { ControlInventarioComponent } from './components/control-inventario/cont
     AngularEditorModule,
     Ng2SmartTableModule,
     ExtraModule,
-    NgxCurrencyModule
+    NgxCurrencyModule,
   ],
   exports: [
     FormcategoriasComponent,

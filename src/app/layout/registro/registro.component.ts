@@ -32,6 +32,28 @@ export class RegistrosComponent implements OnInit {
   error:string;
   files: File[] = [];
   list_files: any = [];
+  listRedes:any = [
+    {
+      titulo: "facebook",
+      check: false
+    },
+    {
+      titulo: "Instagram",
+      check: false
+    },
+    {
+      titulo: "Twitter",
+      check: false
+    },
+    {
+      titulo: "Youtube",
+      check: false
+    },
+    {
+      titulo: "Google ADS",
+      check: false
+    }
+  ];
 
   constructor(
     private _user: UsuariosService,
@@ -139,6 +161,10 @@ export class RegistrosComponent implements OnInit {
     dialogRef.afterClosed().subscribe(result => {
       console.log(`Dialog result: ${result}`);
     });
+  }
+
+  selectTable( item ){
+    console.log( item );
   }
 
 }

@@ -45,8 +45,8 @@
                                     <ngx-dropzone (change)="onSelect($event)">
                                         <ngx-dropzone-label>Mis archivos</ngx-dropzone-label>
                                         <ngx-dropzone-image-preview ngProjectAs="ngx-dropzone-preview"
-                                            *ngFor="let f of files" [file]="f" [removable]="true" (removed)="onRemove(f)"
-                                            multiple="false">
+                                            *ngFor="let f of files" [file]="f" [removable]="true"
+                                            (removed)="onRemove(f)" multiple="false">
                                             <ngx-dropzone-label>{{ f.name }} ({{ f.type }})</ngx-dropzone-label>
                                         </ngx-dropzone-image-preview>
                                     </ngx-dropzone>
@@ -68,7 +68,8 @@
                         </div>
                         <div class="d-flex flex-row-reverse bd-highlight">
                             <div class="p-2 bd-highlight">
-                                <button mat-raised-button color="primary" (click)="subirFile()" matStepperNext>Siguiente</button>
+                                <button mat-raised-button color="primary" (click)="subirFile()"
+                                    matStepperNext>Siguiente</button>
                             </div>
                         </div>
                     </mat-step>
@@ -123,6 +124,55 @@
                             <div class="p-2 bd-highlight">
                                 <button mat-raised-button color="warn" matStepperPrevious>Atras</button>
                                 <button mat-raised-button color="primary" (click)="submit()">Registrarse</button>
+                            </div>
+                        </div>
+                    </mat-step>
+                    <mat-step>
+                        <ng-template matStepLabel>Terpaso Paso</ng-template>
+                        <div class="form row container">
+                            <div class="col-12">
+                                <label for="exampleFormControlSelect1">sabes qué es droppshipping</label>
+                                <select class="form-control" [(ngModel)]="data.queEsDropp">
+                                    <option value="si">SI</option>
+                                    <option value="no">NO</option>
+                                </select>
+                            </div>
+                            <div class="col-12" *ngIf="data.queEsDropp == 'no'">
+                                <label for="exampleFormControlTextarea1">en cuales plataformas de dropshipping has
+                                    participado, describe cada plataforma y separa con una , cada una de estas</label>
+                                <textarea class="form-control" [(ngModel)]="data.textoQueEsDropp" rows="3"></textarea>
+                            </div>
+                            <div class="col-12">
+                                <label for="exampleFormControlSelect1">Cuanto tiempo llevas vendiendo de manera
+                                    virtual</label>
+                                <select class="form-control" [(ngModel)]="data.tiempoVendiendo">
+                                    <option value="menos3">3 meses o menos</option>
+                                    <option value="mas6">De 6 meses a un año</option>
+                                    <option value="mas12">Más de un año</option>
+                                </select>
+                            </div>
+                            <div class="col-12">
+                                <label for="exampleFormControlSelect1">Cuantas ventas crees que puedes realizar
+                                    mensualmente</label>
+                                <select class="form-control" [(ngModel)]="data.ventasRealizarMensual">
+                                    <option value="menos3">1 a 30</option>
+                                    <option value="mas6">de 31 a 100</option>
+                                    <option value="mas12">más de 100</option>
+                                </select>
+                            </div>
+                            <div class="col-12">
+                                <label for="exampleFormControlSelect1">Pagas publicidad en alguna red social para
+                                    vender</label>
+                                <select class="form-control" [(ngModel)]="data.pagasPublicidad">
+                                    <option value="si">SI</option>
+                                    <option value="no">NO</option>
+                                </select>
+                            </div>
+                            <div class="col-12 container row" *ngIf="data.pagasPublicidad == 'si'">
+                                <mat-checkbox [(ngModel)]="item.check" *ngFor="let item of listRedes"
+                                    (ngModelChange)="selectTable( item )">
+                                    {{ item.titulo }} &nbsp;
+                                </mat-checkbox>
                             </div>
                         </div>
                     </mat-step>

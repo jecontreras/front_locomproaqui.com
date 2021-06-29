@@ -35,7 +35,13 @@ export class ControlInventarioComponent implements OnInit {
     page: 0,
     limit: 10
   };
-  Header:any = [ 'Acciones','Foto','Nombre','Codigo', 'Precio', 'Categoria','Estado', 'Creado'];
+  query2:any = {
+    where:{
+      estado: 1
+    },
+    page: 0,
+    limit: 10
+  };
   $:any;
   public datoBusqueda = '';
   notscrolly:boolean=true;
@@ -43,6 +49,10 @@ export class ControlInventarioComponent implements OnInit {
   seleccionoColor:any = [];
   productosSlc:any = [];  
   dataUser:any = {};
+
+  listHeader:any = [ "Tipo Entrada", "Fecha", "Descripcion", "Accion" ];
+  listData:any = [];
+  rolName:string;
 
   constructor(
     public dialog: MatDialog,
@@ -56,16 +66,13 @@ export class ControlInventarioComponent implements OnInit {
     this._store.subscribe((store: any) => {
       store = store.name;
       this.dataUser = store.user;
+      this.rolName = this.dataUser.usu_perfil.prf_descripcion;
     });
   }
 
   ngOnInit(): void {
-    this.dataTable = {
-      headerRow: this.Header,
-      footerRow: this.Header,
-      dataRows: []
-    };
     this.cargarTodos();
+    this.getLista();
   }
 
   crear(obj:any){
@@ -93,17 +100,23 @@ export class ControlInventarioComponent implements OnInit {
       }
     });
   }
-  onScroll(){
+  onScroll( opt:string ){
     if (this.notscrolly && this.notEmptyPost) {
        this.notscrolly = false;
-       this.query.page++;
-       this.cargarTodos();
+       if( opt === 'producto' ){
+         this.query.page++;
+         this.cargarTodos();
+       }
+       if( opt === 'control' ){
+        this.query2.page++;
+        this.getLista();
+      }
      }
    }
 
   cargarTodos() {
     this.spinner.show();
-    this.query.where.pro_usu_creacion = this.dataUser.id;
+    if( this.rolName !== 'administrador') this.query.where.pro_usu_creacion = this.dataUser.id;
     this._productos.get( this.query )
     .subscribe(
       (response: any) => {
@@ -182,7 +195,9 @@ export class ControlInventarioComponent implements OnInit {
   TallaSeleccionado( item:any ){
     try {
       item.detalleSeleccion = item.listSeleccionoColor.tallaSelect.find( ( row:any ) => row.tal_descripcion == item.tallaSltc );
-    } catch (error) { }
+      item.foto2 = item.foto;
+      item.foto = item.detalleSeleccion.foto;
+    } catch (error) { item.foto = item.foto2 || item.foto; }
   }
 
   seleccionPr( item:any ){
@@ -194,7 +209,7 @@ export class ControlInventarioComponent implements OnInit {
 
   submit(){
     if( this.data.id ) this.update();
-    else this.guardar();
+    else { this.data.user = this.dataUser.id; this.guardar();}
   }
 
   guardar(){
@@ -210,6 +225,13 @@ export class ControlInventarioComponent implements OnInit {
   update(){
     this._controlInventario.update( this.data ).subscribe( ( res:any )=>{
       this._tools.tooast( { title: "guardado exitoso" } );
+    });
+  }
+
+  getLista(){
+    if( this.rolName !== 'administrador') this.query2.where.user = this.dataUser.id;
+    this._controlInventario.get( this.query2 ).subscribe(( res:any )=>{
+      this.listData = _.unionBy( this.listData || [], res.data, 'id');
     });
   }
 

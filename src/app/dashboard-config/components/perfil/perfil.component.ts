@@ -10,7 +10,6 @@ import { UserAction } from 'src/app/redux/app.actions';
 import { Indicativo } from 'src/app/JSON/indicativo';
 import { UsuariosService } from 'src/app/servicesComponents/usuarios.service';
 import { ArchivosService } from 'src/app/servicesComponents/archivos.service';
-
 const URL = environment.url;
 const URLFRON = environment.urlFront;
 
@@ -33,6 +32,9 @@ export class PerfilComponent implements OnInit {
   listIndicativos = Indicativo;
   disableBtn:boolean = false;
 
+  imageChangedEvent: any = '';
+  croppedImage: any = '';
+
   constructor(
     private _model: ServiciosService,
     private _user: UsuariosService,
@@ -53,6 +55,27 @@ export class PerfilComponent implements OnInit {
     if(this.data.usu_fec_nacimiento) this.data.usu_fec_nacimiento = moment(this.data.usu_fec_nacimiento).format('DD/MM/YYYY');
     this.urlTienda+=this.data.id;
     this.urlRegistro+=this.data.id;
+  }
+
+  fileChangeEvent(event: any): void {
+      this.imageChangedEvent = event;
+      console.log( this.imageChangedEvent )
+  }
+  imageCropped(event: any) {
+      this.croppedImage = event.base64;
+      console.log( event )
+  }
+  imageLoaded(image: HTMLImageElement) {
+      // show cropper
+      console.log( image )
+  }
+  cropperReady( event: any ) {
+      // cropper ready
+      console.log( event )
+  }
+  loadImageFailed( event: any ) {
+      // show message
+      console.log( event )
   }
 
   onSelect(event:any) {
