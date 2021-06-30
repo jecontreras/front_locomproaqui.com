@@ -138,14 +138,14 @@ export class ViewProductosComponent implements OnInit {
   }
 
   AgregarCart( opt:any ){
-    if(  this.seleccionnTalla.cantidad <= this.data.cantidadAdquirir ) return this._tools.tooast({ title: "Lo sentimos en estos momento no tenemos en stock", icon: "warning" });
+    if(  this.seleccionnTalla.cantidad < this.data.cantidadAdquirir ) return this._tools.tooast({ title: "Lo sentimos en estos momento no tenemos en stock", icon: "warning" });
     if (!this.data.tallas) return this._tools.tooast({ title: "Por Favor debes seleccionar una talla", icon: "warning" });
     let color = '';
     let cantidad = this.data.cantidadAdquirir || 1;
-    let precio = this.data.pro_uni_venta;
+    let precio = this.data.precio_vendedor || this.data.pro_uni_venta;
     if( this.data.listColor ) { this.data.color = this.data.listColor.find(row=>row.foto = this.data.foto) || {}; color = this.data.color.talla }
     if(opt) { opt.selecciono = true; this.suma( opt.precios , opt.cantidad ); cantidad = opt.cantidad; precio = opt.precios; }
-    else this.suma( this.data.pro_uni_venta , this.data.cantidadAdquirir );
+    else this.suma( ( this.data.precio_vendedor || this.data.pro_uni_venta ) , this.data.cantidadAdquirir );
     let data = {
       articulo: this.data.id,
       codigo: this.data.pro_codigo,

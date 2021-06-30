@@ -86,12 +86,13 @@ export class RegistrosComponent implements OnInit {
 
   subirFile( ){
     let form:any = new FormData();
+    if( !this.files[0] ) return false;
     form.append('file', this.files[0]);
     this._tools.ProcessTime({ title: "Cargando..."});
     this._archivos.create(form).subscribe((res:any)=>{
       console.log(res);
       this.data.usu_imagen = res.files; //URL+`/${res}`;
-      this._tools.presentToast("Exitoso");
+      this.files = [];
     },(error)=>{console.error(error); this._tools.presentToast("Error de servidor")});
 
   }

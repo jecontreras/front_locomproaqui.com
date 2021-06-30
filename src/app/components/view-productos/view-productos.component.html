@@ -44,10 +44,17 @@
                     <div class="col-12">
                         <div class="d-flex justify-content-between">
                             <div>
-                                <h3>{{ data.pro_nombre }}</h3>
+                                <h3 class="precios" *ngIf="data.precio_vendedor">Precio Vendedor: {{ _tools.monedaChange( 3, 2, data.precio_vendedor ) }}</h3>
                             </div>
                             <div>
-                                <h3 class="precios">{{ _tools.monedaChange( 3, 2, data.pro_uni_venta ) }}</h3>
+                                <h3 class="precios">Precio Sugerido: {{ _tools.monedaChange( 3, 2, data.pro_uni_venta ) }}</h3>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-12">
+                        <div class="d-flex justify-content-between">
+                            <div>
+                                <h3>{{ data.pro_nombre }}</h3>
                             </div>
                         </div>
                     </div>

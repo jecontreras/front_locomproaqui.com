@@ -167,7 +167,7 @@ export class PedidosComponent implements OnInit {
   nextConsulta() {
     if (this.idCategoria) this.query.where.pro_categoria = this.idCategoria;
     this.getCategorias();
-    this.cargarProductos();
+    setTimeout(()=> this.cargarProductos(), 1000 )
   }
 
   getUser() {
@@ -221,6 +221,7 @@ export class PedidosComponent implements OnInit {
     if( this.seartxt ) this.ultimoSeartxt = this.seartxt;
     this.loader = true;
     //console.log( this.ultimoSeartxt );
+    if( this.dataUser.id ) this.query.where.user = this.dataUser.id;
     this._productos.get(this.query).subscribe((res: any) => {
       console.log("res", res);
       this.loader = false;
