@@ -1,5 +1,5 @@
 import { Component, OnInit, Inject, ViewChild } from '@angular/core';
-import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
+import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
 import { Store } from '@ngrx/store';
 import { CartAction } from 'src/app/redux/app.actions';
 import { CART } from 'src/app/interfaces/sotarage';
@@ -42,12 +42,15 @@ export class ViewProductosComponent implements OnInit {
   sliderSlideImage: Number = 1;
   sliderAnimationSpeed: any = 1;
 
+  opcionCurrencys:any = {};
+
   constructor(
     public dialogRef: MatDialogRef<ViewProductosComponent>,
     @Inject(MAT_DIALOG_DATA) public datas: any,
     private _store: Store<CART>,
     public _tools: ToolsService,
     private _catalago: CatalogoService,
+    public dialog: MatDialog,
   ) { 
 
     this._store.subscribe((store: any) => {
@@ -60,13 +63,15 @@ export class ViewProductosComponent implements OnInit {
   }
 
   ngOnInit() {
-  
+
+    this.opcionCurrencys = this._tools.currency;
     if(Object.keys(this.datas.datos).length > 0) {
-      //console.log(this.datas)
       this.data = _.clone(this.datas.datos);
       this.galeria = _.clone( this.data.listaGaleria || [] );
       this.data.cantidadAdquirir = 1;
       this.urlFoto = this.data.foto;
+      this.data.encuanto = this.data.pro_uni_venta;
+      console.log(this.datas)
     }
     this.procesoNext();
 
@@ -137,7 +142,7 @@ export class ViewProductosComponent implements OnInit {
     //console.log( this.urlFoto );
   }
 
-  AgregarCart( opt:any ){
+  async AgregarCart( opt:any ){
     if(  this.seleccionnTalla.cantidad < this.data.cantidadAdquirir ) return this._tools.tooast({ title: "Lo sentimos en estos momento no tenemos en stock", icon: "warning" });
     if (!this.data.tallas) return this._tools.tooast({ title: "Por Favor debes seleccionar una talla", icon: "warning" });
     let color = '';
@@ -146,6 +151,14 @@ export class ViewProductosComponent implements OnInit {
     if( this.data.listColor ) { this.data.color = this.data.listColor.find(row=>row.foto = this.data.foto) || {}; color = this.data.color.talla }
     if(opt) { opt.selecciono = true; this.suma( opt.precios , opt.cantidad ); cantidad = opt.cantidad; precio = opt.precios; }
     else this.suma( ( this.data.precio_vendedor || this.data.pro_uni_venta ) , this.data.cantidadAdquirir );
+    let encuanto:any = 0;
+    if( this.data.precio_vendedor && !this.data.encuanto ){
+      encuanto = await this._tools.alertInput( { title: "Encuanto lo vendio", input: 'text', confirme: "Agregar"} );
+      if( !encuanto.value ) return this._tools.tooast({ title: "Por Favor debes decirnos en cuanto lo vendiste", icon: "warning" });
+      encuanto = encuanto.value;
+    }else{
+      encuanto = this.data.encuanto || precio;
+    }
     let data = {
       articulo: this.data.id,
       codigo: this.data.pro_codigo,
@@ -155,12 +168,14 @@ export class ViewProductosComponent implements OnInit {
       foto: this.urlFoto,
       cantidad: cantidad,
       costo: precio,
+      loVendio: encuanto,
       costoTotal: this.data.costo,
       id: this.codigo()
     };
     let accion = new CartAction(data, 'post');
     this._store.dispatch(accion);
     this._tools.presentToast("Producto agregado al carro");
+    this.dialog.closeAll();
   }
 
   async descargarFoto( item:any ){

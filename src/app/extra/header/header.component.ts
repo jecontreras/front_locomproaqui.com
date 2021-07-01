@@ -202,9 +202,11 @@ export class HeaderComponent implements OnInit {
   submitChat(){
     let texto:string = "";
     this.data.total = 0;
+    this.data.totalGanancias = 0;
     for(let row of this.listCart){
       texto+= ` productos: ${ row.titulo } codigo: ${ row.codigo } talla: ${ row.talla } cantidad: ${ row.cantidad } precio: ${ row.costo } precio Total: ${ row.costoTotal } foto: ${ row.foto } color ${ row.color || 'default'}`;
       this.data.total+= row.costoTotal || 0;
+      this.data.totalGanancias+= ( row.loVendio - row.costoTotal ) || 0;
     }
     
     let cerialNumero:any = ''; 

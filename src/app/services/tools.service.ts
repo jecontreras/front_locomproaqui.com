@@ -78,6 +78,28 @@ export class ToolsService {
       confirmButtonText: text.confir || 'Yes, delete it!'
     });
   }
+
+  alertInput( opciones ){
+    return new Promise( resolve => {
+      Swal.fire({
+        title: opciones.title || 'Input',
+        input: opciones.input || 'text',
+        inputAttributes: {
+          autocapitalize: 'off'
+        },
+        showCancelButton: true,
+        confirmButtonText: opciones.confirme || 'Siguiente',
+        showLoaderOnConfirm: true,
+        preConfirm: ( txt ) => {
+          return txt;
+        },
+        allowOutsideClick: () => !Swal.isLoading()
+      }).then((result) => {
+        resolve( result ) ;
+      })
+    });
+  }
+
   ProcessTime(text: any) {
     let timerInterval
     Swal.fire({

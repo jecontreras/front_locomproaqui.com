@@ -20,6 +20,7 @@ import { NgxImageZoomModule } from 'ngx-image-zoom';
 import { ConfigModule } from '../dashboard-config/config.module';
 import { ExtraModule } from '../extra/extra.module';
 import { NgxDropzoneModule } from 'ngx-dropzone';
+import { NgxCurrencyModule } from 'ngx-currency';
 
 
 @NgModule({
@@ -53,7 +54,8 @@ import { NgxDropzoneModule } from 'ngx-dropzone';
     NgxDropzoneModule,
     NgxImageZoomModule,
     ConfigModule,
-    ExtraModule
+    ExtraModule,
+    NgxCurrencyModule
   ],
   exports: [
     LoginComponent,
