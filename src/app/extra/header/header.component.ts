@@ -7,7 +7,7 @@ import { RegistroComponent } from '../../components/registro/registro.component'
 import { ServiciosService } from 'src/app/services/servicios.service';
 import { Store } from '@ngrx/store';
 import { CART } from 'src/app/interfaces/sotarage';
-import { BuscarAction, CartAction, UserAction } from 'src/app/redux/app.actions';
+import { BuscarAction, CartAction, UserAction, UserCabezaAction } from 'src/app/redux/app.actions';
 import { UsuariosService } from 'src/app/servicesComponents/usuarios.service';
 import * as _ from 'lodash';
 import { environment } from 'src/environments/environment';
@@ -484,7 +484,7 @@ export class HeaderComponent implements OnInit {
   }
 
   getAlert(){
-    this._notificaciones.get( { where: { user: this.dataUser.id, tipoDe: 1, view: false }}).subscribe(( res:any ) =>{
+    this._notificaciones.get( { where: { user: this.dataUser.id, tipoDe: [ 1, 2 ], view: false }}).subscribe(( res:any ) =>{
       res = res.data;
       this.listAlert = res;
     });
@@ -511,6 +511,14 @@ export class HeaderComponent implements OnInit {
     let accion = new UserAction( this.dataUser, 'delete');
     this._store.dispatch(accion);
     location.reload();
+  }
+
+  openTienda( opt:string ){
+    if( opt == 'visitante' ) window.open( "http://localhost:4200/pedidos/62", "ventana1" , "scrollbars=NO" )
+    else {
+      let accion = new UserCabezaAction( {} , 'drop' );
+      this._store.dispatch(accion);
+    }
   }
 
 }

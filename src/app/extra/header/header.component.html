@@ -107,7 +107,8 @@
               <h2>Resumen &nbsp;</h2>
               <ul class="summary-table">
                 <li><span>Total: &nbsp;</span> <span>{{ ( data.total || 0 ) | currency:'':true}}</span></li>
-                <li><span>Total de Ganancias: &nbsp;</span> <span>{{ ( data.totalGanancias || 0 ) | currency:'':true}}</span></li>
+                <li><span>Total de Ganancias: &nbsp;</span> <span>{{ ( data.totalGanancias || 0 ) |
+                    currency:'':true}}</span></li>
               </ul>
               <div class="d-flex justify-content-end">
                 <a class="list-group-item list-group-item-action active pointer" (click)="pedidosSubmit()">Hacer
@@ -201,6 +202,19 @@
       <br>
       <div class="container">
         <div class="d-flex justify-content-center">
+          <div style="width: 100%;">
+            <div class="d-flex justify-content-around">
+              <div>
+                <button type="button" class="btn btn-primary" (click)="openTienda('distribuidor')">Ver como Distribuidor</button>
+              </div>
+              <div></div>
+              <div>
+                <button type="button" class="btn btn-success" (click)="openTienda('visitante')">Ver como visitante</button>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="d-flex justify-content-center">
           <h4 *ngIf="dataUser.id" class="text-center text-dark altos titulo1">
             BIENVENIDO A TU OFICINA VIRTUAL " {{ dataUser.usu_usuario }} "
           </h4>
@@ -210,13 +224,18 @@
         </div>
       </div>
       <div class="alert alert-warning alert-dismissible fade show" role="alert" *ngFor="let item of listAlert">
-        <img class="foto" *ngIf="item.foto" [src]="item.foto"> <strong>{{ item.titulo }}!</strong> {{ item.descripcion
-        }}.
-        <button *ngIf="item.tipoDe == 1" (click)="crear( item )" class="btn btn-primary btn-just-icon btn-round"
-          mat-raised-button mat-min-fab>Crear Comentario</button>
-        <button type="button" class="close" data-dismiss="alert" (click)="closeAlert( item )" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
+        <div class="d-flex justify-content-center">
+          <div style="width: 100%;">
+            <img class="foto" *ngIf="item.foto" [src]="item.foto"> <strong>{{ item.titulo }}!</strong> {{
+            item.descripcion
+            }}.
+            <button *ngIf="item.tipoDe == 1" (click)="crear( item )" class="btn btn-primary btn-just-icon btn-round"
+              mat-raised-button mat-min-fab>Crear Comentario</button>
+            <button type="button" class="close" data-dismiss="alert" (click)="closeAlert( item )" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+        </div>
       </div>
       <ng-content> </ng-content>
     </mat-sidenav-content>
