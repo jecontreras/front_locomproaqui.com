@@ -122,12 +122,13 @@
                                 </div>
                                 <div class="col-12">
                                     <div class="d-flex justify-content-between">
-                                        <div>
+                                        <div *ngIf="dataUser.id">
                                             <img src="./assets/icons/descargar.png" style="width: 100%;" class="pointer"
                                             (click)="descargarFoto( item )">
                                         </div>
-                                        <div>
-                                            <img src="./assets/icons/pagas.png" style="width: 100%;">
+                                        <div style="width: 200%;">
+                                            <h6 class="titulo1">Pago Contra Entrega</h6>
+                                            <!--<img src="./assets/icons/pagas.png" style="width: 100%;">-->
                                         </div>
                                     </div>
                                 </div>

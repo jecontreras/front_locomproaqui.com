@@ -48,6 +48,7 @@
                             </div>
                             <div>
                                 <h3 class="precios">Precio Sugerido: {{ _tools.monedaChange( 3, 2, data.pro_uni_venta ) }}</h3>
+                                <span class="precios">Ganas el {{ porcentajeMostrar }} %</span>
                             </div>
                         </div>
                     </div>
@@ -86,10 +87,10 @@
                         <label>Cantidad Adquirir</label>
                         <input type="number" [(ngModel)]="data.cantidadAdquirir" class="form-control form-control-sm">
                     </div>
-                    <div class="col-4" *ngIf="data.precio_vendedor">
+                    <!--<div class="col-4" *ngIf="data.precio_vendedor">
                         <label>Lo Vendiste</label>
                         <input currencyMask [(ngModel)]="data.encuanto" class="form-control form-control-sm" [options]="opcionCurrencys"/>
-                    </div>
+                    </div>-->
                     <div class="col-4">
                         <img style="width: 50%;" src="./assets/img/gratis.jpg" alt="">
                     </div>

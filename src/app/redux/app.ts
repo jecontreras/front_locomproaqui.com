@@ -189,6 +189,29 @@ export function appReducer(state: STORAGES = APP, action: _action.actions) {
         break;
       }
     }
+    case _action.USERPR: {
+      switch(action.opt) {
+        case 'post' :
+          if(!state.userpr) state.userpr = "";
+            state.userpr = action.payload;
+            return local_Storage(state);
+        break;
+        case 'put': {
+          state.userpr = action.payload;
+        }
+        return local_Storage(state);
+        break;
+        case 'delete': 
+          state.userpr = "";
+          return local_Storage(state);
+        break;
+        case 'drop': {
+          state.userpr = "";
+          return local_Storage(state);
+        }
+        break;
+      }
+    }
     
     /*case _action.ARTICULOS:{
       switch (action.opt){

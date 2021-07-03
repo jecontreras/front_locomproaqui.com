@@ -5,7 +5,12 @@ export interface STORAGES {
     token?: TOKEN;
     buscar?: BUSCAR;
     configuracion?: CONFIGURACION;
+    userpr?: USERPR;
 };
+
+export interface USERPR{
+
+}
 
 export interface DataTable {
     headerRow: string[];

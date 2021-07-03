@@ -4,10 +4,9 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { MatDialog } from '@angular/material';
 import { LoginComponent } from '../../components/login/login.component';
 import { RegistroComponent } from '../../components/registro/registro.component';
-import { ServiciosService } from 'src/app/services/servicios.service';
 import { Store } from '@ngrx/store';
 import { CART } from 'src/app/interfaces/sotarage';
-import { BuscarAction, CartAction, UserAction, UserCabezaAction } from 'src/app/redux/app.actions';
+import { BuscarAction, CartAction, UserAction, UserCabezaAction, UserprAction } from 'src/app/redux/app.actions';
 import { UsuariosService } from 'src/app/servicesComponents/usuarios.service';
 import * as _ from 'lodash';
 import { environment } from 'src/environments/environment';
@@ -58,6 +57,7 @@ export class HeaderComponent implements OnInit {
   disabledSearch:boolean = true;
   urlLogo:string = "./assets/logo.png";
   ultimoSer:string;
+  userPr:any = {};
 
   constructor(
     public changeDetectorRef: ChangeDetectorRef,
@@ -78,6 +78,7 @@ export class HeaderComponent implements OnInit {
       this.listCart = store.cart || [];
       this.userId = store.usercabeza || {};
       this.dataUser = store.user || {};
+      this.userPr = store.userpr || {};
       if( store.buscar ) { 
         this.seartxt = store.buscar; 
       }
@@ -113,7 +114,7 @@ export class HeaderComponent implements OnInit {
     else this.rolUser = 'visitante';
     this.listMenus();
     if( this.dataUser.id )this.getCarrito();
-    this.getAlert();
+    if( this.dataUser.id ) this.getAlert();
   }
 
   activarSearch(){
@@ -514,10 +515,24 @@ export class HeaderComponent implements OnInit {
   }
 
   openTienda( opt:string ){
-    if( opt == 'visitante' ) window.open( "http://localhost:4200/pedidos/62", "ventana1" , "scrollbars=NO" )
-    else {
-      let accion = new UserCabezaAction( {} , 'drop' );
+    console.log( opt )
+    if( opt == 'visitante' ) 
+    {
+      console.log( this.dataUser )
+      let accion = new UserprAction( this.dataUser, 'post' );
       this._store.dispatch(accion);
+      this.router.navigate(['/pedidos/', this.dataUser.id ]);
+      setTimeout( () =>{
+        this.salir();
+      }, 1000 );
+    }
+    else {
+      this.router.navigate(['/pedidos' ]);
+      let accion = new UserAction( this.dataUser.id ? this.dataUser : this.userPr, 'post');
+      this._store.dispatch( accion );
+      accion = new UserCabezaAction( {} , 'drop' );
+      this._store.dispatch(accion);
+      setTimeout( ()=> location.reload(), 1000 );
     }
   }
 

@@ -43,7 +43,9 @@ export class ViewProductosComponent implements OnInit {
   sliderAnimationSpeed: any = 1;
 
   opcionCurrencys:any = {};
-
+  porcentajeMostrar:number = 10;
+  porcentajeUser: number = 0;
+  
   constructor(
     public dialogRef: MatDialogRef<ViewProductosComponent>,
     @Inject(MAT_DIALOG_DATA) public datas: any,
@@ -59,6 +61,13 @@ export class ViewProductosComponent implements OnInit {
       if (!store) return false;
       this.userId = store.usercabeza;
       this.dataUser = store.user || {};
+      try {
+        if (this.dataUser.categoriaPerfil) this.porcentajeUser = this.dataUser.categoriaPerfil.precioPorcentaje;
+      } catch (error) {
+        this.porcentajeUser = 0;
+      }
+      if( this.porcentajeUser > this.dataUser.porcentaje ) this.porcentajeMostrar = this.porcentajeUser;
+      else this.porcentajeMostrar = this.dataUser.porcentaje;
     });
   }
 
@@ -82,7 +91,6 @@ export class ViewProductosComponent implements OnInit {
         this.colorSeleccionado( ); 
       } catch (error) { }
      },2000 );*/
-
   }
 
   procesoNext(){
@@ -151,14 +159,14 @@ export class ViewProductosComponent implements OnInit {
     if( this.data.listColor ) { this.data.color = this.data.listColor.find(row=>row.foto = this.data.foto) || {}; color = this.data.color.talla }
     if(opt) { opt.selecciono = true; this.suma( opt.precios , opt.cantidad ); cantidad = opt.cantidad; precio = opt.precios; }
     else this.suma( ( this.data.precio_vendedor || this.data.pro_uni_venta ) , this.data.cantidadAdquirir );
-    let encuanto:any = 0;
-    if( this.data.precio_vendedor && !this.data.encuanto ){
+    let encuanto:any = this.data.pro_uni_venta;
+    /*if( this.data.precio_vendedor && !this.data.encuanto ){
       encuanto = await this._tools.alertInput( { title: "Encuanto lo vendio", input: 'text', confirme: "Agregar"} );
       if( !encuanto.value ) return this._tools.tooast({ title: "Por Favor debes decirnos en cuanto lo vendiste", icon: "warning" });
       encuanto = encuanto.value;
     }else{
       encuanto = this.data.encuanto || precio;
-    }
+    }*/
     let data = {
       articulo: this.data.id,
       codigo: this.data.pro_codigo,
