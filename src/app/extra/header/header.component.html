@@ -5,42 +5,47 @@
         <button mat-icon-button (click)="snav.toggle()" translate="no">
           <i class="material-icons icoss">menu</i>
         </button>
-        <img [src]="urlLogo" style="width: 177px;" class="pointer" [routerLink]="[ '/pedidos' ]">
+        <a [routerLink]="[ '/pedidos' ]">
+          <img [src]="urlLogo" style="width: 177px;">
+        </a>
       </div>
       <div class="buscadorOcultar">
         <input type="text" style="border-radius: 11px;" [(ngModel)]="seartxt" (change)="buscar()"
           class="form-control form-control-sm" placeholder="Buscar Productos">
       </div>
-      <div style="width: auto;">
+      <div style="width: 25%;">
         <div class="d-flex flex-row-reverse bd-highlight" style="margin-top: 15px;">
-          <!--<div class="anchosIcons ocultarGrande">
-          <span (click)="activarSearch()" class="p-1 pointer espacios" matBadgeColor="accent"> <i
-              class="material-icons icoss">search</i> </span>
-        </div>-->
-          <div class="anchoReal12" *ngIf="!dataUser.id">
-            <span [routerLink]="[ '/login' ]" class="p-1 pointer espacios"> <img class="iconsPng"
-                src="./assets/icons/Recurso4.png" alt=""> </span>
+          <div class="anchoReal12" *ngIf="userId.id">
+            <a [routerLink]="[ '/registro', this.userId.id ]" class="p-1 pointer espacios" matBadgeColor="accent">
+              <i class="material-icons icoss">person_add</i>
+            </a>
+          </div>
+          <div class="anchoReal12" *ngIf="!dataUser.id && !userId.id">
+            <a [routerLink]="[ '/login' ]" class="p-1 pointer espacios">
+              <i class="material-icons icoss">person</i>
+            </a>
           </div>
           <div class="anchoReal12" *ngIf="dataUser.id">
-            <span [routerLink]="[ '/config/perfil' ]" class=" altoNull buscadorOcultar2p-1 pointer espacios"> <img
-                class="iconsPng" src="./assets/icons/Recurso4.png" alt=""> </span>
+            <a [routerLink]="[ '/config/perfil' ]" class=" altoNull buscadorOcultar2p-1 pointer espacios">
+              <i class="material-icons icoss">person</i>
+            </a>
           </div>
           <div class="anchoReal12">
-            <span (click)="this.opcionoView = 'carro'; sidenav.toggle();" class="p-1 pointer espacios"
-              [matBadge]="listCart.length" matBadgePosition="before" matBadgeColor="accent"> <i
-                class="material-icons icoss"><img class="iconsPng" src="./assets/icons/Recurso3.png" alt=""></i>
-            </span>
+            <a (click)="this.opcionoView = 'carro'; sidenav.toggle();" class="p-1 pointer espacios"
+              [matBadge]="listCart.length" matBadgePosition="before" matBadgeColor="accent">
+              <i class="material-icons icoss">shopping_cart</i>
+            </a>
           </div>
           <div class="anchoReal12" *ngIf="dataUser.id">
-            <span (click)="this.opcionoView = 'notificaciones'; sidenav.toggle();" class="p-1 pointer espacios"
-              [matBadge]="notificando" matBadgePosition="before" matBadgeColor="accent"> <img class="iconsPng"
-                src="./assets/icons/Recurso2.png" alt="">
-            </span>
+            <a (click)="this.opcionoView = 'notificaciones'; sidenav.toggle();" class="p-1 pointer espacios"
+              [matBadge]="notificando" matBadgePosition="before" matBadgeColor="accent">
+              <i class="material-icons icoss">notifications_active</i>
+            </a>
           </div>
           <div *ngIf="dataUser.id" style="margin-right: 4%;" class="buscadorOcultar">
-            <span class="text-white">
+            <a class="text-white">
               $ {{ ( ( dataInfo?.porcobrado ) || 0 ).toLocaleString(1) }} COP
-            </span>
+            </a>
           </div>
         </div>
       </div>
@@ -90,7 +95,7 @@
                   <h4 mat-line>{{ item.titulo }}</h4>
                   <p mat-line>{{ 'Cantidad: '+item.cantidad }} </p>
                   <p mat-line>Precio:$ {{ ( item.costoTotal || 0).toLocaleString(1) }} COP</p>
-                  <p mat-line>Lo Vendiste:$ {{ ( item.loVendio || 0).toLocaleString(1) }} COP</p>
+                  <p mat-line *ngIf="dataUser.id">Lo Vendiste:$ {{ ( item.loVendio || 0).toLocaleString(1) }} COP</p>
                   <p mat-line><span (click)="deleteCart(idx, item)" class="p-1 pointer d-flex justify-content-end"><i
                         class="material-icons">delete</i></span> </p>
                 </mat-list-item>
@@ -107,7 +112,7 @@
               <h2>Resumen &nbsp;</h2>
               <ul class="summary-table">
                 <li><span>Total: &nbsp;</span> <span>{{ ( data.total || 0 ) | currency:'':true}}</span></li>
-                <li><span>Total de Ganancias: &nbsp;</span> <span>{{ ( data.totalGanancias || 0 ) |
+                <li *ngIf="dataUser.id"><span>Total de Ganancias: &nbsp;</span> <span>{{ ( data.totalGanancias || 0 ) |
                     currency:'':true}}</span></li>
               </ul>
               <div class="d-flex justify-content-end">
@@ -189,8 +194,8 @@
             <li class="active col-12 paddingLeft pointer" *ngFor="let item of menus2">
               <a routerLinkActive="active" translate="false" (click)="EventMenus(item)" *ngIf="item.disable"
                 class="colorMenu">
-                <i class="material-icons colorList textInf">{{ item.icons }}</i>
-                <span class="p textInf colorList">{{ item.nombre}}</span>
+                <i class="material-icons textInf">{{ item.icons }}</i>
+                <span class="p">{{ item.nombre }}</span>
               </a>
             </li>
           </ul>
@@ -205,11 +210,13 @@
           <div style="width: 100%;">
             <div class="d-flex justify-content-around">
               <div>
-                <button type="button" class="btn btn-primary" (click)="openTienda('distribuidor')">Ver como Distribuidor</button>
+                <button type="button" class="btn btn-primary" (click)="openTienda('distribuidor')">Ver como
+                  Distribuidor</button>
               </div>
               <div></div>
               <div>
-                <button type="button" class="btn btn-success" (click)="openTienda('visitante')">Ver como visitante</button>
+                <button type="button" class="btn btn-success" (click)="openTienda('visitante')">Ver como
+                  visitante</button>
               </div>
             </div>
           </div>

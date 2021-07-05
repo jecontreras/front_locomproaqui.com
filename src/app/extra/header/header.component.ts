@@ -205,7 +205,8 @@ export class HeaderComponent implements OnInit {
     this.data.total = 0;
     this.data.totalGanancias = 0;
     for(let row of this.listCart){
-      texto+= ` productos: ${ row.titulo } codigo: ${ row.codigo } talla: ${ row.talla } cantidad: ${ row.cantidad } precio: ${ row.costo } precio Total: ${ row.costoTotal } foto: ${ row.foto } color ${ row.color || 'default'}`;
+      //texto+= ` productos: ${ row.titulo } codigo: ${ row.codigo } talla: ${ row.tallaSelect } cantidad: ${ row.cantidad } precio: ${ row.costo } precio Total: ${ row.costoTotal } foto: ${ row.foto } color ${ row.color || 'default'}`;
+      texto+= ` ${ row.foto } talla ${ row.tallaSelect } color ${ row.color || 'default' } ref:${ row.codigo } y el valor ${ this._tools.monedaChange( 3, 2, row.costo ) } `;
       this.data.total+= row.costoTotal || 0;
       this.data.totalGanancias+= ( row.loVendio - row.costoTotal ) || 0;
     }
@@ -220,8 +221,8 @@ export class HeaderComponent implements OnInit {
       if( cabeza.usu_perfil == 3 ) cerialNumero = ( cabeza.usu_indicativo || '57' ) + ( cabeza.usu_telefono || '3506700802' );
       else cerialNumero = `${ this.userId.usu_indicativo || 57 }${ this.userId.usu_telefono || '3506700802'}`;
     }else cerialNumero = "573506700802";
-    if( this.userId.id ) this.urlwhat = `https://wa.me/${ this.userId.usu_indicativo || 57 }${ ( this.userId.usu_telefono ) || 3506700802 }?text=Hola Servicio al cliente, como esta, saludo cordial, estoy interesad@ en comprar los siguientes ${texto}`
-    else this.urlwhat = `https://wa.me/${ cerialNumero  }?text=Hola Servicio al cliente, como esta, saludo cordial, estoy interesad@ en comprar los siguientes ${texto}`
+    if( this.userId.id ) this.urlwhat = `https://wa.me/${ this.userId.usu_indicativo || 57 }${ ( this.userId.usu_telefono ) || 3506700802 }?text=Hola estoy interesad@ en los siguientes productos ${texto}`
+    else this.urlwhat = `https://wa.me/${ cerialNumero  }?text=Hola estoy interesad@ en los siguientes productos ${texto}`
   }
 
   ngOnDestroy(): void {
@@ -507,10 +508,14 @@ export class HeaderComponent implements OnInit {
     this.listAlert = this.listAlert.find( ( row:any ) => row.id !== item.id );
   }
 
-  salir(){
+  salir( opt:boolean =  false ){
     localStorage.removeItem('user');
     let accion = new UserAction( this.dataUser, 'delete');
     this._store.dispatch(accion);
+    if( opt == false ){
+      accion = new UserCabezaAction( {} , 'drop' );
+      this._store.dispatch(accion);
+    }
     location.reload();
   }
 
@@ -523,7 +528,7 @@ export class HeaderComponent implements OnInit {
       this._store.dispatch(accion);
       this.router.navigate(['/pedidos/', this.dataUser.id ]);
       setTimeout( () =>{
-        this.salir();
+        this.salir( true );
       }, 1000 );
     }
     else {

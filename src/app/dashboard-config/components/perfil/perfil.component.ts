@@ -10,6 +10,7 @@ import { UserAction } from 'src/app/redux/app.actions';
 import { Indicativo } from 'src/app/JSON/indicativo';
 import { UsuariosService } from 'src/app/servicesComponents/usuarios.service';
 import { ArchivosService } from 'src/app/servicesComponents/archivos.service';
+import { CategoriasService } from 'src/app/servicesComponents/categorias.service';
 const URL = environment.url;
 const URLFRON = environment.urlFront;
 
@@ -34,19 +35,23 @@ export class PerfilComponent implements OnInit {
 
   imageChangedEvent: any = '';
   croppedImage: any = '';
+  textPerfil:string = "";
+  listCategorias:any = [];
+  
 
   constructor(
-    private _model: ServiciosService,
     private _user: UsuariosService,
     private _tools: ToolsService,
     private _archivos: ArchivosService,
     private _store: Store<STORAGES>,
+    private _categorias: CategoriasService
   ) { 
     this._store.subscribe((store: any) => {
       console.log(store);
       store = store.name;
       this.data = store.user;
       if( this.data.usu_perfil.prf_descripcion != 'subAdministrador' || this.data.usu_perfil.prf_descripcion != 'administrador' || this.data.usu_perfil.prf_descripcion != 'lider' ) this.disableBtn = true;
+      this.textPerfil = this.data.usu_perfil.prf_descripcion;
     });
   }
 
@@ -55,6 +60,13 @@ export class PerfilComponent implements OnInit {
     if(this.data.usu_fec_nacimiento) this.data.usu_fec_nacimiento = moment(this.data.usu_fec_nacimiento).format('DD/MM/YYYY');
     this.urlTienda+=this.data.id;
     this.urlRegistro+=this.data.id;
+    this.getCategorias();
+  }
+
+  getCategorias(){
+    this._categorias.get( { where: { cat_activo: 0, cat_padre:null }, limit: 1000 } ).subscribe(( res:any )=>{
+      this.listCategorias = res.data;
+    }, ()=> this._tools.tooast("Error de servidor") );
   }
 
   fileChangeEvent(event: any): void {
@@ -108,7 +120,7 @@ export class PerfilComponent implements OnInit {
   }
 
   Actualizar(){
-    this.data = _.omit(this.data, ['usu_perfil', 'cabeza', 'nivel', 'empresa', 'createdAt', 'updatedAt',]);
+    this.data = _.omit(this.data, ['usu_perfil', 'cabeza', 'nivel', 'empresa', 'createdAt', 'updatedAt', 'categoriaPerfil']);
     this._user.update(this.data).subscribe((res:any)=>{
       //console.log(res);
       this._tools.presentToast("Actualizado");
@@ -153,6 +165,10 @@ export class PerfilComponent implements OnInit {
 
   colorDato(){
     console.log( this.data );
+  }
+
+  tallaSeleccionando(t) {
+
   }
 
 }

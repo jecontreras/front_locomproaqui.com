@@ -32,128 +32,192 @@
                             </div>
                         </div>
                     </div>
-                    <div class="row p-3">
-                        <div class="col-12 mx-auto">
-                            <div class="mx-auto" style="width: 200px;">
-                                <img [src]="data.usu_imagen" class="imgPerfil">
-                                <img [src]="croppedImage" class="imgPerfil"/>
+                    <mat-tab-group mat-align-tabs="center">
+                        <mat-tab label="Datos Iniciales">
+                            <div class="row p-3">
+                                <div class="col-12 mx-auto">
+                                    <div class="mx-auto" style="width: 200px;">
+                                        <img [src]="data.usu_imagen" class="imgPerfil">
+                                        <img [src]="croppedImage" class="imgPerfil" />
+                                    </div>
+                                </div>
+                                <div class="col-12 container">
+                                    <div class="row">
+                                        <label>Subir Foto de Tienda</label>
+                                        <button class="btn btn-primary btn-just-icon btn-round"
+                                            (click)="subirFile('usu_imagen')" *ngIf="files.length > 0">
+                                            Subir Imagen
+                                        </button>
+                                    </div>
+                                    <ngx-dropzone (change)="onSelect($event)">
+                                        <ngx-dropzone-label>Abrir archivos</ngx-dropzone-label>
+                                        <ngx-dropzone-image-preview ngProjectAs="ngx-dropzone-preview"
+                                            *ngFor="let f of files" [file]="f" [removable]="true"
+                                            (removed)="onRemove(f)" multiple="false">
+                                            <ngx-dropzone-label>{{ f.name }} ({{ f.type }})</ngx-dropzone-label>
+                                        </ngx-dropzone-image-preview>
+                                    </ngx-dropzone>
+                                    <!--<input type="file" (change)="fileChangeEvent($event)" />
+        
+                                    <image-cropper [imageChangedEvent]="imageChangedEvent" [maintainAspectRatio]="true"
+                                        [aspectRatio]="4 / 3" format="png" (imageCropped)="imageCropped($event)"
+                                        (imageLoaded)="imageLoaded($event)" (cropperReady)="cropperReady( $event )"
+                                        (loadImageFailed)="loadImageFailed( $event )" imageQuality="95" cropperStaticHeight="1024" ></image-cropper>-->
+                                </div>
+                                <div class="col-12">
+                                    <label>Nombre de su tienda</label>
+                                    <input type="text" [(ngModel)]="data.usu_usuario"
+                                        class="form-control form-control-sm">
+                                </div>
+                                <div class="col-6 col-sm-3">
+                                    <label>Nombre de usuario</label>
+                                    <input type="text" [(ngModel)]="data.usu_nombre"
+                                        class="form-control form-control-sm">
+                                </div>
+                                <div class="col-6 col-sm-3">
+                                    <label>Apellido(s)</label>
+                                    <input type="text" [(ngModel)]="data.usu_apellido"
+                                        class="form-control form-control-sm">
+                                </div>
+                                <div class="form-group col-2">
+                                    <label for="exampleFormControlInput1">Indicativo</label>
+                                    <select class="form-control form-control-sm" [(ngModel)]="data.usu_indicativo"
+                                        required>
+                                        <option [value]="item.phone_code" *ngFor="let item of listIndicativos">{{
+                                            item.nombre }}
+                                            +{{ item.phone_code }}</option>
+                                    </select>
+                                </div>
+                                <div class="col-4">
+                                    <label>Numero de Whatsapp</label>
+                                    <input type="text" [(ngModel)]="data.usu_telefono"
+                                        class="form-control form-control-sm">
+                                </div>
+                                <div class="col-6">
+                                    <label>Ciudad</label>
+                                    <input type="text" [(ngModel)]="data.usu_ciudad"
+                                        class="form-control form-control-sm">
+                                </div>
+                                <div class="col-6">
+                                    <label>Dirección</label>
+                                    <input type="text" [(ngModel)]="data.usu_direccion"
+                                        class="form-control form-control-sm">
+                                </div>
+                                <div class="col-6">
+                                    <label>Correo Electronico</label>
+                                    <input type="text" [(ngModel)]="data.usu_email"
+                                        class="form-control form-control-sm">
+                                </div>
+                                <div class="col-6">
+                                    <label>Url de Facebook</label>
+                                    <input type="text" [(ngModel)]="data.url_facebook"
+                                        class="form-control form-control-sm">
+                                </div>
+                                <div class="col-6">
+                                    <label>Url de Instagram</label>
+                                    <input type="text" [(ngModel)]="data.url_instagram"
+                                        class="form-control form-control-sm">
+                                </div>
+                                <div class="col-6">
+                                    <label>Url de youtube</label>
+                                    <input type="text" [(ngModel)]="data.url_youtube"
+                                        class="form-control form-control-sm">
+                                </div>
+                                <div class="col-6 col-sm-3">
+                                    <label>Fecha Nacimiento(s)</label>
+                                    <div class="input-group">
+                                        <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
+                                        <input type="date" class="form-control" [(ngModel)]="data.usu_fec_nacimiento">
+                                    </div>
+                                </div>
+                                <div class="col-6 col-sm-3">
+                                    <label>Genero</label>
+                                    <select class="form-control form-control-sm" [(ngModel)]="data.usu_genero">
+                                        <option value="masculino">Masculino</option>
+                                        <option value="feminino">Feminino</option>
+                                    </select>
+                                </div>
+                                <div class="col-6">
+                                    <label>Color de tu tienda</label>
+                                    <input type="color" [(ngModel)]="data.usu_color"
+                                        class="form-control form-control-sm">
+                                </div>
+                                <!--<div class="col-12">
+                                    <label>Confirmar Contraseña Para Actualizar</label>
+                                    <input type="text" [(ngModel)]="data.cat_nombre" class="form-control form-control-sm">
+                                </div>-->
+                                <div class="col-6">
+                                    <br>
+                                    <button class="p-2 btn btn-success btn-just-icon btn-round" (click)="Actualizar()">
+                                        Actualizar Datos
+                                    </button>
+                                </div>
+                                <div class="col-6">
+                                    <br>
+                                    <div class="col-6" *ngIf="disableRestaure">
+                                        <label>Clave Nueva</label>
+                                        <input type="password" [(ngModel)]="restaure.passNew"
+                                            class="form-control form-control-sm">
+                                        <br>
+                                    </div>
+                                    <button class="p-2 btn btn-primary btn-just-icon btn-round"
+                                        (click)="disableRestaure = true;" *ngIf="!disableRestaure">
+                                        Cambiar Contraseña
+                                    </button>
+                                    <button class="p-2 btn btn-primary btn-just-icon btn-round"
+                                        (click)="CambiarPassword()" *ngIf="disableRestaure">
+                                        Actualizar Contraseña
+                                    </button>
+                                    <br><br><br>
+                                </div>
                             </div>
-                        </div>
-                        <div class="col-12 container">
-                            <div class="row">
-                        <label>Subir Foto de Tienda</label>
-                        <button class="btn btn-primary btn-just-icon btn-round" (click)="subirFile('usu_imagen')" *ngIf="files.length > 0">
-                            Subir Imagen
-                        </button>
-                    </div>
-                    <ngx-dropzone (change)="onSelect($event)">
-                        <ngx-dropzone-label>Abrir archivos</ngx-dropzone-label>
-                        <ngx-dropzone-image-preview ngProjectAs="ngx-dropzone-preview" *ngFor="let f of files"
-                            [file]="f" [removable]="true" (removed)="onRemove(f)" multiple="false">
-                            <ngx-dropzone-label>{{ f.name }} ({{ f.type }})</ngx-dropzone-label>
-                        </ngx-dropzone-image-preview>
-                    </ngx-dropzone>
-                            <!--<input type="file" (change)="fileChangeEvent($event)" />
-
-                            <image-cropper [imageChangedEvent]="imageChangedEvent" [maintainAspectRatio]="true"
-                                [aspectRatio]="4 / 3" format="png" (imageCropped)="imageCropped($event)"
-                                (imageLoaded)="imageLoaded($event)" (cropperReady)="cropperReady( $event )"
-                                (loadImageFailed)="loadImageFailed( $event )" imageQuality="95" cropperStaticHeight="1024" ></image-cropper>-->
-                        </div>
-                        <div class="col-12">
-                            <label>Nombre de su tienda</label>
-                            <input type="text" [(ngModel)]="data.usu_usuario" class="form-control form-control-sm">
-                        </div>
-                        <div class="col-6 col-sm-3">
-                            <label>Nombre de usuario</label>
-                            <input type="text" [(ngModel)]="data.usu_nombre" class="form-control form-control-sm">
-                        </div>
-                        <div class="col-6 col-sm-3">
-                            <label>Apellido(s)</label>
-                            <input type="text" [(ngModel)]="data.usu_apellido" class="form-control form-control-sm">
-                        </div>
-                        <div class="form-group col-2">
-                            <label for="exampleFormControlInput1">Indicativo</label>
-                            <select class="form-control form-control-sm" [(ngModel)]="data.usu_indicativo" required>
-                                <option [value]="item.phone_code" *ngFor="let item of listIndicativos">{{ item.nombre }}
-                                    +{{ item.phone_code }}</option>
-                            </select>
-                        </div>
-                        <div class="col-4">
-                            <label>Numero de Whatsapp</label>
-                            <input type="text" [(ngModel)]="data.usu_telefono" class="form-control form-control-sm">
-                        </div>
-                        <div class="col-6">
-                            <label>Ciudad</label>
-                            <input type="text" [(ngModel)]="data.usu_ciudad" class="form-control form-control-sm">
-                        </div>
-                        <div class="col-6">
-                            <label>Dirección</label>
-                            <input type="text" [(ngModel)]="data.usu_direccion" class="form-control form-control-sm">
-                        </div>
-                        <div class="col-6">
-                            <label>Correo Electronico</label>
-                            <input type="text" [(ngModel)]="data.usu_email" class="form-control form-control-sm">
-                        </div>
-                        <div class="col-6">
-                            <label>Url de Facebook</label>
-                            <input type="text" [(ngModel)]="data.url_facebook" class="form-control form-control-sm">
-                        </div>
-                        <div class="col-6">
-                            <label>Url de Instagram</label>
-                            <input type="text" [(ngModel)]="data.url_instagram" class="form-control form-control-sm">
-                        </div>
-                        <div class="col-6">
-                            <label>Url de youtube</label>
-                            <input type="text" [(ngModel)]="data.url_youtube" class="form-control form-control-sm">
-                        </div>
-                        <div class="col-6 col-sm-3">
-                            <label>Fecha Nacimiento(s)</label>
-                            <div class="input-group">
-                                <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
-                                <input type="date" class="form-control" [(ngModel)]="data.usu_fec_nacimiento">
+                        </mat-tab>
+                        <mat-tab label="Datos de bodegas" *ngIf="textPerfil == 'proveedor'">
+                            <div class="container">
+                                <div class="row">
+                                    <div class="form-group col-4">
+                                        <label for="exampleFormControlInput1">Nombre de tu bodega</label>
+                                        <input type="text" [(ngModel)]="data.nombreBodega"
+                                            class="form-control form-control-sm">
+                                    </div>
+                                    <div class="form-group col-4">
+                                        <label for="exampleFormControlInput1">Numero contacto de soporte</label>
+                                        <input type="number" [(ngModel)]="data.numeroSoporte"
+                                            class="form-control form-control-sm">
+                                    </div>
+                                    <div class="form-group col-4">
+                                        <label for="exampleFormControlInput1">Correo electrónico soporte</label>
+                                        <input type="email" [(ngModel)]="data.correoElectronico"
+                                            class="form-control form-control-sm">
+                                    </div>
+                                    <div class="form-group col-4">
+                                        <label for="exampleFormControlInput1">Seleccionar la o las categorías del tipo
+                                            de producto que quiere promocionar</label>
+                                        <div class="row">
+                                            <div class="col-6 col-sm-4 col-md-3 col-xs-2 col-lg-4"
+                                            *ngFor="let item of listCategorias">
+                                            <mat-checkbox (ngModelChange)="tallaSeleccionando( item )"
+                                                [(ngModel)]="item.check" class="example-margin">
+                                                {{ item.cat_nombre }}
+                                            </mat-checkbox>
+                                        </div>
+                                        </div>
+                                    </div>
+                                    <div class="form-group col-4">
+                                        <label for="exampleFormControlInput1">Seleccionar la o las categorías del tipo
+                                            de producto que quiere promocionar
+                                        </label>
+                                        <select class="form-control form-control-sm" [(ngModel)]="data.usu_indicativo" required >
+                                            <option [value]="item.phone_code" *ngFor="let item of listIndicativos">{{
+                                                item.nombre }}
+                                                +{{ item.phone_code }}
+                                            </option>
+                                        </select>
+                                    </div>
+                                </div>
                             </div>
-                        </div>
-                        <div class="col-6 col-sm-3">
-                            <label>Genero</label>
-                            <select class="form-control form-control-sm" [(ngModel)]="data.usu_genero">
-                                <option value="masculino">Masculino</option>
-                                <option value="feminino">Feminino</option>
-                            </select>
-                        </div>
-                        <div class="col-6">
-                            <label>Color de tu tienda</label>
-                            <input type="color" [(ngModel)]="data.usu_color" class="form-control form-control-sm">
-                        </div>
-                        <!--<div class="col-12">
-                    <label>Confirmar Contraseña Para Actualizar</label>
-                    <input type="text" [(ngModel)]="data.cat_nombre" class="form-control form-control-sm">
-                </div>-->
-                        <div class="col-6">
-                            <br>
-                            <button class="p-2 btn btn-success btn-just-icon btn-round" (click)="Actualizar()">
-                                Actualizar Datos
-                            </button>
-                        </div>
-                        <div class="col-6">
-                            <br>
-                            <div class="col-6" *ngIf="disableRestaure">
-                                <label>Clave Nueva</label>
-                                <input type="password" [(ngModel)]="restaure.passNew"
-                                    class="form-control form-control-sm">
-                                <br>
-                            </div>
-                            <button class="p-2 btn btn-primary btn-just-icon btn-round"
-                                (click)="disableRestaure = true;" *ngIf="!disableRestaure">
-                                Cambiar Contraseña
-                            </button>
-                            <button class="p-2 btn btn-primary btn-just-icon btn-round" (click)="CambiarPassword()"
-                                *ngIf="disableRestaure">
-                                Actualizar Contraseña
-                            </button>
-                            <br><br><br>
-                        </div>
-                    </div>
+                        </mat-tab>
+                    </mat-tab-group>
                 </div>
             </div>
             <div></div>

@@ -48,7 +48,7 @@
                             </div>
                             <div>
                                 <h3 class="precios">Precio Sugerido: {{ _tools.monedaChange( 3, 2, data.pro_uni_venta ) }}</h3>
-                                <span class="precios">Ganas el {{ porcentajeMostrar }} %</span>
+                                <span *ngIf="data.precio_vendedor" class="precios">Ganas el {{ porcentajeMostrar }} %</span>
                             </div>
                         </div>
                     </div>
