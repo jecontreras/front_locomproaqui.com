@@ -49,4 +49,16 @@ export class UsuariosService {
   delete(query:any){
     return this._model.querys('tblusuario/'+query.id, query, 'delete');
   }
+
+  createSolicitud(query:any){
+    return this._model.querys('solicitudes',query, 'post');
+  }
+
+  updateSolicitud(query:any){
+    return this._model.querys('solicitudes/'+query.id, query, 'put');
+  }
+  
+  deleteSolicitud(query:any){
+    return this._model.querys('solicitudes/'+query.id, query, 'delete');
+  }
 }

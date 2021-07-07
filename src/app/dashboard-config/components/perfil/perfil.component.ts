@@ -42,6 +42,7 @@ export class PerfilComponent implements OnInit {
   listCategorias:any = [];
   listCiudad:any = [];
   listDepartamento:any = departamento;
+  dataSolicitud:any = {};
 
   constructor(
     private _user: UsuariosService,
@@ -195,6 +196,27 @@ export class PerfilComponent implements OnInit {
       let respuesta = this._tools.confirm( { title: "Solicitud enviada de manera exitosa", 
       detalle: `el área encargada de proveedores tendrá un plazo de 1 a 8 días hábiles para ponerse en contacto con tigo via whatsapp`,
       confir: "Yes"} );
+    });
+  }
+
+  submitSolicitud( ){
+    if( this.dataSolicitud.id ) this.updateSolictud( this.dataSolicitud )
+    else this.enviarSolicitud( this.dataSolicitud );
+  }
+
+  enviarSolicitud( data:any ){
+    return new Promise( resolve =>{
+      this._user.createSolicitud( data ).subscribe(( res:any )=>{
+        resolve( res );
+      },()=> resolve( false ) );
+    });
+  }
+
+  updateSolictud( data:any ){
+    return new Promise( resolve =>{
+      this._user.updateSolicitud( data ).subscribe(( res:any )=>{
+        resolve( res );
+      },()=> resolve( false ) );
     });
   }
 
