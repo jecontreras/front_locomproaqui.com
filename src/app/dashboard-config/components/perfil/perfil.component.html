@@ -204,15 +204,20 @@
                                         </div>
                                     </div>
                                     <div class="form-group col-4">
-                                        <label for="exampleFormControlInput1">Seleccionar la o las categorías del tipo
-                                            de producto que quiere promocionar
-                                        </label>
-                                        <select class="form-control form-control-sm" [(ngModel)]="data.usu_indicativo" required >
-                                            <option [value]="item.phone_code" *ngFor="let item of listIndicativos">{{
-                                                item.nombre }}
-                                                +{{ item.phone_code }}
+                                        <label for="exampleFormControlInput1">Ciudad</label>
+                                        <select class="form-control form-control-sm" [(ngModel)]="data.ciudadBodega" required >
+                                            <option [value]="item.phone_code" *ngFor="let item of listCiudad">
+                                                {{ item.departamento }} - {{ item.ciudad }}
                                             </option>
                                         </select>
+                                    </div>
+                                    <div class="form-group col-4">
+                                        <label for="exampleFormControlInput1">Dirección de bodega para mensajeria</label>
+                                        <input type="text" [(ngModel)]="data.direccionBodega"
+                                            class="form-control form-control-sm">
+                                    </div>
+                                    <div class="col-4">
+                                        <button type="button" class="btn btn-primary" (click)="iniciarClick()">SUBIR 5 IMÁGENES DE TUS MEJORES PRODUCTOS</button>
                                     </div>
                                 </div>
                             </div>

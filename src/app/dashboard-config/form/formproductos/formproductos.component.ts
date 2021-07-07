@@ -82,15 +82,20 @@ export class FormproductosComponent implements OnInit {
   inicial(){
     
     if (Object.keys(this.datas.datos).length > 0) {
-      if( this.id ) this.titulo = "Crear";
-      else this.titulo = "Actualizar";
       this.data = _.clone(this.datas.datos);
       this.id = this.data.id;
-      this.listFotos = this.data.listaGaleria || [];
-      
-      this.tallaSelect = this.data.listaTallas || [];
-      this.procesoEdision();
-      if( this.data.pro_categoria ) this.getSubCategorias( this.data.pro_categoria );
+      if( !this.id ) {
+        this.titulo = "Crear";
+        this.id = ""; this.data.pro_codigo = this.codigo(); this.data.pro_sw_tallas = 1; this.disableSpinner = false; this.listFotos = [];
+      }
+      else {
+        this.titulo = "Actualizar";
+        this.listFotos = this.data.listaGaleria || [];
+        
+        this.tallaSelect = this.data.listaTallas || [];
+        this.procesoEdision();
+        if( this.data.pro_categoria ) this.getSubCategorias( this.data.pro_categoria );
+      }
     } else { this.id = ""; this.data.pro_codigo = this.codigo(); this.data.pro_sw_tallas = 1; this.disableSpinner = false; this.listFotos = []; }
     this.getCategorias();
     this.getTipoTallas();
@@ -299,6 +304,8 @@ export class FormproductosComponent implements OnInit {
 
   guardar() {
     return new Promise(resolve => {
+      if( this.data.opt == 'demo' ) this.data.pro_mp_venta = 1;
+      this.data.pro_usu_creacion = this.dataUser.id;
       this._productos.create(this.data).subscribe((res: any) => {
         //console.log(res);
         this._tools.presentToast("Exitoso");

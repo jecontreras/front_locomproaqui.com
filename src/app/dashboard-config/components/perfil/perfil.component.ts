@@ -11,6 +11,9 @@ import { Indicativo } from 'src/app/JSON/indicativo';
 import { UsuariosService } from 'src/app/servicesComponents/usuarios.service';
 import { ArchivosService } from 'src/app/servicesComponents/archivos.service';
 import { CategoriasService } from 'src/app/servicesComponents/categorias.service';
+import { departamento } from 'src/app/JSON/departamentos';
+import { FormproductosComponent } from '../../form/formproductos/formproductos.component';
+import { MatDialog } from '@angular/material';
 const URL = environment.url;
 const URLFRON = environment.urlFront;
 
@@ -37,14 +40,16 @@ export class PerfilComponent implements OnInit {
   croppedImage: any = '';
   textPerfil:string = "";
   listCategorias:any = [];
-  
+  listCiudad:any = [];
+  listDepartamento:any = departamento;
 
   constructor(
     private _user: UsuariosService,
     private _tools: ToolsService,
     private _archivos: ArchivosService,
     private _store: Store<STORAGES>,
-    private _categorias: CategoriasService
+    private _categorias: CategoriasService,
+    public dialog: MatDialog
   ) { 
     this._store.subscribe((store: any) => {
       console.log(store);
@@ -61,6 +66,7 @@ export class PerfilComponent implements OnInit {
     this.urlTienda+=this.data.id;
     this.urlRegistro+=this.data.id;
     this.getCategorias();
+    for( let row of this.listDepartamento ) for( let item of row.ciudades ) this.listCiudad.push( { departamento: row.departamento, ciudad: item });
   }
 
   getCategorias(){
@@ -70,7 +76,7 @@ export class PerfilComponent implements OnInit {
   }
 
   fileChangeEvent(event: any): void {
-      this.imageChangedEvent = event;
+      this.imageChangedEvent = event; 
       console.log( this.imageChangedEvent )
   }
   imageCropped(event: any) {
@@ -169,6 +175,27 @@ export class PerfilComponent implements OnInit {
 
   tallaSeleccionando(t) {
 
+  }
+
+  async iniciarClick(){
+    let respuesta = await this._tools.confirm( { title: "SUBIR 5 IMÁGENES DE TUS MEJORES PRODUCTOS –PRECIO PARA DISTRIBUIDOR", 
+    detalle: `ten en cuenta, que si los precios que quieres mostrar a nuestra enorme comunidad  de distribuidores es atractivo. 
+    Ellos se motivaran a pagar marketing y publicidad para promocionar tus productos en las plataformas más grandes, 
+    tendrás más posibilidades de un mayor número de ventas PRECIO SUGERIDO DE VENTA A CLIENTE FINAL`,
+    confir: "Yes"} );
+    if( !respuesta ) return false;
+    const dialogRef = this.dialog.open(FormproductosComponent,{
+      data: { datos: {
+        opt: "demo"
+      } }
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      console.log(`Dialog result: ${result}`);
+      let respuesta = this._tools.confirm( { title: "Solicitud enviada de manera exitosa", 
+      detalle: `el área encargada de proveedores tendrá un plazo de 1 a 8 días hábiles para ponerse en contacto con tigo via whatsapp`,
+      confir: "Yes"} );
+    });
   }
 
 }
