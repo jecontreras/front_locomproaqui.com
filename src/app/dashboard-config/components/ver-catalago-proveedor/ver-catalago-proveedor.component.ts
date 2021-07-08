@@ -12,6 +12,7 @@ export class VerCatalagoProveedorComponent implements OnInit {
   };
   listTendencia:any = [
     {
+      id: 1,
       precio: "COP 22,500",
       titulo: "fibra natural, colon + plus 450g",
       descripcion: "sicommer",
@@ -20,11 +21,29 @@ export class VerCatalagoProveedorComponent implements OnInit {
   ];
   listDestacados:any = [
     {
-      foto: "https://triidyftp.s3.us-east-2.amazonaws.com/Tiendas/3403.jpg"
-    }
+      foto: "https://triidyftp.s3.us-east-2.amazonaws.com/Tiendas/3403.jpg",
+      id: 1
+    },
+    {
+      foto: "https://triidyftp.s3.us-east-2.amazonaws.com/Tiendas/3403.jpg",
+      id: 2
+    },
+    {
+      foto: "https://triidyftp.s3.us-east-2.amazonaws.com/Tiendas/3403.jpg",
+      id: 3
+    },
+    {
+      foto: "https://triidyftp.s3.us-east-2.amazonaws.com/Tiendas/3403.jpg",
+      id: 4
+    },
+    {
+      foto: "https://triidyftp.s3.us-east-2.amazonaws.com/Tiendas/3403.jpg",
+      id: 5
+    },
   ];
   listRecomendados:any = [
     {
+      id: 1,
       precio: "COP 22,500",
       titulo: "fibra natural, colon + plus 450g",
       descripcion: "sicommer",
@@ -33,6 +52,7 @@ export class VerCatalagoProveedorComponent implements OnInit {
   ];
   listRentables:any = [
     {
+      id: 1,
       precio: "COP 22,500",
       titulo: "fibra natural, colon + plus 450g",
       descripcion: "sicommer",

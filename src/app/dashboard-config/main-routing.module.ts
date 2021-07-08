@@ -20,6 +20,8 @@ import { AdminComponent } from './components/admin/admin.component';
 import { ConfiguracionComponent } from './components/configuracion/configuracion.component';
 import { ControlInventarioComponent } from './components/control-inventario/control-inventario.component';
 import { VerCatalagoProveedorComponent } from './components/ver-catalago-proveedor/ver-catalago-proveedor.component';
+import { VerProductoProveedorComponent } from './components/ver-producto-proveedor/ver-producto-proveedor.component';
+import { VerProveedorComponent } from './components/ver-proveedor/ver-proveedor.component';
 
 const dashboardRoutes: Routes = [
  {
@@ -45,6 +47,8 @@ const dashboardRoutes: Routes = [
      {path: 'controlInventario', component: ControlInventarioComponent },
      {path: 'admin', component: AdminComponent},
      {path: 'verCatalagoProveedor', component: VerCatalagoProveedorComponent},
+     {path: 'verProveedor/:id', component: VerProveedorComponent},
+     {path: 'verProductoProveedor/:id', component: VerProductoProveedorComponent},
      {path: '**', redirectTo: 'categorias', pathMatch: 'full'}
    ]
   }

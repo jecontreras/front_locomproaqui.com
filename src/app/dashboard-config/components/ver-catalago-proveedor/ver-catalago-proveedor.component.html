@@ -28,7 +28,7 @@
                 Productos en Tendencia</h3>
         </div>
         <div class="cards" style="box-sizing: border-box; display: flex; margin-left: -1vw; margin-right: -1vw;">
-            <div *ngFor="let item of listTendencia" class="card ng-star-inserted"
+            <div *ngFor="let item of listTendencia" class="card ng-star-inserted" [routerLink]="['/config/verProductoProveedor', item.id ]"
                 style="background-clip: border-box; background-color: white; border-radius: 5px; border: 0px solid rgb(231, 231, 231); box-sizing: border-box; cursor: pointer; display: grid; flex-direction: column; grid-template-rows: max-content; margin-left: 1vw; margin-right: 1vw; min-width: 0px; overflow-wrap: break-word; padding: 0.5rem; position: relative; text-align: center; width: 379.469px;">
                 <div class="ng-star-inserted" style="box-sizing: border-box;"><img alt="" [src]="item.foto"
                         style="border-style: none; box-sizing: border-box; height: 12vw; vertical-align: middle; width: 363.469px;" />
@@ -56,7 +56,7 @@
             style="--bs-gutter-x: 1.5rem; --bs-gutter-y: 0; align-items: center !important; background: rgb(255, 255, 255); border-radius: 5px; box-sizing: border-box; display: flex !important; flex-wrap: wrap; margin: 0px;">
             <ul class="grid"
                 style="box-sizing: border-box; content: s; display: table; flex-shrink: 0; justify-content: center; list-style: none; margin: 0px; max-width: 100%; padding: 2vw 1vw; transition: all 0.2s ease-in-out 0s; width: 1633.02px;">
-                <li class="ng-star-inserted noLineaSup" dir="0" id="proveedor" *ngFor="let item of listDestacados"
+                <li class="ng-star-inserted noLineaSup" dir="0" id="proveedor" *ngFor="let item of listDestacados"  [routerLink]="['/config/verProveedor', item.id ]"
                     style="border-right: 1px solid rgb(168, 168, 168); border-top: 1px solid rgb(168, 168, 168); box-sizing: border-box; float: left; padding: 13px; width: 20vw;">
                     <figure class="grid__figure ng-star-inserted"
                         style="box-sizing: border-box; cursor: pointer; display: flex; height: 15vw; margin: 0px auto; width: 15vw;">
@@ -84,7 +84,7 @@
             <div class="card ng-star-inserted"
                 style="background-clip: border-box; background-color: white; border-radius: 5px; border: 0px solid rgb(231, 231, 231); box-sizing: border-box; cursor: pointer; display: grid; flex-direction: column; grid-template-rows: max-content; margin-left: 1vw; margin-right: 1vw; min-width: 0px; overflow-wrap: break-word; padding: 0.5rem; position: relative; text-align: center; width: 379.469px;">
                 <div class="ng-star-inserted" style="box-sizing: border-box;"
-                 *ngFor="let item of listRecomendados"
+                 *ngFor="let item of listRecomendados" [routerLink]="['/config/verProductoProveedor', item.id ]"
                 ><img alt=""
                         [src]="item.foto"
                         style="border-style: none; box-sizing: border-box; height: 12vw; vertical-align: middle; width: 363.469px;" />
@@ -109,7 +109,7 @@
                 Productos más rentables</h3>
         </div>
         <div class="cards" style="box-sizing: border-box; display: flex; margin-left: -1vw; margin-right: -1vw;">
-            <div class="card ng-star-inserted" *ngFor="let item of listRentables"
+            <div class="card ng-star-inserted" *ngFor="let item of listRentables" [routerLink]="['/config/verProductoProveedor', item.id ]"
                 style="background-clip: border-box; background-color: white; border-radius: 5px; border: 0px solid rgb(231, 231, 231); box-sizing: border-box; cursor: pointer; display: grid; flex-direction: column; grid-template-rows: max-content; margin-left: 1vw; margin-right: 1vw; min-width: 0px; overflow-wrap: break-word; padding: 0.5rem; position: relative; text-align: center; width: 379.469px;">
                 <div class="ng-star-inserted" style="box-sizing: border-box;"><img alt=""
                         [src]="item.foto"
