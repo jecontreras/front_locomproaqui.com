@@ -207,6 +207,7 @@ export class PerfilComponent implements OnInit {
   enviarSolicitud( data:any ){
     return new Promise( resolve =>{
       this._user.createSolicitud( data ).subscribe(( res:any )=>{
+        this.envioWhatsap( );
         resolve( res );
       },()=> resolve( false ) );
     });
@@ -218,6 +219,11 @@ export class PerfilComponent implements OnInit {
         resolve( res );
       },()=> resolve( false ) );
     });
+  }
+
+  envioWhatsap( ){
+    let url:string = `https://wa.me/573228576900?text=`;
+    window.open( url );
   }
 
 }

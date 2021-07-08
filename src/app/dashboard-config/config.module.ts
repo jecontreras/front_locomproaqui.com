@@ -46,6 +46,7 @@ import { NgxCurrencyModule } from "ngx-currency";
 import { ConfiguracionComponent } from './components/configuracion/configuracion.component';
 import { ControlInventarioComponent } from './components/control-inventario/control-inventario.component';
 import { ImageCropperModule } from 'ngx-image-cropper';
+import { VerCatalagoProveedorComponent } from './components/ver-catalago-proveedor/ver-catalago-proveedor.component';
 
 
 @NgModule({
@@ -92,7 +93,8 @@ import { ImageCropperModule } from 'ngx-image-cropper';
     ProductosOrdenarComponent,
     AdminComponent,
     ConfiguracionComponent,
-    ControlInventarioComponent
+    ControlInventarioComponent,
+    VerCatalagoProveedorComponent
   ],
   imports: [
     CommonModule,

@@ -332,6 +332,13 @@ export class HeaderComponent implements OnInit {
         url: '/config/controlInventario',
         submenus:[]
       },
+      {
+        icons: 'receipt_long',
+        nombre: 'Ver catalogo de proveedores',
+        disable: this.rolUser == 'administrador' || this.rolUser == 'proveedor',
+        url: '/config/verCatalagoProveedor',
+        submenus:[]
+      },
       /*{
         icons: 'security',
         nombre: 'Seguridad',

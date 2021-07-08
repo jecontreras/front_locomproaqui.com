@@ -34,7 +34,7 @@ export class PedidosComponent implements OnInit {
   query: any = {
     where: {
       pro_activo: 0,
-      pro_vendedor: 0
+      pro_mp_venta: 0
     },
     page: 0,
     limit: 18

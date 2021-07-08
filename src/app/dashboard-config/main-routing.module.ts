@@ -19,6 +19,7 @@ import { CatalogoComponent } from './components/catalogo/catalogo.component';
 import { AdminComponent } from './components/admin/admin.component';
 import { ConfiguracionComponent } from './components/configuracion/configuracion.component';
 import { ControlInventarioComponent } from './components/control-inventario/control-inventario.component';
+import { VerCatalagoProveedorComponent } from './components/ver-catalago-proveedor/ver-catalago-proveedor.component';
 
 const dashboardRoutes: Routes = [
  {
@@ -43,6 +44,7 @@ const dashboardRoutes: Routes = [
      {path: 'configuracion', component: ConfiguracionComponent},
      {path: 'controlInventario', component: ControlInventarioComponent },
      {path: 'admin', component: AdminComponent},
+     {path: 'verCatalagoProveedor', component: VerCatalagoProveedorComponent},
      {path: '**', redirectTo: 'categorias', pathMatch: 'full'}
    ]
   }
