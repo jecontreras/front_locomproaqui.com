@@ -1,4 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+import { NgxSpinnerService } from 'ngx-spinner';
+import { ProductoService } from 'src/app/servicesComponents/producto.service';
+import { UsuariosService } from 'src/app/servicesComponents/usuarios.service';
 
 @Component({
   selector: 'app-ver-catalago-proveedor',
@@ -10,60 +13,85 @@ export class VerCatalagoProveedorComponent implements OnInit {
     opt: "",
     text: ""
   };
-  listTendencia:any = [
-    {
-      id: 1,
-      precio: "COP 22,500",
-      titulo: "fibra natural, colon + plus 450g",
-      descripcion: "sicommer",
-      foto: "https://triidyftp.s3.us-east-2.amazonaws.com/Productos/8335.jpg"
-    }
-  ];
-  listDestacados:any = [
-    {
-      foto: "https://triidyftp.s3.us-east-2.amazonaws.com/Tiendas/3403.jpg",
-      id: 1
-    },
-    {
-      foto: "https://triidyftp.s3.us-east-2.amazonaws.com/Tiendas/3403.jpg",
-      id: 2
-    },
-    {
-      foto: "https://triidyftp.s3.us-east-2.amazonaws.com/Tiendas/3403.jpg",
-      id: 3
-    },
-    {
-      foto: "https://triidyftp.s3.us-east-2.amazonaws.com/Tiendas/3403.jpg",
-      id: 4
-    },
-    {
-      foto: "https://triidyftp.s3.us-east-2.amazonaws.com/Tiendas/3403.jpg",
-      id: 5
-    },
-  ];
-  listRecomendados:any = [
-    {
-      id: 1,
-      precio: "COP 22,500",
-      titulo: "fibra natural, colon + plus 450g",
-      descripcion: "sicommer",
-      foto: "https://triidyftp.s3.us-east-2.amazonaws.com/Productos/8335.jpg"
-    }
-  ];
-  listRentables:any = [
-    {
-      id: 1,
-      precio: "COP 22,500",
-      titulo: "fibra natural, colon + plus 450g",
-      descripcion: "sicommer",
-      foto: "https://triidyftp.s3.us-east-2.amazonaws.com/Productos/8335.jpg"
-    }
-  ];
+  listTendencia:any = [];
+  listDestacados:any = [];
+  listRecomendados:any = [];
+  listRentables:any = [];
 
+  queryTendencia:any = {
+    where:{
+      pro_activo: 0,
+      pro_mp_venta: 0
+    },
+    page: 0,
+    limit: 4  
+  };
 
-  constructor() { }
+  querysDestacados:any = {
+    where:{
+      rolName: 'proveedor'
+    },
+    page: 0,
+    limit: 4  
+  };
+
+  queryRecomendados:any = {
+    where:{
+      pro_activo: 0,
+      pro_mp_venta: 0
+    },
+    page: 0,
+    limit: 4  
+  };
+
+  queryRentables:any = {
+    where:{
+      pro_activo: 0,
+      pro_mp_venta: 0
+    },
+    page: 0,
+    limit: 4  
+  };
+
+  constructor(
+    private _productos: ProductoService,
+    private _user: UsuariosService,
+    private spinner: NgxSpinnerService
+  ) { }
 
   ngOnInit(): void {
+    setTimeout(()=>{
+      this.spinner.show();
+    }, 1000 );
+    this.getListTendencia();
+    this.getListaProveedor();
+    this.getRecomendados();
+    this.getRentables();
+  }
+
+  getListTendencia(){
+    this._productos.get( this.queryTendencia ).subscribe(( res:any )=>{
+      this.listTendencia = res.data;
+    });
+  }
+
+  getListaProveedor(){
+    this._user.get( this.querysDestacados ).subscribe(( res:any )=>{
+      this.listDestacados = res.data;
+    });
+  }
+
+  getRecomendados(){
+    this._productos.get( this.queryRecomendados ).subscribe(( res:any )=>{
+      this.listRecomendados = res.data;
+    })
+  }
+
+  getRentables(){
+    this._productos.get( this.queryRentables ).subscribe(( res:any )=>{
+      this.listRentables = res.data;
+      this.spinner.hide();
+    })
   }
 
   buscarFTP(){

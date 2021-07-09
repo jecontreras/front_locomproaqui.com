@@ -1,6 +1,6 @@
 <div class="containe"
     style="box-sizing: border-box; margin-left: auto; margin-right: auto; padding-left: 15px; padding-right: 15px; width: 1816.61px;">
-    <div class="buscador ng-star-inserted"
+    <!-- <div class="buscador ng-star-inserted"
         style="border-radius: 1vw; box-shadow: rgba(0, 0, 0, 0.22) 2px 3px 5px 1px; box-sizing: border-box; display: flex; margin: 2vw 0px 1vw 28vw; position: static; width: 625.312px;">
         <div class="input-group-prepend b-text"
             style="align-items: center; background-color: white; border-bottom-left-radius: 1vw; border-top-left-radius: 1vw; border: none; box-sizing: border-box; color: #495057; display: flex; font-size: 1.2vw; font-weight: 600; line-height: 1.5; margin-bottom: 0px; margin-right: -1px; padding: 0.5vw 0vw 0.5vw 0.8vw; text-align: center; white-space: nowrap;">
@@ -18,7 +18,7 @@
             class="in-busc ng-star-inserted" placeholder="Busca aqui {{ sear.opt }}" [(ngModel)]="sear.txt"
             style="background-clip: padding-box; background-color: white; border-bottom-right-radius: 1vw; border-color: rgb(255, 255, 255); border-style: solid; border-top-right-radius: 1vw; border-width: 1px; color: #495057; display: block; font-family: inherit; font-size: 1.2vw; line-height: 1.5; margin: 0px; overflow: visible; padding: 0.4vw; transition: border-color 0.15s ease-in-out 0s, box-shadow 0.15s ease-in-out 0s; width: 435.234px;"
             type="text" (ngModelChange)="buscarFTP()" />
-    </div>
+    </div>-->
     <div class="mprodsdrop ng-star-inserted"
         style="box-sizing: border-box; margin-right: 5vw; text-align: end !important;"></div>
     <div class="margen ng-star-inserted" style="box-sizing: border-box; padding: 2vw 4vw;">
@@ -27,21 +27,45 @@
                 style="box-sizing: border-box; color: #484848; font-family: sJosefin Sanss, sans-serif !important; font-size: 1.75rem; font-weight: 500; line-height: 1.2; margin-bottom: 0.5rem; margin-top: 0px;">
                 Productos en Tendencia</h3>
         </div>
-        <div class="cards" style="box-sizing: border-box; display: flex; margin-left: -1vw; margin-right: -1vw;">
-            <div *ngFor="let item of listTendencia" class="card ng-star-inserted" [routerLink]="['/config/verProductoProveedor', item.id ]"
-                style="background-clip: border-box; background-color: white; border-radius: 5px; border: 0px solid rgb(231, 231, 231); box-sizing: border-box; cursor: pointer; display: grid; flex-direction: column; grid-template-rows: max-content; margin-left: 1vw; margin-right: 1vw; min-width: 0px; overflow-wrap: break-word; padding: 0.5rem; position: relative; text-align: center; width: 379.469px;">
-                <div class="ng-star-inserted" style="box-sizing: border-box;"><img alt="" [src]="item.foto"
-                        style="border-style: none; box-sizing: border-box; height: 12vw; vertical-align: middle; width: 363.469px;" />
-                    <p class="precio"
-                        style="box-sizing: border-box; color: #004d00; font-family: Montserrat, sans-serif !important; font-size: 1.4vw; font-weight: 600; margin-bottom: 1rem; margin-top: 0px;">
-                        <span style="box-sizing: border-box; font-size: 1.2vw;">COP</span>{{ item.precio }}
-                    </p>
-                    <h3
-                        style="box-sizing: border-box; color: #484848; font-family: sJosefin Sanss, sans-serif !important; font-size: 1.2vw; font-weight: 500; line-height: 1.2; margin-bottom: 0.5rem; margin-top: 0.5vw;">
-                        {{ item.titulo }}</h3>
-                    <p
-                        style="box-sizing: border-box; color: #484848; font-family: Montserrat, sans-serif !important; font-size: 1.1vw; margin-bottom: 1rem; margin-top: 0px;">
-                        {{ item.descripcion }}</p>
+        <div class="col-12">
+            <ngx-spinner bdOpacity=0.9 bdColor="" size="default" color="#581f87" type="ball-pulse-sync"
+                [fullScreen]="false">
+            </ngx-spinner>
+        </div>
+        <div class="col-12">
+            <div class="row">
+                <div class="col-12 row ">
+                    <mat-card class="example-card col-md-2 col-sm-4 col-lg-2 col-xs-6 col-6 anchandoPr "
+                        *ngFor="let item of listTendencia" [routerLink]="['/config/verProductoProveedor', item.id ]">
+                        <div class="ui-ribbon-wrapper hide" *ngIf="item.descuento">
+                            <div class="ui-ribbon">
+                                {{ item.descuento }}% Off
+                            </div>
+                        </div>
+                        <figure data-toggle="modal" id="figura" data-target="#modalinfo" class="img-contenedor">
+                            <img class="img-responsive btn-block imgProductos pointer " [src]="item.foto">
+                        </figure>
+                        <mat-card-content>
+                            <div class="row">
+                                <div class="col-12">
+                                    <div class="d-flex justify-content-between">
+                                        <div>
+                                            <h6 class="titulo1 color1">{{ item.pro_nombre | slice: 0: 20 }}</h6>
+                                        </div>
+                                        <div>
+                                            <h6 class="titulo1 color1">
+                                                <small style="display: inline-block;  font-size: 90% !important;"
+                                                    class="pricesmall currency2" id="pricesmall_25">$ {{ (
+                                                    item.precio_vendedor || item.pro_uni_venta || 0
+                                                    ).toLocaleString(1) }}
+                                                </small><br>
+                                            </h6>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </mat-card-content>
+                    </mat-card>
                 </div>
             </div>
         </div>
@@ -52,20 +76,17 @@
                 style="box-sizing: border-box; color: #484848; font-family: sJosefin Sanss, sans-serif !important; font-size: 1.75rem; font-weight: 500; line-height: 1.2; margin-bottom: 0.5rem; margin-top: 0px;">
                 Proveedores Destacados</h3>
         </div>
-        <div class="row d-flex align-items-center content-prov"
-            style="--bs-gutter-x: 1.5rem; --bs-gutter-y: 0; align-items: center !important; background: rgb(255, 255, 255); border-radius: 5px; box-sizing: border-box; display: flex !important; flex-wrap: wrap; margin: 0px;">
-            <ul class="grid"
-                style="box-sizing: border-box; content: s; display: table; flex-shrink: 0; justify-content: center; list-style: none; margin: 0px; max-width: 100%; padding: 2vw 1vw; transition: all 0.2s ease-in-out 0s; width: 1633.02px;">
-                <li class="ng-star-inserted noLineaSup" dir="0" id="proveedor" *ngFor="let item of listDestacados"  [routerLink]="['/config/verProveedor', item.id ]"
-                    style="border-right: 1px solid rgb(168, 168, 168); border-top: 1px solid rgb(168, 168, 168); box-sizing: border-box; float: left; padding: 13px; width: 20vw;">
-                    <figure class="grid__figure ng-star-inserted"
-                        style="box-sizing: border-box; cursor: pointer; display: flex; height: 15vw; margin: 0px auto; width: 15vw;">
-                        <img alt="Felmel" aria-describedby="cdk-describedby-message-8" cdk-describedby-host=""
-                            class="mat-tooltip-trigger" [src]="item.foto"
-                            style="border-radius: 15vw; border-style: none; box-sizing: border-box; height: 288px; object-fit: contain; vertical-align: middle; width: 288px;" />
-                    </figure>
-                </li>
-            </ul>
+        <div class="col-12">
+            <div class="row">
+                <div class="col-12 row ">
+                    <mat-card class="example-card col-md-2 col-sm-4 col-lg-2 col-xs-6 col-6 anchandoPr "
+                        *ngFor="let item of listDestacados" [routerLink]="['/config/verProveedor', item.id ]">
+                        <figure data-toggle="modal" id="figura" data-target="#modalinfo" class="img-contenedor">
+                            <img class="img-responsive btn-block imgProductos pointer " [src]="item.usu_imagen">
+                        </figure>
+                    </mat-card>
+                </div>
+            </div>
         </div>
         <div class="content-btn"
             style="box-sizing: border-box; display: flex; justify-content: center; margin-top: 1vw; width: 1633.02px;">
@@ -80,24 +101,35 @@
                 style="box-sizing: border-box; color: #484848; font-family: sJosefin Sanss, sans-serif !important; font-size: 1.75rem; font-weight: 500; line-height: 1.2; margin-bottom: 0.5rem; margin-top: 0px;">
                 Nuestros recomendados</h3>
         </div>
-        <div class="cards" style="box-sizing: border-box; display: flex; margin-left: -1vw; margin-right: -1vw;">
-            <div class="card ng-star-inserted"
-                style="background-clip: border-box; background-color: white; border-radius: 5px; border: 0px solid rgb(231, 231, 231); box-sizing: border-box; cursor: pointer; display: grid; flex-direction: column; grid-template-rows: max-content; margin-left: 1vw; margin-right: 1vw; min-width: 0px; overflow-wrap: break-word; padding: 0.5rem; position: relative; text-align: center; width: 379.469px;">
-                <div class="ng-star-inserted" style="box-sizing: border-box;"
-                 *ngFor="let item of listRecomendados" [routerLink]="['/config/verProductoProveedor', item.id ]"
-                ><img alt=""
-                        [src]="item.foto"
-                        style="border-style: none; box-sizing: border-box; height: 12vw; vertical-align: middle; width: 363.469px;" />
-                    <p class="precio"
-                        style="box-sizing: border-box; color: #004d00; font-family: Montserrat, sans-serif !important; font-size: 1.4vw; font-weight: 600; margin-bottom: 1rem; margin-top: 0px;">
-                        <span style="box-sizing: border-box; font-size: 1.2vw;">COP</span>{{ item.precio }}
-                    </p>
-                    <h3
-                        style="box-sizing: border-box; color: #484848; font-family: sJosefin Sanss, sans-serif !important; font-size: 1.2vw; font-weight: 500; line-height: 1.2; margin-bottom: 0.5rem; margin-top: 0.5vw;">
-                        {{ item.titulo }}</h3>
-                    <p
-                        style="box-sizing: border-box; color: #484848; font-family: Montserrat, sans-serif !important; font-size: 1.1vw; margin-bottom: 1rem; margin-top: 0px;">
-                        {{ item.descripcion }}</p>
+        <div class="col-12">
+            <div class="row">
+                <div class="col-12 row ">
+                    <mat-card class="example-card col-md-2 col-sm-4 col-lg-2 col-xs-6 col-6 anchandoPr "
+                        *ngFor="let item of listRecomendados" [routerLink]="['/config/verProductoProveedor', item.id ]">
+                        <figure data-toggle="modal" id="figura" data-target="#modalinfo" class="img-contenedor">
+                            <img class="img-responsive btn-block imgProductos pointer " [src]="item.foto">
+                        </figure>
+                        <mat-card-content>
+                            <div class="row">
+                                <div class="col-12">
+                                    <div class="d-flex justify-content-between">
+                                        <div>
+                                            <h6 class="titulo1 color1">{{ item.pro_nombre | slice: 0: 20 }}</h6>
+                                        </div>
+                                        <div>
+                                            <h6 class="titulo1 color1">
+                                                <small style="display: inline-block;  font-size: 90% !important;"
+                                                    class="pricesmall currency2" id="pricesmall_25">$ {{ (
+                                                    item.precio_vendedor || item.pro_uni_venta || 0
+                                                    ).toLocaleString(1) }}
+                                                </small><br>
+                                            </h6>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </mat-card-content>
+                    </mat-card>
                 </div>
             </div>
         </div>
@@ -108,22 +140,35 @@
                 style="box-sizing: border-box; color: #484848; font-family: sJosefin Sanss, sans-serif !important; font-size: 1.75rem; font-weight: 500; line-height: 1.2; margin-bottom: 0.5rem; margin-top: 0px;">
                 Productos más rentables</h3>
         </div>
-        <div class="cards" style="box-sizing: border-box; display: flex; margin-left: -1vw; margin-right: -1vw;">
-            <div class="card ng-star-inserted" *ngFor="let item of listRentables" [routerLink]="['/config/verProductoProveedor', item.id ]"
-                style="background-clip: border-box; background-color: white; border-radius: 5px; border: 0px solid rgb(231, 231, 231); box-sizing: border-box; cursor: pointer; display: grid; flex-direction: column; grid-template-rows: max-content; margin-left: 1vw; margin-right: 1vw; min-width: 0px; overflow-wrap: break-word; padding: 0.5rem; position: relative; text-align: center; width: 379.469px;">
-                <div class="ng-star-inserted" style="box-sizing: border-box;"><img alt=""
-                        [src]="item.foto"
-                        style="border-style: none; box-sizing: border-box; height: 12vw; vertical-align: middle; width: 363.469px;" />
-                    <p class="precio"
-                        style="box-sizing: border-box; color: #004d00; font-family: Montserrat, sans-serif !important; font-size: 1.4vw; font-weight: 600; margin-bottom: 1rem; margin-top: 0px;">
-                        <span style="box-sizing: border-box; font-size: 1.2vw;">COP</span>{{ item.precio }}
-                    </p>
-                    <h3
-                        style="box-sizing: border-box; color: #484848; font-family: sJosefin Sanss, sans-serif !important; font-size: 1.2vw; font-weight: 500; line-height: 1.2; margin-bottom: 0.5rem; margin-top: 0.5vw;">
-                        {{ item.titulo }}</h3>
-                    <p
-                        style="box-sizing: border-box; color: #484848; font-family: Montserrat, sans-serif !important; font-size: 1.1vw; margin-bottom: 1rem; margin-top: 0px;">
-                        {{ item.descripcion }}</p>
+        <div class="col-12">
+            <div class="row">
+                <div class="col-12 row ">
+                    <mat-card class="example-card col-md-2 col-sm-4 col-lg-2 col-xs-6 col-6 anchandoPr "
+                        *ngFor="let item of listRentables" [routerLink]="['/config/verProductoProveedor', item.id ]">
+                        <figure data-toggle="modal" id="figura" data-target="#modalinfo" class="img-contenedor">
+                            <img class="img-responsive btn-block imgProductos pointer " [src]="item.foto">
+                        </figure>
+                        <mat-card-content>
+                            <div class="row">
+                                <div class="col-12">
+                                    <div class="d-flex justify-content-between">
+                                        <div>
+                                            <h6 class="titulo1 color1">{{ item.pro_nombre | slice: 0: 20 }}</h6>
+                                        </div>
+                                        <div>
+                                            <h6 class="titulo1 color1">
+                                                <small style="display: inline-block;  font-size: 90% !important;"
+                                                    class="pricesmall currency2" id="pricesmall_25">$ {{ (
+                                                    item.precio_vendedor || item.pro_uni_venta || 0
+                                                    ).toLocaleString(1) }}
+                                                </small><br>
+                                            </h6>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </mat-card-content>
+                    </mat-card>
                 </div>
             </div>
         </div>
