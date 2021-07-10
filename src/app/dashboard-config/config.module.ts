@@ -49,6 +49,8 @@ import { ImageCropperModule } from 'ngx-image-cropper';
 import { VerCatalagoProveedorComponent } from './components/ver-catalago-proveedor/ver-catalago-proveedor.component';
 import { VerProductoProveedorComponent } from './components/ver-producto-proveedor/ver-producto-proveedor.component';
 import { VerProveedorComponent } from './components/ver-proveedor/ver-proveedor.component';
+import { NgImageSliderModule } from 'ng-image-slider';
+import { NgxImageZoomModule } from 'ngx-image-zoom';
 
 
 @NgModule({
@@ -116,6 +118,8 @@ import { VerProveedorComponent } from './components/ver-proveedor/ver-proveedor.
     Ng2SmartTableModule,
     ExtraModule,
     NgxCurrencyModule,
+    NgImageSliderModule,
+    NgxImageZoomModule,
   ],
   exports: [
     FormcategoriasComponent,

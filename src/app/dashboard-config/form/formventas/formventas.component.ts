@@ -189,6 +189,7 @@ export class FormventasComponent implements OnInit {
     for (let row of this.listCarrito) {
       if (!row.costo || !row.cantidad) continue;
       total += (Number(row.costo) * Number(row.cantidad));
+      row.loVendio = row.costo;
       if ( this.porcentajeUser == 0 ) row.comision = (row.costo * (this.dataUser.porcentaje || 10) / 100);
       else this.data.ven_ganancias+= ( row.loVendio - row.costoTotal ) || 0;
     }

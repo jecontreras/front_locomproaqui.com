@@ -1,214 +1,164 @@
-<p>&nbsp;<a _ngcontent-imy-c247="" href="https://triidy.com/dashboard/proveedores" routerlink="/dashboard/proveedores"
+<p>&nbsp;<a routerlink="/config/verCatalagoProveedor"
         style="box-sizing: border-box; color: #0040ff; cursor: pointer; font-family: Montserrat, sans-serif; font-size: 1.2vw; letter-spacing: 0.04vw; text-decoration-line: none;">Volver
         al listado</a><span
         style="background-color: #eef3f4; color: #484848; font-family: Montserrat, sans-serif; font-size: 1.2vw; letter-spacing: 0.04vw;">&nbsp;|&nbsp;</span><a
-        _ngcontent-imy-c247=""
-        style="box-sizing: border-box; color: #0040ff; cursor: pointer; font-family: Montserrat, sans-serif; font-size: 1.2vw; letter-spacing: 0.04vw;">Marketplace</a><span
+       routerlink="/config/verCatalagoProveedor/:id"
+        style="box-sizing: border-box; color: #0040ff; cursor: pointer; font-family: Montserrat, sans-serif; font-size: 1.2vw; letter-spacing: 0.04vw;"> {{ titulo }}</a><span
         style="background-color: #eef3f4; color: #484848; font-family: Montserrat, sans-serif; font-size: 1.2vw; letter-spacing: 0.04vw;">&nbsp;&gt;&nbsp;</span><a
-        _ngcontent-imy-c247=""
-        style="box-sizing: border-box; color: #0040ff; cursor: pointer; font-family: Montserrat, sans-serif; font-size: 1.2vw; letter-spacing: 0.04vw;">la
-        mixteria</a><span
-        style="background-color: #eef3f4; color: #484848; font-family: Montserrat, sans-serif; font-size: 1.2vw; letter-spacing: 0.04vw;">&nbsp;&gt;&nbsp;</span><a
-        _ngcontent-imy-c247=""
-        style="box-sizing: border-box; color: #0040ff; cursor: pointer; font-family: Montserrat, sans-serif; font-size: 1.2vw; letter-spacing: 0.04vw;">VITAGLOW
-        ALISADOR</a></p>
-<div _ngcontent-imy-c247="" class="row"
+       
+        style="box-sizing: border-box; color: #0040ff; cursor: pointer; font-family: Montserrat, sans-serif; font-size: 1.2vw; letter-spacing: 0.04vw;">{{ data.pro_nombre }}</a></p>
+<div class="row"
     style="--bs-gutter-x: 1.5rem; --bs-gutter-y: 0; background-color: #eef3f4; box-sizing: border-box; color: #212529; display: flex; flex-wrap: wrap; font-family: Montserrat, sans-serif; font-size: 16px; margin-left: 0.5vw; margin-right: -15px; margin-top: calc(var(--bs-gutter-y) * -1);">
-    <div _ngcontent-imy-c247="" class="col-7"
+    <div class="col-7"
         style="background: rgb(255, 255, 255); box-sizing: border-box; flex: 0 0 58.3333%; margin: 0.5vw; max-width: 58.3333%; padding-left: 15px; padding-right: 15px; position: relative; width: 1045.33px;">
-        <div _ngcontent-imy-c247="" class="product-gallery" style="box-sizing: border-box;">
-            <div _ngcontent-imy-c247="" class="product-image" style="box-sizing: border-box;"><img
-                    _ngcontent-imy-c247="" class="active"
-                    src="https://triidyftp.s3.us-east-2.amazonaws.com/Productos/4950.jpg"
-                    style="border-style: none; box-sizing: border-box; cursor: pointer; display: block; height: 52vh; margin: 0px 0px 0.75rem; max-width: 100%; object-fit: contain; vertical-align: middle; width: 1015.33px;" />
-            </div>
-            <ul _ngcontent-imy-c247="" class="image-list"
-                style="box-sizing: border-box; display: flex; list-style: none; margin: 0px; overflow: hidden; padding: 0px;">
-                <li _ngcontent-imy-c247="" class="image-item"
-                    style="box-sizing: border-box; flex-basis: 100%; margin: 0px 0.75rem 0px 0px;"><img
-                        _ngcontent-imy-c247="" class="ng-star-inserted"
-                        src="https://triidyftp.s3.us-east-2.amazonaws.com/Productos/4950.jpg"
-                        style="border-style: none; box-sizing: border-box; cursor: pointer; height: 10rem; max-width: 100%; object-fit: cover; transition: opacity 0.3s ease 0s; vertical-align: middle; width: 330.438px;" />
-                </li>
-                <li _ngcontent-imy-c247="" class="image-item"
-                    style="box-sizing: border-box; flex-basis: 100%; margin: 0px 0.75rem 0px 0px;"><img
-                        _ngcontent-imy-c247="" class="ng-star-inserted"
-                        src="https://rimatour.com/wp-content/uploads/2017/09/No-image-found.jpg"
-                        style="border-style: none; box-sizing: border-box; cursor: pointer; height: 10rem; max-width: 100%; object-fit: cover; transition: opacity 0.3s ease 0s; vertical-align: middle; width: 330.438px;" />
-                </li>
-                <li _ngcontent-imy-c247="" class="image-item"
-                    style="box-sizing: border-box; flex-basis: 100%; margin: 0px;"><img _ngcontent-imy-c247=""
-                        class="ng-star-inserted"
-                        src="https://rimatour.com/wp-content/uploads/2017/09/No-image-found.jpg"
-                        style="border-style: none; box-sizing: border-box; cursor: pointer; height: 10rem; max-width: 100%; object-fit: cover; transition: opacity 0.3s ease 0s; vertical-align: middle; width: 330.438px;" />
-                </li>
-            </ul>
+        hola
+        <lib-ngx-image-zoom  [thumbImage]=urlFoto [fullImage]=urlFoto [magnification]="1"
+                [enableScrollZoom]="true" [enableLens]="true" [lensWidth]="200" [lensHeight]="200">
+        </lib-ngx-image-zoom>
+        <div class="col-12">
+            <ng-image-slider [images]="imageObject" [infinite]="sliderInfinite" [imagePopup]="sliderImagePopup"
+                style="width: 100%;" [showArrow]="sliderArrowShow"
+                [imageSize]="{width: sliderImageWidth, height: sliderImageHeight}"
+                [autoSlide]="sliderAutoSlide ? 1 : 0" [slideImage]="sliderSlideImage"
+                [animationSpeed]="sliderAnimationSpeed" (imageClick)="imageOnClick($event)"
+                (arrowClick)="arrowOnClick($event)" (lightboxArrowClick)="lightboxArrowClick($event)" #nav
+                (mouseover)="eventoFoto($event)">
+            </ng-image-slider>
         </div>
     </div>
-    <div _ngcontent-imy-c247="" class="col-4 descripcion1"
+    <div class="col-4 descripcion1"
         style="background: rgb(255, 255, 255); box-sizing: border-box; flex: 0 0 33.3333%; margin: 0.5vw; max-width: 33.3333%; padding: 2vw; position: relative; width: 597.328px;">
-        <h3 _ngcontent-imy-c247=""
-            style="box-sizing: border-box; color: #484848; font-family:Josefin San, sans-serif !important; font-size: 2.5vw; font-weight: 500; line-height: 1.2; margin-bottom: 0.5rem; margin-top: 0px;">
-            VITAGLOW ALISADOR</h3>
-        <h5 _ngcontent-imy-c247="" class="greenFont"
-            style="box-sizing: border-box; color: #22b573; font-family:Josefin San, sans-serif !important; font-size: 2vw; font-weight: 500; line-height: 1.2; margin-bottom: 0.5rem; margin-top: 0px;">
-            <span _ngcontent-imy-c247=""
-                style="box-sizing: border-box; font-family: Montserrat, sans-serif !important; font-size: 1.8vw;">COP</span>&nbsp;28,000
+        <h3
+            style="box-sizing: border-box; color: #484848; font-family:Josefin San, sans-serif !important; font-size: 2.5vw; font-weight: 500; line-height: 1.2; margin-bottom: 0.5rem; margin-top: 0px;">{{ data.pro_nombre }}</h3>
+        <h5 class="greenFont" style="box-sizing: border-box; color: #22b573; font-family:Josefin San, sans-serif !important; font-size: 2vw; font-weight: 500; line-height: 1.2; margin-bottom: 0.5rem; margin-top: 0px;">
+            <span style="box-sizing: border-box; font-family: Montserrat, sans-serif !important; font-size: 1.8vw;">
+            </span>Precio Vendedor: {{ _tools.monedaChange( 3, 2, data.precio_vendedor ) }}
         </h5>
-        <h6 _ngcontent-imy-c247=""
+        <!--<h5 class="greenFont"  style="box-sizing: border-box; color: #22b573; font-family:Josefin San, sans-serif !important; font-size: 2vw; font-weight: 500; line-height: 1.2; margin-bottom: 0.5rem; margin-top: 0px;">
+            <span style="box-sizing: border-box; font-family: Montserrat, sans-serif !important; font-size: 1.8vw;">
+            </span>Precio Sugerido: {{ _tools.monedaChange( 3, 2, data.pro_uni_venta ) }}
+        </h5>-->
+        <!--<h6
             style="box-sizing: border-box; font-size: 1.4vw; font-weight: 500; line-height: 1.2; margin-bottom: 0.5rem; margin-top: 0px;">
-            <span _ngcontent-imy-c247="" class="triidy-color" style="box-sizing: border-box; color: #484848;">la
-                mixteria</span></h6>
-        <hr _ngcontent-imy-c247=""
+            <span class="triidy-color" style="box-sizing: border-box; color: #484848;">la
+                mixteria</span></h6>-->
+        <hr
             style="background-color: currentcolor; border-bottom: 0px; border-image: initial; border-left: 0px; border-right: 0px; border-top-color: rgba(0, 0, 0, 0.1); border-top-style: solid; box-sizing: content-box; color: inherit; height: 1px; margin: 1rem 0px; opacity: 0.25; overflow: visible;" />
-        <div _ngcontent-imy-c247="" class="row"
+        <div class="row"
             style="--bs-gutter-x: 1.5rem; --bs-gutter-y: 0; box-sizing: border-box; display: flex; flex-wrap: wrap; margin-left: 0.5vw; margin-right: -15px; margin-top: calc(var(--bs-gutter-y) * -1);">
-            <div _ngcontent-imy-c247="" class="col-2"
+            <div class="col-2"
                 style="align-items: center; box-sizing: border-box; display: flex; flex: 0 0 16.6667%; margin-top: var(--bs-gutter-y); max-width: 16.6667%; padding-left: 15px; padding-right: 15px; position: relative; width: 87.6562px;">
-                <img _ngcontent-imy-c247="" alt=""
+                <img alt=""
                     src="https://triidyftp.s3.us-east-2.amazonaws.com/Triidy_web/storeIcon.png"
                     style="border-style: none; box-sizing: border-box; height: auto; max-width: none; object-fit: cover; vertical-align: middle; width: 3.2vw;" />
             </div>
-            <div _ngcontent-imy-c247="" class="col-10"
+            <div class="col-10"
                 style="box-sizing: border-box; flex: 0 0 83.3333%; margin-top: var(--bs-gutter-y); max-width: 83.3333%; padding-left: 15px; padding-right: 15px; position: relative; width: 438.281px;">
-                <p _ngcontent-imy-c247=""
+                <p
                     style="box-sizing: border-box; color: #484848; font-size: 1.2vw; margin-bottom: 0px; margin-top: 0px;">
                     120 Tiendas venden este producto</p>
             </div>
         </div>
-        <div _ngcontent-imy-c247="" class="row"
+        <div class="row"
             style="--bs-gutter-x: 1.5rem; --bs-gutter-y: 0; box-sizing: border-box; display: flex; flex-wrap: wrap; margin-left: 0.5vw; margin-right: -15px; margin-top: calc(var(--bs-gutter-y) * -1);">
-            <div _ngcontent-imy-c247="" class="col-2"
+            <div class="col-2"
                 style="align-items: center; box-sizing: border-box; display: flex; flex: 0 0 16.6667%; margin-top: var(--bs-gutter-y); max-width: 16.6667%; padding-left: 15px; padding-right: 15px; position: relative; width: 87.6562px;">
-                <img _ngcontent-imy-c247="" alt=""
+                <img alt=""
                     src="https://triidyftp.s3.us-east-2.amazonaws.com/Triidy_web/loyaltyIcon.png"
                     style="border-style: none; box-sizing: border-box; height: auto; max-width: none; object-fit: cover; vertical-align: middle; width: 3.2vw;" />
             </div>
-            <div _ngcontent-imy-c247="" class="col-10"
+            <div class="col-10"
                 style="box-sizing: border-box; flex: 0 0 83.3333%; margin-top: var(--bs-gutter-y); max-width: 83.3333%; padding-left: 15px; padding-right: 15px; position: relative; width: 438.281px;">
-                <p _ngcontent-imy-c247=""
+                <p
                     style="box-sizing: border-box; color: #484848; font-size: 1.2vw; margin-bottom: 0px; margin-top: 0px;">
-                    <span _ngcontent-imy-c247="" style="box-sizing: border-box; font-weight: bolder;">Popularidad del
-                        producto</span><br _ngcontent-imy-c247="" style="box-sizing: border-box;" />462 ventas en total
+                    <span style="box-sizing: border-box; font-weight: bolder;">Popularidad del
+                        producto</span><br style="box-sizing: border-box;" />462 ventas en total
                 </p>
             </div>
-        </div><br _ngcontent-imy-c247="" style="box-sizing: border-box;" />
-        <h6 _ngcontent-imy-c247="" class="ng-star-inserted"
+        </div><br style="box-sizing: border-box;" />
+        <h6 class="ng-star-inserted"
             style="box-sizing: border-box; font-size: 1.4vw; font-weight: 500; line-height: 1.2; margin-bottom: 0.5rem; margin-top: 0px;">
             Precio de venta sugerido</h6>
-        <h5 _ngcontent-imy-c247="" class="greenFont ng-star-inserted"
+        <h5 class="greenFont ng-star-inserted"
             style="box-sizing: border-box; color: #22b573; font-family:Josefin San, sans-serif !important; font-size: 2vw; font-weight: 500; line-height: 1.2; margin-bottom: 0.5rem; margin-top: 0px;">
-            <span _ngcontent-imy-c247=""
-                style="box-sizing: border-box; font-family: Montserrat, sans-serif !important; font-size: 1.8vw;">COP</span>&nbsp;69,900
+            <span
+                style="box-sizing: border-box; font-family: Montserrat, sans-serif !important; font-size: 1.8vw;"></span>{{ _tools.monedaChange( 3, 2, data.pro_uni_venta ) }}
         </h5>
-        <div _ngcontent-imy-c247="" class="row entrada-pre ng-star-inserted"
-            style="--bs-gutter-x: 1.5rem; --bs-gutter-y: 0; box-sizing: border-box; display: flex; flex-wrap: wrap; margin-left: 0.5vw; margin-right: -15px; margin-top: calc(var(--bs-gutter-y) * -1);">
-            <div _ngcontent-imy-c247="" class="col-5"
-                style="box-sizing: border-box; flex: 0 0 41.6667%; margin-top: var(--bs-gutter-y); max-width: 41.6667%; padding-left: 15px; padding-right: 15px; position: relative; width: 219.141px;">
-                <h6 _ngcontent-imy-c247=""
-                    style="box-sizing: border-box; font-size: 1.4vw; font-weight: 500; line-height: 1.2; margin-bottom: 0.5rem; margin-top: 0px;">
-                    Vender en:</h6>
-            </div>
-            <div _ngcontent-imy-c247="" class="webflow-style-input col-6"
-                style="border-radius: 2px; box-sizing: border-box; display: flex; flex-direction: row; flex: 0 0 50%; margin-top: var(--bs-gutter-y); max-width: 50%; padding-left: 0px; padding-right: 15px; position: relative; width: 262.969px;">
-                <input _ngcontent-imy-c247="" class="ng-untouched ng-pristine ng-valid" placeholder="COP 000"
-                    style="background-attachment: initial; background-clip: initial; background-image: initial; background-origin: initial; background-position: initial; background-repeat: initial; background-size: initial; border-style: none; color: #484848; flex-grow: 1; font-family: Montserrat, sans-serif !important; font-size: 1.4vw; line-height: inherit; margin: 0px; outline: none; overflow: visible; vertical-align: middle;"
-                    type="text" /></div>
-        </div>
-        <div _ngcontent-imy-c247="" class="row r-gan ng-star-inserted"
+        <div class="row r-gan ng-star-inserted"
             style="--bs-gutter-x: 1.5rem; --bs-gutter-y: 0; box-sizing: border-box; display: flex; flex-wrap: wrap; margin: 1vw -15px 1vw 0.5vw;">
-            <div _ngcontent-imy-c247="" class="col-5"
+            <div class="col-5"
                 style="box-sizing: border-box; flex: 0 0 41.6667%; margin-top: var(--bs-gutter-y); max-width: 41.6667%; padding-left: 15px; padding-right: 15px; position: relative; width: 219.141px;">
-                <h6 _ngcontent-imy-c247=""
+                <h6
                     style="box-sizing: border-box; font-size: 1.4vw; font-weight: 500; line-height: 1.2; margin-bottom: 0.5rem; margin-top: 0px;">
                     Ganancia:</h6>
             </div>
-            <div _ngcontent-imy-c247="" class="col-6"
+            <div class="col-6"
                 style="box-sizing: border-box; flex: 0 0 50%; margin-top: var(--bs-gutter-y); max-width: 50%; padding-left: 15px; padding-right: 15px; position: relative; width: 262.969px;">
+                {{ _tools.monedaChange( 3, 2, ( data.ganancia ) ) }}
             </div>
         </div>
-        <div _ngcontent-imy-c247="" class="r-agrega ng-star-inserted"
+        <div class="r-agrega ng-star-inserted"
             style="box-sizing: border-box; text-align: center;">
-            <p _ngcontent-imy-c247=""
+            <p
                 style="box-sizing: border-box; color: #484848; font-size: 1vw; margin-bottom: 1rem; margin-top: 0px;">1
-                Unidades disponibles</p><input _ngcontent-imy-c247="" class="btn pulse ng-star-inserted"
-                style="appearance: button; background: rgb(245, 139, 31); border-color: initial; border-radius: 1vw; border-style: none; border-width: initial; color: white; cursor: pointer; font-family: Montserrat, sans-serif !important; font-size: 1.4vw; height: auto; line-height: 1.5; margin: 0px; outline: none; overflow: visible; padding: 7px 20px; transition: none 0s ease 0s; vertical-align: middle; width: auto;"
-                type="button" value="Agregar Producto" />
+                Unidades disponibles</p>
+                <button type="button" class="btn btn-primary" (click)="AgregarCart( false )">Agregar Producto</button>
         </div>
     </div>
 </div>
-<div _ngcontent-imy-c247="" class="row"
+<div class="row"
     style="--bs-gutter-x: 1.5rem; --bs-gutter-y: 0; background-color: #eef3f4; box-sizing: border-box; color: #212529; display: flex; flex-wrap: wrap; font-family: Montserrat, sans-serif; font-size: 16px; margin-left: 0.5vw; margin-right: -15px; margin-top: calc(var(--bs-gutter-y) * -1);">
-    <div _ngcontent-imy-c247="" class="col-7 descripcion2"
+    <div class="col-7 descripcion2"
         style="background: rgb(255, 255, 255); box-sizing: border-box; flex: 0 0 58.3333%; margin: 0.5vw; max-width: 58.3333%; padding: 2vw; position: relative; width: 1045.33px;">
-        <h3 _ngcontent-imy-c247=""
+        <h3
             style="box-sizing: border-box; color: #484848; font-family:Josefin San, sans-serif !important; font-size: 2.5vw; font-weight: 500; line-height: 1.2; margin-bottom: 0.5rem; margin-top: 0px;">
-            <span _ngcontent-imy-c247="" class="triidy-color"
+            <span class="triidy-color"
                 style="box-sizing: border-box; font-family: Montserrat, sans-serif !important;">Descripción</span></h3>
-        <p _ngcontent-imy-c247=""
-            style="box-sizing: border-box; color: #484848; font-size: 1.2vw; margin-bottom: 1rem; margin-top: 0px;">CON
-            HIALURÓNICO &amp; COLÁGENO ¿Cómo funciona? ¡Alisa y repara CABELLOS NO DECOLORADOS Se activa con calor!
-            VITAGLOW Es el mejor REVITALIZADOR PROGRESIVO fácil de aplicar en casa, a base de HIALURÓNICO Y COLÁGENO que
-            ALISA tu cabello hasta un 90%. Nutre, fortalece y aporta un brillo increíble *¡hasta por 3 meses! Mejora
-            instantáneamente el aspecto de cabellos porosos y sin vida. Al ser un producto sin formol, puede aclarar tu
-            cabello un tono. Este producto NO es recomendado en cabellos decolorados Resultados inmediatos* Liso hasta
-            por 90 lavadas. ¡Libre de formol y muy fácil de usar en casa!</p>
-        <h3 _ngcontent-imy-c247=""
-            style="box-sizing: border-box; color: #484848; font-family:Josefin San, sans-serif !important; font-size: 2.5vw; font-weight: 500; line-height: 1.2; margin-bottom: 0.5rem; margin-top: 0px;">
-            <span _ngcontent-imy-c247="" class="triidy-color"
-                style="box-sizing: border-box; font-family: Montserrat, sans-serif !important;">Características</span>
-        </h3>
-        <p _ngcontent-imy-c247=""
-            style="box-sizing: border-box; color: #484848; font-size: 1.2vw; margin-bottom: 1rem; margin-top: 0px;">
-            <span _ngcontent-imy-c247="" style="box-sizing: border-box; font-weight: bolder;">Tamaño:&nbsp;</span>1cm
-            (Alto) x 1cm (Ancho) x 1cm (Profundo)</p>
-        <div _ngcontent-imy-c247="" class="ng-star-inserted" style="box-sizing: border-box;"><input
-                _ngcontent-imy-c247="" class="btn pulse ng-star-inserted"
-                style="appearance: button; background: rgb(245, 139, 31); border-color: initial; border-radius: 1vw; border-style: none; border-width: initial; color: white; cursor: pointer; font-family: Montserrat, sans-serif !important; font-size: 1.4vw; height: auto; line-height: 1.5; margin: 0px; outline: none; overflow: visible; padding: 7px 20px; transition: none 0s ease 0s; vertical-align: middle; width: auto;"
-                type="button" value="Agregar Producto" /></div>
+        <p
+            style="box-sizing: border-box; color: #484848; font-size: 1.2vw; margin-bottom: 1rem; margin-top: 0px;" [innerHtml]="data.pro_descripcion" ></p>
     </div>
-    <div _ngcontent-imy-c247="" class="col-4 descripcion3 ng-star-inserted"
+    <div class="col-4 descripcion3 ng-star-inserted"
         style="background: rgb(255, 255, 255); box-sizing: border-box; flex: 0 0 33.3333%; margin: 0.5vw; max-width: 33.3333%; padding: 2vw; position: relative; text-align: center; width: 597.328px;">
-        <img _ngcontent-imy-c247="" alt="Triidy" class="calif ng-star-inserted"
+        <img alt="Triidy" class="calif ng-star-inserted"
             src="https://triidyftp.s3.us-east-2.amazonaws.com/Triidy_web/MarketCalif_new1.png"
             style="border-style: none; box-sizing: border-box; height: auto; max-width: 100%; object-fit: cover; vertical-align: middle; width: 468.484px;" />
-        <div _ngcontent-imy-c247="" class="grid-container"
+        <div class="grid-container"
             style="box-sizing: border-box; display: grid; grid-template-columns: auto auto auto; padding: 10px;">
-            <div _ngcontent-imy-c247="" class="grid-item"
+            <div class="grid-item"
                 style="background-color: rgba(0, 0, 0, 0); box-sizing: border-box; font-size: 30px; padding: 0.5vw;">
-                <span _ngcontent-imy-c247="" class="vent-store"
+                <span class="vent-store"
                     style="box-sizing: border-box; color: #757677; font-size: 2vw;">3759</span><br
-                    _ngcontent-imy-c247="" style="box-sizing: border-box;" />
-                <p _ngcontent-imy-c247="" class="text-store"
+                    style="box-sizing: border-box;" />
+                <p class="text-store"
                     style="box-sizing: border-box; color: #4d4d4d; font-size: 0.7vw; margin-bottom: 1rem; margin-top: 0px;">
-                    venta(s) en el<br _ngcontent-imy-c247="" style="box-sizing: border-box;" />ultimo mes</p>
+                    venta(s) en el<br style="box-sizing: border-box;" />ultimo mes</p>
             </div>
         </div>
-        <hr _ngcontent-imy-c247=""
+        <hr
             style="background-color: currentcolor; border-bottom: 0px; border-image: initial; border-left: 0px; border-right: 0px; border-top-color: rgba(0, 0, 0, 0.1); border-top-style: solid; box-sizing: content-box; color: inherit; height: 1px; margin: 1rem 0px; opacity: 0.25; overflow: visible;" />
-        <h3 _ngcontent-imy-c247="" class="greenFont"
+        <h3 class="greenFont"
             style="box-sizing: border-box; color: #22b573; font-family:Josefin San, sans-serif !important; font-size: 2.5vw; font-weight: 500; line-height: 1.2; margin-bottom: 0.5rem; margin-top: 0px;">
             Garantía</h3>
-        <p _ngcontent-imy-c247=""
+        <p
             style="box-sizing: border-box; color: #484848; font-size: 1.1vw; margin-bottom: 1rem; margin-top: 0px;">
             VITAGLOW ALISADOR tiene una garantia por defectos de fabrica por 0 dia(s)</p>
-        <hr _ngcontent-imy-c247=""
+        <hr
             style="background-color: currentcolor; border-bottom: 0px; border-image: initial; border-left: 0px; border-right: 0px; border-top-color: rgba(0, 0, 0, 0.1); border-top-style: solid; box-sizing: content-box; color: inherit; height: 1px; margin: 1rem 0px; opacity: 0.25; overflow: visible;" />
-        <h3 _ngcontent-imy-c247=""
+        <h3
             style="box-sizing: border-box; color: #484848; font-family:Josefin San, sans-serif !important; font-size: 2.5vw; font-weight: 500; line-height: 1.2; margin-bottom: 0.5rem; margin-top: 0px;">
-            <span _ngcontent-imy-c247="" class="fas fa-shield-alt"
+            <span class="fas fa-shield-alt"
                 style="-webkit-font-smoothing: antialiased; box-sizing: border-box; display: inline-block; font-family:Font Awesome 5 Fre; font-variant-east-asian: normal; font-variant-numeric: normal; font-weight: 900; line-height: 1; text-rendering: auto;"></span><span
-                _ngcontent-imy-c247="" class="triidy-color"
+                class="triidy-color"
                 style="box-sizing: border-box; font-family: Montserrat, sans-serif !important;">Compra protegida</span>
         </h3>
-        <p _ngcontent-imy-c247=""
+        <p
             style="box-sizing: border-box; color: #484848; font-size: 1.1vw; margin-bottom: 1rem; margin-top: 0px;">
             Seguridad total al adquirir el producto, protegido por la billetera digital de Triidy</p>
-        <hr _ngcontent-imy-c247=""
+        <hr
             style="background-color: currentcolor; border-bottom: 0px; border-image: initial; border-left: 0px; border-right: 0px; border-top-color: rgba(0, 0, 0, 0.1); border-top-style: solid; box-sizing: content-box; color: inherit; height: 1px; margin: 1rem 0px; opacity: 0.25; overflow: visible;" />
-        <h3 _ngcontent-imy-c247=""
+        <h3
             style="box-sizing: border-box; color: #484848; font-family:Josefin San, sans-serif !important; font-size: 2.5vw; font-weight: 500; line-height: 1.2; margin-bottom: 0.5rem; margin-top: 0px;">
-            <span _ngcontent-imy-c247="" class="triidy-color"
+            <span class="triidy-color"
                 style="box-sizing: border-box; font-family: Montserrat, sans-serif !important;">Productos
                 similares</span></h3>
     </div>
