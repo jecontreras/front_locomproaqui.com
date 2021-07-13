@@ -339,6 +339,13 @@ export class HeaderComponent implements OnInit {
         url: '/config/verCatalagoProveedor',
         submenus:[]
       },
+      {
+        icons: 'settings',
+        nombre: 'Edicion Productos',
+        url: '/config/productos',
+        disable: this.rolUser == 'proveedor',
+        submenus:[]
+      },
       /*{
         icons: 'security',
         nombre: 'Seguridad',

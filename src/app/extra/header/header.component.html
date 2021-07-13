@@ -15,7 +15,7 @@
       </div>
       <div style="width: 25%;">
         <div class="d-flex flex-row-reverse bd-highlight" style="margin-top: 15px;">
-          <div class="anchoReal12" *ngIf="userId.id">
+          <div class="anchoReal12" *ngIf="userId.id && !dataUser.id">
             <a [routerLink]="[ '/registro', this.userId.id ]" class="p-1 pointer espacios" matBadgeColor="accent">
               <i class="material-icons icoss">person_add</i>
             </a>

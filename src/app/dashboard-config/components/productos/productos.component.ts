@@ -43,6 +43,7 @@ export class ProductosComponent implements OnInit {
   notscrolly:boolean=true;
   notEmptyPost:boolean = true;
   dataUser:any = {};
+  rolName:string;
 
   constructor(
     public dialog: MatDialog,
@@ -53,14 +54,13 @@ export class ProductosComponent implements OnInit {
   ) { 
     this._store.subscribe( ( store: any ) => {
       store = store.name;
+      console.log( store )
       if( !store.name ) return false;
       this.dataUser = store.user || {};
+      try {
+        this.rolName =  this.dataUser.usu_perfil.prf_descripcion;
+      } catch (error) {}
     });
-    try {
-      if( this.dataUser.usu_perfil.prf_descripcion != 'administrador' ) this.query.where.pro_usu_creacion = this.dataUser.id;
-    } catch (error) {
-      
-    }
   }
 
   ngOnInit() {
@@ -69,7 +69,11 @@ export class ProductosComponent implements OnInit {
       footerRow: this.Header,
       dataRows: []
     };
-    this.cargarTodos();
+    setTimeout(()=>{
+      if( this.rolName != 'administrador') this.query.where.pro_usu_creacion = this.dataUser.id;
+      console.log( this.query, this.rolName, this.dataUser )
+      this.cargarTodos();
+    }, 2000 )
   }
 
   crear(obj:any){

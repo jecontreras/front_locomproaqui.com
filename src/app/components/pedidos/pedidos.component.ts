@@ -13,8 +13,6 @@ import { CategoriasService } from 'src/app/servicesComponents/categorias.service
 import * as _ from 'lodash';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { CatalogoService } from 'src/app/servicesComponents/catalogo.service';
-import { resolve } from 'dns';
-
 @Component({
   selector: 'app-pedidos',
   templateUrl: './pedidos.component.html',

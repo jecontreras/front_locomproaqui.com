@@ -23,6 +23,7 @@ export class VerCatalagoProveedorComponent implements OnInit {
       pro_activo: 0,
       pro_mp_venta: 0
     },
+    sort: "createdAt ASC",
     page: 0,
     limit: 4  
   };
@@ -40,6 +41,7 @@ export class VerCatalagoProveedorComponent implements OnInit {
       pro_activo: 0,
       pro_mp_venta: 0
     },
+    sort: "pro_vendedor ASC",
     page: 0,
     limit: 4  
   };
@@ -49,6 +51,7 @@ export class VerCatalagoProveedorComponent implements OnInit {
       pro_activo: 0,
       pro_mp_venta: 0
     },
+    sort: "createdAt DESC",
     page: 0,
     limit: 4  
   };
