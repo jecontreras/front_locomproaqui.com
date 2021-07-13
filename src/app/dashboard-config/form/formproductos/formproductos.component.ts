@@ -71,6 +71,7 @@ export class FormproductosComponent implements OnInit {
     this.formatoMoneda = this._tools.currency;
     this._store.subscribe((store: any) => {
       store = store.name;
+      if( !store ) return false;
       this.dataUser = store.user || {};
     });
   }
@@ -316,7 +317,7 @@ export class FormproductosComponent implements OnInit {
     //this.dialog.closeAll();
   }
   updates() {
-    // this.data = _.omit(this.data, [ ''])
+    this.data = _.omit(this.data, [ 'pro_usu_creacion' ])
     this.data = _.omitBy(this.data, _.isNull);
     this._productos.update(this.data).subscribe((res: any) => {
       this._tools.presentToast("Actualizado");
@@ -395,6 +396,7 @@ export class FormproductosComponent implements OnInit {
           "cat_activo": 1,
           "checkMayor": 0,
           "pro_uni_venta": this.data.pro_uni_venta || 0,
+          "pro_vendedor": this.data.pro_vendedor,
           "precioFabrica": this.data.precioFabrica || 0
         };
         this.blurTalla(0);

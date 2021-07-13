@@ -54,8 +54,7 @@ export class ProductosComponent implements OnInit {
   ) { 
     this._store.subscribe( ( store: any ) => {
       store = store.name;
-      console.log( store )
-      if( !store.name ) return false;
+      if( !store ) return false;
       this.dataUser = store.user || {};
       try {
         this.rolName =  this.dataUser.usu_perfil.prf_descripcion;
@@ -69,11 +68,8 @@ export class ProductosComponent implements OnInit {
       footerRow: this.Header,
       dataRows: []
     };
-    setTimeout(()=>{
-      if( this.rolName != 'administrador') this.query.where.pro_usu_creacion = this.dataUser.id;
-      console.log( this.query, this.rolName, this.dataUser )
-      this.cargarTodos();
-    }, 2000 )
+    if( this.rolName != 'administrador') this.query.where.pro_usu_creacion = this.dataUser.id;
+    this.cargarTodos();
   }
 
   crear(obj:any){
@@ -150,28 +146,16 @@ export class ProductosComponent implements OnInit {
     this.dataTable.dataRows = [];
     //console.log(this.datoBusqueda);
     this.datoBusqueda = this.datoBusqueda.trim();
-    if (this.datoBusqueda === '') {
-      this.query = {
-        where:{
-          pro_activo: 0
-        },
-        limit: 10
-      }
-      this.cargarTodos();
-    } else {
+    this.query = {
+      where:{
+        pro_activo: 0
+      },
+      limit: 10
+    }
+    if (this.datoBusqueda != '') {
       this.query.where.or = [
         {
           pro_nombre: {
-            contains: this.datoBusqueda|| ''
-          }
-        },
-        {
-          pro_descripcion: {
-            contains: this.datoBusqueda|| ''
-          }
-        },
-        {
-          pro_descripcionbreve: {
             contains: this.datoBusqueda|| ''
           }
         },
@@ -181,8 +165,9 @@ export class ProductosComponent implements OnInit {
           }
         }
       ];
-      this.cargarTodos();
     }
+    if( this.rolName != 'administrador') this.query.where.pro_usu_creacion = this.dataUser.id;
+    this.cargarTodos();
   }
 
 }

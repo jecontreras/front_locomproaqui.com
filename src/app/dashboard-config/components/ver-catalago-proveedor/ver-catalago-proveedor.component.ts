@@ -21,7 +21,8 @@ export class VerCatalagoProveedorComponent implements OnInit {
   queryTendencia:any = {
     where:{
       pro_activo: 0,
-      pro_mp_venta: 0
+      pro_mp_venta: 0,
+      pro_usu_creacion: { '!=': 1 }
     },
     sort: "createdAt ASC",
     page: 0,
@@ -39,7 +40,8 @@ export class VerCatalagoProveedorComponent implements OnInit {
   queryRecomendados:any = {
     where:{
       pro_activo: 0,
-      pro_mp_venta: 0
+      pro_mp_venta: 0,
+      pro_usu_creacion: { '!=': 1 }
     },
     sort: "pro_vendedor ASC",
     page: 0,
@@ -49,7 +51,8 @@ export class VerCatalagoProveedorComponent implements OnInit {
   queryRentables:any = {
     where:{
       pro_activo: 0,
-      pro_mp_venta: 0
+      pro_mp_venta: 0,
+      pro_usu_creacion: { '!=': 1 }
     },
     sort: "createdAt DESC",
     page: 0,
