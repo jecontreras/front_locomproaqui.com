@@ -61,4 +61,7 @@ export class UsuariosService {
   deleteSolicitud(query:any){
     return this._model.querys('solicitudes/'+query.id, query, 'delete');
   }
+  getRecaudo(query:any){
+    return this._model.querys('platadistribuidor/querys',query, 'post');
+  }
 }

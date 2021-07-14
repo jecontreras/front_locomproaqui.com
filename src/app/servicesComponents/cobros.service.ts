@@ -25,5 +25,6 @@ export class CobrosService {
   delete(query:any){
     return this._model.querys('tblcobrar/'+query.id, query, 'delete');
   }
+  
 
 }

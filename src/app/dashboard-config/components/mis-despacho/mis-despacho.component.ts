@@ -32,7 +32,8 @@ export class MisDespachoComponent implements OnInit {
   notEmptyPost:boolean = true;
   dataUser:any = {};
   rolName:string;
-
+  opcionCurrencys:any;
+  reacudo:number;
   constructor(
     public dialog: MatDialog,
     private _tools: ToolsService,
@@ -51,6 +52,7 @@ export class MisDespachoComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.opcionCurrencys = this._tools.currency;
     this.dataTable = {
       headerRow: this.Header,
       footerRow: this.Header,
