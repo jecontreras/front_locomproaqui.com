@@ -10,8 +10,7 @@
         data.pro_nombre }}</a></p>
 <div class="row"
     style="--bs-gutter-x: 1.5rem; --bs-gutter-y: 0; background-color: #eef3f4; box-sizing: border-box; color: #212529; display: flex; flex-wrap: wrap; font-family: Montserrat, sans-serif; font-size: 16px; margin-left: 0.5vw; margin-right: -15px; margin-top: calc(var(--bs-gutter-y) * -1);">
-    <div class="col-7"
-        style="background: rgb(255, 255, 255); box-sizing: border-box; flex: 0 0 58.3333%; margin: 0.5vw; max-width: 58.3333%; padding-left: 15px; padding-right: 15px; position: relative; width: 1045.33px;">
+    <div class="col-7">
         <lib-ngx-image-zoom [thumbImage]=urlFoto [fullImage]=urlFoto [magnification]="1" [enableScrollZoom]="true"
             [enableLens]="true" [lensWidth]="200" [lensHeight]="200">
         </lib-ngx-image-zoom>
@@ -25,8 +24,7 @@
             </ng-image-slider>
         </div>
     </div>
-    <div class="col-4 descripcion1"
-        style="background: rgb(255, 255, 255); box-sizing: border-box; flex: 0 0 33.3333%; margin: 0.5vw; max-width: 33.3333%; padding: 2vw; position: relative; width: 597.328px;">
+    <div class="col-4 descripcion1">
         <h3
             style="box-sizing: border-box; color: #484848; font-family:Josefin San, sans-serif !important; font-size: 2.5vw; font-weight: 500; line-height: 1.2; margin-bottom: 0.5rem; margin-top: 0px;">
             {{ data.pro_nombre }}</h3>
@@ -49,8 +47,9 @@
             style="--bs-gutter-x: 1.5rem; --bs-gutter-y: 0; box-sizing: border-box; display: flex; flex-wrap: wrap; margin-left: 0.5vw; margin-right: -15px; margin-top: calc(var(--bs-gutter-y) * -1);">
             <div class="col-2"
                 style="align-items: center; box-sizing: border-box; display: flex; flex: 0 0 16.6667%; margin-top: var(--bs-gutter-y); max-width: 16.6667%; padding-left: 15px; padding-right: 15px; position: relative; width: 87.6562px;">
-                <img alt="" src="https://triidyftp.s3.us-east-2.amazonaws.com/Triidy_web/storeIcon.png"
-                    style="border-style: none; box-sizing: border-box; height: auto; max-width: none; object-fit: cover; vertical-align: middle; width: 3.2vw;" />
+                <!--<img alt="" src="https://triidyftp.s3.us-east-2.amazonaws.com/Triidy_web/storeIcon.png"
+                    style="border-style: none; box-sizing: border-box; height: auto; max-width: none; object-fit: cover; vertical-align: middle; width: 3.2vw;" />-->
+                    <i class="material-icons icoss">storefront</i>
             </div>
             <div class="col-10"
                 style="box-sizing: border-box; flex: 0 0 83.3333%; margin-top: var(--bs-gutter-y); max-width: 83.3333%; padding-left: 15px; padding-right: 15px; position: relative; width: 438.281px;">
@@ -60,11 +59,13 @@
             </div>
         </div>
         <div class="row"
-            style="--bs-gutter-x: 1.5rem; --bs-gutter-y: 0; box-sizing: border-box; display: flex; flex-wrap: wrap; margin-left: 0.5vw; margin-right: -15px; margin-top: calc(var(--bs-gutter-y) * -1);">
+            style="--bs-gutter-x: 1.5rem; --bs-gutter-y: 0; box-sizing: border-box; display: flex; flex-wrap: wrap; margin-left: 0.5vw; margin-right: -15px; margin-top: calc(var(--bs-gutter-y) * -1);"
+        >
             <div class="col-2"
                 style="align-items: center; box-sizing: border-box; display: flex; flex: 0 0 16.6667%; margin-top: var(--bs-gutter-y); max-width: 16.6667%; padding-left: 15px; padding-right: 15px; position: relative; width: 87.6562px;">
-                <img alt="" src="https://triidyftp.s3.us-east-2.amazonaws.com/Triidy_web/loyaltyIcon.png"
-                    style="border-style: none; box-sizing: border-box; height: auto; max-width: none; object-fit: cover; vertical-align: middle; width: 3.2vw;" />
+                <!--<img alt="" src="https://triidyftp.s3.us-east-2.amazonaws.com/Triidy_web/loyaltyIcon.png"
+                    style="border-style: none; box-sizing: border-box; height: auto; max-width: none; object-fit: cover; vertical-align: middle; width: 3.2vw;" />-->
+                <i class="material-icons icoss">sell</i>
             </div>
             <div class="col-10"
                 style="box-sizing: border-box; flex: 0 0 83.3333%; margin-top: var(--bs-gutter-y); max-width: 83.3333%; padding-left: 15px; padding-right: 15px; position: relative; width: 438.281px;">
@@ -98,7 +99,7 @@
             </div>
         </div>
         <div class="row">
-            <div class="col-6 col-sm-4" *ngIf="data.listTallas">
+            <div class="col-12 col-sm-4" *ngIf="data.listTallas">
                 <label for="exampleFormControlSelect1">Color disponibles:</label>
                 <select class="form-control form-control-sm" [(ngModel)]="data.color" (change)="colorSeleccionado( );">
                     <option value="null">Todos</option>
@@ -107,7 +108,7 @@
                     </option>
                 </select>
             </div>
-            <div class="col-6 col-sm-4" *ngIf="data.listTallas">
+            <div class="col-12 col-sm-4" *ngIf="data.listTallas">
                 <label for="exampleFormControlSelect1">Tallas disponibles:</label>
                 <select class="form-control form-control-sm" [(ngModel)]="data.tallas" (change)="seleccionTalla()"
                     [disabled]="!data.color">
@@ -116,16 +117,16 @@
                         item.tal_descripcion }} UND: {{ item.cantidad }}</option>
                 </select>
             </div>
-            <div class="col-6 col-sm-4" *ngIf="seleccionnTalla">
+            <div class="col-12 col-sm-4" *ngIf="seleccionnTalla">
                 <label>Cantidad Disponibles</label>
                 <input type="number" [(ngModel)]="seleccionnTalla.cantidad" disabled class="form-control form-control-sm">
             </div>
-            <div class="col-4">
+            <div class="col-12 col-sm-4">
                 <label>Cantidad Adquirir</label>
                 <input type="number" [(ngModel)]="data.cantidadAdquirir" class="form-control form-control-sm">
             </div>
         </div>
-        <div class="r-agrega ng-star-inserted" style="box-sizing: border-box; text-align: center;">
+        <div class="r-agrega ng-star-inserted" style="box-sizing: border-box; text-align: center;"><br>
             <button type="button" class="btn btn-primary" (click)="AgregarCart( false )">Agregar Producto</button>
         </div>
     </div>

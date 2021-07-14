@@ -51,6 +51,7 @@ import { VerProductoProveedorComponent } from './components/ver-producto-proveed
 import { VerProveedorComponent } from './components/ver-proveedor/ver-proveedor.component';
 import { NgImageSliderModule } from 'ng-image-slider';
 import { NgxImageZoomModule } from 'ngx-image-zoom';
+import { MisDespachoComponent } from './components/mis-despacho/mis-despacho.component';
 
 
 @NgModule({
@@ -100,7 +101,8 @@ import { NgxImageZoomModule } from 'ngx-image-zoom';
     ControlInventarioComponent,
     VerCatalagoProveedorComponent,
     VerProductoProveedorComponent,
-    VerProveedorComponent
+    VerProveedorComponent,
+    MisDespachoComponent
   ],
   imports: [
     CommonModule,

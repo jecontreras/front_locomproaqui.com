@@ -25,4 +25,7 @@ export class ProductoService {
   ordenar(query:any){
     return this._model.querys('tblproductos/ordenar', query, 'post');
   }
+  getVenta(query:any){
+    return this._model.querys('tblventasproducto/querys',query, 'post');
+  }
 }
