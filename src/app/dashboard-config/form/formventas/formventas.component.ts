@@ -50,6 +50,8 @@ export class FormventasComponent implements OnInit {
   listCarrito: any = [];
   porcentajeUser: number = 0;
   porcentajeMostrar: number = 0;
+  namePorcentaje: string;
+
   constructor(
     public dialog: MatDialog,
     private _ventas: VentasService,
@@ -72,15 +74,19 @@ export class FormventasComponent implements OnInit {
       if (this.dataUser.usu_perfil.prf_descripcion == 'administrador' || this.dataUser.usu_perfil.prf_descripcion == 'subAdministrador') this.superSub = true;
       else this.superSub = false;
       try {
-        if (this.dataUser.categoriaPerfil) this.porcentajeUser = this.dataUser.categoriaPerfil.precioPorcentaje;
+        if (this.dataUser.categoriaPerfil) {
+          this.namePorcentaje = this.dataUser.categoriaPerfil.categoria;
+          this.porcentajeUser = this.dataUser.categoriaPerfil.precioPorcentaje;
+        }
       } catch (error) {
         this.porcentajeUser = 0;
+        this.namePorcentaje = "dropshipping básico";
       }
       if( this.porcentajeUser > this.dataUser.porcentaje ) this.porcentajeMostrar = this.porcentajeUser;
       else this.porcentajeMostrar = this.dataUser.porcentaje;
     });
 
-  }
+  } 
 
   ngOnInit() {
     if (Object.keys(this.datas.datos).length > 0) {
@@ -190,12 +196,13 @@ export class FormventasComponent implements OnInit {
       if (!row.costo || !row.cantidad) continue;
       total += (Number(row.costo) * Number(row.cantidad));
       row.loVendio = row.costo;
-      if ( this.porcentajeUser == 0 ) row.comision = (row.costo * (this.dataUser.porcentaje || 10) / 100);
-      else this.data.ven_ganancias+= ( row.loVendio - row.costoTotal ) || 0;
+      console.log( this.namePorcentaje == "dropshipping básico", this.namePorcentaje, row)
+      if ( this.namePorcentaje == "dropshipping básico" ) row.comision = ( row.costoTotal * ( this.dataUser.porcentaje || 10 ) / 100 );
+      else this.data.ven_ganancias+= ( ( row.loVendio * row.cantidad ) - row.costoTotal ) || 0;
+
     }
     this.data.ven_total = total;
-    if ( this.porcentajeUser == 0 ) this.data.ven_ganancias = (total * ( this.dataUser.porcentaje || 10 ) / 100 );
-    console.log( this.porcentajeUser )
+    if ( this.namePorcentaje == "dropshipping básico" ) this.data.ven_ganancias = (total * ( this.dataUser.porcentaje || 10 ) / 100 );
   }
 
   submit() {

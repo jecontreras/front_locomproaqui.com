@@ -121,7 +121,8 @@ export class VerProductoProveedorComponent implements OnInit {
       costo: precio,
       loVendio: encuanto,
       costoTotal: this.data.costo,
-      id: this._tools.codigo()
+      id: this._tools.codigo(),
+      precioReal: this.data.pro_uni_venta
     };
     let accion = new CartAction(data, 'post');
     this._store.dispatch(accion);

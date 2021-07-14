@@ -178,7 +178,8 @@ export class ViewProductosComponent implements OnInit {
       costo: precio,
       loVendio: encuanto,
       costoTotal: this.data.costo,
-      id: this.codigo()
+      id: this.codigo(),
+      precioReal: this.data.pro_uni_venta
     };
     let accion = new CartAction(data, 'post');
     this._store.dispatch(accion);

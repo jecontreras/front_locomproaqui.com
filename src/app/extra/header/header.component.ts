@@ -58,6 +58,9 @@ export class HeaderComponent implements OnInit {
   urlLogo:string = "./assets/logo.png";
   ultimoSer:string;
   userPr:any = {};
+  porcentajeUser: number = 0;
+  namePorcentaje: string;
+  porcentajeMostrar: number = 0;
 
   constructor(
     public changeDetectorRef: ChangeDetectorRef,
@@ -85,6 +88,19 @@ export class HeaderComponent implements OnInit {
       //console.log( window.innerWidth )
       this.disabledSearch = window.innerWidth <= 600 ? true : false;
       this.submitChat();
+      if( this.dataUser.id ){
+        try {
+          if (this.dataUser.categoriaPerfil) {
+            this.porcentajeUser = this.dataUser.categoriaPerfil.precioPorcentaje;
+            this.namePorcentaje = this.dataUser.categoriaPerfil.categoria;
+          }
+        } catch (error) {
+          this.porcentajeUser = 0;
+          this.namePorcentaje = "dropshipping básico";
+        }
+        if( this.porcentajeUser > this.dataUser.porcentaje ) this.porcentajeMostrar = this.porcentajeUser;
+        else this.porcentajeMostrar = this.dataUser.porcentaje;
+      }
     });
     //this.getVentas();
     this.mobileQuery = media.matchMedia('(max-width: 290px)');
@@ -204,11 +220,13 @@ export class HeaderComponent implements OnInit {
     let texto:string = "";
     this.data.total = 0;
     this.data.totalGanancias = 0;
+    console.log( this.porcentajeUser )
     for(let row of this.listCart){
       //texto+= ` productos: ${ row.titulo } codigo: ${ row.codigo } talla: ${ row.tallaSelect } cantidad: ${ row.cantidad } precio: ${ row.costo } precio Total: ${ row.costoTotal } foto: ${ row.foto } color ${ row.color || 'default'}`;
       texto+= ` ${ row.foto } talla ${ row.tallaSelect } color ${ row.color || 'default' } ref:${ row.codigo } y el valor ${ this._tools.monedaChange( 3, 2, row.costo ) } `;
       this.data.total+= row.costoTotal || 0;
-      this.data.totalGanancias+= ( row.loVendio - row.costoTotal ) || 0;
+      if ( this.namePorcentaje == "dropshipping básico" ) this.data.totalGanancias+= ( row.costoTotal * ( this.dataUser.porcentaje || 10 ) / 100 );
+      else this.data.totalGanancias+= ( ( row.loVendio * row.cantidad ) - row.costoTotal ) || 0;
     }
     
     let cerialNumero:any = ''; 

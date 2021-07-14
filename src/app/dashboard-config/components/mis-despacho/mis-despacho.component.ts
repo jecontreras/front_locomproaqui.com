@@ -25,7 +25,7 @@ export class MisDespachoComponent implements OnInit {
     page: 0,
     limit: 10
   };
-  Header:any = [ 'Foto','Producto','Codigo', 'Precio', 'Talla', 'Color','Estado', 'Creado'];
+  Header:any = [ 'Foto','Producto','Numero Guia', 'Logo', 'Cantidad', 'Precio Distribuidor', 'Talla', 'Color', 'Creado'];
   $:any;
   public datoBusqueda = '';
   notscrolly:boolean=true;

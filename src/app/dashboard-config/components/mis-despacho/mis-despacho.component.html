@@ -59,11 +59,12 @@
                           <img [src]="row['producto']['foto'] || './assets/noimagen.jpg'" class="foto">
                         </td>
                         <td>{{ row['producto']['pro_nombre'] }}</td>
-                        <td>{{ row['producto']['pro_codigo'] }}</td>
-                        <td>{{ ( row['precio'] || 0 ).toLocaleString(1) }} COP</td>
+                        <td>{{ row['ventas']['ven_numero_guia'] }}</td>
+                        <td></td>
+                        <td>{{ row['cantidad'] }}</td>
+                        <td>{{ ( row['precioVendedor'] || 0 ).toLocaleString(1) }} COP</td>
                         <td>{{ row['tallaSelect'] }}</td>
                         <td>{{ row['colorSelect'] }}</td>
-                        <td>{{ row['pro_estado'] == 0 ? 'Activo' : 'Inactivo' }}</td>
                         <td>{{ row['createdAt'] | date:'medium' }}</td>
                       </tr>
                     </tbody>
