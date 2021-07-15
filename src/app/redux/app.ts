@@ -169,7 +169,7 @@ export function appReducer(state: STORAGES = APP, action: _action.actions) {
     case _action.CONFIGURACION:{
       switch(action.opt) {
         case 'post' :
-          if(!state.configuracion) state.configuracion = "";
+          if(!state.configuracion) state.configuracion = {};
             state.configuracion = action.payload;
             return local_Storage(state);
         break;
@@ -179,11 +179,11 @@ export function appReducer(state: STORAGES = APP, action: _action.actions) {
         return local_Storage(state);
         break;
         case 'delete': 
-          state.configuracion = "";
+          state.configuracion = {};
           return local_Storage(state);
         break;
         case 'drop': {
-          state.configuracion = "";
+          state.configuracion = {};
           return local_Storage(state);
         }
         break;
@@ -192,7 +192,7 @@ export function appReducer(state: STORAGES = APP, action: _action.actions) {
     case _action.USERPR: {
       switch(action.opt) {
         case 'post' :
-          if(!state.userpr) state.userpr = "";
+          if(!state.userpr) state.userpr = {};
             state.userpr = action.payload;
             return local_Storage(state);
         break;
@@ -202,11 +202,11 @@ export function appReducer(state: STORAGES = APP, action: _action.actions) {
         return local_Storage(state);
         break;
         case 'delete': 
-          state.userpr = "";
+          state.userpr = {};
           return local_Storage(state);
         break;
         case 'drop': {
-          state.userpr = "";
+          state.userpr = {};
           return local_Storage(state);
         }
         break;

@@ -35,12 +35,12 @@ export class BuscarAction implements Action {
 
 export class ConfiguracionAction implements Action {
     readonly type = CONFIGURACION;
-    constructor( public payload: string,  public opt: string){}
+    constructor( public payload: object,  public opt: string){}
 }
 
 export class UserprAction implements Action {
     readonly type = USERPR;
-    constructor( public payload: string,  public opt: string){}
+    constructor( public payload: object,  public opt: string){}
 }
 
 export type actions = CartAction         |

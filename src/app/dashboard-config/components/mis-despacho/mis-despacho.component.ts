@@ -6,6 +6,7 @@ import { DataTable, STORAGES } from 'src/app/interfaces/sotarage';
 import { ToolsService } from 'src/app/services/tools.service';
 import { ProductoService } from 'src/app/servicesComponents/producto.service';
 import * as _ from 'lodash';
+import { UsuariosService } from 'src/app/servicesComponents/usuarios.service';
 
 @Component({
   selector: 'app-mis-despacho',
@@ -25,7 +26,7 @@ export class MisDespachoComponent implements OnInit {
     page: 0,
     limit: 10
   };
-  Header:any = [ 'Foto','Producto','Numero Guia', 'Logo', 'Cantidad', 'Precio Distribuidor', 'Talla', 'Color', 'Creado'];
+  Header:any = [ 'Foto','Producto','Numero Guia', 'Logo', 'Estado Venta', 'Cantidad', 'Precio Distribuidor', 'Talla', 'Color', 'Creado'];
   $:any;
   public datoBusqueda = '';
   notscrolly:boolean=true;
@@ -39,7 +40,8 @@ export class MisDespachoComponent implements OnInit {
     private _tools: ToolsService,
     private _productos: ProductoService,
     private spinner: NgxSpinnerService,
-    private _store: Store<STORAGES>
+    private _store: Store<STORAGES>,
+    private _usuarios: UsuariosService
   ) { 
     this._store.subscribe( ( store: any ) => {
       store = store.name;
@@ -60,6 +62,18 @@ export class MisDespachoComponent implements OnInit {
     };
     if( this.rolName != 'administrador') this.query.where.creacion = this.dataUser.id;
     this.cargarTodos();
+    this.getDineros();
+  }
+
+  getDineros(){
+    this._usuarios.getRecaudo( { where: { usuario: this.dataUser.id } } )
+    .subscribe( (res: any ) => {
+      try {
+        this.reacudo = res.data[0].valor;
+      } catch (error) {
+        this.reacudo = 0;
+      }
+    });
   }
 
   onScroll(){
@@ -101,20 +115,18 @@ export class MisDespachoComponent implements OnInit {
     //console.log(this.datoBusqueda);
     this.datoBusqueda = this.datoBusqueda.trim();
     this.query = {
-      where:{
-        pro_activo: 0
-      },
+      where:{},
       limit: 10
-    }
+    };
     if (this.datoBusqueda != '') {
       this.query.where.or = [
         {
-          pro_nombre: {
+          colorSelect: {
             contains: this.datoBusqueda|| ''
           }
         },
         {
-          pro_codigo: {
+          titulo: {
             contains: this.datoBusqueda|| ''
           }
         }

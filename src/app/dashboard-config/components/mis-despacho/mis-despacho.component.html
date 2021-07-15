@@ -10,14 +10,14 @@
                 <i class="material-icons">assignment</i>
               </div>
               <h4 class="card-title">Mis Despachos</h4>
-            </div>
-            <div class="col-12">
-              <div class="form-group row">
-                <label for="inputEmail3" class="col-sm-2 col-form-label">Reacaudo</label>
-                <div class="col-sm-10">
-                  <input disabled currencyMask [(ngModel)]="reacudo" class="form-control form-control-sm" [options]="opcionCurrencys"/>
+              <h4>
+                <div class="form-group row">
+                  <h4 for="inputEmail3" class="col-sm-2 col-form-label">Reacaudo</h4>
+                  <div class="col-sm-2">
+                    <input disabled currencyMask [(ngModel)]="reacudo" class="form-control form-control-sm" disabled [options]="opcionCurrencys"/>
+                  </div>
                 </div>
-              </div>
+              </h4>
             </div>
             <div class="card-body">
               <div class="toolbar">
@@ -68,7 +68,11 @@
                         </td>
                         <td>{{ row['producto']['pro_nombre'] }}</td>
                         <td>{{ row['ventas']['ven_numero_guia'] }}</td>
-                        <td></td>
+                        <td>{{ row['ventas']['logoPlatform'] }}</td>
+                        <td *ngIf="row['ventas']['ven_estado'] == 0">Pendiente</td>
+                        <td *ngIf="row['ventas']['ven_estado'] == 1">Exitosa</td>
+                        <td *ngIf="row['ventas']['ven_estado'] == 2">Rechazada</td>
+                        <td *ngIf="row['ventas']['ven_estado'] == 3">Despachado</td>
                         <td>{{ row['cantidad'] }}</td>
                         <td>{{ ( row['precioVendedor'] || 0 ).toLocaleString(1) }} COP</td>
                         <td>{{ row['tallaSelect'] }}</td>

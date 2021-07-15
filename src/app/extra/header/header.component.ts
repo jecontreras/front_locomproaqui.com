@@ -290,7 +290,7 @@ export class HeaderComponent implements OnInit {
       {
         icons: 'menu_book',
         nombre: 'Productos',
-        disable: true,
+        disable: this.rolUser != 'proveedor',
         disabled: true,
         url: '/pedidos',
         submenus: submenus
@@ -318,14 +318,14 @@ export class HeaderComponent implements OnInit {
       {
         icons: 'shop',
         nombre: 'Mis Cobros',
-        disable: this.rolUser !== 'visitante',
+        disable: this.rolUser !== 'visitante' && this.rolUser != 'proveedor',
         url: '/config/cobros',
         submenus:[]
       },
       {
         icons: 'local_grocery_store',
         nombre: 'Mis Ventas',
-        disable: this.rolUser !== 'visitante',
+        disable: this.rolUser !== 'visitante' && this.rolUser != 'proveedor',
         url: '/config/ventas',
         submenus:[]
       },
@@ -353,7 +353,7 @@ export class HeaderComponent implements OnInit {
       {
         icons: 'receipt_long',
         nombre: 'Ver catalogo de proveedores',
-        disable: this.dataUser.id ? true : false,
+        disable: this.rolUser != 'proveedor',
         url: '/config/verCatalagoProveedor',
         submenus:[]
       },
@@ -562,7 +562,6 @@ export class HeaderComponent implements OnInit {
     console.log( opt )
     if( opt == 'visitante' ) 
     {
-      console.log( this.dataUser )
       let accion = new UserprAction( this.dataUser, 'post' );
       this._store.dispatch(accion);
       this.router.navigate(['/pedidos/', this.dataUser.id ]);
@@ -570,12 +569,41 @@ export class HeaderComponent implements OnInit {
         this.salir( true );
       }, 1000 );
     }
-    else {
+    else if( opt == 'distribuidor') {
       this.router.navigate(['/pedidos' ]);
       let accion = new UserAction( this.dataUser.id ? this.dataUser : this.userPr, 'post');
       this._store.dispatch( accion );
       accion = new UserCabezaAction( {} , 'drop' );
       this._store.dispatch(accion);
+      setTimeout( ()=> location.reload(), 1000 );
+    }
+    else if ( opt == 'proveedor'){
+      this.router.navigate(['/config/misDespacho' ]);
+      let accion = new UserAction( this.userPr, 'post');
+      this._store.dispatch( accion );
+      accion = new UserprAction( {} , 'drop' );
+      this._store.dispatch(accion);
+      setTimeout( ()=> location.reload(), 1000 );
+    }
+    else{
+      let accion = new UserprAction( this.dataUser, 'post' );
+      this._store.dispatch( accion );
+      this.dataUser.usu_perfil = {
+        createdAt: "2021-02-26T18:35:35.893Z",
+        est_clave_int: 0,
+        id: 1,
+        prf_descripcion: "vendedor",
+        prf_fec_actualiz: "",
+        prf_usu_actualiz: "",
+        updatedAt: "2021-02-26T18:35:35.893Z"
+      };
+      console.log( this.dataUser)
+      let clon:any = _.clone( this.dataUser );
+      accion = new UserAction( {}, 'delete');
+      this._store.dispatch( accion );
+      accion = new UserAction( clon, 'post');
+      this._store.dispatch( accion );
+      this.router.navigate(['/pedidos' ]);
       setTimeout( ()=> location.reload(), 1000 );
     }
   }

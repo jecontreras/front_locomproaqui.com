@@ -42,6 +42,11 @@
               <i class="material-icons icoss">notifications_active</i>
             </a>
           </div>
+          <div *ngIf="dataUser.id && rolUser == 'proveedor'" style="margin-right: 4%;" class="buscadorOcultar">
+            <a class="text-white" routerLink="/config/misDespacho">
+              Despachos
+            </a>
+          </div>
           <div *ngIf="dataUser.id" style="margin-right: 4%;" class="buscadorOcultar">
             <a class="text-white">
               $ {{ ( ( dataInfo?.porcobrado ) || 0 ).toLocaleString(1) }} COP
@@ -208,15 +213,22 @@
       <div class="container">
         <div class="d-flex justify-content-center" *ngIf="dataUser.id || userPr.id">
           <div style="width: 100%;">
-            <div class="d-flex justify-content-around">
+            <div class="d-flex justify-content-around" *ngIf="rolUser != 'proveedor'">
               <div>
-                <button type="button" class="btn btn-primary" (click)="openTienda('distribuidor')">Ver como
-                  Distribuidor</button>
+                <button type="button" class="btn btn-primary" (click)="openTienda('distribuidor')">Ver como Distribuidor</button>
               </div>
               <div></div>
               <div>
-                <button type="button" class="btn btn-success" (click)="openTienda('visitante')">Ver como
-                  visitante</button>
+                <button type="button" class="btn btn-success" (click)="openTienda('visitante')">Ver como Visitante</button>
+              </div>
+            </div>
+            <div class="d-flex justify-content-around" *ngIf="rolUser == 'proveedor'">
+              <div>
+                <button type="button" class="btn btn-primary" (click)="openTienda('proveedor')">Ver como Proveedor</button>
+              </div>
+              <div></div>
+              <div>
+                <button type="button" class="btn btn-success" (click)="openTienda('distribuidorpr')">Ver como  Distribuidor</button>
               </div>
             </div>
           </div>
