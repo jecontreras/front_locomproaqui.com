@@ -107,11 +107,11 @@
                                 <input type="password" [(ngModel)]="data.usu_confir"
                                     class="form-control form-control-sm" placeholder="Confirmar Contraseña">
                             </div>
-                            <div class="form-group col-sm-6 col-12">
+                            <!--<div class="form-group col-sm-6 col-12">
                                 <label for="exampleFormControlInput1">Describenos porque aceptarte como uno de nuestros
                                     vendedores</label>
                                 <textarea class="form-control" [(ngModel)]="data.usu_modo" rows="3"></textarea>
-                            </div>
+                            </div>-->
                             <div class="form-group col-sm-6 col-12">
                                 <input class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios2"
                                     [(ngModel)]="data.cat_activo">
@@ -137,7 +137,7 @@
                                     <option value="no">NO</option>
                                 </select>
                             </div>
-                            <div class="col-12" *ngIf="data.queEsDropp == 'no'">
+                            <div class="col-12" *ngIf="data.queEsDropp == 'si'">
                                 <label for="exampleFormControlTextarea1">en cuales plataformas de dropshipping has
                                     participado, describe cada plataforma y separa con una , cada una de estas</label>
                                 <textarea class="form-control" [(ngModel)]="data.textoQueEsDropp" rows="3"></textarea>
@@ -170,6 +170,7 @@
                                 <br>
                             </div>
                             <div class="col-12 container row" *ngIf="data.pagasPublicidad == 'si'">
+                                <label for="exampleFormControlSelect1">Seleccione en cuales plataformas has pagado publicidad</label>
                                 <mat-checkbox [(ngModel)]="item.check" *ngFor="let item of listRedes"
                                     (ngModelChange)="selectTable( item )">
                                     {{ item.titulo }} &nbsp;

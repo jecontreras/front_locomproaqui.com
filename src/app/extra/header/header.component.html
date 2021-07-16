@@ -15,28 +15,28 @@
       </div>
       <div style="width: 25%;">
         <div class="d-flex flex-row-reverse bd-highlight" style="margin-top: 15px;">
-          <div class="anchoReal12" *ngIf="userId.id && !dataUser.id">
+          <div class="anchoReal12 anchos2" *ngIf="userId.id && !dataUser.id">
             <a [routerLink]="[ '/registro', this.userId.id ]" class="p-1 pointer espacios" matBadgeColor="accent">
               <i class="material-icons icoss">person_add</i>
             </a>
           </div>
-          <div class="anchoReal12" *ngIf="!dataUser.id && !userId.id">
+          <div class="anchoReal12 anchos2" *ngIf="!dataUser.id && !userId.id">
             <a [routerLink]="[ '/login' ]" class="p-1 pointer espacios">
               <i class="material-icons icoss">person</i>
             </a>
           </div>
-          <div class="anchoReal12" *ngIf="dataUser.id">
+          <div class="anchoReal12 anchos2" *ngIf="dataUser.id">
             <a [routerLink]="[ '/config/perfil' ]" class=" altoNull buscadorOcultar2p-1 pointer espacios">
               <i class="material-icons icoss">person</i>
             </a>
           </div>
-          <div class="anchoReal12">
+          <div class="anchoReal12 anchos2">
             <a (click)="this.opcionoView = 'carro'; sidenav.toggle();" class="p-1 pointer espacios"
               [matBadge]="listCart.length" matBadgePosition="before" matBadgeColor="accent">
               <i class="material-icons icoss">shopping_cart</i>
             </a>
           </div>
-          <div class="anchoReal12" *ngIf="dataUser.id">
+          <div class="anchoReal12 anchos2" *ngIf="dataUser.id">
             <a (click)="this.opcionoView = 'notificaciones'; sidenav.toggle();" class="p-1 pointer espacios"
               [matBadge]="notificando" matBadgePosition="before" matBadgeColor="accent">
               <i class="material-icons icoss">notifications_active</i>

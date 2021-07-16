@@ -148,6 +148,7 @@ export class HeaderComponent implements OnInit {
     //console.log("***") 
     let data:any = { where:{ view:0, admin: 1 },limit: 100 };
     if( this.rolUser === 'administrador' ) data.where.admin = 1;
+    else if( this.rolUser == 'subAdministrador') data.where.dmin = 2;
     else data.where.user = this.dataUser.id;
     
     //if(this.dataUser.usu_perfil.prf_descripcion != 'administrador') data.where.user=this.dataUser.id,

@@ -51,6 +51,7 @@ export class FormventasComponent implements OnInit {
   porcentajeUser: number = 0;
   porcentajeMostrar: number = 0;
   namePorcentaje: string;
+  rolUser:string;
 
   constructor(
     public dialog: MatDialog,
@@ -74,6 +75,7 @@ export class FormventasComponent implements OnInit {
       if (this.dataUser.usu_perfil.prf_descripcion == 'administrador' || this.dataUser.usu_perfil.prf_descripcion == 'subAdministrador') this.superSub = true;
       else this.superSub = false;
       try {
+        this.rolUser = this.dataUser.usu_perfil.prf_descripcion;
         if (this.dataUser.categoriaPerfil) {
           this.namePorcentaje = this.dataUser.categoriaPerfil.categoria;
           this.porcentajeUser = this.dataUser.categoriaPerfil.precioPorcentaje;
@@ -81,6 +83,7 @@ export class FormventasComponent implements OnInit {
       } catch (error) {
         this.porcentajeUser = 0;
         this.namePorcentaje = "dropshipping básico";
+        this.rolUser = "null";
       }
       if( this.porcentajeUser > this.dataUser.porcentaje ) this.porcentajeMostrar = this.porcentajeUser;
       else this.porcentajeMostrar = this.dataUser.porcentaje;
@@ -104,8 +107,8 @@ export class FormventasComponent implements OnInit {
       this.data.usu_clave_int = this.dataUser.id;
       this.data.ven_usu_creacion = this.dataUser.usu_email;
       this.data.ven_fecha_venta = moment().format('YYYY-MM-DD');
+      this.suma();
     }
-    this.suma();
   }
 
   getArticulos() {
@@ -196,7 +199,6 @@ export class FormventasComponent implements OnInit {
       if (!row.costo || !row.cantidad) continue;
       total += (Number(row.costo) * Number(row.cantidad));
       row.loVendio = row.costo;
-      console.log( this.namePorcentaje == "dropshipping básico", this.namePorcentaje, row)
       if ( this.namePorcentaje == "dropshipping básico" ) row.comision = ( row.costoTotal * ( this.dataUser.porcentaje || 10 ) / 100 );
       else this.data.ven_ganancias+= ( ( row.loVendio * row.cantidad ) - row.costoTotal ) || 0;
 
@@ -245,14 +247,25 @@ export class FormventasComponent implements OnInit {
     this.data.listaArticulo = this.listCarrito;
     this._ventas.create(this.data).subscribe((res: any) => {
       //this.OrderWhatsapp(res);
-      this.crearNotificacion({
-        titulo: "Nueva venta de " + res.ven_nombre_cliente,
-        descripcion: "Nueva venta de " + res.ven_nombre_cliente,
-        venta: res.id,
-        user: res.usu_clave_int.id,
-        admin: 1,
-        tipoDe: 0
-      });
+      if( this.rolUser != "subAdministrador"){
+        this.crearNotificacion({
+          titulo: "Nueva venta de " + res.ven_nombre_cliente,
+          descripcion: "Nueva venta de " + res.ven_nombre_cliente,
+          venta: res.id,
+          user: res.usu_clave_int.id,
+          admin: 1,
+          tipoDe: 0
+        });
+      }else{
+        this.crearNotificacion({
+          titulo: "Nueva venta de " + res.ven_nombre_cliente,
+          descripcion: "Nueva venta de " + res.ven_nombre_cliente,
+          venta: res.id,
+          user: res.usu_clave_int.id,
+          admin: 2,
+          tipoDe: 0
+        });
+      }
       this.crearNotificacion({
         titulo: " VENTA PENDIENTE " + res.ven_nombre_cliente,
         descripcion: "SIGNIFICA QUE AUN NO HA SIDO DESPACHADO",
