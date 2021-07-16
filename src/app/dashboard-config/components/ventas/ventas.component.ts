@@ -81,6 +81,7 @@ export class VentasComponent implements OnInit {
   }
 
   getUserCabeza(){
+    console.log( this.dataUser)
     if( !this.dataUser.empresa ) return false;
     delete this.query.where.usu_clave_int;
     this.query.where.ven_empresa = this.dataUser.empresa.id;

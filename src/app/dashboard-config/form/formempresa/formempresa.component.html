@@ -1,0 +1,49 @@
+<h2 mat-dialog-title>
+    <div class="row">
+        <div class="col-12">
+            <div class="d-flex justify-content-center">
+                <div>
+                    <h2>{{ titulo }} Empresa</h2>
+                </div>
+                <div>
+                    <button type="button" class="btn btn-primary" (click)="newDato()">Crear</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</h2>
+<mat-dialog-content class="mat-typography">
+    <div class="form row">
+        <mat-list>
+            <div mat-subheader>Lista de Empresa</div>
+            <mat-list-item *ngFor="let item of listEmpresa">
+                <div mat-line>
+                    <div class="row">
+                        <div class="col-12">
+                            <div class="d-flex justify-content-between">
+                                <div>
+                                    <mat-checkbox (ngModelChange)="checkiando( item )" [(ngModel)]="item.check" class="example-margin">
+                                    </mat-checkbox>
+                                </div>
+                                <div>
+                                    <input type="text" [(ngModel)]="item.empresa" class="form-control form-control-sm">
+                                </div>
+                                <div>
+                                    <button *ngIf="!item.id" (click)="guardar( item )" type="button" class="btn btn-primary">Guardar</button>
+                                    <button *ngIf="item.id" (click)="updates( item )" type="button" class="btn btn-primary">Actualizar</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </mat-list-item>
+        </mat-list>
+    </div>
+</mat-dialog-content>
+
+<mat-dialog-actions align="end">
+    <button mat-button mat-dialog-close>Cerrar</button>
+    <button mat-button cdkFocusInitial (click)="submit()">
+        <span>Actulizar Cambios</span>
+    </button>
+</mat-dialog-actions>

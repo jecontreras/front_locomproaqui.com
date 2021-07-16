@@ -52,6 +52,7 @@ import { VerProveedorComponent } from './components/ver-proveedor/ver-proveedor.
 import { NgImageSliderModule } from 'ng-image-slider';
 import { NgxImageZoomModule } from 'ngx-image-zoom';
 import { MisDespachoComponent } from './components/mis-despacho/mis-despacho.component';
+import { FormempresaComponent } from './form/formempresa/formempresa.component';
 
 
 @NgModule({
@@ -67,7 +68,8 @@ import { MisDespachoComponent } from './components/mis-despacho/mis-despacho.com
     VentastableComponent,
     FormventasLiderComponent,
     FormcatalogoComponent,
-    ProductosOrdenarComponent
+    ProductosOrdenarComponent,
+    FormempresaComponent
   ],
   declarations: [
     MainComponent,
@@ -102,7 +104,8 @@ import { MisDespachoComponent } from './components/mis-despacho/mis-despacho.com
     VerCatalagoProveedorComponent,
     VerProductoProveedorComponent,
     VerProveedorComponent,
-    MisDespachoComponent
+    MisDespachoComponent,
+    FormempresaComponent
   ],
   imports: [
     CommonModule,

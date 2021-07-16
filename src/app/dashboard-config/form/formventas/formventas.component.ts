@@ -222,10 +222,11 @@ export class FormventasComponent implements OnInit {
     this.data.create = moment().format('DD-MM-YYYY');
     if (!this.validarPrecio()) { this.disabledButton = false; this.disabled = false; return this._tools.presentToast("el Valorde producto debe contener 5 numeros ejemplo 80000, 90000"); }
     // if( this.dataUser.cabeza ) if( this.dataUser.cabeza.usu_perfil == 3 ) this.data.ven_subVendedor = 1;
+    //console.log( this.dataUser )
     if (this.dataUser.empresa) {
       if (this.dataUser.empresa.id != 1) this.data.ven_subVendedor = 1;
-      this.data.empresa = this.dataUser.empresa.id;
-    } else this.data.empresa = 1;
+      this.data.ven_empresa = this.dataUser.empresa.id;
+    } else this.data.ven_empresa = 1;
     this._ventas.get({ where: { cob_num_cedula_cliente: this.data.cob_num_cedula_cliente, ven_estado: 0, ven_sw_eliminado: 0 } }).subscribe((res: any) => {
       res = res.data[0];
       if (res) this._tools.basicIcons({ header: "Este cliente tiene una venta activa!", subheader: "Esta venta sera vereficada por posible confuciones" });

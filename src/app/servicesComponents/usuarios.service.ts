@@ -64,4 +64,7 @@ export class UsuariosService {
   getRecaudo(query:any){
     return this._model.querys('platadistribuidor/querys',query, 'post');
   }
+  getPerfiles(query:any){
+    return this._model.querys('tblcategoriaperfil/querys',query, 'post');
+  }
 }

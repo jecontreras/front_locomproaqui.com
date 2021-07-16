@@ -1,8 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material';
 import { ToolsService } from 'src/app/services/tools.service';
-import { ProvedoresService } from 'src/app/servicesComponents/provedores.service';
-import { FormprovedoresComponent } from 'src/app/dashboard-config/form/formprovedores/formprovedores.component';
+import { UsuariosService } from 'src/app/servicesComponents/usuarios.service';
+import { NgxSpinnerService } from 'ngx-spinner';
+import { FormusuariosComponent } from '../../form/formusuarios/formusuarios.component';
+import * as _ from 'lodash';
 
 declare interface DataTable {
   headerRow: string[];
@@ -25,28 +27,37 @@ export class ProvedoresComponent implements OnInit {
   pagina = 10;
   paginas = 0;
   loader = true;
-  query:any = { 
+  query:any = {
     where:{
-      prv_activo: 0
+      rolName: "proveedor"
     },
-    limit:100
+    page: 0
   };
-  Header:any = [ 'Acciones','Nombre','Tipo','Documento','Telefonos','Email','Dirección','Observación','Estado' ];
+  Header:any = [ 'Acciones','Nombre','Perfil','E-mail','Telefonos','Fecha Registro','Activo' ];
   $:any;
   public datoBusqueda = '';
+
+  notscrolly:boolean=true;
+  notEmptyPost:boolean = true;
 
   constructor(
     public dialog: MatDialog,
     private _tools: ToolsService,
-    private _provedores: ProvedoresService
+    private _usuarios: UsuariosService,
+    private spinner: NgxSpinnerService
   ) { }
 
   ngOnInit() {
+    this.dataTable = {
+      headerRow: this.Header,
+      footerRow: this.Header,
+      dataRows: []
+    };
     this.cargarTodos();
   }
 
   crear(obj:any){
-    const dialogRef = this.dialog.open(FormprovedoresComponent,{
+    const dialogRef = this.dialog.open(FormusuariosComponent,{
       data: {datos: obj || {}}
     });
 
@@ -55,112 +66,77 @@ export class ProvedoresComponent implements OnInit {
     });
   }
   delete(obj:any, idx:any){
-    this._provedores.delete(obj).subscribe((res:any)=>{
+    this._usuarios.delete(obj).subscribe((res:any)=>{
       this.dataTable.dataRows.splice(idx, 1);
       this._tools.presentToast("Eliminado")
     },(error)=>{console.error(error); this._tools.presentToast("Error de servidor") })
   }
 
-
-
+  onScroll(){
+    if (this.notscrolly && this.notEmptyPost) {
+       this.notscrolly = false;
+       this.query.page++;
+       this.cargarTodos();
+     }
+   }
 
   cargarTodos() {
-    this._provedores.get(this.query)
+    this.spinner.show();
+    this._usuarios.get(this.query)
     .subscribe(
       (response: any) => {
-        console.log(response);
-        this.dataTable = {
-          headerRow: this.Header,
-          footerRow: this.Header,
-          dataRows: []
-        };
         this.dataTable.headerRow = this.dataTable.headerRow;
         this.dataTable.footerRow = this.dataTable.footerRow;
-        this.dataTable.dataRows = response.data;
-        this.paginas = Math.ceil(response.count/10);
+        this.dataTable.dataRows.push(... response.data);
+        this.dataTable.dataRows =_.unionBy(this.dataTable.dataRows || [], response.data, 'id');
         this.loader = false;
-        setTimeout(() => {
-          this.config();
-          console.log("se cumplio el intervalo");
-        }, 500);
+          this.spinner.hide();
+          
+          if (response.data.length === 0 ) {
+            this.notEmptyPost =  false;
+          }
+          this.notscrolly = true;
       },
       error => {
         console.log('Error', error);
       });
   }
-  config() {
-    if(!this.$)return false;
-    $('#datatables').DataTable({
-      "pagingType": "full_numbers",
-      "lengthMenu": [
-        [10, 25, 50, -1],
-        [10, 25, 50, "All"]
-      ],
-      responsive: true,
-      language: {
-        search: "_INPUT_",
-        searchPlaceholder: "Buscar",
-      }
-
-    });
-
-    const table = $('#datatables').DataTable();
-
-    /* // Edit record
-    table.on('click', '.edit', function (e) {
-      let $tr = $(this).closest('tr');
-      if ($($tr).hasClass('child')) {
-        $tr = $tr.prev('.parent');
-      }
-
-      var data = table.row($tr).data();
-      alert('You press on Row: ' + data[0] + ' ' + data[1] + ' ' + data[2] + '\'s row.');
-      e.preventDefault();
-    }); */
-
-    /* // Delete a record
-    table.on('click', '.remove', function (e) {
-      const $tr = $(this).closest('tr');
-      table.row($tr).remove().draw();
-      e.preventDefault();
-    }); */
-
-    //Like record
-    table.on('click', '.like', function (e) {
-      alert('You clicked on Like button');
-      e.preventDefault();
-    });
-
-    $('.card .material-datatables label').addClass('form-group');
-  }
   buscar() {
-    this.loader = true;
-    this.dataTable.dataRows = [];
+    this.loader = false;
+    this.notscrolly = true 
+    this.notEmptyPost = true;
     //console.log(this.datoBusqueda);
     this.datoBusqueda = this.datoBusqueda.trim();
+    this.dataTable.dataRows = [];
     if (this.datoBusqueda === '') {
-      this.query.where = {};
-      this.cargarTodos();
+      this.query = {where:{},page: 0};
     } else {
+      this.query.page = 0;
       this.query.where.or = [
         {
-          prv_nro_docum: {
+          usu_nombre: {
             contains: this.datoBusqueda|| ''
           }
         },
         {
-          prv_nombre: {
+          usu_email: {
             contains: this.datoBusqueda|| ''
           }
         },
         {
-          prv_email: {
+          usu_apellido: {
+            contains: this.datoBusqueda|| ''
+          }
+        },
+        {
+          usu_telefono: {
             contains: this.datoBusqueda|| ''
           }
         },
       ];
-      this.cargarTodos();
     }
+    this.query.where.rolName = "proveedor";
+    this.cargarTodos();
   }
 
 }
