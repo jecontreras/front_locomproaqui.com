@@ -18,13 +18,13 @@
                         <label>Precio Vendedor</label>
                         <input currencyMask class="form-control form-control-sm" [(ngModel)]="data.precioFabrica" [options]="formatoMoneda" />
                     </div> -->
-                    <div class="form-group col-md-4 col-sm-4 col-lg-4 col-xs-4">
-                        <label>Precio Cliente</label>
+                    <div class="form-group col-md-4 col-sm-4 col-lg-4 col-xs-4" *ngIf="rolUser == 'administrador'">
+                        <label>Precio Cliente final</label>
                         <input currencyMask class="form-control form-control-sm" [(ngModel)]="data.pro_uni_venta"
                             [options]="formatoMoneda" />
                     </div>
                     <div class="form-group col-md-4 col-sm-4 col-lg-4 col-xs-4">
-                        <label>Precio Vendedor</label>
+                        <label>Precio dropshipping pro</label>
                         <input currencyMask class="form-control form-control-sm" [(ngModel)]="data.pro_vendedor"
                             [options]="formatoMoneda" />
                     </div>
@@ -112,13 +112,13 @@
                     <label>Precio Vendedor</label>
                     <input currencyMask class="form-control form-control-sm"  [(ngModel)]="data.precioFabrica" [options]="formatoMoneda" />
                 </div> -->
-                <div class="form-group col-md-6 col-sm-4 col-lg-4 col-xs-6">
-                    <label>Precio Clientes</label>
+                <div class="form-group col-md-6 col-sm-4 col-lg-4 col-xs-6" *ngIf="rolUser == 'administrador'">
+                    <label>Precio Cliente Final</label>
                     <input currencyMask class="form-control form-control-sm" 
                         [(ngModel)]="data.pro_uni_venta" [options]="formatoMoneda" />
                 </div>
                 <div class="form-group col-md-6 col-sm-4 col-lg-4 col-xs-6">
-                    <label>Precio Vendedor</label>
+                    <label>Precio dropshipping pro</label>
                     <input currencyMask class="form-control form-control-sm" [(ngModel)]="data.pro_vendedor"
                            [options]="formatoMoneda" />
                 </div>

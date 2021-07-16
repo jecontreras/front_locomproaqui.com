@@ -37,13 +37,23 @@ export class ProductosComponent implements OnInit {
     page: 0,
     limit: 10
   };
+  query2:any = {
+    where:{
+      pro_activo: 3
+    },
+    page: 0,
+    limit: 10
+  };
   Header:any = [ 'Acciones','Foto','Nombre','Codigo', 'Precio', 'Categoria','Estado', 'Creado'];
+  Header2:any = [ 'Acciones','Foto','Nombre', 'Precio dropshipping pro ', 'Precio Cliente Final','Estado', 'Creado'];
   $:any;
   public datoBusqueda = '';
   notscrolly:boolean=true;
   notEmptyPost:boolean = true;
   dataUser:any = {};
   rolName:string;
+  dataRows:any = [];
+  formatoMoneda:any = {};
 
   constructor(
     public dialog: MatDialog,
@@ -70,6 +80,7 @@ export class ProductosComponent implements OnInit {
     };
     if( this.rolName != 'administrador') this.query.where.pro_usu_creacion = this.dataUser.id;
     this.cargarTodos();
+    this.cargarProveedor();
   }
 
   crear(obj:any){
@@ -115,6 +126,13 @@ export class ProductosComponent implements OnInit {
        this.cargarTodos();
      }
    }
+  onScroll2(){
+    if (this.notscrolly && this.notEmptyPost) {
+       this.notscrolly = false;
+       this.query2.page++;
+       this.cargarProveedor();
+     }
+  }
 
   cargarTodos() {
     this.spinner.show();
@@ -126,6 +144,25 @@ export class ProductosComponent implements OnInit {
         this.dataTable.footerRow = this.dataTable.footerRow;
         this.dataTable.dataRows.push(... response.data);
         this.dataTable.dataRows =_.unionBy(this.dataTable.dataRows || [], response.data, 'id');
+        this.loader = false;
+        this.spinner.hide();
+
+        if (response.data.length === 0 ) {
+          this.notEmptyPost =  false;
+        }
+        this.notscrolly = true;
+      },
+      error => {
+        console.log('Error', error);
+      });
+  }
+
+  cargarProveedor() {
+    this.spinner.show();
+    this._productos.get( this.query2 ).subscribe( ( response: any ) => {
+        console.log(response);
+        this.dataRows.push( ... response.data );
+        this.dataRows =_.unionBy( this.dataRows || [], response.data, 'id' );
         this.loader = false;
         this.spinner.hide();
 
@@ -168,6 +205,17 @@ export class ProductosComponent implements OnInit {
     }
     if( this.rolName != 'administrador') this.query.where.pro_usu_creacion = this.dataUser.id;
     this.cargarTodos();
+  }
+
+  updatePrecio( item, opt ){
+    let data:any ={
+      id: item.id
+    };
+    data[opt] = item[opt];
+    if( item.pro_uni_venta ) data.pro_activo = 0;
+    this._productos.update( data ).subscribe(( res:any )=>{
+      this._tools.tooast( "Actualizado " + opt );
+    },( error )=> this._tools.tooast( "Error " + opt ));
   }
 
 }

@@ -55,6 +55,7 @@ export class FormproductosComponent implements OnInit {
   readonly separatorKeysCodes = [ENTER, COMMA] as const;
   fruits: Fruit[] = [ ];
   listSubCategorias:any = [];
+  rolUser:string;
 
   constructor(
     public dialog: MatDialog,
@@ -73,6 +74,7 @@ export class FormproductosComponent implements OnInit {
       store = store.name;
       if( !store ) return false;
       this.dataUser = store.user || {};
+      if(Object.keys( this.dataUser ).length > 0 ) this.rolUser = this.dataUser.usu_perfil.prf_descripcion;
     });
   }
 
@@ -306,6 +308,7 @@ export class FormproductosComponent implements OnInit {
   guardar() {
     return new Promise(resolve => {
       if( this.data.opt == 'demo' ) this.data.pro_mp_venta = 1;
+      if( this.rolUser != 'administrador') this.data.pro_activo = 3;
       this.data.pro_usu_creacion = this.dataUser.id;
       this._productos.create(this.data).subscribe((res: any) => {
         //console.log(res);
@@ -319,6 +322,7 @@ export class FormproductosComponent implements OnInit {
   updates() {
     this.data = _.omit(this.data, [ 'pro_usu_creacion' ])
     this.data = _.omitBy(this.data, _.isNull);
+    if( this.rolUser == 'administrador' ) this.data.pro_activo = 0;
     this._productos.update(this.data).subscribe((res: any) => {
       this._tools.presentToast("Actualizado");
       res.listColor = this.data.listColor;
