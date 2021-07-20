@@ -170,7 +170,7 @@
                                 <br>
                             </div>
                             <div class="col-12 container row" *ngIf="data.pagasPublicidad == 'si'">
-                                <label for="exampleFormControlSelect1">Seleccione en cuales plataformas has pagado publicidad</label>
+                                <label for="exampleFormControlSelect1">Seleccione en cuales plataformas has pagado publicidad</label><br>
                                 <mat-checkbox [(ngModel)]="item.check" *ngFor="let item of listRedes"
                                     (ngModelChange)="selectTable( item )">
                                     {{ item.titulo }} &nbsp;

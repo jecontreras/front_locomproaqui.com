@@ -354,7 +354,7 @@ export class HeaderComponent implements OnInit {
       {
         icons: 'receipt_long',
         nombre: 'Ver catalogo de proveedores',
-        disable: this.rolUser != 'proveedor',
+        disable: this.dataUser.id,
         url: '/config/verCatalagoProveedor',
         submenus:[]
       },

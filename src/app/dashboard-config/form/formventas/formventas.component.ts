@@ -107,7 +107,6 @@ export class FormventasComponent implements OnInit {
       this.data.usu_clave_int = this.dataUser.id;
       this.data.ven_usu_creacion = this.dataUser.usu_email;
       this.data.ven_fecha_venta = moment().format('YYYY-MM-DD');
-      this.suma();
     }
   }
 

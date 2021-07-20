@@ -74,6 +74,7 @@ export class CobrosComponent implements OnInit {
   }
 
   disabledRetiro(){
+    return false;
     if(this.dataUser.usu_perfil.prf_descripcion == 'administrador') return this.btnDisableRetiro = true;
     this._cobros.validador({ user: this.dataUser.id }).subscribe((res:any)=>{
       this.btnDisableRetiro = res.data;

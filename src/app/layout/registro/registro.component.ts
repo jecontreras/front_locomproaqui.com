@@ -112,11 +112,11 @@ export class RegistrosComponent implements OnInit {
     this._user.get({where:{ id: this.cabeza }}).subscribe((res:any)=>{ console.log(res); this.dataUser = res.data[0]; this.data.cabeza = this.dataUser.id; }, (error)=>console.error(error) );
   }
 
-  submit(){
+  async submit(){
     if(!this.disableSubmit) return false;
     this.disableSubmit = false;
-    let valid: boolean = this.validando();
-    if( !valid && this.error ) return false;
+    let valid: boolean = await this.validando();
+    if( !valid || this.error ) { this.disableSubmit = true; return false};
     this._user.create(this.data).subscribe((res:any)=>{
       console.log("user", res);
       this.disableSubmit = true;
@@ -135,7 +135,7 @@ export class RegistrosComponent implements OnInit {
     },(error)=>{ console.error(error); this.disableSubmit = true; this._tools.presentToast("Error de servidor")});
   }
 
-  validando(){
+  async validando(){
     if( !this.data.usu_nombre ) { this._tools.tooast( { title: "Error falta el nombre", icon: "error" }); return false; }
     if( !this.data.usu_apellido ) { this._tools.tooast( { title: "Error falta el Apellido", icon: "error" }); return false; }
     if( !this.data.usu_indicativo ) { this._tools.tooast( { title: "Error falta el Indicativo", icon: "error" }); return false; }
@@ -149,7 +149,11 @@ export class RegistrosComponent implements OnInit {
     if( !this.data.usu_confir ) { this._tools.tooast( { title: "Error falta la clave de confirmar", icon: "error" }); return false; }
     if( this.data.usu_confir !=  this.data.usu_clave ) { this._tools.tooast( { title: "Error las claves no son correctas", icon: "error" }); return false; }
     if( !this.data.usu_usuario ) { this._tools.tooast( { title: "Error falta Tu Nombre de tienda", icon: "error" }); return false; }
-    if( !this.data.usu_modo ) { this._tools.tooast( { title: "Error falta la descripcion de porque aceptarte como vendedor", icon: "error" }); return false; }
+    if( !this.data.queEsDropp ) { this._tools.tooast( { title: "Error falta que complete los campos de que es qué es droppshipping", icon: "error" }); return false; }
+    if( !this.data.tiempoVendiendo ) { this._tools.tooast( { title: "Error falta que complete los campos Cuanto tiempo llevas vendiendo de manera virtual", icon: "error" }); return false; }
+    if( !this.data.ventasRealizarMensual ) { this._tools.tooast( { title: "Error falta que complete los campos Cuantas ventas crees que puedes realizar mensualmente", icon: "error" }); return false; }
+    if( !this.data.pagasPublicidad ) { this._tools.tooast( { title: "Error falta que complete los campos Pagas publicidad en alguna red social para vender", icon: "error" }); return false; }
+    //if( !this.data.usu_modo ) { this._tools.tooast( { title: "Error falta la descripcion de porque aceptarte como vendedor", icon: "error" }); return false; }
     return true;
   }
   
