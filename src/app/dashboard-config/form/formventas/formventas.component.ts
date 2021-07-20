@@ -107,6 +107,7 @@ export class FormventasComponent implements OnInit {
       this.data.usu_clave_int = this.dataUser.id;
       this.data.ven_usu_creacion = this.dataUser.usu_email;
       this.data.ven_fecha_venta = moment().format('YYYY-MM-DD');
+      this.suma();
     }
   }
 
@@ -197,7 +198,7 @@ export class FormventasComponent implements OnInit {
     for (let row of this.listCarrito) {
       if (!row.costo || !row.cantidad) continue;
       total += (Number(row.costo) * Number(row.cantidad));
-      row.loVendio = row.costo;
+      row.loVendio = row.costoTotal;
       if ( this.namePorcentaje == "dropshipping básico" ) row.comision = ( row.costoTotal * ( this.dataUser.porcentaje || 10 ) / 100 );
       else this.data.ven_ganancias+= ( ( row.loVendio * row.cantidad ) - row.costoTotal ) || 0;
 

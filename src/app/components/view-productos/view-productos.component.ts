@@ -176,7 +176,7 @@ export class ViewProductosComponent implements OnInit {
       foto: this.urlFoto,
       cantidad: cantidad,
       costo: precio,
-      loVendio: encuanto,
+      loVendio: encuanto * cantidad,
       costoTotal: this.data.costo,
       id: this.codigo(),
       precioReal: this.data.pro_uni_venta

@@ -68,7 +68,11 @@ export class FormcobrosComponent implements OnInit {
   }
 
   getInfoUser(){
-    this._user.getInfo({where:{id:this.dataUser.id}}).subscribe((res:any)=>this.data.cob_monto = res.data.porcobrado);
+    this._user.getInfo({where:{id:this.dataUser.id}}).subscribe((res:any)=>{ 
+      this.data.cob_monto = res.data.porcobrado; 
+      this.data.devoluciones = res.data.devoluciones;
+      this.data.totalrecibir = ( res.data.porcobrado - res.data.devoluciones || 0 );
+    });
   }
 
   onSelect(event:any) {
@@ -116,7 +120,7 @@ export class FormcobrosComponent implements OnInit {
       this.procesoWhat( res );
       setTimeout(()=> this.openTestimonios(), 3000);
       this.dialog.closeAll();
-    }, (error)=>{ this._tools.presentToast(error.error.mensaje); console.error(error); this.disabledButton = false; this.dialog.closeAll(); });
+    }, (error)=>{ this._tools.presentToast(error.error.mensaje); console.error(error); this.disabledButton = false; });
   }
 
   async validador(){
