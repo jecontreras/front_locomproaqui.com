@@ -29,7 +29,7 @@ export class PerfilComponent implements OnInit {
   };
   files: File[] = [];
   list_files: any = [];
-  urlTienda:string = `${ URLFRON }/pedidos/`;
+  urlTienda:string = `${ URLFRON }/`;
   urlRegistro:string = `${ URLFRON }/registro/`;
   restaure:any = {};
   disableRestaure:boolean = false;

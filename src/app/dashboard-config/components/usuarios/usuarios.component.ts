@@ -5,6 +5,7 @@ import { MatDialog } from '@angular/material';
 import { FormusuariosComponent } from 'src/app/dashboard-config/form/formusuarios/formusuarios.component';
 import { NgxSpinnerService } from 'ngx-spinner';
 import * as _ from 'lodash';
+import { PerfilService } from 'src/app/servicesComponents/perfil.service';
 
 declare interface DataTable {
   headerRow: string[];
@@ -36,12 +37,17 @@ export class UsuariosComponent implements OnInit {
 
   notscrolly:boolean=true;
   notEmptyPost:boolean = true;
+  search:any = {
 
+  };
+  listPerfiles:any = [];
+  listCategoriaPerfil:any = [];
   constructor(
     public dialog: MatDialog,
     private _tools: ToolsService,
     private _usuarios: UsuariosService,
-    private spinner: NgxSpinnerService
+    private spinner: NgxSpinnerService,
+    private _perfil: PerfilService
   ) { }
 
   ngOnInit() {
@@ -51,6 +57,20 @@ export class UsuariosComponent implements OnInit {
       dataRows: []
     };
     this.cargarTodos();
+    this.getPerfiles();
+    this.getCategoriaPerfil();
+  }
+
+  getPerfiles(){
+    this._perfil.get( { where: { est_clave_int: 0 }, limit: 100 } ).subscribe(( res:any )=>{
+      this.listPerfiles = res.data;
+    });
+  }
+
+  getCategoriaPerfil(){
+    this._perfil.getCategoria( { where: {  }, limit: 100 } ).subscribe(( res:any )=>{
+      this.listCategoriaPerfil = res.data;
+    });
   }
 
   crear(obj:any){
@@ -134,6 +154,31 @@ export class UsuariosComponent implements OnInit {
       ];
       this.cargarTodos();
     }
+  }
+
+  buscarText(){
+    this.query = { where:{},page: 0 };
+    this.loader = false;
+    this.notscrolly = true 
+    this.notEmptyPost = true;
+    this.dataTable.dataRows = [];
+    if( this.search.queEsDropp ) this.query.where.queEsDropp = this.search.queEsDropp;
+    if( this.search.tiempoVendiendo ) this.query.where.tiempoVendiendo = this.search.tiempoVendiendo;
+    if( this.search.ventasRealizarMensual ) this.query.where.ventasRealizarMensual = this.search.ventasRealizarMensual;
+    if( this.search.pagasPublicidad ) this.query.where.pagasPublicidad = this.search.pagasPublicidad;
+    if( this.search.usu_perfil ) this.query.where.usu_perfil = this.search.usu_perfil;
+    if( this.search.categoriaPerfil ) this.query.where.categoriaPerfil = this.search.categoriaPerfil;
+    this.cargarTodos();
+  }
+
+  limpiarText(){
+    this.search = {};
+    this.query = { where:{},page: 0 };
+    this.dataTable.dataRows = [];
+    this.loader = false;
+    this.notscrolly = true 
+    this.notEmptyPost = true;
+    this.cargarTodos();
   }
 
 }

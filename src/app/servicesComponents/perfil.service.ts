@@ -22,4 +22,7 @@ export class PerfilService {
   delete(query:any){
     return this._model.querys('tblperfil/'+query.id, query, 'delete');
   }
+  getCategoria(query:any){
+    return this._model.querys('tblcategoriaperfil/querys',query, 'post');
+  }
 }

@@ -34,6 +34,66 @@
                   <i class="material-icons">add_circle_outline</i>
                 </button>
               </div>
+              <div class="col-12 container">
+                <div class="row">
+                  <div class="col-3">
+                    <label for="exampleFormControlSelect1">sabes qué es droppshipping</label>
+                    <select class="form-control" [(ngModel)]="search.queEsDropp">
+                      <option value="si">SI</option>
+                      <option value="no">NO</option>
+                    </select>
+                  </div>
+                  <div class="col-3">
+                    <label for="exampleFormControlSelect1">Cuanto tiempo llevas vendiendo de manera
+                      virtual</label>
+                    <select class="form-control" [(ngModel)]="search.tiempoVendiendo">
+                      <option value="menos3">3 meses o menos</option>
+                      <option value="mas6">De 6 meses a un año</option>
+                      <option value="mas12">Más de un año</option>
+                    </select>
+                  </div>
+                  <div class="col-3">
+                    <label for="exampleFormControlSelect1">Cuantas ventas crees que puedes realizar
+                      mensualmente</label>
+                    <select class="form-control" [(ngModel)]="search.ventasRealizarMensual">
+                      <option value="30">1 a 30</option>
+                      <option value="100">de 31 a 100</option>
+                      <option value="110">más de 100</option>
+                    </select>
+                  </div>
+                  <div class="col-3">
+                    <label for="exampleFormControlSelect1">Pagas publicidad en alguna red social para
+                      vender</label>
+                    <select class="form-control" [(ngModel)]="search.pagasPublicidad">
+                      <option value="si">SI</option>
+                      <option value="no">NO</option>
+                    </select>
+                  </div>
+                  <div class="col-3">
+                    <label for="exampleFormControlSelect1">Categoria Perfil</label>
+                    <select class="form-control" [(ngModel)]="search.categoriaPerfil">
+                      <option [value]="item.id" *ngFor="let item of listCategoriaPerfil" >{{ item.categoria }}</option>
+                    </select>
+                  </div>
+                  <div class="col-3">
+                    <label for="exampleFormControlSelect1">Perfil</label>
+                    <select class="form-control" [(ngModel)]="search.usu_perfil">
+                      <option [value]="item.id" *ngFor="let item of listPerfiles">{{ item.prf_descripcion }}</option>
+                    </select>
+                  </div>
+                  <div class="col-12">
+                    <div class="d-flex justify-content-center">
+                      <div>
+                        <button type="button" class="btn btn-warning" (click)="limpiarText()">limpiar</button>
+                      </div>
+                      <div>
+                        <button type="button" class="btn btn-primary" (click)="buscarText()">Buscar</button>
+                      </div>
+                    </div>
+                    <br>
+                  </div>
+                </div>
+              </div>
 
             </div>
             <div class="search-results col-12 row" infiniteScroll [infiniteScrollDistance]="3"
