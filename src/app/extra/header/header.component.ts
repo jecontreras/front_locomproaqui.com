@@ -36,6 +36,7 @@ export class HeaderComponent implements OnInit {
   menus2:any = [];
   dataUser:any = {};
   rolUser:any = {};
+  rolUser1:string;
   data:any = {
     total: 0
   };
@@ -112,6 +113,7 @@ export class HeaderComponent implements OnInit {
   }
 
   ngOnInit() {
+    console.log( this.namePorcentaje )
     setInterval(()=> {
       let color:string = ( this.dataUser.usu_color || "#02a0e3" );
       if( this.userId.id ) {
@@ -124,10 +126,17 @@ export class HeaderComponent implements OnInit {
     this.onResize(null);
     if(Object.keys(this.dataUser).length > 0 ) {
       this.rolUser = this.dataUser.usu_perfil.prf_descripcion;
+      this.rolUser1 = this.dataUser.usu_perfil.prf_descripcion;
       this.urlRegistro+=this.dataUser.id;
       this.getInfoUser();
     }
-    else this.rolUser = 'visitante';
+    else { this.rolUser = 'visitante'; this.rolUser1 = "visitante"; }
+    try {
+      if( Object.keys( this.userPr ).length > 0 ) this.rolUser1 = this.userPr.usu_perfil.prf_descripcion;
+    } catch (error) {
+      console.log(error)
+    }
+    console.log( this.rolUser1 )
     this.listMenus();
     if( this.dataUser.id )this.getCarrito();
     if( this.dataUser.id ) this.getAlert();
@@ -227,7 +236,7 @@ export class HeaderComponent implements OnInit {
       texto+= ` ${ row.foto } talla ${ row.tallaSelect } color ${ row.color || 'default' } ref:${ row.codigo } y el valor ${ this._tools.monedaChange( 3, 2, row.costo ) } `;
       this.data.total+= row.costoTotal || 0;
       if ( this.namePorcentaje == "dropshipping básico" ) this.data.totalGanancias+= ( row.costoTotal * ( this.dataUser.porcentaje || 10 ) / 100 );
-      else this.data.totalGanancias+= ( ( row.loVendio * row.cantidad ) - row.costoTotal ) || 0;
+      else this.data.totalGanancias+= ( row.loVendio - ( row.costoTotal ) ) || 0;
     }
     
     let cerialNumero:any = ''; 
@@ -604,8 +613,10 @@ export class HeaderComponent implements OnInit {
       this._store.dispatch( accion );
       accion = new UserAction( clon, 'post');
       this._store.dispatch( accion );
+      console.log( clon, this.dataUser)
       this.router.navigate(['/pedidos' ]);
       setTimeout( ()=> location.reload(), 1000 );
+      return false;
     }
   }
 

@@ -22,16 +22,26 @@ export class ServiciosService {
   public disable_reconect: boolean = false;
   public interval:any;
   public dataUser:any = {};
-
+  activador: boolean = false;
   constructor(
     private http: HttpClient,
     private _store: Store<USER>,
     private Router: Router,
     private _tools: ToolsService
   ) { 
+    this._store.subscribe((store: any) => {
+      //console.log(store);
+      store = store.name;
+      if(!store) return false;
+      try {
+        this.activador = store.userpr.id ? true : false;
+      } catch (error) {
+        this.activador = false;
+      }
+    });
     //this.conectionSocket();
     //this.createsocket("emitir", {mensaje:"inicial"}); 
-    this.privateDataUser();
+    if( !this.activador ) this.privateDataUser();
   }
   privateDataUser(){
     this._store.subscribe((store: any) => {
@@ -57,7 +67,7 @@ export class ServiciosService {
         }else{
           let accion = new UserAction( res, 'post');
           this._store.dispatch( accion );
-          localStorage.setItem('user', JSON.stringify(res));
+          //localStorage.setItem('user', JSON.stringify(res));
         }
       });
     }

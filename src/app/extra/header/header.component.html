@@ -213,7 +213,7 @@
       <div class="container">
         <div class="d-flex justify-content-center" *ngIf="dataUser.id || userPr.id">
           <div style="width: 100%;">
-            <div class="d-flex justify-content-around" *ngIf="rolUser != 'proveedor'">
+            <div class="d-flex justify-content-around" *ngIf="rolUser1 != 'proveedor'">
               <div>
                 <button type="button" class="btn btn-primary" (click)="openTienda('distribuidor')">Ver como Distribuidor</button>
               </div>
@@ -222,7 +222,7 @@
                 <button type="button" class="btn btn-success" (click)="openTienda('visitante')">Ver como Visitante</button>
               </div>
             </div>
-            <div class="d-flex justify-content-around" *ngIf="rolUser == 'proveedor'">
+            <div class="d-flex justify-content-around" *ngIf="rolUser1 == 'proveedor'">
               <div>
                 <button type="button" class="btn btn-primary" (click)="openTienda('proveedor')">Ver como Proveedor</button>
               </div>

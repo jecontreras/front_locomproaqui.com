@@ -58,7 +58,7 @@ export class RegistroComponent implements OnInit {
       console.log("user", res);
       this.disableSubmit = true;
       if(res.success){
-        localStorage.setItem('user', JSON.stringify(res.data));
+        //localStorage.setItem('user', JSON.stringify(res.data));
         let accion = new UserAction( res.data, 'post');
         this._store.dispatch(accion);
         accion = new TokenAction( { token: res.data.tokens }, 'post');
