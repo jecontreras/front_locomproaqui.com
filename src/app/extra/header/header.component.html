@@ -114,10 +114,10 @@
 
           <div class="cart-content d-flex p-2">
             <div class="cart-amount-summary">
-              <h2>Resumen &nbsp;</h2>
+              <h2>Resumen de tu venta &nbsp;</h2>
               <ul class="summary-table">
-                <li><span>Total: &nbsp;</span> <span>{{ ( data.total || 0 ) | currency:'':true}}</span></li>
-                <li *ngIf="dataUser.id"><span>Total de Ganancias: &nbsp;</span> <span>{{ ( data.totalGanancias || 0 ) |
+                <li><span>Valor a pagar de tu cliente: &nbsp;</span> <span>{{ ( data.total || 0 ) | currency:'':true}}</span></li>
+                <li *ngIf="dataUser.id"><span>Tu ganancia en esta venta es: &nbsp;</span> <span>{{ ( data.totalGanancias || 0 ) |
                     currency:'':true}}</span></li>
               </ul>
               <div class="d-flex justify-content-end">

@@ -60,7 +60,7 @@
                         </div>
                     </div>
                     <div class="col-6 col-sm-4" *ngIf="data.listTallas">
-                        <label for="exampleFormControlSelect1">Color disponibles:</label>
+                        <label for="exampleFormControlSelect1">Colores disponibles:</label>
                         <select class="form-control form-control-sm" [(ngModel)]="data.color"
                             (change)="colorSeleccionado( );">
                             <option value="null">Todos</option>
@@ -79,7 +79,7 @@
                         </select>
                     </div>
                     <div class="col-6 col-sm-4" *ngIf="seleccionnTalla">
-                        <label>Cantidad Disponibles</label>
+                        <label>Cantidades disponibles</label>
                         <input type="number" [(ngModel)]="seleccionnTalla.cantidad" disabled
                             class="form-control form-control-sm">
                     </div>
@@ -219,7 +219,7 @@
 
 <mat-dialog-actions align="end">
     <button cdkFocusInitial (click)="AgregarCart(false)" type="button" class="btn btn-primary">
-        Agregar al carrito
+        Confirmar pedido
     </button>
     <button mat-button mat-dialog-close>Cerrar</button>
 </mat-dialog-actions>

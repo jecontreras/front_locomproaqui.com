@@ -107,8 +107,12 @@
             <label for="exampleFormControlInput1" class="text-primary">Precio Total: </label> &nbsp;
             <span>$ {{ ( data.ven_total || 0 ).toLocaleString(1) }} COP</span>
         </div>
-        <div class="form-group col-md-6 col-sm-4 col-lg-4 col-xs-6">
+        <div class="form-group col-md-6 col-sm-4 col-lg-4 col-xs-6" *ngIf="porcentajeMostrar != 40">
             <label for="exampleFormControlInput1" class="text-success">Recompensa {{ porcentajeMostrar }}%: </label> &nbsp;
+            <span>$ {{ ( data.ven_ganancias || 0 ).toLocaleString(1) }} COP</span>
+        </div>
+        <div class="form-group col-md-6 col-sm-4 col-lg-4 col-xs-6" *ngIf="porcentajeMostrar == 40">
+            <label for="exampleFormControlInput1" class="text-success">Recompensa: </label> &nbsp;
             <span>$ {{ ( data.ven_ganancias || 0 ).toLocaleString(1) }} COP</span>
         </div>
         <div class="form-group col-md-6 col-sm-4 col-lg-4 col-xs-6" *ngIf="data.id && superSub && data.ven_imagen_guia">

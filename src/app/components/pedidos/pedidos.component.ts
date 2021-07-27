@@ -316,6 +316,7 @@ export class PedidosComponent implements OnInit {
   }
 
   menosCantidad(obj) {
+    //console.log( obj )
     if (!obj.cantidadAdquirir) obj.cantidadAdquirir = 1;
     obj.cantidadAdquirir = obj.cantidadAdquirir - 1;
     if (obj.cantidadAdquirir <= -1) obj.cantidadAdquirir = 0;
