@@ -15,6 +15,8 @@ import { NotificacionesService } from 'src/app/servicesComponents/notificaciones
 import { TipoTallasService } from 'src/app/servicesComponents/tipo-tallas.service';
 import { VentasProductosService } from 'src/app/servicesComponents/ventas-productos.service';
 import { CartAction } from 'src/app/redux/app.actions';
+import { DANEGROUP } from 'src/app/JSON/dane-nogroup';
+import { FormcrearguiaComponent } from '../formcrearguia/formcrearguia.component';
 
 const URL = environment.url;
 
@@ -52,6 +54,8 @@ export class FormventasComponent implements OnInit {
   porcentajeMostrar: number = 0;
   namePorcentaje: string;
   rolUser:string;
+  listCiudades:any = DANEGROUP;
+  keyword = 'city';
 
   constructor(
     public dialog: MatDialog,
@@ -112,6 +116,7 @@ export class FormventasComponent implements OnInit {
   }
 
   getArticulos() {
+    this.listCarrito = [];
     this._ventasProducto.get({ where: { ventas: this.id }, limit: 10000 }).subscribe((res: any) => {
       this.listCarrito = _.map(res.data, (item: any) => {
         return {
@@ -121,6 +126,7 @@ export class FormventasComponent implements OnInit {
           costo: item.precio,
           loVendio: item.loVendio,
           id: item.id,
+          costoTotal: item.costoTotal,
           demas: item
         };
       });
@@ -192,13 +198,13 @@ export class FormventasComponent implements OnInit {
   }
 
   suma() {
-    // console.log( this.data );
+    console.log( this.data, this.listCarrito, this.namePorcentaje );
     let total: number = 0;
     this.data.ven_ganancias = 0;
     for (let row of this.listCarrito) {
       if (!row.costo || !row.cantidad) continue;
       total += (Number(row.costo) * Number(row.cantidad));
-      row.loVendio = row.costoTotal;
+      if( !row.id ) row.loVendio = row.costoTotal;
       if ( this.namePorcentaje == "dropshipping básico" ) row.comision = ( row.costoTotal * ( this.dataUser.porcentaje || 10 ) / 100 );
       else this.data.ven_ganancias+= ( ( row.loVendio * row.cantidad ) - row.costoTotal ) || 0;
 
@@ -208,14 +214,20 @@ export class FormventasComponent implements OnInit {
   }
 
   submit() {
-    this.disabled = true;
-    this.suma();
-    this.disabledButton = true;
-    if (this.id) {
-      if (!this.superSub) if (this.clone.ven_estado == 1) { this._tools.presentToast("Error no puedes ya editar la venta ya esta aprobada"); return false; }
-      this.updates();
+    try {
+      this.data.codeCiudad = this.data.ciudadDestino.code;
+      this.data.ciudadDestino = this.data.ciudadDestino.name;
+      this.disabled = true;
+      this.suma();
+      this.disabledButton = true;
+      if (this.id) {
+        if (!this.superSub) if (this.clone.ven_estado == 1) { this._tools.presentToast("Error no puedes ya editar la venta ya esta aprobada"); return false; }
+        this.updates();
+      }
+      else { this.guardar(); }
+    } catch (error) {
+      return this._tools.presentToast("debes agregar la ciudad del cliente");
     }
-    else { this.guardar(); }
   }
 
   guardar() {
@@ -400,6 +412,17 @@ export class FormventasComponent implements OnInit {
       this.submit();
     }, (error) => { console.error(error); this._tools.presentToast("Error de servidor al subir una imagen") });
 
+  }
+
+  generarGuia(){
+    console.log( this.data )
+    const dialogRef = this.dialog.open( FormcrearguiaComponent,{
+      data: { datos: this.data || {} }
+    } );
+
+    dialogRef.afterClosed().subscribe(result => {
+      console.log(`Dialog result: ${result}`);
+    });
   }
 
 

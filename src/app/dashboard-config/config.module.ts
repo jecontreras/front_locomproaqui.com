@@ -53,6 +53,8 @@ import { NgImageSliderModule } from 'ng-image-slider';
 import { NgxImageZoomModule } from 'ngx-image-zoom';
 import { MisDespachoComponent } from './components/mis-despacho/mis-despacho.component';
 import { FormempresaComponent } from './form/formempresa/formempresa.component';
+import {AutocompleteLibModule} from 'angular-ng-autocomplete';
+import { FormcrearguiaComponent } from './form/formcrearguia/formcrearguia.component';
 
 
 @NgModule({
@@ -69,7 +71,8 @@ import { FormempresaComponent } from './form/formempresa/formempresa.component';
     FormventasLiderComponent,
     FormcatalogoComponent,
     ProductosOrdenarComponent,
-    FormempresaComponent
+    FormempresaComponent,
+    FormcrearguiaComponent
   ],
   declarations: [
     MainComponent,
@@ -105,7 +108,8 @@ import { FormempresaComponent } from './form/formempresa/formempresa.component';
     VerProductoProveedorComponent,
     VerProveedorComponent,
     MisDespachoComponent,
-    FormempresaComponent
+    FormempresaComponent,
+    FormcrearguiaComponent
   ],
   imports: [
     CommonModule,
@@ -125,6 +129,7 @@ import { FormempresaComponent } from './form/formempresa/formempresa.component';
     NgxCurrencyModule,
     NgImageSliderModule,
     NgxImageZoomModule,
+    AutocompleteLibModule
   ],
   exports: [
     FormcategoriasComponent,

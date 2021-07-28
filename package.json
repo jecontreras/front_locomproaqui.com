@@ -31,6 +31,7 @@
     "@kolkov/angular-editor": "^1.1.1",
     "@ngrx/store": "^8.6.0",
     "@ngrx/store-devtools": "github:ngrx/store-devtools-builds",
+    "angular-ng-autocomplete": "^2.0.1",
     "@nguniversal/express-engine": "^9.0.1",
     "@types/memory-cache": "^0.2.1",
     "add": "^2.0.6",

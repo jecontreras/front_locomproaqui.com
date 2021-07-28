@@ -22,4 +22,7 @@ export class VentasService {
   delete(query:any){
     return this._model.querys('tblventas/'+query.id, query, 'delete');
   }
+  createFelte(query:any){
+    return this._model.querys('tblventas/createFlete',query, 'post');
+  }
 }
