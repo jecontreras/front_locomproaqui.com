@@ -55,6 +55,7 @@ export class PedidosComponent implements OnInit {
   counts:number = 0;
   disabledBtn:boolean = false;
   dataConfig:any = {};
+  rolname:string;
   
   constructor(
     private _productos: ProductoService,
@@ -76,6 +77,15 @@ export class PedidosComponent implements OnInit {
       this.dataConfig = store.configuracion || {};
       if( this.seartxt != store.buscar && store.buscar ) { 
         this.seartxt = store.buscar;
+      }
+      if( this.dataUser.id ){
+        try {
+          if (this.dataUser.usu_perfil) {
+            this.rolname = this.dataUser.usu_perfil.prf_descripcion;
+          }
+        } catch (error) {
+          this.rolname = "visitante";
+        }
       }
     });
 
@@ -297,9 +307,9 @@ export class PedidosComponent implements OnInit {
       if (cabeza.usu_perfil == 3) cerialNumero = (cabeza.usu_indicativo || '57') + (cabeza.usu_telefono || this._tools.dataConfig.clInformacion );
       else cerialNumero = "57"+ this._tools.dataConfig.clInformacion;
     } else cerialNumero = "57"+ this._tools.dataConfig.clInformacion;
-    if (this.userId.id) this.urlwhat = `https://wa.me/${this.userId.usu_indicativo || 57}${( this.userId.usu_telefono ) || this._tools.dataConfig.clInformacion }?text=Hola Servicio al cliente, como esta, saludo cordial, estoy interesad@ en mas informacion ${obj.pro_nombre} codigo ${obj.pro_codigo} codigo: ${obj.pro_codigo} talla: ${obj.tallasSelect} foto ==> ${obj.foto}`;
+    if ( this.userId.id ) this.urlwhat = `https://wa.me/${this.userId.usu_indicativo || 57}${( this.userId.usu_telefono ) || this._tools.dataConfig.clInformacion }?text=Hola ${ this.userId.usu_usuario }, estoy interesad@ en mas informacion ${obj.pro_nombre} codigo ${obj.pro_codigo} codigo: ${obj.pro_codigo} talla: ${obj.tallasSelect} foto ==> ${obj.foto}`;
     else {
-      this.urlwhat = `https://wa.me/${cerialNumero}?text=Hola Servicio al cliente, como esta, saludo cordial, estoy interesad@ en mas informacion ${obj.pro_nombre} codigo: ${obj.pro_codigo} talla: ${obj.tallasSelect} foto ==> ${obj.foto}`;
+      this.urlwhat = `https://wa.me/${cerialNumero}?text=Hola, estoy interesad@ en mas informacion codigo: ${obj.pro_nombre} talla: ${obj.tallasSelect} foto ==> ${obj.foto}`;
     }
     window.open(this.urlwhat);
   }

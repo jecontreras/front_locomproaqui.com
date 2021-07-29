@@ -67,7 +67,7 @@
                                             <h6 class="titulo1 color1">
                                                 <small style="display: inline-block;  font-size: 90% !important;"
                                                     class="pricesmall currency2" id="pricesmall_25">$ {{ (
-                                                        item.pro_uni_ventaEdit || item.precio_vendedor || item.pro_uni_venta || 0
+                                                        item.pro_uni_ventaEdit || item.pro_uni_venta || 0
                                                     ).toLocaleString(1) }}
                                                 </small><br>
                                             </h6>
@@ -116,7 +116,7 @@
                                         data-original-title=" Hacer pedido"> Hacer pedido</button>
                                 </div>
 
-                                <div class="col-12 paddins1">
+                                <div class="col-12 paddins1" *ngIf="rolname != 'vendedor'">
                                     <img (click)="masInfo(item)" class="pointer" src="./assets/icons/masinformacion.png"
                                         style="width: 100%;">
                                 </div>

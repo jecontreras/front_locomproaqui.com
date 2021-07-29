@@ -119,14 +119,25 @@
                 <li *ngIf="dataUser.id"><span>Valor a pagar de tu cliente: &nbsp;</span> <span>{{ ( data.total || 0 ) | currency:'':true }}</span> </li>
                 <li *ngIf="!dataUser.id"><span>Valor a pagar: &nbsp;</span> <span>{{ ( data.total || 0 ) | currency:'':true }}</span> </li>
                 <li *ngIf="dataUser.id"><span>Tu ganancia en esta venta es: &nbsp;</span> <span>{{ ( data.totalGanancias || 0 ) | currency:'':true }}</span> </li>
+                <li *ngIf="namePorcentaje == 'dropshipping pro'">
+                  <div class="alert alert-danger" role="alert">
+                    <span>Nota: &nbsp;</span> <span>Ten en cuenta que el valor del flete sera descontado de tu ganancia</span>
+                  </div>
+                </li>
               </ul>
+              <div class="col-12">
+
+              </div>
               <div class="d-flex justify-content-between">
                 <div>
-                  <a class="list-group-item list-group-item-action active pointer" (click)="pedidosSubmit()">realizar guía de despacho</a>
+                  <button type="button" class="btn btn-primary" (click)="pedidosSubmit()">
+                    <span *ngIf="dataUser.id">realizar guía de despacho</span>
+                    <span *ngIf="!dataUser.id">Hacer pedido</span>
+                  </button>
                 </div>
                 <div></div>
                 <div>
-                  <a class="list-group-item list-group-item-action active pointer" (click)="sidenav.toggle()">agregar más productos</a>
+                  <button (click)="sidenav.toggle()" type="button" class="btn btn-success">agregar más productos</button>
                 </div>
               </div>
             </div>
