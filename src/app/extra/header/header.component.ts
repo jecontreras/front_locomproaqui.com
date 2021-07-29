@@ -166,7 +166,7 @@ export class HeaderComponent implements OnInit {
       if(res.data.length > this.notificando) this.audioNotificando('./assets/sonidos/notificando.mp3');
       this.notificando = res.data.length;
       this.listNotificaciones = res.data;
-    },(error)=>this._tools.presentToast("error de servidor"));
+    },(error)=>{});
   }
 
   audioNotificando(obj:string){
@@ -559,6 +559,7 @@ export class HeaderComponent implements OnInit {
 
   salir( opt:boolean =  false ){
     localStorage.removeItem('user');
+    localStorage.removeItem('APP');
     let accion = new UserAction( this.dataUser, 'delete');
     this._store.dispatch(accion);
     if( opt == false ){
@@ -574,7 +575,7 @@ export class HeaderComponent implements OnInit {
     {
       let accion = new UserprAction( this.dataUser, 'post' );
       this._store.dispatch(accion);
-      this.router.navigate(['/pedidos/', this.dataUser.id ]);
+      this.router.navigate(['/', this.dataUser.id ]);
       setTimeout( () =>{
         this.salir( true );
       }, 1000 );

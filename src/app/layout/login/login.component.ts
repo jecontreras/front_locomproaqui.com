@@ -33,6 +33,7 @@ export class LoginsComponent implements OnInit {
   submit(){
     if(!this.disableSubmit) return false;
     this.disableSubmit = false;
+    this.borrarCache();
     this._user.login(this.data).subscribe((res:any)=>{
       console.log("user", res);
       this.disableSubmit = true;
@@ -55,6 +56,11 @@ export class LoginsComponent implements OnInit {
 
   registre(){
     
+  }
+
+  borrarCache(){
+    localStorage.removeItem('APP');
+    localStorage.removeItem('user');
   }
 
 }
