@@ -180,7 +180,7 @@ export class PedidosComponent implements OnInit {
   }
 
   getUser() {
-    this._user.get({ where: { id: this.userId } }).subscribe((res: any) => { this.userId = res.data[0]; this.GuardarStoreUser() }, (error) => { console.error(error); this.userId = ''; });
+    this._user.get({ where: { usu_usuario: this.userId } }).subscribe((res: any) => { this.userId = res.data[0]; this.GuardarStoreUser() }, (error) => { console.error(error); this.userId = ''; });
   }
   GuardarStoreUser() {
     let accion = new UserCabezaAction(this.userId, 'post');

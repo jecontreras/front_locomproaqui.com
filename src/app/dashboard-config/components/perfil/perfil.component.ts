@@ -64,8 +64,8 @@ export class PerfilComponent implements OnInit {
   ngOnInit() {
     //this.data = this._model.dataUser || {};
     if(this.data.usu_fec_nacimiento) this.data.usu_fec_nacimiento = moment(this.data.usu_fec_nacimiento).format('DD/MM/YYYY');
-    this.urlTienda+=this.data.id;
-    this.urlRegistro+=this.data.id;
+    this.urlTienda+=this.data.usu_usuario;
+    this.urlRegistro+=this.data.usu_usuario;
     this.getCategorias();
     for( let row of this.listDepartamento ) for( let item of row.ciudades ) this.listCiudad.push( { departamento: row.departamento, ciudad: item });
   }

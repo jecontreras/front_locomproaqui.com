@@ -109,7 +109,7 @@ export class RegistrosComponent implements OnInit {
   }
 
   getCabeza(){
-    this._user.get({where:{ id: this.cabeza }}).subscribe((res:any)=>{ console.log(res); this.dataUser = res.data[0]; this.data.cabeza = this.dataUser.id; }, (error)=>console.error(error) );
+    this._user.get({where:{ usu_usuario: this.cabeza }}).subscribe((res:any)=>{ console.log(res); this.dataUser = res.data[0]; this.data.cabeza = this.dataUser.id; }, (error)=>console.error(error) );
   }
 
   async submit(){

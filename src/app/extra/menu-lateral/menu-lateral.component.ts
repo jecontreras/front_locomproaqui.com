@@ -50,9 +50,9 @@ export class MenuLateralComponent implements OnInit {
   }
   rellenoRedes(){
     if(this.dataUser.id || !this.userId.id) {
-      this.urlFacebook = `https://www.facebook.com/CLICKEAMEVICTORLANDAZURY?fref=search&__tn__=%2Cd%2CP-R&eid=ARBwh7n8hr6OUXCIoOSMGvfyrxPaixr69annbby3aYVJvFo0_NKpHRBDRYhNAdxpF5-prIsBz_6Lsush`;
-      this.urlInstagram = `http://bit.ly/quieroempezaryamismo`;
-      this.urlWhatsapp = `http://bit.ly/grupovende`;
+      this.urlFacebook = `http://bit.ly/NUESTROGRUPOENFACEBOOK`;
+      this.urlInstagram = `http://bit.ly/INSTAGRAMLOKOMPROAQUI`;
+      this.urlWhatsapp = `http://bit.ly/Soportelokomproaqui`;
       this.urlYoutube = `http://bit.ly/YOUTUBEZAFIRO`;
     }else{
       this.urlFacebook = this.userId.url_facebook || "";

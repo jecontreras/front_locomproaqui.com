@@ -28,6 +28,7 @@ export class HeaderComponent implements OnInit {
   showFiller = false;
 
   @ViewChild('nav',{static: false} ) private nav: any
+  @ViewChild('sidenav') sidenav;
 
   public mobileQuery: any;
   breakpoint: number;
@@ -62,6 +63,8 @@ export class HeaderComponent implements OnInit {
   porcentajeUser: number = 0;
   namePorcentaje: string;
   porcentajeMostrar: number = 0;
+  lentcoun:number = 0;
+  booleanoOpen:boolean = false;
 
   constructor(
     public changeDetectorRef: ChangeDetectorRef,
@@ -85,6 +88,13 @@ export class HeaderComponent implements OnInit {
       this.userPr = store.userpr || {};
       if( store.buscar ) { 
         this.seartxt = store.buscar; 
+      }
+      if( this.listCart.length > this.lentcoun && this.booleanoOpen ) {
+        this.opcionoView = 'carro'; 
+        this.opened = !this.opened;
+      }else {
+        this.lentcoun = this.listCart.length;
+        this.booleanoOpen = true;
       }
       //console.log( window.innerWidth )
       this.disabledSearch = window.innerWidth <= 600 ? true : false;
@@ -575,7 +585,7 @@ export class HeaderComponent implements OnInit {
     {
       let accion = new UserprAction( this.dataUser, 'post' );
       this._store.dispatch(accion);
-      this.router.navigate(['/', this.dataUser.id ]);
+      this.router.navigate(['/', this.dataUser.usu_usuario ]);
       setTimeout( () =>{
         this.salir( true );
       }, 1000 );
