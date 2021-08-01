@@ -21,7 +21,7 @@
             <div class="d-flex justify-content-center">
                 <div class="container">
                     <mat-horizontal-stepper [linear]="isLinear" #stepper>
-                        <mat-step>
+                        <mat-step >
                             <ng-template matStepLabel>Primer Paso</ng-template>
                             <div class="form row container">
                                 <div class="form-group col-sm-6 col-12">
@@ -36,22 +36,13 @@
                                 </div>
                                 <div class="form-group col-sm-6 col-12">
                                     <label for="exampleFormControlInput1">como quieres llamar tu tienda virtual</label>
-                                    <input type="text" [(ngModel)]="data.usu_usuario" required
+                                    <input type="text" [(ngModel)]="data.usu_usuario"
                                         class="form-control form-control-sm"
                                         placeholder="Ejemplos ( dayanstore ) ( carolstore )">
                                 </div>
                                 <div class="form-group col-sm-6 col-12">
                                     <label for="exampleFormControlInput1">Subir logotipo de tu tienda</label>
-                                    <div>
-                                        <ngx-dropzone (change)="onSelect($event)">
-                                            <ngx-dropzone-label>Mis archivos</ngx-dropzone-label>
-                                            <ngx-dropzone-image-preview ngProjectAs="ngx-dropzone-preview"
-                                                *ngFor="let f of files" [file]="f" [removable]="true"
-                                                (removed)="onRemove(f)" multiple="false">
-                                                <ngx-dropzone-label>{{ f.name }} ({{ f.type }})</ngx-dropzone-label>
-                                            </ngx-dropzone-image-preview>
-                                        </ngx-dropzone>
-                                    </div>
+                                    <input type="file" required class="form-control form-control-sm" #coverFilesInput (change)="onSelect($event)" accept="image/png, .jpeg, .jpg, image/gif">
                                 </div>
                                 <div class="form-group col-sm-6 col-12">
                                     <label for="exampleFormControlInput1">Indicativo</label>
@@ -63,14 +54,19 @@
                                 </div>
                                 <div class="form-group col-sm-6 col-12">
                                     <label for="exampleFormControlInput1">Celular</label>
-                                    <input type="text" [(ngModel)]="data.usu_telefono" required
+                                    <input type="number" [(ngModel)]="data.usu_telefono" required
                                         class="form-control form-control-sm" placeholder="Ingrese tu Celular">
                                 </div>
-                            </div>
-                            <div class="d-flex flex-row-reverse bd-highlight">
-                                <div class="p-2 bd-highlight">
-                                    <button mat-raised-button color="primary" (click)="subirFile()"
-                                        matStepperNext>Siguiente</button>
+                                <div class="col-12">
+                                    <div class="d-flex justify-content-between">
+                                        <div>
+                                            <!--<button mat-raised-button color="warn" matStepperPrevious>Atras</button>-->
+                                        </div>
+                                        <div></div>
+                                        <div>
+                                            <button mat-raised-button color="primary" (click)="validador( 1, stepper )">Siguiente</button>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                         </mat-step>
@@ -120,11 +116,16 @@
                                         Estoy de acuerdo con los terminos de privacidad
                                     </label>
                                 </div>
-                            </div>
-                            <div class="d-flex flex-row-reverse bd-highlight">
-                                <div class="p-2 bd-highlight">
-                                    <button mat-raised-button color="warn" matStepperPrevious>Atras</button>
-                                    <button mat-raised-button color="primary" matStepperNext>Siguiente</button>
+                                <div class="col-12">
+                                    <div class="d-flex justify-content-between">
+                                        <div>
+                                            <button mat-raised-button color="warn" matStepperPrevious>Atras</button>
+                                        </div>
+                                        <div></div>
+                                        <div>
+                                            <button mat-raised-button color="primary" (click)="validador( 2, stepper )">Siguiente</button>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                         </mat-step>
@@ -177,11 +178,16 @@
                                         {{ item.titulo }} &nbsp;
                                     </mat-checkbox>
                                 </div>
-                            </div>
-                            <div class="d-flex flex-row-reverse bd-highlight">
-                                <div class="p-2 bd-highlight">
-                                    <button mat-raised-button color="warn" matStepperPrevious>Atras</button>
-                                    <button mat-raised-button color="primary" (click)="submit()">Registrarse</button>
+                                <div class="col-12">
+                                    <div class="d-flex justify-content-between">
+                                        <div>
+                                            <button mat-raised-button color="warn" matStepperPrevious>Atras</button>
+                                        </div>
+                                        <div></div>
+                                        <div>
+                                            <button mat-raised-button color="primary" (click)="validador( 3, stepper )">Siguiente</button>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                         </mat-step>

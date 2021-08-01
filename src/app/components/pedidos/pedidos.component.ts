@@ -120,8 +120,9 @@ export class PedidosComponent implements OnInit {
     item.base64 = await this._catalago.FormatoBase64( item.foto );
     await this._tools.descargarFoto( item.base64 );
     try {
-      let lista:any = item.listaGaleria;
+      let lista:any = item.listaGaleria || [];
       lista.push(..._.map( item.listColor, ( row:any )=> { return { foto: row.foto, id: row.id }; } ) );
+      //console.log( lista );
       if( lista ){
         for( let row of lista ){
           this._tools.ProcessTime( { title: "Descargando..." } );
@@ -131,6 +132,7 @@ export class PedidosComponent implements OnInit {
       }
       this.disabledBtn = false;
     } catch (error) {
+      //console.log(error)
       this.disabledBtn = false;
     }
   }
@@ -237,7 +239,16 @@ export class PedidosComponent implements OnInit {
       this.loader = false;
       this.counts = res.count;
       this.spinner.hide();
-      this.listProductos = _.unionBy(this.listProductos || [], res.data, 'id');
+      this.listProductos = _.unionBy( this.listProductos || [], res.data, 'id' );
+      /*for( let row of this.listProductos ){
+        if( !row.listColor22 ) row.listColor = [];
+        let lleno = []
+        for( let key of row.listColor ) {
+          console.log(":::", key)
+          lleno.push( ... key.tallaSelect || [] );
+        }
+        row.listColor22 = _.unionBy( row.listColor || [], lleno, 'tal_descripcion');
+      }*/
 
       if (res.data.length === 0) {
         this.notEmptyPost = false;

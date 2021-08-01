@@ -102,6 +102,7 @@ export class ViewProductosComponent implements OnInit {
       });
       console.log(this.data);
       if( this.data.listColor ) if( this.data.listColor.length ) this.data.listColor = this.data.listColor.filter(( item:any )=> {
+        if( !item.tallaSelect ) item.tallaSelect = [];
         item.tallaSelect = item.tallaSelect.filter(( row:any ) => Number( row.cantidad ) > 0 );
         if( item.galeriaList ) this.galeria.push( ... item.galeriaList );
         return true;
