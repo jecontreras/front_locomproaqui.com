@@ -48,7 +48,7 @@
             </a>
           </div>
           <div *ngIf="dataUser.id" style="margin-right: 4%;" class="buscadorOcultar">
-            <a class="text-white">
+            <a class="text-white" routerLink="/config/cobros">
               $ {{ ( ( dataInfo?.porcobrado ) || 0 ).toLocaleString(1) }} COP
             </a>
           </div>
@@ -137,7 +137,7 @@
                 </div>
                 <div></div>
                 <div>
-                  <button (click)="sidenav.toggle()" type="button" class="btn btn-success">agregar más productos</button>
+                  <button (click)="sidenav.toggle()" type="button" class="btn btn-success" routerLink="/pedidos">agregar más productos</button>
                 </div>
               </div>
             </div>

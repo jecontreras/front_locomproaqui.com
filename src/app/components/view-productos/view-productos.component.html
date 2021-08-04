@@ -70,7 +70,7 @@
                             </option>
                         </select>
                     </div>
-                    <div class="col-6 col-sm-4" *ngIf="data.listTallas">
+                    <div class="col-6 col-sm-4" *ngIf="data.listTallas && disabledSelect">
                         <label for="exampleFormControlSelect1">Tallas disponibles:</label>
                         <select class="form-control form-control-sm" [(ngModel)]="data.tallas"
                             (change)="seleccionTalla()" [disabled]="!data.color">

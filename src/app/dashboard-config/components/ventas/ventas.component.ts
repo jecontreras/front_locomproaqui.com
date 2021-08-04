@@ -277,4 +277,8 @@ export class VentasComponent implements OnInit {
     window.open( foto );
   }
 
+  verDetalles( url:string ){
+    window.open( "https://enviosrrapidoscom.web.app/portada/guiadetalles/" + url )
+  }
+
 }

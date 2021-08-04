@@ -107,6 +107,9 @@
                         <button (click)="crear(row)" class="btn btn-primary btn-just-icon btn-round">
                           <i class="material-icons">remove_red_eye</i>
                         </button>
+                        <button (click)="verDetalles( row.ven_numero_guia )" class="btn btn-primary btn-just-icon btn-round">
+                          Estado Guia
+                        </button>
                         <button (click)="delete(row, idx)" class="btn btn-danger btn-just-icon btn-round">
                           <i class="material-icons">delete_forever</i>
                         </button>
@@ -121,7 +124,7 @@
                       <td>{{ row['ven_nombre_cliente'] }}</td>
                       <td>
                         <span>
-                          {{ row['ven_telefono_cliente'] }} <img src="./assets/icons/whatsapp.png" class="pointer" style="width: 35px;" (click)="openUrl( row['ven_telefono_cliente'], row['ven_nombre_cliente'] )">
+                          {{ row['ven_telefono_cliente'] }} <img src="./assets/img/what.jpg" class="pointer" style="width: 35px;" (click)="openUrl( row['ven_telefono_cliente'], row['ven_nombre_cliente'] )">
                         </span>
                       </td>
                       <td>{{ row['createdAt'] | date:'medium' }}</td>

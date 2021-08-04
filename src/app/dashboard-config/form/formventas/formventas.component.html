@@ -21,8 +21,11 @@
             <label for="exampleFormControlInput1">número de Rastreo de guía</label>
             <input type="text" [(ngModel)]="data.ven_numero_guia" class="form-control form-control-sm">
         </div>
-        <div class="form-group col-md-6 col-sm-4 col-lg-4 col-xs-6" *ngIf="data.id && superSub">
+        <div class="form-group col-md-6 col-sm-4 col-lg-4 col-xs-6" *ngIf="data.id && superSub && !data.ven_imagen_guia">
             <button type="button" class="btn btn-success" (click)="generarGuia()">Generar Guia</button>
+        </div>
+        <div class="form-group col-md-6 col-sm-4 col-lg-4 col-xs-6" *ngIf="data.id && superSub && data.ven_imagen_guia">
+            <button type="button" class="btn btn-warning" (click)="imprimirGuia()">Imprimir Guia </button>
         </div>
         <div class="form-group col-md-12" *ngIf="data.ven_imagen_producto && id">
             <div class="mx-auto" style="width: 200px;">
@@ -138,14 +141,19 @@
             <label for="exampleFormControlInput1" class="text-success">Recompensa: </label> &nbsp;
             <span>$ {{ ( data.ven_ganancias || 0 ).toLocaleString(1) }} COP</span>
         </div>
-        <div class="form-group col-md-6 col-sm-4 col-lg-4 col-xs-6" *ngIf="data.id && superSub && data.ven_imagen_guia">
-            <div class="mx-auto" style="width: 200px;">
+        <div class="form-group col-12" *ngIf="data.id && superSub && data.ven_imagen_guia">
+            <button type="button" class="btn btn-warning" (click)="imprimirGuia()">Imprimir Guia </button>
+            <iframe style="width: 100%; height: -webkit-fill-available;" [src]="url" frameborder="0" width="1499"
+                height="561" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
+                allowfullscreen>
+            </iframe>
+            <!--<div class="mx-auto" style="width: 200px;">
                 <a [href]="data.ven_imagen_guia" target="_blank">
                     <img [src]="data.ven_imagen_guia" class="imgFoto">
                 </a>
-            </div>
+            </div>-->
         </div>
-        <div class="form-group col-md-6 col-sm-4 col-lg-4 col-xs-6" *ngIf="data.id && superSub && data.ven_estado == 3">
+        <!--<div class="form-group col-md-6 col-sm-4 col-lg-4 col-xs-6" *ngIf="data.id && superSub && data.ven_estado == 3">
             <div class="row">
                 <div class="col"></div>
                 <button class="btn btn-primary btn-just-icon btn-round" (click)="subirFileGuias()"
@@ -160,7 +168,7 @@
                     <ngx-dropzone-label>{{ f.name }} ({{ f.type }})</ngx-dropzone-label>
                 </ngx-dropzone-image-preview>
             </ngx-dropzone>
-        </div>
+        </div>-->
         <div class="form-group col-12">
             <label for="exampleFormControlInput1">Observación</label>
             <textarea class="form-control" [(ngModel)]="data.ven_observacion" id="exampleFormControlTextarea1"

@@ -56,6 +56,8 @@ export class FormventasComponent implements OnInit {
   rolUser:string;
   listCiudades:any = DANEGROUP;
   keyword = 'city';
+  // url de la publicidad
+  url: any;
 
   constructor(
     public dialog: MatDialog,
@@ -105,6 +107,7 @@ export class FormventasComponent implements OnInit {
       if (this.data.pro_clave_int) this.data.pro_clave_int = this.data.pro_clave_int.id;
       if (this.data.ven_tipo == "WHATSAPP") { if (!this.data.ven_imagen_producto) this.data.ven_imagen_producto = "./assets/noimagen.jpg"; this.data.ven_tipo = "whatsapp"; }
       if (this.data.ven_tipo == "CARRITO") { this.data.ven_tipo = "carrito"; }
+      if( this.data.ven_imagen_guia ) this.viewRotulo( this.data.ven_imagen_guia );
       this.getArticulos();
     } else {
       this.id = "";
@@ -422,7 +425,20 @@ export class FormventasComponent implements OnInit {
 
     dialogRef.afterClosed().subscribe(result => {
       console.log(`Dialog result: ${result}`);
+      if( !result ) return false;
+      this.data.ven_numero_guia = result.nRemesa;
+      this.data.ven_imagen_guia = result.urlRotulos;
+      this.viewRotulo( this.data.ven_imagen_guia );
+      this.updates();
     });
+  }
+
+  viewRotulo( urlRotulos ){
+    this.url = this._tools.seguridadIfrane( urlRotulos );
+  }
+
+  imprimirGuia(){
+    window.open( this.data.ven_imagen_guia );
   }
 
 

@@ -4,7 +4,7 @@ import { ToolsService } from 'src/app/services/tools.service';
 import { Router, ActivatedRoute } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { STORAGES } from 'src/app/interfaces/sotarage';
-import { UserAction, TokenAction } from 'src/app/redux/app.actions';
+import { UserAction, TokenAction, UserCabezaAction } from 'src/app/redux/app.actions';
 import { AuthService } from 'src/app/services/auth.service';
 import { MatDialog } from '@angular/material';
 import { TerminosComponent } from '../terminos/terminos.component';
@@ -78,8 +78,8 @@ export class RegistrosComponent implements OnInit {
 
   onSelect(event: any) {
     //console.log(event, event.target.files);
-    this.files = [event.target.files];
-    let image: any = event.target.files[0];
+    this.files = [event.target.files[0]];
+    /*let image: any = event.target.files[0];
     let fr = new FileReader();
     fr.onload = () => { // when file has loaded
       var img = new Image();
@@ -87,7 +87,7 @@ export class RegistrosComponent implements OnInit {
         console.log( img.width,img.height )
       };
     };
-    fr.readAsDataURL(image);
+    fr.readAsDataURL(image);*/
 }
 
 onRemove(event) {
@@ -96,16 +96,20 @@ onRemove(event) {
 }
 
 subirFile(){
-  let form: any = new FormData();
-  this.disabledFile = true;
-  if (!this.files[0]) return false;
-  form.append('file', this.files[0]);
-  this._tools.ProcessTime({ title: "Cargando..." });
-  this._archivos.create(form).subscribe((res: any) => {
-    console.log(res);
-    this.data.usu_imagen = res.files; //URL+`/${res}`;
-    this.files = [];
-  }, (error) => { console.error(error); this._tools.presentToast("Error de servidor") });
+  console.log( this.files )
+  return new Promise( resolve =>{
+    let form: any = new FormData();
+    this.disabledFile = true;
+    if (!this.files[0]) return false;
+    form.append('file', this.files[0]);
+    this._tools.ProcessTime({ title: "Cargando..." });
+    this._archivos.create(form).subscribe((res: any) => {
+      console.log(res);
+      this.data.usu_imagen = res.files; //URL+`/${res}`;
+      this.files = [];
+      resolve( true );
+    }, (error) => { console.error(error); this._tools.presentToast("Error de servidor subida de imagen"); resolve( false ); this.disabledFile = false; });
+  });
 
 }
 
@@ -121,7 +125,24 @@ validadorEmail(email: string){
 }
 
 getCabeza(){
-  this._user.get({ where: { or: [ { usu_usuario: { contains: this.cabeza }, id: { contains: this.cabeza }  }] } }).subscribe((res: any) => { console.log(res); this.dataUser = res.data[0]; this.data.cabeza = this.dataUser.id; }, (error) => console.error(error));
+  this._user.get({ where: { 
+    usu_usuario: this.cabeza } 
+  }).subscribe((res: any) => { 
+    this.dataUser = res.data[0]; 
+    if( !this.dataUser ) this.dataUser = {
+      usu_nombre: "ejemplo1",
+      usu_usuario: "Tienda",
+      id: 75,
+      codigo: "UVOQA"
+    };
+    this.GuardarStoreUser();
+    this.data.cabeza = this.dataUser.id; 
+  }, (error) => console.error(error));
+}
+
+GuardarStoreUser() {
+  let accion = new UserCabezaAction( this.dataUser, 'post' );
+  this._store.dispatch(accion);
 }
 
 async submit(){
@@ -140,6 +161,8 @@ async submit(){
       this._store.dispatch(accion);
       this._router.navigate(['/pedidos']);
       this._tools.basicIcons({ header: "Hola Bienvenido!", subheader: `Hola ${res.data.usu_nombre} Que tengas un buen dia` });
+      accion = new UserCabezaAction( this.dataUser, 'drop' );
+      this._store.dispatch(accion);
       setTimeout(() => {
         location.reload();
       }, 3000);
@@ -184,16 +207,17 @@ selectTable(item){
   console.log(item);
 }
 
-validador( opt:number, stepper: MatStepper ){
+async validador( opt:number, stepper: MatStepper ){
   console.log( stepper, this.disabledFile  )
   if( opt == 1 ){
+    if( !this.disabledFile ) await this.subirFile();
     if (!this.data.usu_nombre) { this._tools.tooast({ title: "Error falta el nombre", icon: "error" }); return false; }
     if (!this.data.usu_apellido) { this._tools.tooast({ title: "Error falta el Apellido", icon: "error" }); return false; }
     if (!this.data.usu_indicativo) { this._tools.tooast({ title: "Error falta el Indicativo", icon: "error" }); return false; }
     if (!this.data.usu_telefono) { this._tools.tooast({ title: "Error falta el Telefono", icon: "error" }); return false; }
     if (!this.data.usu_usuario) { this._tools.tooast({ title: "Error falta Tu Nombre de tienda", icon: "error" }); return false; }
+    if (!this.data.usu_imagen) { this._tools.tooast({ title: "Error falta Tu Logo de tienda", icon: "error" }); return false; }
     stepper.next();
-    if( !this.disabledFile ) this.subirFile();
   }
   if( opt == 2 ){
     if (!this.data.usu_ciudad) { this._tools.tooast({ title: "Error falta la Ciudad", icon: "error" }); return false; }

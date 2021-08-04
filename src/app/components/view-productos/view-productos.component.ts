@@ -45,6 +45,7 @@ export class ViewProductosComponent implements OnInit {
   opcionCurrencys:any = {};
   porcentajeMostrar:number = 10;
   porcentajeUser: number = 0;
+  disabledSelect:boolean = true;
   
   constructor(
     public dialogRef: MatDialogRef<ViewProductosComponent>,
@@ -83,6 +84,7 @@ export class ViewProductosComponent implements OnInit {
       console.log(this.datas)
     }
     this.procesoNext();
+    try { if( this.data.pro_categoria.cat_nombre != "CALZADO" ) this.disabledSelect = false; } catch (error) { this.disabledSelect = true; }
 
     /*setTimeout(()=>{ 
       try {
@@ -100,7 +102,6 @@ export class ViewProductosComponent implements OnInit {
         id: this._tools.codigo(),
         foto: this.data.foto
       });
-      console.log(this.data);
       if( this.data.listColor ) if( this.data.listColor.length ) this.data.listColor = this.data.listColor.filter(( item:any )=> {
         if( !item.tallaSelect ) item.tallaSelect = [];
         item.tallaSelect = item.tallaSelect.filter(( row:any ) => Number( row.cantidad ) > 0 );
@@ -153,7 +154,12 @@ export class ViewProductosComponent implements OnInit {
 
   async AgregarCart( opt:any ){
     if(  this.seleccionnTalla.cantidad < this.data.cantidadAdquirir ) return this._tools.tooast({ title: "Lo sentimos en estos momento no tenemos en stock", icon: "warning" });
-    if (!this.data.tallas) return this._tools.tooast({ title: "Por Favor debes seleccionar una talla", icon: "warning" });
+    if (!this.data.tallas) {
+      try {
+        if( this.data.pro_categoria.cat_nombre == "CALZADO" ) return this._tools.tooast({ title: "Por Favor debes seleccionar una talla", icon: "warning" });
+        else this.data.tallas = "default"; 
+      } catch (error) { return this._tools.tooast({ title: "Por Favor debes seleccionar una talla", icon: "warning" }); }
+    }
     let color = '';
     let cantidad = this.data.cantidadAdquirir || 1;
     let precio = this.data.precio_vendedor || this.data.pro_uni_venta;

@@ -4,6 +4,7 @@ import Swal from 'sweetalert2'
 import * as _ from 'lodash';
 import { CART } from '../interfaces/sotarage';
 import { Store } from '@ngrx/store';
+import { DomSanitizer } from '@angular/platform-browser';
 
 @Injectable({
   providedIn: 'root'
@@ -19,6 +20,7 @@ export class ToolsService {
   constructor(
     private snackBar: MatSnackBar,
     private _store: Store<CART>,
+    public sanitizer: DomSanitizer
   ) {
     this._store.subscribe((store: any) => {
       store = store.name;
@@ -235,6 +237,10 @@ export class ToolsService {
     }
     separados = separados.filter((row: any) => row != "");
     return '$' + separados.join(".") + ' COP'; //+ ',' + inputNum[1];
+  }
+
+  seguridadIfrane( url:string ){
+    return this.sanitizer.bypassSecurityTrustResourceUrl( url );
   }
 
 
