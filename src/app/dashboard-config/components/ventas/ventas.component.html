@@ -107,7 +107,7 @@
                         <button (click)="crear(row)" class="btn btn-primary btn-just-icon btn-round">
                           <i class="material-icons">remove_red_eye</i>
                         </button>
-                        <button (click)="verDetalles( row.ven_numero_guia )" class="btn btn-primary btn-just-icon btn-round">
+                        <button *ngIf="row['ven_numero_guia']" (click)="verDetalles( row['ven_numero_guia'] )" class="btn btn-primary btn-just-icon btn-round">
                           Estado Guia
                         </button>
                         <button (click)="delete(row, idx)" class="btn btn-danger btn-just-icon btn-round">

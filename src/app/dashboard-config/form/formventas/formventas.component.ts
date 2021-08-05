@@ -133,7 +133,7 @@ export class FormventasComponent implements OnInit {
           demas: item
         };
       });
-      this.suma();
+      //this.suma();
     }, (error) => { console.error(error); this._tools.presentToast("Error de servidor"); this.listCarrito = []; });
   }
 
@@ -218,16 +218,17 @@ export class FormventasComponent implements OnInit {
 
   submit() {
     try {
-      this.data.codeCiudad = this.data.ciudadDestino.code;
-      this.data.ciudadDestino = this.data.ciudadDestino.name;
+      if( this.data.ciudadDestino.code ){
+        this.data.codeCiudad = this.data.ciudadDestino.code;
+        this.data.ciudadDestino = this.data.ciudadDestino.name;
+      }
       this.disabled = true;
-      this.suma();
       this.disabledButton = true;
       if (this.id) {
         if (!this.superSub) if (this.clone.ven_estado == 1) { this._tools.presentToast("Error no puedes ya editar la venta ya esta aprobada"); return false; }
         this.updates();
       }
-      else { this.guardar(); }
+      else { this.suma(); this.guardar(); }
     } catch (error) {
       return this._tools.presentToast("debes agregar la ciudad del cliente");
     }
@@ -364,7 +365,8 @@ export class FormventasComponent implements OnInit {
   }
 
   updates() {
-    this.data = _.omit(this.data, ['usu_clave_int']);
+    this.data = _.omit(this.data, ['usu_clave_int','ven_ganancias','ven_total']);
+    if( this.superSub == false ) this.data = _.omit(this.data, ['usu_clave_int','ven_ganancias','ven_total','ven_estado']);
     this.data = _.omitBy(this.data, _.isNull);
     this._ventas.update(this.data).subscribe((res: any) => {
       this._tools.presentToast("Actualizado");

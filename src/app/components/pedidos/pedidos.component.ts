@@ -56,7 +56,10 @@ export class PedidosComponent implements OnInit {
   disabledBtn:boolean = false;
   dataConfig:any = {};
   rolname:string;
-  
+  filtro:any = {};
+  listTallas:any = [];
+  disabledFiltro:boolean = false;
+
   constructor(
     private _productos: ProductoService,
     private _store: Store<CART>,
@@ -251,6 +254,7 @@ export class PedidosComponent implements OnInit {
       this.counts = res.count;
       this.spinner.hide();
       this.listProductos = _.unionBy( this.listProductos || [], res.data, 'id' );
+      this.listTallas = this.listProductos[0].listaTallas;
       /*for( let row of this.listProductos ){
         if( !row.listColor22 ) row.listColor = [];
         let lleno = []
@@ -431,6 +435,37 @@ export class PedidosComponent implements OnInit {
 
   codigo() {
     return (Date.now().toString(20).substr(2, 3) + Math.random().toString(20).substr(2, 3)).toUpperCase();
+  }
+
+  buscarExpert(){
+    this.query = {
+      where: {
+        pro_activo: 0,
+        pro_mp_venta: 0,
+      },
+      filtro: this.filtro,
+      page: 0,
+      limit: 18
+    };
+    this.loader = true;
+    this.listProductos = [];
+    this.notscrolly = true;
+    this.cargarProductos();
+  }
+
+  buscarLimpiar(){
+    this.query = {
+      where: {
+        pro_activo: 0,
+        pro_mp_venta: 0
+      },
+      page: 0,
+      limit: 18
+    };
+    this.loader = true;
+    this.listProductos = [];
+    this.notscrolly = true;
+    this.cargarProductos();
   }
 
 }
