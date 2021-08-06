@@ -36,6 +36,7 @@ export class LoginComponent implements OnInit {
   submit(){
     if(!this.disableSubmit) return false;
     this.disableSubmit = false;
+    this.borrarCache();
     this._user.login(this.data).subscribe((res:any)=>{
       console.log("user", res);
       this.disableSubmit = true;
@@ -79,6 +80,11 @@ export class LoginComponent implements OnInit {
       console.log( error); 
       let errors = error.error.data || "";
       this._tools.tooast( { title: "Tenemos problemas con el restablecimiento de la contraseña "+ errors, icon: "error", timer: 5000 } ); this.disabled = false; } );
+  }
+
+  borrarCache(){
+    localStorage.removeItem('APP');
+    localStorage.removeItem('user');
   }
 
 }

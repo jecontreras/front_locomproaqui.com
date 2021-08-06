@@ -19,6 +19,7 @@ const routes: Routes = [
       { path: 'productos/:id', component: ProductoViewComponent },
       { path: 'testimonio', component: TestimoniosComponent },
       { path: 'login', component: LoginsComponent },
+      { path: 'login/:id', component: LoginsComponent },
       { path: 'registro', component: RegistrosComponent },
       { path: 'registro/:id', component: RegistrosComponent },
     ]

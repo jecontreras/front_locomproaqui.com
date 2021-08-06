@@ -131,7 +131,7 @@ getCabeza(){
     this.dataUser = res.data[0]; 
     if( !this.dataUser ) this.dataUser = {
       usu_nombre: "ejemplo1",
-      usu_usuario: "Tienda",
+      usu_usuario: "LOKOMPROAQUI",
       id: 75,
       codigo: "UVOQA"
     };

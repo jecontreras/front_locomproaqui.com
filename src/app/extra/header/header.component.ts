@@ -568,14 +568,16 @@ export class HeaderComponent implements OnInit {
 
   salir( opt:boolean =  false ){
     localStorage.removeItem('user');
-    localStorage.removeItem('APP');
     let accion = new UserAction( this.dataUser, 'delete');
     this._store.dispatch(accion);
     if( opt == false ){
       accion = new UserCabezaAction( {} , 'drop' );
       this._store.dispatch(accion);
+      accion = new UserprAction( {} , 'drop' );
+      this._store.dispatch(accion);
+      localStorage.removeItem('APP');
     }
-    location.reload();
+    setTimeout( () => location.reload(), 2000 );
   }
 
   openTienda( opt:string ){

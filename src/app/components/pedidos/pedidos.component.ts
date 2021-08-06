@@ -191,7 +191,7 @@ export class PedidosComponent implements OnInit {
       this.userId = res.data[0]; 
       if( !this.userId ) this.userId = {
         usu_nombre: "Tienda",
-        usu_usuario: "Tienda",
+        usu_usuario: "LOKOMPROAQUI",
         id: 75,
         codigo: "UVOQA"
       }
