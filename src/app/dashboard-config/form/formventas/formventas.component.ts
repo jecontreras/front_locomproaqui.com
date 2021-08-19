@@ -365,10 +365,11 @@ export class FormventasComponent implements OnInit {
   }
 
   updates() {
-    this.data = _.omit(this.data, ['usu_clave_int','ven_ganancias','ven_total']);
-    if( this.superSub == false ) this.data = _.omit(this.data, ['usu_clave_int','ven_ganancias','ven_total','ven_estado']);
-    this.data = _.omitBy(this.data, _.isNull);
-    this._ventas.update(this.data).subscribe((res: any) => {
+    let data = _.clone( this.data );
+    data = _.omit( data, ['usu_clave_int','ven_ganancias','ven_total']);
+    if( this.superSub == false ) data = _.omit( data, ['usu_clave_int','ven_ganancias','ven_total','ven_estado']);
+    data = _.omitBy(data, _.isNull);
+    this._ventas.update( data ).subscribe((res: any) => {
       this._tools.presentToast("Actualizado");
       this.disabledButton = false;
       this.disabled = false;

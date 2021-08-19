@@ -46,6 +46,8 @@ export class ViewProductosComponent implements OnInit {
   porcentajeMostrar:number = 10;
   porcentajeUser: number = 0;
   disabledSelect:boolean = true;
+
+  gananciaEstimada:any = 0;
   
   constructor(
     public dialogRef: MatDialogRef<ViewProductosComponent>,
@@ -81,7 +83,8 @@ export class ViewProductosComponent implements OnInit {
       this.data.cantidadAdquirir = 1;
       this.urlFoto = this.data.foto;
       this.data.encuanto = this.data.pro_uni_venta;
-      console.log(this.datas)
+      console.log(this.datas, this.porcentajeMostrar)
+      this.gananciaEstimada = this._tools.monedaChange(3,2,( Number( this.data.pro_uni_venta * this.porcentajeMostrar ) ) / 100);
     }
     this.procesoNext();
     try { if( this.data.pro_categoria.cat_nombre != "CALZADO" ) this.disabledSelect = false; } catch (error) { this.disabledSelect = true; }

@@ -49,7 +49,7 @@
                             <div>
                                 <h3 class="precios" *ngIf="dataUser.id">Precio Sugerido: {{ _tools.monedaChange( 3, 2, data.pro_uni_venta ) }}</h3>
                                 <h3 class="precios" *ngIf="!dataUser.id">Precio: {{ _tools.monedaChange( 3, 2, data.pro_uni_venta ) }}</h3>
-                                <!--<span *ngIf="data.precio_vendedor" class="precios">Ganas el {{ porcentajeMostrar }} %</span>-->
+                                <span *ngIf="!data.precio_vendedor && dataUser.id" class="precios">Ganas el {{ porcentajeMostrar }} % : &nbsp; {{ gananciaEstimada }}</span>
                             </div>
                         </div>
                     </div>

@@ -547,6 +547,16 @@ export class HeaderComponent implements OnInit {
     this._notificaciones.get( { where: { user: this.dataUser.id, tipoDe: [ 1, 2 ], view: false }}).subscribe(( res:any ) =>{
       res = res.data;
       this.listAlert = res;
+      if( this.namePorcentaje == "dropshipping básico"){
+        this.listAlert.unshift(
+          {
+            id: this._tools.codigo(),
+            titulo: "Importante",
+            descripcion: "Cuenta de Ganancias de Ventas por porcentaje "+ this.dataUser.porcentaje + "%",
+            tipoDe: 2
+          }
+        );
+      }
     });
   }
 
@@ -563,7 +573,8 @@ export class HeaderComponent implements OnInit {
   }
 
   closeAlert( item ){
-    this.listAlert = this.listAlert.find( ( row:any ) => row.id !== item.id );
+    this.listAlert = this.listAlert.filter( ( row:any ) => row.id !== item.id ) || [];
+    console.log(this.listAlert)
   }
 
   salir( opt:boolean =  false ){
