@@ -2,8 +2,9 @@ import { Component, Inject, OnInit } from '@angular/core';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { VentasService } from 'src/app/servicesComponents/ventas.service';
 import * as _ from 'lodash';
-import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
+import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
 import { ToolsService } from 'src/app/services/tools.service';
+import { FormventasComponent } from '../formventas/formventas.component';
 
 declare interface DataTable {
   headerRow: string[];
@@ -30,7 +31,7 @@ export class FormlistventasComponent implements OnInit {
     page: 0,
     limit: 100
   };
-  Header:any = [ 'Vendedor','Nombre Cliente','Teléfono Cliente','Pagado' , 'valor flete', 'Fecha Venta', 'Estado','Ganancia', 'Numero Guia', 'Evidencia' ];
+  Header:any = [ 'Opciones', 'Vendedor','Nombre Cliente','Teléfono Cliente','Pagado' , 'valor flete', 'Fecha Venta', 'Estado','Ganancia', 'Numero Guia', 'Evidencia' ];
   $:any;
   
   notscrolly:boolean=true;
@@ -43,7 +44,8 @@ export class FormlistventasComponent implements OnInit {
     private spinner: NgxSpinnerService,
     public dialogRef: MatDialogRef<FormlistventasComponent>,
     @Inject(MAT_DIALOG_DATA) public datas: any,
-    public _tools: ToolsService
+    public _tools: ToolsService,
+    public dialog: MatDialog
   ) { }
 
   ngOnInit(): void {
@@ -94,6 +96,15 @@ export class FormlistventasComponent implements OnInit {
 
   openEvidencia( url:string ){
     window.open( url )
+  }
+
+  crear(obj:any){
+    const dialogRef = this.dialog.open(FormventasComponent,{
+      data: {datos: obj || {}}
+    });
+    dialogRef.afterClosed().subscribe( async ( result ) => {
+      console.log(`Dialog result: ${result}`);
+    });
   }
 
 }

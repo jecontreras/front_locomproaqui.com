@@ -43,7 +43,7 @@ export class VentasComponent implements OnInit {
     page: 0,
     limit: 10
   };
-  Header:any = [ 'Acciones','Tipo Venta','Vendedor','Nombre Cliente','Teléfono Cliente','Fecha Venta','Estado', 'Pagado', 'Ganancia', 'Motivo Rechazo' ];
+  Header:any = [ 'Acciones','Tipo Venta','Vendedor','Nombre Cliente','Teléfono Cliente','Ganancia Vendedor', 'Valor de flete', 'Fecha Venta','Estado', 'Pagado', 'Ganancia'];
   $:any;
   public datoBusqueda = '';
 

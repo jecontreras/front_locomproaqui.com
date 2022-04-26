@@ -228,6 +228,7 @@ export class FormventasComponent implements OnInit {
     this.data.ven_totalDistribuidor = total;
     this.data.ven_total = total1;
     if ( this.namePorcentaje == "dropshipping básico" ) this.data.ven_ganancias = (total * ( this.dataUser.porcentaje || 10 ) / 100 );
+    else this.data.ven_ganancias = this.data.ven_ganancias - ( this.data.fleteValor || 0 ) ;
   }
 
   async submit() {
@@ -524,6 +525,7 @@ export class FormventasComponent implements OnInit {
       this._ventas.getFleteValor( data ).subscribe(( res:any )=>{
         console.log( "****", res )
         this.data.fleteValor = res.data.flteTotal;
+        this.suma();
         resolve( true );
       },()=>resolve( false ));
     });
