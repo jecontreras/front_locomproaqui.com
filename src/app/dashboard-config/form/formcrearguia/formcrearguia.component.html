@@ -3,16 +3,20 @@
     <div class="form row">
         <div class="form-group col-4">
             <label for="exampleFormControlInput1">Valor Mercancia</label>
-            <input type="text" [(ngModel)]="data.valorMercancia" class="form-control form-control-sm">
+            <input currencyMask [(ngModel)]="data.valorMercancia" class="form-control form-control-sm" [options]="opcionCurrencys"/>
+        </div>
+        <div class="form-group col-4">
+            <label for="exampleFormControlInput1">Valor a segurar</label>
+            <input currencyMask [(ngModel)]="data.valorAsegurado" class="form-control form-control-sm" [options]="opcionCurrencys"/>
         </div>
         <div class="form-group col-4">
             <label for="exampleFormControlInput1">Fecha</label>
             <input type="date" [(ngModel)]="data.fecha" class="form-control form-control-sm">
         </div>
-        <div class="form-group col-4">
+        <!--<div class="form-group col-4">
             <label for="exampleFormControlInput1">Numero Unidad</label>
             <input type="number" [(ngModel)]="data.numeroUnidad" class="form-control form-control-sm">
-        </div>
+        </div>-->
         <div class="form-group col-4">
             <label for="exampleFormControlInput1">Peso Real</label>
             <input type="number" [(ngModel)]="data.pesoReal" class="form-control form-control-sm">
@@ -32,6 +36,10 @@
         <div class="form-group col-4">
             <label for="exampleFormControlInput1">Ancho</label>
             <input type="number" [(ngModel)]="data.ancho" class="form-control form-control-sm">
+        </div>
+        <div class="form-group col-12">
+            <label for="exampleFormControlInput1">Descripcion</label>
+            <textarea class="form-control" [(ngModel)]="textData" rows="6"></textarea>
         </div>
     </div>
 </mat-dialog-content>

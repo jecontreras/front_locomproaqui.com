@@ -13,6 +13,10 @@ export class UsuariosService {
   get(query:any){
     return this._model.querys('tblusuario/querys',query, 'post');
   }
+  
+  getOn(query:any){
+    return this._model.querys('tblusuario/querysOn',query, 'post');
+  }
 
   recuperacion(query:any){
     return this._model.querys('tblusuario/resetiar',query, 'post');
@@ -66,5 +70,8 @@ export class UsuariosService {
   }
   getPerfiles(query:any){
     return this._model.querys('tblcategoriaperfil/querys',query, 'post');
+  }
+  olvidoPass(query:any){
+    return this._model.querys('tblusuario/olvidopass',query, 'post');
   }
 }

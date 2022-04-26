@@ -58,6 +58,7 @@ export class FormventasComponent implements OnInit {
   keyword = 'city';
   // url de la publicidad
   url: any;
+  textData:string;
 
   constructor(
     public dialog: MatDialog,
@@ -77,7 +78,12 @@ export class FormventasComponent implements OnInit {
       store = store.name;
       if (!store) return false;
       this.dataUser = store.user || {};
-      if (!this.id) this.listCarrito = store.cart || [];
+      if (!this.id) this.listCarrito = _.map( store.cart, ( key:any )=>{
+        return {
+          colorSelect: key.color,
+           ... key
+        }
+      }) || [];
       if (this.dataUser.usu_perfil.prf_descripcion == 'administrador' || this.dataUser.usu_perfil.prf_descripcion == 'subAdministrador') this.superSub = true;
       else this.superSub = false;
       try {
@@ -101,6 +107,7 @@ export class FormventasComponent implements OnInit {
     if (Object.keys(this.datas.datos).length > 0) {
       this.clone = _.clone(this.datas.datos);
       this.data = _.clone(this.datas.datos);
+      this.datas.datos.ven_estado = this.data.ven_estado;
       this.id = this.data.id;
       this.titulo = "Actualizar";
       if (this.data.cat_activo === 0) this.data.cat_activo = true;
@@ -115,6 +122,7 @@ export class FormventasComponent implements OnInit {
       this.data.ven_usu_creacion = this.dataUser.usu_email;
       this.data.ven_fecha_venta = moment().format('YYYY-MM-DD');
       this.suma();
+      this.data.fleteValor = 0;
     }
   }
 
@@ -123,13 +131,15 @@ export class FormventasComponent implements OnInit {
     this._ventasProducto.get({ where: { ventas: this.id }, limit: 10000 }).subscribe((res: any) => {
       this.listCarrito = _.map(res.data, (item: any) => {
         return {
-          foto: item.producto.foto,
+          foto: item.fotoproducto || item.producto.foto,
           cantidad: item.cantidad,
           tallaSelect: item.tallaSelect,
           costo: item.precio,
           loVendio: item.loVendio,
           id: item.id,
           costoTotal: item.costoTotal,
+          colorSelect: item.colorSelect,
+          codigoImg: item.codigoImg || "no seleccionado",
           demas: item
         };
       });
@@ -201,22 +211,30 @@ export class FormventasComponent implements OnInit {
   }
 
   suma() {
-    console.log( this.data, this.listCarrito, this.namePorcentaje );
+    //console.log( this.data, this.listCarrito, this.namePorcentaje );
     let total: number = 0;
+    let total1: number = 0;
     this.data.ven_ganancias = 0;
     for (let row of this.listCarrito) {
       if (!row.costo || !row.cantidad) continue;
-      total += (Number(row.costo) * Number(row.cantidad));
+      total += ( Number( row.costo ) * Number( row.cantidad ) );
       if( !row.id ) row.loVendio = row.costoTotal;
+      total1 += ( Number( row.loVendio ) );
+      //console.log("********", total1 );
       if ( this.namePorcentaje == "dropshipping básico" ) row.comision = ( row.costoTotal * ( this.dataUser.porcentaje || 10 ) / 100 );
-      else this.data.ven_ganancias+= ( ( row.loVendio * row.cantidad ) - row.costoTotal ) || 0;
+      else this.data.ven_ganancias+= ( ( row.loVendio  ) - row.costoTotal ) || 0;
 
     }
-    this.data.ven_total = total;
+    this.data.ven_totalDistribuidor = total;
+    this.data.ven_total = total1;
     if ( this.namePorcentaje == "dropshipping básico" ) this.data.ven_ganancias = (total * ( this.dataUser.porcentaje || 10 ) / 100 );
   }
 
-  submit() {
+  async submit() {
+    let validprecio = await this.precioRutulo();
+    if( !validprecio ) {
+      return this._tools.presentToast("debes agregar la ciudad del cliente");
+    }
     try {
       if( this.data.ciudadDestino.code ){
         this.data.codeCiudad = this.data.ciudadDestino.code;
@@ -239,13 +257,14 @@ export class FormventasComponent implements OnInit {
     this.data.ven_estado = 0;
     this.data.create = moment().format('DD-MM-YYYY');
     if (!this.validarPrecio()) { this.disabledButton = false; this.disabled = false; return this._tools.presentToast("el Valorde producto debe contener 5 numeros ejemplo 80000, 90000"); }
+    if( ( this.validador() ) == false )  { this.disabledButton = false; this.disabled = false; return false; }
     // if( this.dataUser.cabeza ) if( this.dataUser.cabeza.usu_perfil == 3 ) this.data.ven_subVendedor = 1;
     //console.log( this.dataUser )
     if (this.dataUser.empresa) {
       if (this.dataUser.empresa.id != 1) this.data.ven_subVendedor = 1;
       this.data.ven_empresa = this.dataUser.empresa.id;
     } else this.data.ven_empresa = 1;
-    this._ventas.get({ where: { cob_num_cedula_cliente: this.data.cob_num_cedula_cliente, ven_estado: 0, ven_sw_eliminado: 0 } }).subscribe((res: any) => {
+    this._ventas.get({ where: { cob_num_cedula_cliente: this.data.cob_num_cedula_cliente, ven_estado: 0, ven_sw_eliminado: 0 } }).subscribe( (res: any) => {
       res = res.data[0];
       if (res) this._tools.basicIcons({ header: "Este cliente tiene una venta activa!", subheader: "Esta venta sera vereficada por posible confuciones" });
       this.guardarVenta();
@@ -301,6 +320,17 @@ export class FormventasComponent implements OnInit {
 
   }
 
+  validador(){
+    if( !this.data.cob_num_cedula_cliente ) { this._tools.tooast( { title: "Error falta la cedula del cliente", icon: "error" } ); return false; }
+    if( !this.data.ven_nombre_cliente ) { this._tools.tooast( { title: "Error falta el nombre del cliente", icon: "error" } ); return false; }
+    if( !this.data.ven_telefono_cliente ) { this._tools.tooast( { title: "Error falta el numero de celular del cliente", icon: "error" } ); return false; }
+    if( !this.data.ciudadDestino ) { this._tools.tooast( { title: "Error falta la ciudad de destino del cliente", icon: "error" } ); return false; }
+    if( !this.data.ven_barrio ) { this._tools.tooast( { title: "Error falta el barrio de destino del cliente", icon: "error" } ); return false; }
+    if( !this.data.ven_direccion_cliente ) { this._tools.tooast( { title: "Error falta la direccion del cliente", icon: "error" } ); return false; }
+
+    return true;
+  }
+
   OrderWhatsapp(res: any) {
     let cerialNumero: any = '';
     let cabeza: any = this.dataUser.cabeza || {};
@@ -331,7 +361,7 @@ export class FormventasComponent implements OnInit {
 
       TOTAL FACTURA ${(this.data.ven_total || 0).toLocaleString(1)}
       🤝Gracias por su atención y quedo pendiente para recibir por este medio la imagen de la guía de despacho`)}`;
-    console.log(mensaje);
+    //console.log(mensaje);
     window.open(mensaje);
   }
 
@@ -421,7 +451,7 @@ export class FormventasComponent implements OnInit {
   }
 
   generarGuia(){
-    console.log( this.data )
+    this.data.articulo = this.listCarrito;
     const dialogRef = this.dialog.open( FormcrearguiaComponent,{
       data: { datos: this.data || {} }
     } );
@@ -442,6 +472,62 @@ export class FormventasComponent implements OnInit {
 
   imprimirGuia(){
     window.open( this.data.ven_imagen_guia );
+  }
+
+  verDetalles( url:string ){
+    window.open( "https://enviosrrapidoscom.web.app/portada/guiadetalles/" + url )
+  }
+
+  openEvidencia( url:string ){
+    window.open( url )
+  }
+
+  async precioRutulo(){
+    return new Promise( resolve =>{
+      if( !this.data.ciudadDestino ) { resolve( false ); return false;}
+      if( !this.data.ciudadDestino.code ) { resolve( false ); return false;}
+
+      this.data.pesoVolumen = ( ( parseFloat( this.data.alto ) * parseFloat( this.data.largo ) * parseFloat( this.data.ancho ) ) / 5000 ) || 1;
+      this.data.pesoVolumen = Math.round( this.data.pesoVolumen );
+      for( let row of this.listCarrito ){
+        this.textData+= `${ row.cantidad } REF:${ row['codigoImg'] } ${ row.tallaSelect }, 
+        `
+      }
+      let data:any ={
+        "selectEnvio": "contraEntrega",
+        "idCiudadDestino": this.data.ciudadDestino.code,
+        "idCiudadOrigen": "54001000",
+        "valorMercancia": Number( this.data.ven_total ),
+        "fechaRemesa": moment( this.data.fecha ).format( "YYYY-MM-DD" ),
+        "idUniSNegogocio": 1,
+        "numeroUnidad": 1,
+        "pesoReal": 1,
+        "pesoVolumen": this.data.pesoVolumen,
+        "alto": 8,
+        "largo": 28,
+        "ancho": 21,
+        "tipoEmpaque": "",
+        "drpCiudadOrigen": "CUCUTA-NORTE DE SANTANDER",
+        "txtIdentificacionDe": this.dataUser.usu_documento || 1090519754,
+        "txtTelefonoDe": this.dataUser.usu_telefono,
+        "txtDireccionDe": this.dataUser.usu_direccion,
+        "txtCod_Postal_Rem": 540001,
+        "txtEMailRemitente": this.dataUser.usu_email,
+        "txtPara": this.data.ven_nombre_cliente,
+        "txtIdentificacionPara": this.data.cob_num_cedula_cliente,
+        "drpCiudadDestino": this.data.ciudadDestino.name,
+        "txtTelefonoPara": this.data.ven_telefono_cliente,
+        "txtDireccionPara": this.data.ven_direccion_cliente,
+        "txtDice": this.textData,
+        "txtNotas": "ok",
+      }
+      this._ventas.getFleteValor( data ).subscribe(( res:any )=>{
+        console.log( "****", res )
+        this.data.fleteValor = res.data.flteTotal;
+        resolve( true );
+      },()=>resolve( false ));
+    });
+    
   }
 
 

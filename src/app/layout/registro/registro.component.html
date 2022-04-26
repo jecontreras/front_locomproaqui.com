@@ -38,7 +38,11 @@
                                     <label for="exampleFormControlInput1">como quieres llamar tu tienda virtual</label>
                                     <input type="text" [(ngModel)]="data.usu_usuario"
                                         class="form-control form-control-sm"
-                                        placeholder="Ejemplos ( dayanstore ) ( carolstore )">
+                                        placeholder="Ejemplos ( dayanstore ) ( carolstore )" (ngModelChange)="validadUsername()">
+                                    <div *ngIf="!disabledusername">
+                                        <span class="bg-danger text-white rounded">El Nombre de su tienda Ya Se Encuentra Registrado Por Favor Utilizar
+                                            Otro</span>
+                                    </div>
                                 </div>
                                 <div class="form-group col-sm-6 col-12">
                                     <label for="exampleFormControlInput1">Subir logotipo de tu tienda</label>

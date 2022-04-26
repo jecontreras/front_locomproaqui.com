@@ -8,12 +8,17 @@ import { ExtraRoutingModule } from './extra-routing.module';
 import { RouterModule } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { NgImageSliderModule } from 'ng-image-slider';
+import { DialogconfirmarPedidoComponent } from './dialogconfirmar-pedido/dialogconfirmar-pedido.component';
 
 @NgModule({
+  entryComponents:[
+    DialogconfirmarPedidoComponent
+  ],
   declarations: [
     HeaderComponent,
     FooterComponent,
-    MenuLateralComponent
+    MenuLateralComponent,
+    DialogconfirmarPedidoComponent
   ],
   imports: [
     MyOwnCustomMaterialModule,

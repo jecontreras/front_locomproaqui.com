@@ -27,8 +27,8 @@ export class ToolsService {
       //console.log(store);
       if (!store) return false;
       this.dataConfig = store.configuracion || {};
-    }
-    );
+      if( !this.dataConfig.clInformacion ) this.dataConfig.clInformacion = "3506700802"
+    });
   }
 
   async presentToast(mensaje: string, type = 'completado') {

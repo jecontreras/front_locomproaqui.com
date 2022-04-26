@@ -69,7 +69,11 @@
                                 <div class="col-12">
                                     <label>Nombre de su tienda</label>
                                     <input type="text" [(ngModel)]="data.usu_usuario"
-                                        class="form-control form-control-sm">
+                                        class="form-control form-control-sm" (ngModelChange)="validadUsername()">
+                                    <div *ngIf="!disabledusername">
+                                        <span class="bg-danger text-white rounded">El Nombre de su tienda Ya Se Encuentra Registrado Por Favor Utilizar
+                                            Otro</span>
+                                    </div>
                                 </div>
                                 <div class="col-6 col-sm-3">
                                     <label>Nombre de usuario</label>
@@ -108,7 +112,10 @@
                                 <div class="col-6">
                                     <label>Correo Electronico</label>
                                     <input type="text" [(ngModel)]="data.usu_email"
-                                        class="form-control form-control-sm">
+                                        class="form-control form-control-sm" (ngModelChange)="validadEmail()">
+                                    <div *ngIf="!disabledemail">
+                                        <span class="bg-danger text-white rounded">El Email Solo Seran Correos Con Dominio Gmail</span>
+                                    </div>
                                 </div>
                                 <div class="col-6">
                                     <label>Url de Facebook</label>

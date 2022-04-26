@@ -11,6 +11,7 @@ import { TerminosComponent } from '../terminos/terminos.component';
 import { UsuariosService } from 'src/app/servicesComponents/usuarios.service';
 import { ArchivosService } from 'src/app/servicesComponents/archivos.service';
 import { MatStepper } from '@angular/material/stepper';
+import * as _ from 'lodash';
 
 const indicativos = Indicativo;
 
@@ -56,7 +57,7 @@ export class RegistrosComponent implements OnInit {
     }
   ];
   disabledFile:boolean = false;
-
+  disabledusername: boolean = true;
   constructor(
     private _user: UsuariosService,
     private _tools: ToolsService,
@@ -113,14 +114,37 @@ subirFile(){
 
 }
 
+validadUsername() {
+
+  this.disabledusername = true;
+  if (this.data.usu_usuario) {
+    // console.log(this.data.usu_usuario.replace(/ /g, ""));
+    this.data.usu_usuario = this.data.usu_usuario.replace(/ /g, '');
+    this.data.usu_usuario = this.data.usu_usuario.replace(/[^a-zA-Z ]/g, "");
+    this.data.usu_usuario = _.camelCase( this.data.usu_usuario );
+    this._user.get({ where: { usu_usuario: this.data.usu_usuario } })
+      .subscribe(
+        (res: any) => {
+          res = res.data[0];
+          // console.log(res);
+          if (res) this.disabledusername = false;
+        }
+      )
+      ;
+  }
+}
+
 validadorEmail(email: string){
   let validador: any = email.split("@");
   validador = validador[1];
   if (validador) {
     validador = validador.toLowerCase();
     console.log(validador);
-    if ((validador == "gmail.com") || (validador == "hotmail.com") || (validador == "hotmail.es") || (validador == "outlook.com") || (validador == "outlook.es")) { this.error = ""; return true; }
-    else this.error = "Error el dominio tiene que ser gmail o hotmail o outlook";
+    //if ((validador == "gmail.com") || (validador == "hotmail.com") || (validador == "hotmail.es") || (validador == "outlook.com") || (validador == "outlook.es")) { 
+    if (validador == 'gmail.com' || validador == 'gmail.es' ) {
+      this.error = ""; return true; 
+    }
+    else this.error = "Error el dominio tiene que ser gmail ";
   }
 }
 
@@ -150,6 +174,7 @@ async submit(){
   this.disableSubmit = false;
   let valid: boolean = await this.validando();
   if (!valid || this.error) { this.disableSubmit = true; return false };
+  if( !this.disabledusername ) return this._tools.tooast( { title: "Error tenemos problemas en el formulario por favor revisar gracias", icon: "error"})
   this._user.create(this.data).subscribe((res: any) => {
     console.log("user", res);
     this.disableSubmit = true;

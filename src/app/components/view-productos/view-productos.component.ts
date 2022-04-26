@@ -48,7 +48,8 @@ export class ViewProductosComponent implements OnInit {
   disabledSelect:boolean = true;
 
   gananciaEstimada:any = 0;
-  
+  disabledPr:boolean = true;
+
   constructor(
     public dialogRef: MatDialogRef<ViewProductosComponent>,
     @Inject(MAT_DIALOG_DATA) public datas: any,
@@ -156,6 +157,8 @@ export class ViewProductosComponent implements OnInit {
   }
 
   async AgregarCart( opt:any ){
+    if( this.disabledPr == false ) return this._tools.tooast({ title: "lo sentimos pero no se puedes vender este producto en este precio", icon: "warning" });
+    if(  !this.data.color ) return this._tools.tooast({ title: "Lo sentimos tienes que seleccionar un color", icon: "warning" });
     if(  this.seleccionnTalla.cantidad < this.data.cantidadAdquirir ) return this._tools.tooast({ title: "Lo sentimos en estos momento no tenemos en stock", icon: "warning" });
     if (!this.data.tallas) {
       try {
@@ -163,13 +166,13 @@ export class ViewProductosComponent implements OnInit {
         else this.data.tallas = "default"; 
       } catch (error) { return this._tools.tooast({ title: "Por Favor debes seleccionar una talla", icon: "warning" }); }
     }
-    let color = '';
+    let color = this.data.color;
     let cantidad = this.data.cantidadAdquirir || 1;
     let precio = this.data.precio_vendedor || this.data.pro_uni_venta;
-    if( this.data.listColor ) { this.data.color = this.data.listColor.find(row=>row.foto = this.data.foto) || {}; color = this.data.color.talla }
+    let encuanto:any = this.data.encuanto || this.data.pro_uni_venta;
+    //if( this.data.listColor ) { this.data.color = this.data.listColor.find(row=>row.foto == this.data.foto) || {}; color = this.data.color.talla }
     if(opt) { opt.selecciono = true; this.suma( opt.precios , opt.cantidad ); cantidad = opt.cantidad; precio = opt.precios; }
     else this.suma( ( this.data.precio_vendedor || this.data.pro_uni_venta ) , this.data.cantidadAdquirir );
-    let encuanto:any = this.data.pro_uni_venta;
     /*if( this.data.precio_vendedor && !this.data.encuanto ){
       encuanto = await this._tools.alertInput( { title: "Encuanto lo vendio", input: 'text', confirme: "Agregar"} );
       if( !encuanto.value ) return this._tools.tooast({ title: "Por Favor debes decirnos en cuanto lo vendiste", icon: "warning" });
@@ -177,11 +180,15 @@ export class ViewProductosComponent implements OnInit {
     }else{
       encuanto = this.data.encuanto || precio;
     }*/
+    let codigoImg:any = this.data.listColor.find( ( row:any )=> row.talla == this.data.color );
+    if( !codigoImg ) codigoImg = "NO CODIGO";
+    else codigoImg = codigoImg['id']
     let data = {
       articulo: this.data.id,
       codigo: this.data.pro_codigo,
+      codigoImg: codigoImg,
       titulo: this.data.pro_nombre,
-      color: color,
+      color: this.data.color,
       tallaSelect: this.data.tallas || 'default',
       foto: this.urlFoto,
       cantidad: cantidad,
@@ -236,7 +243,7 @@ export class ViewProductosComponent implements OnInit {
     } else cerialNumero = "57" + this._tools.dataConfig.clInformacion;
     if (this.userId.id) this.urlwhat = `https://wa.me/${this.userId.usu_indicativo || 57}${((_.split(this.userId.usu_telefono, "+57", 2))[1]) || this._tools.dataConfig.clInformacion }?text=Hola Servicio al cliente, como esta, saludo cordial, estoy interesad@ en mas informacion ${obj.pro_nombre} codigo ${obj.pro_codigo} codigo: ${obj.pro_codigo} talla: ${obj.tallas} foto ==> ${obj.this.urlFoto}`;
     else {
-      this.urlwhat = `https://wa.me/${cerialNumero}?text=Hola Servicio al cliente, como esta, saludo cordial, estoy interesad@ en mas informacion ${obj.pro_nombre} codigo: ${obj.pro_codigo} talla: ${obj.tallas} foto ==> ${obj.this.urlFoto}`;
+      this.urlwhat = `https://wa.me/${cerialNumero}?text=Hola Servicio al cliente, como esta, saludo cordial, estoy interesad@ en mas informacion ${obj.pro_nombre} codigo: ${obj.pro_codigo} talla: ${obj.tallas} foto ==> ${ obj.urlFoto }`;
     }
     window.open(this.urlwhat);
   }
@@ -324,6 +331,11 @@ export class ViewProductosComponent implements OnInit {
 
   eventoFoto( event ){
     //console.log( event )
+  }
+
+  validando(){
+    if( ( this.data.encuanto < this.data.pro_uni_venta ) && ( this.data.checkpromo == false ) ) { this.disabledPr = false; return this._tools.tooast({ title: "lo sentimos pero no se puedes vender este producto en este precio", icon: "warning" });}
+
   }
 
 }

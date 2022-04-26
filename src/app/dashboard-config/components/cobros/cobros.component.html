@@ -33,6 +33,18 @@
                   <span>Devoluciones</span>
                   <p>$ {{ ( dataInfo.devoluciones || 0 ).toLocaleString(1) }} COP</p>
                 </div>
+                <div class="col-md-3 col-sm-6 col-lg-3 col-xs-3">
+                  <span>Ventas Pendientes Por Entregar</span>
+                  <p>$ {{ ( dataInfo.ventasPendientes || 0 ).toLocaleString(1) }} COP</p>
+                </div>
+                <div class="col-md-3 col-sm-6 col-lg-3 col-xs-3">
+                  <span>Ventas Totales del calzado (Exitoso)</span>
+                  <p>$ {{ ( dataInfo.ventasCalzadoVR || 0 ).toLocaleString(1) }} COP</p>
+                </div>
+                <div class="col-md-3 col-sm-6 col-lg-3 col-xs-3">
+                  <span>Ventas Totales del calzado ( Despachado )</span>
+                  <p>$ {{ ( dataInfo.ventasCalzadoDR || 0 ).toLocaleString(1) }} COP</p>
+                </div>
                 <!-- <div class="col-md-3 col-sm-4 col-lg-3 col-xs-3">
                   <span>Ganancias Por Mis Referidos</span>
                   <p>$ {{ ( dataInfo.gananciasRefereridos || 0 ).toLocaleString(1) }}</p>

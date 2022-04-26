@@ -4,7 +4,7 @@ import { environment } from 'src/environments/environment';
 import { USER } from '../interfaces/sotarage';
 import { Store } from '@ngrx/store';
 import { Router } from '@angular/router';
-import { UserAction } from '../redux/app.actions';
+import { ConfiguracionAction, UserAction } from '../redux/app.actions';
 import { ToolsService } from './tools.service';
 
 declare var io: any;
@@ -23,6 +23,8 @@ export class ServiciosService {
   public interval:any;
   public dataUser:any = {};
   activador: boolean = false;
+  dataConfig:any = {};
+
   constructor(
     private http: HttpClient,
     private _store: Store<USER>,
@@ -33,6 +35,7 @@ export class ServiciosService {
       //console.log(store);
       store = store.name;
       if(!store) return false;
+      this.dataConfig = store.configuracion || {};
       try {
         this.activador = store.userpr.id ? true : false;
       } catch (error) {
@@ -42,6 +45,18 @@ export class ServiciosService {
     //this.conectionSocket();
     //this.createsocket("emitir", {mensaje:"inicial"}); 
     if( !this.activador ) this.privateDataUser();
+    this.getConfig();
+  }
+  getConfig(){
+    this.querys('admin/querys',{
+      where:{}
+    }, 'post').subscribe((res:any)=>{
+      res = res.data[0];
+      let opcion:string = "post";
+      if( this.dataConfig.id ) opcion = "put";
+      let accion = new ConfiguracionAction( res, opcion )
+      this._store.dispatch(accion);
+    });
   }
   privateDataUser(){
     this._store.subscribe((store: any) => {

@@ -43,7 +43,10 @@ export class PerfilComponent implements OnInit {
   listCiudad:any = [];
   listDepartamento:any = departamento;
   dataSolicitud:any = {};
-
+  // disable validaro email
+  disabledemail:boolean = true;
+  // disable validador username
+  disabledusername:boolean = true;
   constructor(
     private _user: UsuariosService,
     private _tools: ToolsService,
@@ -68,6 +71,40 @@ export class PerfilComponent implements OnInit {
     this.urlRegistro+=this.data.usu_usuario;
     this.getCategorias();
     for( let row of this.listDepartamento ) for( let item of row.ciudades ) this.listCiudad.push( { departamento: row.departamento, ciudad: item });
+  }
+
+  validadEmail() {
+    this.disabledemail = true;
+     if (this.data.usu_email) {
+       const
+         filtro: any = this.data.usu_email.split('@', '2')
+         ;
+        console.log(filtro);
+       //if ( filtro[1] == 'gmail.com' || filtro[1] == 'gmail.es'|| filtro[1] == 'hotmail.com'|| filtro[1] == 'outlook.com'|| filtro[1] == 'outlook.es') {
+        if ( filtro[1] == 'gmail.com' || filtro[1] == 'gmail.es' ) {
+         this.disabledemail = true;
+       }else this.disabledemail = false;
+     }
+  }
+
+  validadUsername() {
+
+    this.disabledusername = true;
+    if (this.data.usu_usuario) {
+      // console.log(this.data.usu_usuario.replace(/ /g, ""));
+      this.data.usu_usuario = this.data.usu_usuario.replace(/ /g, '');
+      this.data.usu_usuario = this.data.usu_usuario.replace(/[^a-zA-Z ]/g, "");
+      this.data.usu_usuario = _.camelCase( this.data.usu_usuario );
+      this._user.get({ where: { usu_usuario: this.data.usu_usuario, id: { '!=' : [ this.data.id ] }  }})
+        .subscribe(
+          (res: any) => {
+            res = res.data[0];
+            // console.log(res);
+            if (res) this.disabledusername = false;
+          }
+        )
+        ;
+    }
   }
 
   getCategorias(){
@@ -127,6 +164,7 @@ export class PerfilComponent implements OnInit {
   }
 
   Actualizar(){
+    if( !this.disabledusername || !this.disabledemail ) return this._tools.tooast( { title: "Error tenemos problemas en el formulario por favor revisar gracias", icon: "error"})
     this.data = _.omit(this.data, ['usu_perfil', 'cabeza', 'nivel', 'empresa', 'createdAt', 'updatedAt', 'categoriaPerfil']);this.data = _.omitBy(this.data, _.isNull);
     this._user.update(this.data).subscribe((res:any)=>{
       //console.log(res);

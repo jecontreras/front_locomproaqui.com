@@ -37,11 +37,13 @@ export class VentasComponent implements OnInit {
   query:any = {
     where:{
       ven_sw_eliminado: 0,
-      ven_estado: { '!=': 4 }
+      ven_estado: { '!=': 4 },
+      ven_retiro: null
     },
-    page: 0
+    page: 0,
+    limit: 10
   };
-  Header:any = [ 'Acciones','Tipo Venta','Vendedor','Nombre Cliente','Teléfono Cliente','Fecha Venta','Estado', 'Motivo Rechazo' ];
+  Header:any = [ 'Acciones','Tipo Venta','Vendedor','Nombre Cliente','Teléfono Cliente','Fecha Venta','Estado', 'Pagado', 'Ganancia', 'Motivo Rechazo' ];
   $:any;
   public datoBusqueda = '';
 
@@ -50,10 +52,13 @@ export class VentasComponent implements OnInit {
   dataUser:any = {};
   activando:boolean = false;
   filtro:any = {};
+  dataInfo:any ={};
+  listVendedores:any = [];
+  keyword = 'usu_usuario';
 
   constructor(
     public dialog: MatDialog,
-    private _tools: ToolsService,
+    public _tools: ToolsService,
     private _ventas: VentasService,
     private spinner: NgxSpinnerService,
     private _store: Store<STORAGES>,
@@ -78,6 +83,13 @@ export class VentasComponent implements OnInit {
       dataRows: []
     };
     this.borrarFiltro();
+    this.getVendedores();
+  }
+
+  getVendedores(){
+    this._user.getOn( { where: { }, limit: 10000 } ).subscribe( ( res:any )=>{
+      this.listVendedores = res.data;
+    } );
   }
 
   getUserCabeza(){
@@ -104,10 +116,29 @@ export class VentasComponent implements OnInit {
       data: {datos: obj || {}}
     });
 
-    dialogRef.afterClosed().subscribe(result => {
+    dialogRef.afterClosed().subscribe( async ( result ) => {
       console.log(`Dialog result: ${result}`);
       if(result == 'creo') this.cargarTodos();
+      if( obj.id ) {
+        let filtro:any = await this.getDetallado( obj.id );
+          if( !filtro ) return false;
+          let idx = _.findIndex( this.dataTable.dataRows, [ 'id', obj.id ] );
+          console.log("**",idx)
+          if( idx >= 0 ) { 
+            console.log("**",this.dataTable['dataRows'][idx], filtro)
+            this.dataTable['dataRows'][idx] = { ven_estado: filtro.ven_estado, ...filtro}; 
+          }
+      }
     });
+  }
+
+  async getDetallado( id:any ){
+    return new Promise( resolve => {
+      this._ventas.get( { where: { id: id } } ).subscribe(( res:any )=>{
+        res = res.data[0];
+        resolve( res || false )
+      },()=> resolve( false ) );
+    })
   }
 
   verTable(){
@@ -182,9 +213,11 @@ export class VentasComponent implements OnInit {
     this.query = {
       where:{
         ven_sw_eliminado: 0,
-        ven_estado: { '!=': 4 }
+        ven_estado: { '!=': 4 },
+        ven_retiro: null
       },
-      page: 0
+      page: 0,
+      limit: 10
     };
     if (this.datoBusqueda !== '') {
       this.query.where.or = [
@@ -215,9 +248,20 @@ export class VentasComponent implements OnInit {
         },
       ];
     }
+    if( this.filtro.vendedor ) { 
+      console.log( this.filtro )
+      this.query.where.usu_clave_int = this.filtro.vendedor.id;
+      this.getValorVenta();
+    }
     if(this.dataUser.usu_perfil.prf_descripcion != 'administrador') this.query.where.usu_clave_int = this.dataUser.id;
     if(this.dataUser.usu_perfil.prf_descripcion == "subAdministrador") this.getUserCabeza();
     else this.cargarTodos();
+  }
+
+  getValorVenta(){
+    let filtro: any = { where:{ user: this.query.where.usu_clave_int, estado: this.query.where.ven_estado } };
+    console.log( filtro );
+    this._ventas.getMontos( filtro ).subscribe((res:any)=>this.dataInfo = res.data);
   }
 
   buscarEstado(){
@@ -227,8 +271,16 @@ export class VentasComponent implements OnInit {
     this.dataTable.dataRows = [];
 
     this.query.page =  0;
-    if( Number( this.filtro.ven_estado ) == 5 ) { this.query.where.ven_estado = { '!=': 4 }; }
+    console.log( "**", this.filtro.ven_estado )
+    if( Number( this.filtro.ven_estado ) == 5 ) { this.query.where.ven_estado = { '!=': 4 }; this.query.where.ven_retiro = null; }
+    if( Number( this.filtro.ven_estado ) == 6 ) { this.query.where.ven_estado = { '!=': 4 }; this.query.where.ven_retiro = { '!=': null }; }
     else this.query.where.ven_estado = Number( this.filtro.ven_estado );
+
+    if( this.filtro.vendedor ) { 
+      this.query.where.usu_clave_int = this.filtro.vendedor.id;
+      this.getValorVenta();
+    }
+
     this.cargarTodos();
   }
 
@@ -254,23 +306,28 @@ export class VentasComponent implements OnInit {
   borrarFiltro(){
     this.filtro = {
       fechaInicio: moment().format("YYYY-MM-DD"),
-      fechaFinal: moment().add(30, 'days').format("YYY-MM-DD")
+      fechaFinal: moment().add(-30, 'days').format("YYYY-MM-DD")
     };
     this.datoBusqueda = "";
     this.query= {
       where: {
         ven_sw_eliminado: 0,
-        ven_estado: { '!=': 4 }
+        ven_estado: { '!=': 4 },
+        ven_retiro: null
       },
-      page: 0
+      page: 0,
+      limit: 10
     };
     if(this.dataUser.usu_perfil.prf_descripcion != 'administrador') this.query.where.usu_clave_int = this.dataUser.id;
+
     if(this.dataUser.usu_perfil.prf_descripcion == "subAdministrador") this.getUserCabeza();
     else this.cargarTodos();
   }
 
-  openUrl( numero:any, cliente:string ){
-    window.open( `https://wa.me/57${ numero }?text=Hola Cliente ${ cliente }`);
+  openUrl( numero:any, cliente:string, obj:any ){
+    let Url:string = `https://wa.me/57${ numero }?text=Hola Cliente ${ cliente } Este esta es tu guia --> ${ obj.ven_numero_guia } <-- Transportadora Envia >>>>>> url: ' ${ obj.ven_imagen_guia }' <<<<<<`;
+    console.log(Url, obj)
+    window.open( Url );
   }
 
   openFoto( foto: string ){
@@ -279,6 +336,10 @@ export class VentasComponent implements OnInit {
 
   verDetalles( url:string ){
     window.open( "https://enviosrrapidoscom.web.app/portada/guiadetalles/" + url )
+  }
+
+  openEvidencia( url:string ){
+    window.open( url )
   }
 
 }

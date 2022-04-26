@@ -99,8 +99,8 @@
                   <img class="imgFoto pointer" [src]="item.foto || './assets/img/producto.jpg'" mat-list-icon>
                   <h4 mat-line>{{ item.titulo }}</h4>
                   <p mat-line>{{ 'Cantidad: '+item.cantidad }} </p>
-                  <p mat-line>Precio:$ {{ ( item.costoTotal || 0).toLocaleString(1) }} COP</p>
-                  <p mat-line *ngIf="dataUser.id">Lo Vendiste:$ {{ ( item.loVendio || 0).toLocaleString(1) }} COP</p>
+                  <p mat-line>Precio: {{ _tools.monedaChange( 3,2,item.costoTotal || 0 )  }} COP</p>
+                  <p mat-line *ngIf="dataUser.id">Lo Vendiste: {{ _tools.monedaChange( 3,2,item.loVendio || 0 )  }} COP</p>
                   <p mat-line><span (click)="booleanoOpen = false; deleteCart(idx, item);" class="p-1 pointer d-flex justify-content-end"><i
                         class="material-icons">delete</i></span> </p>
                 </mat-list-item>
@@ -116,9 +116,9 @@
             <div class="cart-amount-summary">
               <h2>Resumen de tu venta &nbsp;</h2>
               <ul class="summary-table">
-                <li *ngIf="dataUser.id"><span>Valor a pagar de tu cliente: &nbsp;</span> <span>{{ ( data.total || 0 ) | currency:'':true }}</span> </li>
-                <li *ngIf="!dataUser.id"><span>Valor a pagar: &nbsp;</span> <span>{{ ( data.total || 0 ) | currency:'':true }}</span> </li>
-                <li *ngIf="dataUser.id"><span>Tu ganancia en esta venta es: &nbsp;</span> <span>{{ ( data.totalGanancias || 0 ) | currency:'':true }}</span> </li>
+                <li *ngIf="dataUser.id"><span>Valor a pagar de tu cliente: &nbsp;</span> <span>{{ _tools.monedaChange( 3,2,data.total || 0 ) }}</span> </li>
+                <li *ngIf="!dataUser.id"><span>Valor a pagar: &nbsp;</span> <span>{{ _tools.monedaChange( 3,2,data.total || 0 ) }}</span> </li>
+                <li *ngIf="dataUser.id"><span>Tu ganancia en esta venta es: &nbsp;</span> <span>{{ _tools.monedaChange( 3,2,data.totalGanancias || 0 )  }}</span> </li>
                 <li *ngIf="namePorcentaje == 'dropshipping pro'">
                   <div class="alert alert-danger" role="alert">
                     <span>Nota: &nbsp;</span> <span>Ten en cuenta que el valor del flete sera descontado de tu ganancia</span>

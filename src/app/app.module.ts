@@ -1,5 +1,5 @@
 import { BrowserModule } from '@angular/platform-browser';
-import { NgModule } from '@angular/core';
+import { LOCALE_ID, NgModule } from '@angular/core';
 //config
 import { HttpClientModule } from '@angular/common/http';
 
@@ -25,6 +25,18 @@ import { IntroduccionComponent } from './components/introduccion/introduccion.co
 import { MatVideoModule } from 'mat-video';
 import { RegistroComponent } from './components/registro/registro.component';
 import { NgxCurrencyModule } from 'ngx-currency';
+
+import { registerLocaleData } from '@angular/common';
+    // importar locales
+    import localePy from '@angular/common/locales/es-PY';
+    import localePt from '@angular/common/locales/pt';
+    import localeEn from '@angular/common/locales/en';
+    import localeEsAr from '@angular/common/locales/es-AR';
+
+    // registrar los locales con el nombre que quieras utilizar a la hora de proveer
+    registerLocaleData(localePy, 'es');
+    registerLocaleData(localePt, 'pt');
+    registerLocaleData(localeEn, 'en')
 
 @NgModule({
   entryComponents:[],
@@ -57,6 +69,7 @@ import { NgxCurrencyModule } from 'ngx-currency';
     NgxCurrencyModule
   ],
   providers: [
+    { provide: LOCALE_ID, useValue: 'es-Co', }
     // {
     //   provide : HTTP_INTERCEPTORS,
     //   useClass: AuthInterceptor,

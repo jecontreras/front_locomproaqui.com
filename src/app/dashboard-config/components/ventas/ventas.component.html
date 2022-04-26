@@ -49,29 +49,50 @@
                 </div>
               </div>
               <div class="col-12 row">
+                <div class="form-group col-12">
+                  <label>Vendedor</label>
+                  <!-- <input type="text" class="form-control form-control-sm" [(ngModel)]="data.ciudadDestino"> -->
+                  <ng-autocomplete [(ngModel)]="filtro.vendedor" [data]="listVendedores" [searchKeyword]="keyword" placeHolder="Vendedor" autocomplete="off"
+                      historyIdentifier="listVendedores" [itemTemplate]="itemTemplate" [notFoundTemplate]="notFoundTemplate" (change)="buscar()" >
+                  </ng-autocomplete>
+      
+                  <ng-template #itemTemplate let-item>
+                      <div class="item">
+                          <!-- <img src="{{item.flag}}" height="25"> -->
+                          <span [innerHTML]="item.usu_usuario"></span> &nbsp; | &nbsp;
+                          <small>Email: {{ item.usu_email }}</small> &nbsp; | &nbsp;
+                          <small>Nombre: {{ item.usu_nombre }}</small>
+                      </div>
+                  </ng-template>
+      
+                  <ng-template #notFoundTemplate let-notFound>
+                      <div [innerHTML]="notFound"></div>
+                  </ng-template>
+                </div>
                 <div class="col-md-6 col-sm-4 col-lg-4 col-xs-6">
                   <label>Estado de la venta</label>
                   <select class="form-control form-control-sm" [(ngModel)]="filtro.ven_estado" placeholder="Estado de la Venta"
-                    (change)="buscarEstado()">
+                    (change)="buscarEstado()" [disabled]="loader">
                     <option type="number" value="5">Todos</option>
                     <option type="number" value="0">Pendiente</option>
                     <option type="number" value="1">Venta exitosa</option>
                     <option type="number" value="2">Rechazada</option>
                     <option type="number" value="3">Despachado</option>
+                    <option type="number" value="6">Pagado y completado</option>
                   </select>
                 </div>
                 <div class="col-md-5 col-sm-3 col-lg-3 col-xs-5">
                   <label>Fecha Inicial</label>
                   <div class="input-group">
                     <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
-                    <input type="date" class="form-control" [(ngModel)]="filtro.fechaInicio" (keyup)="validandoFecha()" (change)="validandoFecha()">
+                    <input type="date" class="form-control" [(ngModel)]="filtro.fechaFinal" (keyup)="validandoFecha()" (change)="validandoFecha()">
                   </div>
                 </div>
                 <div class="col-md-5 col-sm-3 col-lg-3 col-xs-5">
                   <label>Fecha Final</label>
                   <div class="input-group">
                     <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
-                    <input type="date" class="form-control" [(ngModel)]="filtro.fechaFinal" (keyup)="validandoFecha()" (change)="validandoFecha()">
+                    <input type="date" class="form-control" [(ngModel)]="filtro.fechaInicio" (keyup)="validandoFecha()" (change)="validandoFecha()">
                   </div>
                 </div>
                 <div class="col-2">
@@ -83,6 +104,12 @@
               </div>
 
             </div>
+            <!--<div class="col-12" *ngIf="activando">
+              <div class="col-md-3 col-sm-4 col-lg-3 col-xs-3">
+                <span>Total Utilidad de venta</span>
+                <p>$ {{ ( dataInfo.pagado || 0 ).toLocaleString(1) }} COP</p>
+              </div>
+            </div>-->
             <div class="search-results col-12 row" infiniteScroll [infiniteScrollDistance]="3"
               [infiniteScrollThrottle]="50" (scrolled)="onScroll()">
               <div class="col-12 material-datatables" *ngIf="!loader">
@@ -100,16 +127,24 @@
                   </tfoot>
                   <tbody>
                     <tr *ngFor="let row of dataTable.dataRows; let idx=index" [ngClass]="{
-                      'colorFondo':row['ven_subVendedor'] == 1
+                      'colorFondo':row['ven_subVendedor'] == 1,
+                      'colorCompletado':row['ven_estado'] == 1,
+                      'colorDespachado':row['ven_estado'] == 3,
+                      'colorEntrante':row['ven_estado'] == 0,
+                      'colorDevolucion':row['ven_estado'] == 2,
+                      'colorPagado':row['ven_retiro'] >= 1
                     }">
 
                       <td>
                         <button (click)="crear(row)" class="btn btn-primary btn-just-icon btn-round">
                           <i class="material-icons">remove_red_eye</i>
-                        </button>
-                        <button *ngIf="row['ven_numero_guia']" (click)="verDetalles( row['ven_numero_guia'] )" class="btn btn-primary btn-just-icon btn-round">
+                        </button><br>
+                        <button *ngIf="row['ven_numero_guia']" (click)="verDetalles( row['ven_numero_guia'] )" class="btn btn-info btn-just-icon btn-round">
                           Estado Guia
-                        </button>
+                        </button><br>
+                        <button (click)="openEvidencia( row['ven_imagen_tiket'] )" *ngIf="row['ven_imagen_tiket']" class="btn btn-dark btn-just-icon btn-round">
+                          Evidencia Entrega
+                        </button><br>
                         <button (click)="delete(row, idx)" class="btn btn-danger btn-just-icon btn-round">
                           <i class="material-icons">delete_forever</i>
                         </button>
@@ -124,9 +159,10 @@
                       <td>{{ row['ven_nombre_cliente'] }}</td>
                       <td>
                         <span>
-                          {{ row['ven_telefono_cliente'] }} <img src="./assets/img/what.jpg" class="pointer" style="width: 35px;" (click)="openUrl( row['ven_telefono_cliente'], row['ven_nombre_cliente'] )">
+                          {{ row['ven_telefono_cliente'] }} <img src="./assets/img/what.jpg" class="pointer" style="width: 35px;" (click)="openUrl( row['ven_telefono_cliente'], row['ven_nombre_cliente'], row )">
                         </span>
                       </td>
+                      <td>{{ _tools.monedaChange( 3,2, row['ven_ganancias'] || 0 ) }}</td>
                       <td>{{ row['createdAt'] | date:'medium' }}</td>
                       <!-- <td>{{ row['pro_clave_int']?.pro_nombre }}</td> -->
                       <!-- <td>{{ row['ven_cantidad'] }}</td> -->
@@ -141,6 +177,10 @@
                       <td *ngIf="row['ven_estado'] == 1">Exitosa</td>
                       <td *ngIf="row['ven_estado'] == 2">Rechazada</td>
                       <td *ngIf="row['ven_estado'] == 3">Despachado</td>
+                      <td>
+                        <img src="./assets/icons/pago.png" alt="" *ngIf="row['ven_retirado'] == 1" style="width: 25%;">
+                        <span *ngIf="row['ven_imagen_tiket'] && row['ven_retirado'] == 0">lista para cobrar</span>
+                      </td>
                       <td>{{ row['ven_motivo_rechazo'] }}</td>
                       <!-- <td>{{ row['ven_tallas'] }}</td> -->
                     </tr>

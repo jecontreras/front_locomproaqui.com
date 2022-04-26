@@ -10,6 +10,7 @@ import { UsuariosService } from 'src/app/servicesComponents/usuarios.service';
 import { FormtestimoniosComponent } from '../formtestimonios/formtestimonios.component';
 import { ArchivosService } from 'src/app/servicesComponents/archivos.service';
 import { NotificacionesService } from 'src/app/servicesComponents/notificaciones.service';
+import { FormlistventasComponent } from '../formlistventas/formlistventas.component';
 
 @Component({
   selector: 'app-formcobros',
@@ -68,10 +69,11 @@ export class FormcobrosComponent implements OnInit {
   }
 
   getInfoUser(){
-    this._user.getInfo({where:{id:this.dataUser.id}}).subscribe((res:any)=>{ 
+    this._user.getInfo( { where:{ id:this.dataUser.id } } ).subscribe((res:any)=>{ 
       this.data.cob_monto = res.data.porcobrado; 
-      this.data.devoluciones = res.data.devoluciones;
-      this.data.totalrecibir = ( res.data.porcobrado - res.data.devoluciones || 0 );
+      this.data.devoluciones = 0 /*res.data.devoluciones*/;
+      //this.data.totalrecibir = ( res.data.porcobrado - res.data.devoluciones || 0 );
+      this.data.totalrecibir = res.data.porcobrado;
     });
   }
 
@@ -179,6 +181,16 @@ export class FormcobrosComponent implements OnInit {
     const dialogRef = this.dialog.open(FormtestimoniosComponent,{
       width: '731px',
       data: {datos: {}}
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      console.log(`Dialog result: ${result}`);
+    });
+  }
+
+  openVentasList(){
+    const dialogRef = this.dialog.open(FormlistventasComponent,{
+      data: {datos: this.data }
     });
 
     dialogRef.afterClosed().subscribe(result => {

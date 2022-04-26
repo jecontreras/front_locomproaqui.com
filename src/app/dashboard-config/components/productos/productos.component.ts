@@ -44,7 +44,7 @@ export class ProductosComponent implements OnInit {
     page: 0,
     limit: 10
   };
-  Header:any = [ 'Acciones','Foto','Nombre','Codigo', 'Precio', 'Categoria','Estado', 'Creado'];
+  Header:any = [ 'Acciones','Foto','Nombre','Codigo', 'Precio', 'Categoria','Estado','Creado'];
   Header2:any = [ 'Acciones','Foto','Nombre', 'Precio dropshipping pro ', 'Precio Cliente Final','Estado', 'Creado'];
   $:any;
   public datoBusqueda = '';
@@ -54,6 +54,7 @@ export class ProductosComponent implements OnInit {
   rolName:string;
   dataRows:any = [];
   formatoMoneda:any = {};
+  counts:number = 0;
 
   constructor(
     public dialog: MatDialog,
@@ -133,6 +134,11 @@ export class ProductosComponent implements OnInit {
        this.cargarProveedor();
      }
   }
+  pageEvent(ev: any) {
+    this.query.page = ev.pageIndex;
+    this.query.limit = ev.pageSize;
+    this.cargarTodos();
+  }
 
   cargarTodos() {
     this.spinner.show();
@@ -140,6 +146,7 @@ export class ProductosComponent implements OnInit {
     .subscribe(
       (response: any) => {
         console.log(response);
+        this.counts = response.count;
         this.dataTable.headerRow = this.dataTable.headerRow;
         this.dataTable.footerRow = this.dataTable.footerRow;
         this.dataTable.dataRows.push(... response.data);

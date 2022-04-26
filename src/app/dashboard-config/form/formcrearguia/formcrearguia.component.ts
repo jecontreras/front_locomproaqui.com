@@ -17,6 +17,8 @@ export class FormcrearguiaComponent implements OnInit {
   data2:any = {};
   dataUser:any = {};
   btndisabled:boolean = false;
+  textData:string = "";
+  opcionCurrencys:any;
 
   constructor(
     public dialogRef: MatDialogRef<FormcrearguiaComponent>,
@@ -30,6 +32,7 @@ export class FormcrearguiaComponent implements OnInit {
       this.dataUser = store.user || {};
 
     });
+    this.opcionCurrencys = this._tools.currency;
   }
 
   ngOnInit(): void {
@@ -39,20 +42,26 @@ export class FormcrearguiaComponent implements OnInit {
        ... this.data,
        valorMercancia: this.data.ven_total,
        fecha: moment( this.data.fecha ).format( "YYYY-MM-DD" ),
-       numeroUnidad: 1,
+       numeroUnidad:  1,
        pesoReal: 1,
        pesoVolumen: "",
        alto: 8,
        largo: 28,
-       ancho: 21
+       ancho: 21,
+       valorAsegurado: 100000
       };
       this.data.pesoVolumen = ( ( parseFloat( this.data.alto ) * parseFloat( this.data.largo ) * parseFloat( this.data.ancho ) ) / 5000 ) || 1;
       this.data.pesoVolumen = Math.round( this.data.pesoVolumen );
-
+      console.log( this.data )
+      this.rellenoData();
     }
   }
 
   rellenoData(){
+    for( let row of this.data.articulo ){
+      this.textData+= `${ row.cantidad } REF:${ row['codigoImg'] } ${ row.tallaSelect }, 
+      `
+    }
     this.data2 = {
       idCiudadOrigen: "54001000",
       idCiudadDestino: this.data.codeCiudad,
@@ -60,7 +69,7 @@ export class FormcrearguiaComponent implements OnInit {
       valorMercancia: this.data.valorMercancia,
       fechaRemesa: moment( this.data.fecha ).format( "YYYY-MM-DD" ),
       idUniSNegogocio: 1,
-      numeroUnidad: this.data.numeroUnidad,
+      numeroUnidad: 1,
       pesoVolumen: this.data.pesoVolumen,
       alto: this.data.alto || 8,
       largo: this.data.largo || 28,
@@ -76,7 +85,7 @@ export class FormcrearguiaComponent implements OnInit {
       drpCiudadDestino: this.data.ciudadDestino,
       txtTelefonoPara: this.data.ven_telefono_cliente,
       txtDireccionPara: this.data.ven_direccion_cliente,
-      txtDice: "zapatos",
+      txtDice: this.textData,
       txtNotas: "ok",
       txtEMailDestinatario: "joseeduar147@gmail.com",
 
@@ -107,7 +116,7 @@ export class FormcrearguiaComponent implements OnInit {
       celularDestinatario: Number( this.data.ven_telefono_cliente ),
       ciudadDestinatario: /*11001000,*/ Number( this.data.codeCiudad ),
       barrioDestinatario: this.data.ven_barrio,
-      totalPeso: Number( this.data.pesoReal ),
+      totalPeso: Number( this.data.pesoReal ), 
       totalPesovolumen: Number( this.data.pesoVolumen ),
       totalValorMercancia: Number( this.data.ven_total ),
       observaciones: this.data.ven_observacion || "",
@@ -115,7 +124,7 @@ export class FormcrearguiaComponent implements OnInit {
       tipoUnidad: "TIPO_UND_PAQ",
       tipoEmpaque: "",
       claseEmpaque: "Bolsa",
-      diceContener: "Calzado",
+      diceContener: this.textData,
       kilosReales: Number( this.data.pesoReal ),
       numeroBolsa: Number( this.data.numeroUnidad || 1 ),
       unidadesInternas: Number( this.data.numeroUnidad || 1 ),
@@ -126,7 +135,7 @@ export class FormcrearguiaComponent implements OnInit {
       seleccionAgente: "Victor moises", // string
       paisOrigen: "colombia", // string
       paisDestino: "colombia", // string
-      valorAsegurado: this.data.ven_total + 50000, //number
+      valorAsegurado: this.data.valorAsegurado || 100000, //number
       numeroFactura: "1", //number
       flete: this.data.flete,  // boleando
       valorRecaudar: this.data.ven_total,   //number
@@ -134,7 +143,7 @@ export class FormcrearguiaComponent implements OnInit {
       remitenteBarrio: this.data.ven_barrio, // strint
       destinatarioFechaExpedicion: "2019-10-10", // strint
       destinatarioCelular: this.data.ven_telefono_cliente, // number
-      observacionAdicional: "mercancia nacional", //string
+      observacionAdicional: "mercancia nacional", //string 
       transportadoraSelect: "ENVIA", //string
       txtUnidades: this.data.numeroUnidad || 1,
       txtPeso: this.data.pesoReal,
@@ -147,7 +156,8 @@ export class FormcrearguiaComponent implements OnInit {
   }
 
   submit(){
-    this.rellenoData();
+    this.data2.diceContener = this.textData;
+    this.data2.txtDice = this.textData;
     if( this.btndisabled ) return false;
     this.btndisabled = true;
     this._ventas.createFelte( this.data2 ).subscribe( ( res:any ) => {

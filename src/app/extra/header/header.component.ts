@@ -16,6 +16,7 @@ import { NotificacionesService } from 'src/app/servicesComponents/notificaciones
 import { FormventasComponent } from 'src/app/dashboard-config/form/formventas/formventas.component';
 import { FormtestimoniosComponent } from 'src/app/dashboard-config/form/formtestimonios/formtestimonios.component';
 import { CategoriasService } from 'src/app/servicesComponents/categorias.service';
+import { DialogconfirmarPedidoComponent } from '../dialogconfirmar-pedido/dialogconfirmar-pedido.component';
 
 const URLFRON = environment.urlFront;
 
@@ -72,7 +73,7 @@ export class HeaderComponent implements OnInit {
     public dialog: MatDialog,
     private _store: Store<CART>,
     private _user: UsuariosService,
-    private _tools: ToolsService,
+    public _tools: ToolsService,
     private _notificaciones: NotificacionesService,
     private _venta: VentasService,
     private _categorias: CategoriasService
@@ -186,13 +187,38 @@ export class HeaderComponent implements OnInit {
   }
 
   getCarrito(){
-    setInterval(()=>{ 
-      this.getVentas();
-    }, 5000);
+    this.getVentas();
+    /*setInterval(()=>{ 
+    }, 5000);*/
   }
 
   pedidosSubmit(){
-    if( !this.dataUser.id ) return window.open( this.urlwhat );
+    if( !this.dataUser.id ) {
+      this.data.listCart = this.listCart || [];
+      const dialogRef = this.dialog.open(DialogconfirmarPedidoComponent,{
+        data: { datos: this.data }
+      });
+  
+      dialogRef.afterClosed().subscribe(result => {
+        console.log(`Dialog result:`, result );
+        this.urlwhat+= ` ${encodeURIComponent(`
+        Para confirmar adquiere este producto
+        Mis Datos
+        Nombre de cliente: ${ result.nombre }
+        *celular:*${ result.telefono }
+        Ciudad: ${ result.ciudad }
+        Barrio: ${ result.barrio } 
+        Dirección: ${ result.direccion }
+        cedula: ${ result.cedula }
+  
+        TOTAL FACTURA ${( result.total )}
+        🤝Gracias por su atención y quedo pendiente para recibir por este medio la imagen de la guía de despacho`)}`;
+        window.open( this.urlwhat );
+        let accion = new CartAction( {}, 'drop');
+        this._store.dispatch( accion );
+        return true;
+      });
+    }
     else{
       const dialogRef = this.dialog.open(FormventasComponent,{
         data: { datos: {} }
@@ -242,8 +268,16 @@ export class HeaderComponent implements OnInit {
     console.log( this.porcentajeUser,this.namePorcentaje )
     for(let row of this.listCart){
       //texto+= ` productos: ${ row.titulo } codigo: ${ row.codigo } talla: ${ row.tallaSelect } cantidad: ${ row.cantidad } precio: ${ row.costo } precio Total: ${ row.costoTotal } foto: ${ row.foto } color ${ row.color || 'default'}`;
-      texto+= ` ${ row.foto } talla ${ row.tallaSelect } color ${ row.color || 'default' } ref:${ row.codigo } y el valor ${ this._tools.monedaChange( 3, 2, row.costo ) } `;
-      this.data.total+= row.loVendio * row.cantidad || 0;
+      texto+= `${ encodeURIComponent(` 
+        Foto: ${ row.foto } 
+        Talla: ${ row.tallaSelect } 
+        Color ${ row.color || 'default' } 
+        Ref:${ row.codigo } 
+        Valor: ${ this._tools.monedaChange( 3, 2, row.costo ) } 
+        >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>><<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
+        `)
+      }`;
+      this.data.total+= row.loVendio || 0;
       if ( this.namePorcentaje == "dropshipping básico" ) this.data.totalGanancias+= ( row.costoTotal * ( this.dataUser.porcentaje || 10 ) / 100 );
       else this.data.totalGanancias+= ( row.loVendio - ( row.costoTotal ) ) || 0;
     }

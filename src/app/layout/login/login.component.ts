@@ -17,7 +17,8 @@ export class LoginsComponent implements OnInit {
   data:any = {};
   disableRestarure:boolean = true;
   disableSubmit:boolean = true;
-
+  disabled:boolean = false;
+  vista:string = "inicial";
   constructor(
     private _user: UsuariosService,
     private _tools: ToolsService,
@@ -56,6 +57,17 @@ export class LoginsComponent implements OnInit {
 
   registre(){
     
+  }
+
+  cambiosPass(){
+    if( this.disabled ) return false;
+    this.disabled = true;
+    this._user.olvidoPass( this.data ).subscribe(( res:any )=>{
+      this._tools.tooast( { title: "Actaulizada la Contraseña por Favor revisar correo electronico" } );
+      this.disabled = false;
+      this.data = {};
+      
+    }, (error) => { console.log( error ); this._tools.tooast({ title:"Error "+ error.error.data ,icon: "error" }); this.disabled = false; } )
   }
 
   borrarCache(){

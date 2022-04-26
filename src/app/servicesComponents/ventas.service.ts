@@ -25,4 +25,10 @@ export class VentasService {
   createFelte(query:any){
     return this._model.querys('tblventas/createFlete',query, 'post');
   }
+  getMontos(query:any){
+    return this._model.querys('tblventas/getDineroDetalle',query, 'post');
+  }
+  getFleteValor(query:any){
+    return this._model.querys('tblventas/getFleteValor',query, 'post');
+  }
 }

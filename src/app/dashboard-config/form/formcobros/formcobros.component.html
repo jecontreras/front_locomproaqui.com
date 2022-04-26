@@ -21,6 +21,11 @@
                 </ngx-dropzone-image-preview>
             </ngx-dropzone>
         </div>
+        <div class="form-group col-md-6 col-sm-4 col-lg-4 col-xs-4" *ngIf="data.id">
+            <button class="btn btn-primary btn-just-icon btn-round" (click)="openVentasList()">
+                Ventas Solicitadas
+            </button>
+        </div>
         <div class="form-group col-md-6 col-sm-4 col-lg-4 col-xs-4">
             <label for="exampleFormControlSelect1">Pais Donde vas a retirar</label>
             <select class="form-control form-control-sm" [(ngModel)]="data.cob_pais">
@@ -120,10 +125,18 @@
             <label>Devoluciones - </label>
             <input type="number" disabled [(ngModel)]="data.devoluciones" class="form-control form-control-sm">
         </div>
+        <div class="form-group col-md-6 col-sm-4 col-lg-4 col-xs-4" *ngIf="data.id">
+            <label>Valor Total del flete -</label>
+            <input type="number" disabled [(ngModel)]="data.sumaFlete" class="form-control form-control-sm">
+        </div>
         <div class="form-group col-md-6 col-sm-4 col-lg-4 col-xs-4">
             <label>Total Dinero Recibir </label>
             <input type="number" disabled [(ngModel)]="data.totalrecibir" class="form-control form-control-sm">
         </div>
+        <!--<div class="form-group col-md-6 col-sm-4 col-lg-4 col-xs-4">
+            <label>Total Dinero Recibir </label>
+            <input type="number" disabled [(ngModel)]="data.cob_monto" class="form-control form-control-sm">
+        </div>-->
         <div class="form-group col-12">
             <label>Descripcion</label>
             <textarea class="form-control" [(ngModel)]="data.cob_descripcion" rows="3"></textarea>

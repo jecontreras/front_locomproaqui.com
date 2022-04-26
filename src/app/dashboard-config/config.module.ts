@@ -55,6 +55,7 @@ import { MisDespachoComponent } from './components/mis-despacho/mis-despacho.com
 import { FormempresaComponent } from './form/formempresa/formempresa.component';
 import {AutocompleteLibModule} from 'angular-ng-autocomplete';
 import { FormcrearguiaComponent } from './form/formcrearguia/formcrearguia.component';
+import { FormlistventasComponent } from './form/formlistventas/formlistventas.component';
 
 
 @NgModule({
@@ -72,7 +73,8 @@ import { FormcrearguiaComponent } from './form/formcrearguia/formcrearguia.compo
     FormcatalogoComponent,
     ProductosOrdenarComponent,
     FormempresaComponent,
-    FormcrearguiaComponent
+    FormcrearguiaComponent,
+    FormlistventasComponent
   ],
   declarations: [
     MainComponent,
@@ -109,7 +111,8 @@ import { FormcrearguiaComponent } from './form/formcrearguia/formcrearguia.compo
     VerProveedorComponent,
     MisDespachoComponent,
     FormempresaComponent,
-    FormcrearguiaComponent
+    FormcrearguiaComponent,
+    FormlistventasComponent
   ],
   imports: [
     CommonModule,

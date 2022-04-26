@@ -23,8 +23,8 @@ export class AuthInterceptor implements HttpInterceptor {
         // console.log("*******", this.token);
         req = req.clone({
             setHeaders: {
-                'Content-Type': 'application/json; charset=utf-8',
-                'Accept': 'application/json',
+                //'Content-Type': 'application/json; charset=utf-8',
+                //'Accept': 'application/json',
                 'authorization': this.token || 'Bearer',
             },
         });
