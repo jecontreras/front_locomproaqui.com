@@ -124,6 +124,7 @@ export class FormventasComponent implements OnInit {
       this.suma();
       this.data.fleteValor = 0;
     }
+    this.listCiudades = this.listCiudades.filter( ( row:any )=> row.code > 0 );
   }
 
   getArticulos() {
@@ -232,7 +233,7 @@ export class FormventasComponent implements OnInit {
   }
 
   async submit() {
-    let validprecio = await this.precioRutulo();
+    let validprecio = await this.precioRutulo( false );
     if( !validprecio ) {
       return this._tools.presentToast("debes agregar la ciudad del cliente");
     }
@@ -483,7 +484,9 @@ export class FormventasComponent implements OnInit {
     window.open( url )
   }
 
-  async precioRutulo(){
+  async precioRutulo( ev:any ){
+    console.log( ev );
+    if( ev.state ) if( ev ) this.data.ciudadDestino = ev;
     return new Promise( resolve =>{
       if( !this.data.ciudadDestino ) { resolve( false ); return false;}
       if( !this.data.ciudadDestino.code ) { resolve( false ); return false;}
@@ -524,12 +527,23 @@ export class FormventasComponent implements OnInit {
       }
       this._ventas.getFleteValor( data ).subscribe(( res:any )=>{
         console.log( "****", res )
-        this.data.fleteValor = res.data.flteTotal;
+        this.data.fleteValor = res.data.fleteTotal;
+        if( this.data.fleteValor == 0 ) { this._tools.confirm( { title: "Error", detalle: "Lo sentimos no tenemos contraentrega para este destino ( Te ofrecemos el siguiente metodo, para que puedas realizar esta venta que tu cliente deposite a nuestra empresa atrevez de bancolombia cuenta de ahorros 82000049227 )", icon: "warning" } ); return resolve( false ) }
+        else this._tools.confirm( { title: "Completado", detalle: "El valor del envio para la ciudad "+ this.data.ciudadDestino.name + " es de " + this._tools.monedaChange( 3, 2, this.data.fleteValor ), icon: "succes" } );
         this.suma();
         resolve( true );
       },()=>resolve( false ));
     });
     
+  }
+
+  borrarCart( data:any ){
+    if( this.data.id ) return false;
+    console.log( data )
+    this.listCarrito = this.listCarrito.filter( ( row:any )=> row.id !== data.id );
+    this.suma();
+    let accion = new CartAction( data, 'delete' );
+    this._store.dispatch( accion );
   }
 
 

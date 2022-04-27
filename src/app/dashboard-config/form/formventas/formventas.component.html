@@ -71,7 +71,7 @@
             <label>Ciudad Destino *</label>
             <!-- <input type="text" class="form-control form-control-sm" [(ngModel)]="data.ciudadDestino"> -->
             <ng-autocomplete [(ngModel)]="data.ciudadDestino" [data]="listCiudades" [searchKeyword]="keyword" placeHolder="Buscar Ciudad" autocomplete="off"
-                historyIdentifier="listCiudades" [itemTemplate]="itemTemplate" [notFoundTemplate]="notFoundTemplate" (blur)="precioRutulo()">
+                historyIdentifier="listCiudades" [itemTemplate]="itemTemplate" [notFoundTemplate]="notFoundTemplate" (selected)='precioRutulo($event)'>
             </ng-autocomplete>
 
             <ng-template #itemTemplate let-item>
@@ -87,7 +87,7 @@
                 <div [innerHTML]="notFound"></div>
             </ng-template>
             <div>
-                <button type="button" class="btn btn-warning" (click)="precioRutulo()"> Consultar Valor del Flete </button>
+                <button type="button" class="btn btn-warning" (click)="precioRutulo( false )"> Consultar Valor del Flete </button>
             </div>
         </div>
         <div class="form-group col-md-6 col-sm-4 col-lg-4 col-xs-6">
@@ -131,6 +131,7 @@
                                 <input disabled currencyMask [(ngModel)]="item.costo" class="form-control form-control-sm" [options]="opcionCurrencys"/>
                                 <label for="exampleFormControlInput1">Vr.Vendido:</label>
                                 <input disabled currencyMask [(ngModel)]="item.loVendio" class="form-control form-control-sm" [options]="opcionCurrencys"/>
+                                <button type="button" class="btn btn-danger" *ngIf="!data.id" (click)="borrarCart( item )">Borrar</button>
                             </div>
                         </div>
                     </mat-card-actions>

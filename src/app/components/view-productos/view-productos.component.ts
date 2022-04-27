@@ -338,4 +338,8 @@ export class ViewProductosComponent implements OnInit {
 
   }
 
+  alertPromocion(){
+    if( this.data.checkpromo ) this._tools.confirm( { title: "Importante", detalle: "Recuerda que solo aplica despues de 2 pares en adelante la promocion no sera valido con 1 solo par tenlo en cuenta", icon: "warning"})
+  }
+
 }

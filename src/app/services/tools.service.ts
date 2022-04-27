@@ -66,7 +66,7 @@ export class ToolsService {
       icon: text.icon || 'success',
       title: text.title || 'Your work has been saved',
       showConfirmButton: text.show || false,
-      timer: 1500
+      timer: 3000
     });
   }
   confirm(text: any) {
@@ -77,7 +77,7 @@ export class ToolsService {
       showCancelButton: true,
       confirmButtonColor: text.confirColor || '#3085d6',
       cancelButtonColor: text.cancelColor || '#d33',
-      confirmButtonText: text.confir || 'Yes, delete it!'
+      confirmButtonText: text.confir || 'Aceptar!'
     });
   }
 

@@ -90,7 +90,7 @@
                     </div>
                     <div class="col-4" *ngIf="data.precio_vendedor">
                         <div>
-                            <input type="checkbox" [(ngModel)]="data.checkpromo" class="form-check-input">
+                            <input type="checkbox" [(ngModel)]="data.checkpromo" class="form-check-input" (ngModelChange)="alertPromocion()">
                             <label class="form-check-label" for="exampleCheck1">Promoción</label>
                         </div>
                     </div>
@@ -98,7 +98,7 @@
                         <label>Lo Vendiste</label>
                         <input currencyMask [(ngModel)]="data.encuanto" class="form-control form-control-sm" [options]="opcionCurrencys" (blur)="validando()"/>
                     </div>
-                    <div class="col-4">
+                    <div class="col-4" *ngIf="!data.precio_vendedor">
                         <img style="width: 50%;" src="./assets/img/gratis.jpg" alt="">
                     </div>
                     <div class="col-12" *ngIf="data.checkMayor == 1">

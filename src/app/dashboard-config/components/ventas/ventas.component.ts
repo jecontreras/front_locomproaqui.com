@@ -43,7 +43,7 @@ export class VentasComponent implements OnInit {
     page: 0,
     limit: 10
   };
-  Header:any = [ 'Acciones','Tipo Venta','Vendedor','Nombre Cliente','Teléfono Cliente','Ganancia Vendedor', 'Valor de flete', 'Fecha Venta','Estado', 'Pagado', 'Ganancia'];
+  Header:any = [ 'Acciones','Numero Guia','Vendedor','Nombre Cliente','Teléfono Cliente','Ganancia Vendedor', 'Valor de flete', 'Fecha Venta','Estado', 'Pagado', 'Ganancia'];
   $:any;
   public datoBusqueda = '';
 
@@ -163,7 +163,7 @@ export class VentasComponent implements OnInit {
     };
     this._tools.confirm({title:"Eliminar", detalle:"Deseas Eliminar Dato", confir:"Si Eliminar"}).then((opt)=>{
       if(opt.value){
-        if(obj.ven_estado == 1) { this._tools.presentToast("Error no puedes ya Eliminar la venta ya esta aprobada"); return false; }
+        if( obj.ven_estado == 1 || obj.ven_estado == 2 || obj.ven_estado == 3 || obj.ven_estado == 4 ) { this._tools.presentToast("Error no puedes Eliminar esta venta por tener datos de despachado"); return false; }
         this._ventas.update(data).subscribe((res:any)=>{
           this.dataTable.dataRows.splice(idx, 1);
           this._tools.presentToast("Eliminado")
@@ -204,7 +204,7 @@ export class VentasComponent implements OnInit {
   }
 
   buscar() {
-    this.loader = false;
+    this.loader = true;
     this.notscrolly = true 
     this.notEmptyPost = true;
     this.dataTable.dataRows = [];
@@ -223,11 +223,6 @@ export class VentasComponent implements OnInit {
       this.query.where.or = [
         {
           ven_nombre_cliente: {
-            contains: this.datoBusqueda|| ''
-          }
-        },
-        {
-          ven_usu_creacion: {
             contains: this.datoBusqueda|| ''
           }
         },
@@ -265,7 +260,8 @@ export class VentasComponent implements OnInit {
   }
 
   buscarEstado(){
-    this.loader = false;
+    if( this.loader ) return false;
+    this.loader = true;
     this.notscrolly = true 
     this.notEmptyPost = true;
     this.dataTable.dataRows = [];
