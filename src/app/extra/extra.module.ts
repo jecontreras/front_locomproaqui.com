@@ -9,16 +9,19 @@ import { RouterModule } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { NgImageSliderModule } from 'ng-image-slider';
 import { DialogconfirmarPedidoComponent } from './dialogconfirmar-pedido/dialogconfirmar-pedido.component';
+import { MediosPagosComponent } from './medios-pagos/medios-pagos.component';
 
 @NgModule({
   entryComponents:[
-    DialogconfirmarPedidoComponent
+    DialogconfirmarPedidoComponent,
+    MediosPagosComponent
   ],
   declarations: [
     HeaderComponent,
     FooterComponent,
     MenuLateralComponent,
-    DialogconfirmarPedidoComponent
+    DialogconfirmarPedidoComponent,
+    MediosPagosComponent
   ],
   imports: [
     MyOwnCustomMaterialModule,

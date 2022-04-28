@@ -17,6 +17,7 @@ import { VentasProductosService } from 'src/app/servicesComponents/ventas-produc
 import { CartAction } from 'src/app/redux/app.actions';
 import { DANEGROUP } from 'src/app/JSON/dane-nogroup';
 import { FormcrearguiaComponent } from '../formcrearguia/formcrearguia.component';
+import { MediosPagosComponent } from 'src/app/extra/medios-pagos/medios-pagos.component';
 
 const URL = environment.url;
 
@@ -86,6 +87,7 @@ export class FormventasComponent implements OnInit {
       }) || [];
       if (this.dataUser.usu_perfil.prf_descripcion == 'administrador' || this.dataUser.usu_perfil.prf_descripcion == 'subAdministrador') this.superSub = true;
       else this.superSub = false;
+      //this.superSub = false;
       try {
         this.rolUser = this.dataUser.usu_perfil.prf_descripcion;
         if (this.dataUser.categoriaPerfil) {
@@ -121,6 +123,7 @@ export class FormventasComponent implements OnInit {
       this.data.usu_clave_int = this.dataUser.id;
       this.data.ven_usu_creacion = this.dataUser.usu_email;
       this.data.ven_fecha_venta = moment().format('YYYY-MM-DD');
+      this.data.cubreEnvio = "tienda";
       this.suma();
       this.data.fleteValor = 0;
     }
@@ -150,7 +153,8 @@ export class FormventasComponent implements OnInit {
 
   onSelect(event: any) {
     //console.log(event, this.files);
-    this.files = [event.addedFiles[0]]
+    this.files = [event.addedFiles[0]];
+    if( this.id ) if( this.files.length > 0 ) this.subirFile( 'ven_imagen_conversacion' );
   }
 
   onRemove(event) {
@@ -176,7 +180,7 @@ export class FormventasComponent implements OnInit {
 
   // }
 
-  subirFile(opt: boolean) {
+  subirFile( opt: string ) {
     this.disabled = true;
     this.disableBtnFile = true;
     this.disabledButton = true;
@@ -184,14 +188,11 @@ export class FormventasComponent implements OnInit {
     form.append('file', this.files[0]);
     this._tools.ProcessTime({ tiempo: 7000, title: "Esperar mientras carga la imagen" });
     this._archivos.create(form).subscribe((res: any) => {
-      this.data.ven_imagen_producto = res.files;
+      this.data[opt] = res.files;
       this.disabled = false;
       this.disableBtnFile = false;
       this.disabledButton = false;
       if (this.id) this.submit();
-      else {
-        if (opt) if ((this.data.ven_tipo == 'whatsapp' || this.data.ven_tipo == 'WHATSAPP') && this.data.ven_imagen_producto) this.submit();
-      }
     }, (error) => { console.error(error); this._tools.presentToast("Error de servidor al subir una imagen"); this.disableBtnFile = false; this.disabledButton = false; });
 
   }
@@ -213,30 +214,50 @@ export class FormventasComponent implements OnInit {
 
   suma() {
     //console.log( this.data, this.listCarrito, this.namePorcentaje );
+    //if( this.superSub == false && this.id ) return false;
     let total: number = 0;
     let total1: number = 0;
     this.data.ven_ganancias = 0;
+    console.log( this.listCarrito)
     for (let row of this.listCarrito) {
       if (!row.costo || !row.cantidad) continue;
       total += ( Number( row.costo ) * Number( row.cantidad ) );
       if( !row.id ) row.loVendio = row.costoTotal;
+      if( row.costoTotal === 0 ) row.costoTotal = ( row.costo * row.cantidad ) || 0;
       total1 += ( Number( row.loVendio ) );
-      //console.log("********", total1 );
+      console.log("********", row );
       if ( this.namePorcentaje == "dropshipping básico" ) row.comision = ( row.costoTotal * ( this.dataUser.porcentaje || 10 ) / 100 );
       else this.data.ven_ganancias+= ( ( row.loVendio  ) - row.costoTotal ) || 0;
 
     }
+
     this.data.ven_totalDistribuidor = total;
     this.data.ven_total = total1;
     if ( this.namePorcentaje == "dropshipping básico" ) this.data.ven_ganancias = (total * ( this.dataUser.porcentaje || 10 ) / 100 );
-    else this.data.ven_ganancias = this.data.ven_ganancias - ( this.data.fleteValor || 0 ) ;
+    else { 
+      if( this.data.cubreEnvio == 'tienda') this.data.ven_ganancias = this.data.ven_ganancias - ( this.data.fleteValor || 0 ) ;
+      else this.data.ven_total = this.data.ven_total + ( this.data.fleteValor || 0 ) ;
+    }
   }
 
   async submit() {
-    let validprecio = await this.precioRutulo( false );
-    if( !validprecio ) {
-      return this._tools.presentToast("debes agregar la ciudad del cliente");
+    console.log( this.data.ven_tipo == 'pago_anticipado', !this.data.ven_imagen_conversacion, this.data )
+    if( this.data.ven_tipo == 'pago_anticipado' && !this.data.ven_imagen_conversacion ) { 
+      if( this.files.length >0 ) this.subirFile( 'ven_imagen_conversacion' );
+      else { 
+        this._tools.confirm( { title: "Importante", detalle: "Recuerda que debes primero darnos el soporte de pago para despachar el pedido + el valor del envio", icon:"warning" } ); 
+      }
     }
+    if( this.data.ven_tipo == 'pago_anticipado' && this.data.fleteValor <= 4000 && this.superSub == true ) { 
+      let valor:any = await this._tools.alertInput({
+        title: "Valor del envio",
+        input: "number",
+        confirme: "Aceptar"
+      });
+      console.log("*******", valor )
+      this.data.fleteValor = Number( valor.value );
+    }
+    if( this.data.ven_tipo == 'pago_anticipado' && this.data.fleteValor <= 4000 && this.superSub == false ) this._tools.confirm( { title: "Importante", detalle: "Recuerda que Falta el valor del envio eso afectara en tu ganancia", icon:"warning" } ); 
     try {
       if( this.data.ciudadDestino.code ){
         this.data.codeCiudad = this.data.ciudadDestino.code;
@@ -245,7 +266,8 @@ export class FormventasComponent implements OnInit {
       this.disabled = true;
       this.disabledButton = true;
       if (this.id) {
-        if (!this.superSub) if (this.clone.ven_estado == 1) { this._tools.presentToast("Error no puedes ya editar la venta ya esta aprobada"); return false; }
+        //console.log("****", this.superSub, this.clone )
+        if (!this.superSub) if ( this.clone.ven_estado == 1 || this.clone.ven_estado == 2 || this.clone.ven_estado == 3 || this.clone.ven_estado == 4 ) { this._tools.presentToast("Error no puedes ya editar la venta ya esta aprobada"); return false; }
         this.updates();
       }
       else { this.suma(); this.guardar(); }
@@ -329,6 +351,7 @@ export class FormventasComponent implements OnInit {
     if( !this.data.ciudadDestino ) { this._tools.tooast( { title: "Error falta la ciudad de destino del cliente", icon: "error" } ); return false; }
     if( !this.data.ven_barrio ) { this._tools.tooast( { title: "Error falta el barrio de destino del cliente", icon: "error" } ); return false; }
     if( !this.data.ven_direccion_cliente ) { this._tools.tooast( { title: "Error falta la direccion del cliente", icon: "error" } ); return false; }
+    if( !this.data.cubreEnvio ) { this._tools.tooast( { title: "Error falta Quien Paga el Envio", icon: "error" } ); return false; }
 
     return true;
   }
@@ -398,8 +421,10 @@ export class FormventasComponent implements OnInit {
 
   updates() {
     let data = _.clone( this.data );
-    data = _.omit( data, ['usu_clave_int','ven_ganancias','ven_total']);
-    if( this.superSub == false ) data = _.omit( data, ['usu_clave_int','ven_ganancias','ven_total','ven_estado']);
+    data = _.omit( data, ['usu_clave_int']);
+    if( this.superSub == false ) { 
+      data = _.omit( data, ['usu_clave_int','ven_estado']);
+  }
     data = _.omitBy(data, _.isNull);
     this._ventas.update( data ).subscribe((res: any) => {
       this._tools.presentToast("Actualizado");
@@ -486,7 +511,16 @@ export class FormventasComponent implements OnInit {
 
   async precioRutulo( ev:any ){
     console.log( ev );
+    if( this.id && this.data.ven_estado != 1 ) return false;
     if( ev.state ) if( ev ) this.data.ciudadDestino = ev;
+    let result:any;
+    result = await this.PrecioContraEntrega();
+    if( result == false ) await this.PrecioNormal();
+    console.log( result )
+    
+  }
+
+  async PrecioContraEntrega(){
     return new Promise( resolve =>{
       if( !this.data.ciudadDestino ) { resolve( false ); return false;}
       if( !this.data.ciudadDestino.code ) { resolve( false ); return false;}
@@ -494,7 +528,7 @@ export class FormventasComponent implements OnInit {
       this.data.pesoVolumen = ( ( parseFloat( this.data.alto ) * parseFloat( this.data.largo ) * parseFloat( this.data.ancho ) ) / 5000 ) || 1;
       this.data.pesoVolumen = Math.round( this.data.pesoVolumen );
       for( let row of this.listCarrito ){
-        this.textData+= `${ row.cantidad } REF:${ row['codigoImg'] } ${ row.tallaSelect }, 
+        this.textData+= `${ row.cantidad } ${ row['codigoImg'] } ${ row.tallaSelect }, 
         `
       }
       let data:any ={
@@ -524,17 +558,70 @@ export class FormventasComponent implements OnInit {
         "txtDireccionPara": this.data.ven_direccion_cliente,
         "txtDice": this.textData,
         "txtNotas": "ok",
-      }
+      };
+      
       this._ventas.getFleteValor( data ).subscribe(( res:any )=>{
         console.log( "****", res )
         this.data.fleteValor = res.data.fleteTotal;
-        if( this.data.fleteValor == 0 ) { this._tools.confirm( { title: "Error", detalle: "Lo sentimos no tenemos contraentrega para este destino ( Te ofrecemos el siguiente metodo, para que puedas realizar esta venta que tu cliente deposite a nuestra empresa atrevez de bancolombia cuenta de ahorros 82000049227 )", icon: "warning" } ); return resolve( false ) }
-        else this._tools.confirm( { title: "Completado", detalle: "El valor del envio para la ciudad "+ this.data.ciudadDestino.name + " es de " + this._tools.monedaChange( 3, 2, this.data.fleteValor ), icon: "succes" } );
+        if( this.data.fleteValor == 0 ) { this._tools.confirm( { title: "Error", detalle: "Lo sentimos no tenemos Cubrimiento para esa zona", icon: "warning" } ); return resolve( false ) }
+        this.data.ven_tipo = "contraentrega"; 
+        this._tools.confirm( { title: "Completado", detalle: "El valor del envio para la ciudad "+ this.data.ciudadDestino.name + " es de " + this._tools.monedaChange( 3, 2, this.data.fleteValor ), icon: "succes" } );
         this.suma();
         resolve( true );
       },()=>resolve( false ));
     });
-    
+  }
+
+  async PrecioNormal(){
+    return new Promise( resolve =>{
+      if( !this.data.ciudadDestino ) { resolve( false ); return false;}
+      if( !this.data.ciudadDestino.code ) { resolve( false ); return false;}
+
+      this.data.pesoVolumen = ( ( parseFloat( this.data.alto ) * parseFloat( this.data.largo ) * parseFloat( this.data.ancho ) ) / 5000 ) || 1;
+      this.data.pesoVolumen = Math.round( this.data.pesoVolumen );
+      for( let row of this.listCarrito ){
+        this.textData+= `${ row.cantidad } ${ row['codigoImg'] } ${ row.tallaSelect }, 
+        `
+      }
+      let data:any ={
+        "selectEnvio": "envioNormal",
+        "idCiudadDestino": this.data.ciudadDestino.code,
+        "idCiudadOrigen": "54001000",
+        "valorMercancia": Number( this.data.ven_total ),
+        "fechaRemesa": moment( this.data.fecha ).format( "YYYY-MM-DD" ),
+        "idUniSNegogocio": 1,
+        "numeroUnidad": 1,
+        "pesoReal": 1,
+        "pesoVolumen": this.data.pesoVolumen,
+        "alto": 8,
+        "largo": 28,
+        "ancho": 21,
+        "tipoEmpaque": "",
+        "drpCiudadOrigen": "CUCUTA-NORTE DE SANTANDER",
+        "txtIdentificacionDe": this.dataUser.usu_documento || 1090519754,
+        "txtTelefonoDe": this.dataUser.usu_telefono,
+        "txtDireccionDe": this.dataUser.usu_direccion,
+        "txtCod_Postal_Rem": 540001,
+        "txtEMailRemitente": this.dataUser.usu_email,
+        "txtPara": this.data.ven_nombre_cliente,
+        "txtIdentificacionPara": this.data.cob_num_cedula_cliente,
+        "drpCiudadDestino": this.data.ciudadDestino.name,
+        "txtTelefonoPara": this.data.ven_telefono_cliente,
+        "txtDireccionPara": this.data.ven_direccion_cliente,
+        "txtDice": this.textData,
+        "txtNotas": "ok",
+      };
+      
+      this._ventas.getFleteValor( data ).subscribe(( res:any )=>{
+        console.log( "****", res )
+        this.data.fleteValor = res.data.fleteTotal;
+        if( this.data.fleteValor == 0 ) { this._tools.confirm( { title: "Error", detalle: "Lo sentimos no tenemos Cubrimiento para esa zona", icon: "warning" } ); return resolve( false ) }
+        this.data.ven_tipo = "pago_anticipado"; 
+        this._tools.confirm( { title: "Completado", detalle: "El valor del envio para la ciudad "+ this.data.ciudadDestino.name + " es de " + this._tools.monedaChange( 3, 2, this.data.fleteValor ), icon: "succes" } );
+        this.suma();
+        resolve( true );
+      },()=>resolve( false ));
+    });
   }
 
   borrarCart( data:any ){
@@ -544,6 +631,16 @@ export class FormventasComponent implements OnInit {
     this.suma();
     let accion = new CartAction( data, 'delete' );
     this._store.dispatch( accion );
+  }
+
+  openMedios(){
+    const dialogRef = this.dialog.open( MediosPagosComponent,{
+      data: { datos: this.data || {} }
+    } );
+
+    dialogRef.afterClosed().subscribe(result => {
+      console.log(`Dialog result: ${result}`);
+    });
   }
 
 

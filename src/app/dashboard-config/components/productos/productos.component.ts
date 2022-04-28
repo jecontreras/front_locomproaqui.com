@@ -44,7 +44,7 @@ export class ProductosComponent implements OnInit {
     page: 0,
     limit: 10
   };
-  Header:any = [ 'Acciones','Foto','Nombre','Codigo', 'Precio', 'Categoria','Estado','Creado'];
+  Header:any = [ 'Acciones','Foto','Nombre','Codigo', 'Cantidades', 'Precio', 'Categoria','Estado','Creado'];
   Header2:any = [ 'Acciones','Foto','Nombre', 'Precio dropshipping pro ', 'Precio Cliente Final','Estado', 'Creado'];
   $:any;
   public datoBusqueda = '';
@@ -152,6 +152,7 @@ export class ProductosComponent implements OnInit {
         this.dataTable.dataRows.push(... response.data);
         this.dataTable.dataRows =_.unionBy(this.dataTable.dataRows || [], response.data, 'id');
         this.loader = false;
+        this.cantidadUnidades();
         this.spinner.hide();
 
         if (response.data.length === 0 ) {
@@ -162,6 +163,17 @@ export class ProductosComponent implements OnInit {
       error => {
         console.log('Error', error);
       });
+  }
+
+  cantidadUnidades(){
+    for( let row of this.dataTable.dataRows ){
+      row['cantidadTallas'] = 0;
+      for( let key of row['listColor'] ){
+        for( let item of key.tallaSelect ){
+          if( item.cantidad ) row['cantidadTallas']+= Number( item.cantidad || 0 );
+        }
+      }
+    }
   }
 
   cargarProveedor() {

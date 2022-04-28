@@ -48,7 +48,8 @@ export class FormcrearguiaComponent implements OnInit {
        alto: 8,
        largo: 28,
        ancho: 21,
-       valorAsegurado: 100000
+       valorAsegurado: 100000,
+       selectEnvio: 'contraEntrega'
       };
       this.data.pesoVolumen = ( ( parseFloat( this.data.alto ) * parseFloat( this.data.largo ) * parseFloat( this.data.ancho ) ) / 5000 ) || 1;
       this.data.pesoVolumen = Math.round( this.data.pesoVolumen );
@@ -59,13 +60,13 @@ export class FormcrearguiaComponent implements OnInit {
 
   rellenoData(){
     for( let row of this.data.articulo ){
-      this.textData+= `${ row.cantidad } REF:${ row['codigoImg'] } ${ row.tallaSelect }, 
+      this.textData+= `${ row.cantidad } ${ row['codigoImg'] } ${ row.tallaSelect }, 
       `
     }
     this.data2 = {
       idCiudadOrigen: "54001000",
       idCiudadDestino: this.data.codeCiudad,
-      selectEnvio: "contraEntrega",
+      selectEnvio: this.data.selectEnvio || 'contraEntrega',
       valorMercancia: this.data.valorMercancia,
       fechaRemesa: moment( this.data.fecha ).format( "YYYY-MM-DD" ),
       idUniSNegogocio: 1,
