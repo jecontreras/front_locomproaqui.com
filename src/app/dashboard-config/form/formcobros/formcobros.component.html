@@ -6,14 +6,14 @@
                 <img [src]="data.fotoPago" class="imgFoto">
             </div>
         </div>
-        <div class="form-group col-12" *ngIf="data.id">
+        <div class="form-group col-12" *ngIf="data.id && superSub">
             <div class="row">
                 <label class="col">Subir Imagen</label>
                 <button class="btn btn-primary btn-just-icon btn-round" (click)="subirFile(false)" *ngIf="files.length > 0">
                     Subir Imagen
                 </button>
             </div>
-            <ngx-dropzone (change)="onSelect($event)">
+            <ngx-dropzone (change)="onSelect($event)" accept="image/jpeg,image/jpg,image/png,image/gif"  multiple="false">
                 <ngx-dropzone-label>Abrir archivos</ngx-dropzone-label>
                 <ngx-dropzone-image-preview ngProjectAs="ngx-dropzone-preview" *ngFor="let f of files" [file]="f"
                     [removable]="true" (removed)="onRemove(f)" multiple="false">

@@ -40,7 +40,7 @@ export class FormventasLiderComponent implements OnInit {
     },
     page: 0
   };
-  Header: any = ['Acciones', 'Tipo Venta', 'Vendedor', 'Nombre Cliente', 'Teléfono Cliente', 'Fecha Venta', 'Productos', 'Cantidad', 'Precio', 'Imagen Producto', 'Estado', 'Motivo Rechazo', 'Tallas'];
+  Header:any = [ 'Acciones','Numero Guia','Vendedor','Nombre Cliente','Teléfono Cliente','Ganancia Vendedor', 'Valor de flete', 'Fecha Venta','Estado', 'Pagado', 'Ganancia'];
   $: any;
   public datoBusqueda = '';
 
@@ -53,7 +53,7 @@ export class FormventasLiderComponent implements OnInit {
 
   constructor(
     public dialog: MatDialog,
-    private _tools: ToolsService,
+    public _tools: ToolsService,
     private _ventas: VentasService,
     private _store: Store<STORAGES>,
     private _user: UsuariosService,
@@ -235,6 +235,41 @@ export class FormventasLiderComponent implements OnInit {
       page: 0
     };
     this.getUserCabeza();
+  }
+
+  openUrl( numero:any, cliente:string, obj:any ){
+    let Url:string = `https://wa.me/57${ numero }?text=Hola Cliente ${ cliente } Este esta es tu guia --> ${ obj.ven_numero_guia } <-- Transportadora Envia >>>>>> url: ' ${ obj.ven_imagen_guia }' <<<<<<`;
+    console.log(Url, obj)
+    window.open( Url );
+  }
+
+  openFoto( foto: string ){
+    window.open( foto );
+  }
+
+  verDetalles( url:string ){
+    window.open( "https://enviosrrapidoscom.web.app/portada/guiadetalles/" + url )
+  }
+
+  openEvidencia( url:string ){
+    window.open( url )
+  }
+
+  btndelete(obj:any, idx:any){
+    let data:any = {
+      id: obj.id,
+      ven_estado: 1,
+      ven_sw_eliminado: 1
+    };
+    this._tools.confirm({title:"Eliminar", detalle:"Deseas Eliminar Dato", confir:"Si Eliminar"}).then((opt)=>{
+      if(opt.value){
+        if( obj.ven_estado == 1 || obj.ven_estado == 2 || obj.ven_estado == 3 || obj.ven_estado == 4 ) { this._tools.presentToast("Error no puedes Eliminar esta venta por tener datos de despachado"); return false; }
+        this._ventas.update(data).subscribe((res:any)=>{
+          this.dataTable.dataRows.splice(idx, 1);
+          this._tools.presentToast("Eliminado")
+        },(error)=>{console.error(error); this._tools.presentToast("Error de servidor") })
+      }
+    });
   }
 
 }

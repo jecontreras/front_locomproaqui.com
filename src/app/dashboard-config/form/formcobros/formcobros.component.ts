@@ -137,6 +137,8 @@ export class FormcobrosComponent implements OnInit {
 
   updates(){
     let data:any = _.omit( this.data, ['usu_clave_int'] );
+    data = _.omitBy( data, _.isNull );
+    if( !data.sumaFlete ) data.sumaFlete = 0;
     if( data.cob_estado == 1 )  data.cob_fecha_pago = moment().format('DD-MM-YYYY HH:MM:SS');
     this._cobros.update( data ).subscribe((res:any)=>{
       this.disabledButton = false;

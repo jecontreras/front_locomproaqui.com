@@ -320,9 +320,10 @@ export class HeaderComponent implements OnInit {
 
   EventMenus(obj:any){
     console.log(obj);
-    if(obj.url == 'login()') this.login();
-    if(obj.url == 'registrar()') this.registrar();
-    if(obj.url == 'salir()') this.salir();
+    if( obj.url == 'login()' ) this.login();
+    if( obj.url == 'registrar()' ) this.registrar();
+    if( obj.url == 'salir()' ) this.salir();
+    if( obj.url == 'ayuda()' ) window.open("https://www.youtube.com/channel/UCVrLNcx0H2COUCBfSWcYI8g/featured");
   }
 
   btnCarrito(){
@@ -503,6 +504,13 @@ export class HeaderComponent implements OnInit {
         url: 'registrar()',
         submenus:[]
       },*/
+      {
+        icons: 'help',
+        nombre: 'Ayuda Material de apoyo',
+        disable: true,
+        url: 'ayuda()',
+        submenus:[]
+      },
       {
         icons: 'exit_to_app',
         nombre: 'Salir',

@@ -155,7 +155,7 @@ export class VentasComponent implements OnInit {
     });
   }
 
-  delete(obj:any, idx:any){
+  btndelete(obj:any, idx:any){
     let data:any = {
       id: obj.id,
       ven_estado: 1,
@@ -182,7 +182,7 @@ export class VentasComponent implements OnInit {
 
   cargarTodos() {
     this.spinner.show();
-    if(this.dataUser.usu_perfil.prf_descripcion == 'administrador') this.query.where.ven_subVendedor = 0;
+    //if(this.dataUser.usu_perfil.prf_descripcion == 'administrador') this.query.where.ven_subVendedor = 0;
     this._ventas.get(this.query)
     .subscribe(
       (response: any) => {

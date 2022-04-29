@@ -511,13 +511,17 @@ export class FormventasComponent implements OnInit {
 
   async precioRutulo( ev:any ){
     console.log( ev );
+    if( this.disabledButton ) return false;
+    this.disabledButton = true;
     if( this.id && this.data.ven_estado != 1 ) return false;
     if( ev.state ) if( ev ) this.data.ciudadDestino = ev;
     let result:any;
     result = await this.PrecioContraEntrega();
-    if( result == false ) await this.PrecioNormal();
-    console.log( result )
-    
+    setTimeout( async ()=>{
+      if( result == false ) await this.PrecioNormal();
+    }, 2000 )
+    console.log( result, this.data )
+    this.disabledButton = false;
   }
 
   async PrecioContraEntrega(){
@@ -563,11 +567,13 @@ export class FormventasComponent implements OnInit {
       this._ventas.getFleteValor( data ).subscribe(( res:any )=>{
         console.log( "****", res )
         this.data.fleteValor = res.data.fleteTotal;
-        if( this.data.fleteValor == 0 ) { this._tools.confirm( { title: "Error", detalle: "Lo sentimos no tenemos Cubrimiento para esa zona", icon: "warning" } ); return resolve( false ) }
-        this.data.ven_tipo = "contraentrega"; 
-        this._tools.confirm( { title: "Completado", detalle: "El valor del envio para la ciudad "+ this.data.ciudadDestino.name + " es de " + this._tools.monedaChange( 3, 2, this.data.fleteValor ), icon: "succes" } );
-        this.suma();
-        resolve( true );
+        if( this.data.fleteValor == 0 ) { this.data.ven_tipo = "pago_anticipado"; this._tools.confirm( { title: "Novedad", detalle: "Lo sentimos no tenemos Cubrimiento para esa zona (CONTRA ENTREGA)", icon: "warning" } ); return resolve( false ) }
+        else {
+          this.data.ven_tipo = "contraentrega"; 
+          this._tools.confirm( { title: "Completado", detalle: "El valor del envio para la ciudad "+ this.data.ciudadDestino.name + " es de " + this._tools.monedaChange( 3, 2, this.data.fleteValor ), icon: "succes" } );
+          this.suma();
+          resolve( true );
+        }
       },()=>resolve( false ));
     });
   }
@@ -613,13 +619,17 @@ export class FormventasComponent implements OnInit {
       };
       
       this._ventas.getFleteValor( data ).subscribe(( res:any )=>{
-        console.log( "****", res )
         this.data.fleteValor = res.data.fleteTotal;
-        if( this.data.fleteValor == 0 ) { this._tools.confirm( { title: "Error", detalle: "Lo sentimos no tenemos Cubrimiento para esa zona", icon: "warning" } ); return resolve( false ) }
-        this.data.ven_tipo = "pago_anticipado"; 
-        this._tools.confirm( { title: "Completado", detalle: "El valor del envio para la ciudad "+ this.data.ciudadDestino.name + " es de " + this._tools.monedaChange( 3, 2, this.data.fleteValor ), icon: "succes" } );
-        this.suma();
-        resolve( true );
+        console.log( "****", res, this.data.fleteValor )
+        if( this.data.fleteValor == 0 ) { this.data.ven_tipo = "pago_anticipado"; this.openMedios(); return resolve( false ) }
+        else{
+          this.data.ven_tipo = "pago_anticipado"; 
+          //console.log("Hola2222");
+          this._tools.confirm( { title: "Completado", detalle: "El valor del envio para la ciudad "+ this.data.ciudadDestino.name + " es de " + this._tools.monedaChange( 3, 2, this.data.fleteValor ), icon: "succes" } );
+          this.suma();
+          this.openMedios();
+          resolve( true );
+        }
       },()=>resolve( false ));
     });
   }

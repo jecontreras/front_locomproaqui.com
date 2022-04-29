@@ -6,7 +6,7 @@
           <i class="material-icons icoss">menu</i>
         </button>
         <a [routerLink]="[ '/pedidos' ]">
-          <img [src]="urlLogo" style="width: 177px;">
+          <img [src]="urlLogo" style="width: 177px; height: 55px;">
         </a>
       </div>
       <div class="buscadorOcultar">
@@ -213,11 +213,12 @@
               </div>
             </li>
             <li class="active col-12 paddingLeft pointer" *ngFor="let item of menus2">
-              <a routerLinkActive="active" translate="false" (click)="EventMenus(item)" *ngIf="item.disable"
-                class="colorMenu">
-                <i class="material-icons textInf">{{ item.icons }}</i>
-                <span class="p">{{ item.nombre }}</span>
-              </a>
+              <div *ngIf="item.disable" class="colorMenu padding2">
+                <a routerLinkActive="active" translate="false" (click)="EventMenus(item)" class="colorMenu" >
+                  <i class="material-icons textInf">{{ item.icons }}</i>
+                  <span class="p">{{ item.nombre }}</span>
+                </a>
+              </div>
             </li>
           </ul>
         </ng-container>

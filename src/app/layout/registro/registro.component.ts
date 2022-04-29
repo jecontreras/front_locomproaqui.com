@@ -264,4 +264,8 @@ async validador( opt:number, stepper: MatStepper ){
   }
 }
 
+eventEstado(){
+  if( this.data.fileDise ) { this.disabledFile = true; this.data.usu_imagen='./assets/logo.png' }
+}
+
 }

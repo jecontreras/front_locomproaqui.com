@@ -31,7 +31,7 @@ export class FormlistventasComponent implements OnInit {
     page: 0,
     limit: 100
   };
-  Header:any = [ 'Opciones', 'Vendedor','Nombre Cliente','Teléfono Cliente','Pagado' , 'valor flete', 'Fecha Venta', 'Estado','Ganancia', 'Numero Guia', 'Evidencia' ];
+  Header:any = [ 'Opciones', 'Vendedor','Nombre Cliente','Teléfono Cliente','Ganancia Vendedor' , 'valor flete', 'Fecha Venta', 'Estado','Ganancia', 'Numero Guia', 'Evidencia' ];
   $:any;
   
   notscrolly:boolean=true;

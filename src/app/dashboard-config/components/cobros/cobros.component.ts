@@ -44,6 +44,7 @@ export class CobrosComponent implements OnInit {
   notscrolly:boolean=true;
   notEmptyPost:boolean = true;
   btnDisableRetiro:boolean = true;
+  activando:boolean = false;
 
   constructor(
     private _cobros: CobrosService,
@@ -57,7 +58,8 @@ export class CobrosComponent implements OnInit {
     this._store.subscribe((store: any) => {
       store = store.name;
       this.dataUser = store.user || {};
-      if(this.dataUser.usu_perfil.prf_descripcion != 'administrador') this.query.where.usu_clave_int = this.dataUser.id;
+      if(this.dataUser.usu_perfil.prf_descripcion != 'administrador') { this.query.where.usu_clave_int = this.dataUser.id; }
+      if(this.dataUser.usu_perfil.prf_descripcion == 'administrador') this.activando = true;
     });
 
   }

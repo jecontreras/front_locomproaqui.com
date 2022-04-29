@@ -170,7 +170,7 @@ export class ProductosComponent implements OnInit {
       row['cantidadTallas'] = 0;
       for( let key of row['listColor'] ){
         for( let item of key.tallaSelect ){
-          if( item.cantidad ) row['cantidadTallas']+= Number( item.cantidad || 0 );
+          if( item.cantidad && item.check ) row['cantidadTallas']+= Number( item.cantidad || 0 );
         }
       }
     }

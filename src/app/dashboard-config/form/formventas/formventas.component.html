@@ -17,6 +17,13 @@
                 <option type="number" value="2">Devolucion</option>
             </select>
         </div>
+        <div class="form-group col-md-6 col-sm-4 col-lg-4 col-xs-6">
+            <label>Tipo de envio *</label>
+            <select class="form-control form-control-sm" [(ngModel)]="data.selectEnvio">
+                <option value="contraEntrega">Contra entrega</option>
+                <option value="envioNormal">Envio Normal</option>
+            </select>
+        </div>
         <div class="form-group col-md-6 col-sm-4 col-lg-4 col-xs-6 envio" *ngIf="data.id && superSub">
             <label for="exampleFormControlInput1">número de Rastreo de guía ( ENVIO )</label>
             <input type="text" [(ngModel)]="data.ven_numero_guia" class="form-control form-control-sm">
@@ -109,7 +116,7 @@
             <label for="exampleFormControlInput1">Valor del Envio</label>
             <input [disabled]="!superSub" currencyMask [(ngModel)]="data.fleteValor" (ngModelChange)="suma()" class="form-control form-control-sm" [options]="opcionCurrencys"/>
         </div>
-        <div class="form-group col-md-6 col-sm-4 col-lg-4 col-xs-6" *ngIf="data.ven_tipo == 'pago_anticipado'">
+        <div class="form-group col-md-6 col-sm-4 col-lg-4 col-xs-6" *ngIf="data.ven_tipo == 'pago_anticipado' && porcentajeMostrar == 40 ">
             <label for="exampleFormControlInput1">Quien Paga el Envio</label>
             <select class="form-control" id="exampleFormControlSelect1" [(ngModel)]="data.cubreEnvio" (change)="suma()">
                 <option value="tienda" >La tienda</option>
