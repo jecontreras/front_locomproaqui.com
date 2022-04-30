@@ -29,7 +29,8 @@ export class FormcobrosComponent implements OnInit {
   superSub:boolean = false;
   clone:any = {};
   disabledButton:boolean = false;
-
+  opcionCurrencys: any = {};
+  
   constructor(
     public dialog: MatDialog,
     private _cobros: CobrosService,
@@ -52,6 +53,7 @@ export class FormcobrosComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.opcionCurrencys = this._tools.currency;
     if(Object.keys(this.datas.datos).length > 0) {
       this.data = _.clone(this.datas.datos);
       this.clone = _.clone(this.datas.datos);

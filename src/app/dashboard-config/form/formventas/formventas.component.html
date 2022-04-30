@@ -17,7 +17,7 @@
                 <option type="number" value="2">Devolucion</option>
             </select>
         </div>
-        <div class="form-group col-md-6 col-sm-4 col-lg-4 col-xs-6">
+        <div class="form-group col-md-6 col-sm-4 col-lg-4 col-xs-6" *ngIf="porcentajeMostrar == 40">
             <label>Tipo de envio *</label>
             <select class="form-control form-control-sm" [(ngModel)]="data.selectEnvio">
                 <option value="contraEntrega">Contra entrega</option>
@@ -93,9 +93,9 @@
             <ng-template #notFoundTemplate let-notFound>
                 <div [innerHTML]="notFound"></div>
             </ng-template>
-            <div>
+            <!--<div>
                 <button type="button" class="btn btn-warning" (click)="precioRutulo( false )"> Consultar Valor del Flete </button>
-            </div>
+            </div>-->
         </div>
         <div class="form-group col-md-6 col-sm-4 col-lg-4 col-xs-6">
             <label for="exampleFormControlInput1">Barrio del Cliente</label>
@@ -230,7 +230,7 @@
 </mat-dialog-content>
 <mat-dialog-actions>
     <div class="row" style="width: 100%;">
-        <div class="col-6 col-sm-3 col-xs-3">
+        <div class="col-6 col-sm-3 col-xs-3" *ngIf="porcentajeMostrar == 40">
             <label for="exampleFormControlInput1" class="text-primary">Precio Total Distribuidor: </label> &nbsp;
             <span>$ {{ ( data.ven_totalDistribuidor || 0 ).toLocaleString(1) }} COP</span>
         </div>

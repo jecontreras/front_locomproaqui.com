@@ -102,13 +102,17 @@ html, body {
 .ng-image-slider-lightbox{
   display: none !important;
 }
+.ngxImageZoomThumbnail{
+  height: 406px;
+  align-content: center;
+}
 
-.ngxImageZoomThumbnail {
+/*.ngxImageZoomThumbnail {
   max-height: 425px !important;
   max-width: 407px !important;
   height: 219px !important;
   width: 100%;
-}
+}*/
 
 footer {
   background: #02a0e3;
@@ -297,11 +301,11 @@ footer {
     max-width: 384px !important;
     max-height: 425px !important;
   }
-  .ngxImageZoomThumbnail{
+  /*.ngxImageZoomThumbnail{
     max-height: 425px !important;
     max-width: 407px !important;
     height: 258px !important;
-  }
+  }*/
   .textFooter {
     font-size: 20px;
   }
@@ -364,11 +368,11 @@ footer {
   .textFooter {
     font-size: 20px;
   }
-  .ngxImageZoomThumbnail{
+  /*.ngxImageZoomThumbnail{
     max-height: 425px !important;
     max-width: 407px !important;
     height: 258px !important;
-  }
+  }*/
   footer {
     font-size: 10px;
   }
@@ -420,11 +424,11 @@ footer {
   .textInf {
     font-size: 12px;
   }
-  .ngxImageZoomThumbnail{
+  /*.ngxImageZoomThumbnail{
     max-height: 425px !important;
     max-width: 407px !important;
     height: 287px !important;
-  }
+  }*/
   .textFooter {
     font-size: 29px;
   }
@@ -487,11 +491,11 @@ footer {
   .textInf {
     font-size: 12px;
   }
-  .ngxImageZoomThumbnail{
+  /*.ngxImageZoomThumbnail{
     max-height: 425px !important;
     max-width: 407px !important;
     height: 285px !important;
-  }
+  }*/
   .textFooter {
     font-size: 20px;
   }
@@ -554,11 +558,11 @@ footer {
   .textInf {
     font-size: 13px;
   }
-  .ngxImageZoomThumbnail{
+  /*.ngxImageZoomThumbnail{
     max-height: 425px !important;
     max-width: 407px !important;
     height: 289px !important;
-  }
+  }*/
   .textFooter {
     font-size: 35px;
   }
@@ -621,11 +625,11 @@ footer {
   .ancho {
     width: 60%;
   }
-  .ngxImageZoomThumbnail{
+  /*.ngxImageZoomThumbnail{
     max-height: 425px !important;
     max-width: 407px !important;
     height: 367px !important;
-  }
+  }*/
   .textFooter {
     font-size: 45px;
   }
@@ -691,11 +695,11 @@ footer {
   .textInf {
     font-size: 15px;
   }
-  .ngxImageZoomThumbnail{
+  /*.ngxImageZoomThumbnail{
     max-height: 425px !important;
     max-width: 407px !important;
     height: 425px !important;
-  }
+  }*/
   .textFooter {
     font-size: 47px;
   }
@@ -761,11 +765,11 @@ footer {
   .textInf {
     font-size: 15px;
   }
-  .ngxImageZoomThumbnail{
+  /*.ngxImageZoomThumbnail{
     max-height: 425px !important;
     max-width: 407px !important;
     height: 425px !important;
-  }
+  }*/
   .textFooter {
     font-size: 47px;
   }

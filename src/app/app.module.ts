@@ -1,7 +1,7 @@
 import { BrowserModule } from '@angular/platform-browser';
-import { LOCALE_ID, NgModule } from '@angular/core';
+import { ErrorHandler, LOCALE_ID, NgModule } from '@angular/core';
 //config
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -32,6 +32,8 @@ import { registerLocaleData } from '@angular/common';
     import localePt from '@angular/common/locales/pt';
     import localeEn from '@angular/common/locales/en';
     import localeEsAr from '@angular/common/locales/es-AR';
+import { AuthInterceptor } from './services/authInterceptor';
+import { GlobalErrorHandler } from './services/globalErrorHandler';
 
     // registrar los locales con el nombre que quieras utilizar a la hora de proveer
     registerLocaleData(localePy, 'es');
@@ -69,16 +71,16 @@ import { registerLocaleData } from '@angular/common';
     NgxCurrencyModule
   ],
   providers: [
-    { provide: LOCALE_ID, useValue: 'es-Co', }
-    // {
-    //   provide : HTTP_INTERCEPTORS,
-    //   useClass: AuthInterceptor,
-    //   multi   : true,
-    // },
-    // {
-    //   provide: ErrorHandler, 
-    //   useClass: GlobalErrorHandler
-    // }
+    { provide: LOCALE_ID, useValue: 'es-Co', },
+    {
+      provide : HTTP_INTERCEPTORS,
+      useClass: AuthInterceptor,
+      multi   : true,
+    },
+    /*{
+      provide: ErrorHandler, 
+      useClass: GlobalErrorHandler
+    }*/
   ],
   /*providers: [
     // {

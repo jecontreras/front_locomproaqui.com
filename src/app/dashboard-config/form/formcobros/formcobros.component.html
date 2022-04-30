@@ -119,19 +119,19 @@
         </div>
         <div class="form-group col-md-6 col-sm-4 col-lg-4 col-xs-4">
             <label>Monto</label>
-            <input type="number" disabled [(ngModel)]="data.cob_monto" class="form-control form-control-sm">
+            <input [disabled]="!superSub" currencyMask [(ngModel)]="data.cob_monto" class="form-control form-control-sm" [options]="opcionCurrencys"/>
         </div>
         <div class="form-group col-md-6 col-sm-4 col-lg-4 col-xs-4">
             <label>Devoluciones - </label>
-            <input type="number" disabled [(ngModel)]="data.devoluciones" class="form-control form-control-sm">
+            <input [disabled]="!superSub" currencyMask [(ngModel)]="data.devoluciones" class="form-control form-control-sm" [options]="opcionCurrencys"/>
         </div>
         <div class="form-group col-md-6 col-sm-4 col-lg-4 col-xs-4" *ngIf="data.id">
             <label>Valor Total del flete -</label>
-            <input type="number" disabled [(ngModel)]="data.sumaFlete" class="form-control form-control-sm">
+            <input [disabled]="!superSub" currencyMask [(ngModel)]="data.sumaFlete" class="form-control form-control-sm" [options]="opcionCurrencys"/>
         </div>
         <div class="form-group col-md-6 col-sm-4 col-lg-4 col-xs-4">
             <label>Total Dinero Recibir </label>
-            <input type="number" disabled [(ngModel)]="data.totalrecibir" class="form-control form-control-sm">
+            <input [disabled]="!superSub" currencyMask [(ngModel)]="data.totalrecibir" class="form-control form-control-sm" [options]="opcionCurrencys"/>
         </div>
         <!--<div class="form-group col-md-6 col-sm-4 col-lg-4 col-xs-4">
             <label>Total Dinero Recibir </label>

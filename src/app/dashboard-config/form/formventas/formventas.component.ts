@@ -85,7 +85,7 @@ export class FormventasComponent implements OnInit {
            ... key
         }
       }) || [];
-      if (this.dataUser.usu_perfil.prf_descripcion == 'administrador' || this.dataUser.usu_perfil.prf_descripcion == 'subAdministrador') this.superSub = true;
+      if (this.dataUser.usu_perfil.prf_descripcion == 'administrador' ) this.superSub = true;
       else this.superSub = false;
       //this.superSub = false;
       try {
@@ -570,7 +570,7 @@ export class FormventasComponent implements OnInit {
         if( this.data.fleteValor == 0 ) { this.data.ven_tipo = "pago_anticipado"; this._tools.confirm( { title: "Novedad", detalle: "Lo sentimos no tenemos Cubrimiento para esa zona (CONTRA ENTREGA)", icon: "warning" } ); return resolve( false ) }
         else {
           this.data.ven_tipo = "contraentrega"; 
-          this._tools.confirm( { title: "Completado", detalle: "El valor del envio para la ciudad "+ this.data.ciudadDestino.name + " es de " + this._tools.monedaChange( 3, 2, this.data.fleteValor ), icon: "succes" } );
+          if( this.porcentajeMostrar == 40 ) this._tools.confirm( { title: "Completado", detalle: "El valor del envio para la ciudad "+ this.data.ciudadDestino.name + " es de " + this._tools.monedaChange( 3, 2, this.data.fleteValor ), icon: "succes" } );
           this.suma();
           resolve( true );
         }
@@ -625,7 +625,7 @@ export class FormventasComponent implements OnInit {
         else{
           this.data.ven_tipo = "pago_anticipado"; 
           //console.log("Hola2222");
-          this._tools.confirm( { title: "Completado", detalle: "El valor del envio para la ciudad "+ this.data.ciudadDestino.name + " es de " + this._tools.monedaChange( 3, 2, this.data.fleteValor ), icon: "succes" } );
+          if( this.porcentajeMostrar == 40 ) this._tools.confirm( { title: "Completado", detalle: "El valor del envio para la ciudad "+ this.data.ciudadDestino.name + " es de " + this._tools.monedaChange( 3, 2, this.data.fleteValor ), icon: "succes" } );
           this.suma();
           this.openMedios();
           resolve( true );
