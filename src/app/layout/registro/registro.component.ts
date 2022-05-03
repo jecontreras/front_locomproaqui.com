@@ -12,6 +12,7 @@ import { UsuariosService } from 'src/app/servicesComponents/usuarios.service';
 import { ArchivosService } from 'src/app/servicesComponents/archivos.service';
 import { MatStepper } from '@angular/material/stepper';
 import * as _ from 'lodash';
+import * as moment from 'moment';
 
 const indicativos = Indicativo;
 
@@ -28,7 +29,8 @@ export class RegistrosComponent implements OnInit {
   listIndicativos = indicativos;
   disableSubmit: boolean = true;
   isLinear: boolean = true;
-
+  
+  fecha:string = moment().format("DD/MM/YYYY");
   dataUser: any = {};
   cabeza: any;
   error: string;
