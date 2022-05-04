@@ -27,12 +27,12 @@
                                 <div class="form-group col-sm-6 col-12">
                                     <label for="exampleFormControlInput1">Nombre</label>
                                     <input type="text" [(ngModel)]="data.usu_nombre" required
-                                        class="form-control form-control-sm" placeholder="Ingrese tu nombre">
+                                        class="form-control form-control-sm" placeholder="Ingrese tu nombre"  (ngModelChange)="blurApellido()">
                                 </div>
                                 <div class="form-group col-sm-6 col-12">
                                     <label for="exampleFormControlInput1">Apellido</label>
                                     <input type="text" [(ngModel)]="data.usu_apellido" class="form-control form-control-sm"
-                                        placeholder="Ingrese tu Apellido">
+                                        placeholder="Ingrese tu Apellido" (ngModelChange)="blurApellido()">
                                 </div>
                                 <div class="form-group col-sm-6 col-12">
                                     <label for="exampleFormControlInput1">como quieres llamar tu tienda virtual</label>
@@ -51,7 +51,7 @@
                                         <span *ngIf="data.fileDise">Por Defecto</span>
                                     </label>
                                 </div>
-                                <div class="form-group col-sm-3 col-6" *ngIf="data.fileDise == false">
+                                <div class="form-group col-sm-3 col-6" *ngIf="!data.fileDise">
                                     <label for="exampleFormControlInput1">Subir logotipo de tu tienda</label>
                                     <input type="file" required class="form-control form-control-sm" #coverFilesInput (change)="onSelect($event)" accept="image/png, .jpeg, .jpg, image/gif">
                                 </div>
@@ -206,9 +206,51 @@
                             </div>
                         </mat-step>
                     </mat-horizontal-stepper>
-                    <div class="row">
+                    <div class="row" style="    height: -webkit-fill-available; width: min-content;">
                         <div class="col-12">
                             <div class="d-flex justify-content-center">
+                                <div class="row efectos">
+                                    <div class="col-12">
+                                        <div class="d-flex justify-content-center">
+                                            <div>
+                                                <h2>ASO-VIRTUAL-CONNECTED</h2>
+                                                <p style="text-align: center;
+                                                font-size: 13px;
+                                                font-weight: bolder;">Asociacion  de Tiendas Virtuales conectadas</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-4">
+                                        <img style="width: 100%;   background-attachment: fixed; background-position: center;" [src]="data.usu_imagen || '../assets/noimagen.jpg' " alt="">
+                                    </div>
+                                    <div class="col-8 row">
+                                        <div class="col-12">
+                                            <label for="exampleFormControlInput1" class="sixes">ID:</label>
+                                            <input type="text" [(ngModel)]="data.ids" required disabled
+                                                class="form-control form-control-sm sixes" placeholder="id">
+                                        </div>
+                                        <div class="col-12">
+                                            <label for="exampleFormControlInput1" class="sixes">Nombre:</label>
+                                            <input type="text" [(ngModel)]="data.usu_nombre1" required disabled
+                                                class="form-control form-control-sm sixes" placeholder="Ingrese tu nombre">
+                                        </div>
+                                        <div class="col-6">
+                                            <label for="exampleFormControlInput1" class="sixes">Ciudad</label>
+                                            <input type="text" [(ngModel)]="data.usu_ciudad" required disabled
+                                                class="form-control form-control-sm sixes" placeholder="Ingrese tu ciudad">
+                                        </div>
+                                        <div class="col-6">
+                                            <label for="exampleFormControlInput1" class="sixes">fecha</label>
+                                            <input type="text" [(ngModel)]="fecha" required disabled
+                                                class="form-control form-control-sm sixes">
+                                        </div>
+                                    </div>
+                                    <div class="col-12">
+                                        <p class="sixes"> Este documento es para uso vip de nuestra plataforma con este documento entras a evento exclusivos </p>
+                                    </div>
+                                </div>
+                            </div>
+                            <!--<div class="d-flex justify-content-center">
                                 <div class="efectos">
                                     <table>
                                         <tbody>
@@ -269,7 +311,7 @@
                                         </tbody>
                                     </table>
                                 </div>
-                            </div>
+                            </div>-->
                         </div>
                     </div>
                 </div>

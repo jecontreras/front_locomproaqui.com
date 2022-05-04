@@ -16,6 +16,10 @@ import { FormproductosComponent } from '../../form/formproductos/formproductos.c
 import { MatDialog } from '@angular/material';
 const URL = environment.url;
 const URLFRON = environment.urlFront;
+import pdfMake from 'pdfmake/build/pdfmake';
+import pdfFonts from 'pdfmake/build/vfs_fonts';
+
+pdfMake.vfs = pdfFonts.pdfMake.vfs;
 
 @Component({
   selector: 'app-perfil',
@@ -35,7 +39,7 @@ export class PerfilComponent implements OnInit {
   disableRestaure:boolean = false;
   listIndicativos = Indicativo;
   disableBtn:boolean = false;
-
+  fecha:string = moment().format("DD/MM/YYYY");
   imageChangedEvent: any = '';
   croppedImage: any = '';
   textPerfil:string = "";
@@ -59,12 +63,14 @@ export class PerfilComponent implements OnInit {
       console.log(store);
       store = store.name;
       this.data = store.user;
+      this.data.usu_nombre1 = ( this.data.usu_nombre || "" ) + " " + ( this.data.usu_apellido || "" );
       if( this.data.usu_perfil.prf_descripcion != 'subAdministrador' || this.data.usu_perfil.prf_descripcion != 'administrador' || this.data.usu_perfil.prf_descripcion != 'lider' ) this.disableBtn = true;
       this.textPerfil = this.data.usu_perfil.prf_descripcion;
     });
   }
 
   ngOnInit() {
+    console.log( this.data.usu_nombre1 )
     //this.data = this._model.dataUser || {};
     if(this.data.usu_fec_nacimiento) this.data.usu_fec_nacimiento = moment(this.data.usu_fec_nacimiento).format('DD/MM/YYYY');
     this.urlTienda+=this.data.usu_usuario;
@@ -262,6 +268,48 @@ export class PerfilComponent implements OnInit {
   envioWhatsap( ){
     let url:string = `https://wa.me/573228576900?text=`;
     window.open( url );
+  }
+
+  openImprimir(){
+    //window.print();
+    window.open( `${ URLFRON }/imprimirTarjeta`, "Imprimir Tarjeta", "width=550, height=290");
+    return false;
+    var ficha = document.getElementById("tarjeta");
+	  var ventimp = window.open(' ', 'popimpr');
+	  ventimp.document.write( ficha.innerHTML );
+	  ventimp.document.close();
+	  ventimp.print( );
+	  ventimp.close();
+  }
+
+  openPdf(){
+    const documentDefinition = { 
+      content: [
+        {
+          stack: [
+            'This header has both top and bottom margins defined',
+            {text: 'This is a subheader', style: 'subheader'},
+          ],
+          style: 'header'
+        },
+      ],
+      styles: {
+        header: {
+          fontSize: 18,
+          bold: true,
+          alignment: 'right',
+          margin: [0, 190, 0, 80]
+        },
+        subheader: {
+          fontSize: 14
+        },
+        superMargin: {
+          margin: [20, 0, 40, 0],
+          fontSize: 15
+        }
+      }
+     };
+    pdfMake.createPdf(documentDefinition).open();
   }
 
 }

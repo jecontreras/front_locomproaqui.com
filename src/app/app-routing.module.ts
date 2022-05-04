@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { IntroduccionComponent } from './components/introduccion/introduccion.component';
+import { ImprimirTarjetaComponent } from './layout/imprimir-tarjeta/imprimir-tarjeta.component';
 
 const routes: Routes = [
   { path: '', 
@@ -27,6 +28,10 @@ const routes: Routes = [
   {
     path: "introduccion",
     component: IntroduccionComponent
+  },
+  {
+    path: "imprimirTarjeta",
+    component: ImprimirTarjetaComponent
   },
   { path: '', redirectTo: "pedidos", pathMatch: 'full' }
 ];

@@ -24,7 +24,8 @@ const indicativos = Indicativo;
 export class RegistrosComponent implements OnInit {
 
   data: any = {
-    usu_indicativo: "57"
+    usu_indicativo: "57",
+    ids: "XXXXXXXXXXXXXXXXXXXX"
   };
   listIndicativos = indicativos;
   disableSubmit: boolean = true;
@@ -79,9 +80,10 @@ export class RegistrosComponent implements OnInit {
     if (this._authSrvice.isLoggedIn()) this._router.navigate(['/pedidos']);
   }
 
-  onSelect(event: any) {
+  async onSelect(event: any) {
     //console.log(event, event.target.files);
     this.files = [event.target.files[0]];
+    await this.subirFile();
     /*let image: any = event.target.files[0];
     let fr = new FileReader();
     fr.onload = () => { // when file has loaded
@@ -91,6 +93,10 @@ export class RegistrosComponent implements OnInit {
       };
     };
     fr.readAsDataURL(image);*/
+}
+
+blurApellido(){
+  this.data.usu_nombre1 = ( this.data.usu_nombre || "" ) + " " + ( this.data.usu_apellido || "" );
 }
 
 onRemove(event) {
@@ -177,6 +183,8 @@ async submit(){
   let valid: boolean = await this.validando();
   if (!valid || this.error) { this.disableSubmit = true; return false };
   if( !this.disabledusername ) return this._tools.tooast( { title: "Error tenemos problemas en el formulario por favor revisar gracias", icon: "error"})
+  this.data = _.omit(this.data, [ 'id', 'usu_nombre1' ])
+  this.data = _.omitBy(this.data, _.isNull);
   this._user.create(this.data).subscribe((res: any) => {
     console.log("user", res);
     this.disableSubmit = true;
