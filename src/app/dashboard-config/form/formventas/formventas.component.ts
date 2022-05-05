@@ -60,6 +60,7 @@ export class FormventasComponent implements OnInit {
   // url de la publicidad
   url: any;
   textData:string;
+  dataVendedor:any = {};
 
   constructor(
     public dialog: MatDialog,
@@ -112,6 +113,7 @@ export class FormventasComponent implements OnInit {
       this.datas.datos.ven_estado = this.data.ven_estado;
       this.id = this.data.id;
       this.titulo = "Actualizar";
+      this.dataVendedor = this.data.usu_clave_int || {};
       if (this.data.cat_activo === 0) this.data.cat_activo = true;
       if (this.data.pro_clave_int) this.data.pro_clave_int = this.data.pro_clave_int.id;
       if (this.data.ven_tipo == "WHATSAPP") { if (!this.data.ven_imagen_producto) this.data.ven_imagen_producto = "./assets/noimagen.jpg"; this.data.ven_tipo = "whatsapp"; }
@@ -128,6 +130,18 @@ export class FormventasComponent implements OnInit {
       this.data.fleteValor = 0;
     }
     this.listCiudades = this.listCiudades.filter( ( row:any )=> row.code > 0 );
+    //this.listValidar();
+  }
+
+  async listValidar(){
+    let result;
+    let guardado:any = [];
+    for( let item of this.listCiudades ){
+      this.data.ciudadDestino = item;
+      result = await this.PrecioContraEntrega();
+      if( result )guardado.push( item.name );
+    }
+    console.log( guardado );
   }
 
   getArticulos() {

@@ -55,6 +55,35 @@
                 </a>
             </div>
         </div>
+        <div class="row col-12" *ngIf="id">
+            <div class="form-group col-12 bg-primary text-white rounded">
+                <h2>Información del Vendedor</h2>
+            </div>
+            <div class="form-group col-md-6 col-sm-4 col-lg-4 col-xs-6">
+                <label for="exampleFormControlInput1">Número Cédula del Vendedor</label>
+                <input type="text" disabled [(ngModel)]="dataVendedor.usu_documento" class="form-control form-control-sm">
+            </div>
+            <div class="form-group col-md-6 col-sm-4 col-lg-4 col-xs-6">
+                <label for="exampleFormControlInput1">Nombre del Vendedor</label>
+                <input type="text" disabled [(ngModel)]="dataVendedor.usu_nombre" class="form-control form-control-sm">
+            </div>
+            <div class="form-group col-md-6 col-sm-4 col-lg-4 col-xs-6">
+                <label for="exampleFormControlInput1">Direccion del Vendedor</label>
+                <input type="text" disabled [(ngModel)]="dataVendedor.usu_direccion" class="form-control form-control-sm">
+            </div>
+            <div class="form-group col-md-6 col-sm-4 col-lg-4 col-xs-6">
+                <label for="exampleFormControlInput1">Correo del Vendedor</label>
+                <input type="text" disabled [(ngModel)]="dataVendedor.usu_email" class="form-control form-control-sm">
+            </div>
+            <div class="form-group col-md-6 col-sm-4 col-lg-4 col-xs-6">
+                <label for="exampleFormControlInput1">Telefono del Vendedor</label>
+                <input type="text" disabled [(ngModel)]="dataVendedor.usu_telefono" class="form-control form-control-sm">
+            </div>
+            <div class="form-group col-md-6 col-sm-4 col-lg-4 col-xs-6">
+                <label for="exampleFormControlInput1">Ciudad del Vendedor</label>
+                <input type="text" disabled [(ngModel)]="dataVendedor.usu_ciudad" class="form-control form-control-sm">
+            </div>
+        </div>
         <div class="form-group col-12 bg-primary text-white rounded">
             <h2>Información del Cliente</h2>
         </div>
