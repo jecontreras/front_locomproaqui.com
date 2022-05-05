@@ -29,7 +29,7 @@ export class FormcrearguiaComponent implements OnInit {
   ) { 
     this._store.subscribe((store: any) => {
       store = store.name;
-      this.dataUser = store.user || {};
+      //this.dataUser = store.user || {};
 
     });
     this.opcionCurrencys = this._tools.currency;
@@ -55,6 +55,8 @@ export class FormcrearguiaComponent implements OnInit {
       this.data.pesoVolumen = Math.round( this.data.pesoVolumen );
       console.log( this.data )
       this.rellenoData();
+      this.dataUser = this.data.usu_clave_int;
+      console.log( this.dataUser )
     }
   }
 
@@ -76,11 +78,11 @@ export class FormcrearguiaComponent implements OnInit {
       largo: this.data.largo || 28,
       ancho: this.data.ancho || 21,
       drpCiudadOrigen: "CUCUTA-NORTE DE SANTANDER",
-      txtIdentificacionDe: this.dataUser.usu_documento || 1090519754,
-      txtTelefonoDe: this.dataUser.usu_telefono,
-      txtDireccionDe: this.dataUser.usu_direccion,
+      txtIdentificacionDe: this.dataUser.usu_documento || 1093753373,
+      txtTelefonoDe: this.dataUser.usu_telefono || 320514638,
+      txtDireccionDe: this.dataUser.usu_direccion || "av 13 # 10-62 barrio el llano apt 102 (cucuta)",
       txtCod_Postal_Rem: 540001,
-      txtEMailRemitente: this.dataUser.usu_email,
+      txtEMailRemitente: this.dataUser.usu_email || "fabricadecalzadocolombia@gmail.com",
       txtPara: this.data.ven_nombre_cliente,
       txtIdentificacionPara: this.data.cob_num_cedula_cliente,
       drpCiudadDestino: this.data.ciudadDestino,
@@ -94,17 +96,17 @@ export class FormcrearguiaComponent implements OnInit {
       solicitudFecha: moment( this.data.fecha ).format( "YYYY-MM-DD" ),
       solictudVentanaInicio: moment( this.data.fecha ).format( "YYYY-MM-DD" ),
       solictudVentanaFin: moment( this.data.fecha ).format( "YYYY-MM-DD" ),
-      unidadNegocio: Number( this.data.totalUnidad ), //OJO
+      unidadNegocio: Number( this.data.totalUnidad || 1 ), //OJO
       fechaDespacho: moment( this.data.fecha ).format( "YYYY-MM-DD" ),
       cuentaRemitente: 1422863,
       tipoIdentificacionRemitente: "CC",
-      identificacionRemitente: Number( this.dataUser.usu_documento || 9999999 ),
+      identificacionRemitente: Number( this.dataUser.usu_documento || 1093753373 ),
       sedeRemitent: "",
-      nombreRemitente: this.dataUser.usu_nombre,
-      direccionCliente: this.data.ven_direccion_cliente,
-      emailRemitente: this.dataUser.usu_email,
-      telefonoRemitente: Number( this.dataUser.usu_telefono ),
-      celularRemitente: this.dataUser.usu_telefono,
+      nombreRemitente: this.dataUser.usu_nombre || 'Tienda',
+      direccionCliente: "",
+      emailRemitente: this.dataUser.usu_email || "fabricadecalzadocolombia@gmail.com",
+      telefonoRemitente: Number( this.dataUser.usu_telefono || 320514638 ),
+      celularRemitente: this.dataUser.usu_telefono || 320514638,
       ciudadOrigen: /*11001000,*/ Number( 54001000 ),
       tipoIdentificacionDestinatario: "CC",
       identificacionDestinatario: Number( this.data.cob_num_cedula_cliente ),

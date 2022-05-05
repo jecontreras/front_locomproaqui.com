@@ -37,7 +37,7 @@ export class VentasComponent implements OnInit {
   query:any = {
     where:{
       ven_sw_eliminado: 0,
-      ven_estado: { '!=': 4 },
+      ven_estado: { '!=': [4,3] },
       ven_retiro: null
     },
     page: 0,
@@ -213,7 +213,7 @@ export class VentasComponent implements OnInit {
     this.query = {
       where:{
         ven_sw_eliminado: 0,
-        ven_estado: { '!=': 4 },
+        ven_estado: { '!=': [4,2] },
         ven_retiro: null
       },
       page: 0,
@@ -268,8 +268,8 @@ export class VentasComponent implements OnInit {
 
     this.query.page =  0;
     console.log( "**", this.filtro.ven_estado )
-    if( Number( this.filtro.ven_estado ) == 5 ) { this.query.where.ven_estado = { '!=': 4 }; this.query.where.ven_retiro = null; }
-    if( Number( this.filtro.ven_estado ) == 6 ) { this.query.where.ven_estado = { '!=': 4 }; this.query.where.ven_retiro = { '!=': null }; }
+    if( Number( this.filtro.ven_estado ) == 5 ) { this.query.where.ven_estado = { '!=': [4, 2] }; this.query.where.ven_retiro = null; }
+    if( Number( this.filtro.ven_estado ) == 6 ) { this.query.where.ven_estado = { '!=': [4, 2] }; this.query.where.ven_retiro = { '!=': null }; }
     else this.query.where.ven_estado = Number( this.filtro.ven_estado );
 
     if( this.filtro.vendedor ) { 
@@ -308,7 +308,7 @@ export class VentasComponent implements OnInit {
     this.query= {
       where: {
         ven_sw_eliminado: 0,
-        ven_estado: { '!=': 4 },
+        ven_estado: { '!=': [4,2] },
         ven_retiro: null
       },
       page: 0,

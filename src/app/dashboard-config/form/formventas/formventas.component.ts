@@ -215,10 +215,11 @@ export class FormventasComponent implements OnInit {
   suma() {
     //console.log( this.data, this.listCarrito, this.namePorcentaje );
     //if( this.superSub == false && this.id ) return false;
+    if( this.id ) return this.sumaIds();
     let total: number = 0;
     let total1: number = 0;
     this.data.ven_ganancias = 0;
-    console.log( this.listCarrito)
+    //console.log( this.listCarrito)
     for (let row of this.listCarrito) {
       if (!row.costo || !row.cantidad) continue;
       total += ( Number( row.costo ) * Number( row.cantidad ) );
@@ -233,7 +234,38 @@ export class FormventasComponent implements OnInit {
 
     this.data.ven_totalDistribuidor = total;
     this.data.ven_total = total1;
+    //console.log( this.dataUser, this.namePorcentaje )
     if ( this.namePorcentaje == "dropshipping básico" ) this.data.ven_ganancias = (total * ( this.dataUser.porcentaje || 10 ) / 100 );
+    else { 
+      if( this.data.cubreEnvio == 'tienda') this.data.ven_ganancias = this.data.ven_ganancias - ( this.data.fleteValor || 0 ) ;
+      else this.data.ven_total = this.data.ven_total + ( this.data.fleteValor || 0 ) ;
+    }
+  }
+
+  sumaIds() {
+    //console.log( this.data, this.listCarrito, this.namePorcentaje );
+    //if( this.superSub == false && this.id ) return false;
+    let total: number = 0;
+    let total1: number = 0;
+    this.data.ven_ganancias = 0;
+    //console.log( this.listCarrito)
+    let namePorcentaje = this.data.usu_clave_int.categoriaPerfil;
+    for (let row of this.listCarrito) {
+      if (!row.costo || !row.cantidad) continue;
+      total += ( Number( row.costo ) * Number( row.cantidad ) );
+      if( !row.id ) row.loVendio = row.costoTotal;
+      if( row.costoTotal === 0 ) row.costoTotal = ( row.costo * row.cantidad ) || 0;
+      total1 += ( Number( row.loVendio ) );
+      //console.log("********", row );
+      if ( namePorcentaje == 1 ) row.comision = ( row.costoTotal * ( this.dataUser.porcentaje || 10 ) / 100 );
+      else this.data.ven_ganancias+= ( ( row.loVendio  ) - row.costoTotal ) || 0;
+
+    }
+
+    this.data.ven_totalDistribuidor = total;
+    this.data.ven_total = total1;
+    //console.log( this.dataUser, namePorcentaje )
+    if ( namePorcentaje == 1 ) this.data.ven_ganancias = (total * ( this.dataUser.porcentaje || 10 ) / 100 );
     else { 
       if( this.data.cubreEnvio == 'tienda') this.data.ven_ganancias = this.data.ven_ganancias - ( this.data.fleteValor || 0 ) ;
       else this.data.ven_total = this.data.ven_total + ( this.data.fleteValor || 0 ) ;
@@ -513,7 +545,7 @@ export class FormventasComponent implements OnInit {
     console.log( ev );
     if( this.disabledButton ) return false;
     this.disabledButton = true;
-    if( this.id && this.data.ven_estado != 1 ) return false;
+    if( this.id && ( this.data.ven_estado == 1 && this.data.ven_estado == 2 && this.data.ven_estado == 3 && this.data.ven_estado == 4 ) ) { this.disabledButton = false; return false;}
     if( ev.state ) if( ev ) this.data.ciudadDestino = ev;
     let result:any;
     result = await this.PrecioContraEntrega();
