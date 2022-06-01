@@ -61,6 +61,13 @@ export class FormventasComponent implements OnInit {
   url: any;
   textData:string;
   dataVendedor:any = {};
+  listValorEnvio:any = [];
+  tablet:any = {
+    header: ["Opciones","Transp","Origen / Destino","Unid","Total Kilos","Kilos Vol","Valoración","Tray","Flete","Flete Manejo","Valor Tarifa","Total","Tiempos Aprox"],
+    listRow: []
+  };
+  progreses:boolean = false;
+  errorCotisa:string;
 
   constructor(
     public dialog: MatDialog,
@@ -562,15 +569,85 @@ export class FormventasComponent implements OnInit {
     if( this.id && ( this.data.ven_estado == 1 && this.data.ven_estado == 2 && this.data.ven_estado == 3 && this.data.ven_estado == 4 ) ) { this.disabledButton = false; return false;}
     if( ev.state ) if( ev ) this.data.ciudadDestino = ev;
     let result:any;
+    this.tablet.listRow = [];
     result = await this.PrecioContraEntrega();
     setTimeout( async ()=>{
-      if( result == false ) await this.PrecioNormal();
+      //if( result == false ) await this.PrecioNormal();
     }, 2000 )
     console.log( result, this.data )
     this.disabledButton = false;
   }
 
   async PrecioContraEntrega(){
+    return new Promise( resolve =>{
+      if( !this.data.ciudadDestino ) { resolve( false ); return false;}
+      if( !this.data.ciudadDestino.code ) { resolve( false ); return false;}
+
+      this.data.pesoVolumen = ( ( parseFloat( this.data.alto ) * parseFloat( this.data.largo ) * parseFloat( this.data.ancho ) ) / 5000 ) || 1;
+      this.data.pesoVolumen = Math.round( this.data.pesoVolumen );
+      for( let row of this.listCarrito ){
+        this.textData+= `${ row.cantidad } ${ row['codigoImg'] } ${ row.tallaSelect }, 
+        `
+      }
+      let data:any ={
+        "selectEnvio": "contraEntrega",
+        "selectTds": true,
+        "idCiudadDestino": this.data.ciudadDestino.code,
+        "idCiudadOrigen": "54001000",
+        "valorMercancia": Number( this.data.ven_total ),
+        "fechaRemesa": moment( this.data.fecha ).format( "YYYY-MM-DD" ),
+        "idUniSNegogocio": 1,
+        "numeroUnidad": 1,
+        "pesoReal": 1,
+        "pesoVolumen": this.data.pesoVolumen,
+        "alto": 8,
+        "largo": 28,
+        "ancho": 21,
+        "tipoEmpaque": "",
+        "drpCiudadOrigen": "CUCUTA-NORTE DE SANTANDER",
+        "txtIdentificacionDe": this.dataUser.usu_documento || 1090519754,
+        "txtTelefonoDe": this.dataUser.usu_telefono,
+        "txtDireccionDe": this.dataUser.usu_direccion,
+        "txtCod_Postal_Rem": 540001,
+        "txtEMailRemitente": this.dataUser.usu_email,
+        "txtPara": this.data.ven_nombre_cliente,
+        "txtIdentificacionPara": this.data.cob_num_cedula_cliente,
+        "drpCiudadDestino": this.data.ciudadDestino.name,
+        "txtTelefonoPara": this.data.ven_telefono_cliente,
+        "txtDireccionPara": this.data.ven_direccion_cliente,
+        "txtDice": this.textData,
+        "txtNotas": "ok",
+      };
+      
+      this._ventas.getFleteValor( data ).subscribe(( res:any )=>{
+        console.log( "****", res )
+        this.tablet.listRow = res.data || [];
+        resolve( true );
+
+
+        //if( this.data.fleteValor == 0 ) { this.data.ven_tipo = "pago_anticipado"; this._tools.confirm( { title: "Novedad", detalle: "Lo sentimos no tenemos Cubrimiento para esa zona (CONTRA ENTREGA)", icon: "warning" } ); return resolve( false ) }
+        /*else {
+          this.data.ven_tipo = "contraentrega"; 
+          if( this.porcentajeMostrar == 40 ) this._tools.confirm( { title: "Completado", detalle: "El valor del envio para la ciudad "+ this.data.ciudadDestino.name + " es de " + this._tools.monedaChange( 3, 2, this.data.fleteValor ), icon: "succes" } );
+          this.suma();
+          resolve( true );
+        }*/
+      },()=>resolve( false ));
+    });
+  }
+
+  selectTrans( item ){
+    this.data.transportadoraSelect = item.trasportadora;
+    if( this.data.transportadoraSelect === "CORDINADORA" || this.data.transportadoraSelect === "ENVIA") {
+      this.data.ven_tipo = "contraentrega"; 
+    }
+    this.data.fleteValor = item.fleteSin;
+    this.data.fleteManejo = item.fleteManejoSin;
+    this.data.flteTotal = item.totalSin;
+    this.suma();
+  }
+
+  /*async PrecioContraEntrega(){
     return new Promise( resolve =>{
       if( !this.data.ciudadDestino ) { resolve( false ); return false;}
       if( !this.data.ciudadDestino.code ) { resolve( false ); return false;}
@@ -622,9 +699,9 @@ export class FormventasComponent implements OnInit {
         }
       },()=>resolve( false ));
     });
-  }
+  }*/
 
-  async PrecioNormal(){
+  /*async PrecioNormal(){
     return new Promise( resolve =>{
       if( !this.data.ciudadDestino ) { resolve( false ); return false;}
       if( !this.data.ciudadDestino.code ) { resolve( false ); return false;}
@@ -678,7 +755,7 @@ export class FormventasComponent implements OnInit {
         }
       },()=>resolve( false ));
     });
-  }
+  }*/
 
   borrarCart( data:any ){
     if( this.data.id ) return false;
