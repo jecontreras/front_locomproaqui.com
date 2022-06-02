@@ -66,6 +66,7 @@ export class FormcrearguiaComponent implements OnInit {
       `
     }
     this.data2 = {
+      transportadoraSelect: this.data.transportadoraSelect,
       idCiudadOrigen: "54001000",
       idCiudadDestino: this.data.codeCiudad,
       selectEnvio: this.data.selectEnvio || 'contraEntrega',
@@ -147,7 +148,6 @@ export class FormcrearguiaComponent implements OnInit {
       destinatarioFechaExpedicion: "2019-10-10", // strint
       destinatarioCelular: this.data.ven_telefono_cliente, // number
       observacionAdicional: "mercancia nacional", //string 
-      transportadoraSelect: "ENVIA", //string
       txtUnidades: this.data.numeroUnidad || 1,
       txtPeso: this.data.pesoReal,
       txtVolumen: this.data.pesoVolumen || 5,
@@ -169,8 +169,29 @@ export class FormcrearguiaComponent implements OnInit {
       res = res.data;
       this._tools.basicIcons({ header: "Exitoso!", subheader: "Creacion de flete creado exitoso #remesa " + res.nRemesa });
       this.btndisabled = false;
+      if( res.transportadoraSelect == "CORDINADORA") if( res.urlRotulos ) this.downloadPdf( res.ven_imagen_guia, this.data.codigo);
       this.dialogRef.close( res );
     },(error)=> { this.btndisabled = false;  this._tools.basicIcons({ header: "Error!", subheader: "No pudimos crear el flete por favor actualizar pagina" }); } );
+  }
+  downloadPdf(base64String, fileName){
+    if(window.navigator && window.navigator['msSaveOrOpenBlob']){
+      // download PDF in IE
+      let byteChar = atob(base64String);
+      let byteArray = new Array(byteChar.length);
+      for(let i = 0; i < byteChar.length; i++){
+        byteArray[i] = byteChar.charCodeAt(i);
+      }
+      let uIntArray = new Uint8Array(byteArray);
+      let blob = new Blob([uIntArray], {type : 'application/pdf'});
+      window.navigator['msSaveOrOpenBlob'](blob, `${fileName}.pdf`);
+    } else {
+      // Download PDF in Chrome etc.
+      const source = `data:application/pdf;base64,${base64String}`;
+      const link = document.createElement("a");
+      link.href = source;
+      link.download = `${fileName}.pdf`
+      link.click();
+    }
   }
 
 }

@@ -59,11 +59,11 @@ export class FormventasComponent implements OnInit {
   keyword = 'city';
   // url de la publicidad
   url: any;
-  textData:string;
+  textData:string = "";
   dataVendedor:any = {};
   listValorEnvio:any = [];
   tablet:any = {
-    header: ["Opciones","Transp","Origen / Destino","Unid","Total Kilos","Kilos Vol","Valoración","Tray","Flete","Flete Manejo","Valor Tarifa","Total","Tiempos Aprox"],
+    header: ["Mensaje","Transp","Origen / Destino","Unid","Total Kilos","Kilos Vol","Valoración","Tray","Flete","Flete Manejo","Valor Tarifa","Total","Tiempos Aprox"],
     listRow: []
   };
   progreses:boolean = false;
@@ -113,7 +113,7 @@ export class FormventasComponent implements OnInit {
 
   } 
 
-  ngOnInit() {
+  async ngOnInit() {
     if (Object.keys(this.datas.datos).length > 0) {
       this.clone = _.clone(this.datas.datos);
       this.data = _.clone(this.datas.datos);
@@ -127,6 +127,10 @@ export class FormventasComponent implements OnInit {
       if (this.data.ven_tipo == "CARRITO") { this.data.ven_tipo = "carrito"; }
       if( this.data.ven_imagen_guia ) this.viewRotulo( this.data.ven_imagen_guia );
       this.getArticulos();
+      this.data.ciudadDestino = this.data.ciudadDestino;
+      let filtro = await this.PrecioContraEntrega();
+      filtro = _.find( this.tablet.listRow, ( row:any ) => row.slug === this.data.transportadoraSelect );
+      if( filtro ) await this.selectTrans( filtro );;
     } else {
       this.id = "";
       this.data.usu_clave_int = this.dataUser.id;
@@ -392,7 +396,8 @@ export class FormventasComponent implements OnInit {
       //this.dialog.closeAll();
       let accion: any = new CartAction({}, 'drop');
       this._store.dispatch(accion);
-      this.dialogRef.close('creo');
+      //this.dialogRef.close('creo');
+      this.generarGuia();
     }, (error) => { this._tools.presentToast("Error al crear la venta"); this.disabledButton = false; this.dialog.closeAll(); });
 
   }
@@ -570,6 +575,10 @@ export class FormventasComponent implements OnInit {
     if( ev.state ) if( ev ) this.data.ciudadDestino = ev;
     let result:any;
     this.tablet.listRow = [];
+    if( !this.data.ciudadDestino ) { return false;}
+    if( !this.data.ciudadDestino.code ) { return false;}
+    this.data.codeCiudad = this.data.ciudadDestino.code;
+    this.data.ciudadDestino = this.data.ciudadDestino.name;
     result = await this.PrecioContraEntrega();
     setTimeout( async ()=>{
       //if( result == false ) await this.PrecioNormal();
@@ -580,11 +589,9 @@ export class FormventasComponent implements OnInit {
 
   async PrecioContraEntrega(){
     return new Promise( resolve =>{
-      if( !this.data.ciudadDestino ) { resolve( false ); return false;}
-      if( !this.data.ciudadDestino.code ) { resolve( false ); return false;}
 
-      this.data.pesoVolumen = ( ( parseFloat( this.data.alto ) * parseFloat( this.data.largo ) * parseFloat( this.data.ancho ) ) / 5000 ) || 1;
-      this.data.pesoVolumen = Math.round( this.data.pesoVolumen );
+      this.data.pesoVolumen = ( ( parseFloat( this.data.alto || 3 ) * parseFloat( this.data.largo || 13 ) * parseFloat( this.data.ancho || 10 ) ) / 5000 ) || 1;
+      this.data.pesoVolumen = Math.round( this.data.pesoVolumen || 1 );
       for( let row of this.listCarrito ){
         this.textData+= `${ row.cantidad } ${ row['codigoImg'] } ${ row.tallaSelect }, 
         `
@@ -592,9 +599,10 @@ export class FormventasComponent implements OnInit {
       let data:any ={
         "selectEnvio": "contraEntrega",
         "selectTds": true,
-        "idCiudadDestino": this.data.ciudadDestino.code,
+        "idCiudadDestino": String( this.data.codeCiudad ),
         "idCiudadOrigen": "54001000",
         "valorMercancia": Number( this.data.ven_total ),
+        "valorProductos": Number( this.data.ven_totalDistribuidor ),
         "fechaRemesa": moment( this.data.fecha ).format( "YYYY-MM-DD" ),
         "idUniSNegogocio": 1,
         "numeroUnidad": 1,
@@ -612,7 +620,7 @@ export class FormventasComponent implements OnInit {
         "txtEMailRemitente": this.dataUser.usu_email,
         "txtPara": this.data.ven_nombre_cliente,
         "txtIdentificacionPara": this.data.cob_num_cedula_cliente,
-        "drpCiudadDestino": this.data.ciudadDestino.name,
+        "drpCiudadDestino": this.data.ciudadDestino,
         "txtTelefonoPara": this.data.ven_telefono_cliente,
         "txtDireccionPara": this.data.ven_direccion_cliente,
         "txtDice": this.textData,
@@ -637,13 +645,17 @@ export class FormventasComponent implements OnInit {
   }
 
   selectTrans( item ){
-    this.data.transportadoraSelect = item.trasportadora;
+    this.data.transportadoraSelect = item.slug;
     if( this.data.transportadoraSelect === "CORDINADORA" || this.data.transportadoraSelect === "ENVIA") {
-      this.data.ven_tipo = "contraentrega"; 
-    }
-    this.data.fleteValor = item.fleteSin;
-    this.data.fleteManejo = item.fleteManejoSin;
-    this.data.flteTotal = item.totalSin;
+      this.data.ven_tipo = "contraEntrega"; 
+    }else this.data.ven_tipo = "envioNormal";
+    for(let row of this.tablet.listRow ) row.check = false;
+    item.check = !item.check;
+    this.data.fleteValor = item.fleteTotal;
+    this.data.fleteManejo = item.fleteManejo;
+    this.data.flteTotal = item.fleteTotal;
+    console.log("**", this.data)
+    if( this.id ) this.submit();
     this.suma();
   }
 

@@ -17,42 +17,55 @@
                 <option type="number" value="2">Devolucion</option>
             </select>
         </div>
-        <div class="form-group col-md-6 col-sm-4 col-lg-4 col-xs-6" *ngIf="porcentajeMostrar == 40">
-            <label>Tipo de envio *</label>
-            <select class="form-control form-control-sm" [(ngModel)]="data.ven_tipo">
-                <option value="contraEntrega">Contra entrega</option>
-                <option value="envioNormal">Envio Normal</option>
-            </select>
-        </div>
-        <div class="form-group col-md-6 col-sm-4 col-lg-4 col-xs-6 envio" *ngIf="data.id && superSub">
-            <label for="exampleFormControlInput1">número de Rastreo de guía ( ENVIO )</label>
-            <input type="text" [(ngModel)]="data.ven_numero_guia" class="form-control form-control-sm">
-        </div>
-        <div class="form-group col-md-6 col-sm-4 col-lg-4 col-xs-6" *ngIf="data.id && superSub">
-            <label for="exampleFormControlInput1">URL de ROTULO de guía</label>
-            <input type="text" [(ngModel)]="data.ven_imagen_guia" class="form-control form-control-sm">
-        </div>
-        <div class="form-group col-md-6 col-sm-4 col-lg-4 col-xs-6 devolucion" *ngIf="data.id && superSub && data.ven_estado == 2">
-            <label for="exampleFormControlInput1">número de Rastreo de guía ( DEVOLUCION )</label>
-            <input type="text" [(ngModel)]="data.ven_numero_guia" class="form-control form-control-sm"> 
-        </div>
-        <div class="form-group col-md-6 col-sm-4 col-lg-4 col-xs-6" *ngIf="data.id && superSub && !data.ven_imagen_guia && listCarrito.length && !data.ven_numero_guia">
-            <button type="button" class="btn btn-success" (click)="generarGuia()">Generar Guia</button>
-        </div>
-        <div class="form-group col-md-6 col-sm-4 col-lg-4 col-xs-6" *ngIf="data.id && superSub && data.ven_imagen_guia">
-            <button type="button" class="btn btn-warning" (click)="imprimirGuia()">Imprimir Guia </button>
-        </div>
-        <div class="form-group col-md-6 col-sm-4 col-lg-4 col-xs-6" *ngIf="data.id && data.ven_numero_guia">
-            <button type="button" class="btn btn-info" (click)="verDetalles( data.ven_numero_guia )">Estado Guia </button>
-        </div>
-        <div class="form-group col-md-6 col-sm-4 col-lg-4 col-xs-6" *ngIf="data.id && data.ven_imagen_tiket">
-            <button type="button" class="btn btn-dark" (click)="openEvidencia( data.ven_imagen_tiket )">Evidencia Entrega </button>
-        </div>
-        <div class="form-group col-md-12" *ngIf="data.ven_imagen_producto && id">
-            <div class="mx-auto" style="width: 200px;">
-                <a [href]="data.ven_imagen_producto" target="_blank">
-                    <img [src]="data.ven_imagen_producto" class="imgFoto">
-                </a>
+        <div class="col-12 row">
+            <div class="form-group col-12 bg-primary text-white rounded">
+                <h2>Detalle de Envio</h2>
+            </div>
+            <div class="form-group col-md-6 col-sm-4 col-lg-4 col-xs-6" *ngIf="porcentajeMostrar == 40">
+                <label>Empresa de Envio *</label>
+                <select class="form-control form-control-sm" [(ngModel)]="data.transportadoraSelect">
+                    <option value="CORDINADORA">Cordinadora ( Recomendado )</option>
+                    <option value="ENVIA">Envia</option>
+                    <option value="ENVIANO">Envia ( Sin contra entrega )</option>
+                </select>
+            </div>
+            <div class="form-group col-md-6 col-sm-4 col-lg-4 col-xs-6" *ngIf="porcentajeMostrar == 40">
+                <label>Tipo de envio *</label>
+                <select class="form-control form-control-sm" [(ngModel)]="data.ven_tipo">
+                    <option value="contraEntrega">Contra entrega</option>
+                    <option value="envioNormal">Envio Normal</option>
+                </select>
+            </div>
+            <div class="form-group col-md-6 col-sm-4 col-lg-4 col-xs-6 envio" *ngIf="data.id && superSub">
+                <label for="exampleFormControlInput1">número de Rastreo de guía ( ENVIO )</label>
+                <input type="text" [(ngModel)]="data.ven_numero_guia" class="form-control form-control-sm">
+            </div>
+            <div class="form-group col-md-6 col-sm-4 col-lg-4 col-xs-6" *ngIf="data.id && superSub">
+                <label for="exampleFormControlInput1">URL de ROTULO de guía</label>
+                <input type="text" [(ngModel)]="data.ven_imagen_guia" class="form-control form-control-sm">
+            </div>
+            <div class="form-group col-md-6 col-sm-4 col-lg-4 col-xs-6 devolucion" *ngIf="data.id && superSub && data.ven_estado == 2">
+                <label for="exampleFormControlInput1">número de Rastreo de guía ( DEVOLUCION )</label>
+                <input type="text" [(ngModel)]="data.ven_numero_guia" class="form-control form-control-sm"> 
+            </div>
+            <div class="form-group col-md-6 col-sm-4 col-lg-4 col-xs-6" *ngIf="data.id && !data.ven_imagen_guia && listCarrito.length && !data.ven_numero_guia">
+                <button type="button" class="btn btn-success" (click)="generarGuia()">Generar Guia</button>
+            </div>
+            <div class="form-group col-md-6 col-sm-4 col-lg-4 col-xs-6" *ngIf="data.id && data.ven_imagen_guia">
+                <button type="button" class="btn btn-warning" (click)="imprimirGuia()">Imprimir Guia </button>
+            </div>
+            <div class="form-group col-md-6 col-sm-4 col-lg-4 col-xs-6" *ngIf="data.id && data.ven_numero_guia">
+                <button type="button" class="btn btn-info" (click)="verDetalles( data.ven_numero_guia )">Estado Guia </button>
+            </div>
+            <div class="form-group col-md-6 col-sm-4 col-lg-4 col-xs-6" *ngIf="data.id && data.ven_imagen_tiket">
+                <button type="button" class="btn btn-dark" (click)="openEvidencia( data.ven_imagen_tiket )">Evidencia Entrega </button>
+            </div>
+            <div class="form-group col-md-12" *ngIf="data.ven_imagen_producto && id">
+                <div class="mx-auto" style="width: 200px;">
+                    <a [href]="data.ven_imagen_producto" target="_blank">
+                        <img [src]="data.ven_imagen_producto" class="imgFoto">
+                    </a>
+                </div>
             </div>
         </div>
         <div class="row col-12" *ngIf="id">
@@ -141,9 +154,14 @@
                 <input type="date" class="form-control" [(ngModel)]="data.ven_fecha_venta">
             </div>
         </div>
-        <div class="form-group col-12" *ngIf="superSub">
-            <!--<label for="exampleFormControlInput1">Valor del Envio</label>
-            <input [disabled]="!superSub" currencyMask [(ngModel)]="data.fleteValor" (ngModelChange)="suma()" class="form-control form-control-sm" [options]="opcionCurrencys"/>-->
+        <div class="form-group col-md-6 col-sm-4 col-lg-4 col-xs-6" *ngIf="superSub">
+            <label for="exampleFormControlInput1">Valor del Envio</label>
+            <input [disabled]="!superSub" currencyMask [(ngModel)]="data.fleteValor" (ngModelChange)="suma()" class="form-control form-control-sm" [options]="opcionCurrencys"/>
+        </div>
+        <div class="form-group col-12 bg-primary text-white rounded">
+            <h2>Litas de Pataforma de envios</h2>
+        </div>
+        <div class="form-group col-12" *ngIf="!data.ven_numero_guia">
             <div class="card-body ng-tns-c14-12 table-border-style ng-star-inserted">
                 <div class="table-responsive">
                     <table class="table table-hover">
@@ -153,11 +171,9 @@
                             </tr>
                         </thead>
                         <tbody>
-                            <tr *ngFor="let item of tablet.listRow" (click)="selectTrans( item )" class="mouse">
-                                <td>
-                                    <button type="button" class="btn btn-primary">
-                                        <i class="fa fa-eye" aria-hidden="true"></i>
-                                    </button>
+                            <tr *ngFor="let item of tablet.listRow" (click)="selectTrans( item )" class="mouse" [ngClass]="{checks: item.check }">
+                                <td [ngClass]="{mensaje: item.mensaje}">
+                                    <p>{{ item.mensaje }}</p>
                                 </td>
                                 <td>
                                     <img [src]="item.imgTrasp" class="img">
@@ -248,7 +264,7 @@
         <div class="form-group col-12 row">
             <div class="col-6 col-md-4 col-sm-4 col-lg-2 col-xs-2" *ngFor="let item of listCarrito">
                 <mat-card class="example-card">
-                    <img mat-card-image [src]="item.foto" alt="Photo of a Shiba Inu">
+                    <img mat-card-image [src]="item.foto" style="width: 100%; object-fit: cover;" alt="Photo of a Shiba Inu">
                     <mat-card-actions>
                         <div class="d-flex justify-content-center">
                             <div>
