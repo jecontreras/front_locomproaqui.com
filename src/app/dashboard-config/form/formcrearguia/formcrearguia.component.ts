@@ -54,9 +54,9 @@ export class FormcrearguiaComponent implements OnInit {
       this.data.pesoVolumen = ( ( parseFloat( this.data.alto ) * parseFloat( this.data.largo ) * parseFloat( this.data.ancho ) ) / 5000 ) || 1;
       this.data.pesoVolumen = Math.round( this.data.pesoVolumen );
       console.log( this.data )
-      this.rellenoData();
       this.dataUser = this.data.usu_clave_int;
       console.log( this.dataUser )
+      this.rellenoData();
     }
   }
 

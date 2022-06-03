@@ -31,4 +31,7 @@ export class VentasService {
   getFleteValor(query:any){
     return this._model.querys('tblventas/getFleteValor',query, 'post');
   }
+  cancelarFlete(query:any){
+    return this._model.querys('tblventas/cancelarGuia',query, 'post');
+  }
 }

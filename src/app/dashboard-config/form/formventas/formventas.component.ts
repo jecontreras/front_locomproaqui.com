@@ -551,6 +551,21 @@ export class FormventasComponent implements OnInit {
     });
   }
 
+  cancelarGuia(){
+    this.disabledButton = true; 
+    this._ventas.cancelarFlete( { 
+      nRemesa: this.data.ven_numero_guia,
+      transportadoraSelect: this.data.transportadoraSelect
+    } ).subscribe(( res:any )=>{
+      this.disabledButton = false; 
+      if( res.status !== 200 ) return this._tools.confirm( { title: "Error en cancelar guia", icon: "error" } );
+      this._tools.confirm( { title: "Guia cancelado exitos", icon: "succes" } );
+      this.data.ven_numero_guia = "";
+      this.data.ven_imagen_guia = "";
+      if( this.id ) this.submit();
+    },( error:any  )=> { this.disabledButton = false; this._tools.confirm( { title: "Error en cancelar guia", icon: "error" } );} );
+  }
+
   viewRotulo( urlRotulos ){
     this.url = this._tools.seguridadIfrane( urlRotulos );
   }
@@ -579,10 +594,9 @@ export class FormventasComponent implements OnInit {
     if( !this.data.ciudadDestino.code ) { return false;}
     this.data.codeCiudad = this.data.ciudadDestino.code;
     this.data.ciudadDestino = this.data.ciudadDestino.name;
+    this.progreses = true;
     result = await this.PrecioContraEntrega();
-    setTimeout( async ()=>{
-      //if( result == false ) await this.PrecioNormal();
-    }, 2000 )
+    this.progreses = false;
     console.log( result, this.data )
     this.disabledButton = false;
   }
@@ -656,7 +670,7 @@ export class FormventasComponent implements OnInit {
     this.data.flteTotal = item.fleteTotal;
     console.log("**", this.data)
     if( this.id ) this.submit();
-    this.suma();
+    else this.suma();
   }
 
   /*async PrecioContraEntrega(){
