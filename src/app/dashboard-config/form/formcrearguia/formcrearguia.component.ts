@@ -153,7 +153,7 @@ export class FormcrearguiaComponent implements OnInit {
       txtVolumen: this.data.pesoVolumen || 5,
       txtDeclarado: this.data.ven_total,
       txtValorRecaudo: this.data.ven_total,
-      flteTotal: this.data.ven_total,
+      flteTotal: this.data.fleteValor,
       pesoReal: this.data.pesoReal
     };
   }
