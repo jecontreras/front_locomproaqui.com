@@ -359,7 +359,8 @@ export class FormventasComponent implements OnInit {
   }
 
   guardarVenta() {
-    if (this.listCarrito.length == 0) return this._tools.tooast({ title: "Tiene que existir almenos un articulo seleccionado", icon: "warning" });
+    if ( this.listCarrito.length == 0 ) return this._tools.tooast({ title: "Tiene que existir almenos un articulo seleccionado", icon: "warning" });
+    if( !this.data.transportadoraSelect ) return this._tools.tooast({ title: "Tienes que seleccionar por medio de envio lo vas a enviar ( Obligatorio )", icon: "warning" });
     this.data.listaArticulo = this.listCarrito;
     this._ventas.create(this.data).subscribe((res: any) => {
       //this.OrderWhatsapp(res);
@@ -616,12 +617,12 @@ export class FormventasComponent implements OnInit {
         "idCiudadDestino": String( this.data.codeCiudad ),
         "idCiudadOrigen": "54001000",
         "valorMercancia": Number( this.data.ven_total ),
-        "valorProductos": Number( this.data.ven_totalDistribuidor ),
+        "valorProductos": Number( this.data.ven_totalDistribuidor - 10000 ),
         "fechaRemesa": moment( this.data.fecha ).format( "YYYY-MM-DD" ),
         "idUniSNegogocio": 1,
         "numeroUnidad": 1,
         "pesoReal": 1,
-        "pesoVolumen": this.data.pesoVolumen,
+        "pesoVolumen": this.data.pesoVolumen || 1,
         "alto": 8,
         "largo": 28,
         "ancho": 21,
@@ -644,6 +645,7 @@ export class FormventasComponent implements OnInit {
       this._ventas.getFleteValor( data ).subscribe(( res:any )=>{
         console.log( "****", res )
         this.tablet.listRow = res.data || [];
+        this.selectTrans( res.data[2] );
         resolve( true );
 
 
@@ -669,8 +671,8 @@ export class FormventasComponent implements OnInit {
     this.data.fleteManejo = item.fleteManejo;
     this.data.flteTotal = item.fleteTotal;
     console.log("**", this.data)
+    this.suma();
     if( this.id ) this.submit();
-    else this.suma();
   }
 
   /*async PrecioContraEntrega(){

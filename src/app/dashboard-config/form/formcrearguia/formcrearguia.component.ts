@@ -38,6 +38,13 @@ export class FormcrearguiaComponent implements OnInit {
   ngOnInit(): void {
     if (Object.keys(this.datas.datos).length > 0) {
       this.data = this.datas.datos || {};
+      let valor = 1;
+      try {
+        valor = this.data['listaArticulo']['length'] || 1;
+      } catch (error) {}
+      try {
+        valor = this.data['articulo']['length'] || 1;
+      } catch (error) {}
       this.data = {
        ... this.data,
        valorMercancia: this.data.ven_total,
@@ -48,8 +55,8 @@ export class FormcrearguiaComponent implements OnInit {
        alto: 8,
        largo: 28,
        ancho: 21,
-       valorAsegurado: 100000,
-       selectEnvio: 'contraEntrega'
+       valorAsegurado: 50000 * ( valor ),
+       selectEnvio: this.data.ven_tipo || 'contraEntrega'
       };
       this.data.pesoVolumen = ( ( parseFloat( this.data.alto ) * parseFloat( this.data.largo ) * parseFloat( this.data.ancho ) ) / 5000 ) || 1;
       this.data.pesoVolumen = Math.round( this.data.pesoVolumen );
