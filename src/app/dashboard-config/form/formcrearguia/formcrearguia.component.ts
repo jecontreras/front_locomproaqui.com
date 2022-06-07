@@ -52,7 +52,7 @@ export class FormcrearguiaComponent implements OnInit {
        numeroUnidad:  1,
        pesoReal: 1,
        pesoVolumen: "",
-       alto: 8,
+       alto: 9 * valor,
        largo: 28,
        ancho: 21,
        valorAsegurado: 50000 * ( valor ),
@@ -82,7 +82,7 @@ export class FormcrearguiaComponent implements OnInit {
       idUniSNegogocio: 1,
       numeroUnidad: 1,
       pesoVolumen: this.data.pesoVolumen,
-      alto: this.data.alto || 8,
+      alto: this.data.alto || 9,
       largo: this.data.largo || 28,
       ancho: this.data.ancho || 21,
       drpCiudadOrigen: "CUCUTA-NORTE DE SANTANDER",
@@ -173,32 +173,12 @@ export class FormcrearguiaComponent implements OnInit {
     this._ventas.createFelte( this.data2 ).subscribe( ( res:any ) => {
       res = res.data;
       if( res.status !== 200 ) this._tools.basicIcons({ header: "Error!", subheader: "No pudimos crear el flete por favor actualizar pagina" });
-      res = res.data;
       this._tools.basicIcons({ header: "Exitoso!", subheader: "Creacion de flete creado exitoso #remesa " + res.nRemesa });
       this.btndisabled = false;
-      if( res.transportadoraSelect == "CORDINADORA") if( res.urlRotulos ) this.downloadPdf( res.ven_imagen_guia, this.data.codigo);
+      if( res.transportadoraSelect == "CORDINADORA") if( res.urlRotulos ) this._tools.downloadPdf( res.urlRotulos, res.nRemesa);
       this.dialogRef.close( res );
     },(error)=> { this.btndisabled = false;  this._tools.basicIcons({ header: "Error!", subheader: "No pudimos crear el flete por favor actualizar pagina" }); } );
   }
-  downloadPdf(base64String, fileName){
-    if(window.navigator && window.navigator['msSaveOrOpenBlob']){
-      // download PDF in IE
-      let byteChar = atob(base64String);
-      let byteArray = new Array(byteChar.length);
-      for(let i = 0; i < byteChar.length; i++){
-        byteArray[i] = byteChar.charCodeAt(i);
-      }
-      let uIntArray = new Uint8Array(byteArray);
-      let blob = new Blob([uIntArray], {type : 'application/pdf'});
-      window.navigator['msSaveOrOpenBlob'](blob, `${fileName}.pdf`);
-    } else {
-      // Download PDF in Chrome etc.
-      const source = `data:application/pdf;base64,${base64String}`;
-      const link = document.createElement("a");
-      link.href = source;
-      link.download = `${fileName}.pdf`
-      link.click();
-    }
-  }
+  
 
 }

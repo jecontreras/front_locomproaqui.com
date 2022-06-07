@@ -1,6 +1,13 @@
 <h2 mat-dialog-title>{{ titulo }} Ventas</h2>
 <mat-dialog-content class="mat-typography">
-    <div class="form row">
+    <div class="row" *ngIf="disableSpinner">
+        <div class="col-12">
+            <div class="d-flex justify-content-center">
+                <mat-spinner></mat-spinner>
+            </div>
+        </div>
+    </div>
+    <div class="form row" *ngIf="!disableSpinner">
         <!-- <div class="form-group col-md-6 col-sm-4 col-lg-4 col-xs-6">
             <label for="exampleFormControlSelect1">Tipo de Venta</label>
             <select class="form-control form-control-sm" [(ngModel)]="data.ven_tipo">
@@ -203,7 +210,7 @@
             <div class="form-group col-md-6 col-sm-4 col-lg-4 col-xs-6" *ngIf="data.id && !data.ven_imagen_guia && listCarrito.length && !data.ven_numero_guia">
                 <button type="button" class="btn btn-success" (click)="generarGuia()">Generar Guia</button>
             </div>
-            <div class="form-group col-md-6 col-sm-4 col-lg-4 col-xs-6" *ngIf="data.id && data.ven_imagen_guia && listCarrito.length && data.ven_numero_guia">
+            <div class="form-group col-md-6 col-sm-4 col-lg-4 col-xs-6" *ngIf="data.id && data.ven_imagen_guia && listCarrito.length && data.ven_numero_guia && data.ven_estado == 0">
                 <button type="button" class="btn btn-danger" (click)="cancelarGuia()">Cancelar Guia</button>
             </div>
             <div class="form-group col-md-6 col-sm-4 col-lg-4 col-xs-6" *ngIf="data.id && data.ven_imagen_guia">
@@ -300,7 +307,7 @@
             <label for="exampleFormControlInput1">Vr.Unidad: </label>
             <span>$ {{ ( data.ven_precio || 0 ).toLocaleString(1) }} COP</span>
         </div> -->
-        <div class="form-group col-12" *ngIf="data.id && superSub && data.ven_imagen_guia">
+        <div class="form-group col-12" *ngIf="data.id && superSub && data.ven_imagen_guia && data.transportadoraSelect == 'ENVIA'">
             <button type="button" class="btn btn-warning" (click)="imprimirGuia()">Imprimir Guia </button>
             <iframe style="width: 100%; height: -webkit-fill-available;" [src]="url" frameborder="0" width="1499"
                 height="561" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"

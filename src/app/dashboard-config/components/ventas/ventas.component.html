@@ -148,7 +148,10 @@
                           <i class="material-icons">delete_forever</i>
                         </button>
                       </td>
-                      <td>{{ row['ven_numero_guia'] }}</td>
+                      <td>{{ row['ven_numero_guia'] }}
+                        <span *ngIf=" row['transportadoraSelect']=='ENVIA' "><img class="imgs" src="./assets/img/envia.jpg" alt=""></span>
+                        <span *ngIf=" row['transportadoraSelect']=='CORDINADORA' "><img class="imgs" src="./assets/img/logoCordinadora.png" alt=""></span>
+                      </td>
                       <td>
                         <p>{{ row['ven_usu_creacion'] }}</p>
                         <p>{{ row['usu_clave_int']?.usu_nombre }}</p>

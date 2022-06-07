@@ -69,6 +69,8 @@ export class FormventasComponent implements OnInit {
   progreses:boolean = false;
   errorCotisa:string;
 
+  disableSpinner:boolean = true;
+
   constructor(
     public dialog: MatDialog,
     private _ventas: VentasService,
@@ -131,6 +133,9 @@ export class FormventasComponent implements OnInit {
       let filtro = await this.PrecioContraEntrega();
       filtro = _.find( this.tablet.listRow, ( row:any ) => row.slug === this.data.transportadoraSelect );
       if( filtro ) await this.selectTrans( filtro );;
+      this.progreses = false;
+      this.disableSpinner = false;
+      this.disabledButton = false;
     } else {
       this.id = "";
       this.data.usu_clave_int = this.dataUser.id;
@@ -572,7 +577,14 @@ export class FormventasComponent implements OnInit {
   }
 
   imprimirGuia(){
-    window.open( this.data.ven_imagen_guia );
+    if( this.data.transportadoraSelect == "ENVIA") window.open( this.data.ven_imagen_guia );
+    if( this.data.transportadoraSelect == "CORDINADORA"){
+      this._ventas.imprimirFlete( { 
+        codigo_remision: this.data.ven_numero_guia
+      }).subscribe(( res:any ) =>{
+        this._tools.downloadPdf( res.data, this.data.ven_numero_guia );
+      })
+    }
   }
 
   verDetalles( url:string ){
@@ -597,8 +609,9 @@ export class FormventasComponent implements OnInit {
     this.data.ciudadDestino = this.data.ciudadDestino.name;
     this.progreses = true;
     result = await this.PrecioContraEntrega();
-    this.progreses = false;
     console.log( result, this.data )
+    this.progreses = false;
+    this.disableSpinner = false;
     this.disabledButton = false;
   }
 
@@ -623,7 +636,7 @@ export class FormventasComponent implements OnInit {
         "numeroUnidad": 1,
         "pesoReal": 1,
         "pesoVolumen": this.data.pesoVolumen || 1,
-        "alto": 8,
+        "alto": 9,
         "largo": 28,
         "ancho": 21,
         "tipoEmpaque": "",
@@ -645,9 +658,11 @@ export class FormventasComponent implements OnInit {
       this._ventas.getFleteValor( data ).subscribe(( res:any )=>{
         console.log( "****", res )
         this.tablet.listRow = res.data || [];
-        this.selectTrans( res.data[2] );
+        try {
+          this.selectTrans( res.data[2] );
+        } catch (error) {}
         resolve( true );
-
+        
 
         //if( this.data.fleteValor == 0 ) { this.data.ven_tipo = "pago_anticipado"; this._tools.confirm( { title: "Novedad", detalle: "Lo sentimos no tenemos Cubrimiento para esa zona (CONTRA ENTREGA)", icon: "warning" } ); return resolve( false ) }
         /*else {

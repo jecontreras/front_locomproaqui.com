@@ -34,4 +34,7 @@ export class VentasService {
   cancelarFlete(query:any){
     return this._model.querys('tblventas/cancelarGuia',query, 'post');
   }
+  imprimirFlete(query:any){
+    return this._model.querys('tblventas/imprimirRotulo',query, 'post');
+  }
 }
