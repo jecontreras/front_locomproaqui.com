@@ -321,9 +321,21 @@ export class VentasComponent implements OnInit {
   }
 
   openUrl( numero:any, cliente:string, obj:any ){
-    let Url:string = `https://wa.me/57${ numero }?text=Hola Cliente ${ cliente } Este esta es tu guia --> ${ obj.ven_numero_guia } <-- Transportadora Envia >>>>>> url: ' ${ obj.ven_imagen_guia }' <<<<<<`;
-    console.log(Url, obj)
-    window.open( Url );
+    let Url:string = `https://wa.me/57${ numero }?text=Hola Cliente ${ cliente } Este esta es tu guia --> ${ obj.ven_numero_guia } <-- `;
+    if( obj.transportadoraSelect == "ENVIA") {
+      Url+= `Transportadora ENVIA >>>>>> url: ' ${ obj.ven_imagen_guia }' <<<<<<`;
+      window.open( Url );
+    }
+    if( obj.transportadoraSelect == "CORDINADORA") {
+      Url+= `Transportadora CORDINADORA >>>>>>`;
+      this._ventas.imprimirFlete( { 
+        codigo_remision: obj.ven_numero_guia
+      }).subscribe(( res:any ) =>{
+        this._tools.downloadPdf( res.data, obj.ven_numero_guia );
+      })
+      window.open( Url );
+    }
+
   }
 
   openFoto( foto: string ){
@@ -334,8 +346,15 @@ export class VentasComponent implements OnInit {
     window.open( "https://enviosrrapidoscom.web.app/portada/guiadetalles/" + url )
   }
 
-  openEvidencia( url:string ){
-    window.open( url )
+  openEvidencia( url:string, item:any  ){
+    if( item.transportadoraSelect == "ENVIA" ) window.open( url );
+    if( item.transportadoraSelect == "CORDINADORA" ){
+      this._ventas.imprimirFlete( { 
+        codigo_remision: item.ven_imagen_tiket
+      }).subscribe(( res:any ) =>{
+        this._tools.downloadPdf( res.data, item.ven_numero_guia );
+      })
+    }
   }
 
 }

@@ -135,18 +135,34 @@
                     }">
 
                       <td>
-                        <button (click)="crear(row)" class="btn btn-primary btn-just-icon btn-round">
-                          <i class="material-icons">remove_red_eye</i>
-                        </button><br>
-                        <button *ngIf="row['ven_numero_guia']" (click)="verDetalles( row['ven_numero_guia'] )" class="btn btn-info btn-just-icon btn-round">
-                          Estado Guia
-                        </button><br>
-                        <button (click)="openEvidencia( row['ven_imagen_tiket'] )" *ngIf="row['ven_imagen_tiket']" class="btn btn-dark btn-just-icon btn-round">
-                          Evidencia Entrega
-                        </button><br>
-                        <button (click)="btndelete(row, idx)" class="btn btn-danger btn-just-icon btn-round">
-                          <i class="material-icons">delete_forever</i>
-                        </button>
+                        <div *ngIf="!row.ven_numero_guia">
+                          <span class="text-warning fondos" >Debes generar la guia </span><br>
+                        </div>
+                        <div>
+                          <button (click)="crear(row)" class="btn btn-primary btn-just-icon btn-round">
+                            <i class="material-icons">remove_red_eye</i>
+                          </button><br>
+                        </div>
+                        <div *ngIf="row['ven_numero_guia']">
+                          <button  (click)="verDetalles( row['ven_numero_guia'] )" class="btn btn-info btn-just-icon btn-round">
+                            Estado Guia
+                          </button><br>
+                        </div>
+                        <div *ngIf="row['ven_imagen_tiket']">
+                          <button (click)="openEvidencia( row['ven_imagen_tiket'], row )" class="btn btn-dark btn-just-icon btn-round">
+                            Evidencia Entrega
+                          </button><br>
+                        </div>
+                        <div *ngIf="row['ven_numero_guia']">
+                          <button (click)="openUrl( row['ven_telefono_cliente'], row['ven_nombre_cliente'], row )" class="btn btn-warning btn-just-icon btn-round">
+                            Enviar Guia
+                          </button><br>
+                        </div>
+                        <div>
+                          <button (click)="btndelete(row, idx)" class="btn btn-danger btn-just-icon btn-round">
+                            <i class="material-icons">delete_forever</i>
+                          </button><br>
+                        </div>
                       </td>
                       <td>{{ row['ven_numero_guia'] }}
                         <span *ngIf=" row['transportadoraSelect']=='ENVIA' "><img class="imgs" src="./assets/img/envia.jpg" alt=""></span>

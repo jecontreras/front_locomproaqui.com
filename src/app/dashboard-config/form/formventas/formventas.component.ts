@@ -63,7 +63,7 @@ export class FormventasComponent implements OnInit {
   dataVendedor:any = {};
   listValorEnvio:any = [];
   tablet:any = {
-    header: ["Mensaje","Transp","Origen / Destino","Unid","Total Kilos","Kilos Vol","Valoración","Tray","Flete","Flete Manejo","Valor Tarifa","Total","Tiempos Aprox"],
+    header: ["Mensaje","Transp","Origen / Destino","Unid","Total Kilos","Valoración","Flete","Valor Tarifa","Total","Tiempos Aprox"],
     listRow: []
   };
   progreses:boolean = false;
@@ -132,10 +132,7 @@ export class FormventasComponent implements OnInit {
       this.data.ciudadDestino = this.data.ciudadDestino;
       let filtro = await this.PrecioContraEntrega();
       filtro = _.find( this.tablet.listRow, ( row:any ) => row.slug === this.data.transportadoraSelect );
-      if( filtro ) await this.selectTrans( filtro );;
-      this.progreses = false;
-      this.disableSpinner = false;
-      this.disabledButton = false;
+      if( filtro ) await this.selectTrans( filtro, true );;
     } else {
       this.id = "";
       this.data.usu_clave_int = this.dataUser.id;
@@ -145,6 +142,9 @@ export class FormventasComponent implements OnInit {
       this.suma();
       this.data.fleteValor = 0;
     }
+    this.progreses = false;
+    this.disableSpinner = false;
+    this.disabledButton = false;
     this.listCiudades = this.listCiudades.filter( ( row:any )=> row.code > 0 );
     //this.listValidar();
   }
@@ -402,8 +402,8 @@ export class FormventasComponent implements OnInit {
       //this.dialog.closeAll();
       let accion: any = new CartAction({}, 'drop');
       this._store.dispatch(accion);
-      //this.dialogRef.close('creo');
       this.generarGuia();
+      this.dialogRef.close('creo');
     }, (error) => { this._tools.presentToast("Error al crear la venta"); this.disabledButton = false; this.dialog.closeAll(); });
 
   }
@@ -675,7 +675,8 @@ export class FormventasComponent implements OnInit {
     });
   }
 
-  selectTrans( item ){
+  selectTrans( item, opt = false ){
+    if( this.data.ven_numero_guia && !opt) return false;
     this.data.transportadoraSelect = item.slug;
     if( this.data.transportadoraSelect === "CORDINADORA" || this.data.transportadoraSelect === "ENVIA") {
       this.data.ven_tipo = "contraEntrega"; 
@@ -688,6 +689,7 @@ export class FormventasComponent implements OnInit {
     console.log("**", this.data)
     this.suma();
     if( this.id ) this.submit();
+    return true;
   }
 
   /*async PrecioContraEntrega(){

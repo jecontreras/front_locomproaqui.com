@@ -60,6 +60,10 @@ html, body {
   position: inherit;
 }
 
+.ngxImageZoomThumbnail{
+  width: 100% !important;
+  object-fit: scale-down !important;
+}
 
 
 .pointer {

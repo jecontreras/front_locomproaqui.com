@@ -45,12 +45,13 @@ export class FormcrearguiaComponent implements OnInit {
       try {
         valor = this.data['articulo']['length'] || 1;
       } catch (error) {}
+      console.log("***", valor)
       this.data = {
        ... this.data,
        valorMercancia: this.data.ven_total,
        fecha: moment( this.data.fecha ).format( "YYYY-MM-DD" ),
        numeroUnidad:  1,
-       pesoReal: 1,
+       pesoReal: valor,
        pesoVolumen: "",
        alto: 9 * valor,
        largo: 28,

@@ -88,13 +88,13 @@
                         <label>Cantidad Adquirir</label>
                         <input type="number" [(ngModel)]="data.cantidadAdquirir" class="form-control form-control-sm">
                     </div>
-                    <div class="col-4" *ngIf="data.precio_vendedor">
+                    <!--<div class="col-4" *ngIf="data.precio_vendedor">
                         <div>
                             <input type="checkbox" [(ngModel)]="data.checkpromo" class="form-check-input" (ngModelChange)="alertPromocion()">
                             <label class="form-check-label" for="exampleCheck1">Promoción</label>
                         </div>
-                    </div>
-                    <div class="col-4" *ngIf="data.checkpromo == true">
+                    </div>-->
+                    <div class="col-4">
                         <label>Lo Vendiste</label>
                         <input currencyMask [(ngModel)]="data.encuanto" class="form-control form-control-sm" [options]="opcionCurrencys" (blur)="validando()"/>
                     </div>
