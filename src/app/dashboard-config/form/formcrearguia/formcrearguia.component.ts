@@ -51,14 +51,15 @@ export class FormcrearguiaComponent implements OnInit {
        valorMercancia: this.data.ven_total,
        fecha: moment( this.data.fecha ).format( "YYYY-MM-DD" ),
        numeroUnidad:  1,
-       pesoReal: valor,
+       //pesoReal: valor,
        pesoVolumen: "",
-       alto: 9 * valor,
+       alto: ( 9 * valor ) - 3,
        largo: 28,
        ancho: 21,
        valorAsegurado: 50000 * ( valor ),
        selectEnvio: this.data.ven_tipo || 'contraEntrega'
       };
+      this.data.pesoReal = this.data.pesoReal || valor,
       this.data.pesoVolumen = ( ( parseFloat( this.data.alto ) * parseFloat( this.data.largo ) * parseFloat( this.data.ancho ) ) / 5000 ) || 1;
       this.data.pesoVolumen = Math.round( this.data.pesoVolumen );
       console.log( this.data )
@@ -70,8 +71,7 @@ export class FormcrearguiaComponent implements OnInit {
 
   rellenoData(){
     for( let row of this.data.articulo ){
-      this.textData+= `${ row.cantidad } ${ row['codigoImg'] } ${ row.tallaSelect }, 
-      `
+      this.textData+= `${ row.cantidad } ${ row['codigoImg'] } -T${ row.tallaSelect }, `
     }
     this.data2 = {
       transportadoraSelect: this.data.transportadoraSelect,

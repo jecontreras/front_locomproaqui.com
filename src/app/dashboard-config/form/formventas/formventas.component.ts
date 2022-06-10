@@ -56,7 +56,7 @@ export class FormventasComponent implements OnInit {
   namePorcentaje: string;
   rolUser:string;
   listCiudades:any = DANEGROUP;
-  keyword = 'city';
+  keyword = 'name';
   // url de la publicidad
   url: any;
   textData:string = "";
@@ -128,11 +128,12 @@ export class FormventasComponent implements OnInit {
       if (this.data.ven_tipo == "WHATSAPP") { if (!this.data.ven_imagen_producto) this.data.ven_imagen_producto = "./assets/noimagen.jpg"; this.data.ven_tipo = "whatsapp"; }
       if (this.data.ven_tipo == "CARRITO") { this.data.ven_tipo = "carrito"; }
       if( this.data.ven_imagen_guia ) this.viewRotulo( this.data.ven_imagen_guia );
-      this.getArticulos();
+      await this.getArticulos();
       this.data.ciudadDestino = this.data.ciudadDestino;
-      let filtro = await this.PrecioContraEntrega();
+      let filtro:any = await this.PrecioContraEntrega();
       filtro = _.find( this.tablet.listRow, ( row:any ) => row.slug === this.data.transportadoraSelect );
-      if( filtro ) await this.selectTrans( filtro, true );;
+      console.log("MEN", filtro)
+      if( filtro ) if( filtro.slug ) await this.selectTrans( filtro, true );;
     } else {
       this.id = "";
       this.data.usu_clave_int = this.dataUser.id;
@@ -161,30 +162,37 @@ export class FormventasComponent implements OnInit {
   }
 
   getArticulos() {
-    this.listCarrito = [];
-    this._ventasProducto.get({ where: { ventas: this.id }, limit: 10000 }).subscribe((res: any) => {
-      this.listCarrito = _.map(res.data, (item: any) => {
-        return {
-          foto: item.fotoproducto || item.producto.foto,
-          cantidad: item.cantidad,
-          tallaSelect: item.tallaSelect,
-          costo: item.precio,
-          loVendio: item.loVendio,
-          id: item.id,
-          costoTotal: item.costoTotal,
-          colorSelect: item.colorSelect,
-          codigoImg: item.codigoImg || "no seleccionado",
-          demas: item
-        };
-      });
-      //this.suma();
-    }, (error) => { console.error(error); this._tools.presentToast("Error de servidor"); this.listCarrito = []; });
+    return new Promise( resolve =>{
+      this.listCarrito = [];
+      this._ventasProducto.get({ where: { ventas: this.id }, limit: 10000 }).subscribe((res: any) => {
+        this.listCarrito = _.map(res.data, (item: any) => {
+          return {
+            foto: item.fotoproducto || item.producto.foto,
+            cantidad: item.cantidad,
+            tallaSelect: item.tallaSelect,
+            costo: item.precio,
+            loVendio: item.loVendio,
+            id: item.id,
+            costoTotal: item.costoTotal,
+            colorSelect: item.colorSelect,
+            codigoImg: item.codigoImg || "no seleccionado",
+            demas: item
+          };
+        });
+        //this.suma();
+        resolve( true );
+      }, (error) => { console.error(error); this._tools.presentToast("Error de servidor"); this.listCarrito = [];  resolve( false ); });
+    });
   }
 
   onSelect(event: any) {
     //console.log(event, this.files);
     this.files = [event.addedFiles[0]];
     if( this.id ) if( this.files.length > 0 ) this.subirFile( 'ven_imagen_conversacion' );
+  }
+
+  onChangeSearch( ev:any ){
+    //console.log( ev )
   }
 
   onRemove(event) {
@@ -329,7 +337,7 @@ export class FormventasComponent implements OnInit {
       this.disabledButton = true;
       if (this.id) {
         //console.log("****", this.superSub, this.clone )
-        if (!this.superSub) if ( this.clone.ven_estado == 1 || this.clone.ven_estado == 2 || this.clone.ven_estado == 3 || this.clone.ven_estado == 4 ) { this._tools.presentToast("Error no puedes ya editar la venta ya esta aprobada"); return false; }
+        if (!this.superSub) if ( ( this.clone.ven_estado == 1 || this.clone.ven_estado == 2 || this.clone.ven_estado == 3 || this.clone.ven_estado == 4 ) && this.clone.ven_numero_guia  ) { this._tools.presentToast("Error no puedes ya editar la venta ya esta aprobada"); return false; }
         this.updates();
       }
       else { this.suma(); this.guardar(); }
@@ -369,6 +377,8 @@ export class FormventasComponent implements OnInit {
     this.data.listaArticulo = this.listCarrito;
     this._ventas.create(this.data).subscribe((res: any) => {
       //this.OrderWhatsapp(res);
+      this.data.usu_clave_int = res.usu_clave_int;
+      this.generarGuia();
       if( this.rolUser != "subAdministrador"){
         this.crearNotificacion({
           titulo: "Nueva venta de " + res.ven_nombre_cliente,
@@ -402,8 +412,9 @@ export class FormventasComponent implements OnInit {
       //this.dialog.closeAll();
       let accion: any = new CartAction({}, 'drop');
       this._store.dispatch(accion);
-      this.generarGuia();
-      this.dialogRef.close('creo');
+      this.id = res.id;
+      this.data.id = res.id;
+      //this.dialogRef.close('creo');
     }, (error) => { this._tools.presentToast("Error al crear la venta"); this.disabledButton = false; this.dialog.closeAll(); });
 
   }
@@ -483,7 +494,8 @@ export class FormventasComponent implements OnInit {
     this._tools.openSnack('Copiado:' + ' ' + this.mensajeWhat, 'completado', false);
   }
 
-  updates() {
+  updates( opt:boolean = false ) {
+    if( !opt ) if (!this.superSub) if ( ( this.clone.ven_estado == 1 || this.clone.ven_estado == 2 || this.clone.ven_estado == 3 || this.clone.ven_estado == 4 ) || ( this.clone.ven_numero_guia ) ) { this._tools.presentToast("Error no puedes ya editar la venta ya esta aprobada"); return false; }
     let data = _.clone( this.data );
     data = _.omit( data, ['usu_clave_int']);
     if( this.superSub == false ) { 
@@ -494,6 +506,7 @@ export class FormventasComponent implements OnInit {
       this._tools.presentToast("Actualizado");
       this.disabledButton = false;
       this.disabled = false;
+      this.clone.ven_numero_guia = this.data.ven_numero_guia;
       if (this.clone.ven_estado != this.data.ven_estado) {
         let armando = {
           titulo: "VENTA DESPACHADO " + res.ven_nombre_cliente,
@@ -552,7 +565,8 @@ export class FormventasComponent implements OnInit {
       if( !result ) return false;
       this.data.ven_numero_guia = result.nRemesa;
       this.data.ven_imagen_guia = result.urlRotulos;
-      this.viewRotulo( this.data.ven_imagen_guia );
+      if( this.data.transportadoraSelect === "CORDINADORA") this.imprimirGuia();
+      if( this.data.transportadoraSelect === "ENVIA") this.viewRotulo( this.data.ven_imagen_guia );
       this.updates();
     });
   }
@@ -568,7 +582,7 @@ export class FormventasComponent implements OnInit {
       this._tools.confirm( { title: "Guia cancelado exitos", icon: "succes" } );
       this.data.ven_numero_guia = "";
       this.data.ven_imagen_guia = "";
-      if( this.id ) this.submit();
+      if( this.id ) this.updates( true );
     },( error:any  )=> { this.disabledButton = false; this._tools.confirm( { title: "Error en cancelar guia", icon: "error" } );} );
   }
 
@@ -597,6 +611,7 @@ export class FormventasComponent implements OnInit {
 
   async precioRutulo( ev:any ){
     console.log( ev );
+    if( this.superSub == false && this.data.ven_numero_guia ) return this._tools.confirm( { title: "Lo sentimos tienes una guia generada ya", detalle: "1.Toca cancelar la guia si te quedo mal. 2.hablar con el servicio al cliente", icon: "error" } );
     if( this.disabledButton ) return false;
     this.disabledButton = true;
     if( this.id && ( this.data.ven_estado == 1 && this.data.ven_estado == 2 && this.data.ven_estado == 3 && this.data.ven_estado == 4 ) ) { this.disabledButton = false; return false;}
@@ -634,9 +649,9 @@ export class FormventasComponent implements OnInit {
         "fechaRemesa": moment( this.data.fecha ).format( "YYYY-MM-DD" ),
         "idUniSNegogocio": 1,
         "numeroUnidad": 1,
-        "pesoReal": 1,
+        "pesoReal": ( this.listCarrito.length ) || 1,
         "pesoVolumen": this.data.pesoVolumen || 1,
-        "alto": 9,
+        "alto": ( ( 9 * ( this.listCarrito.length || 1) ) - 3 ) || 9,
         "largo": 28,
         "ancho": 21,
         "tipoEmpaque": "",
@@ -656,8 +671,9 @@ export class FormventasComponent implements OnInit {
       };
       
       this._ventas.getFleteValor( data ).subscribe(( res:any )=>{
-        console.log( "****", res )
         this.tablet.listRow = res.data || [];
+        this.tablet.listRow = _.filter( this.tablet.listRow, ( item:any )=> item.fleteTotal > 0 );
+        console.log( "****", res, this.tablet)
         try {
           this.selectTrans( res.data[2] );
         } catch (error) {}
@@ -681,6 +697,7 @@ export class FormventasComponent implements OnInit {
     if( this.data.transportadoraSelect === "CORDINADORA" || this.data.transportadoraSelect === "ENVIA") {
       this.data.ven_tipo = "contraEntrega"; 
     }else this.data.ven_tipo = "envioNormal";
+    console.log( this.tablet.listRow)
     for(let row of this.tablet.listRow ) row.check = false;
     item.check = !item.check;
     this.data.fleteValor = item.fleteTotal;
