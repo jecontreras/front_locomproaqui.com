@@ -56,7 +56,7 @@ export class FormventasComponent implements OnInit {
   namePorcentaje: string;
   rolUser:string;
   listCiudades:any = DANEGROUP;
-  keyword = 'name';
+  keyword = 'city';
   // url de la publicidad
   url: any;
   textData:string = "";
@@ -705,7 +705,7 @@ export class FormventasComponent implements OnInit {
     this.data.flteTotal = item.fleteTotal;
     console.log("**", this.data)
     this.suma();
-    if( this.id ) this.submit();
+    //if( this.id ) this.submit();
     return true;
   }
 
