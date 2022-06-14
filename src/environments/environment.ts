@@ -6,7 +6,8 @@ export const environment = {
   production: false,
   url: "http://localhost:1337",
   //url: "https://backlocompro.herokuapp.com",
-  urlFront: "http://localhost:4200"
+  urlEnvios: "https://enviosrapidoback.herokuapp.com",
+  urlFront: "http://localhost:4200",
 };
 
 /*

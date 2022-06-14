@@ -144,9 +144,9 @@ export class ToolsService {
 
       let blob = new Blob([byteArray], { "type": "image/jpeg" });
 
-      if (navigator.msSaveBlob) {
+      if (navigator['msSaveBlob']) {
         let filename = 'picture';
-        navigator.msSaveBlob(blob, filename);
+        navigator['msSaveBlob'](blob, filename);
       } else {
         let link = document.createElement("a");
 
@@ -243,7 +243,26 @@ export class ToolsService {
     return this.sanitizer.bypassSecurityTrustResourceUrl( url );
   }
 
+  dataURItoBlob(dataURI) {
+    const byteString = window.atob(dataURI);
+    const arrayBuffer = new ArrayBuffer(byteString.length);
+    const int8Array = new Uint8Array(arrayBuffer);
+    for (let i = 0; i < byteString.length; i++) {
+      int8Array[i] = byteString.charCodeAt(i);
+    }
+    const blob = new Blob([int8Array], { type: 'application/pdf'});
+    return blob;
+  }
+
   downloadPdf(base64String, fileName){
+
+    // data should be your response data in base64 format
+    
+    const blob = this.dataURItoBlob( base64String );
+    const urls = URL.createObjectURL(blob);
+    
+    // to open the PDF in a new window
+    window.open(urls, '_blank');
     if(window.navigator && window.navigator['msSaveOrOpenBlob']){
       // download PDF in IE
       let byteChar = atob(base64String);
@@ -262,6 +281,13 @@ export class ToolsService {
       link.download = `${fileName}.pdf`
       link.click();
     }
+  }
+
+  downloadIMG( ImageBase64:string ){
+    var a = document.createElement("a"); //Create <a>
+    a.href = "data:image/png;base64," + ImageBase64; //Image Base64 Goes here
+    a.download = "Image.png"; //File name Here
+    a.click(); //Downloaded file
   }
 
 

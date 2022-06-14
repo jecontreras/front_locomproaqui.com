@@ -37,4 +37,7 @@ export class VentasService {
   imprimirFlete(query:any){
     return this._model.querys('tblventas/imprimirRotulo',query, 'post');
   }
+  imprimirEvidencia(query:any){
+    return this._model.querysFlete('fletes/cordinadoraSeguimiento',query, 'post');
+  }
 }

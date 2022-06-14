@@ -94,8 +94,17 @@ export class FormlistventasComponent implements OnInit {
       });
   }
 
-  openEvidencia( url:string ){
-    window.open( url )
+  openEvidencia( url:string, item:any  ){
+    if( item.transportadoraSelect == "CORDINADORA" ){
+      this._ventas.imprimirEvidencia( { nRemesa: item.ven_numero_guia } ).subscribe( ( res:any )=>{
+        res = res.data[0];
+        //console.log("**", res.imagen )
+        if( !res ) return this._tools.tooast("");
+        this._tools.downloadIMG( res.imagen );
+      });
+    }else{
+      window.open( url );
+    }
   }
 
   crear(obj:any){

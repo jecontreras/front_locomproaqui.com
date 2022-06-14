@@ -347,13 +347,15 @@ export class VentasComponent implements OnInit {
   }
 
   openEvidencia( url:string, item:any  ){
-    if( item.transportadoraSelect == "ENVIA" ) window.open( url );
     if( item.transportadoraSelect == "CORDINADORA" ){
-      this._ventas.imprimirFlete( { 
-        codigo_remision: item.ven_imagen_tiket
-      }).subscribe(( res:any ) =>{
-        this._tools.downloadPdf( res.data, item.ven_numero_guia );
-      })
+      this._ventas.imprimirEvidencia( { nRemesa: item.ven_numero_guia } ).subscribe( ( res:any )=>{
+        res = res.data[0];
+        //console.log("**", res.imagen )
+        if( !res ) return this._tools.tooast("");
+        this._tools.downloadIMG( res.imagen );
+      });
+    }else{
+      window.open( url );
     }
   }
 

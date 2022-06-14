@@ -56,7 +56,7 @@
             </td>
             <td>{{ row['ven_numero_guia'] }}</td>
             <td>
-                <button (click)="openEvidencia( row['ven_imagen_tiket'] )" *ngIf="row['ven_imagen_tiket']" class="btn btn-dark btn-just-icon btn-round">
+                <button (click)="openEvidencia( row['ven_imagen_tiket'], row )" *ngIf="row['ven_imagen_tiket']" class="btn btn-dark btn-just-icon btn-round">
                     Evidencia Entrega
                 </button>
             </td>
