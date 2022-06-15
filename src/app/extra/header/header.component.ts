@@ -479,6 +479,13 @@ export class HeaderComponent implements OnInit {
           // },
         ]
       },
+      {
+        icons: 'help',
+        nombre: 'Ayuda',
+        disable: this.dataUser.id,
+        url: '/config/cursos',
+        submenus:[]
+      },
       /*{
         icons: 'assessment',
         nombre: 'Informes',
@@ -504,13 +511,13 @@ export class HeaderComponent implements OnInit {
         url: 'registrar()',
         submenus:[]
       },*/
-      {
+      /*{
         icons: 'help',
         nombre: 'Ayuda Material de apoyo',
         disable: true,
         url: 'ayuda()',
         submenus:[]
-      },
+      },*/
       {
         icons: 'exit_to_app',
         nombre: 'Salir',

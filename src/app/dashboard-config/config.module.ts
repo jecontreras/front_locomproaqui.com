@@ -56,6 +56,8 @@ import { FormempresaComponent } from './form/formempresa/formempresa.component';
 import {AutocompleteLibModule} from 'angular-ng-autocomplete';
 import { FormcrearguiaComponent } from './form/formcrearguia/formcrearguia.component';
 import { FormlistventasComponent } from './form/formlistventas/formlistventas.component';
+import { CursosComponent } from './components/cursos/cursos.component';
+import { MatVideoModule } from 'mat-video';
 
 
 @NgModule({
@@ -112,7 +114,8 @@ import { FormlistventasComponent } from './form/formlistventas/formlistventas.co
     MisDespachoComponent,
     FormempresaComponent,
     FormcrearguiaComponent,
-    FormlistventasComponent
+    FormlistventasComponent,
+    CursosComponent
   ],
   imports: [
     CommonModule,
@@ -132,7 +135,8 @@ import { FormlistventasComponent } from './form/formlistventas/formlistventas.co
     NgxCurrencyModule,
     NgImageSliderModule,
     NgxImageZoomModule,
-    AutocompleteLibModule
+    AutocompleteLibModule,
+    MatVideoModule
   ],
   exports: [
     FormcategoriasComponent,

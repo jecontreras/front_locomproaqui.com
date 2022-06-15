@@ -23,6 +23,7 @@ import { VerCatalagoProveedorComponent } from './components/ver-catalago-proveed
 import { VerProductoProveedorComponent } from './components/ver-producto-proveedor/ver-producto-proveedor.component';
 import { VerProveedorComponent } from './components/ver-proveedor/ver-proveedor.component';
 import { MisDespachoComponent } from './components/mis-despacho/mis-despacho.component';
+import { CursosComponent } from './components/cursos/cursos.component';
 
 const dashboardRoutes: Routes = [
  {
@@ -51,6 +52,7 @@ const dashboardRoutes: Routes = [
      {path: 'verProveedor/:id', component: VerProveedorComponent},
      {path: 'verProductoProveedor/:id', component: VerProductoProveedorComponent},
      {path: 'misDespacho', component: MisDespachoComponent},
+     {path: 'cursos', component: CursosComponent},
      {path: '**', redirectTo: 'categorias', pathMatch: 'full'}
    ]
   }
