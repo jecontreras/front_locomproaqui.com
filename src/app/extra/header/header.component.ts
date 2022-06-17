@@ -481,7 +481,7 @@ export class HeaderComponent implements OnInit {
       },
       {
         icons: 'help',
-        nombre: 'Ayuda',
+        nombre: 'Cursos / Ayuda',
         disable: this.dataUser.id,
         url: '/config/cursos',
         submenus:[]
