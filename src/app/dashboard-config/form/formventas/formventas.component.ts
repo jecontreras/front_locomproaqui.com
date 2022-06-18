@@ -651,7 +651,7 @@ export class FormventasComponent implements OnInit {
         "numeroUnidad": 1,
         "pesoReal": ( this.listCarrito.length ) || 1,
         "pesoVolumen": this.data.pesoVolumen || 1,
-        "alto": ( ( 9 * ( this.listCarrito.length || 1) ) - 3 ) || 9,
+        "alto": 9,
         "largo": 28,
         "ancho": 21,
         "tipoEmpaque": "",

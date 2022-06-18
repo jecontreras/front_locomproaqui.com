@@ -53,7 +53,7 @@ export class FormcrearguiaComponent implements OnInit {
        numeroUnidad:  1,
        //pesoReal: valor,
        pesoVolumen: "",
-       alto: ( 9 * valor ) - 3,
+       alto: 9,
        largo: 28,
        ancho: 21,
        valorAsegurado: 50000 * ( valor ),
