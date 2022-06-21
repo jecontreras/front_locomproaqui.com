@@ -34,7 +34,7 @@ import { registerLocaleData } from '@angular/common';
     import localeEsAr from '@angular/common/locales/es-AR';
 import { AuthInterceptor } from './services/authInterceptor';
 import { GlobalErrorHandler } from './services/globalErrorHandler';
-import { ImprimirTarjetaComponent } from './layout/imprimir-tarjeta/imprimir-tarjeta.component';
+import { ExtraModule } from './extra/extra.module';
 
     // registrar los locales con el nombre que quieras utilizar a la hora de proveer
     registerLocaleData(localePy, 'es');
@@ -46,8 +46,7 @@ import { ImprimirTarjetaComponent } from './layout/imprimir-tarjeta/imprimir-tar
   declarations: [
     AppComponent,
     RegistroComponent,
-    IntroduccionComponent,
-    ImprimirTarjetaComponent
+    IntroduccionComponent
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'serverApp' }),
@@ -70,7 +69,8 @@ import { ImprimirTarjetaComponent } from './layout/imprimir-tarjeta/imprimir-tar
     TiendaModule,
     PublicoModule,
     MatVideoModule,
-    NgxCurrencyModule
+    NgxCurrencyModule,
+    ExtraModule
   ],
   providers: [
     { provide: LOCALE_ID, useValue: 'es-Co', },

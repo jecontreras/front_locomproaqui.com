@@ -201,6 +201,7 @@ export class HeaderComponent implements OnInit {
   
       dialogRef.afterClosed().subscribe(result => {
         console.log(`Dialog result:`, result );
+        if( !result.nombre ) return false;
         this.urlwhat+= ` ${encodeURIComponent(`
         Para confirmar adquiere este producto
         Mis Datos

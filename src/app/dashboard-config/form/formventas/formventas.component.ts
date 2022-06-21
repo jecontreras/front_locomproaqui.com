@@ -131,8 +131,8 @@ export class FormventasComponent implements OnInit {
       await this.getArticulos();
       this.data.ciudadDestino = this.data.ciudadDestino;
       let filtro:any = await this.PrecioContraEntrega();
-      filtro = _.find( this.tablet.listRow, ( row:any ) => row.slug === this.data.transportadoraSelect );
-      console.log("MEN", filtro)
+      filtro = _.find( this.tablet.listRow, ( row:any ) => row.slug === this.clone.transportadoraSelect );
+      //console.log("MEN", filtro, this.clone, this.data)
       if( filtro ) if( filtro.slug ) await this.selectTrans( filtro, true );;
     } else {
       this.id = "";

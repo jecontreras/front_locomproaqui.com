@@ -10,18 +10,23 @@ import { CommonModule } from '@angular/common';
 import { NgImageSliderModule } from 'ng-image-slider';
 import { DialogconfirmarPedidoComponent } from './dialogconfirmar-pedido/dialogconfirmar-pedido.component';
 import { MediosPagosComponent } from './medios-pagos/medios-pagos.component';
+import { AlertaGanadorComponent } from './alerta-ganador/alerta-ganador.component';
+import { ImprimirTarjetaComponent } from './imprimir-tarjeta/imprimir-tarjeta.component';
 
 @NgModule({
   entryComponents:[
     DialogconfirmarPedidoComponent,
-    MediosPagosComponent
+    MediosPagosComponent,
+    ImprimirTarjetaComponent
   ],
   declarations: [
     HeaderComponent,
     FooterComponent,
     MenuLateralComponent,
     DialogconfirmarPedidoComponent,
-    MediosPagosComponent
+    MediosPagosComponent,
+    AlertaGanadorComponent,
+    ImprimirTarjetaComponent,
   ],
   imports: [
     MyOwnCustomMaterialModule,
@@ -30,12 +35,13 @@ import { MediosPagosComponent } from './medios-pagos/medios-pagos.component';
     ExtraRoutingModule,
     RouterModule,
     CommonModule,
-    NgImageSliderModule
+    NgImageSliderModule,
   ],
   exports: [
     HeaderComponent,
     FooterComponent,
-    MenuLateralComponent
+    MenuLateralComponent,
+    ImprimirTarjetaComponent
   ]
 })
 export class ExtraModule { }

@@ -212,3 +212,87 @@ h1.example-app-name {
 .anchosIcons{
   padding: 0 2%;
 }
+
+.wrapper {
+  display: block;
+}
+
+#sidebar {
+  background: rgb(115, 134, 213);
+  box-shadow: rgba(0, 0, 0, 0.2) 3px 3px 3px;
+  box-sizing: border-box;
+  color: white;
+  height: 100vh;
+  left: 0px;
+  overflow: visible;
+  position: fixed;
+  top: 0px;
+  touch-action: auto;
+  transition: all 0.3s ease 0s;
+  width: 250px;
+  z-index: 999;
+}
+
+#mCSB_1{
+  box-sizing: border-box; 
+  direction: ltr; 
+  height: 937px; 
+  max-height: none; 
+  max-width: 100%; 
+  outline: 0px; 
+  overflow: hidden; 
+  position: relative;
+}
+
+#mCSB_1_container{
+  box-sizing: border-box; 
+  height: auto; 
+  left: 0px; 
+  margin-right: 0px; 
+  overflow: hidden; 
+  position: relative; 
+  top: 0px; 
+  width: auto;
+}
+
+.overlay {
+  display: none;
+  position: fixed;
+  /* full screen */
+  width: 100vw;
+  height: 100vh;
+  /* transparent black */
+  background: rgba(0, 0, 0, 0.7);
+  /* middle layer, i.e. appears below the sidebar */
+  z-index: 998;
+  opacity: 0;
+  /* animate the transition */
+  transition: all 0.5s ease-in-out;
+}
+/* display .overlay when it has the .active class */
+.overlay.active {
+  display: block;
+  opacity: 1;
+}
+
+#dismiss {
+  width: 35px;
+  height: 35px;
+  position: absolute;
+  /* top right corner of the sidebar */
+  top: 10px;
+  right: 10px;
+}
+
+#lista{
+  background: rgb(109, 127, 204); 
+  box-sizing: border-box; 
+  color: white; 
+  display: block; 
+  font-size: 1.1em; 
+  padding: 10px; 
+  position: relative; 
+  text-decoration-line: none; 
+  transition: all 0.3s ease 0s;
+
+}

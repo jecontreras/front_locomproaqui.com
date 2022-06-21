@@ -45,6 +45,7 @@
     "jquery": "^3.5.1",
     "lodash": "^4.17.15",
     "mat-video": "^2.8.1",
+    "material-icons": "^1.11.2",
     "memory-cache": "^0.2.0",
     "moment": "^2.24.0",
     "ng-image-slider": "^2.6.4",

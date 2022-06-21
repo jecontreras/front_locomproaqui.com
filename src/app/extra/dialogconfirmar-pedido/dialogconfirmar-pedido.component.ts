@@ -31,6 +31,8 @@ export class DialogconfirmarPedidoComponent implements OnInit {
   }
 
   async finalizando(){
+    let validador = this.validador();
+    if( !validador ) return false;
     if( this.disabled ) return false;
     this.disabled = true;
     this.dialogRef.close( this.data );

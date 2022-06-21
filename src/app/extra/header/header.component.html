@@ -99,10 +99,11 @@
                   <img class="imgFoto pointer" [src]="item.foto || './assets/img/producto.jpg'" mat-list-icon>
                   <h4 mat-line>{{ item.titulo }}</h4>
                   <p mat-line>{{ 'Cantidad: '+item.cantidad }} </p>
-                  <p mat-line>Precio: {{ _tools.monedaChange( 3,2,item.costoTotal || 0 )  }} COP</p>
-                  <p mat-line *ngIf="dataUser.id">Lo Vendiste: {{ _tools.monedaChange( 3,2,item.loVendio || 0 )  }} COP</p>
-                  <p mat-line><span (click)="booleanoOpen = false; deleteCart(idx, item);" class="p-1 pointer d-flex justify-content-end"><i
-                        class="material-icons">delete</i></span> </p>
+                  <p mat-line>Precio: {{ _tools.monedaChange( 3,2,item.costoTotal || 0 ) }} COP</p>
+                  <p mat-line *ngIf="dataUser.id">Lo Vendiste: {{ _tools.monedaChange( 3,2,item.loVendio || 0 ) }} COP
+                  </p>
+                  <p mat-line><span (click)="booleanoOpen = false; deleteCart(idx, item);"
+                      class="p-1 pointer d-flex justify-content-end"><i class="material-icons">delete</i></span> </p>
                 </mat-list-item>
               </mat-list>
             </div>
@@ -116,12 +117,16 @@
             <div class="cart-amount-summary">
               <h2>Resumen de tu venta &nbsp;</h2>
               <ul class="summary-table">
-                <li *ngIf="dataUser.id"><span>Valor a pagar de tu cliente: &nbsp;</span> <span>{{ _tools.monedaChange( 3,2,data.total || 0 ) }}</span> </li>
-                <li *ngIf="!dataUser.id"><span>Valor a pagar: &nbsp;</span> <span>{{ _tools.monedaChange( 3,2,data.total || 0 ) }}</span> </li>
-                <li *ngIf="dataUser.id"><span>Tu ganancia en esta venta es: &nbsp;</span> <span>{{ _tools.monedaChange( 3,2,data.totalGanancias || 0 )  }}</span> </li>
+                <li *ngIf="dataUser.id"><span>Valor a pagar de tu cliente: &nbsp;</span> <span>{{ _tools.monedaChange(
+                    3,2,data.total || 0 ) }}</span> </li>
+                <li *ngIf="!dataUser.id"><span>Valor a pagar: &nbsp;</span> <span>{{ _tools.monedaChange( 3,2,data.total
+                    || 0 ) }}</span> </li>
+                <li *ngIf="dataUser.id"><span>Tu ganancia en esta venta es: &nbsp;</span> <span>{{ _tools.monedaChange(
+                    3,2,data.totalGanancias || 0 ) }}</span> </li>
                 <li *ngIf="namePorcentaje == 'dropshipping pro'">
                   <div class="alert alert-danger" role="alert">
-                    <span>Nota: &nbsp;</span> <span>Ten en cuenta que el valor del flete sera descontado de tu ganancia</span>
+                    <span>Nota: &nbsp;</span> <span>Ten en cuenta que el valor del flete sera descontado de tu
+                      ganancia</span>
                   </div>
                 </li>
               </ul>
@@ -137,7 +142,8 @@
                 </div>
                 <div></div>
                 <div>
-                  <button (click)="sidenav.toggle()" type="button" class="btn btn-success" routerLink="/pedidos">agregar más productos</button>
+                  <button (click)="sidenav.toggle()" type="button" class="btn btn-success" routerLink="/pedidos">agregar
+                    más productos</button>
                 </div>
               </div>
             </div>
@@ -178,51 +184,67 @@
         </div>
       </div>
     </mat-sidenav>
-    <mat-sidenav class="sidenav" #snav (window:resize)="onResize($event)" [mode]="mobileQuery.ds ? 'over' : 'side'"
-      [fixedInViewport]="true" fixedTopGap="56" [opened]="(isHandset$ | async) === false">
-      <div style="width: 290px; height: 90px;" fxLayout="column">
-        <ng-container class="row">
-          <!--<ul class="nav nav-pills nav-stacked row margin">
-            <li class="active col-12 paddingLeft">
-              <p> MENU PRINCIPAL </p>
-              <span *ngIf="dataUser.id"> NIVEL {{ dataInfo['nivel']?.categorias }} </span>
-            </li>
-          </ul>-->
-          <ul class="nav nav-pills nav-stacked row margin">
-            <li *ngFor="let item of menus" class="active col-12 paddingLeft ">
-              <div *ngIf="item.disable" class="colorMenu padding2">
-                <a [routerLink]="item.url" routerLinkActive="active" translate="false" *ngIf="item.submenus.length == 0"
-                  class="pointer colorMenu">
-                  <i class="material-icons textInf">{{ item.icons }}</i>
-                  <span class="p">{{ item.nombre }}</span>
+    <mat-sidenav class="sidenav" #snav (window:resize)="onResize($event)" [mode]="'side'"
+      [fixedInViewport]="false" fixedTopGap="56" [opened]="(isHandset$ | async) === true" style="width: 290px; height: 90px;">
+      <nav class="mCustomScrollbar _mCS_1 mCS-autoHide mCS_no_scrollbar active" id="sidebar"
+        style="background: rgb(115, 134, 213); box-shadow: rgba(0, 0, 0, 0.2) 3px 3px 3px; box-sizing: border-box; color: white; height: 100vh; left: 0px; overflow: visible; position: fixed; top: 0px; touch-action: auto; transition: all 0.3s ease 0s; width: 250px; z-index: 999;">
+        <div class="mCustomScrollBox mCS-minimal mCSB_vertical mCSB_outside" id="mCSB_1"
+          style="box-sizing: border-box; direction: ltr; height: 937px; max-height: none; max-width: 100%; outline: 0px; overflow: hidden; position: relative;"
+          tabindex="0">
+          <div class="mCSB_container mCS_y_hidden mCS_no_scrollbar_y" dir="ltr" id="mCSB_1_container"
+            style="box-sizing: border-box; height: auto; left: 0px; margin-right: 0px; overflow: hidden; position: relative; top: 0px; width: auto;">
+            <div class="sidebar-header" style="background: rgb(109, 127, 204); box-sizing: border-box; padding: 20px;">
+              <h3
+                style="box-sizing: border-box; color: inherit; font-family: inherit; font-size: 1.75rem; font-weight: 500; line-height: 1.2; margin-bottom: 0.5rem; margin-top: 0px;">
+                Bootstrap Sidebar
+                <a class="pointer text-danger" (click)="sidenav.toggle()">
+                  <i class="material-icons" aria-hidden="true">close</i>
                 </a>
-
-                <a class="dropdown-toggle pointer colorMenu" *ngIf="item.submenus.length >0"
-                  (click)="item.disabled = !item.disabled">
-                  <i class="material-icons textInf">{{ item.icons }}</i>
-                  <span class="p">{{ item.nombre }}</span>
-                </a>
-
-                <ul class="submenu colorMenu" *ngIf="item.submenus.length >0 && item.disabled">
-                  <li *ngFor="let sub of item.submenus" class="pointer">
-                    <a [routerLink]="sub.url" class="p colorMenu">
-                      <span class="p">{{ sub.nombre }}</span>
-                    </a>
-                  </li>
-                </ul>
-              </div>
-            </li>
-            <li class="active col-12 paddingLeft pointer" *ngFor="let item of menus2">
-              <div *ngIf="item.disable" class="colorMenu padding2">
-                <a routerLinkActive="active" translate="false" (click)="EventMenus(item)" class="colorMenu" >
-                  <i class="material-icons textInf">{{ item.icons }}</i>
-                  <span class="p">{{ item.nombre }}</span>
-                </a>
-              </div>
-            </li>
-          </ul>
-        </ng-container>
-      </div>
+              </h3>
+            </div>
+            <ul class="list-unstyled components"
+              style="border-bottom: 1px solid rgb(71, 116, 139); box-sizing: border-box; list-style: none; margin-bottom: 1rem; margin-top: 0px; padding: 20px 0px;">
+              <p
+                style="box-sizing: border-box; font-size: 1.1em; line-height: 1.7em; margin-bottom: 1rem; margin-top: 0px; padding: 10px;">
+                Dummy Heading
+              </p>
+              <li class="active" style="box-sizing: border-box;">
+                <a aria-expanded="false" data-toggle="collapse"
+                  href="https://bootstrapious.com/tutorial/sidebar/index3.html#homeSubmenu"
+                  style="background: rgb(109, 127, 204); box-sizing: border-box; color: white; display: block; font-size: 1.1em; padding: 10px; position: relative; text-decoration-line: none; transition: all 0.3s ease 0s;">Home</a>
+              </li>
+              <li style="box-sizing: border-box;">
+                <a href="https://bootstrapious.com/tutorial/sidebar/index3.html#"
+                  style="background-color: transparent; box-sizing: border-box; display: block; font-size: 1.1em; padding: 10px; text-decoration-line: none; transition: all 0.3s ease 0s;">About</a><a
+                  aria-expanded="false" data-toggle="collapse"
+                  href="https://bootstrapious.com/tutorial/sidebar/index3.html#pageSubmenu"
+                  style="background-color: transparent; box-sizing: border-box; display: block; font-size: 1.1em; padding: 10px; position: relative; text-decoration-line: none; transition: all 0.3s ease 0s;">Pages</a>
+              </li>
+              <li style="box-sizing: border-box;">
+                <a href="https://bootstrapious.com/tutorial/sidebar/index3.html#"
+                  style="background-color: transparent; box-sizing: border-box; display: block; font-size: 1.1em; padding: 10px; text-decoration-line: none; transition: all 0.3s ease 0s;">Portfolio</a>
+              </li>
+              <li style="box-sizing: border-box;">
+                <a href="https://bootstrapious.com/tutorial/sidebar/index3.html#"
+                  style="background-color: transparent; box-sizing: border-box; display: block; font-size: 1.1em; padding: 10px; text-decoration-line: none; transition: all 0.3s ease 0s;">Contact</a>
+              </li>
+            </ul>
+            <ul class="list-unstyled CTAs"
+              style="box-sizing: border-box; list-style: none; margin-bottom: 1rem; margin-top: 0px; padding: 20px;">
+              <li style="box-sizing: border-box;">
+                <a class="download" href="https://bootstrapious.com/tutorial/files/sidebar.zip"
+                  style="background: rgb(255, 255, 255); border-radius: 5px; box-sizing: border-box; color: #7386d5; display: block; font-size: 1.1em; margin-bottom: 5px; padding: 10px; text-align: center; text-decoration-line: none; transition: all 0.3s ease 0s;">Download
+                  source</a>
+              </li>
+              <li style="box-sizing: border-box;">
+                <a class="article" href="https://bootstrapious.com/p/bootstrap-sidebar"
+                  style="background: rgb(109, 127, 204) !important; border-radius: 5px; box-sizing: border-box; color: rgb(255, 255, 255) !important; display: block; font-size: 1.1em; margin-bottom: 5px; padding: 10px; text-align: center; text-decoration-line: none; transition: all 0.3s ease 0s;">Back
+                  to article</a>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </nav>
     </mat-sidenav>
 
     <mat-sidenav-content>
@@ -232,20 +254,24 @@
           <div style="width: 100%;">
             <div class="d-flex justify-content-around" *ngIf="rolUser1 != 'proveedor'">
               <div>
-                <button type="button" class="btn btn-primary" (click)="openTienda('distribuidor')">Ver como Distribuidor</button>
+                <button type="button" class="btn btn-primary" (click)="openTienda('distribuidor')">Ver como
+                  Distribuidor</button>
               </div>
               <div></div>
               <div>
-                <button type="button" class="btn btn-success" (click)="openTienda('visitante')">Ver como Visitante</button>
+                <button type="button" class="btn btn-success" (click)="openTienda('visitante')">Ver como
+                  Visitante</button>
               </div>
             </div>
             <div class="d-flex justify-content-around" *ngIf="rolUser1 == 'proveedor'">
               <div>
-                <button type="button" class="btn btn-primary" (click)="openTienda('proveedor')">Ver como Proveedor</button>
+                <button type="button" class="btn btn-primary" (click)="openTienda('proveedor')">Ver como
+                  Proveedor</button>
               </div>
               <div></div>
               <div>
-                <button type="button" class="btn btn-success" (click)="openTienda('distribuidorpr')">Ver como  Distribuidor</button>
+                <button type="button" class="btn btn-success" (click)="openTienda('distribuidorpr')">Ver como
+                  Distribuidor</button>
               </div>
             </div>
           </div>
