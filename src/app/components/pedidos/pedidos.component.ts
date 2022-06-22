@@ -254,7 +254,9 @@ export class PedidosComponent implements OnInit {
       this.counts = res.count;
       this.spinner.hide();
       this.listProductos = _.unionBy( this.listProductos || [], res.data, 'id' );
-      this.listTallas = this.listProductos[0].listaTallas;
+      try {
+        this.listTallas = this.listProductos[0].listaTallas;
+      } catch (error) { }
       /*for( let row of this.listProductos ){
         if( !row.listColor22 ) row.listColor = [];
         let lleno = []

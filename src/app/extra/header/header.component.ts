@@ -28,7 +28,7 @@ const URLFRON = environment.urlFront;
 export class HeaderComponent implements OnInit {
   showFiller = false;
 
-  @ViewChild('nav',{static: false} ) private nav: any
+  @ViewChild('toolbar',{static: false} ) private nav: any
   @ViewChild('sidenav') sidenav;
 
   public mobileQuery: any;
@@ -50,7 +50,7 @@ export class HeaderComponent implements OnInit {
   userId:any;
   opened:boolean;
   dataInfo:any = {};
-  isHandset$:any;
+  isHandset$:any = true;
   urlRegistro:string = `${ URLFRON }/registro/`;
   notificando:number = 0;
   opcionoView:string = 'carro';
@@ -125,6 +125,7 @@ export class HeaderComponent implements OnInit {
 
   ngOnInit() {
     setInterval(()=> {
+      //console.log( this.nav)
       let color:string = ( this.dataUser.usu_color || "#02a0e3" );
       if( this.userId.id ) {
         color = this.userId.usu_color || "#02a0e3";
@@ -134,6 +135,7 @@ export class HeaderComponent implements OnInit {
       this.nav.nativeElement.style.backgroundColor = color
     }, 100 );
     this.breakpoint = (window.innerWidth <= 400) ? 1 : 6;
+    if( this.breakpoint == 1 ) this.isHandset$ = false;
     this.onResize(null);
     if(Object.keys(this.dataUser).length > 0 ) {
       this.rolUser = this.dataUser.usu_perfil.prf_descripcion;
@@ -531,6 +533,16 @@ export class HeaderComponent implements OnInit {
     this.menus2 = _.filter(this.menus2, row=>row.disable);
   }
 
+  navegar( item:any ){
+    console.log("*", item, item.url[1])
+    for( let row of this.menus ) row.check = false;
+    item.check = true;
+    if( item.submenus ) if( item.submenus.length >0 ) return false;
+    if( item.opt ) this.router.navigate(item.url);
+    else this.router.navigate([ item.url ]);
+
+  }
+
   getCategorias(){
     return new Promise( resolve =>{
       this._categorias.get( { where: { cat_activo: 0, cat_padre: null }, limit: 1000 } ).subscribe(( res:any )=>{
@@ -539,6 +551,7 @@ export class HeaderComponent implements OnInit {
             'nombre': row['cat_nombre'],
             icons: "settings",
             url: [ "/pedido", row['id'] ],
+            opt: true
             //subCategoria: await this.getSubcategoria( row.id )
           }
         })

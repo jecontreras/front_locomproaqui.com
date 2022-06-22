@@ -55,6 +55,7 @@ export class VentasComponent implements OnInit {
   dataInfo:any ={};
   listVendedores:any = [];
   keyword = 'usu_usuario';
+  counts:number = 0;
 
   constructor(
     public dialog: MatDialog,
@@ -180,12 +181,19 @@ export class VentasComponent implements OnInit {
      }
   }
 
+  pageEvent(ev: any) {
+    this.query.page = ev.pageIndex;
+    this.query.limit = ev.pageSize;
+    this.cargarTodos();
+  }
+
   cargarTodos() {
     this.spinner.show();
     //if(this.dataUser.usu_perfil.prf_descripcion == 'administrador') this.query.where.ven_subVendedor = 0;
     this._ventas.get(this.query)
     .subscribe(
       (response: any) => {
+        this.counts = response.count;
         this.dataTable.headerRow = this.dataTable.headerRow;
         this.dataTable.footerRow = this.dataTable.footerRow;
         this.dataTable.dataRows.push(... response.data)

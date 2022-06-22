@@ -59,6 +59,17 @@ mat-sidenav {
   visibility: visible;
 }
 
+.scrols{
+  height: 845px;
+  overflow: auto;
+}
+.scrols::-webkit-scrollbar {
+  width: 8px;     /* Tamaño del scroll en vertical */
+  height: 8px;    /* Tamaño del scroll en horizontal */
+  display: none;  /* Ocultar scroll */
+}
+
+
 .example-container {
   display: flex;
   flex-direction: column;
@@ -295,4 +306,8 @@ h1.example-app-name {
   text-decoration-line: none; 
   transition: all 0.3s ease 0s;
 
+}
+
+.check{
+  background: #afafaf;
 }

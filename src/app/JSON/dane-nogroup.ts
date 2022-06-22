@@ -693,7 +693,7 @@ export const DANEGROUP: any = [
 	{"code": "20621000","city": "LA PAZ - ROBLES","state": "CESAR","active": "R", "name": "LA PAZ-CESAR"},
 	{"code": "20013000","city": "AGUSTÍN CODAZZI","state": "CESAR","active": "", "name": "CODAZZI-CESAR"},
 	{"code": "20228000","city": "CURUMANÍ","state": "CESAR","active": "R", "name": "CURUMANI-CESAR"},
-	{"code": "20238000","city": "EL COPEY","state": "CESAR","active": "R", "name": ""},
+	{"code": "20238000","city": "EL COPEY","state": "CESAR","active": "R", "name": "EL COPEY"},
 	{"code": "20295000","city": "GAMARRA","state": "CESAR","active": "R", "name": "GAMARRA-CESAR"},
 	{"code": "20250002","city": "LA LOMA","state": "CESAR","active": "R", "name": "LA LOMA-CESAR"},
 	{"code": "20001013","city": "MARIANGOLA","state": "CESAR","active": "R", "name": ""},
