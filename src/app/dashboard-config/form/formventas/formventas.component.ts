@@ -564,7 +564,7 @@ export class FormventasComponent implements OnInit {
       console.log(`Dialog result: ${result}`);
       if( !result ) return false;
       this.data.ven_numero_guia = result.nRemesa;
-      this.data.ven_imagen_guia = result.urlRotulos;
+      this.data.ven_imagen_guia = result.pdf_guia;
       if( this.data.transportadoraSelect === "CORDINADORA") this.imprimirGuia();
       if( this.data.transportadoraSelect === "ENVIA") this.viewRotulo( this.data.ven_imagen_guia );
       this.updates();

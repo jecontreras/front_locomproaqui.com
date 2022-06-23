@@ -1,5 +1,5 @@
-<mat-drawer-container class="example-container" autosize [hasBackdrop]="true">
-  <mat-sidenav position="end" #sidenav mode="side" [mode]="'side'" (opened)="events.push('open!')"
+<mat-drawer-container class="example-container" autosize [hasBackdrop]="hasBackdrop$">
+  <mat-drawer class="example-sidenav" style="padding: 0;" position="end" #sidenav mode="side" [mode]="'side'" (opened)="events.push('open!')"
     (closed)="events.push('close!')" class="sidenav anchos">
     <div *ngIf="opcionoView == 'carro'">
       <mat-toolbar>
@@ -109,8 +109,8 @@
         </div>
       </div>
     </div>
-  </mat-sidenav>
-  <mat-drawer #drawer class="example-sidenav" mode="side" style="width: 12%;">
+  </mat-drawer>
+  <mat-drawer #drawer class="example-sidenav" opened="isHandset$" mode="side" style="width: 12%;">
     <div>
       <nav class="mCustomScrollbar _mCS_1 mCS-autoHide mCS_no_scrollbar active" id="sidebar"
         style="background: rgb(0 62 88); box-shadow: rgba(0, 0, 0, 0.2) 3px 3px 3px; box-sizing: border-box; color: white; height: 100vh; left: 0px; overflow: visible; position: fixed; top: 0px; touch-action: auto; transition: all 0.3s ease 0s; width: 250px; z-index: 999;">

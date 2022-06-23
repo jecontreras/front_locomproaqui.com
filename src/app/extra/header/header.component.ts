@@ -51,6 +51,7 @@ export class HeaderComponent implements OnInit {
   opened:boolean;
   dataInfo:any = {};
   isHandset$:any = true;
+  hasBackdrop$:any = false;
   urlRegistro:string = `${ URLFRON }/registro/`;
   notificando:number = 0;
   opcionoView:string = 'carro';
@@ -135,7 +136,11 @@ export class HeaderComponent implements OnInit {
       this.nav.nativeElement.style.backgroundColor = color
     }, 100 );
     this.breakpoint = (window.innerWidth <= 400) ? 1 : 6;
-    if( this.breakpoint == 1 ) this.isHandset$ = false;
+    if( this.breakpoint == 1 ) {
+      this.isHandset$ = false;
+      this.hasBackdrop$ = true;
+    }
+    console.log( this.isHandset$ )
     this.onResize(null);
     if(Object.keys(this.dataUser).length > 0 ) {
       this.rolUser = this.dataUser.usu_perfil.prf_descripcion;
