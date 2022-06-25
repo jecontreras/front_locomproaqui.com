@@ -739,7 +739,7 @@ export const DANEGROUP: any = [
 	{"code": "27150000","city": "CARMEN DEL DARIEN","state": "CHOCO","active": "", "name": ""},
 	{"code": "27135000","city": "CANTON DEL SAN PABLO","state": "CHOCO","active": "", "name": ""},
 	{"code": "27205000","city": "CONDOTO","state": "CHOCO","active": "R", "name": "CONDOTO-CHOCO"},
-	{"code": "27001000","city": "SAN FRANCISCO DE QUIBDO","state": "CHOCO","active": "R", "name": ""},
+	{"code": "27001000","city": "SAN FRANCISCO DE QUIBDO","state": "CHOCO","active": "R", "name": "SAN FRANCISCO-DE-QUIBDO"},
 	{"code": "27615000","city": "RIOSUCIO","state": "CHOCO","active": "R", "name": ""},
 	{"code": "23686000","city": "SAN PELAYO","state": "CORDOBA","active": "", "name": "SAN PELAYO-CORDOBA"},
 	{"code": "23807000","city": "TIERRALTA","state": "CORDOBA","active": "R", "name": ""},

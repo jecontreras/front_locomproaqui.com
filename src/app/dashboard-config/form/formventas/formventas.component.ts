@@ -571,19 +571,21 @@ export class FormventasComponent implements OnInit {
     });
   }
 
-  cancelarGuia(){
+  async cancelarGuia(){
+    let validador = await this._tools.confirm( { title: "Desas Cancelar la guia", icon: "succes" } );
+    if( !validador.value ) return false;
     this.disabledButton = true; 
     this._ventas.cancelarFlete( { 
       nRemesa: this.data.ven_numero_guia,
       transportadoraSelect: this.data.transportadoraSelect
     } ).subscribe(( res:any )=>{
       this.disabledButton = false; 
-      if( res.status !== 200 ) return this._tools.confirm( { title: "Error en cancelar guia", icon: "error" } );
-      this._tools.confirm( { title: "Guia cancelado exitos", icon: "succes" } );
+      if( res.status !== 200 ) return this._tools.presentToast( "Error en cancelar guia" );
+      
       this.data.ven_numero_guia = "";
       this.data.ven_imagen_guia = "";
       if( this.id ) this.updates( true );
-    },( error:any  )=> { this.disabledButton = false; this._tools.confirm( { title: "Error en cancelar guia", icon: "error" } );} );
+    },( error:any  )=> { this.disabledButton = false; this._tools.presentToast( "Error en cancelar guia" );} );
   }
 
   viewRotulo( urlRotulos ){
