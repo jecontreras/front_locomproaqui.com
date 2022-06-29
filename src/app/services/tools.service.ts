@@ -279,7 +279,7 @@ export class ToolsService {
       const link = document.createElement("a");
       link.href = source;
       link.download = `${fileName}.pdf`
-      link.click();
+      //link.click();
     }
   }
 

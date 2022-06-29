@@ -564,7 +564,7 @@ export class FormventasComponent implements OnInit {
       console.log(`Dialog result: ${result}`);
       if( !result ) return false;
       this.data.ven_numero_guia = result.nRemesa;
-      this.data.ven_imagen_guia = result.pdf_guia;
+      this.data.ven_imagen_guia = result.urlRotulos;
       if( this.data.transportadoraSelect === "CORDINADORA") this.imprimirGuia();
       if( this.data.transportadoraSelect === "ENVIA") this.viewRotulo( this.data.ven_imagen_guia );
       this.updates();
@@ -593,7 +593,16 @@ export class FormventasComponent implements OnInit {
   }
 
   imprimirGuia(){
-    if( this.data.transportadoraSelect == "ENVIA") window.open( this.data.ven_imagen_guia );
+    if( this.data.transportadoraSelect == "ENVIA") {
+      if( this.data.ven_imagen_guia ) window.open( this.data.ven_imagen_guia );
+      else{
+        this._ventas.getFletes( {  where: {  nRemesa: this.data.ven_numero_guia } } ).subscribe( ( res:any ) =>{
+          res = res.data[0];
+          if( !res ) return this._tools.tooast("Error al imprimir la guia por favor comunicarse con el servicio al cliente")
+          window.open( res.urlRotulos );
+        });
+      }
+    }
     if( this.data.transportadoraSelect == "CORDINADORA"){
       this._ventas.imprimirFlete( { 
         codigo_remision: this.data.ven_numero_guia

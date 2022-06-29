@@ -40,4 +40,7 @@ export class VentasService {
   imprimirEvidencia(query:any){
     return this._model.querysFlete('fletes/cordinadoraSeguimiento',query, 'post');
   }
+  getFletes(query:any){
+    return this._model.querysFlete('fletes/querys',query, 'post');
+  }
 }

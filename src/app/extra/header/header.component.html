@@ -1,6 +1,5 @@
 <mat-drawer-container class="example-container" autosize [hasBackdrop]="hasBackdrop$">
-  <mat-drawer class="example-sidenav" style="padding: 0;" position="end" #sidenav mode="side" [mode]="'side'" (opened)="events.push('open!')"
-    (closed)="events.push('close!')" class="sidenav anchos">
+  <mat-drawer class="example-sidenav" style="padding: 0;" position="end" #sidenav mode="over" (opened)="events.push('open!')" (closed)="events.push('close!')" class="sidenav anchos">
     <div *ngIf="opcionoView == 'carro'">
       <mat-toolbar>
         <mat-toolbar-row>
@@ -110,7 +109,7 @@
       </div>
     </div>
   </mat-drawer>
-  <mat-drawer #drawer class="example-sidenav" opened="isHandset$" mode="side" style="width: 12%;">
+  <mat-drawer #drawer class="example-sidenav" [opened]="isHandset$" mode="side" style="width: 12%;">
     <div>
       <nav class="mCustomScrollbar _mCS_1 mCS-autoHide mCS_no_scrollbar active" id="sidebar"
         style="background: rgb(0 62 88); box-shadow: rgba(0, 0, 0, 0.2) 3px 3px 3px; box-sizing: border-box; color: white; height: 100vh; left: 0px; overflow: visible; position: fixed; top: 0px; touch-action: auto; transition: all 0.3s ease 0s; width: 250px; z-index: 999;">
@@ -128,12 +127,21 @@
               </h3>
             </div>
             <section class="scrols">
+              <ul class="list-unstyled CTAs"
+                style="box-sizing: border-box; list-style: none; margin-bottom: 1rem; margin-top: 0px;">
+                <li style="box-sizing: border-box;" *ngFor="let item of menus2">
+                  <a class="download pointer" (click)="EventMenus(item)"
+                    style="background: rgb(255, 255, 255); border-radius: 5px; box-sizing: border-box; color: #7386d5; display: block; font-size: 1.1em; margin-bottom: 5px; padding: 10px; text-align: center; text-decoration-line: none; transition: all 0.3s ease 0s;">
+                    {{ item.nombre }}
+                  </a>
+                </li>
+              </ul>
               <ul class="list-unstyled components"
                 style="border-bottom: 1px solid rgb(71, 116, 139); box-sizing: border-box; list-style: none; margin-bottom: 1rem; margin-top: 0px; padding: 20px 0px;">
-                <p
+                <!--<p
                   style="box-sizing: border-box; font-size: 1.1em; line-height: 1.7em; margin-bottom: 1rem; margin-top: 0px; padding: 10px;">
                   {{ dataUser['categoriaPerfil']?.categoria || "VISITANTE"}}
-                </p>
+                </p>-->
                 <li class="active" style="box-sizing: border-box;" *ngFor="let item of menus"
                   [ngClass]="{'check': item.check }">
                   <a aria-expanded="false" data-toggle="collapse" (click)="navegar( item )" class="pointer titulo3"
@@ -151,15 +159,6 @@
                       </a>
                     </li>
                   </ul>
-                </li>
-              </ul>
-              <ul class="list-unstyled CTAs"
-                style="box-sizing: border-box; list-style: none; margin-bottom: 1rem; margin-top: 0px; padding: 20px;">
-                <li style="box-sizing: border-box;" *ngFor="let item of menus2">
-                  <a class="download pointer" (click)="EventMenus(item)"
-                    style="background: rgb(255, 255, 255); border-radius: 5px; box-sizing: border-box; color: #7386d5; display: block; font-size: 1.1em; margin-bottom: 5px; padding: 10px; text-align: center; text-decoration-line: none; transition: all 0.3s ease 0s;">
-                    {{ item.nombre }}
-                  </a>
                 </li>
               </ul>
             </section>

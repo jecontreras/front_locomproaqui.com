@@ -125,22 +125,25 @@ export class HeaderComponent implements OnInit {
   }
 
   ngOnInit() {
+
+    this.breakpoint = (window.innerWidth <= 500) ? 1 : 6;
+    if( this.breakpoint == 1 ) {
+      this.isHandset$ = false;
+      this.hasBackdrop$ = true;
+    }
+    //console.log( this.isHandset$, this.breakpoint, window.innerWidth )
+
     setInterval(()=> {
       //console.log( this.nav)
       let color:string = ( this.dataUser.usu_color || "#02a0e3" );
       if( this.userId.id ) {
         color = this.userId.usu_color || "#02a0e3";
-        this.urlLogo = this.userId.usu_imagen;
+        this.urlLogo = this.userId.usu_imagen || './assets/logo.png';
       }
-      if( this.dataUser.id ) this.urlLogo = this.dataUser.usu_imagen;
+      if( this.dataUser.id ) this.urlLogo = this.dataUser.usu_imagen || './assets/logo.png';
       this.nav.nativeElement.style.backgroundColor = color
     }, 100 );
-    this.breakpoint = (window.innerWidth <= 400) ? 1 : 6;
-    if( this.breakpoint == 1 ) {
-      this.isHandset$ = false;
-      this.hasBackdrop$ = true;
-    }
-    console.log( this.isHandset$ )
+
     this.onResize(null);
     if(Object.keys(this.dataUser).length > 0 ) {
       this.rolUser = this.dataUser.usu_perfil.prf_descripcion;
