@@ -43,4 +43,7 @@ export class VentasService {
   getFletes(query:any){
     return this._model.querysFlete('fletes/querys',query, 'post');
   }
+  getCiudades(query:any){
+    return this._model.querysFlete('ciudades/querys',query, 'post');
+  }
 }

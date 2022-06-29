@@ -56,7 +56,7 @@ export class FormventasComponent implements OnInit {
   namePorcentaje: string;
   rolUser:string;
   listCiudades:any = DANEGROUP;
-  keyword = 'city';
+  keyword = 'name';
   // url de la publicidad
   url: any;
   textData:string = "";
@@ -146,6 +146,7 @@ export class FormventasComponent implements OnInit {
     this.progreses = false;
     this.disableSpinner = false;
     this.disabledButton = false;
+    await this.getCiudades();
     this.listCiudades = this.listCiudades.filter( ( row:any )=> row.code > 0 );
     //this.listValidar();
   }
@@ -159,6 +160,14 @@ export class FormventasComponent implements OnInit {
       if( result )guardado.push( item.name );
     }
     console.log( guardado );
+  }
+
+  async getCiudades(){
+    return new Promise( resolve => {
+      this._ventas.getCiudades( { where: { }, limit: 100000 } ).subscribe( ( res:any )=>{
+        this.listCiudades = res.data;
+      });
+    });
   }
 
   getArticulos() {
