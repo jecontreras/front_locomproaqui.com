@@ -50,8 +50,8 @@ export class HeaderComponent implements OnInit {
   userId:any;
   opened:boolean;
   dataInfo:any = {};
-  isHandset$:any = true;
-  hasBackdrop$:any = false;
+  isHandset$:any = false;
+  hasBackdrop$:any = true;
   urlRegistro:string = `${ URLFRON }/registro/`;
   notificando:number = 0;
   opcionoView:string = 'carro';
@@ -127,10 +127,10 @@ export class HeaderComponent implements OnInit {
   ngOnInit() {
 
     this.breakpoint = (window.innerWidth <= 500) ? 1 : 6;
-    if( this.breakpoint == 1 ) {
+    /*if( this.breakpoint == 1 ) {
       this.isHandset$ = false;
       this.hasBackdrop$ = true;
-    }
+    }*/
     //console.log( this.isHandset$, this.breakpoint, window.innerWidth )
 
     setInterval(()=> {

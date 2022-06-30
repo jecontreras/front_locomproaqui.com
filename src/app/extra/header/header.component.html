@@ -109,7 +109,7 @@
       </div>
     </div>
   </mat-drawer>
-  <mat-drawer #drawer class="example-sidenav" [opened]="isHandset$" mode="side" style="width: 12%;">
+  <mat-drawer #drawer class="example-sidenav" [opened]="isHandset$" mode="over" style="width: 12%;">
     <div>
       <nav class="mCustomScrollbar _mCS_1 mCS-autoHide mCS_no_scrollbar active" id="sidebar"
         style="background: rgb(0 62 88); box-shadow: rgba(0, 0, 0, 0.2) 3px 3px 3px; box-sizing: border-box; color: white; height: 100vh; left: 0px; overflow: visible; position: fixed; top: 0px; touch-action: auto; transition: all 0.3s ease 0s; width: 250px; z-index: 999;">
@@ -123,6 +123,10 @@
                 style="box-sizing: border-box; color: inherit; font-family: inherit; font-size: 1.75rem; font-weight: 500; line-height: 1.2; margin-bottom: 0.5rem; margin-top: 0px;">
                 <a [routerLink]="[ '/pedidos' ]">
                   <img [src]="urlLogo" style="width: 177px; height: 55px;">
+                </a>
+                <a class="pointer text-white" style="position: initial;" (click)="drawer.toggle()">
+                  <i class="material-icons" aria-hidden="true" style="position: absolute;
+                  left: 216px;">close</i>
                 </a>
               </h3>
             </div>

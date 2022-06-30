@@ -334,8 +334,9 @@ export class ViewProductosComponent implements OnInit {
   }
 
   validando(){
-    if( ( this.data.encuanto < this.data.pro_uni_venta ) && ( this.data.checkpromo == false ) ) { this.disabledPr = false; return this._tools.tooast({ title: "lo sentimos pero no se puedes vender este producto en este precio", icon: "warning" });}
-
+    console.log( this.data )
+    if( ( this.data.encuanto < this.data.pro_vendedor )  ) { this.disabledPr = false; return this._tools.tooast({ title: "lo sentimos pero no se puedes vender este producto en este precio", icon: "warning" });}
+    this.disabledPr = true;
   }
 
   alertPromocion(){
