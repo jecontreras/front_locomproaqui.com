@@ -387,7 +387,7 @@ export class FormventasComponent implements OnInit {
     this._ventas.create(this.data).subscribe((res: any) => {
       //this.OrderWhatsapp(res);
       this.data.usu_clave_int = res.usu_clave_int;
-      this.generarGuia();
+      //this.generarGuia();
       if( this.rolUser != "subAdministrador"){
         this.crearNotificacion({
           titulo: "Nueva venta de " + res.ven_nombre_cliente,

@@ -161,7 +161,7 @@ export class FormcobrosComponent implements OnInit {
 
   procesoWhat( res:any ){
     let mensaje:string;
-    let numero:string = "573232523235";
+    let numero:string = "573134453649";
 
     if(res.cob_pais === 'colombia'){
       mensaje = `https://wa.me/${ numero }?text=info del cliente ${ this.dataUser.usu_nombre } Pais ${ res.cob_pais } cedula ${ res.cob_num_cedula } telefono ${ this.dataUser.usu_telefono || '' }  fecha de retiro ${ moment(res.createdAt).format('DD-MM-YYYY HH:MM:SS') } Tipo de Banco ${ res.cob_metodo } Numero cuenta ${ res.cob_num_cuenta } Hola Servicio al cliente, como esta, cordial saludo. Sería tan amable de solicitarme este retiro monto $ ${ ( res.cob_monto || 0 ).toLocaleString(1) } COP gracias por su tiempo ...`;
