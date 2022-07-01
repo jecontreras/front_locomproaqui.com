@@ -423,7 +423,7 @@ export class FormventasComponent implements OnInit {
       this._store.dispatch(accion);
       this.id = res.id;
       this.data.id = res.id;
-      //this.dialogRef.close('creo');
+      this.dialogRef.close('creo');
     }, (error) => { this._tools.presentToast("Error al crear la venta"); this.disabledButton = false; this.dialog.closeAll(); });
 
   }
