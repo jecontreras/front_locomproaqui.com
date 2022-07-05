@@ -273,7 +273,7 @@ export class FormventasComponent implements OnInit {
       if( !row.id ) row.loVendio = row.costoTotal;
       if( row.costoTotal === 0 ) row.costoTotal = ( row.costo * row.cantidad ) || 0;
       total1 += ( Number( row.loVendio ) );
-      console.log("********", row );
+      //console.log("********", row );
       if ( this.namePorcentaje == "dropshipping básico" ) row.comision = ( row.costoTotal * ( this.dataUser.porcentaje || 10 ) / 100 );
       else this.data.ven_ganancias+= ( ( row.loVendio  ) - row.costoTotal ) || 0;
 
@@ -284,7 +284,13 @@ export class FormventasComponent implements OnInit {
     //console.log( this.dataUser, this.namePorcentaje )
     if ( this.namePorcentaje == "dropshipping básico" ) this.data.ven_ganancias = (total * ( this.dataUser.porcentaje || 10 ) / 100 );
     else { 
-      if( this.data.cubreEnvio == 'tienda') this.data.ven_ganancias = this.data.ven_ganancias - ( this.data.fleteValor || 0 ) ;
+      if( this.data.cubreEnvio == 'tienda') {
+        this.data.ven_ganancias = ( ( this.data.ven_ganancias - ( this.data.fleteValor || 0  ) ) || 0 );
+        if( this.data.ven_ganancias <= 0 ) {
+          this.data.ven_total = this.data.ven_total + ( this.data.fleteValor || 0 ) ;
+          this.data.ven_ganancias = 0;
+        }
+      }
       else this.data.ven_total = this.data.ven_total + ( this.data.fleteValor || 0 ) ;
     }
   }
@@ -314,7 +320,13 @@ export class FormventasComponent implements OnInit {
     //console.log( this.dataUser, namePorcentaje )
     if ( namePorcentaje == 1 ) this.data.ven_ganancias = (total * ( this.dataUser.porcentaje || 10 ) / 100 );
     else { 
-      if( this.data.cubreEnvio == 'tienda') this.data.ven_ganancias = this.data.ven_ganancias - ( this.data.fleteValor || 0 ) ;
+      if( this.data.cubreEnvio == 'tienda') {
+        this.data.ven_ganancias = ( ( this.data.ven_ganancias - ( this.data.fleteValor || 0  ) ) || 0 );
+        if( this.data.ven_ganancias <= 0 ) {
+          this.data.ven_total = this.data.ven_total + ( this.data.fleteValor || 0 ) ;
+          this.data.ven_ganancias = 0;
+        }
+      }
       else this.data.ven_total = this.data.ven_total + ( this.data.fleteValor || 0 ) ;
     }
   }
