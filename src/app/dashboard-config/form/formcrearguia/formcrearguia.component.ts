@@ -89,7 +89,7 @@ export class FormcrearguiaComponent implements OnInit {
       drpCiudadOrigen: "CUCUTA-NORTE DE SANTANDER",
       txtIdentificacionDe: this.dataUser.usu_documento || 1093753373,
       txtTelefonoDe: this.dataUser.usu_telefono || 320514638,
-      txtDireccionDe: this.dataUser.usu_direccion || "av 13 # 10-62 barrio el llano apt 102 (cucuta)",
+      txtDireccionDe: "AV. 10 # 6-30 ( comuneros )",
       txtCod_Postal_Rem: 540001,
       txtEMailRemitente: this.dataUser.usu_email || "fabricadecalzadocolombia@gmail.com",
       txtPara: this.data.ven_nombre_cliente,
