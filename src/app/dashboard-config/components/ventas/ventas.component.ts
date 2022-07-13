@@ -230,7 +230,7 @@ export class VentasComponent implements OnInit {
     if (this.datoBusqueda !== '') {
       this.query.where.or = [
         {
-          ven_nombre_cliente: {
+          slug: {
             contains: this.datoBusqueda|| ''
           }
         },
@@ -240,16 +240,14 @@ export class VentasComponent implements OnInit {
           }
         },
         {
-          ven_direccion_cliente: {
-            contains: this.datoBusqueda|| ''
-          }
-        },
-        {
           ven_numero_guia: {
             contains: this.datoBusqueda|| ''
           }
         },
       ];
+      delete this.query.where.ven_sw_eliminado;
+      delete this.query.where.ven_estado;
+      delete this.query.where.ven_retiro;
     }
     if( this.filtro.vendedor ) { 
       console.log( this.filtro )
@@ -350,8 +348,9 @@ export class VentasComponent implements OnInit {
     window.open( foto );
   }
 
-  verDetalles( url:string ){
-    window.open( "https://enviosrrapidoscom.web.app/portada/guiadetalles/" + url )
+  verDetalles( url:string, item:any ){
+    if( item.transportadoraSelect == 'CORDINADORA' ) window.open( "https://www.coordinadora.com/portafolio-de-servicios/servicios-en-linea/rastrear-guias/?guia=" + url )
+    else window.open( "https://enviosrrapidoscom.web.app/portada/guiadetalles/" + url )
   }
 
   openEvidencia( url:string, item:any  ){
