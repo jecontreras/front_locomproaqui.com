@@ -109,7 +109,7 @@ export class FormcrearguiaComponent implements OnInit {
       fechaDespacho: moment( this.data.fecha ).format( "YYYY-MM-DD" ),
       cuentaRemitente: 1422863,
       tipoIdentificacionRemitente: "CC",
-      identificacionRemitente: Number( this.dataUser.usu_documento || 1093753373 ),
+      identificacionRemitente: 1093753373,
       sedeRemitent: "",
       nombreRemitente: this.dataUser.usu_nombre || 'Tienda',
       direccionCliente: "",
@@ -152,7 +152,7 @@ export class FormcrearguiaComponent implements OnInit {
       flete: this.data.flete,  // boleando
       valorRecaudar: this.data.ven_total,   //number
       destinatarioCosto: this.data.destinatarioCosto, // boleand
-      remitenteBarrio: this.data.ven_barrio, // strint
+      remitenteBarrio: "comuneros", // strint
       destinatarioFechaExpedicion: "2019-10-10", // strint
       destinatarioCelular: this.data.ven_telefono_cliente, // number
       observacionAdicional: "mercancia nacional", //string 
