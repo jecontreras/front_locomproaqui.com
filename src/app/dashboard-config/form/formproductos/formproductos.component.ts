@@ -177,11 +177,18 @@ export class FormproductosComponent implements OnInit {
     this.files.splice(this.files.indexOf(event), 1);
   }
 
+  async datafiles( event ){
+    console.log( event );
+    let url:any = event.target.files;
+    this.files = url;
+    if( url.length > 0 ) await this.subirFile( this.data, 'foto');
+  }
+
   codigo() {
     return (Date.now().toString(20).substr(2, 3) + Math.random().toString(20).substr(2, 3)).toUpperCase();
   }
 
-  async subirFile( item: any, opt:string = 'foto' ) {
+  async subirFile( item: any = this.data, opt:string = 'foto' ) {
     let lista = this.files;
     if( opt === 'galeria') lista = this.files2;
     if( opt === 'colorGaleria') lista = this.files3;
@@ -191,6 +198,7 @@ export class FormproductosComponent implements OnInit {
       this._tools.ProcessTime({});
       await this.fileNext( item, opt, form );
       if( this.id ) if( opt == 'galeria' ) { this.data.listaGaleria = this.listFotos; this.updates(); }
+      if( opt == 'foto' ) this.updates();
       //this._archivos.create( this.files[0] );
       
     }

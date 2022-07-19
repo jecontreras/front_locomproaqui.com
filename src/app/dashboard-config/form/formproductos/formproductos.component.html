@@ -78,6 +78,14 @@
                 <div class="form-group col-md-12" *ngIf="data.foto">
                     <div class="mx-auto" style="width: 200px;">
                         <img [src]="data.foto" class="imgFoto">
+                        <div>
+                            <button class="contenedor-btn-file">
+                                <i class="material-icons">file_upload</i>
+                                Subir Foto Perfil
+                                <label for="btn-file"></label>
+                                <input type="file" id="btn-file" (change)="datafiles($event)">
+                            </button>
+                        </div>
                     </div>
                 </div>
                 <div class="form-group col-md-6 col-sm-4 col-lg-4 col-xs-4">
