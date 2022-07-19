@@ -258,6 +258,13 @@ export class ViewProductosComponent implements OnInit {
       this.llenadoGaleria();  
       this.seleccionTalla();
       this.cambioImgs();
+      //console.log( this.data.pro_sw_tallas == 5, this.data )
+      try {
+        if( this.data.pro_sw_tallas == 5 ) this.seleccionnTalla.cantidad = this.seleccionoColor.tallaSelect[0].cantidad;
+      } catch (error) {
+        console.log("ERrOR", error);
+        this.seleccionnTalla.cantidad = 100;
+      }
     } catch (error) {}
   }
 
