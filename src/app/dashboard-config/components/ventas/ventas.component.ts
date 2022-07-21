@@ -159,7 +159,7 @@ export class VentasComponent implements OnInit {
   btndelete(obj:any, idx:any){
     let data:any = {
       id: obj.id,
-      ven_estado: 1,
+      ven_estado: 5,
       ven_sw_eliminado: 1
     };
     this._tools.confirm({title:"Eliminar", detalle:"Deseas Eliminar Dato", confir:"Si Eliminar"}).then((opt)=>{

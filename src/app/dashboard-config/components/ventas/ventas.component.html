@@ -131,10 +131,14 @@
                       'colorDespachado':row['ven_estado'] == 3,
                       'colorEntrante':row['ven_estado'] == 0,
                       'colorDevolucion':row['ven_estado'] == 2,
+                      'colorEliminado':row['ven_estado'] == 5,
                       'colorPagado':row['ven_retiro'] >= 1
                     }">
 
-                      <td>
+                      <td *ngIf="row['ven_estado'] == 5">
+                        
+                      </td>
+                      <td *ngIf="row['ven_estado'] != 5">
                         <div *ngIf="!row.ven_numero_guia">
                           <span class="text-warning fondos" >Debes generar la guia </span><br>
                         </div>
@@ -196,6 +200,7 @@
                       <td *ngIf="row['ven_estado'] == 1">Exitosa</td>
                       <td *ngIf="row['ven_estado'] == 2">Rechazada</td>
                       <td *ngIf="row['ven_estado'] == 3">Despachado</td>
+                      <td *ngIf="row['ven_estado'] == 5">Eliminado</td>
                       <td>
                         <img src="./assets/icons/pago.png" alt="" *ngIf="row['ven_retirado'] == 1" style="width: 25%;">
                         <span *ngIf="row['ven_imagen_tiket'] && row['ven_retirado'] == 0">lista para cobrar</span>
