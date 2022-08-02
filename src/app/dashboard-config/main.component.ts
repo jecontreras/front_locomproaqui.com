@@ -9,4 +9,6 @@ export class MainComponent {
   title = 'Dashboard config';
   constructor () {
   }
+
+  
 }

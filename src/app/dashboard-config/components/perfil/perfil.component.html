@@ -24,8 +24,7 @@
                                     class="btn btn-primary btn-just-icon btn-round saltoButton">TRAER CLIENTES A MI
                                     TIENDA</button>
                                 <button (click)="copiarLinkRegistro()"
-                                    class="btn btn-success btn-just-icon btn-round saltoButton"
-                                    *ngIf="disableBtn">
+                                    class="btn btn-success btn-just-icon btn-round saltoButton" *ngIf="disableBtn">
                                     Link para crear mi equipo de vendedores
                                 </button>
                                 <!--<button (click)="abrrirTienda()"
@@ -37,7 +36,8 @@
                     <div class="row container">
                         <div class="col-12">
                             <div class="d-flex justify-content-center">
-                                <div class="row" id="tarjeta" style="    height: -webkit-fill-available; width: min-content;">
+                                <div class="row" id="tarjeta"
+                                    style="    height: -webkit-fill-available; width: min-content;">
                                     <div class="col-12">
                                         <div class="d-flex justify-content-center">
                                             <div class="row efectos">
@@ -47,12 +47,16 @@
                                                             <h2>ASO-VIRTUAL-CONNECTED</h2>
                                                             <p style="text-align: center;
                                                             font-size: 13px;
-                                                            font-weight: bolder;">Asociacion  de Tiendas Virtuales conectadas</p>
+                                                            font-weight: bolder;">Asociacion de Tiendas Virtuales
+                                                                conectadas</p>
                                                         </div>
                                                     </div>
                                                 </div>
                                                 <div class="col-4">
-                                                    <img style="width: 100%;   background-attachment: fixed; background-position: center;" [src]="data.usu_imagen || '../assets/noimagen.jpg' " alt="">
+                                                    <img style="width: 100%;   background-attachment: fixed; background-position: center;"
+                                                        [src]="data.usu_imagen || '../assets/noimagen.jpg' " *ngIf="!croppedImage">
+                                                    <img style="width: 100%;   background-attachment: fixed; background-position: center;"
+                                                    [src]="croppedImage" *ngIf="croppedImage">
                                                 </div>
                                                 <div class="col-8 row">
                                                     <div class="col-12">
@@ -61,23 +65,29 @@
                                                             class="form-control form-control-sm sixes" placeholder="id">
                                                     </div>
                                                     <div class="col-12">
-                                                        <label for="exampleFormControlInput1" class="sixes">Nombre:</label>
-                                                        <input type="text" [(ngModel)]="data.usu_nombre1" required disabled
-                                                            class="form-control form-control-sm sixes" placeholder="Ingrese tu nombre">
+                                                        <label for="exampleFormControlInput1"
+                                                            class="sixes">Nombre:</label>
+                                                        <input type="text" [(ngModel)]="data.usu_nombre1" required
+                                                            disabled class="form-control form-control-sm sixes"
+                                                            placeholder="Ingrese tu nombre">
                                                     </div>
                                                     <div class="col-6">
-                                                        <label for="exampleFormControlInput1" class="sixes">Ciudad</label>
-                                                        <input type="text" [(ngModel)]="data.usu_ciudad" required disabled
-                                                            class="form-control form-control-sm sixes" placeholder="Ingrese tu ciudad">
+                                                        <label for="exampleFormControlInput1"
+                                                            class="sixes">Ciudad</label>
+                                                        <input type="text" [(ngModel)]="data.usu_ciudad" required
+                                                            disabled class="form-control form-control-sm sixes"
+                                                            placeholder="Ingrese tu ciudad">
                                                     </div>
                                                     <div class="col-6">
-                                                        <label for="exampleFormControlInput1" class="sixes">fecha</label>
+                                                        <label for="exampleFormControlInput1"
+                                                            class="sixes">fecha</label>
                                                         <input type="text" [(ngModel)]="fecha" required disabled
                                                             class="form-control form-control-sm sixes">
                                                     </div>
                                                 </div>
                                                 <div class="col-12">
-                                                    <p class="sixes"> Este documento es para uso vip de nuestra plataforma con este documento entras a evento exclusivos </p>
+                                                    <p class="sixes"> Este documento es para uso vip de nuestra
+                                                        plataforma con este documento entras a evento exclusivos </p>
                                                 </div>
                                             </div>
                                         </div>
@@ -94,41 +104,63 @@
                     <mat-tab-group mat-align-tabs="center">
                         <mat-tab label="Datos Iniciales">
                             <div class="row p-3">
-                                <div class="col-12 mx-auto">
+                                <!--<div class="col-12 mx-auto">
                                     <div class="mx-auto" style="width: 200px;">
-                                        <img [src]="data.usu_imagen" class="imgPerfil">
-                                        <img [src]="croppedImage" class="imgPerfil" />
+                                        <img [src]="data.usu_imagen" class="imgPerfil" *ngIf="!croppedImage">
+                                        <img [src]="croppedImage" class="imgPerfil" *ngIf="croppedImage"/>
                                     </div>
-                                </div>
+                                </div>-->
                                 <div class="col-12 container">
-                                    <div class="row">
+                                    <!--<div class="row">
                                         <label>Subir Foto de Tienda</label>
                                         <button class="btn btn-primary btn-just-icon btn-round"
                                             (click)="subirFile('usu_imagen')" *ngIf="files.length > 0">
                                             Subir Imagen
                                         </button>
-                                    </div>
-                                    <ngx-dropzone (change)="onSelect($event)">
+                                    </div>-->
+                                    <!--<ngx-dropzone (change)="onSelect($event)">
                                         <ngx-dropzone-label>Abrir archivos</ngx-dropzone-label>
                                         <ngx-dropzone-image-preview ngProjectAs="ngx-dropzone-preview"
                                             *ngFor="let f of files" [file]="f" [removable]="true"
                                             (removed)="onRemove(f)" multiple="false">
                                             <ngx-dropzone-label>{{ f.name }} ({{ f.type }})</ngx-dropzone-label>
                                         </ngx-dropzone-image-preview>
-                                    </ngx-dropzone>
+                                    </ngx-dropzone>-->
                                     <!--<input type="file" (change)="fileChangeEvent($event)" />
         
                                     <image-cropper [imageChangedEvent]="imageChangedEvent" [maintainAspectRatio]="true"
                                         [aspectRatio]="4 / 3" format="png" (imageCropped)="imageCropped($event)"
                                         (imageLoaded)="imageLoaded($event)" (cropperReady)="cropperReady( $event )"
                                         (loadImageFailed)="loadImageFailed( $event )" imageQuality="95" cropperStaticHeight="1024" ></image-cropper>-->
+
+                                    
+
+                                    <div class="d-flex justify-content-center">
+                                        <div>
+                                            <button class="contenedor-btn-file">
+                                                <i class="material-icons">file_upload</i>
+                                                Seleccionar Foto Perfil
+                                                <label for="btn-file"></label>
+                                                <input type="file" id="btn-file" (change)="fileChangeEvent($event)">
+                                            </button>
+
+                                            <button *ngIf="croppedImage" style="height: 55px;" type="button" class="btn btn-success" (click)="finixCorteImg()">Terminar y Subir Imagen</button>
+        
+                                            <image-cropper style="width: 570px;" [imageChangedEvent]="imageChangedEvent" [maintainAspectRatio]="true"
+                                                [aspectRatio]="30 / 10" format="png" (imageCropped)="imageCropped( $event )"
+                                                (imageLoaded)="imageLoaded( $event )" (cropperReady)="cropperReady( $event )"
+                                                (loadImageFailed)="loadImageFailed( $event )"></image-cropper>
+                                        </div>
+                                    </div>
+
                                 </div>
                                 <div class="col-12">
                                     <label>Nombre de su tienda</label>
                                     <input type="text" [(ngModel)]="data.usu_usuario"
                                         class="form-control form-control-sm" (ngModelChange)="validadUsername()">
                                     <div *ngIf="!disabledusername">
-                                        <span class="bg-danger text-white rounded">El Nombre de su tienda Ya Se Encuentra Registrado Por Favor Utilizar
+                                        <span class="bg-danger text-white rounded">El Nombre de su tienda Ya Se
+                                            Encuentra Registrado Por Favor Utilizar
                                             Otro</span>
                                     </div>
                                 </div>
@@ -168,10 +200,11 @@
                                 </div>
                                 <div class="col-6">
                                     <label>Correo Electronico</label>
-                                    <input type="text" [(ngModel)]="data.usu_email"
-                                        class="form-control form-control-sm" (ngModelChange)="validadEmail()">
+                                    <input type="text" [(ngModel)]="data.usu_email" class="form-control form-control-sm"
+                                        (ngModelChange)="validadEmail()">
                                     <div *ngIf="!disabledemail">
-                                        <span class="bg-danger text-white rounded">El Email Solo Seran Correos Con Dominio Gmail</span>
+                                        <span class="bg-danger text-white rounded">El Email Solo Seran Correos Con
+                                            Dominio Gmail</span>
                                     </div>
                                 </div>
                                 <div class="col-6">

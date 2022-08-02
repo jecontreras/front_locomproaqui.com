@@ -59,7 +59,6 @@ import { FormlistventasComponent } from './form/formlistventas/formlistventas.co
 import { CursosComponent } from './components/cursos/cursos.component';
 import { MatVideoModule } from 'mat-video';
 
-
 @NgModule({
   entryComponents: [
     FormcategoriasComponent,

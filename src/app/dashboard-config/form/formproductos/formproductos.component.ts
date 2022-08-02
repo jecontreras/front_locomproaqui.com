@@ -56,6 +56,9 @@ export class FormproductosComponent implements OnInit {
   fruits: Fruit[] = [ ];
   listSubCategorias:any = [];
   rolUser:string;
+  
+  imageChangedEvent: any = '';
+  croppedImage: any = '';
 
   constructor(
     public dialog: MatDialog,
@@ -177,16 +180,41 @@ export class FormproductosComponent implements OnInit {
     this.files.splice(this.files.indexOf(event), 1);
   }
 
-  async datafiles( event ){
-    console.log( event );
-    let url:any = event.target.files;
-    this.files = url;
-    if( url.length > 0 ) await this.subirFile( this.data, 'foto');
-  }
 
   codigo() {
     return (Date.now().toString(20).substr(2, 3) + Math.random().toString(20).substr(2, 3)).toUpperCase();
   }
+
+  finixCorteImg(){
+    //Usage example:
+    var file = this._tools.converBase64ImgToBynare(this.croppedImage,'hello');
+    //console.log(file);
+    this.files.push( file );
+    this.subirFile(this.data, 'usu_imagen');
+  }
+
+  fileChangeEvent(event: any): void {
+    this.imageChangedEvent = event;
+    console.log(this.imageChangedEvent)
+  }
+  imageCropped(event: any) {
+    this.croppedImage = event.base64;
+    console.log(event);
+    //this.subirFile('usu_imagen');
+  }
+  imageLoaded(image: HTMLImageElement) {
+    // show cropper
+    console.log(image)
+  }
+  cropperReady(event: any) {
+    // cropper ready
+    console.log(event)
+  }
+  loadImageFailed(event: any) {
+    // show message
+    console.log(event)
+  }
+
 
   async subirFile( item: any = this.data, opt:string = 'foto' ) {
     let lista = this.files;
@@ -206,7 +234,7 @@ export class FormproductosComponent implements OnInit {
     this.files2 = [];
     this.files3 = [];
     item.checkFotoGaleri = false;
-    item.item.checkFoto = false;
+    item.checkFoto = false;
   }
 
   fileNext( item, opt, form:any ){
@@ -364,6 +392,8 @@ export class FormproductosComponent implements OnInit {
     this.btnDisabled = false;
     this.procesoEdision();
     this.blurTalla(0);
+    this.croppedImage = "";
+    this.imageChangedEvent = "";
   }
 
   getProducto(obj: any) {

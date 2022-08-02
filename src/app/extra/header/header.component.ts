@@ -17,6 +17,7 @@ import { FormventasComponent } from 'src/app/dashboard-config/form/formventas/fo
 import { FormtestimoniosComponent } from 'src/app/dashboard-config/form/formtestimonios/formtestimonios.component';
 import { CategoriasService } from 'src/app/servicesComponents/categorias.service';
 import { DialogconfirmarPedidoComponent } from '../dialogconfirmar-pedido/dialogconfirmar-pedido.component';
+import { CobrosService } from 'src/app/servicesComponents/cobros.service';
 
 const URLFRON = environment.urlFront;
 
@@ -67,6 +68,10 @@ export class HeaderComponent implements OnInit {
   porcentajeMostrar: number = 0;
   lentcoun:number = 0;
   booleanoOpen:boolean = false;
+  eventos:any = {
+    cobros: 0,
+    ventas: 0
+  };
 
   constructor(
     public changeDetectorRef: ChangeDetectorRef,
@@ -77,7 +82,8 @@ export class HeaderComponent implements OnInit {
     public _tools: ToolsService,
     private _notificaciones: NotificacionesService,
     private _venta: VentasService,
-    private _categorias: CategoriasService
+    private _categorias: CategoriasService,
+    private _retiros: CobrosService
 
   ) { 
     this._store.subscribe((store: any) => {
@@ -160,6 +166,29 @@ export class HeaderComponent implements OnInit {
     this.listMenus();
     if( this.dataUser.id )this.getCarrito();
     if( this.dataUser.id ) this.getAlert();
+    this.getEventos();
+  }
+
+  getEventos(){
+    this.getRetirosCount();
+    this.getVentasCount();
+
+  }
+
+  getRetirosCount(){
+    this._retiros.get( { where: { 
+      cob_estado: 0
+    } } ).subscribe(( res:any )=>{
+      this.eventos.cobros =  res.count;
+    });
+  }
+
+  getVentasCount(){
+    this._venta.get( { where: { 
+      cob_estado: 0
+    } } ).subscribe(( res:any )=>{
+      this.eventos.ventas = res.count || 3;
+    });
   }
 
   activarSearch(){

@@ -168,11 +168,13 @@ export class ProductosComponent implements OnInit {
   cantidadUnidades(){
     for( let row of this.dataTable.dataRows ){
       row['cantidadTallas'] = 0;
-      for( let key of row['listColor'] ){
-        for( let item of key.tallaSelect ){
-          if( item.cantidad && item.check ) row['cantidadTallas']+= Number( item.cantidad || 0 );
+      try {
+        for( let key of row['listColor'] ){
+          for( let item of key.tallaSelect ){
+            if( item.cantidad && item.check ) row['cantidadTallas']+= Number( item.cantidad || 0 );
+          }
         }
-      }
+      } catch (error) { console.error("ERROR", error )}
     }
   }
 
