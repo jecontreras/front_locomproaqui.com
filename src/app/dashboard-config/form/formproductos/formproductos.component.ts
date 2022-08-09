@@ -191,6 +191,8 @@ export class FormproductosComponent implements OnInit {
     //console.log(file);
     this.files.push( file );
     this.subirFile(this.data, 'usu_imagen');
+    this.croppedImage = "";
+    this.imageChangedEvent = "";
   }
 
   fileChangeEvent(event: any): void {
