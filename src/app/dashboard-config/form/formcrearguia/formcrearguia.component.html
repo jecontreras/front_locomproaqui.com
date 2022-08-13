@@ -60,7 +60,7 @@
 </mat-dialog-content>
 
 <mat-dialog-actions align="end">
-    <button mat-button mat-dialog-close>Cerrar</button>
+    <button mat-button mat-dialog-close [disabled]="btndisabled">Cerrar</button>
     <button mat-button cdkFocusInitial (click)="submit()" [disabled]="btndisabled">
         Generar Guia
     </button>
