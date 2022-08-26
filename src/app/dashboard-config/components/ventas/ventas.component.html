@@ -103,6 +103,16 @@
               </div>
 
             </div>
+            <div class="col-12">
+              <button class="btn btn-primary" type="button" title="Refresh" data-toggle="tooltip" data-placement="bottom"
+                (click)="buscar()" [disabled]="loader">
+                <i class="fa fa-refresh"></i>
+              </button>
+              <button class="btn btn-danger" type="button" title="Erase" data-toggle="tooltip" data-placement="bottom"
+                (click)="procesoDelete()" [disabled]="btnDisabled">
+                <i class="fa fa-trash-o"></i>
+              </button>
+            </div>
             <!--<div class="col-12" *ngIf="activando">
               <div class="col-md-3 col-sm-4 col-lg-3 col-xs-3">
                 <span>Total Utilidad de venta</span>
@@ -138,6 +148,9 @@
                       <td *ngIf="row['ven_estado'] == 5">
                         
                       </td>
+                      <td>
+                        <mat-checkbox color="primary" class="example-margin" [(ngModel)]="row.checks"></mat-checkbox>
+                      </td>
                       <td *ngIf="row['ven_estado'] != 5">
                         <div *ngIf="!row.ven_numero_guia">
                           <span class="text-warning fondos" >Debes generar la guia </span><br>
@@ -162,11 +175,11 @@
                             Enviar Guia ( cliente )
                           </button><br>
                         </div>
-                        <div>
+                        <!--<div>
                           <button (click)="btndelete(row, idx)" class="btn btn-danger btn-just-icon btn-round">
                             <i class="material-icons">delete_forever</i>
                           </button><br>
-                        </div>
+                        </div>-->
                       </td>
                       <td>{{ row['ven_numero_guia'] }}
                         <span *ngIf=" row['transportadoraSelect']=='ENVIA' || row['transportadoraSelect']=='ENVIANO' "><img class="imgs" src="./assets/img/envia.jpg" alt=""></span>

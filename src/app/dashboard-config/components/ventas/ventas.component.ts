@@ -13,6 +13,7 @@ import { UsuariosService } from 'src/app/servicesComponents/usuarios.service'
 import { VentastableComponent } from '../../table/ventastable/ventastable.component';
 import { Router } from '@angular/router';
 import { EmpresaService } from 'src/app/servicesComponents/empresa.service';
+import { NotificacionesService } from 'src/app/servicesComponents/notificaciones.service';
 
 declare interface DataTable {
   headerRow: string[];
@@ -43,7 +44,7 @@ export class VentasComponent implements OnInit {
     page: 0,
     limit: 10
   };
-  Header:any = [ 'Acciones','Numero Guia','Vendedor','Nombre Cliente','Teléfono Cliente','Ganancia Vendedor', 'Valor de flete', 'Fecha Venta','Estado', 'Pagado', 'Ganancia'];
+  Header:any = [ '','Acciones','Numero Guia','Vendedor','Nombre Cliente','Teléfono Cliente','Ganancia Vendedor', 'Valor de flete', 'Fecha Venta','Estado', 'Pagado', 'Ganancia'];
   $:any;
   public datoBusqueda = '';
 
@@ -56,7 +57,7 @@ export class VentasComponent implements OnInit {
   listVendedores:any = [];
   keyword = 'usu_usuario';
   counts:number = 0;
-
+  btnDisabled:boolean = false;
   constructor(
     public dialog: MatDialog,
     public _tools: ToolsService,
@@ -65,7 +66,8 @@ export class VentasComponent implements OnInit {
     private _store: Store<STORAGES>,
     private _user: UsuariosService,
     private Router: Router,
-    private _empresa: EmpresaService
+    private _empresa: EmpresaService,
+    private _notificaciones: NotificacionesService,
   ) {
     this._store.subscribe((store: any) => {
       store = store.name;
@@ -113,6 +115,7 @@ export class VentasComponent implements OnInit {
   }
 
   crear(obj:any){
+    this.getNotificacion( obj );
     const dialogRef = this.dialog.open(FormventasComponent,{
       data: {datos: obj || {}}
     });
@@ -131,6 +134,24 @@ export class VentasComponent implements OnInit {
           }
       }
     });
+  }
+
+  getNotificacion( obj:any ){
+    return new Promise( resolve =>{
+      this._notificaciones.get( { where: { venta: obj.id } } ).subscribe(( res:any ) =>{
+        res = res.data[0];
+        if( !res ) return false;
+        this.estadoNotificaciones( res );
+      });
+    });
+  } 
+
+  estadoNotificaciones(obj:any){
+    let data:any ={
+      id: obj.id,
+      view: 1
+    };
+    this._notificaciones.update(data).subscribe((res:any)=>{});
   }
 
   async getDetallado( id:any ){
@@ -156,20 +177,27 @@ export class VentasComponent implements OnInit {
     });
   }
 
-  btndelete(obj:any, idx:any){
-    let data:any = {
-      id: obj.id,
-      ven_estado: 5,
-      ven_sw_eliminado: 1
-    };
-    this._tools.confirm({title:"Eliminar", detalle:"Deseas Eliminar Dato", confir:"Si Eliminar"}).then((opt)=>{
-      if(opt.value){
-        if( obj.ven_estado == 1 || obj.ven_estado == 2 || obj.ven_estado == 3 || obj.ven_estado == 4 ) { this._tools.presentToast("Error no puedes Eliminar esta venta por tener datos de despachado"); return false; }
-        this._ventas.update(data).subscribe((res:any)=>{
-          this.dataTable.dataRows.splice(idx, 1);
-          this._tools.presentToast("Eliminado")
-        },(error)=>{console.error(error); this._tools.presentToast("Error de servidor") })
-      }
+  async procesoDelete(){
+    let confirm = await this._tools.confirm( {title:"Eliminar", detalle:"Deseas Eliminar Dato", confir:"Si Eliminar"} );
+    if(!confirm.value) return false;
+    this.btnDisabled = true;
+    for(let row of this.dataTable.dataRows ) if( row['checks'] ) await this.btndelete( row );
+    this.btnDisabled = false;
+  }
+
+  btndelete( obj:any ){
+    return new Promise( resolve =>{
+      let data:any = {
+        id: obj.id,
+        ven_estado: 5,
+        ven_sw_eliminado: 1
+      };
+      if( obj.ven_estado == 1 || obj.ven_estado == 2 || obj.ven_estado == 3 || obj.ven_estado == 4 ) { this._tools.presentToast("Error no puedes Eliminar esta venta por tener datos de despachado"); return resolve( false ); }
+      this._ventas.update(data).subscribe((res:any)=>{
+        this.dataTable.dataRows = _.filter( this.dataTable.dataRows, ( row:any ) => row.id != obj.id );
+        this._tools.presentToast("Eliminado")
+        resolve( true );
+      },(error)=>{console.error(error); this._tools.presentToast("Error de servidor"); resolve( false ); })
     });
   }
 
