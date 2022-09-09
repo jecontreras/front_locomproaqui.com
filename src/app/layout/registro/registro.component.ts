@@ -25,7 +25,8 @@ export class RegistrosComponent implements OnInit {
 
   data: any = {
     usu_indicativo: "57",
-    ids: "XXXXXXXXXXXXXXXXXXXX"
+    ids: "XXXXXXXXXXXXXXXXXXXX",
+    usu_imagen: './assets/logo.png'
   };
   listIndicativos = indicativos;
   disableSubmit: boolean = true;
