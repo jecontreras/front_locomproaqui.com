@@ -35,6 +35,7 @@ import { registerLocaleData } from '@angular/common';
 import { AuthInterceptor } from './services/authInterceptor';
 import { GlobalErrorHandler } from './services/globalErrorHandler';
 import { ExtraModule } from './extra/extra.module';
+import { SocialLoginModule } from 'angularx-social-login';
 
     // registrar los locales con el nombre que quieras utilizar a la hora de proveer
     registerLocaleData(localePy, 'es');
@@ -70,7 +71,8 @@ import { ExtraModule } from './extra/extra.module';
     PublicoModule,
     MatVideoModule,
     NgxCurrencyModule,
-    ExtraModule
+    ExtraModule,
+    SocialLoginModule,
   ],
   providers: [
     { provide: LOCALE_ID, useValue: 'es-Co', },
