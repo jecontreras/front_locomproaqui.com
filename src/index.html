@@ -1,5 +1,6 @@
 <!doctype html>
 <html lang="en">
+
 <head>
   <meta charset="utf-8">
   <title>LokomproAqui</title>
@@ -8,22 +9,43 @@
   <link rel="icon" type="image/x-icon" href="favicon.ico">
   <link href="./assets/logo.png" rel="shortcut icon">
   <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500&amp;display=swap" rel="stylesheet">
-  
+
   <link href="https://maxcdn.bootstrapcdn.com/font-awesome/latest/css/font-awesome.min.css" rel="stylesheet">
   <link rel="manifest" href="manifest.webmanifest">
+  <link rel="stylesheet" type="text/css" href="./assets/vendor/bootstrap/css/bootstrap.min.css">
+  <!--===============================================================================================-->
+  <link rel="stylesheet" type="text/css" href="./assets/fonts/font-awesome-4.7.0/css/font-awesome.min.css">
+  <!--===============================================================================================-->
+  <link rel="stylesheet" type="text/css" href="./assets/fonts/Linearicons-Free-v1.0.0/icon-font.min.css">
+  <!--===============================================================================================-->
+  <link rel="stylesheet" type="text/css" href="./assets/vendor/animate/animate.css">
+  <!--===============================================================================================-->
+  <link rel="stylesheet" type="text/css" href="./assets/vendor/css-hamburgers/hamburgers.min.css">
+  <!--===============================================================================================-->
+  <link rel="stylesheet" type="text/css" href="./assets/vendor/animsition/css/animsition.min.css">
+  <!--===============================================================================================-->
+  <link rel="stylesheet" type="text/css" href="./assets/vendor/select2/select2.min.css">
+  <!--===============================================================================================-->
+  <link rel="stylesheet" type="text/css" href="./assets/vendor/daterangepicker/daterangepicker.css">
+  <!--===============================================================================================-->
+  <link rel="stylesheet" type="text/css" href="./assets/css/util.css">
+  <link rel="stylesheet" type="text/css" href="./assets/css/main.css">
+
   <meta name="theme-color" content="#1976d2">
 
-  <meta property="og:url"           content="https://www.lokomproaqui.com/" />
-  <meta property="og:type"          content="website" />
-  <meta property="og:title"         content="Lokomproaqui" />
-  <meta property="og:description"   content="Lokompreaqui una empresa de vendedores acá podrás encontrar productos que podéis vender sin ningún problemas de envió todo se hace contra entrega tú lo que haces es recomendarnos a tus conocidos y pues todo lo que se venda por esa recomendación tu tendrás ganancias por venta" />
-  <meta property="og:image"         content="./assets/logo.jpeg" />
+  <meta property="og:url" content="https://www.lokomproaqui.com/" />
+  <meta property="og:type" content="website" />
+  <meta property="og:title" content="Lokomproaqui" />
+  <meta property="og:description"
+    content="Lokompreaqui una empresa de vendedores acá podrás encontrar productos que podéis vender sin ningún problemas de envió todo se hace contra entrega tú lo que haces es recomendarnos a tus conocidos y pues todo lo que se venda por esa recomendación tu tendrás ganancias por venta" />
+  <meta property="og:image" content="./assets/logo.jpeg" />
   <meta property="og:site_name" content="Zapatos" />
   <meta property="og:price:amount" content="90.000" />
   <meta property="og:price:currency" content="COP" />
 
   <meta name="twitter:title" content=" Lokomproaqui">
-  <meta name="twitter:description" content="Lokompreaqui una empresa de vendedores acá podrás encontrar productos que podéis vender sin ningún problemas de envió todo se hace contra entrega tú lo que haces es recomendarnos a tus conocidos y pues todo lo que se venda por esa recomendación tu tendrás ganancias por venta">
+  <meta name="twitter:description"
+    content="Lokompreaqui una empresa de vendedores acá podrás encontrar productos que podéis vender sin ningún problemas de envió todo se hace contra entrega tú lo que haces es recomendarnos a tus conocidos y pues todo lo que se venda por esa recomendación tu tendrás ganancias por venta">
   <meta name="twitter:image" content="./assets/logo.jpeg">
   <meta name="twitter:site" content="@MIUSUARIO">
   <meta name="twitter:creator" content="@ MIUSUARIO">
@@ -33,40 +55,43 @@
   <meta name="twitter:label2" content="#1976d2">
 
 
-    <!-- Facebook Pixel Code -->
+  <!-- Facebook Pixel Code -->
   <script>
-    !function(f,b,e,v,n,t,s)
-    {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
-    n.callMethod.apply(n,arguments):n.queue.push(arguments)};
-    if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
-    n.queue=[];t=b.createElement(e);t.async=!0;
-    t.src=v;s=b.getElementsByTagName(e)[0];
-    s.parentNode.insertBefore(t,s)}(window, document,'script',
-    'https://connect.facebook.net/en_US/fbevents.js');
+    !function (f, b, e, v, n, t, s) {
+      if (f.fbq) return; n = f.fbq = function () {
+        n.callMethod ?
+        n.callMethod.apply(n, arguments) : n.queue.push(arguments)
+      };
+      if (!f._fbq) f._fbq = n; n.push = n; n.loaded = !0; n.version = '2.0';
+      n.queue = []; t = b.createElement(e); t.async = !0;
+      t.src = v; s = b.getElementsByTagName(e)[0];
+      s.parentNode.insertBefore(t, s)
+    }(window, document, 'script',
+      'https://connect.facebook.net/en_US/fbevents.js');
     fbq('init', '351978276134909');
     fbq('track', 'PageView');
   </script>
   <noscript><img height="1" width="1" style="display:none"
-    src="https://www.facebook.com/tr?id=351978276134909&ev=PageView&noscript=1"
-  /></noscript>
+      src="https://www.facebook.com/tr?id=351978276134909&ev=PageView&noscript=1" /></noscript>
   <!-- End Facebook Pixel Code -->
-  
+
 </head>
+
 <body translate="false">
   <app-root>
     <div class="loader">
-        <svg class="circular" viewBox="25 25 50 50">
-            <circle class="path" cx="50" cy="50" r="20" fill="none" stroke-width="2" stroke-miterlimit="10"/>
-        </svg>
+      <svg class="circular" viewBox="25 25 50 50">
+        <circle class="path" cx="50" cy="50" r="20" fill="none" stroke-width="2" stroke-miterlimit="10" />
+      </svg>
     </div>
   </app-root>
   <noscript>Please enable JavaScript to continue using this application.</noscript>
-  
+
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
   <!-- SmartMenus jQuery plugin -->
   <script type="text/javascript" src="./assets/js/jquery.smartmenus.js"></script>
   <!-- SmartMenus jQuery Bootstrap Addon -->
-  <script type="text/javascript" src="./assets/js/jquery.smartmenus.bootstrap.js"></script>  
+  <script type="text/javascript" src="./assets/js/jquery.smartmenus.bootstrap.js"></script>
   <!-- To Slider JS -->
   <!-- Product view slider -->
   <script type="text/javascript" src="./assets/js/jquery.simpleGallery.js"></script>
@@ -75,6 +100,7 @@
   <script type="text/javascript" src="./assets/js/slick.js"></script>
   <!-- Price picker slider -->
   <script type="text/javascript" src="./assets/js/nouislider.js"></script>
-  <script src="./assets/js/custom.js"></script> 
+  <script src="./assets/js/custom.js"></script>
 </body>
+
 </html>
