@@ -1,0 +1,9 @@
+{
+    "version": 3,
+    "mappings": "AAAA,AAAA,aAAa,CAAC;EACV,SAAS,EAAE,KAAK;CACjB;;AAED,AAAA,qBAAqB,CAAC;EACpB,gBAAgB,EAAE,iEAAiE;EACnF,eAAe,EAAE,KAAK;CACvB",
+    "sources": [
+        "medios-pagos.component.scss"
+    ],
+    "names": [],
+    "file": "medios-pagos.component.css"
+}

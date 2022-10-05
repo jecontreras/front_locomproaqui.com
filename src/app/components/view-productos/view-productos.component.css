@@ -1,0 +1,20 @@
+.colorSeleccionado {
+  background: yellow;
+}
+
+.contentCenter {
+  padding: 0 5%;
+}
+
+.sliderpasador {
+  position: relative;
+  top: 45%;
+}
+
+.precios {
+  background: #dedede;
+  padding: 5px;
+  border-radius: 10px;
+  color: #00a000;
+}
+/*# sourceMappingURL=view-productos.component.css.map */

@@ -1,0 +1,121 @@
+.social-bar {
+  position: absolute;
+  right: 15px;
+  top: 106px;
+  font-size: 1.5rem;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  -webkit-box-align: end;
+      -ms-flex-align: end;
+          align-items: flex-end;
+  z-index: 100;
+}
+
+.anchos1 {
+  width: 100%;
+  margin: 2px 0;
+}
+
+.icon {
+  color: white;
+  text-decoration: none;
+  padding: .7rem;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-transition: all .5s;
+  transition: all .5s;
+}
+
+.altosIcons {
+  height: 19px;
+}
+
+.fab {
+  width: 20px !important;
+}
+
+.icon-flecha {
+  background: orange;
+  width: 42px;
+  cursor: pointer;
+}
+
+.fa-angle-right {
+  color: white;
+}
+
+.fa-grin-beam {
+  color: white;
+}
+
+.feed {
+  color: white !important;
+  cursor: pointer;
+}
+
+.icon-facebook {
+  background: #02a0e3;
+  border-radius: 20px;
+}
+
+.icon-color {
+  background: #02a0e3;
+  border-radius: 20px;
+}
+
+.icon-twitter {
+  background: #02a0e3;
+  border-radius: 20px;
+}
+
+.icon-youtube {
+  background: #02a0e3;
+  border-radius: 20px;
+}
+
+.icon-instagram {
+  background: #02a0e3;
+  border-radius: 20px;
+}
+
+.icon-whattsapp {
+  background: #02a0e3;
+  border-radius: 20px;
+}
+
+.icon-feedback {
+  background: #02a0e3;
+  border-radius: 20px;
+  -webkit-writing-mode: vertical-lr;
+      -ms-writing-mode: tb-lr;
+          writing-mode: vertical-lr;
+  font-size: 14.5px;
+}
+
+.icono-feed {
+  margin-bottom: 5px;
+  background: #02a0e3;
+  border-radius: 20px;
+}
+
+/*.icon:first-child {
+	border-radius: 1rem 0 0 0;
+}
+
+.icon:last-child {
+	border-radius: 0 0 0 1rem;
+}
+*/
+.icon:hover {
+  padding-right: 3rem;
+  border-radius: 20px;
+  -webkit-box-shadow: 0 0 0.5rem rgba(0, 0, 0, 0.42);
+          box-shadow: 0 0 0.5rem rgba(0, 0, 0, 0.42);
+}
+/*# sourceMappingURL=menu-lateral.component.css.map */

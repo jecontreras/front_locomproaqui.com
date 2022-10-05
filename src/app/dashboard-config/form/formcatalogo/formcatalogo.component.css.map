@@ -1,0 +1,9 @@
+{
+    "version": 3,
+    "mappings": "AAAA,AAAA,OAAO,CAAC;EACJ,UAAU,EAAE,GAAG;CAClB",
+    "sources": [
+        "formcatalogo.component.scss"
+    ],
+    "names": [],
+    "file": "formcatalogo.component.css"
+}
