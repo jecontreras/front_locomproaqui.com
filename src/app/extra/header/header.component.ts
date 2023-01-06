@@ -187,7 +187,7 @@ export class HeaderComponent implements OnInit {
     this._venta.get( { where: { 
       ven_estado: 0
     } } ).subscribe(( res:any )=>{
-      this.eventos.ventas = res.count || 3;
+      this.eventos.ventas = res.count || 0;
     });
   }
 
