@@ -94,7 +94,7 @@ export class FormcrearguiaComponent implements OnInit {
       txtEMailRemitente: this.dataUser.usu_email || "fabricadecalzadocolombia@gmail.com",
       txtPara: this.data.ven_nombre_cliente,
       txtIdentificacionPara: this.data.cob_num_cedula_cliente,
-      drpCiudadDestino: this.data.ciudadDestino,
+      drpCiudadDestino: this.data.ciudadDestino.name,
       txtTelefonoPara: this.data.ven_telefono_cliente,
       txtDireccionPara: this.data.ven_direccion_cliente,
       txtDice: this.textData,
