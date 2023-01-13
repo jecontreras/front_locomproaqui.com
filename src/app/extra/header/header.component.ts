@@ -390,7 +390,7 @@ export class HeaderComponent implements OnInit {
       },
       {
         icons: 'menu_book',
-        nombre: 'Comprar',
+        nombre: ' Hacer Comprar',
         disable: this.dataUser.id,
         url: 'handleShop()',
         submenus:[]

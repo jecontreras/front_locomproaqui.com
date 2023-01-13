@@ -60,6 +60,8 @@ export class PedidosComponent implements OnInit {
   listTallas:any = [];
   disabledFiltro:boolean = false;
   coinShop:boolean = false;
+  titleButton:string = "Hacer pedido";
+
   constructor(
     private _productos: ProductoService,
     private _store: Store<CART>,
@@ -110,6 +112,7 @@ export class PedidosComponent implements OnInit {
     }, 1000 );
     if( ( this.activate.snapshot.paramMap.get('categoria') ) === 'compra' ){
       this.coinShop = true;
+      this.titleButton = "Hacer Compras";
       this.cargarProductos();
     }
   }
