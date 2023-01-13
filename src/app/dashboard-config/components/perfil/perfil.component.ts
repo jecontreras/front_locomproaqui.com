@@ -18,6 +18,8 @@ const URL = environment.url;
 const URLFRON = environment.urlFront;
 import pdfMake from 'pdfmake/build/pdfmake';
 import pdfFonts from 'pdfmake/build/vfs_fonts';
+import { DANEGROUP } from 'src/app/JSON/dane-nogroup';
+import { VentasService } from 'src/app/servicesComponents/ventas.service';
 
 pdfMake.vfs = pdfFonts.pdfMake.vfs;
 
@@ -51,13 +53,17 @@ export class PerfilComponent implements OnInit {
   disabledemail: boolean = true;
   // disable validador username
   disabledusername: boolean = true;
+  listCiudades:any = DANEGROUP;
+  keyword = 'name';
+
   constructor(
     private _user: UsuariosService,
     private _tools: ToolsService,
     private _archivos: ArchivosService,
     private _store: Store<STORAGES>,
     private _categorias: CategoriasService,
-    public dialog: MatDialog
+    public dialog: MatDialog,
+    private _ventas: VentasService
   ) {
     this._store.subscribe((store: any) => {
       console.log(store);
@@ -71,6 +77,7 @@ export class PerfilComponent implements OnInit {
 
   ngOnInit() {
     console.log(this.data.usu_nombre1)
+    this.getCiudades();
     //this.data = this._model.dataUser || {};
     if (this.data.usu_fec_nacimiento) this.data.usu_fec_nacimiento = moment(this.data.usu_fec_nacimiento).format('DD/MM/YYYY');
     this.urlTienda += this.data.usu_usuario;
@@ -111,6 +118,14 @@ export class PerfilComponent implements OnInit {
         )
         ;
     }
+  }
+
+  async getCiudades(){
+    return new Promise( resolve => {
+      this._ventas.getCiudades( { where: { }, limit: 100000 } ).subscribe( ( res:any )=>{
+        this.listCiudades = res.data;
+      });
+    });
   }
 
   getCategorias() {
@@ -181,6 +196,7 @@ export class PerfilComponent implements OnInit {
   Actualizar() {
     if (!this.disabledusername || !this.disabledemail) return this._tools.tooast({ title: "Error tenemos problemas en el formulario por favor revisar gracias", icon: "error" })
     this.data = _.omit(this.data, ['usu_perfil', 'cabeza', 'nivel', 'empresa', 'createdAt', 'updatedAt', 'categoriaPerfil']); this.data = _.omitBy(this.data, _.isNull);
+    try { this.data.usu_ciudad = this.data.usu_ciudad.name; } catch (error) { error }
     this._user.update(this.data).subscribe((res: any) => {
       //console.log(res);
       this._tools.presentToast("Actualizado");
@@ -234,8 +250,8 @@ export class PerfilComponent implements OnInit {
   async iniciarClick() {
     let respuesta = await this._tools.confirm({
       title: "SUBIR 5 IMÁGENES DE TUS MEJORES PRODUCTOS –PRECIO PARA DISTRIBUIDOR",
-      detalle: `ten en cuenta, que si los precios que quieres mostrar a nuestra enorme comunidad  de distribuidores es atractivo. 
-    Ellos se motivaran a pagar marketing y publicidad para promocionar tus productos en las plataformas más grandes, 
+      detalle: `ten en cuenta, que si los precios que quieres mostrar a nuestra enorme comunidad  de distribuidores es atractivo.
+    Ellos se motivaran a pagar marketing y publicidad para promocionar tus productos en las plataformas más grandes,
     tendrás más posibilidades de un mayor número de ventas PRECIO SUGERIDO DE VENTA A CLIENTE FINAL`,
       confir: "Yes"
     });
@@ -326,5 +342,9 @@ export class PerfilComponent implements OnInit {
     };
     pdfMake.createPdf(documentDefinition).open();
   }
+  onChangeSearch( ev:any ){
+    //console.log( ev )
+  }
+
 
 }

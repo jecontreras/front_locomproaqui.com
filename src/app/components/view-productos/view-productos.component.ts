@@ -7,6 +7,7 @@ import * as _ from 'lodash';
 import { ToolsService } from 'src/app/services/tools.service';
 import { CatalogoService } from 'src/app/servicesComponents/catalogo.service';
 import { NgImageSliderComponent } from 'ng-image-slider';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-view-productos',
@@ -49,6 +50,7 @@ export class ViewProductosComponent implements OnInit {
 
   gananciaEstimada:any = 0;
   disabledPr:boolean = true;
+  coinShop:boolean = false;
 
   constructor(
     public dialogRef: MatDialogRef<ViewProductosComponent>,
@@ -57,7 +59,8 @@ export class ViewProductosComponent implements OnInit {
     public _tools: ToolsService,
     private _catalago: CatalogoService,
     public dialog: MatDialog,
-  ) { 
+    private activate: ActivatedRoute,
+  ) {
 
     this._store.subscribe((store: any) => {
       store = store.name;
@@ -83,18 +86,19 @@ export class ViewProductosComponent implements OnInit {
       this.galeria = _.clone( this.data.listaGaleria || [] );
       this.data.cantidadAdquirir = 1;
       this.urlFoto = this.data.foto;
-      this.data.encuanto = this.data.pro_uni_venta;
+      this.data.encuanto = this.data.coinShop == true ? ( this.data.pro_vendedorCompra || this.data.pro_uni_venta ) : this.data.pro_uni_venta;
       console.log(this.datas, this.porcentajeMostrar)
       this.gananciaEstimada = this._tools.monedaChange(3,2,( Number( this.data.pro_uni_venta * this.porcentajeMostrar ) ) / 100);
+      if( this.data.coinShop == true ) this.coinShop = true;
     }
     this.procesoNext();
     try { if( this.data.pro_categoria.cat_nombre != "CALZADO" ) this.disabledSelect = false; } catch (error) { this.disabledSelect = true; }
 
-    /*setTimeout(()=>{ 
+    /*setTimeout(()=>{
       try {
         this.data.color = this.data.listColor[0].talla;
-        this.cambioImgs(); 
-        this.colorSeleccionado( ); 
+        this.cambioImgs();
+        this.colorSeleccionado( );
       } catch (error) { }
      },2000 );*/
   }
@@ -149,7 +153,7 @@ export class ViewProductosComponent implements OnInit {
   suma( numero:any, cantidad:any ){
     this.data.costo = Number( cantidad ) * Number( numero );
   }
-  
+
   cambioImgs(){
     //console.log( this.seleccionoColor );
     this.urlFoto = this.seleccionoColor.foto;
@@ -163,16 +167,17 @@ export class ViewProductosComponent implements OnInit {
     if (!this.data.tallas) {
       try {
         if( this.data.pro_categoria.cat_nombre == "CALZADO" ) return this._tools.tooast({ title: "Por Favor debes seleccionar una talla", icon: "warning" });
-        else this.data.tallas = "default"; 
+        else this.data.tallas = "default";
       } catch (error) { return this._tools.tooast({ title: "Por Favor debes seleccionar una talla", icon: "warning" }); }
     }
     let color = this.data.color;
     let cantidad = this.data.cantidadAdquirir || 1;
-    let precio = this.data.precio_vendedor || this.data.pro_uni_venta;
+    const coinDefault = ( this.data.precio_vendedor || this.data.pro_uni_venta );
+    let precio =  this.coinShop == true ? ( this.data.pro_vendedorCompra || coinDefault ) : ( coinDefault );
     let encuanto:any = this.data.encuanto || this.data.pro_uni_venta;
     //if( this.data.listColor ) { this.data.color = this.data.listColor.find(row=>row.foto == this.data.foto) || {}; color = this.data.color.talla }
     if(opt) { opt.selecciono = true; this.suma( opt.precios , opt.cantidad ); cantidad = opt.cantidad; precio = opt.precios; }
-    else this.suma( ( this.data.precio_vendedor || this.data.pro_uni_venta ) , this.data.cantidadAdquirir );
+    else this.suma( precio , this.data.cantidadAdquirir );
     /*if( this.data.precio_vendedor && !this.data.encuanto ){
       encuanto = await this._tools.alertInput( { title: "Encuanto lo vendio", input: 'text', confirme: "Agregar"} );
       if( !encuanto.value ) return this._tools.tooast({ title: "Por Favor debes decirnos en cuanto lo vendiste", icon: "warning" });
@@ -194,9 +199,10 @@ export class ViewProductosComponent implements OnInit {
       cantidad: cantidad,
       costo: precio,
       loVendio: encuanto * cantidad,
-      costoTotal: this.data.costo,
+      costoTotal: precio,
       id: this.codigo(),
-      precioReal: this.data.precioProveedor
+      precioReal: this.data.precioProveedor,
+      coinShop: this.coinShop
     };
     let accion = new CartAction(data, 'post');
     this._store.dispatch(accion);
@@ -224,7 +230,7 @@ export class ViewProductosComponent implements OnInit {
       this.disabledBtn = false;
     }
   }
-  
+
   codigo(){
     return (Date.now().toString(20).substr(2, 3) + Math.random().toString(20).substr(2, 3)).toUpperCase();
   }
@@ -255,7 +261,7 @@ export class ViewProductosComponent implements OnInit {
       this.data.tallas = "";
       this.seleccionnTalla = {};
       this.seleccionoColor = this.data.listColor.find( row => row.talla == this.data.color );
-      this.llenadoGaleria();  
+      this.llenadoGaleria();
       this.seleccionTalla();
       this.cambioImgs();
       //console.log( this.data.pro_sw_tallas == 5, this.data )
@@ -270,7 +276,7 @@ export class ViewProductosComponent implements OnInit {
 
   llenadoGaleria(){
     this.imageObject = [];
-    this.imageObject.push( 
+    this.imageObject.push(
       {
         //image: this.seleccionoColor.foto,
         thumbImage: this.seleccionoColor.foto,
@@ -307,7 +313,7 @@ export class ViewProductosComponent implements OnInit {
 
   nextFoto(){
     try {
-      this.contador++; 
+      this.contador++;
       if( Object.keys( this.galeria[ this.contador ] ).length < 1) return;
       this.urlFoto = this.galeria[ this.contador ].foto;
     } catch (error) {

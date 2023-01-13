@@ -29,6 +29,11 @@
                         <input currencyMask class="form-control form-control-sm" [(ngModel)]="data.pro_vendedor"
                             [options]="formatoMoneda" />
                     </div>
+                    <div class="form-group col-md-6 col-sm-4 col-lg-4 col-xs-6">
+                      <label>Precio Vendedor Compra</label>
+                      <input currencyMask class="form-control form-control-sm" [(ngModel)]="data.pro_vendedorCompra"
+                          [options]="formatoMoneda" />
+                  </div>
                     <div class="form-group col-md-4 col-sm-4 col-lg-4 col-xs-4">
                         <label for="exampleFormControlSelect1">Categoria:</label>
                         <select class="form-control form-control-sm" [(ngModel)]="data.pro_categoria" required>
@@ -146,6 +151,11 @@
                     <input currencyMask class="form-control form-control-sm" [(ngModel)]="data.pro_vendedor"
                         [options]="formatoMoneda" />
                 </div>
+                <div class="form-group col-md-6 col-sm-4 col-lg-4 col-xs-6">
+                  <label>Precio Vendedor Compra</label>
+                  <input currencyMask class="form-control form-control-sm" [(ngModel)]="data.pro_vendedorCompra"
+                      [options]="formatoMoneda" />
+              </div>
                 <div class="form-group col-md-6 col-sm-6 col-lg-6 col-xs-6" *ngIf="data.checkMayor">
                     <header class="main-box-header clearfix col-12 row">
                         <h2 class="col">Precios por cantidad Vendedor</h2>

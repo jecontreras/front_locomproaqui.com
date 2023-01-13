@@ -58,15 +58,15 @@
         </div>
         <div class="form-group col-md-6 col-sm-4 col-lg-4 col-xs-6">
             <label for="exampleFormControlInput1">Número Cédula del cliente</label>
-            <input type="number" [(ngModel)]="data.cob_num_cedula_cliente" class="form-control form-control-sm">
+            <input type="number" [(ngModel)]="data.cob_num_cedula_cliente" class="form-control form-control-sm" [disabled]="coinShop">
         </div>
         <div class="form-group col-md-6 col-sm-4 col-lg-4 col-xs-6">
             <label for="exampleFormControlInput1">Nombre y apellidos Cliente</label>
-            <input type="text" [(ngModel)]="data.ven_nombre_cliente" class="form-control form-control-sm">
+            <input type="text" [(ngModel)]="data.ven_nombre_cliente" class="form-control form-control-sm" [disabled]="coinShop">
         </div>
         <div class="form-group col-md-6 col-sm-4 col-lg-4 col-xs-6">
             <label for="exampleFormControlInput1">Numero de llamada cliente o whatsapp</label>
-            <input type="number" [(ngModel)]="data.ven_telefono_cliente" class="form-control form-control-sm" required>
+            <input type="number" [(ngModel)]="data.ven_telefono_cliente" class="form-control form-control-sm" required [disabled]="coinShop">
         </div>
         <!--<div class="form-group col-md-6 col-sm-4 col-lg-4 col-xs-6">
             <label for="exampleFormControlInput1">Ciudad del Cliente</label>
@@ -76,7 +76,7 @@
             <label>Ciudad Destino *</label>
             <!-- <input type="text" class="form-control form-control-sm" [(ngModel)]="data.ciudadDestino"> -->
             <ng-autocomplete [(ngModel)]="data.ciudadDestino" [data]="listCiudades" [searchKeyword]="keyword" placeHolder="Buscar Ciudad" autocomplete="off"
-                historyIdentifier="listCiudades" [itemTemplate]="itemTemplate" [notFoundTemplate]="notFoundTemplate" (selected)='precioRutulo($event)' (inputChanged)='onChangeSearch($event)'>
+                historyIdentifier="listCiudades" [itemTemplate]="itemTemplate" [notFoundTemplate]="notFoundTemplate" (selected)='precioRutulo($event)' (inputChanged)='onChangeSearch($event)' [disabled]="coinShop">
             </ng-autocomplete>
 
             <ng-template #itemTemplate let-item>
@@ -97,11 +97,11 @@
         </div>
         <div class="form-group col-md-6 col-sm-4 col-lg-4 col-xs-6">
             <label for="exampleFormControlInput1">Barrio del Cliente</label>
-            <input type="text" [(ngModel)]="data.ven_barrio" class="form-control form-control-sm">
+            <input type="text" [(ngModel)]="data.ven_barrio" class="form-control form-control-sm" [disabled]="coinShop">
         </div>
         <div class="form-group col-md-6 col-sm-4 col-lg-4 col-xs-6">
             <label for="exampleFormControlInput1">Dirección cliente</label>
-            <input type="text" [(ngModel)]="data.ven_direccion_cliente" class="form-control form-control-sm">
+            <input type="text" [(ngModel)]="data.ven_direccion_cliente" class="form-control form-control-sm" [disabled]="coinShop">
         </div>
         <div class="form-group col-md-6 col-sm-4 col-lg-4 col-xs-6">
             <label for="exampleFormControlInput1">Fecha venta</label>
@@ -112,7 +112,7 @@
         </div>
         <div class="form-group col-md-6 col-sm-4 col-lg-4 col-xs-6">
             <label for="exampleFormControlInput1">Valor del Envio</label>
-            <input [disabled]="!superSub" currencyMask [(ngModel)]="data.fleteValor" (ngModelChange)="suma()" class="form-control form-control-sm" [options]="opcionCurrencys"/>
+            <input [disabled]="!superSub" currencyMask [(ngModel)]="data.fleteValor" (ngModelChange)="suma()" class="form-control form-control-sm" [options]="opcionCurrencys" [disabled]="coinShop"/>
         </div>
         <div class="form-group col-12 bg-primary text-white rounded">
             <h2>Litas de Pataforma de envios</h2>
@@ -212,7 +212,7 @@
             </div>
             <div class="form-group col-md-6 col-sm-4 col-lg-4 col-xs-6 devolucion" *ngIf="data.id && superSub && data.ven_estado == 2">
                 <label for="exampleFormControlInput1">número de Rastreo de guía ( DEVOLUCION )</label>
-                <input type="text" [(ngModel)]="data.ven_numero_guia" class="form-control form-control-sm" [disabled]="!superSub"> 
+                <input type="text" [(ngModel)]="data.ven_numero_guia" class="form-control form-control-sm" [disabled]="!superSub">
             </div>
             <div class="form-group col-md-6 col-sm-4 col-lg-4 col-xs-6" *ngIf="data.id && listCarrito.length && !data.ven_numero_guia && superSub">
                 <button type="button" class="btn btn-success" (click)="generarGuia()">Generar Guia</button>
@@ -354,7 +354,7 @@
         </div>
         <div *ngIf="porcentajeMostrar != 40" class="col-6 col-sm-3 col-xs-3">
             <label for="exampleFormControlInput1" class="text-success">Tu ganancia en esta venta es {{ porcentajeMostrar }}%: </label> &nbsp;
-            <span>$ {{ ( data.ven_ganancias || 0 ).toLocaleString(1) }} COP</span>        
+            <span>$ {{ ( data.ven_ganancias || 0 ).toLocaleString(1) }} COP</span>
         </div>
         <div *ngIf="porcentajeMostrar == 40" class="col-6 col-sm-3 col-xs-3">
             <label for="exampleFormControlInput1" class="text-success">Valor del Flete o Envio: </label> &nbsp;

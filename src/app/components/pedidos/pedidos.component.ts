@@ -59,12 +59,12 @@ export class PedidosComponent implements OnInit {
   filtro:any = {};
   listTallas:any = [];
   disabledFiltro:boolean = false;
-
+  coinShop:boolean = false;
   constructor(
     private _productos: ProductoService,
     private _store: Store<CART>,
     public dialog: MatDialog,
-    private _tools: ToolsService,
+    public _tools: ToolsService,
     private activate: ActivatedRoute,
     private _user: UsuariosService,
     private _categorias: CategoriasService,
@@ -78,7 +78,7 @@ export class PedidosComponent implements OnInit {
       this.userId = store.usercabeza;
       this.dataUser = store.user || {};
       this.dataConfig = store.configuracion || {};
-      if( this.seartxt != store.buscar && store.buscar ) { 
+      if( this.seartxt != store.buscar && store.buscar ) {
         this.seartxt = store.buscar;
       }
       if( this.dataUser.id ){
@@ -106,8 +106,12 @@ export class PedidosComponent implements OnInit {
     if ( ( this.activate.snapshot.paramMap.get('id') ) ) { this.userId = ( this.activate.snapshot.paramMap.get('id') ); this.getUser(); }
     setInterval( ()=>{
       //console.log( this.seartxt, this.ultimoSeartxt );
-      if( this.seartxt !== this.ultimoSeartxt ) this.buscar(); 
+      if( this.seartxt !== this.ultimoSeartxt ) this.buscar();
     }, 1000 );
+    if( ( this.activate.snapshot.paramMap.get('categoria') ) === 'compra' ){
+      this.coinShop = true;
+      this.cargarProductos();
+    }
   }
 
   clearSearch(){
@@ -163,8 +167,8 @@ export class PedidosComponent implements OnInit {
   ngAfterViewChecked() {
     // console.log("***afterviewCheckd")
     this.idCategoria = this.activate.snapshot.paramMap.get('categoria');
-    // console.log( this.idCategoria , this.bandera );
-    if (this.bandera !== this.idCategoria) {
+    //console.log( this.idCategoria , this.bandera );
+    if (this.bandera !== this.idCategoria && this.idCategoria !== 'compra') {
       this.bandera = this.idCategoria
       this.listProductos = [];
       this.nextConsulta();
@@ -185,17 +189,17 @@ export class PedidosComponent implements OnInit {
   }
 
   getUser() {
-    this._user.get({ where: { 
-      usu_usuario: this.userId  
-    } }).subscribe((res: any) => { 
-      this.userId = res.data[0]; 
+    this._user.get({ where: {
+      usu_usuario: this.userId
+    } }).subscribe((res: any) => {
+      this.userId = res.data[0];
       if( !this.userId ) this.userId = {
         usu_nombre: "Tienda",
         usu_usuario: "LOKOMPROAQUI",
         id: 75,
         codigo: "UVOQA"
       }
-      this.GuardarStoreUser() 
+      this.GuardarStoreUser()
     }, (error) => { console.error(error); this.userId = ''; });
   }
   GuardarStoreUser() {
@@ -222,7 +226,7 @@ export class PedidosComponent implements OnInit {
       console.log( this.imageObject );
     });
   }
-  
+
   eventorOver( item:any ){
     console.log( item )
     item.check = !item.check;
@@ -272,7 +276,7 @@ export class PedidosComponent implements OnInit {
       }
       this.notscrolly = true;
       this.clearSearch();
-    },( error:any )=>{ 
+    },( error:any )=>{
       this.loader = false;
       this.spinner.hide();
     });
@@ -314,6 +318,7 @@ export class PedidosComponent implements OnInit {
     }
   }
   agregar(obj) {
+    obj.coinShop = this.coinShop;
     const dialogRef = this.dialog.open(ViewProductosComponent, {
       width: '100%',
       maxHeight: "700%",

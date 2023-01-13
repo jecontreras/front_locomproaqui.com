@@ -236,7 +236,7 @@ export class ToolsService {
       separados = [inputNum[0]]
     }
     separados = separados.filter((row: any) => row != "");
-    return '$' + separados.join(".") + ' COP'; //+ ',' + inputNum[1];
+    return '$' + separados.join("."); //+ ',' + inputNum[1];
   }
 
   seguridadIfrane( url:string ){
@@ -257,10 +257,10 @@ export class ToolsService {
   downloadPdf(base64String, fileName){
 
     // data should be your response data in base64 format
-    
+
     const blob = this.dataURItoBlob( base64String );
     const urls = URL.createObjectURL(blob);
-    
+
     // to open the PDF in a new window
     window.open(urls, '_blank');
     if(window.navigator && window.navigator['msSaveOrOpenBlob']){
@@ -293,14 +293,14 @@ export class ToolsService {
   converBase64ImgToBynare( dataurl, filename ){
     var arr = dataurl.split(','),
           mime = arr[0].match(/:(.*?);/)[1],
-          bstr = atob(arr[1]), 
-          n = bstr.length, 
+          bstr = atob(arr[1]),
+          n = bstr.length,
           u8arr = new Uint8Array(n);
-          
+
       while(n--){
           u8arr[n] = bstr.charCodeAt(n);
       }
-      
+
       return new File([u8arr], filename, {type:mime});
   }
 

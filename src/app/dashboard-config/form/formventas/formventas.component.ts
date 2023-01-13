@@ -70,7 +70,7 @@ export class FormventasComponent implements OnInit {
   errorCotisa:string;
 
   disableSpinner:boolean = true;
-
+  coinShop:boolean = false;
   constructor(
     public dialog: MatDialog,
     private _ventas: VentasService,
@@ -113,9 +113,10 @@ export class FormventasComponent implements OnInit {
       else this.porcentajeMostrar = this.dataUser.porcentaje;
     });
 
-  } 
+  }
 
   async ngOnInit() {
+    //console.log( this.dataUser )
     if (Object.keys(this.datas.datos).length > 0) {
       this.clone = _.clone(this.datas.datos);
       this.data = _.clone(this.datas.datos);
@@ -146,9 +147,22 @@ export class FormventasComponent implements OnInit {
     this.progreses = false;
     this.disableSpinner = false;
     this.disabledButton = false;
+    console.log(  this.listCarrito[0].coinShop )
+    if( this.listCarrito[0].coinShop == true ){ this.coinShop = this.listCarrito[0].coinShop; this.changeCity();}
     await this.getCiudades();
     this.listCiudades = this.listCiudades.filter( ( row:any )=> row.code > 0 );
     //this.listValidar();
+  }
+
+  changeCity(){
+    this.data.ciudadDestino = this.listCiudades.find( ( row:any )=> row.name == this.dataUser.usu_ciudad );
+    this.data.ven_barrio = this.dataUser.usu_direccion;
+    this.data.ven_direccion_cliente = this.dataUser.usu_direccion;
+    this.data.cob_num_cedula_cliente = this.dataUser.usu_documento || this.dataUser.usu_telefono;
+    this.data.ven_nombre_cliente = this.dataUser.usu_nombre;
+    this.data.ven_telefono_cliente = this.dataUser.usu_telefono;
+    if( this.data.ciudadDestino ) this.precioRutulo( this.data.ciudadDestino );
+    //console.log( "158",this.data,this.listCiudades );
   }
 
   async listValidar(){
@@ -166,6 +180,7 @@ export class FormventasComponent implements OnInit {
     return new Promise( resolve => {
       this._ventas.getCiudades( { where: { }, limit: 100000 } ).subscribe( ( res:any )=>{
         this.listCiudades = res.data;
+        resolve( this.listCiudades );
       });
     });
   }
@@ -283,7 +298,7 @@ export class FormventasComponent implements OnInit {
     this.data.ven_total = total1;
     //console.log( this.dataUser, this.namePorcentaje )
     if ( this.namePorcentaje == "dropshipping básico" ) this.data.ven_ganancias = (total * ( this.dataUser.porcentaje || 10 ) / 100 );
-    else { 
+    else {
       if( this.data.cubreEnvio == 'tienda') {
         this.data.ven_ganancias = ( ( this.data.ven_ganancias - ( this.data.fleteValor || 0  ) ) || 0 );
         if( this.data.ven_ganancias <= 0 ) {
@@ -319,7 +334,7 @@ export class FormventasComponent implements OnInit {
     this.data.ven_total = total1;
     //console.log( this.dataUser, namePorcentaje )
     if ( namePorcentaje == 1 ) this.data.ven_ganancias = (total * ( this.dataUser.porcentaje || 10 ) / 100 );
-    else { 
+    else {
       if( this.data.cubreEnvio == 'tienda') {
         this.data.ven_ganancias = ( ( this.data.ven_ganancias - ( this.data.fleteValor || 0  ) ) || 0 );
         if( this.data.ven_ganancias <= 0 ) {
@@ -333,13 +348,13 @@ export class FormventasComponent implements OnInit {
 
   async submit() {
     console.log( this.data.ven_tipo == 'pago_anticipado', !this.data.ven_imagen_conversacion, this.data )
-    if( this.data.ven_tipo == 'pago_anticipado' && !this.data.ven_imagen_conversacion ) { 
+    if( this.data.ven_tipo == 'pago_anticipado' && !this.data.ven_imagen_conversacion ) {
       if( this.files.length >0 ) this.subirFile( 'ven_imagen_conversacion' );
-      else { 
-        this._tools.confirm( { title: "Importante", detalle: "Recuerda que debes primero darnos el soporte de pago para despachar el pedido + el valor del envio", icon:"warning" } ); 
+      else {
+        this._tools.confirm( { title: "Importante", detalle: "Recuerda que debes primero darnos el soporte de pago para despachar el pedido + el valor del envio", icon:"warning" } );
       }
     }
-    if( this.data.ven_tipo == 'pago_anticipado' && this.data.fleteValor <= 4000 && this.superSub == true ) { 
+    if( this.data.ven_tipo == 'pago_anticipado' && this.data.fleteValor <= 4000 && this.superSub == true ) {
       let valor:any = await this._tools.alertInput({
         title: "Valor del envio",
         input: "number",
@@ -348,7 +363,7 @@ export class FormventasComponent implements OnInit {
       console.log("*******", valor )
       this.data.fleteValor = Number( valor.value );
     }
-    if( this.data.ven_tipo == 'pago_anticipado' && this.data.fleteValor <= 4000 && this.superSub == false ) this._tools.confirm( { title: "Importante", detalle: "Recuerda que Falta el valor del envio eso afectara en tu ganancia", icon:"warning" } ); 
+    if( this.data.ven_tipo == 'pago_anticipado' && this.data.fleteValor <= 4000 && this.superSub == false ) this._tools.confirm( { title: "Importante", detalle: "Recuerda que Falta el valor del envio eso afectara en tu ganancia", icon:"warning" } );
     try {
       if( this.data.ciudadDestino.code ){
         this.data.codeCiudad = this.data.ciudadDestino.code;
@@ -464,19 +479,19 @@ export class FormventasComponent implements OnInit {
       dataCarro += `Foto de el producto: ${row.foto}
         cantidad: ${row.cantidad}
         talla: ${row.tallaSelect}
-        valor a cobrar: ${(row.costoTotal || 0).toLocaleString(1)} 
+        valor a cobrar: ${(row.costoTotal || 0).toLocaleString(1)}
         `;
     }
     let mensaje: string = ``;
     mensaje = `https://wa.me/${cerialNumero}&text=${encodeURIComponent(`
       Hola Servicio al cliente, como esta, saludo cordial,
       estos son los datos de la venta realizada por ${this.dataUser.usu_nombre}
-      
+
       Nombre de cliente: ${res.ven_nombre_cliente}
       N'Cedula de cliente: ${res.cob_num_cedula_cliente}
       *celular:*${res.ven_telefono_cliente}
       Ciudad: ${res.ven_ciudad}
-      ${res.ven_barrio} 
+      ${res.ven_barrio}
       Dirección: ${res.ven_direccion_cliente}
       ${dataCarro}
 
@@ -488,14 +503,14 @@ export class FormventasComponent implements OnInit {
 
   OrdenValidadWhatsapp(res: any) {
     let cerialNumero: any = `${res.usu_clave_int.usu_indicativo}${res.usu_clave_int.usu_telefono}`;
-    this.mensajeWhat = `info del cliente ${res.ven_nombre_cliente} telefono ${res.ven_telefono_cliente || ''} fecha del pedido ${res.ven_fecha_venta} Hola Vendedor, 
+    this.mensajeWhat = `info del cliente ${res.ven_nombre_cliente} telefono ${res.ven_telefono_cliente || ''} fecha del pedido ${res.ven_fecha_venta} Hola Vendedor,
     como esta, cordial saludo. su pedido ya fue despachado numero guia ${res.ven_numero_guia} Foto de guia ${res.ven_imagen_guia}`;
     let mensaje: string = `https://wa.me/${cerialNumero}?text=${this.mensajeWhat}`;
     // console.log( mensaje , res);
     window.open(mensaje);
     this.copiarLink();
-    // cerialNumero = `57${ res.ven_telefono_cliente }`; 
-    // mensaje = `https://wa.me/${ cerialNumero }?text=info del cliente ${res.ven_nombre_cliente} telefono ${res.ven_telefono_cliente || ''} fecha del pedido ${res.ven_fecha_venta} Hola Vendedor, 
+    // cerialNumero = `57${ res.ven_telefono_cliente }`;
+    // mensaje = `https://wa.me/${ cerialNumero }?text=info del cliente ${res.ven_nombre_cliente} telefono ${res.ven_telefono_cliente || ''} fecha del pedido ${res.ven_fecha_venta} Hola Vendedor,
     // como esta, cordial saludo. su pedido ya fue despachado numero guia ${ res.ven_numero_guia } Foto de guia ${ res.ven_imagen_guia }`;
     // window.open(mensaje);
   }
@@ -519,7 +534,7 @@ export class FormventasComponent implements OnInit {
     if( !opt ) if (!this.superSub) if ( ( this.clone.ven_estado == 1 || this.clone.ven_estado == 2 || this.clone.ven_estado == 3 || this.clone.ven_estado == 4 ) || ( this.clone.ven_numero_guia ) ) { this._tools.presentToast("Error no puedes ya editar la venta ya esta aprobada"); return false; }
     let data = _.clone( this.data );
     data = _.omit( data, ['usu_clave_int']);
-    if( this.superSub == false ) { 
+    if( this.superSub == false ) {
       data = _.omit( data, ['usu_clave_int','ven_estado']);
   }
     data = _.omitBy(data, _.isNull);
@@ -595,14 +610,14 @@ export class FormventasComponent implements OnInit {
   async cancelarGuia(){
     let validador = await this._tools.confirm( { title: "Desas Cancelar la guia", icon: "succes" } );
     if( !validador.value ) return false;
-    this.disabledButton = true; 
-    this._ventas.cancelarFlete( { 
+    this.disabledButton = true;
+    this._ventas.cancelarFlete( {
       nRemesa: this.data.ven_numero_guia,
       transportadoraSelect: this.data.transportadoraSelect
     } ).subscribe(( res:any )=>{
-      this.disabledButton = false; 
+      this.disabledButton = false;
       if( res.status !== 200 ) return this._tools.presentToast( "Error en cancelar guia" );
-      
+
       this.data.ven_numero_guia = "";
       this.data.ven_imagen_guia = "";
       if( this.id ) this.updates( true );
@@ -625,7 +640,7 @@ export class FormventasComponent implements OnInit {
       }
     }
     if( this.data.transportadoraSelect == "CORDINADORA"){
-      this._ventas.imprimirFlete( { 
+      this._ventas.imprimirFlete( {
         codigo_remision: this.data.ven_numero_guia
       }).subscribe(( res:any ) =>{
         this._tools.downloadPdf( res.data, this.data.ven_numero_guia );
@@ -668,7 +683,7 @@ export class FormventasComponent implements OnInit {
       this.data.pesoVolumen = ( ( parseFloat( this.data.alto || 3 ) * parseFloat( this.data.largo || 13 ) * parseFloat( this.data.ancho || 10 ) ) / 5000 ) || 1;
       this.data.pesoVolumen = Math.round( this.data.pesoVolumen || 1 );
       for( let row of this.listCarrito ){
-        this.textData+= `${ row.cantidad } ${ row['codigoImg'] } ${ row.tallaSelect }, 
+        this.textData+= `${ row.cantidad } ${ row['codigoImg'] } ${ row.tallaSelect },
         `
       }
       let data:any ={
@@ -701,7 +716,7 @@ export class FormventasComponent implements OnInit {
         "txtDice": this.textData,
         "txtNotas": "ok",
       };
-      
+
       this._ventas.getFleteValor( data ).subscribe(( res:any )=>{
         this.tablet.listRow = res.data || [];
         this.tablet.listRow = _.filter( this.tablet.listRow, ( item:any )=> item.fleteTotal > 0 );
@@ -710,11 +725,11 @@ export class FormventasComponent implements OnInit {
           this.selectTrans( res.data[2] );
         } catch (error) {}
         resolve( true );
-        
+
 
         //if( this.data.fleteValor == 0 ) { this.data.ven_tipo = "pago_anticipado"; this._tools.confirm( { title: "Novedad", detalle: "Lo sentimos no tenemos Cubrimiento para esa zona (CONTRA ENTREGA)", icon: "warning" } ); return resolve( false ) }
         /*else {
-          this.data.ven_tipo = "contraentrega"; 
+          this.data.ven_tipo = "contraentrega";
           if( this.porcentajeMostrar == 40 ) this._tools.confirm( { title: "Completado", detalle: "El valor del envio para la ciudad "+ this.data.ciudadDestino.name + " es de " + this._tools.monedaChange( 3, 2, this.data.fleteValor ), icon: "succes" } );
           this.suma();
           resolve( true );
@@ -727,7 +742,7 @@ export class FormventasComponent implements OnInit {
     if( this.data.ven_numero_guia && !opt) return false;
     this.data.transportadoraSelect = item.slug;
     if( this.data.transportadoraSelect === "CORDINADORA" || this.data.transportadoraSelect === "ENVIA") {
-      this.data.ven_tipo = "contraEntrega"; 
+      this.data.ven_tipo = "contraEntrega";
     }else this.data.ven_tipo = "envioNormal";
     console.log( this.tablet.listRow)
     for(let row of this.tablet.listRow ) row.check = false;
@@ -749,7 +764,7 @@ export class FormventasComponent implements OnInit {
       this.data.pesoVolumen = ( ( parseFloat( this.data.alto ) * parseFloat( this.data.largo ) * parseFloat( this.data.ancho ) ) / 5000 ) || 1;
       this.data.pesoVolumen = Math.round( this.data.pesoVolumen );
       for( let row of this.listCarrito ){
-        this.textData+= `${ row.cantidad } ${ row['codigoImg'] } ${ row.tallaSelect }, 
+        this.textData+= `${ row.cantidad } ${ row['codigoImg'] } ${ row.tallaSelect },
         `
       }
       let data:any ={
@@ -780,13 +795,13 @@ export class FormventasComponent implements OnInit {
         "txtDice": this.textData,
         "txtNotas": "ok",
       };
-      
+
       this._ventas.getFleteValor( data ).subscribe(( res:any )=>{
         console.log( "****", res )
         this.data.fleteValor = res.data.fleteTotal;
         if( this.data.fleteValor == 0 ) { this.data.ven_tipo = "pago_anticipado"; this._tools.confirm( { title: "Novedad", detalle: "Lo sentimos no tenemos Cubrimiento para esa zona (CONTRA ENTREGA)", icon: "warning" } ); return resolve( false ) }
         else {
-          this.data.ven_tipo = "contraentrega"; 
+          this.data.ven_tipo = "contraentrega";
           if( this.porcentajeMostrar == 40 ) this._tools.confirm( { title: "Completado", detalle: "El valor del envio para la ciudad "+ this.data.ciudadDestino.name + " es de " + this._tools.monedaChange( 3, 2, this.data.fleteValor ), icon: "succes" } );
           this.suma();
           resolve( true );
@@ -803,7 +818,7 @@ export class FormventasComponent implements OnInit {
       this.data.pesoVolumen = ( ( parseFloat( this.data.alto ) * parseFloat( this.data.largo ) * parseFloat( this.data.ancho ) ) / 5000 ) || 1;
       this.data.pesoVolumen = Math.round( this.data.pesoVolumen );
       for( let row of this.listCarrito ){
-        this.textData+= `${ row.cantidad } ${ row['codigoImg'] } ${ row.tallaSelect }, 
+        this.textData+= `${ row.cantidad } ${ row['codigoImg'] } ${ row.tallaSelect },
         `
       }
       let data:any ={
@@ -834,13 +849,13 @@ export class FormventasComponent implements OnInit {
         "txtDice": this.textData,
         "txtNotas": "ok",
       };
-      
+
       this._ventas.getFleteValor( data ).subscribe(( res:any )=>{
         this.data.fleteValor = res.data.fleteTotal;
         console.log( "****", res, this.data.fleteValor )
         if( this.data.fleteValor == 0 ) { this.data.ven_tipo = "pago_anticipado"; this.openMedios(); return resolve( false ) }
         else{
-          this.data.ven_tipo = "pago_anticipado"; 
+          this.data.ven_tipo = "pago_anticipado";
           //console.log("Hola2222");
           if( this.porcentajeMostrar == 40 ) this._tools.confirm( { title: "Completado", detalle: "El valor del envio para la ciudad "+ this.data.ciudadDestino.name + " es de " + this._tools.monedaChange( 3, 2, this.data.fleteValor ), icon: "succes" } );
           this.suma();

@@ -56,7 +56,7 @@ export class FormproductosComponent implements OnInit {
   fruits: Fruit[] = [ ];
   listSubCategorias:any = [];
   rolUser:string;
-  
+
   imageChangedEvent: any = '';
   croppedImage: any = '';
 
@@ -83,10 +83,10 @@ export class FormproductosComponent implements OnInit {
 
   ngOnInit() {
     this.disableSpinner = true;
-    this.inicial();  
+    this.inicial();
   }
   inicial(){
-    
+
     if (Object.keys(this.datas.datos).length > 0) {
       this.data = _.clone(this.datas.datos);
       this.id = this.data.id;
@@ -97,7 +97,7 @@ export class FormproductosComponent implements OnInit {
       else {
         this.titulo = "Actualizar";
         this.listFotos = this.data.listaGaleria || [];
-        
+
         this.tallaSelect = this.data.listaTallas || [];
         this.procesoEdision();
         if( this.data.pro_categoria ) this.getSubCategorias( this.data.pro_categoria );
@@ -230,7 +230,7 @@ export class FormproductosComponent implements OnInit {
       if( this.id ) if( opt == 'galeria' ) { this.data.listaGaleria = this.listFotos; this.updates(); }
       if( opt == 'foto' ) this.updates();
       //this._archivos.create( this.files[0] );
-      
+
     }
     this.files = [];
     this.files2 = [];
@@ -248,11 +248,11 @@ export class FormproductosComponent implements OnInit {
           else await this.validadorGaleria( res.files );
           if ( this.id ) this.submit();
         }
-        else { 
-          if( opt == 'colorGaleria' ) { 
+        else {
+          if( opt == 'colorGaleria' ) {
             item.galeriaList.push( { id: this._tools.codigo( ), foto: res.files } );
           }else item.foto = res.files;
-          this.submit(); 
+          this.submit();
         }
         this._tools.presentToast("Exitoso");
         console.log(item);
@@ -440,7 +440,8 @@ export class FormproductosComponent implements OnInit {
           "cat_activo": 1,
           "checkMayor": 0,
           "pro_uni_venta": this.data.pro_uni_venta || 0,
-          "pro_vendedor": this.data.pro_vendedor,
+          "pro_vendedor": this.data.pro_vendedor || 0,
+          "pro_vendedorCompra": this.data.pro_vendedorCompra || 0,
           "precioFabrica": this.data.precioFabrica || 0
         };
         this.blurTalla(0);
@@ -519,7 +520,7 @@ export class FormproductosComponent implements OnInit {
       resolve( true );
     })
   }
-  
+
   async getPrecio( data:any ){
     return new Promise( resolve=>{
       resolve( false );
@@ -571,7 +572,7 @@ export class FormproductosComponent implements OnInit {
     try {
       event['chipInput']!.clear();
     } catch (error) {
-      
+
     }
   }
 

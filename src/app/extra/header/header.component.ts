@@ -85,7 +85,7 @@ export class HeaderComponent implements OnInit {
     private _categorias: CategoriasService,
     private _retiros: CobrosService
 
-  ) { 
+  ) {
     this._store.subscribe((store: any) => {
       //console.log(store);
       store = store.name;
@@ -94,11 +94,11 @@ export class HeaderComponent implements OnInit {
       this.userId = store.usercabeza || {};
       this.dataUser = store.user || {};
       this.userPr = store.userpr || {};
-      if( store.buscar ) { 
-        this.seartxt = store.buscar; 
+      if( store.buscar ) {
+        this.seartxt = store.buscar;
       }
       if( this.listCart.length > this.lentcoun && this.booleanoOpen ) {
-        this.opcionoView = 'carro'; 
+        this.opcionoView = 'carro';
         this.opened = !this.opened;
       }else {
         this.lentcoun = this.listCart.length;
@@ -131,7 +131,6 @@ export class HeaderComponent implements OnInit {
   }
 
   ngOnInit() {
-
     this.breakpoint = (window.innerWidth <= 500) ? 1 : 6;
     /*if( this.breakpoint == 1 ) {
       this.isHandset$ = false;
@@ -176,7 +175,7 @@ export class HeaderComponent implements OnInit {
   }
 
   getRetirosCount(){
-    this._retiros.get( { where: { 
+    this._retiros.get( { where: {
       cob_estado: 0
     } } ).subscribe(( res:any )=>{
       this.eventos.cobros =  res.count;
@@ -184,7 +183,7 @@ export class HeaderComponent implements OnInit {
   }
 
   getVentasCount(){
-    this._venta.get( { where: { 
+    this._venta.get( { where: {
       ven_estado: 0
     } } ).subscribe(( res:any )=>{
       this.eventos.ventas = res.count || 0;
@@ -203,12 +202,12 @@ export class HeaderComponent implements OnInit {
   }
 
   getVentas(){
-    //console.log("***") 
+    //console.log("***")
     let data:any = { where:{ view:0, admin: 1 },limit: 100 };
     if( this.rolUser === 'administrador' ) data.where.admin = 1;
     else if( this.rolUser == 'subAdministrador') data.where.admin = 2;
     else data.where.user = this.dataUser.id;
-    
+
     //if(this.dataUser.usu_perfil.prf_descripcion != 'administrador') data.where.user=this.dataUser.id,
     this._notificaciones.get( data ).subscribe((res:any)=>{
       //console.log(res);
@@ -226,7 +225,7 @@ export class HeaderComponent implements OnInit {
   }
 
   getCarrito(){
-    setInterval(()=>{ 
+    setInterval(()=>{
       this.getVentas();
     }, 5000);
   }
@@ -237,7 +236,7 @@ export class HeaderComponent implements OnInit {
       const dialogRef = this.dialog.open(DialogconfirmarPedidoComponent,{
         data: { datos: this.data }
       });
-  
+
       dialogRef.afterClosed().subscribe(result => {
         console.log(`Dialog result:`, result );
         if( !result.nombre ) return false;
@@ -247,10 +246,10 @@ export class HeaderComponent implements OnInit {
         Nombre de cliente: ${ result.nombre }
         *celular:*${ result.telefono }
         Ciudad: ${ result.ciudad }
-        Barrio: ${ result.barrio } 
+        Barrio: ${ result.barrio }
         Dirección: ${ result.direccion }
         cedula: ${ result.cedula }
-  
+
         TOTAL FACTURA ${( result.total )}
         🤝Gracias por su atención y quedo pendiente para recibir por este medio la imagen de la guía de despacho`)}`;
         window.open( this.urlwhat );
@@ -263,7 +262,7 @@ export class HeaderComponent implements OnInit {
       const dialogRef = this.dialog.open(FormventasComponent,{
         data: { datos: {} }
       });
-  
+
       dialogRef.afterClosed().subscribe(result => {
         console.log(`Dialog result: ${result}`);
       });
@@ -308,12 +307,12 @@ export class HeaderComponent implements OnInit {
     console.log( this.porcentajeUser,this.namePorcentaje )
     for(let row of this.listCart){
       //texto+= ` productos: ${ row.titulo } codigo: ${ row.codigo } talla: ${ row.tallaSelect } cantidad: ${ row.cantidad } precio: ${ row.costo } precio Total: ${ row.costoTotal } foto: ${ row.foto } color ${ row.color || 'default'}`;
-      texto+= `${ encodeURIComponent(` 
-        Foto: ${ row.foto } 
-        Talla: ${ row.tallaSelect } 
-        Color ${ row.color || 'default' } 
-        Ref:${ row.codigo } 
-        Valor: ${ this._tools.monedaChange( 3, 2, row.costo ) } 
+      texto+= `${ encodeURIComponent(`
+        Foto: ${ row.foto }
+        Talla: ${ row.tallaSelect }
+        Color ${ row.color || 'default' }
+        Ref:${ row.codigo }
+        Valor: ${ this._tools.monedaChange( 3, 2, row.costo ) }
         >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>><<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
         `)
       }`;
@@ -321,8 +320,8 @@ export class HeaderComponent implements OnInit {
       if ( this.namePorcentaje == "dropshipping básico" ) this.data.totalGanancias+= ( row.costoTotal * ( this.dataUser.porcentaje || 10 ) / 100 );
       else this.data.totalGanancias+= ( row.loVendio - ( row.costoTotal ) ) || 0;
     }
-    
-    let cerialNumero:any = ''; 
+
+    let cerialNumero:any = '';
     let numeroSplit:any;
     let cabeza:any = this.dataUser.cabeza;
     if( cabeza ) {
@@ -369,7 +368,7 @@ export class HeaderComponent implements OnInit {
   btnCarrito(){
 
   }
-  
+
   async listMenus(){
     let submenus = await this.getCategorias();
     console.log( submenus );
@@ -388,6 +387,13 @@ export class HeaderComponent implements OnInit {
         disabled: true,
         url: '/pedidos',
         submenus: submenus
+      },
+      {
+        icons: 'menu_book',
+        nombre: 'Comprar',
+        disable: this.dataUser.id,
+        url: 'handleShop()',
+        submenus:[]
       },
       /*{
         icons: 'announcement',
@@ -533,9 +539,9 @@ export class HeaderComponent implements OnInit {
         submenus:[]
       },*/
     ];
-    
+
     this.menus = _.filter(this.menus, row=>row.disable);
-    
+
     this.menus2 = [
       {
         icons: 'account_circle',
@@ -574,6 +580,7 @@ export class HeaderComponent implements OnInit {
     console.log("*", item, item.url[1])
     for( let row of this.menus ) row.check = false;
     item.check = true;
+    if( item.url == 'handleShop()' ) return this.handleShop();
     if( item.submenus ) if( item.submenus.length >0 ) return false;
     if( item.opt ) this.router.navigate(item.url);
     else this.router.navigate([ item.url ]);
@@ -630,6 +637,12 @@ export class HeaderComponent implements OnInit {
     dialogRef.afterClosed().subscribe(result => {
       console.log(`Dialog result: ${result}`);
     });
+  }
+
+  handleShop(){
+    this.router.navigate(['/pedido']);
+    setTimeout(()=>this.router.navigate(['/pedido','compra']), 1000 );
+    //location.reload();
   }
 
   registrar(){
@@ -693,7 +706,7 @@ export class HeaderComponent implements OnInit {
 
   openTienda( opt:string ){
     console.log( opt )
-    if( opt == 'visitante' ) 
+    if( opt == 'visitante' )
     {
       let accion = new UserprAction( this.dataUser, 'post' );
       this._store.dispatch(accion);

@@ -116,9 +116,12 @@
                                         <div>
                                             <h6 class="titulo1 color1">
                                                 <small style="display: inline-block;  font-size: 90% !important;"
-                                                    class="pricesmall currency2" id="pricesmall_25">$ {{ (
-                                                    item.pro_uni_ventaEdit || item.pro_uni_venta || 0
-                                                    ).toLocaleString(1) }}
+                                                    class="pricesmall currency2" id="pricesmall_25" *ngIf="coinShop == false">
+                                                    {{ _tools.monedaChange( 3, 2, ( item.pro_uni_ventaEdit || item.pro_uni_venta || 0 ) ) }}
+                                                </small>
+                                                <small style="display: inline-block;  font-size: 90% !important;"
+                                                    class="pricesmall currency2" id="pricesmall_25" *ngIf="coinShop == true">
+                                                    {{ _tools.monedaChange( 3, 2, ( item.pro_vendedorCompra || item.pro_uni_venta || 0 ) ) }}
                                                 </small><br>
                                             </h6>
                                         </div>
