@@ -741,7 +741,7 @@ export class FormventasComponent implements OnInit {
   selectTrans( item, opt = false ){
     if( this.data.ven_numero_guia && !opt) return false;
     this.data.transportadoraSelect = item.slug;
-    if( this.data.transportadoraSelect === "CORDINADORA" || this.data.transportadoraSelect === "ENVIA") {
+    if( this.data.transportadoraSelect === "CORDINADORA" || this.data.transportadoraSelect === "ENVIA" || this.data.transportadoraSelect === "INTERRAPIDISIMO" || this.data.transportadoraSelect === "TCC") {
       this.data.ven_tipo = "contraEntrega";
     }else this.data.ven_tipo = "envioNormal";
     console.log( this.tablet.listRow)

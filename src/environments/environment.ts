@@ -4,7 +4,8 @@
 
 export const environment = {
   production: false,
-  url: "https://lokomproaqui.herokuapp.com",
+  //url: "https://lokomproaqui.herokuapp.com",
+  url: "http://localhost:1337",
   //url: "https://backpruebaslokompro.herokuapp.com",
   //url: "https://backlocompro.herokuapp.com",
   urlEnvios: "https://enviosrapidoback.herokuapp.com",
