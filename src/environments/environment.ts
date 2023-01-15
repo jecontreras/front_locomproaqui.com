@@ -8,7 +8,7 @@ export const environment = {
   url: "http://localhost:1337",
   //url: "https://backpruebaslokompro.herokuapp.com",
   //url: "https://backlocompro.herokuapp.com",
-  urlEnvios: "https://enviosrapidoback.herokuapp.com",
+  urlEnvios: "http://localhost:1338",
   urlFront: "http://localhost:4200",
 };
 

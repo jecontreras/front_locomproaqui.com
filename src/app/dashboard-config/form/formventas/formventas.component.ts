@@ -629,7 +629,7 @@ export class FormventasComponent implements OnInit {
   }
 
   imprimirGuia(){
-    if( this.data.transportadoraSelect == "ENVIA") {
+    if( this.data.transportadoraSelect == "ENVIA" || this.data.transportadoraSelect == "TCC") {
       if( this.data.ven_imagen_guia ) window.open( this.data.ven_imagen_guia );
       else{
         this._ventas.getFletes( {  where: {  nRemesa: this.data.ven_numero_guia } } ).subscribe( ( res:any ) =>{
@@ -639,9 +639,10 @@ export class FormventasComponent implements OnInit {
         });
       }
     }
-    if( this.data.transportadoraSelect == "CORDINADORA"){
+    if( this.data.transportadoraSelect == "CORDINADORA" || this.data.transportadoraSelect == "INTERRAPIDISIMO"){
       this._ventas.imprimirFlete( {
-        codigo_remision: this.data.ven_numero_guia
+        codigo_remision: this.data.ven_numero_guia,
+        transportadoraSelect: this.data.transportadoraSelect
       }).subscribe(( res:any ) =>{
         this._tools.downloadPdf( res.data, this.data.ven_numero_guia );
       })
