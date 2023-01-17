@@ -94,7 +94,7 @@
                             <label class="form-check-label" for="exampleCheck1">Promoción</label>
                         </div>
                     </div>-->
-                    <div class="col-4" *ngIf="data.precio_vendedor && dataUser.id">
+                    <div class="col-4" *ngIf="data.precio_vendedor && dataUser.id && coinShop == false">
                         <label>Lo Vendiste</label>
                         <input currencyMask [(ngModel)]="data.encuanto" class="form-control form-control-sm" [options]="opcionCurrencys" (blur)="validando()"/>
                     </div>
@@ -226,7 +226,7 @@
 
 <mat-dialog-actions align="end">
     <button cdkFocusInitial (click)="AgregarCart(false)" type="button" class="btn btn-primary">
-        Confirmar pedido
+        {{ titleButton }}
     </button>
     <button mat-button mat-dialog-close>Cerrar</button>
 </mat-dialog-actions>

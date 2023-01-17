@@ -51,7 +51,7 @@ export class ViewProductosComponent implements OnInit {
   gananciaEstimada:any = 0;
   disabledPr:boolean = true;
   coinShop:boolean = false;
-
+  titleButton:string = "Confirmar pedido";
   constructor(
     public dialogRef: MatDialogRef<ViewProductosComponent>,
     @Inject(MAT_DIALOG_DATA) public datas: any,
@@ -89,7 +89,10 @@ export class ViewProductosComponent implements OnInit {
       this.data.encuanto = this.data.coinShop == true ? ( this.data.pro_vendedorCompra || this.data.pro_uni_venta ) : this.data.pro_uni_venta;
       console.log(this.datas, this.porcentajeMostrar)
       this.gananciaEstimada = this._tools.monedaChange(3,2,( Number( this.data.pro_uni_venta * this.porcentajeMostrar ) ) / 100);
-      if( this.data.coinShop == true ) this.coinShop = true;
+      if( this.data.coinShop == true ) {
+        this.titleButton = "Confirmar Compra";
+        this.coinShop = true;
+      }
     }
     this.procesoNext();
     try { if( this.data.pro_categoria.cat_nombre != "CALZADO" ) this.disabledSelect = false; } catch (error) { this.disabledSelect = true; }

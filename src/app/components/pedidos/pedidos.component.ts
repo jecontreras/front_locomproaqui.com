@@ -112,7 +112,7 @@ export class PedidosComponent implements OnInit {
     }, 1000 );
     if( ( this.activate.snapshot.paramMap.get('categoria') ) === 'compra' ){
       this.coinShop = true;
-      this.titleButton = "Hacer Compras";
+      this.titleButton = "Hacer Compra";
       this.cargarProductos();
     }
   }

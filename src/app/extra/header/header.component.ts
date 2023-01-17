@@ -390,36 +390,16 @@ export class HeaderComponent implements OnInit {
       },
       {
         icons: 'menu_book',
-        nombre: ' Hacer Comprar',
+        nombre: 'Hacer Compra',
         disable: this.dataUser.id,
         url: 'handleShop()',
         submenus:[]
       },
-      /*{
-        icons: 'announcement',
-        nombre: 'Testimonios',
-        disable: true,
-        url: '/testimonio',
-        submenus:[]
-      },*/
       {
-        icons: 'account_circle',
-        nombre: 'Mi Cuenta',
-        disable: this.rolUser !== 'visitante',
-        url: '/config/perfil',
-        submenus:[]
-      },
-      /*{
-        icons: 'shop',
-        nombre: 'Mis Bancos',
-        url: '/config/bancos',
-        submenus:[]
-      },*/
-      {
-        icons: 'shop',
-        nombre: 'Mis Cobros',
-        disable: this.rolUser !== 'visitante' && this.rolUser != 'proveedor',
-        url: '/config/cobros',
+        icons: 'menu_book',
+        nombre: 'Realizar venta',
+        disable: this.dataUser.id,
+        url: '/pedidos',
         submenus:[]
       },
       {
@@ -429,6 +409,26 @@ export class HeaderComponent implements OnInit {
         url: '/config/ventas',
         submenus:[]
       },
+      {
+        icons: 'shop',
+        nombre: 'Mis Cobros',
+        disable: this.rolUser !== 'visitante' && this.rolUser != 'proveedor',
+        url: '/config/cobros',
+        submenus:[]
+      },
+      /*{
+        icons: 'announcement',
+        nombre: 'Testimonios',
+        disable: true,
+        url: '/testimonio',
+        submenus:[]
+      },*/
+      /*{
+        icons: 'shop',
+        nombre: 'Mis Bancos',
+        url: '/config/bancos',
+        submenus:[]
+      },*/
       {
         icons: 'local_grocery_store',
         nombre: 'Ventas de Subvendedor',
@@ -477,6 +477,13 @@ export class HeaderComponent implements OnInit {
         url: '.',
         submenus:[]
       },*/
+      {
+        icons: 'account_circle',
+        nombre: 'Mi Cuenta',
+        disable: this.rolUser !== 'visitante',
+        url: '/config/perfil',
+        submenus:[]
+      },
       {
         icons: 'settings',
         nombre: 'Configuración',
