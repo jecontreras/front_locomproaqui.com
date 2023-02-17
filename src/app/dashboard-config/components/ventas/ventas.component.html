@@ -55,7 +55,7 @@
                   <ng-autocomplete [(ngModel)]="filtro.vendedor" [data]="listVendedores" [searchKeyword]="keyword" placeHolder="Vendedor" autocomplete="off"
                       historyIdentifier="listVendedores" [itemTemplate]="itemTemplate" [notFoundTemplate]="notFoundTemplate" (change)="buscar()" >
                   </ng-autocomplete>
-      
+
                   <ng-template #itemTemplate let-item>
                       <div class="item">
                           <!-- <img src="{{item.flag}}" height="25"> -->
@@ -64,7 +64,7 @@
                           <small>Nombre: {{ item.usu_nombre }}</small>
                       </div>
                   </ng-template>
-      
+
                   <ng-template #notFoundTemplate let-notFound>
                       <div [innerHTML]="notFound"></div>
                   </ng-template>
@@ -146,7 +146,7 @@
                     }">
 
                       <td *ngIf="row['ven_estado'] == 5">
-                        
+
                       </td>
                       <td>
                         <mat-checkbox color="primary" class="example-margin" [(ngModel)]="row.checks"></mat-checkbox>
@@ -184,6 +184,8 @@
                       <td>{{ row['ven_numero_guia'] }}
                         <span *ngIf=" row['transportadoraSelect']=='ENVIA' || row['transportadoraSelect']=='ENVIANO' "><img class="imgs" src="./assets/img/envia.jpg" alt=""></span>
                         <span *ngIf=" row['transportadoraSelect']=='CORDINADORA' "><img class="imgs" src="./assets/img/logoCordinadora.png" alt=""></span>
+                        <span *ngIf=" row['transportadoraSelect']=='TCC' "><img class="imgs" src="https://storage.googleapis.com/tcc-cloud.appspot.com/tcc/wp-content/uploads/2017/12/logo-dark.png" alt=""></span>
+                        <span *ngIf=" row['transportadoraSelect']=='INTERRAPIDISIMO' "><img class="imgs" src="./assets/img/logoInter.png" alt=""></span>
                       </td>
                       <td>
                         <p>{{ row['ven_usu_creacion'] }}</p>
