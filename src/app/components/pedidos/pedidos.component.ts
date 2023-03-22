@@ -6,7 +6,7 @@ import { CART } from 'src/app/interfaces/sotarage';
 import { Store } from '@ngrx/store';
 import { BuscarAction, CartAction, UserCabezaAction } from 'src/app/redux/app.actions';
 import { ToolsService } from 'src/app/services/tools.service';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { UsuariosService } from 'src/app/servicesComponents/usuarios.service';
 import { NgImageSliderComponent } from 'ng-image-slider';
 import { CategoriasService } from 'src/app/servicesComponents/categorias.service';
@@ -72,6 +72,7 @@ export class PedidosComponent implements OnInit {
     private _categorias: CategoriasService,
     private spinner: NgxSpinnerService,
     private _catalago: CatalogoService,
+    private _router: Router,
   ) {
     this._store.subscribe((store: any) => {
       store = store.name;
@@ -97,6 +98,11 @@ export class PedidosComponent implements OnInit {
   }
 
   ngOnInit() {
+    let urlPath = window.location;
+    const pr = urlPath.pathname.split("/");
+    if( pr[1] && pr[2] && pr[3] ) this.getId( pr[3] )
+    console.log("****", urlPath );
+
     setInterval(()=> {
       try {
         let color:string = ( this.dataUser.usu_color || "#02a0e3" );
@@ -115,6 +121,13 @@ export class PedidosComponent implements OnInit {
       this.titleButton = "Hacer Compra";
       this.cargarProductos();
     }
+  }
+
+  getId( id:string ){
+    this._productos.get( { where: { id: id } } ).subscribe(res=>{
+      res = res.data[0];
+      if( res ) this.agregar( res );
+    })
   }
 
   clearSearch(){
@@ -330,6 +343,7 @@ export class PedidosComponent implements OnInit {
 
     dialogRef.afterClosed().subscribe(result => {
       console.log(`Dialog result: ${result}`);
+      //this._router.navigate(['/pedidos']);
     });
   }
   masInfo(obj: any) {
@@ -400,6 +414,7 @@ export class PedidosComponent implements OnInit {
     this.listProductos = [];
     this.notscrolly = true;
     this.notEmptyPost = true;
+    this._router.navigate( [ "/pedido", obj['id'] ] )
     this.cargarProductos();
   }
 

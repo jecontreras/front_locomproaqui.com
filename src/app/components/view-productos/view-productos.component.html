@@ -4,6 +4,10 @@
             Datos {{ data.pro_nombre }}
         </div>
         <div>
+          <button (click)="shareUrl( )" type="button" class="btn btn-success">
+            Compartir link
+        </button>
+        &nbsp;
             <button (click)="descargarFoto( data )" type="button" class="btn btn-primary">
                 Descargar Foto
             </button>
@@ -225,6 +229,9 @@
 </mat-dialog-content>
 
 <mat-dialog-actions align="end">
+  <button (click)="shareUrl( )" type="button" class="btn btn-success">
+    Compartir link
+</button>&nbsp;
     <button cdkFocusInitial (click)="AgregarCart(false)" type="button" class="btn btn-primary">
         {{ titleButton }}
     </button>

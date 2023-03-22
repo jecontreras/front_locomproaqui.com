@@ -7,7 +7,7 @@ import * as _ from 'lodash';
 import { ToolsService } from 'src/app/services/tools.service';
 import { CatalogoService } from 'src/app/servicesComponents/catalogo.service';
 import { NgImageSliderComponent } from 'ng-image-slider';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
   selector: 'app-view-productos',
@@ -60,6 +60,7 @@ export class ViewProductosComponent implements OnInit {
     private _catalago: CatalogoService,
     public dialog: MatDialog,
     private activate: ActivatedRoute,
+    private _router: Router,
   ) {
 
     this._store.subscribe((store: any) => {
@@ -104,6 +105,11 @@ export class ViewProductosComponent implements OnInit {
         this.colorSeleccionado( );
       } catch (error) { }
      },2000 );*/
+  }
+
+  shareUrl( ){
+    const url = window.location.origin+"/pedidos/inf/"+this.data.id;
+    this._tools.handleCopyHolder( url );
   }
 
   procesoNext(){
