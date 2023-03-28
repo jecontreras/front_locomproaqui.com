@@ -95,7 +95,9 @@ export class ViewProductosComponent implements OnInit {
       }
     }
     this.procesoNext();
-    try { if( this.data.pro_categoria.cat_nombre != "CALZADO" ) this.disabledSelect = false; } catch (error) { this.disabledSelect = true; }
+    console.log( this.data.pro_categoria.cat_nombre )
+    if( ( this.data.pro_categoria.cat_nombre == "CALZADO" ) || ( this.data.pro_categoria.cat_nombre == "ROPA" )  ) this.disabledSelect = true;
+    else this.disabledSelect = false;
 
     /*setTimeout(()=>{
       try {

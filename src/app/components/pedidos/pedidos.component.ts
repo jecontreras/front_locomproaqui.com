@@ -105,12 +105,12 @@ export class PedidosComponent implements OnInit {
       } catch (error) {}
     }, 100 );
 
-    if ( ( this.activate.snapshot.paramMap.get('id') ) ) { this.userId = ( this.activate.snapshot.paramMap.get('id') ); this.getUser(); }
+    if ( ( this.activate.snapshot.paramMap.get('id') ) && ( ( this.activate.snapshot.paramMap.get('categoria') ) != '0') ) { this.userId = ( this.activate.snapshot.paramMap.get('id') ); this.getUser(); }
     setInterval( ()=>{
       //console.log( this.seartxt, this.ultimoSeartxt );
       if( this.seartxt !== this.ultimoSeartxt ) this.buscar();
     }, 1000 );
-    if( ( this.activate.snapshot.paramMap.get('categoria') ) === 'compra' ){
+    if( ( this.activate.snapshot.paramMap.get('categoria') ) === '0' ){
       this.coinShop = true;
       this.titleButton = "Hacer Compra";
       this.cargarProductos();
@@ -196,13 +196,7 @@ export class PedidosComponent implements OnInit {
       usu_usuario: this.userId
     } }).subscribe((res: any) => {
       this.userId = res.data[0];
-      if( !this.userId ) this.userId = {
-        usu_nombre: "Tienda",
-        usu_usuario: "LOKOMPROAQUI",
-        id: 75,
-        codigo: "UVOQA"
-      }
-      this.GuardarStoreUser()
+      if( this.userId ) this.GuardarStoreUser()
     }, (error) => { console.error(error); this.userId = ''; });
   }
   GuardarStoreUser() {
@@ -347,6 +341,7 @@ export class PedidosComponent implements OnInit {
     else {
       this.urlwhat = `https://wa.me/${cerialNumero}?text=Hola, estoy interesad@ en mas informacion codigo: ${obj.pro_nombre} talla: ${obj.tallasSelect} foto ==> ${obj.foto}`;
     }
+    console.log("****", this.urlwhat);
     window.open(this.urlwhat);
   }
 

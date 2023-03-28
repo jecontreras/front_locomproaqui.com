@@ -142,12 +142,14 @@ export class HeaderComponent implements OnInit {
       //console.log( this.nav)
       let color:string = ( this.dataUser.usu_color || "#02a0e3" );
       if( this.userId.id ) {
+        //console.log("**NO ENTRE",this.userId)
         color = this.userId.usu_color || "#02a0e3";
         this.urlLogo = this.userId.usu_imagen || './assets/logo.png';
       }
       if( this.dataUser.id ) this.urlLogo = this.dataUser.usu_imagen || './assets/logo.png';
-      this.nav.nativeElement.style.backgroundColor = color
-    }, 100 );
+      //console.log("***144",color, this.dataUser )
+      this.nav.nativeElement.style.backgroundColor = color;
+    }, 1000 );
 
     this.onResize(null);
     if(Object.keys(this.dataUser).length > 0 ) {
@@ -648,7 +650,7 @@ export class HeaderComponent implements OnInit {
 
   handleShop(){
     this.router.navigate(['/pedido']);
-    setTimeout(()=>this.router.navigate(['/pedido','compra']), 1000 );
+    setTimeout(()=>this.router.navigate(['/pedido',0]), 1000 );
     //location.reload();
   }
 

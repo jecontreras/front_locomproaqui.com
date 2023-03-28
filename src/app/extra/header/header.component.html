@@ -38,9 +38,9 @@
 
       <div class="right-side-cart-area">
 
-        <div class="cart-content d-flex p-2">
-          <div class="cart-amount-summary">
-            <h2>Resumen de tu venta &nbsp;</h2>
+        <div class="d-flex p-2">
+          <div class="cart-amount-summary" style="width: 100%;">
+            <h4>Resumen de tu venta &nbsp;</h4>
             <ul class="summary-table">
               <li *ngIf="dataUser.id"><span>Valor a pagar de tu cliente: &nbsp;</span> <span>{{ _tools.monedaChange(
                   3,2,data.total || 0 ) }}</span> </li>
@@ -56,20 +56,12 @@
               </li>
             </ul>
             <div class="col-12">
-
-            </div>
-            <div class="d-flex justify-content-between">
-              <div>
-                <button type="button" class="btn btn-primary" (click)="pedidosSubmit()">
-                  <span *ngIf="dataUser.id">realizar guía de despacho</span>
-                  <span *ngIf="!dataUser.id">Hacer pedido</span>
-                </button>
-              </div>
-              <div></div>
-              <div>
-                <button (click)="sidenav.toggle()" type="button" class="btn btn-success" routerLink="/pedidos">agregar
-                  más productos</button>
-              </div>
+              <button type="button" class="btn btn-primary" (click)="pedidosSubmit()">
+                <span *ngIf="dataUser.id">realizar guía de despacho</span>
+                <span *ngIf="!dataUser.id">Hacer pedido</span>
+              </button><br>
+              <button (click)="sidenav.toggle()" type="button" class="btn btn-success" routerLink="/pedidos">agregar
+                más productos</button>
             </div>
           </div>
         </div>
