@@ -1,19 +1,23 @@
-<h2 mat-dialog-title>
-    <div class="d-flex justify-content-between">
-        <div>
-            Datos {{ data.pro_nombre }}
-        </div>
-        <div>
-            <button (click)="descargarFoto( data )" type="button" class="btn btn-primary">
-                Descargar Foto
-            </button>
-        </div>
-        <div style=" width: 20%;">
-            <img (click)="masInfo( data )" class="pointer" src="./assets/icons/masinformacion.png" style="width: 80%;">
-        </div>
+<div mat-dialog-title>
+  <div class="d-flex bd-highlight">
+    <div class="p-2 flex-grow-1 bd-highlight">
+      <h3>Datos {{ data.pro_nombre }}</h3>
     </div>
-
-</h2>
+    <div class="p-2 bd-highlight">
+      <button (click)="shareUrl( )" type="button" class="btn btn-success">
+        Compartir link
+      </button>
+      <button (click)="descargarFoto( data )" type="button" class="btn btn-primary">
+        Descargar Foto
+    </button>
+    </div>
+    <div class="p-2 bd-highlight">
+      <button mat-raised-button color="warn" mat-dialog-close>
+        <i class="fa fa-window-close-o" aria-hidden="true"></i>
+      </button>
+    </div>
+  </div>
+</div>
 <mat-dialog-content class="mat-typography">
     <div class="row content contentCenter">
 
@@ -45,6 +49,7 @@
                         <div class="d-flex justify-content-between">
                             <div>
                                 <h3 class="precios" *ngIf="data.precio_vendedor">Precio a distribuidor: {{ _tools.monedaChange( 3, 2, ( coinShop == true ? ( data.pro_vendedorCompra || data.precio_vendedor ) : data.precio_vendedor ) ) }}</h3>
+                                <img (click)="masInfo( data )" class="pointer" src="./assets/icons/masinformacion.png" style="width: 120px;">
                             </div>
                             <div>
                                 <h3 class="precios" *ngIf="dataUser.id">Precio Sugerido: {{ _tools.monedaChange( 3, 2, data.pro_uni_venta ) }}</h3>
@@ -225,8 +230,10 @@
 </mat-dialog-content>
 
 <mat-dialog-actions align="end">
+  <button (click)="shareUrl( )" type="button" class="btn btn-success">
+    Compartir link
+</button>&nbsp;
     <button cdkFocusInitial (click)="AgregarCart(false)" type="button" class="btn btn-primary">
         {{ titleButton }}
     </button>
-    <button mat-button mat-dialog-close>Cerrar</button>
 </mat-dialog-actions>

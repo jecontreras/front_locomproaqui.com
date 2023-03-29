@@ -52,7 +52,7 @@ export class MenuLateralComponent implements OnInit {
     if(this.dataUser.id || !this.userId.id) {
       this.urlFacebook = `http://bit.ly/NUESTROGRUPOENFACEBOOK`;
       this.urlInstagram = `http://bit.ly/INSTAGRAMLOKOMPROAQUI`;
-      this.urlWhatsapp = `http://bit.ly/Soportelokomproaqui`;
+      this.urlWhatsapp = "https://wa.me/573213692393?text=Hola Servicio al cliente";
       this.urlYoutube = `http://bit.ly/YOUTUBEZAFIRO`;
     }else{
       this.urlFacebook = this.userId.url_facebook || "";

@@ -7,7 +7,7 @@ import * as _ from 'lodash';
 import { ToolsService } from 'src/app/services/tools.service';
 import { CatalogoService } from 'src/app/servicesComponents/catalogo.service';
 import { NgImageSliderComponent } from 'ng-image-slider';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
   selector: 'app-view-productos',
@@ -60,6 +60,7 @@ export class ViewProductosComponent implements OnInit {
     private _catalago: CatalogoService,
     public dialog: MatDialog,
     private activate: ActivatedRoute,
+    private _router: Router,
   ) {
 
     this._store.subscribe((store: any) => {
@@ -106,6 +107,11 @@ export class ViewProductosComponent implements OnInit {
         this.colorSeleccionado( );
       } catch (error) { }
      },2000 );*/
+  }
+
+  shareUrl( ){
+    const url = window.location.origin+"/pedidos/inf/"+this.data.id;
+    this._tools.handleCopyHolder( url );
   }
 
   procesoNext(){
@@ -221,8 +227,10 @@ export class ViewProductosComponent implements OnInit {
     item.base64 = await this._catalago.FormatoBase64( item.foto );
     await this._tools.descargarFoto( item.base64 );
     try {
-      let lista:any = item.listaGaleria;
+      let lista:any = item.listaGaleria || [];
       lista.push(..._.map( item.listColor, ( row:any )=> { return { foto: row.foto, id: row.id }; } ) );
+      for( let row of item.listColor ) lista.push(..._.map( row.galeriaList, ( row:any )=> { return { foto: row.foto, id: row.id }; } ) );
+      //console.log("**232", lista, this.data )
       if( lista ){
         for( let row of lista ){
           this._tools.ProcessTime( { title: "Descargando..." } );
@@ -232,6 +240,7 @@ export class ViewProductosComponent implements OnInit {
       }
       this.disabledBtn = false;
     } catch (error) {
+      console.log("****243", error)
       this.disabledBtn = false;
     }
   }

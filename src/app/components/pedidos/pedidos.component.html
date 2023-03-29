@@ -1,216 +1,126 @@
-<div class="anchos">
-    <div class="row">
-        <!--<div class="row col-12">
-            <div class="form-group col">
-                <br>
-                <input type="text" [(ngModel)]="seartxt" (change)="buscar()" class="form-control form-control-sm"
-                    placeholder="Buscar Productos" id="exampleFormControlInput1">
-            </div>
-            <div class="pbutton">
-                <button (click)="buscar()" [disabled]="loader" mat-raised-button mat-min-fab
-                    class="btn btn-primary btn-just-icon btn-round">
-                    <i class="material-icons">search</i>
-                </button>
-            </div>
-        </div>-->
-        <!--<div class="col-12">
-            <div class="contenedor">
-                <div class="">
-                    <div style="width: 1077px; height: 33px;">
-                        <a *ngFor="let item of imageObject;let idx=index" (click)="imageOnClick(idx, item);"
-                            class="estiloCategoria pointer titulo3" [ngClass]="{ 'cambiaColor': item.check == true }">
-                            {{ item.title }}
-                        </a>
+<div class="main-content">
+  <div class="row">
+    <div class="col-12">
+      <div class="row" style="padding: 5px;">
+        <span class="catEstilo" *ngFor="let item of imageObject" (click)="eventorOver( item )">
+          <h5 class="titulo2 pointer" [ngClass]="{ 'cambiaColor': item.check == true }">
+            <span *ngIf="item.title =='TODOS'" (click)="imageOnClick(0, item, 'si');"> {{ item.title }} </span>
+            <span *ngIf="item.title !=='TODOS'"> {{ item.title }} </span>
+          </h5>
+          <ul *ngIf="item.check">
+            <label class="pointer" *ngFor="let key of item.subCategoria; let idx=index"
+              (click)="imageOnClick(idx, key, 'no');" [ngClass]="{ 'cambiaColor': key.check == true }">
+              <h5 class="titulo3 estiloCategoria">{{ key.cat_nombre }}</h5>
+            </label>
+          </ul>
+        </span>
+      </div>
+    </div>
+    <div class="col-12" style="    padding: 33px;">
+      <div class="row">
+        <div class="col-md-2 col-sm-4 col-lg-2 col-xs-6 col-6 anchandoPr" style="padding-bottom: 5px;"
+          *ngFor="let item of listProductos" (mouseout)="eventoDes( {} )"
+        >
+          <mat-card class="example-card">
+            <figure mat-card-image data-toggle="modal" id="figura" data-target="#modalinfo" class="img-contenedor"
+                (mouseout)="eventoDes( {} )">
+                <img class="img-responsive btn-block imgProductos pointer " [src]="item.foto" (click)="agregar(item)">
+              </figure>
+            <mat-card-content>
+              <div class="row">
+                <div class="col-12">
+                  <div class="d-flex bd-highlight">
+                    <div class="p-2 flex-grow-1 bd-highlight"><h6 class="titulo1 color1">{{ item.pro_nombre | slice: 0: 15 }}</h6></div>
+                    <div class="p-2 bd-highlight">
+                      <h6 class="titulo1 color1">
+                        <small style="display: inline-block;  font-size: 90% !important;" class="pricesmall currency2"
+                          id="pricesmall_25" *ngIf="coinShop == false">
+                          {{ _tools.monedaChange( 3, 2, ( item.pro_uni_ventaEdit || item.pro_uni_venta || 0 ) ) }}
+                        </small>
+                        <small style="display: inline-block;  font-size: 90% !important;" class="pricesmall currency2"
+                          id="pricesmall_25" *ngIf="coinShop == true">
+                          {{ _tools.monedaChange( 3, 2, ( item.pro_vendedorCompra || item.pro_uni_venta || 0 ) ) }}
+                        </small><br>
+                      </h6>
                     </div>
-                </div>
-            </div>
-            <br>
-        </div>-->
-        <div class="col-12" *ngIf="disabledFiltro">
-            <div class="d-flex justify-content-center">
-                <div>
-                    <button type="button" class="btn btn-primary" (click)="disabledFiltro = !disabledFiltro">
-                        <span *ngIf="!disabledFiltro">Buscar Filtro Avanzado</span>
-                        <span *ngIf="disabledFiltro">Ocultar Filtro Avanzado</span>
-                    </button>
-                </div>
-            </div>
-        </div>
-
-        <div class="col-12 container" *ngIf="disabledFiltro">
-            <div class="row">
-                <div class="col-sm-4 col-12">
-                    <label>Con buen Stock</label>
-                    <select class="form-control form-control-sm" [(ngModel)]="filtro.mayorStock"
-                        placeholder="Estado de la Venta">
-                        <option type="number" value="1">Mayor Stock</option>
-                        <option type="number" value="2">Menor Stock</option>
-                    </select>
-                </div>
-                <div class="col-sm-4 col-12">
-                    <label>Ordenar Por Precio</label>
-                    <select class="form-control form-control-sm" [(ngModel)]="filtro.precio"
-                        placeholder="Estado de la Venta">
-                        <option type="number" value="1">Menor a Mayor</option>
-                        <option type="number" value="2">Mayor a Menor</option>
-                    </select>
-                </div>
-                <div class="col-sm-4 col-12">
-                    <label>Tallas</label>
-                    <select class="form-control form-control-sm" [(ngModel)]="filtro.tallas"
-                        placeholder="Estado de la Venta">
-                        <option type="number" *ngFor="let item of listTallas" [value]="item.tal_descripcion">{{ item.tal_descripcion }} - Tallas</option>
-                    </select>
+                  </div>
                 </div>
                 <div class="col-12">
-                    <div class="d-flex justify-content-center">
-                        <div>
-                            <button type="button" class="btn btn-success" (click)="buscarExpert()">Buscar</button>
-                        </div>
-                        <div>
-                            <button type="button" class="btn btn-danger" (click)="buscarLimpiar()">Limpiar</button>
-                        </div>
+                  <div class="d-flex bd-highlight">
+                    <div class="flex-grow-1 bd-highlight">
+                      <div class="plusminus2 horiz" data-after="UND">
+                        <button type="button" class="btn-number" data-type="minus"
+                          [ngStyle]="{'background-color':urlColor }" (click)="menosCantidad(item)"
+                          data-field="product_quantity_25"></button>
+                        <input (change)="manualCantidad(item)" data-clasificacion="" data-un="UND" type="number"
+                          name="product_quantity2" id="product_quantity_25" min="1"
+                          [(ngModel)]="item.cantidadAdquirir" class="input-number ">
+                        <span class="hide" *ngIf="!item.cantidadAdquirir">1</span>
+                        <button type="button" class="btn-number" data-type="plus"
+                          [ngStyle]="{'background-color':urlColor }" (click)="maxCantidad(item)"
+                          data-field="product_quantity_25"></button>
+                      </div>
                     </div>
+                    <div class="bd-highlight">
+                      <select class="form-control form-control-sm" [(ngModel)]="item.tallasSelect">
+                            <option *ngFor="let row of item.listTallas" [value]="row.tal_descripcion">
+                              {{ row.tal_descripcion }}
+                            </option>
+                        </select>
+                    </div>
+                  </div>
                 </div>
-            </div>
+              </div>
+            </mat-card-content>
+            <mat-card-actions>
+              <div class="row">
+                <div class="col-12">
+                  <button type="button" data-toggle="tooltip" data-placement="right" style="width: 100%;"
+                    class="sc-logout btn btn-success btn-sm pull-right buttonAncho"
+                    [ngStyle]="{'background-color':urlColor }" (click)="AgregarCart(item)"
+                    data-original-title=" Hacer pedido">{{ titleButton }} </button>
+                </div>
+                <div class="col-12 paddins1" *ngIf="rolname != 'vendedor'">
+                  <img (click)="masInfo(item)" class="pointer" src="./assets/icons/masinformacion.png"
+                    style="width: 100%;">
+                </div>
+                <div class="col-12 paddins1" *ngIf="rolname == 'vendedor'">
+
+                </div>
+                <div class="col-12">
+                  <div class="d-flex justify-content-between">
+                    <div>
+                      <img src="./assets/icons/descargar.png" style="width: 100%;" class="pointer"
+                        (click)="descargarFoto( item )">
+                    </div>
+                    <div style="width: 200%;">
+                      <!--<h6 class="titulo1">Pago Contra Entrega</h6>-->
+                      <img src="./assets/img/pago.png" style="width: 100%;">
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </mat-card-actions>
+          </mat-card>
         </div>
         <div class="col-12">
-            <div class="row">
-                <span class="catEstilo" *ngFor="let item of imageObject" (click)="eventorOver( item )">
-                    <h5 class="titulo2 pointer" [ngClass]="{ 'cambiaColor': item.check == true }">
-                        <span *ngIf="item.title =='TODOS'" (click)="imageOnClick(0, item);"> {{ item.title }} </span>
-                        <span *ngIf="item.title !=='TODOS'"> {{ item.title }} </span>
-                    </h5>
-                    <ul *ngIf="item.check">
-                        <label class="pointer" *ngFor="let key of item.subCategoria; let idx=index"
-                            (click)="imageOnClick(idx, key);" [ngClass]="{ 'cambiaColor': key.check == true }">
-                            <h5 class="titulo3 estiloCategoria">{{ key.cat_nombre }}</h5>
-                        </label>
-                    </ul>
-                </span>
+          <div class="d-flex flex-row-reverse bd-highlight">
+            <div>
+              <mat-paginator [length]="counts" [pageSize]="25" [pageSizeOptions]="[5, 10, 25, 100]"
+                (page)="pageEvent($event)">
+              </mat-paginator>
             </div>
+          </div>
         </div>
-        <div class="col-12 d-flex justify-content-center" (mouseout)="eventoDes( {} )">
-            <div class="row">
-                <div class="col-12 row d-flex justify-content-center" infiniteScroll [infiniteScrollDistance]="50"
-                    [infiniteScrollThrottle]="60" (scrolled)="onScroll()">
-                    <mat-card class="example-card col-md-2 col-sm-4 col-lg-2 col-xs-6 col-6 anchandoPr "
-                        *ngFor="let item of listProductos" (mouseout)="eventoDes( {} )">
-                        <div class="ui-ribbon-wrapper hide" *ngIf="item.descuento">
-                            <div class="ui-ribbon">
-                                {{ item.descuento }}% Off
-                            </div>
-                        </div>
-                        <figure data-toggle="modal" id="figura" data-target="#modalinfo" class="img-contenedor"
-                            (mouseout)="eventoDes( {} )">
-                            <img class="img-responsive btn-block imgProductos pointer " [src]="item.foto"
-                                (click)="agregar(item)">
-                        </figure>
-                        <mat-card-content>
-                            <div class="row">
-                                <div class="col-12">
-                                    <div class="d-flex justify-content-between">
-                                        <div>
-                                            <h6 class="titulo1 color1">{{ item.pro_nombre | slice: 0: 20 }}</h6>
-                                        </div>
-                                        <div>
-                                            <h6 class="titulo1 color1">
-                                                <small style="display: inline-block;  font-size: 90% !important;"
-                                                    class="pricesmall currency2" id="pricesmall_25" *ngIf="coinShop == false">
-                                                    {{ _tools.monedaChange( 3, 2, ( item.pro_uni_ventaEdit || item.pro_uni_venta || 0 ) ) }}
-                                                </small>
-                                                <small style="display: inline-block;  font-size: 90% !important;"
-                                                    class="pricesmall currency2" id="pricesmall_25" *ngIf="coinShop == true">
-                                                    {{ _tools.monedaChange( 3, 2, ( item.pro_vendedorCompra || item.pro_uni_venta || 0 ) ) }}
-                                                </small><br>
-                                            </h6>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-12">
-                                    <div class="d-flex justify-content-between">
-                                        <div style="padding-top: 20px;">
-                                            <div class="plusminus2 horiz" data-after="UND">
-                                                <button type="button" class="btn-number" data-type="minus"
-                                                    [ngStyle]="{'background-color':urlColor }"
-                                                    (click)="menosCantidad(item)"
-                                                    data-field="product_quantity_25"></button>
-                                                <input (change)="manualCantidad(item)" data-clasificacion=""
-                                                    data-un="UND" type="number" name="product_quantity2"
-                                                    id="product_quantity_25" min="1" [(ngModel)]="item.cantidadAdquirir"
-                                                    class="input-number ">
-                                                <span class="hide" *ngIf="!item.cantidadAdquirir">1</span>
-                                                <button type="button" class="btn-number" data-type="plus"
-                                                    [ngStyle]="{'background-color':urlColor }"
-                                                    (click)="maxCantidad(item)"
-                                                    data-field="product_quantity_25"></button>
-                                            </div>
-                                        </div>
-                                        <div></div>
-                                        <div style="display: inline;">
-                                            <mat-form-field *ngIf="item.listTallas" class="tallasEstilo">
-                                                <mat-label>Tallas disponibles</mat-label>
-                                                <mat-select [(ngModel)]="item.tallasSelect" disableRipple>
-                                                    <mat-option *ngFor="let row of item.listTallas"
-                                                        [value]="row.tal_descripcion">
-                                                        {{ row.tal_descripcion }}
-                                                    </mat-option>
-                                                </mat-select>
-                                            </mat-form-field>
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <div class="col-12">
-                                    <button type="button" data-toggle="tooltip" data-placement="right"
-                                        style="width: 100%;"
-                                        class="sc-logout btn btn-success btn-sm pull-right buttonAncho"
-                                        [ngStyle]="{'background-color':urlColor }" (click)="AgregarCart(item)"
-                                        data-original-title=" Hacer pedido">{{ titleButton }} </button>
-                                </div>
-
-                                <div class="col-12 paddins1" *ngIf="rolname != 'vendedor'">
-                                    <img (click)="masInfo(item)" class="pointer" src="./assets/icons/masinformacion.png"
-                                        style="width: 100%;">
-                                </div>
-                                <div class="col-12 paddins1" *ngIf="rolname == 'vendedor'">
-
-                                </div>
-                                <div class="col-12">
-                                    <div class="d-flex justify-content-between">
-                                        <div>
-                                            <img src="./assets/icons/descargar.png" style="width: 100%;" class="pointer"
-                                                (click)="descargarFoto( item )">
-                                        </div>
-                                        <div style="width: 200%;">
-                                            <!--<h6 class="titulo1">Pago Contra Entrega</h6>-->
-                                            <img src="./assets/img/pago.png" style="width: 100%;">
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </mat-card-content>
-                    </mat-card>
-                    <div class="col-12">
-                        <div class="d-flex flex-row-reverse bd-highlight">
-                            <div>
-                                <mat-paginator [length]="counts" [pageSize]="25" [pageSizeOptions]="[5, 10, 25, 100]"
-                                    (page)="pageEvent($event)">
-                                </mat-paginator>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-12 p-5">
-                    <ngx-spinner bdOpacity=0.9 bdColor="" size="default" color="#581f87" type="ball-pulse-sync"
-                        [fullScreen]="false">
-                    </ngx-spinner>
-                </div>
-            </div>
+        <div class="col-12 p-5">
+          <ngx-spinner bdOpacity=0.9 bdColor="" size="default" color="#581f87" type="ball-pulse-sync"
+            [fullScreen]="false">
+          </ngx-spinner>
         </div>
-
-        <div class="mx-auto" style="width: 200px;" *ngIf="listProductos.length === 0">
-            No Hay Datos
-        </div>
+      </div>
     </div>
+    <div class="mx-auto" style="width: 200px;" *ngIf="listProductos.length === 0">
+      No Hay Datos
+    </div>
+  </div>
 </div>

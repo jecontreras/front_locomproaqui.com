@@ -46,7 +46,7 @@
   padding: 25px;
 }
 .example-card {
-    max-width: 250px;
+    max-width: 270px;
 }
 
 .example-header-image {
@@ -146,7 +146,7 @@ li {
     -moz-appearance: textfield;
     display: block;
   }
-  
+
   .plusminus2 span {
     position: absolute;
     width: 50px;
@@ -198,7 +198,7 @@ li {
     top: 0;
     left: 20px;
   }
-  
+
   .plusminus3 {
     display: inline-block;
     position: relative;
@@ -265,7 +265,7 @@ li {
     -moz-appearance: textfield;
     /*display: none;*/
   }
-  
+
   .plusminus3 span {
     position: absolute;
     width: 60px;
@@ -317,8 +317,8 @@ li {
     top: 0;
     left: 20px;
   }
-  
-  
+
+
   .img-cart
   {
     vertical-align: middle;
@@ -333,17 +333,17 @@ li {
     position: relative;
     top:5px;
   }
-  
+
   .img-cart-span
   {
-  
+
       content: "Haga el pedido";
       top: -40px;
       display: block;
       /* height: 12px; */
       position: relative;
   }
-  
+
   .img-cart-icon-left
   {
     vertical-align: middle;
@@ -351,7 +351,7 @@ li {
     height: 20px;
     margin-right: 5px
   }
-  
+
   .img-cart-icon-rigth
   {
     vertical-align: middle;
@@ -359,7 +359,7 @@ li {
     height: 20px;
     margin-left: 5px
   }
-  
+
   /*progressbar*/
   .progressbar2 {
     /*top: -60px;*/
@@ -374,7 +374,7 @@ li {
     color: white;
     text-transform: uppercase;
     font-size: 9px;
-    
+
     float: left;
     position: relative;
     color: black;
@@ -414,17 +414,17 @@ li {
     background:  rgba(64,179,94,0.4);
     color: white;
   }
-  
-  
+
+
   @media screen and (max-width: 600px) {
     .respon {
       border: 0;
     }
-  
+
     .respon caption {
       font-size: 1.3em;
     }
-    
+
     .respon thead {
       border: none;
       clip: rect(0 0 0 0);
@@ -435,24 +435,24 @@ li {
       position: absolute;
       width: 1px;
     }
-    
+
     .respon tr {
       border-bottom: 3px solid #ddd !important;
       display: block;
       margin-bottom: .625em;
     }
-  
+
     .respon tr:nth-of-type(odd) {
       background-color: #f9f9f9;
     }
-    
+
     .respon td {
       border-bottom: 1px solid #ddd !important;
       display: block;
       font-size:14px;
       text-align: right !important;
     }
-    
+
     .respon td::before {
       /*
       * aria-label has no advantage, it won't be read inside a table
@@ -463,23 +463,23 @@ li {
       font-weight: bold;
       /*text-transform: uppercase;*/
     }
-    
+
     .respon td:last-child {
       border-bottom: 0;
     }
   }
-  
-  
-  
+
+
+
   img.bn {
   -webkit-filter: grayscale(100%);
   -moz-filter: grayscale(100%);
   -ms-filter: grayscale(100%);
   -o-filter: grayscale(100%);
-  filter: grayscale(100%);  
+  filter: grayscale(100%);
   }
-  
-  
+
+
   .hours-ul
   {
         margin-bottom: 30px;
@@ -492,7 +492,7 @@ li {
       scrollbar-arrow-color:#FFFFFF;
       scrollbar-track-color:#E5E5E5;
   }
-  
+
   .hours-ul ul
   {
       list-style: none;
@@ -502,7 +502,7 @@ li {
   .hours-ul .radio {
       margin: 0;
   }
-  
+
   .hours-ul .radio label {
       width: 100%;
       font-size: 12px;
@@ -513,52 +513,52 @@ li {
       cursor: pointer;
       background-color: transparent;
   }
-  
+
   .hours-ul .radio label::before {
       left: 10px;
   }
-  
+
   .hours-ul .radio label p {
       min-width: 120px;
       margin: 0 50px 0 0;
       color: #7d7d7d;
       transition: .3s;
   }
-  
+
   .hours-ul .radio label p, .hours-ul .radio label span {
       display: inline-block;
       vertical-align: middle;
       zoom: 1;
   }
-  
+
   .hours-ul .radio label span {
       color: #1ec69f;
   }
-  
+
   .hours-ul .radio label::after {
       left: 0px;
   }
   .hours-ul .radio input[type=radio] {
       display: none;
   }
-  
-  
+
+
   .hours-ul .radio input[type=radio]:checked+label {
       border-color: #78b72a;
       background-color: rgba(8,239,47,.07);
   }
-  
+
   .hours-ul .radio input[type=radio] +label:hover {
       border-color: #78b72a;
       background-color: rgba(8,239,47,.07);
   }
-  
+
   .hours-ul::-webkit-scrollbar-track{border-radius:20px;background-color:transparent}
   .hours-ul::-webkit-scrollbar{width:4px}
   .hours-ul::-webkit-scrollbar-thumb{border-radius:10px;background-color:#e5edef}
-  
-  
-  
+
+
+
   .rtRequired {
       background-color: #cc0000;
       height: 21px;

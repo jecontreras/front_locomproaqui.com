@@ -107,7 +107,7 @@ export class ToolsService {
     Swal.fire({
       title: text.title || 'Cargando...',
       html: '',
-      timer: text.tiempo || 3000,
+      timer: text.tiempo || 6000,
       timerProgressBar: true,
       onBeforeOpen: () => {
         Swal.showLoading()
@@ -302,6 +302,20 @@ export class ToolsService {
       }
 
       return new File([u8arr], filename, {type:mime});
+  }
+  handleCopyHolder( url:string ){
+    const selBox = document.createElement('textarea');
+    selBox.style.position = 'fixed';
+    selBox.style.left = '0';
+    selBox.style.top = '0';
+    selBox.style.opacity = '0';
+    selBox.value = url;
+    document.body.appendChild(selBox);
+    selBox.focus();
+    selBox.select();
+    document.execCommand('copy');
+    document.body.removeChild(selBox);
+    this.openSnack('Copiado:' + ' ' + url, 'completado', false);
   }
 
 
