@@ -318,5 +318,35 @@ export class ToolsService {
     this.openSnack('Copiado:' + ' ' + url, 'completado', false);
   }
 
+    // Facebook share won't work if your shareUrl is localhost:port/abc, it should be genuine deployed url 
+    shareOnFacebook(shareUrl: string) {
+      shareUrl = encodeURIComponent(shareUrl);
+      window.open(`https://www.facebook.com/sharer/sharer.php?u=${shareUrl}`, 'sharer');
+    }
+  
+    shareOnPinterest(shareUrl: string, img: string, desc: string) {
+      shareUrl = encodeURIComponent(shareUrl);
+      img = encodeURIComponent(img);
+      desc = encodeURIComponent(desc);
+      window.open(`https://www.pinterest.com/pin/create/button?url=${shareUrl}&media=${img}&description=${desc}`, 'sharer');
+    }
+  
+    shareOnTwitter(shareUrl: string, desc: string) {
+      shareUrl = encodeURIComponent(shareUrl);
+      desc = encodeURIComponent(desc);
+      window.open(`https://twitter.com/intent/tweet?url=${shareUrl}&text=${desc}`, 'sharer');
+    }
+  
+    shareOnGooglePlus(shareUrl: string) {
+      shareUrl = encodeURIComponent(shareUrl);
+      window.open(`https://plus.google.com/share?url=${shareUrl}`, 'sharer');
+    }
+    
+    // LinkedIn share won't work if your shareUrl is localhost:port/abc, it should be genuine deployed url
+    shareOnLinkedIn(shareUrl: string, title: string, summary: string) {
+      shareUrl = encodeURIComponent(shareUrl);
+      window.open(`https://www.linkedin.com/shareArticle?url=${shareUrl}&title=${title}&summary=${summary}`, 'sharer');
+    }
+
 
 }

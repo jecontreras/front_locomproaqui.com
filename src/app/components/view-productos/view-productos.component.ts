@@ -112,6 +112,7 @@ export class ViewProductosComponent implements OnInit {
   shareUrl( ){
     const url = window.location.origin+"/pedidos/inf/"+this.data.id;
     this._tools.handleCopyHolder( url );
+    return url;
   }
 
   procesoNext(){
@@ -250,20 +251,21 @@ export class ViewProductosComponent implements OnInit {
   }
 
   masInfo(obj: any) {
-    //console.log( obj );
+    console.log( obj );
     let cerialNumero: any = '';
     let numeroSplit: any;
     let cabeza: any = this.dataUser.cabeza;
-    if (!obj.tallas) return this._tools.tooast({ title: "Por Favor debes seleccionar una talla", icon: "warning" });
+    const url = this.shareUrl( );
+    //if (!obj.tallas) return this._tools.tooast({ title: "Por Favor debes seleccionar una talla", icon: "warning" });
     if (cabeza) {
       numeroSplit = _.split(cabeza.usu_telefono, "+57", 2);
       if (numeroSplit[1]) cabeza.usu_telefono = numeroSplit[1];
       if (cabeza.usu_perfil == 3) cerialNumero = (cabeza.usu_indicativo || '57') + (cabeza.usu_telefono || this._tools.dataConfig.clInformacion );
       else cerialNumero = "57" + this._tools.dataConfig.clInformacion;
     } else cerialNumero = "57" + this._tools.dataConfig.clInformacion;
-    if (this.userId.id) this.urlwhat = `https://wa.me/${this.userId.usu_indicativo || 57}${((_.split(this.userId.usu_telefono, "+57", 2))[1]) || this._tools.dataConfig.clInformacion }?text=Hola Servicio al cliente, como esta, saludo cordial, estoy interesad@ en mas informacion ${obj.pro_nombre} codigo ${obj.pro_codigo} codigo: ${obj.pro_codigo} talla: ${obj.tallas} foto ==> ${obj.this.urlFoto}`;
+    if (this.userId.id) this.urlwhat = `https://wa.me/${this.userId.usu_indicativo || 57}${((_.split(this.userId.usu_telefono, "+57", 2))[1]) || this._tools.dataConfig.clInformacion }?text=Hola Servicio al cliente, como esta, saludo cordial, estoy interesad@ en mas informacion ${obj.pro_nombre} codigo ${obj.pro_codigo} codigo: ${obj.pro_codigo} talla: ${obj.tallas || ''} url ==> ${ url }`;
     else {
-      this.urlwhat = `https://wa.me/${cerialNumero}?text=Hola Servicio al cliente, como esta, saludo cordial, estoy interesad@ en mas informacion ${obj.pro_nombre} codigo: ${obj.pro_codigo} talla: ${obj.tallas} foto ==> ${ obj.urlFoto }`;
+      this.urlwhat = `https://wa.me/${cerialNumero}?text=Hola Servicio al cliente, como esta, saludo cordial, estoy interesad@ en mas informacion ${obj.pro_nombre} codigo: ${obj.pro_codigo} talla: ${obj.tallas || ''} url ==> ${ url }`;
     }
     window.open(this.urlwhat);
   }
@@ -369,5 +371,6 @@ export class ViewProductosComponent implements OnInit {
   alertPromocion(){
     if( this.data.checkpromo ) this._tools.confirm( { title: "Importante", detalle: "Recuerda que solo aplica despues de 2 pares en adelante la promocion no sera valido con 1 solo par tenlo en cuenta", icon: "warning"})
   }
+
 
 }

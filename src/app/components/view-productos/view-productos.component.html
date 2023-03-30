@@ -49,7 +49,7 @@
                         <div class="d-flex justify-content-between">
                             <div>
                                 <h3 class="precios" *ngIf="data.precio_vendedor">Precio a distribuidor: {{ _tools.monedaChange( 3, 2, ( coinShop == true ? ( data.pro_vendedorCompra || data.precio_vendedor ) : data.precio_vendedor ) ) }}</h3>
-                                <img (click)="masInfo( data )" class="pointer" src="./assets/icons/masinformacion.png" style="width: 120px;">
+                                <img (click)="masInfo( data )" class="pointer" src="./assets/icons/masinformacion.png" style="width: 216px;">
                             </div>
                             <div>
                                 <h3 class="precios" *ngIf="dataUser.id">Precio Sugerido: {{ _tools.monedaChange( 3, 2, data.pro_uni_venta ) }}</h3>

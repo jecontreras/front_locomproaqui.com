@@ -666,9 +666,11 @@ export class HeaderComponent implements OnInit {
   }
 
   getAlert(){
-    this._notificaciones.get( { where: { user: this.dataUser.id, tipoDe: [ 1, 2 ], view: false }}).subscribe(( res:any ) =>{
+    this._notificaciones.get( { where: { user: this.dataUser.id, tipoDe: [ 1, 2 ], view: false }}).subscribe( async ( res:any ) =>{
       res = res.data;
       this.listAlert = res;
+      const result:any = await this.getMas();
+      this.listAlert.push( ...result )
       if( this.namePorcentaje == "dropshipping básico"){
         this.listAlert.unshift(
           {
@@ -679,7 +681,16 @@ export class HeaderComponent implements OnInit {
           }
         );
       }
+      console.log("****684", this.listAlert)
     });
+  }
+
+  getMas(){
+    return new Promise( resolve =>{
+      this._notificaciones.get( { where: { tipoDe: 3, view: false, user:null }}).subscribe(( res:any ) =>{
+        resolve( res.data );
+      });
+    })
   }
 
   crear( obj:any ){
