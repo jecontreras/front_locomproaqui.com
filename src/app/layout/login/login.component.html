@@ -3,7 +3,7 @@
         <div class="form row" *ngIf="vista == 'inicial'">
             <div class="form-group col-12">
                 <br>
-                <p class="text-center">Iniciar Sección</p>
+                <p class="text-center">Iniciar Sesión</p>
             </div>
             <div class="form-group col-12">
                 <label for="exampleFormControlInput1">Correo electrónico</label>
@@ -14,7 +14,7 @@
                 <input type="password" [(ngModel)]="data.usu_clave" (change)="submit()" class="form-control form-control-sm" placeholder="Contraseña">
             </div>
             <div class="form-group col-12">
-                <p class="text-primary pointer" *ngIf="disableRestarure" (click)="vista='segunda'">¿Olvidaste tu constraseña?</p>
+                <p class="text-primary pointer" *ngIf="disableRestarure" (click)="vista='segunda'">¿Olvidaste tu contraseña?</p>
             </div>
         </div>
         <div class="form row" *ngIf="vista == 'segunda'">

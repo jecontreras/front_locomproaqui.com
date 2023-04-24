@@ -4,8 +4,8 @@
             <div class="d-flex justify-content-center">
                 <div>
                     <h5 class="text-dart" style="padding: 45px;">
-                        ¡Haz tu registro y automáticamente tendrás una tienda con más de 20 proveedores de distintas categorías donde podrás traer a tus clientes y 
-                        recibir tus pedidos vía WhatsApp tu montas cada pedido en tu plataforma y nosotros nos encargamos de hacer llegar los pedidos a tu cliente final y 
+                        ¡Haz tu registro y automáticamente tendrás una tienda con más de 20 proveedores de distintas categorías donde podrás traer a tus clientes y
+                        recibir tus pedidos vía WhatsApp tu montas cada pedido en tu plataforma y nosotros nos encargamos de hacer llegar los pedidos a tu cliente final y
                         tu te ganarás una excelente comisión por cada venta
                     </h5>
                 </div>
@@ -35,7 +35,7 @@
                                         placeholder="Ingrese tu Apellido" (ngModelChange)="blurApellido()">
                                 </div>
                                 <div class="form-group col-sm-6 col-12">
-                                    <label for="exampleFormControlInput1">como quieres llamar tu tienda virtual</label>
+                                    <label for="exampleFormControlInput1">Como quieres llamar tu tienda virtual</label>
                                     <input type="text" [(ngModel)]="data.usu_usuario"
                                         class="form-control form-control-sm"
                                         placeholder="Ejemplos ( dayanstore ) ( carolstore )" (ngModelChange)="validadUsername()">
@@ -98,9 +98,9 @@
                                         placeholder="Ingrese tu Dirección">
                                 </div>
                                 <div class="form-group col-sm-6 col-12">
-                                    <label for="exampleFormControlInput1">Email</label>
+                                    <label for="exampleFormControlInput1">Correo</label>
                                     <input type="email" [(ngModel)]="data.usu_email" class="form-control form-control-sm"
-                                        (blur)="validadorEmail( data.usu_email )" placeholder="Ingrese tu Email">
+                                        (blur)="validadorEmail( data.usu_email )" placeholder="Ingrese tu Correo">
                                     <span class="text-danger">{{ error }}</span>
                                 </div>
                                 <div class="form-group col-sm-6 col-12">
@@ -144,17 +144,17 @@
                             </div>
                         </mat-step>
                         <mat-step>
-                            <ng-template matStepLabel>Terpaso Paso</ng-template>
+                            <ng-template matStepLabel>Terser Paso</ng-template>
                             <div class="form row container">
                                 <div class="col-12">
-                                    <label for="exampleFormControlSelect1">sabes qué es droppshipping</label>
+                                    <label for="exampleFormControlSelect1">Sabes qué es droppshipping</label>
                                     <select class="form-control" [(ngModel)]="data.queEsDropp">
                                         <option value="si">SI</option>
                                         <option value="no">NO</option>
                                     </select>
                                 </div>
                                 <div class="col-12" *ngIf="data.queEsDropp == 'si'">
-                                    <label for="exampleFormControlTextarea1">en cuales plataformas de dropshipping has
+                                    <label for="exampleFormControlTextarea1">En cuales plataformas de dropshipping has
                                         participado, describe cada plataforma y separa con una , cada una de estas</label>
                                     <textarea class="form-control" [(ngModel)]="data.textoQueEsDropp" rows="3"></textarea>
                                 </div>
@@ -173,7 +173,7 @@
                                     <select class="form-control" [(ngModel)]="data.ventasRealizarMensual">
                                         <option value="30">1 a 30</option>
                                         <option value="100">de 31 a 100</option>
-                                        <option value="110">más de 100</option>
+                                        <option value="110">Más de 100</option>
                                     </select>
                                 </div>
                                 <div class="col-12">

@@ -72,7 +72,7 @@ export class HeaderComponent implements OnInit {
     cobros: 0,
     ventas: 0
   };
-
+  urlTienda: string = `${URLFRON}/`;
   constructor(
     public changeDetectorRef: ChangeDetectorRef,
     public media: MediaMatcher, private router: Router,
@@ -94,6 +94,7 @@ export class HeaderComponent implements OnInit {
       this.userId = store.usercabeza || {};
       this.dataUser = store.user || {};
       this.userPr = store.userpr || {};
+      this.urlTienda += this.dataUser.usu_usuario;
       if( store.buscar ) {
         this.seartxt = store.buscar;
       }
@@ -559,13 +560,13 @@ export class HeaderComponent implements OnInit {
         url: 'login()',
         submenus:[]
       },
-      /*{
+      {
         icons: 'supervisor_account',
         nombre: 'Inicia tu propio negocio',
         disable: this.rolUser === 'visitante',
         url: 'registrar()',
         submenus:[]
-      },*/
+      },
       /*{
         icons: 'help',
         nombre: 'Ayuda Material de apoyo',
@@ -573,6 +574,13 @@ export class HeaderComponent implements OnInit {
         url: 'ayuda()',
         submenus:[]
       },*/
+      {
+        icons: 'exit_to_app',
+        nombre: 'Compartir mi tienda',
+        disable: this.dataUser.id,
+        url: 'shareTienda()',
+        submenus:[]
+      },
       {
         icons: 'exit_to_app',
         nombre: 'Salir',
@@ -583,6 +591,21 @@ export class HeaderComponent implements OnInit {
 
     ];
     this.menus2 = _.filter(this.menus2, row=>row.disable);
+  }
+
+  shareTienda(){
+    const selBox = document.createElement('textarea');
+    selBox.style.position = 'fixed';
+    selBox.style.left = '0';
+    selBox.style.top = '0';
+    selBox.style.opacity = '0';
+    selBox.value = this.urlTienda;
+    document.body.appendChild(selBox);
+    selBox.focus();
+    selBox.select();
+    document.execCommand('copy');
+    document.body.removeChild(selBox);
+    this._tools.openSnack('Copiado:' + ' ' + this.urlTienda, 'completado', false);
   }
 
   navegar( item:any ){
@@ -655,14 +678,15 @@ export class HeaderComponent implements OnInit {
   }
 
   registrar(){
-    const dialogRef = this.dialog.open(RegistroComponent,{
+    this.router.navigate(['/registro','lokomproaqui']);
+    /*const dialogRef = this.dialog.open(RegistroComponent,{
       width: '461px',
       data: { datos: {} }
     });
 
     dialogRef.afterClosed().subscribe(result => {
       console.log(`Dialog result: ${result}`);
-    });
+    });*/
   }
 
   getAlert(){
