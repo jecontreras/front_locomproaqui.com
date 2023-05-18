@@ -1,0 +1,90 @@
+<p>&nbsp;</p>
+<main class="main-content js-focus-hidden" id="MainContent" role="main"
+    style='background-color: white; box-sizing: border-box; font-family: Helvetica, "Helvetica Neue", Arial, "Lucida Grande", sans-serif; font-size: 15px; opacity: 1; outline: 0px; padding-top: 55px;'
+    tabindex="-1">
+    <div class="shopify-section" id="shopify-section-cart-template" style="box-sizing: border-box; display: inherit;">
+        <div class="page-width" data-ajax-enabled="true" data-section-id="cart-template"
+            data-section-type="cart-template"
+            style="box-sizing: border-box; margin: 0px auto; max-width: 1200px; padding-left: 55px; padding-right: 55px;">
+            <div data-cart-wrapper="" style="box-sizing: border-box;">
+                <div class="cart-header" style="box-sizing: border-box; margin-bottom: 1.7rem; text-align: center;">
+                    <h1 class="cart-header__title"
+                        style="box-sizing: border-box; font-family: var(--font-stack-header); font-size: calc(((var(--font-h1-desktop))/ (var(--font-size-base))) * 1em); font-style: var(--font-style-header); font-weight: var(--font-weight-header); letter-spacing: 0px; line-height: 1.2; margin: 0px 0px 1rem; overflow-wrap: break-word;">
+                        Carrito
+                    </h1>
+                    <a class="text-link text-link--accent" [routerLink]="['./productos']"
+                        routerLinkActive="router-link-active"
+                        style="background: 0px 0px; border-bottom-color: currentcolor; border-image: initial; border-left-color: initial; border-right-color: initial; border-style: none none solid; border-top-color: initial; border-width: 0px 0px 1px; box-sizing: border-box; display: inline; margin: 0px; padding: 0px 0px 1px; text-decoration-line: none; touch-action: manipulation;">Seguir
+                        comprando</a>
+                </div>
+                <div class="row">
+                    <div class="col-12">
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th scope="col" style="width: 10%;">Foto</th>
+                                    <th scope="col" style="width: 50%;">Productos</th>
+                                    <th scope="col" style="width: 30%;">Descripcion</th>
+                                    <th scope="col">Precio</th>
+                                    <th scope="col">Cantidad</th>
+                                    <th scope="col">Total</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr *ngFor="let item of listCarrito; let idx=index;">
+                                    <th scope="row">
+                                        <img alt="" class="cart__image" data-cart-item-image="" [src]="item.foto"
+                                            style="border: 0px; box-sizing: border-box; cursor: pointer; display: block; margin: 0px auto; max-height: 95px; max-width: 100%;" />
+                                    </th>
+                                    <td>
+                                        <span class="cart__product-title" data-cart-item-title=""
+                                            data-role="product-title"
+                                            style="background-color: transparent; border-bottom: none; box-sizing: border-box; text-decoration-line: none; touch-action: manipulation;">
+                                            {{ item.titulo }}
+                                        </span>
+                                        <br>
+                                        <button type="button" (click)="borrar( idx, item )"
+                                            class="btn btn-danger">Borrar</button>
+                                    </td>
+                                    <td>
+                                        <textarea class="form-control" [(ngModel)]="item.descripcion" (change)="updateCart( item )" (blur)="updateCart( item )" rows="3"></textarea>
+                                    </td>
+                                    <td>{{ _tools.monedaChange( 3, 2, item.costo || 0 ) }}</td>
+                                    <td>{{ item.cantidad }}</td>
+                                    <td>{{ _tools.monedaChange( 3, 2, item.costoTotal || 0 ) }}</td>
+                                </tr>
+
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="col-12">
+                        <div class="d-flex flex-row-reverse bd-highlight">
+                            <div class="p-2 bd-highlight">
+                                <div class="grid__item text-right small--text-center"
+                                    style="box-sizing: border-box; float: left; padding-left: 30px; text-align: right !important; width: 1120px;">
+                                    <div class="cart-subtotal" style="box-sizing: border-box;">
+                                        <span class="cart-subtotal__title"
+                                            style="box-sizing: border-box; font-size: calc(((var(--font-size-base) + 2) / (var(--font-size-base))) * 1em);">Subtotal</span>&nbsp;<span
+                                            class="cart-subtotal__price" data-cart-subtotal=""
+                                            style="box-sizing: border-box; display: inline-block; min-width: 150px; padding-left: 55px;">{{ _tools.monedaChange( 3, 2, totalSuma || 0 ) }}</span>
+                                    </div>
+                                    <div class="cart__shipping rte"
+                                        style="box-sizing: border-box; color: var(--color-body-text); font-size: calc(((var(--font-size-base) - 2) / (var(--font-size-base))) * 1em); margin-bottom: 25px; padding: 10px 0px 20px;">
+                                        Pago Contra Entrega Envio Gratis
+                                    </div>
+                                    <div class="cart__buttons-container"
+                                        style="box-sizing: border-box; flex-direction: column; margin: 0px auto; max-width: none;">
+                                        <div class="cart__submit-controls"
+                                            style="align-items: flex-start; box-sizing: border-box; display: flex; flex-flow: row wrap; justify-content: flex-end; width: 1090px;">
+                                            <button type="button" class="btn btn-success" [routerLink]="['/tienda/checkouts']" routerLinkActive="router-link-active" >Finalizar Pedido</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>

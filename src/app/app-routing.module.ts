@@ -4,26 +4,26 @@ import { IntroduccionComponent } from './components/introduccion/introduccion.co
 import { ImprimirTarjetaComponent } from './extra/imprimir-tarjeta/imprimir-tarjeta.component';
 
 const routes: Routes = [
-  { path: '', 
+  { path: '',
     children: [{
       path: '',
       loadChildren: () => import('./tienda/tienda.module').then(m => m.TiendaModule)
-    }], 
-    pathMatch: 'full' 
+    }],
+    pathMatch: 'full'
   },
-  { path: 'publico', 
+  { path: 'publico',
     children: [{
       path: '',
       loadChildren: () => import('./publico/publico.module').then(m => m.PublicoModule)
-    }], 
-    pathMatch: 'full' 
+    }],
+    pathMatch: 'full'
   },
-  { path: 'publico/:id', 
+  { path: 'publico/:id',
     children: [{
       path: '',
       loadChildren: () => import('./publico/publico.module').then(m => m.PublicoModule)
-    }], 
-    pathMatch: 'full' 
+    }],
+    pathMatch: 'full'
   },
   {
     path: "introduccion",
@@ -33,7 +33,14 @@ const routes: Routes = [
     path: "imprimirTarjeta",
     component: ImprimirTarjetaComponent
   },
-  { path: '', redirectTo: "pedidos", pathMatch: 'full' }
+  { path: '', redirectTo: "pedidos", pathMatch: 'full' },
+  {
+    path: 'tienda',
+    children: [{
+      path: '',
+      loadChildren: () => import('./tienda/tienda.module').then(m => m.TiendaModule)
+    }]
+  },
 ];
 
 @NgModule({

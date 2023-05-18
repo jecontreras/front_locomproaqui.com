@@ -35,12 +35,12 @@ import { registerLocaleData } from '@angular/common';
 import { AuthInterceptor } from './services/authInterceptor';
 import { GlobalErrorHandler } from './services/globalErrorHandler';
 import { ExtraModule } from './extra/extra.module';
-import { SocialLoginModule } from 'angularx-social-login';
 
     // registrar los locales con el nombre que quieras utilizar a la hora de proveer
     registerLocaleData(localePy, 'es');
     registerLocaleData(localePt, 'pt');
     registerLocaleData(localeEn, 'en')
+    import  { FacebookLoginProvider, GoogleLoginProvider, SocialLoginModule, SocialAuthServiceConfig } from 'angularx-social-login';
 
 @NgModule({
   entryComponents:[],
@@ -61,6 +61,7 @@ import { SocialLoginModule } from 'angularx-social-login';
     FormsModule,
     NgImageSliderModule,
     NgxImageZoomModule,
+    SocialLoginModule,
     StoreModule.forRoot({ name: appReducer }),
     StoreDevtoolsModule.instrument({
       maxAge: 25, // Retains last 25 states
@@ -81,8 +82,31 @@ import { SocialLoginModule } from 'angularx-social-login';
       useClass: AuthInterceptor,
       multi   : true,
     },
+    {
+      provide: 'SocialAuthServiceConfig',
+      useValue: {
+        autoLogin: false,
+        providers: [
+          {
+            id: GoogleLoginProvider.PROVIDER_ID,
+            provider: new GoogleLoginProvider(
+              'clientId'
+            )
+          },
+          {
+            id: FacebookLoginProvider.PROVIDER_ID,
+            provider: new FacebookLoginProvider(
+              '257894275306451'
+            )
+          }
+        ],
+        onError: (err) => {
+          console.error(err);
+        }
+      } as SocialAuthServiceConfig,
+    }
     /*{
-      provide: ErrorHandler, 
+      provide: ErrorHandler,
       useClass: GlobalErrorHandler
     }*/
   ],

@@ -1,0 +1,59 @@
+
+<mat-dialog-content class="mat-typography">
+    <div class="row">
+        <!-- Modal view slider -->
+        <div class="col-md-6 col-sm-6 col-xs-12">
+          <lib-ngx-image-zoom
+                class="p-3"
+                [thumbImage]=data.foto
+                [fullImage]=data.foto
+                [magnification]="1"
+                [enableScrollZoom]="true"
+                [enableLens]="true"
+                [lensWidth]="200"
+                [lensHeight]="200"
+            ></lib-ngx-image-zoom>
+        </div>
+        <!-- Modal view content -->
+        <div class="col-md-6 col-sm-6 col-xs-12">
+          <div class="aa-product-view-content">
+            <h2>{{ data.pro_nombre }}</h2>
+            <div class="aa-price-block">
+              <span class="aa-product-view-price">{{ _formato.monedaChange( 3, 2, data.pro_uni_venta || 0 ) }} </span>
+              <p class="aa-product-avilability">Disponibilidad: <span>En stock</span></p>
+            </div>
+            <p [innerHtml]="data.pro_descripcion"></p>
+            <!--<h4>Talla</h4>
+            <div class="aa-prod-view-size row">
+              <a class="pointer padding row-2" *ngFor="let item of data.listTallas" [ngClass]="{selecciono: item.check}"
+                (click)="this.pedido.talla = item.tal_descripcion; item.check = !item.check">{{ item.tal_descripcion }}</a>
+            </div>-->
+            <div class="aa-prod-quantity">
+              <h4>Cantidad</h4>
+                <select [(ngModel)]="pedido.cantidad">
+                  <option value="1" selected="1">1</option>
+                  <option value="2">2</option>
+                  <option value="3">3</option>
+                  <option value="4">4</option>
+                  <option value="5">5</option>
+                  <option value="6">6</option>
+                </select>
+              <p class="aa-prod-category">
+                Categoria: <a class="pointer" (click)="categoriasVer()">{{ data['pro_categoria']?.cat_nombre }}</a>
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+</mat-dialog-content>
+
+<mat-dialog-actions align="end">
+  <a mat-dialog-close class="aa-add-to-cart-btn pointer">Cerrar</a>
+  <a (click)="AgregarCart()" class="aa-add-to-cart-btn pointer"><span class="fa fa-shopping-cart"></span>Agregar al Carrito</a>
+  <a (click)="comprarArticulo( )" class="aa-add-to-cart-btn pointer"><span
+    class="fa fab fa-whatsapp"></span>Comprar</a>
+  <a (click)="masInfo( data )" class="aa-add-to-cart-btn pointer"><span
+    class="fa fab fa-whatsapp"></span>Pedir Informacion</a>
+</mat-dialog-actions>
+
+

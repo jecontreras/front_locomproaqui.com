@@ -1,0 +1,86 @@
+<!-- catg header banner section -->
+<section id="aa-catg-head-banner">
+    <img [src]="tiendaInfo.portada4 || './assets/img/fashion/fashion-header-bg-8.jpg'" class="anchosBanner" alt="fashion img">
+    <div class="aa-catg-head-banner-area">
+      <div class="container">
+       <div class="aa-catg-head-banner-content">
+         <h2>Contactos</h2>
+         <ol class="breadcrumb">
+            <li><a href="#" [routerLink]="[ '/tienda' ]">Inicio</a></li>
+           <li class="active">Contactos</li>
+         </ol>
+       </div>
+      </div>
+    </div>
+   </section>
+   <!-- / catg header banner section -->
+ <!-- start contact section -->
+  <section id="aa-contact">
+    <div class="container">
+      <div class="row">
+        <div class="col-md-12">
+          <div class="aa-contact-area">
+            <div class="aa-contact-top">
+              <h2>Esperamos poder ayudarlo.</h2>
+              <p>Con mucho gusto</p>
+            </div>
+            <!-- contact map -->
+            <div class="aa-contact-map">
+               <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d1174.957480600129!2d-72.50567169357947!3d7.8877315263444885!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x4c523fa49aca87f1!2sAlejandr%C3%ADa%20Centro%20Comercial!5e0!3m2!1ses!2sco!4v1641543687574!5m2!1ses!2sco" width="100%" height="450" frameborder="0" style="border:0" allowfullscreen></iframe>
+            </div>
+            <!-- Contact address -->
+            <div class="aa-contact-address">
+              <div class="row">
+                <div class="col-md-8">
+                  <div class="aa-contact-address-left">
+                    <div class="comments-form contact-form" action="">
+                     <div class="row">
+                       <div class="col-md-6">
+                         <div class="form-group">                        
+                           <input type="text" placeholder="Su nombre y apellidos" class="form-control" [(ngModel)]="data.nombre">
+                         </div>
+                       </div>
+                       <div class="col-md-6">
+                         <div class="form-group">                        
+                           <input type="email" placeholder="Email" class="form-control" [(ngModel)]="data.email">
+                         </div>
+                       </div>
+                     </div>
+                      <div class="row">
+                       <div class="col-md-6">
+                         <div class="form-group">                        
+                           <input type="text" placeholder="Motivo" class="form-control" [(ngModel)]="data.sujeto">
+                         </div>
+                       </div>
+                       <div class="col-md-6">
+                         <div class="form-group">                        
+                           <input type="text" placeholder="Compañia" class="form-control" [(ngModel)]="data.compania">
+                         </div>
+                       </div>
+                     </div>                  
+                      
+                     <div class="form-group">                        
+                       <textarea class="form-control" rows="3" placeholder="Mensaje" [(ngModel)]="data.mensaje"></textarea>
+                     </div>
+                     <button (click)="enviarData()" class="aa-secondary-btn">Enviar</button>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-md-4">
+                  <div class="aa-contact-address-right">
+                    <address>
+                      <h4>{{ tiendaInfo.nombreTienda || 'Locomproaqui' }}</h4>
+                      <p>{{ tiendaInfo.decripcion || 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Rerum modi dolor facilis! Nihil error, eius' }}</p>
+                      <p><span class="fa fa-home"></span>{{ tiendaInfo.direccionTienda || 'Huntsville, AL 35813, USA' }}</p>
+                      <p><span class="fa fa-phone"></span>{{ tiendaInfo.numeroCelular || '+ 021.343.7575' }}</p>
+                      <p><span class="fa fa-envelope"></span>Email: {{ tiendaInfo.emailTienda || 'support@dailyshop.com' }}</p>
+                    </address>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>

@@ -28,4 +28,7 @@ export class ProductoService {
   getVenta(query:any){
     return this._model.querys('tblventasproducto/querys',query, 'post');
   }
+  createTestimonio(query:any){
+    return this._model.querys('tbltestimonio',query, 'post');
+  }
 }

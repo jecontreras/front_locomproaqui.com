@@ -7,6 +7,9 @@ export let TOKEN         = '[App] Token';
 export let BUSCAR        = '[App] Buscar';
 export let CONFIGURACION = '[App] Configuracion';
 export let USERPR        = '[App] Userpr';
+export let SELECCIONCATEGORIA = '[App] SeleccionCategoria';
+export let BUSCADOR      = '[App] Buscador';
+export let PRODUCTOHISTORIAL = '[App] Productohistorial';
 
 export class CartAction implements Action {
     readonly type = CART;
@@ -43,10 +46,26 @@ export class UserprAction implements Action {
     constructor( public payload: object,  public opt: string){}
 }
 
+export class SeleccionCategoriaAction implements Action {
+  readonly type = SELECCIONCATEGORIA;
+  constructor( public payload: object,  public opt: string){}
+}
+
+export class BuscadorAction implements Action {
+  readonly type = BUSCADOR;
+  constructor( public payload: object,  public opt: string){}
+}
+export class ProductoHistorialAction implements Action {
+  readonly type = PRODUCTOHISTORIAL;
+  constructor( public payload: object,  public opt: string){}
+}
+
 export type actions = CartAction         |
                       UserAction         |
                       UserCabezaAction   |
                       TokenAction        |
                       BuscarAction       |
-                      ConfiguracionAction|
-                      UserprAction        ;
+                      UserprAction       |
+                      SeleccionCategoriaAction |
+                      ConfiguracionAction  |
+                      ProductoHistorialAction ;
