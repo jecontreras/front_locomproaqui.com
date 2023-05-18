@@ -11,6 +11,13 @@ const routes: Routes = [
     }],
     pathMatch: 'full'
   },
+  {
+    path: 'portada',
+    children: [{
+      path: '',
+      loadChildren: () => import('./portada/portada.module').then(m => m.PortadaModule)
+    }]
+  },
   { path: 'publico',
     children: [{
       path: '',
@@ -34,13 +41,6 @@ const routes: Routes = [
     component: ImprimirTarjetaComponent
   },
   { path: '', redirectTo: "pedidos", pathMatch: 'full' },
-  {
-    path: 'tienda',
-    children: [{
-      path: '',
-      loadChildren: () => import('./tienda/tienda.module').then(m => m.TiendaModule)
-    }]
-  },
 ];
 
 @NgModule({

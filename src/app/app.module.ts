@@ -41,6 +41,7 @@ import { ExtraModule } from './extra/extra.module';
     registerLocaleData(localePt, 'pt');
     registerLocaleData(localeEn, 'en')
     import  { FacebookLoginProvider, GoogleLoginProvider, SocialLoginModule, SocialAuthServiceConfig } from 'angularx-social-login';
+import { PortadaModule } from './portada/portada.module';
 
 @NgModule({
   entryComponents:[],
@@ -69,6 +70,7 @@ import { ExtraModule } from './extra/extra.module';
     }),
     ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production }),
     TiendaModule,
+    PortadaModule,
     PublicoModule,
     MatVideoModule,
     NgxCurrencyModule,

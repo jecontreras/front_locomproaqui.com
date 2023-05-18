@@ -80,7 +80,7 @@ export class ProductosViewComponent implements OnInit {
   sliderArrowShow: Boolean = true;
   sliderInfinite: Boolean = true;
   sliderImagePopup: Boolean = false;
-  sliderAutoSlide: Number = 0;
+  sliderAutoSlide: Number = 1;
   sliderSlideImage: Number = 1;
   sliderAnimationSpeed: any = 1;
   userId:any = {};
@@ -122,7 +122,16 @@ export class ProductosViewComponent implements OnInit {
   }
 
   getProducto(){
-    this._producto.get({ where: { id: this.id}}).subscribe((res:any)=>{ this.data = res.data[0] || {}; this.viewsImagen = this.data.foto; if( !this.data.listComentarios[0] ) this.data.listComentarios = []; this.listGaleria = this.data.galeria || []; this.listGaleria.push( { id: 1000, pri_imagen: this.data.foto }) }, error=> { console.error(error); this._tools.presentToast('Error de servidor'); });
+    this._producto.get({ where: { id: this.id}}).subscribe((res:any)=>{ 
+      this.data = res.data[0] || {}; 
+      this.viewsImagen = this.data.foto; 
+      if( !this.data.listComentarios ) this.data.listComentarios = []; 
+      this.listGaleria = this.data.galeria || []; 
+      for( let row of this.data.listColor ) {
+        let filtro = this.listGaleria.find( item => item.pri_imagen == row.foto );
+        if( !filtro ) this.listGaleria.push( { id: this._tools.codigo(), pri_imagen: row.foto } );
+      }
+    }, error=> { console.error(error); this._tools.presentToast('Error de servidor'); });
   }
 
   verImagen( img:string ){
@@ -141,48 +150,6 @@ export class ProductosViewComponent implements OnInit {
     let resultado:any = await this.getArticulos();
     for( let row of resultado ){
       this.imageObject.push(
-        {
-          image: row.foto,
-          thumbImage: row.foto,
-          alt: '',
-          check: true,
-          id: row.id,
-          ids: row.id,
-          title: this._formato.monedaChange( 3, 2, row.pro_uni_venta || 0 )
-        }
-      );
-    }
-    this.query = {
-      where:{
-        pro_activo: 0
-      },
-      page: 1,
-      limit: 20
-    };
-    resultado = await this.getArticulos();
-    for( let row of resultado ){
-      this.imageObject2.push(
-        {
-          image: row.foto,
-          thumbImage: row.foto,
-          alt: '',
-          check: true,
-          id: row.id,
-          ids: row.id,
-          title: this._formato.monedaChange( 3, 2, row.pro_uni_venta || 0 )
-        }
-      );
-    }
-    this.query = {
-      where:{
-        pro_activo: 0
-      },
-      page: 2,
-      limit: 20
-    };
-    resultado = await this.getArticulos();
-    for( let row of resultado ){
-      this.imageObject3.push(
         {
           image: row.foto,
           thumbImage: row.foto,

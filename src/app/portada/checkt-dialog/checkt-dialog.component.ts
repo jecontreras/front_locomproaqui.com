@@ -74,22 +74,22 @@ export class ChecktDialogComponent implements OnInit {
       "ven_precio": this.datas.pro_uni_venta,
       "ven_total": this.data.costo || 0,
       "ven_ganancias": 0,
-      "prv_observacion": "ok la talla es " + this.data.talla,
+      "prv_observacion": "ok la talla es " + this.data.talla + " Y Color "+ this.data.colorSelect,
       "ven_estado": 0,
       "create": moment().format("DD/MM/YYYY"),
       "apartamento": this.data.apartamento || '',
       "departamento": this.data.departamento || '',
       "ven_imagen_producto": this.datas.foto
     };
-    await this.crearUser();
+    //await this.crearUser();
     data.usu_clave_int = this.dataUser.id;
     await this.nexCompra( data );
     this.disabled = false;
     this._tools.presentToast("Exitoso Tu pedido esta en proceso. un accesor se pondra en contacto contigo!");
     setTimeout(()=>this._tools.tooast( { title: "Tu pedido esta siendo procesado "}) ,3000);
     this.mensajeWhat();
-    this._router.navigate(['/tienda/detallepedido']);
-    //this.dialogRef.close('creo');
+    //this._router.navigate(['/tienda/detallepedido']);
+    this.dialogRef.close('creo');
 
   }
 
@@ -152,6 +152,7 @@ export class ChecktDialogComponent implements OnInit {
       Nombre de cliente: ${ this.data.nombre }
       *celular:*${ this.data.telefono }
       *talla:* ${ this.data.talla }
+      *Color:* ${ this.data.colorSelect }
       *cantidad:* ${ this.data.cantidadAd || 1 }
       Ciudad: ${ this.data.ciudad }
       ${ this.data.barrio } 
@@ -176,7 +177,7 @@ export class ChecktDialogComponent implements OnInit {
 
   async nexCompra( data:any ){
     return new Promise( resolve =>{
-      this._ventas.create( data ).subscribe(( res:any )=>{
+      this._ventas.create2( data ).subscribe(( res:any )=>{
         this.data.id = res.id;
         resolve( true );
       },( error:any )=> {

@@ -9,6 +9,7 @@ import { CarritoComponent } from './carrito/carrito.component';
 import { ChecktComponent } from './checkt/checkt.component';
 import { DetallePedidoComponent } from './detalle-pedido/detalle-pedido.component';
 import { CatalogoComponent } from './catalogo/catalogo.component';
+import { PedidosComponent } from '../components/pedidos/pedidos.component';
 
 
 const routes: Routes = [
@@ -18,11 +19,15 @@ const routes: Routes = [
         children: [
           {
             path: '',
-            component: TiendaComponent
+            component: ProductosComponent
+          },
+          {
+            path: 'index/:id',
+            component: ProductosComponent
           },
           {
             path: 'inicio',
-            component: TiendaComponent
+            component: ProductosComponent
           },
           {
             path: 'productos',
@@ -71,4 +76,4 @@ const routes: Routes = [
   imports: [RouterModule.forChild(routes)],
   exports: [RouterModule]
 })
-export class TiendaRoutingModule { }
+export class PortadaRoutingModule { }

@@ -4,14 +4,16 @@ import { CategoriasService } from 'src/app/servicesComponents/categorias.service
 import { NgxSpinnerService } from 'ngx-spinner';
 import { Store } from '@ngrx/store';
 import { CART } from 'src/app/interfaces/sotarage';
-import { MatDialog } from '@angular/material';
+import { MatBottomSheet, MatBottomSheetRef, MatDialog } from '@angular/material';
 import { InfoProductoComponent } from '../info-producto/info-producto.component';
-import { ProductoHistorialAction, CartAction, BuscadorAction } from 'src/app/redux/app.actions';
+import { ProductoHistorialAction, CartAction, BuscadorAction, UserCabezaAction } from 'src/app/redux/app.actions';
 import * as _ from 'lodash';
 import { ToolsService } from 'src/app/services/tools.service';
 import { FormatosService } from 'src/app/services/formatos.service';
 import { ChecktDialogComponent } from '../checkt-dialog/checkt-dialog.component';
-
+import { ActivatedRoute } from '@angular/router';
+import { UsuariosService } from 'src/app/servicesComponents/usuarios.service';
+let listCategory = [];
 @Component({
   selector: 'app-productos',
   templateUrl: './productos.component.html',
@@ -41,6 +43,8 @@ export class ProductosComponent implements OnInit {
   busqueda:any = {};
 
   tiendaInfo:any = {};
+  id:string;
+  dataUser:any = {};
 
   constructor(
     private _productos: ProductoService,
@@ -49,7 +53,10 @@ export class ProductosComponent implements OnInit {
     private _store: Store<CART>,
     public dialog: MatDialog,
     private _tools: ToolsService,
-    public _formato: FormatosService
+    public _formato: FormatosService,
+    private _bottomSheet: MatBottomSheet,
+    private activate: ActivatedRoute,
+    private _user: UsuariosService
   ) { 
     this._store.subscribe((store: any) => {
       store = store.name;
@@ -60,15 +67,33 @@ export class ProductosComponent implements OnInit {
     });
   }
 
-  ngOnInit() {
+  async ngOnInit() {
+    this.id = this.activate.snapshot.paramMap.get('id');
+    console.log("******ID", this.id)
+    if( this.id ) this.dataUser = await this.getUser();
     this.getProductos();
     this.getCategorias();
     this.getProductosRecomendado();
+  }
+  getUser(){
+    return new Promise( resolve =>{
+      this._user.get({ where:{ usu_telefono: this.id }, limit: 1 } ).subscribe( item =>{
+        item = item.data[0];
+        if( item ) this.GuardarStoreUser( item );
+        resolve( item );
+      },()=> resolve( false ) );
+    })
+  }
+
+  GuardarStoreUser( data:any ) {
+    let accion = new UserCabezaAction( data , 'post');
+    this._store.dispatch(accion);
   }
 
   getCategorias(){
     this._categorias.get( { where:{ cat_activo: 0 }, limit: 100 } ).subscribe((res:any)=>{ 
       this.listCategorias = res.data;
+      listCategory = this.listCategorias;
     });
   }
 
@@ -219,4 +244,25 @@ export class ProductosComponent implements OnInit {
     this._store.dispatch( accion );
   }
 
+  openBottomSheet(): void {
+    this._bottomSheet.open(BottomSheetOverviewExampleSheet);
+  }
+
+}
+
+@Component({
+  selector: 'bottom-sheet-overview-example-sheet',
+  templateUrl: 'bottom-sheet-overview-example-sheet.html',
+})
+export class BottomSheetOverviewExampleSheet {
+  listCategorias:any = listCategory;
+  constructor(private _bottomSheetRef: MatBottomSheetRef<BottomSheetOverviewExampleSheet>) { 
+    console.log("****237", this.listCategorias)
+  }
+  openLink(event: MouseEvent): void {
+    this._bottomSheetRef.dismiss();
+    event.preventDefault();
+  }
+  SeleccionCategoria( obj:any ){
+  }
 }

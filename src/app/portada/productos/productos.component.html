@@ -1,19 +1,18 @@
 <!-- catg header banner section -->
 <section id="aa-catg-head-banner">
-  <img [src]=" tiendaInfo.portada2 || './assets/img/fashion/fashion-header-bg-8.jpg'" alt="fashion img" class="anchosBanner">
+  <img [src]=" tiendaInfo.portada2 || './assets/img/banner.jpg'" alt="fashion img" class="anchosBanner">
   <div class="aa-catg-head-banner-area">
     <div class="container">
       <div class="aa-catg-head-banner-content">
         <h2>Productos exclusivos</h2>
         <ol class="breadcrumb">
-          <li><a href="#" [routerLink]="[ '/tienda' ]">Inicio</a></li>
+          <li><a href="#" [routerLink]="[ '/portada' ]">Inicio</a></li>
           <li class="active">Productos</li>
         </ol>
       </div>
     </div>
   </div>
 </section>
-<!-- / catg header banner section -->
 
 <!-- product category -->
 <section id="aa-product-category">
@@ -23,23 +22,9 @@
         <div class="aa-product-catg-content">
           <div class="aa-product-catg-head">
             <div class="aa-product-catg-head-left">
-              <div class="aa-sort-form">
-                <label for="">Ordenar por</label>
-                <select name="" [(ngModel)]="busqueda.ordenar" (change)="buscarFiltro('ordenar')">
-                  <option value="1" selected="Default">Default</option>
-                  <option value="2">Nombre</option>
-                  <option value="3">Precio</option>
-                  <option value="4">Fecha</option>
-                </select>
+              <div class="aa-sidebar-widget">
+                <button mat-raised-button (click)="openBottomSheet()">Categorias</button>
               </div>
-              <form action="" class="aa-show-form">
-                <label for="">Mostrar</label>
-                <select name="">
-                  <option value="1" selected="12">12</option>
-                  <option value="2">24</option>
-                  <option value="3">36</option>
-                </select>
-              </form>
             </div>
           </div>
           <div class="row">
@@ -57,14 +42,14 @@
               <!-- start single product item -->
               <li *ngFor="let item of listProductos" id="anchosLi">
                 <figure class="img-contenedor">
-                  <a class="aa-product-img" href="#" target="_blank" [routerLink]="[ '/tienda/productosView', item.id ]"><img class="anchosProductos" [src]="item.foto"
+                  <a class="aa-product-img" href="#" target="_blank" [routerLink]="[ '/portada/productosView', item.id ]"><img class="anchosProductos" [src]="item.foto"
                       alt="polo shirt img"></a>
                       <a class="aa-add-card-btn pointer" (click)="AgregarCart(item)"><span
                         class="fa fa-shopping-cart"></span>Comprar y pagar en casa Envio Gratis</a>
                   <figcaption>
                     <h4 class="aa-product-title"><a href="#">{{ item.pro_nombre }}</a></h4>
-                    <span class="aa-product-price">{{ _formato.monedaChange( 3, 2, item.pro_uni_venta ) }}</span><span
-                      class="aa-product-price"><del>{{ _formato.monedaChange( 3, 2, item.pro_uni_venta*2 ) }}</del></span>
+                    <span class="aa-product-price"><del>{{ _formato.monedaChange( 3, 2, item.pro_uni_venta*2 ) }}</del></span>
+                    <span class="aa-product-price">{{ _formato.monedaChange( 3, 2, item.pro_uni_venta ) }}</span>
                   </figcaption>
                 </figure>
                 <!--<div class="aa-product-hvr-content">
@@ -107,39 +92,6 @@
             <h3>Etiquetas</h3>
             <div class="tag-cloud">
               <a class="pointer">{{ dataSeleccionda }}</a>
-            </div>
-          </div>
-          <!-- single sidebar -->
-          <div class="aa-sidebar-widget">
-            <h3>Comprar por precio</h3>
-            <!-- price range -->
-            <div class="aa-sidebar-price-range">
-              <form action="">
-                <div id="skipstep" class="noUi-target noUi-ltr noUi-horizontal noUi-background">
-                </div>
-                <span id="skip-value-lower" class="example-val">30.00</span>
-                <span id="skip-value-upper" class="example-val">100.00</span>
-                <button class="aa-filter-btn" type="submit">Filtrar</button>
-              </form>
-            </div>
-
-          </div>
-          <!-- single sidebar -->
-          <div class="aa-sidebar-widget">
-            <h3>Compra po Color</h3>
-            <div class="aa-color-tag">
-              <a class="aa-color-green pointer" (click)="searchColor('green')"></a>
-              <a class="aa-color-yellow pointer" (click)="searchColor('yellow')"></a>
-              <a class="aa-color-pink pointer" (click)="searchColor('pink')"></a>
-              <a class="aa-color-purple pointer" (click)="searchColor('purple')"></a>
-              <a class="aa-color-blue pointer" (click)="searchColor('blue')"></a>
-              <a class="aa-color-orange pointer" (click)="searchColor('orange')"></a>
-              <a class="aa-color-gray pointer" (click)="searchColor('gray')"></a>
-              <a class="aa-color-black pointer" (click)="searchColor('black')"></a>
-              <a class="aa-color-white pointer" (click)="searchColor('white')"></a>
-              <a class="aa-color-cyan pointer" (click)="searchColor('cyan')"></a>
-              <a class="aa-color-olive pointer" (click)="searchColor('olive')"></a>
-              <a class="aa-color-orchid pointer" (click)="searchColor('orchid')"></a>
             </div>
           </div>
           <!-- single sidebar -->

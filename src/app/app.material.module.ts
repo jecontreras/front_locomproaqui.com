@@ -13,7 +13,6 @@ import {MatButtonModule,
    MatSidenavModule,
    MatIconModule,
    MatToolbarModule,
-   MatListModule,
    MatProgressBarModule,
    MatCardModule,
    MatTooltipModule,
@@ -29,9 +28,11 @@ import {MatButtonModule,
    MatSnackBarModule,
    MatRippleModule,
    MatPaginatorModule,
+   MatBottomSheetModule,
    MatMenuModule,
    MatBadgeModule} from '@angular/material';
    import {ScrollDispatchModule} from '@angular/cdk/scrolling';
+   import {MatListModule} from '@angular/material/list';
 import { NgModule } from '@angular/core';
 import {DragDropModule} from '@angular/cdk/drag-drop';
 
@@ -69,6 +70,7 @@ import {DragDropModule} from '@angular/cdk/drag-drop';
     MatSnackBarModule,
     MatRippleModule,
     MatPaginatorModule,
+    MatBottomSheetModule,
     MatTabsModule,
     MatSelectModule,
     ScrollDispatchModule,
@@ -106,6 +108,7 @@ import {DragDropModule} from '@angular/cdk/drag-drop';
     MatSnackBarModule,
     MatRippleModule,
     MatPaginatorModule,
+    MatBottomSheetModule,
     MatTabsModule,
     MatSelectModule,
     ScrollDispatchModule,

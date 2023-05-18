@@ -1,0 +1,127 @@
+<!-- product category -->
+<section id="aa-product-details">
+  <div class="anchos">
+    <div class="row">
+      <div class="col-md-12">
+        <div class="aa-product-details-area">
+          <div class="aa-product-details-content">
+            <div class="row">
+              <!-- Modal view slider -->
+              <div class="col-md-5 col-sm-5 col-xs-12">
+                <div class="aa-product-view-slider">
+                  <div id="demo-1" class="simpleLens-gallery-container">
+                    <div class="simpleLens-container">
+                      <lib-ngx-image-zoom [thumbImage]=viewsImagen [fullImage]=viewsImagen [magnification]="1"
+                        [enableScrollZoom]="true" [enableLens]="true" [lensWidth]="200" [lensHeight]="200">
+                      </lib-ngx-image-zoom>
+                    </div>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col-2" *ngFor="let item of listGaleria" (click)="verImagen( item.pri_imagen )">
+                    <img [src]="item.pri_imagen" alt="" style="width: 120%; border-radius: 11px;">
+                  </div>
+                </div>
+              </div>
+              <!-- Modal view content -->
+              <div class="col-md-7 col-sm-7 col-xs-12">
+                <div class="aa-product-view-content p-3">
+                  <h3>{{ data.pro_nombre }}</h3>
+                  <div class="aa-price-block">
+                    <span class="aa-product-view-price precio">{{ _formato.monedaChange( 3, 2, data.pro_uni_venta || 0 )
+                      }}</span>
+                    <p class="aa-product-avilability">Disponibilidad: <span>En stock</span></p>
+                  </div>
+                  <p [innerHtml]="data.pro_descripcion "></p>
+                  <section *ngIf="data['listTallas']?.length > 0 ">
+                    <h4>Talla</h4>
+                    <div class="aa-prod-view-size">
+                      <a class="pointer" *ngFor="let item of data.listTallas" [ngClass]="{selecciono: item.check}"
+                        (click)="this.pedido.talla = item.tal_descripcion; item.check = !item.check">{{
+                        item.tal_descripcion }}</a>
+                    </div>
+                  </section>
+                  <!-- <h4>Color</h4>
+                     <div class="aa-color-tag">
+                       <a href="#" class="aa-color-green"></a>
+                       <a href="#" class="aa-color-yellow"></a>
+                       <a href="#" class="aa-color-pink"></a>
+                       <a href="#" class="aa-color-black"></a>
+                       <a href="#" class="aa-color-white"></a>
+                     </div> -->
+                  <div class="aa-prod-quantity">
+                    <h4>Cantidad</h4>
+                    <input class="form-control form-control-sm" type="number" placeholder=".form-control-sm" [(ngModel)]="pedido.cantidad">
+                    <p class="aa-prod-category">
+                      Categoria: <a class="pointer" (click)="categoriasVer()">{{ data['pro_categoria']?.cat_nombre
+                        }}</a>
+                    </p>
+                  </div>
+                  <div class="aa-prod-view-bottom">
+                    <!--<a (click)="AgregarCart()" class="aa-add-to-cart-btn pointer"><span
+                        class="fa fa-shopping-cart"></span>Agregar al Carrito</a>-->
+                    <!--<a class="aa-add-to-cart-btn"
+                      href="https://www.facebook.com/sharer/sharer.php?kid_directed_site=0&u=https://www.locomproaqui.com/productos/15?u=https://www.locomproaqui.com/productos/{{ this.data.id }}"
+                      target="_blank">Compartir</a>-->
+                    <a (click)="comprarArticulo( 1, false )" class="aa-add-to-cart-btn pointer"
+                      style="    font-size: 100%; background: #008116; color: white; border-radius: 11px;"><span
+                        class="fa fab fa-whatsapp"></span>Comprar y pagar en casa</a>
+                    <!--<a (click)="masInfo( data )" class="aa-add-to-cart-btn pointer"><span
+                      class="fa fab fa-whatsapp"></span>Pedir Informacion</a>-->
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="aa-product-details-bottom">
+            <!--<div class="mx-auto" style="width: 200px;">
+              <ul class="nav nav-tabs centerAncho" id="myTab2">
+                <li><a href="#description" data-toggle="tab" (click)="this.view = 'descripcion'">Descripcion</a></li>
+                <li><a href="#review" data-toggle="tab" (click)="this.view = 'comentarios'">Comentarios</a></li>
+              </ul>
+            </div>-->
+
+            <!-- Tab panes -->
+            <div class="container">
+              <!--<div *ngIf="view == 'descripcion'">
+                <h5 [innerHtml]="data.pro_descripcion"></h5>
+              </div>-->
+              <div>
+                <div class="aa-product-review-area">
+                  <h4>Detalles</h4>
+                  <div class="row">
+                    <div class="col-12">
+                      <img src="./assets/img/compra.jpg" style="width: 320px;">
+                    </div>
+                    <div class="col-12" *ngIf="data['pro_categoria']?.pro_categoria == 22">
+                      <h5> 🚚 ENVIO GRATIS Y PAGAS CUANDO RECIBES EL PRODUCTO 🚚
+                        Nuestro tallaje es nacional, un poco pequeño sugerimos solicitar una talla más a la que te de en
+                        la siguiente tabla
+                      </h5>
+                    </div>
+                    <div class="col-12" *ngIf="data['pro_categoria']?.id == 22">
+                      <img src="./assets/img/tallas.jpg" style="width: 320px;">
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <!-- Related product -->
+          <div class="aa-product-related-item">
+            <h3>Productos Relacionados</h3>
+            <ul class="aa-product-catg aa-related-item-slider">
+              <!-- start single product item -->
+              <ng-image-slider [images]="imageObject" [infinite]="sliderInfinite" [imagePopup]="sliderImagePopup"
+                [showArrow]="sliderArrowShow" [imageSize]="{width: sliderImageWidth, height: sliderImageHeight}"
+                [autoSlide]="sliderAutoSlide ? 1 : 0" [slideImage]="sliderSlideImage"
+                [animationSpeed]="sliderAnimationSpeed" (imageClick)="imageOnClick($event)"
+                (arrowClick)="arrowOnClick($event)" (lightboxArrowClick)="lightboxArrowClick($event)" #nav>
+              </ng-image-slider>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
