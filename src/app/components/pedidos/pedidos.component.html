@@ -35,7 +35,8 @@
                       <h6 class="titulo1 color1">
                         <small style="display: inline-block;  font-size: 90% !important;" class="pricesmall currency2"
                           id="pricesmall_25" *ngIf="coinShop == false">
-                          {{ _tools.monedaChange( 3, 2, ( item.pro_uni_ventaEdit || item.pro_uni_venta || 0 ) ) }}
+                          <!--{{ _tools.monedaChange( 3, 2, ( item.pro_uni_ventaEdit || item.pro_uni_venta || 0 ) ) }}-->
+                          <input currencyMask [(ngModel)]="item.pro_uni_venta" (ngModelChange)="handleEdit()" class="form-control form-control-sm" [options]="opcionCurrencys" [disabled]="coinShop"/>
                         </small>
                         <small style="display: inline-block;  font-size: 90% !important;" class="pricesmall currency2"
                           id="pricesmall_25" *ngIf="coinShop == true">

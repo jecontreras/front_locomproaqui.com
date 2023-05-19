@@ -36,6 +36,13 @@ export class ProductosViewComponent implements OnInit {
     page: 0,
     limit: 10
   };
+  queryId:any = {
+    where:{
+      pro_activo: 0
+    },
+    page: 0,
+    limit: 1
+  };
   loader:boolean = false;
   notEmptyPost:boolean = true;
   notscrolly:boolean=true;
@@ -99,7 +106,7 @@ export class ProductosViewComponent implements OnInit {
     public dialog: MatDialog,
     public _formato: FormatosService,
 
-  ) { 
+  ) {
     this._store.subscribe((store: any) => {
       console.log(store);
       store = store.name;
@@ -108,6 +115,10 @@ export class ProductosViewComponent implements OnInit {
       this.dataUser = store.user || {};
       this.listProductosHistorial = _.orderBy(store.productoHistorial, ['createdAt'], ['DESC']);
       this.tiendaInfo = store.configuracion || {};
+      if( store.usercabeza ) {
+        this.queryId.where.idPrice = store.usercabeza.id;
+        this.query.where.idPrice = store.usercabeza.id;
+       }
     });
   }
 
@@ -122,11 +133,12 @@ export class ProductosViewComponent implements OnInit {
   }
 
   getProducto(){
-    this._producto.get({ where: { id: this.id}}).subscribe((res:any)=>{ 
-      this.data = res.data[0] || {}; 
-      this.viewsImagen = this.data.foto; 
-      if( !this.data.listComentarios ) this.data.listComentarios = []; 
-      this.listGaleria = this.data.galeria || []; 
+    this.queryId.where.id = this.id;
+    this._producto.get( this.queryId ).subscribe((res:any)=>{
+      this.data = res.data[0] || {};
+      this.viewsImagen = this.data.foto;
+      if( !this.data.listComentarios ) this.data.listComentarios = [];
+      this.listGaleria = this.data.galeria || [];
       for( let row of this.data.listColor ) {
         let filtro = this.listGaleria.find( item => item.pri_imagen == row.foto );
         if( !filtro ) this.listGaleria.push( { id: this._tools.codigo(), pri_imagen: row.foto } );
@@ -139,14 +151,8 @@ export class ProductosViewComponent implements OnInit {
   }
 
   async getProductos(){
-    this.query = {
-      where:{
-        pro_activo: 0,
-        codigo: this.data.codigo
-      },
-      page: 0,
-      limit: 20
-    };
+    this.query.where.codigo = this.data.codigo;
+    delete this.query.where.id;
     let resultado:any = await this.getArticulos();
     for( let row of resultado ){
       this.imageObject.push(
@@ -262,7 +268,7 @@ export class ProductosViewComponent implements OnInit {
   masInfo(obj:any){
     obj.talla = this.pedido.talla;
     obj.cantidad = this.pedido.cantidad || 1;
-    let cerialNumero:any = ''; 
+    let cerialNumero:any = '';
     let numeroSplit:any;
     let cabeza:any = this.dataUser.cabeza;
     if( cabeza ){
@@ -296,7 +302,7 @@ export class ProductosViewComponent implements OnInit {
       } );
     },()=> this._tools.tooast( { title: "Error al crear el Comentario" } ) );
   }
-  
+
   comprarArticulo( cantidad:number, opt ){
     this.suma();
     //this.AgregarCart();

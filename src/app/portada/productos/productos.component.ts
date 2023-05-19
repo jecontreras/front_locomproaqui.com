@@ -30,7 +30,7 @@ export class ProductosComponent implements OnInit {
     page: 0,
     limit: 10
   };
-  
+
   listCategorias:any = [];
   dataSeleccionda:string;
   listProductosHistorial: any = [];
@@ -57,13 +57,14 @@ export class ProductosComponent implements OnInit {
     private _bottomSheet: MatBottomSheet,
     private activate: ActivatedRoute,
     private _user: UsuariosService
-  ) { 
+  ) {
     this._store.subscribe((store: any) => {
       store = store.name;
       if(!store) return false;
       this.listProductosHistorial = _.orderBy(store.productoHistorial, ['createdAt'], ['DESC']);
       this.tiendaInfo = store.configuracion || {};
       if( store.buscador ) if( Object.keys(store.buscador).length > 0 ) {  if( store.buscador.search ) { this.seartxt = store.buscador.search; this.buscar(); this.borrarBusqueda(); this.dataSeleccionda = store.buscador.search } }
+      if( store.usercabeza ) this.query.where.idPrice = store.usercabeza.id;
     });
   }
 
@@ -79,7 +80,10 @@ export class ProductosComponent implements OnInit {
     return new Promise( resolve =>{
       this._user.get({ where:{ usu_telefono: this.id }, limit: 1 } ).subscribe( item =>{
         item = item.data[0];
-        if( item ) this.GuardarStoreUser( item );
+        if( item ) {
+          this.GuardarStoreUser( item );
+          this.query.where.idPrice = item.id;
+        }
         resolve( item );
       },()=> resolve( false ) );
     })
@@ -91,7 +95,7 @@ export class ProductosComponent implements OnInit {
   }
 
   getCategorias(){
-    this._categorias.get( { where:{ cat_activo: 0 }, limit: 100 } ).subscribe((res:any)=>{ 
+    this._categorias.get( { where:{ cat_activo: 0 }, limit: 100 } ).subscribe((res:any)=>{
       this.listCategorias = res.data;
       listCategory = this.listCategorias;
     });
@@ -106,7 +110,7 @@ export class ProductosComponent implements OnInit {
   }
 
   searchColor( color:string ){
-    this.query.where.color= color; 
+    this.query.where.color= color;
   }
 
   onScroll(){
@@ -119,7 +123,7 @@ export class ProductosComponent implements OnInit {
 
   getProductos(){
     this.spinner.show();
-    this._productos.get(this.query).subscribe((res:any)=>{ 
+    this._productos.get(this.query).subscribe((res:any)=>{
       this.listProductos = _.unionBy(this.listProductos || [], res.data, 'id');
       console.log("******",res)
       this.spinner.hide();
@@ -134,7 +138,7 @@ export class ProductosComponent implements OnInit {
   getProductosRecomendado(){
     this._productos.get( { where:{ pro_activo: 0 }, sort: "createdAt DESC", page: 0, limit: 5 }).subscribe((res:any)=>{ console.log(res); this.listProductosRecomendar = res.data; }, ( error )=> { console.error(error); });
   }
-  
+
   viewProducto( obj:any ){
     const dialogRef = this.dialog.open(InfoProductoComponent,{
       width: '855px',
@@ -190,7 +194,7 @@ export class ProductosComponent implements OnInit {
     this.loader = true;
     this.seartxt = this.seartxt.trim();
     this.listProductos = [];
-    this.notscrolly = true; 
+    this.notscrolly = true;
     this.notEmptyPost = true;
     this.query = { where:{ pro_activo: 0 } ,limit: 15, page: 0 };
     if (this.seartxt) {
@@ -256,7 +260,7 @@ export class ProductosComponent implements OnInit {
 })
 export class BottomSheetOverviewExampleSheet {
   listCategorias:any = listCategory;
-  constructor(private _bottomSheetRef: MatBottomSheetRef<BottomSheetOverviewExampleSheet>) { 
+  constructor(private _bottomSheetRef: MatBottomSheetRef<BottomSheetOverviewExampleSheet>) {
     console.log("****237", this.listCategorias)
   }
   openLink(event: MouseEvent): void {

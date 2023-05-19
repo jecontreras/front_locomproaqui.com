@@ -61,6 +61,7 @@ export class PedidosComponent implements OnInit {
   disabledFiltro:boolean = false;
   coinShop:boolean = false;
   titleButton:string = "Hacer pedido";
+  opcionCurrencys: any = {};
 
   constructor(
     private _productos: ProductoService,
@@ -98,6 +99,7 @@ export class PedidosComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.opcionCurrencys = this._tools.currency;
     let urlPath = window.location;
     const pr = urlPath.pathname.split("/");
     if( pr[1] && pr[2] && pr[3] ) this.getId( pr[3] )
@@ -487,6 +489,10 @@ export class PedidosComponent implements OnInit {
     this.listProductos = [];
     this.notscrolly = true;
     this.cargarProductos();
+  }
+
+  handleEdit(){
+
   }
 
 }
