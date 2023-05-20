@@ -49,4 +49,7 @@ export class VentasService {
   getCiudades(query:any){
     return this._model.querysFlete('ciudades/querys',query, 'post');
   }
+  getPossibleSales( query:any ){
+    return this._model.querys('ventasDBI/querys',query, 'post');
+  }
 }

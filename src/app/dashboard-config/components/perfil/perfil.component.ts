@@ -15,7 +15,7 @@ import { departamento } from 'src/app/JSON/departamentos';
 import { FormproductosComponent } from '../../form/formproductos/formproductos.component';
 import { MatDialog } from '@angular/material';
 const URL = environment.url;
-const URLFRON = environment.urlFront;
+const URLFRON = window.location.origin;
 import pdfMake from 'pdfmake/build/pdfmake';
 import pdfFonts from 'pdfmake/build/vfs_fonts';
 import { DANEGROUP } from 'src/app/JSON/dane-nogroup';

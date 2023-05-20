@@ -407,6 +407,13 @@ export class HeaderComponent implements OnInit {
       },
       {
         icons: 'local_grocery_store',
+        nombre: 'Ventas Posibles Clientes',
+        disable: this.rolUser !== 'visitante' && this.rolUser != 'proveedor',
+        url: '/config/ventasPosibles',
+        submenus:[]
+      },
+      {
+        icons: 'local_grocery_store',
         nombre: 'Mis Ventas',
         disable: this.rolUser !== 'visitante' && this.rolUser != 'proveedor',
         url: '/config/ventas',

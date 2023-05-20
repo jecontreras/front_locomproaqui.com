@@ -58,6 +58,8 @@ import { FormcrearguiaComponent } from './form/formcrearguia/formcrearguia.compo
 import { FormlistventasComponent } from './form/formlistventas/formlistventas.component';
 import { CursosComponent } from './components/cursos/cursos.component';
 import { MatVideoModule } from 'mat-video';
+import { VentasClienteComponent } from './components/ventas-cliente/ventas-cliente.component';
+import { FormPosiblesVentasComponent } from './form/form-posibles-ventas/form-posibles-ventas.component';
 
 @NgModule({
   entryComponents: [
@@ -75,7 +77,8 @@ import { MatVideoModule } from 'mat-video';
     ProductosOrdenarComponent,
     FormempresaComponent,
     FormcrearguiaComponent,
-    FormlistventasComponent
+    FormlistventasComponent,
+    FormPosiblesVentasComponent
   ],
   declarations: [
     MainComponent,
@@ -114,7 +117,9 @@ import { MatVideoModule } from 'mat-video';
     FormempresaComponent,
     FormcrearguiaComponent,
     FormlistventasComponent,
-    CursosComponent
+    CursosComponent,
+    VentasClienteComponent,
+    FormPosiblesVentasComponent
   ],
   imports: [
     CommonModule,
@@ -144,7 +149,8 @@ import { MatVideoModule } from 'mat-video';
     FormusuariosComponent,
     FormventasComponent,
     FormcobrosComponent,
-    ProductosOrdenarComponent
+    ProductosOrdenarComponent,
+    FormPosiblesVentasComponent
   ],
   providers: [
   ],

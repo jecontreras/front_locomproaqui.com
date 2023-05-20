@@ -1,0 +1,76 @@
+<h2 mat-dialog-title>{{ titulo }} </h2>
+<mat-dialog-content class="mat-typography">
+    <div class="row" *ngIf="disableSpinner">
+        <div class="col-12">
+            <div class="d-flex justify-content-center">
+                <mat-spinner></mat-spinner>
+            </div>
+        </div>
+    </div>
+    <div class="form row" *ngIf="!disableSpinner">
+        <!-- <div class="form-group col-md-6 col-sm-4 col-lg-4 col-xs-6">
+            <label for="exampleFormControlSelect1">Tipo de Venta</label>
+            <select class="form-control form-control-sm" [(ngModel)]="data.ven_tipo">
+                <option value="carrito">Carrito</option>
+                <option value="whatsapp">Whatsapp</option>
+            </select>
+        </div> -->
+        <div class="form-group col-md-6 col-sm-4 col-lg-4 col-xs-6" *ngIf="data.id">
+            <label for="exampleFormControlSelect1">Estado de la Venta</label>
+            <select class="form-control form-control-sm" [(ngModel)]="data.ven_estado" (change)="submit()">
+                <option type="number" value="0">Pendiente</option>
+                <option type="number" value="3">Despachado</option>
+                <option type="number" value="2">Cancelado</option>
+            </select>
+        </div>
+        <div class="form-group col-12 bg-primary text-white rounded">
+            <h2>Información del Cliente</h2>
+        </div>
+        <div class="form-group col-md-6 col-sm-4 col-lg-4 col-xs-6">
+            <label for="exampleFormControlInput1">Número Cédula del cliente</label>
+            <input type="number" [(ngModel)]="data.cob_num_cedula_cliente" class="form-control form-control-sm">
+        </div>
+        <div class="form-group col-md-6 col-sm-4 col-lg-4 col-xs-6">
+            <label for="exampleFormControlInput1">Nombre y apellidos Cliente</label>
+            <input type="text" [(ngModel)]="data.ven_nombre_cliente" class="form-control form-control-sm">
+        </div>
+        <div class="form-group col-md-6 col-sm-4 col-lg-4 col-xs-6">
+            <label for="exampleFormControlInput1">Numero de llamada cliente o whatsapp</label>
+            <input type="number" [(ngModel)]="data.ven_telefono_cliente" class="form-control form-control-sm" required>
+        </div>
+        <!--<div class="form-group col-md-6 col-sm-4 col-lg-4 col-xs-6">
+            <label for="exampleFormControlInput1">Ciudad del Cliente</label>
+            <input type="text" [(ngModel)]="data.ven_ciudad" class="form-control form-control-sm">
+        </div>-->
+        <div class="form-group col-xs-5 col-sm-5 col-12">
+            <label>Ciudad Destino *</label>
+            <input type="text" class="form-control form-control-sm" [(ngModel)]="data.ven_barrio">
+        </div>
+        <div class="form-group col-md-6 col-sm-4 col-lg-4 col-xs-6">
+            <label for="exampleFormControlInput1">Barrio del Cliente</label>
+            <input type="text" [(ngModel)]="data.ven_barrio" class="form-control form-control-sm">
+        </div>
+        <div class="form-group col-md-6 col-sm-4 col-lg-4 col-xs-6">
+            <label for="exampleFormControlInput1">Dirección cliente</label>
+            <input type="text" [(ngModel)]="data.ven_direccion_cliente" class="form-control form-control-sm">
+        </div>
+        <div class="form-group col-md-6 col-sm-4 col-lg-4 col-xs-6">
+            <label for="exampleFormControlInput1">Fecha venta</label>
+            <div class="input-group">
+                <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
+                <input type="date" class="form-control" [(ngModel)]="data.ven_fecha_venta">
+            </div>
+        </div>
+    </div>
+</mat-dialog-content>
+
+<mat-dialog-actions align="end">
+    <button mat-button mat-dialog-close>Cerrar</button>
+    <button mat-button cdkFocusInitial color="primary" (click)="submit()" [disabled]="disabledButton" >
+        <span *ngIf="id">Actulizar Cambios</span>
+    </button>
+    <!-- <button mat-button (click)="OrdenValidadWhatsapp( data )" *ngIf="data.id && data.ven_estado == 3">
+        <span>Enviar Guia Whatsapp</span>
+    </button> -->
+</mat-dialog-actions>
+

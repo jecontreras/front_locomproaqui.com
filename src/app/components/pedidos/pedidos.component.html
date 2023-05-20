@@ -28,15 +28,16 @@
               </figure>
             <mat-card-content>
               <div class="row">
-                <div class="col-12">
+                <div class="col-12" style="padding: 0;">
                   <div class="d-flex bd-highlight">
-                    <div class="p-2 flex-grow-1 bd-highlight"><h6 class="titulo1 color1">{{ item.pro_nombre | slice: 0: 15 }}</h6></div>
+                    <div class="flex-grow-1 bd-highlight"><p class="titulo1 color1">{{ item.pro_nombre | slice: 0: 15 }}</p></div>
                     <div class="p-2 bd-highlight">
                       <h6 class="titulo1 color1">
                         <small style="display: inline-block;  font-size: 90% !important;" class="pricesmall currency2"
                           id="pricesmall_25" *ngIf="coinShop == false">
-                          <!--{{ _tools.monedaChange( 3, 2, ( item.pro_uni_ventaEdit || item.pro_uni_venta || 0 ) ) }}-->
-                          <input currencyMask [(ngModel)]="item.pro_uni_venta" (ngModelChange)="handleEdit()" class="form-control form-control-sm" [options]="opcionCurrencys" [disabled]="coinShop"/>
+                          <span *ngIf="!dataUser.id" >{{ _tools.monedaChange( 3, 2, ( item.pro_uni_ventaEdit || item.pro_uni_venta || 0 ) ) }}</span>
+                          <input currencyMask [(ngModel)]="item.pro_uni_venta" *ngIf="dataUser.id"
+                            (blur)="handleEdit( item )" class="form-control form-control-sm" [options]="opcionCurrencys" [disabled]="disabledBtn"/>
                         </small>
                         <small style="display: inline-block;  font-size: 90% !important;" class="pricesmall currency2"
                           id="pricesmall_25" *ngIf="coinShop == true">

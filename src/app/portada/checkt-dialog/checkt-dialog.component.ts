@@ -35,6 +35,7 @@ export class ChecktDialogComponent implements OnInit {
       store = store.name;
       if( !store ) return false;
       this.dataUser = store.user || {};
+      if( store.usercabeza ) this.dataUser = store.usercabeza || {}
     });
   }
 

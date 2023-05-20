@@ -31,4 +31,8 @@ export class ProductoService {
   createTestimonio(query:any){
     return this._model.querys('tbltestimonio',query, 'post');
   }
+  createPrice( query:any ){
+    return this._model.querys('priceArticle',query, 'post');
+  }
+
 }

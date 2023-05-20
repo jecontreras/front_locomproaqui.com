@@ -265,6 +265,7 @@ export class PedidosComponent implements OnInit {
     //console.log( this.ultimoSeartxt );
     if( this.dataUser.id ) this.query.where.user = this.dataUser.id;
     this.query.where.pro_usu_creacion = 1;
+    if( this.dataUser.id ) this.query.where.idPrice = this.dataUser.id;
     this._productos.get(this.query).subscribe((res: any) => {
       console.log("res", res);
       this.loader = false;
@@ -491,8 +492,17 @@ export class PedidosComponent implements OnInit {
     this.cargarProductos();
   }
 
-  handleEdit(){
-
+  handleEdit( item:any ){
+    if( !this.dataUser.id ) return false;
+    this.disabledBtn = true;
+    this._productos.createPrice({
+      article: item.id,
+      user: this.dataUser.id,
+      price: item.pro_uni_venta
+    }).subscribe(res=>{
+      this._tools.presentToast("Actualizado el precio...!");
+      this.disabledBtn = false;
+    },()=> this.disabledBtn = false );
   }
 
 }
