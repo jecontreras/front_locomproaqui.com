@@ -22,6 +22,9 @@ export class VentasService {
   update(query:any){
     return this._model.querys('tblventas/'+query.id, query, 'put');
   }
+  updateDBI(query:any){
+    return this._model.querys('ventasDBI/'+query.id, query, 'put');
+  }
   delete(query:any){
     return this._model.querys('tblventas/'+query.id, query, 'delete');
   }

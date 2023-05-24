@@ -9,7 +9,8 @@ export const environment = {
   //url: "https://1337-jecontreras-backlocompr-p462cm2u50d.ws-us90.gitpod.io",
   //url: "https://backpruebaslokompro.herokuapp.com",
   //url: "https://backlocompro.herokuapp.com",
-  urlEnvios: "http://localhost:1338",
+  //urlEnvios: "http://localhost:1338",
+  urlEnvios: "https://enviosrapidosapi.herokuapp.com",
   urlFront: "http://localhost:4200",
 };
 

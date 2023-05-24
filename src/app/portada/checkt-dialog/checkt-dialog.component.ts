@@ -30,7 +30,7 @@ export class ChecktDialogComponent implements OnInit {
     private _router: Router,
     private _store: Store<STORAGES>,
     private socialAuthService: SocialAuthService,
-  ) { 
+  ) {
     this._store.subscribe((store: any) => {
       store = store.name;
       if( !store ) return false;
@@ -75,13 +75,17 @@ export class ChecktDialogComponent implements OnInit {
       "ven_precio": this.datas.pro_uni_venta,
       "ven_total": this.data.costo || 0,
       "ven_ganancias": 0,
-      "prv_observacion": "ok la talla es " + this.data.talla + " Y Color "+ this.data.colorSelect,
+      "ven_observacion": this.data.colorSelect,
       "ven_estado": 0,
       "create": moment().format("DD/MM/YYYY"),
       "apartamento": this.data.apartamento || '',
       "departamento": this.data.departamento || '',
-      "ven_imagen_producto": this.datas.foto
+      "ven_imagen_producto": this.datas.foto,
+      "pro_clave_int": this.datas.id,
+      "nombreProducto": this.datas.pro_nombre
+
     };
+    console.log("*****88", data);
     //await this.crearUser();
     data.usu_clave_int = this.dataUser.id;
     await this.nexCompra( data );
@@ -156,7 +160,7 @@ export class ChecktDialogComponent implements OnInit {
       *Color:* ${ this.data.colorSelect }
       *cantidad:* ${ this.data.cantidadAd || 1 }
       Ciudad: ${ this.data.ciudad }
-      ${ this.data.barrio } 
+      ${ this.data.barrio }
       Dirección: ${ this.data.direccion }
       ${ this.datas.pro_nombre }
 

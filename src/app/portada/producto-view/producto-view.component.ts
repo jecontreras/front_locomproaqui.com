@@ -95,6 +95,7 @@ export class ProductosViewComponent implements OnInit {
   urlwhat:string
   listGaleria:any = [];
   viewsImagen:string;
+  listTallas:any = [];
 
   constructor(
     private _store: Store<CART>,
@@ -139,6 +140,10 @@ export class ProductosViewComponent implements OnInit {
       this.viewsImagen = this.data.foto;
       if( !this.data.listComentarios ) this.data.listComentarios = [];
       this.listGaleria = this.data.galeria || [];
+      for( let row of this.data.listColor){
+        this.listTallas.push( ... ( _.filter( row.tallaSelect, off=> off.check == true ) ) );
+        this.listTallas = _.unionBy( this.listTallas || [], this.listTallas, 'id');
+      }
       for( let row of this.data.listColor ) {
         let filtro = this.listGaleria.find( item => item.pri_imagen == row.foto );
         if( !filtro ) this.listGaleria.push( { id: this._tools.codigo(), pri_imagen: row.foto } );

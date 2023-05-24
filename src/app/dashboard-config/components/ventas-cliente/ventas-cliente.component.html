@@ -34,21 +34,9 @@
                       class="btn btn-primary btn-just-icon btn-round espaciosL">
                       <i class="material-icons">search</i>
                     </button>
-                    <!-- <button (click)="verTable()" [disabled]="loader" mat-raised-button mat-min-fab
-                      class="btn btn-primary btn-just-icon btn-round espaciosL">
-                      <i class="material-icons">outdoor_grill</i>
-                    </button> -->
-                    <button *ngIf="activando" (click)="darPuntos()" class="btn btn-primary btn-just-icon btn-round espaciosL"
-                      mat-raised-button mat-min-fab>
-                      <i class="material-icons">redeem</i>
-                    </button>
-                    <!--<button (click)="crear(false)" class="btn btn-primary btn-just-icon btn-round espaciosL" mat-raised-button
-                      mat-min-fab>
-                      SUBE TU VENTA <i class="material-icons">add_circle_outline</i>
-                    </button>-->
                   </div>
                 </div>
-  
+
               </div>
               <div class="col-12">
                 <button class="btn btn-primary" type="button" title="Refresh" data-toggle="tooltip" data-placement="bottom"
@@ -91,54 +79,22 @@
                         'colorEliminado':row['ven_estado'] == 5,
                         'colorPagado':row['ven_retiro'] >= 1
                       }">
-  
+
                         <td *ngIf="row['ven_estado'] == 5">
-  
+
                         </td>
                         <td>
                           <mat-checkbox color="primary" class="example-margin" [(ngModel)]="row.checks"></mat-checkbox>
                         </td>
                         <td *ngIf="row['ven_estado'] != 5">
-                          <div *ngIf="!row.ven_numero_guia">
-                            <span class="text-warning fondos" >Debes generar la guia </span><br>
+                          <div *ngIf="row.ven_estado == 0">
+                            <span class="text-warning fondos" >Debes generar Venta a lokomproaqui </span><br>
                           </div>
                           <div>
                             <button (click)="crear(row)" class="btn btn-primary btn-just-icon btn-round">
                               <i class="material-icons">remove_red_eye</i>
                             </button><br>
                           </div>
-                          <div *ngIf="row['ven_numero_guia']">
-                            <button  (click)="verDetalles( row['ven_numero_guia'], row )" class="btn btn-info btn-just-icon btn-round">
-                              Estado Guia
-                            </button><br>
-                          </div>
-                          <div *ngIf="row['ven_imagen_tiket']">
-                            <button (click)="openEvidencia( row['ven_imagen_tiket'], row )" class="btn btn-dark btn-just-icon btn-round">
-                              Evidencia Entrega
-                            </button><br>
-                          </div>
-                          <div *ngIf="row['ven_numero_guia']">
-                            <button (click)="openUrl( row['ven_telefono_cliente'], row['ven_nombre_cliente'], row )" class="btn btn-warning btn-just-icon btn-round">
-                              Enviar Guia ( cliente )
-                            </button><br>
-                          </div>
-                          <!--<div>
-                            <button (click)="btndelete(row, idx)" class="btn btn-danger btn-just-icon btn-round">
-                              <i class="material-icons">delete_forever</i>
-                            </button><br>
-                          </div>-->
-                        </td>
-                        <td>{{ row['ven_numero_guia'] }}
-                          <span *ngIf=" row['transportadoraSelect']=='ENVIA' || row['transportadoraSelect']=='ENVIANO' "><img class="imgs" src="./assets/img/envia.jpg" alt=""></span>
-                          <span *ngIf=" row['transportadoraSelect']=='CORDINADORA' "><img class="imgs" src="./assets/img/logoCordinadora.png" alt=""></span>
-                          <span *ngIf=" row['transportadoraSelect']=='TCC' "><img class="imgs" src="https://storage.googleapis.com/tcc-cloud.appspot.com/tcc/wp-content/uploads/2017/12/logo-dark.png" alt=""></span>
-                          <span *ngIf=" row['transportadoraSelect']=='INTERRAPIDISIMO' "><img class="imgs" src="./assets/img/logoInter.png" alt=""></span>
-                        </td>
-                        <td>
-                          <p>{{ row['ven_usu_creacion'] }}</p>
-                          <p>{{ row['usu_clave_int']?.usu_nombre }}</p>
-                          <p>+{{ row['usu_clave_int']?.usu_indicativo }} {{ row['usu_clave_int']?.usu_telefono }}</p>
-                          <p>{{ row['usu_clave_int']?.usu_ciudad }}</p>
                         </td>
                         <td>{{ row['ven_nombre_cliente'] }}</td>
                         <td>
@@ -146,28 +102,12 @@
                             {{ row['ven_telefono_cliente'] }} <img src="./assets/img/what.jpg" class="pointer" style="width: 35px;" (click)="openUrl( row['ven_telefono_cliente'], row['ven_nombre_cliente'], row )">
                           </span>
                         </td>
-                        <td>{{ _tools.monedaChange( 3,2, row['ven_ganancias'] || 0 ) }}</td>
-                        <td>{{ _tools.monedaChange( 3,2, row['fleteValor'] || 0 ) }}</td>
                         <td>{{ row['createdAt'] | date:'medium' }}</td>
-                        <!-- <td>{{ row['pro_clave_int']?.pro_nombre }}</td> -->
-                        <!-- <td>{{ row['ven_cantidad'] }}</td> -->
-                        <!-- <td>
-                          $ {{ ( row['ven_precio'] || 0 ).toLocaleString(1) }}
-                        </td> -->
-                        <!-- <td>
-                          <img *ngIf="row.ven_tipo === 'whatsapp'" [src]="row['ven_imagen_producto']" class="foto pointer" (click)="openFoto( row['ven_imagen_producto'] )" >
-                          <img *ngIf="row.ven_tipo === 'carrito'" [src]="row['pro_clave_int']?.foto" class="foto">
-                        </td> -->
                         <td *ngIf="row['ven_estado'] == 0">Pendiente</td>
                         <td *ngIf="row['ven_estado'] == 1">Exitosa</td>
                         <td *ngIf="row['ven_estado'] == 2">Rechazada</td>
                         <td *ngIf="row['ven_estado'] == 3">Despachado</td>
                         <td *ngIf="row['ven_estado'] == 5">Eliminado</td>
-                        <td>
-                          <img src="./assets/icons/pago.png" alt="" *ngIf="row['ven_retirado'] == 1" style="width: 25%;">
-                          <span *ngIf="row['ven_imagen_tiket'] && row['ven_retirado'] == 0">lista para cobrar</span>
-                        </td>
-                        <td>{{ row['ven_motivo_rechazo'] }}</td>
                         <!-- <td>{{ row['ven_tallas'] }}</td> -->
                       </tr>
                     </tbody>
@@ -193,4 +133,3 @@
       <br><br><br><br>
     </div>
   </div>
-  

@@ -8,7 +8,7 @@ import * as _ from 'lodash';
 import { STORAGES } from 'src/app/interfaces/sotarage';
 import { Store } from '@ngrx/store';
 import { FormpuntosComponent } from '../../form/formpuntos/formpuntos.component';
-import * as moment from 'moment'; 
+import * as moment from 'moment';
 import { UsuariosService } from 'src/app/servicesComponents/usuarios.service'
 import { VentastableComponent } from '../../table/ventastable/ventastable.component';
 import { Router } from '@angular/router';
@@ -44,7 +44,7 @@ export class VentasClienteComponent implements OnInit {
     page: 0,
     limit: 10
   };
-  Header:any = [ '','Acciones','Numero Guia','Vendedor','Nombre Cliente','Teléfono Cliente','Ganancia Vendedor', 'Valor de flete', 'Fecha Venta','Estado', 'Pagado', 'Ganancia'];
+  Header:any = ["",'Acciones','Nombre Cliente','Teléfono Cliente','Fecha Venta','Estado'];
   $:any;
   public datoBusqueda = '';
 
@@ -112,36 +112,24 @@ export class VentasClienteComponent implements OnInit {
   }
 
   crear(obj:any){
-    this.getNotificacion( obj );
     const dialogRef = this.dialog.open(FormPosiblesVentasComponent,{
       data: {datos: obj || {}}
     });
 
     dialogRef.afterClosed().subscribe( async ( result ) => {
       console.log(`Dialog result: ${result}`);
-      if(result == 'creo') this.cargarTodos();
       if( obj.id ) {
         let filtro:any = await this.getDetallado( obj.id );
           if( !filtro ) return false;
           let idx = _.findIndex( this.dataTable.dataRows, [ 'id', obj.id ] );
           console.log("**",idx)
-          if( idx >= 0 ) { 
+          if( idx >= 0 ) {
             console.log("**",this.dataTable['dataRows'][idx], filtro)
-            this.dataTable['dataRows'][idx] = { ven_estado: filtro.ven_estado, ...filtro}; 
+            this.dataTable['dataRows'][idx] = { ven_estado: filtro.ven_estado, ...filtro};
           }
       }
     });
   }
-
-  getNotificacion( obj:any ){
-    return new Promise( resolve =>{
-      this._notificaciones.get( { where: { venta: obj.id } } ).subscribe(( res:any ) =>{
-        res = res.data[0];
-        if( !res ) return false;
-        this.estadoNotificaciones( res );
-      });
-    });
-  } 
 
   estadoNotificaciones(obj:any){
     let data:any ={
@@ -225,7 +213,7 @@ export class VentasClienteComponent implements OnInit {
         this.dataTable.dataRows = _.unionBy(this.dataTable.dataRows || [], this.dataTable.dataRows, 'id');
         this.loader = false;
           this.spinner.hide();
-          
+
           if (response.data.length === 0 ) {
             this.notEmptyPost =  false;
           }
@@ -238,7 +226,7 @@ export class VentasClienteComponent implements OnInit {
 
   buscar() {
     this.loader = true;
-    this.notscrolly = true 
+    this.notscrolly = true
     this.notEmptyPost = true;
     this.dataTable.dataRows = [];
     //console.log(this.datoBusqueda);
@@ -273,7 +261,7 @@ export class VentasClienteComponent implements OnInit {
       delete this.query.where.ven_estado;
       delete this.query.where.ven_retiro;
     }
-    if( this.filtro.vendedor ) { 
+    if( this.filtro.vendedor ) {
       console.log( this.filtro )
       this.query.where.usu_clave_int = this.filtro.vendedor.id;
       this.getValorVenta();
@@ -292,7 +280,7 @@ export class VentasClienteComponent implements OnInit {
   buscarEstado(){
     if( this.loader ) return false;
     this.loader = true;
-    this.notscrolly = true 
+    this.notscrolly = true
     this.notEmptyPost = true;
     this.dataTable.dataRows = [];
 
@@ -300,7 +288,7 @@ export class VentasClienteComponent implements OnInit {
     console.log( "**", this.filtro.ven_estado )
     this.query.where.ven_estado = Number( this.filtro.ven_estado );
 
-    if( this.filtro.vendedor ) { 
+    if( this.filtro.vendedor ) {
       this.query.where.usu_clave_int = this.filtro.vendedor.id;
       this.getValorVenta();
     }
@@ -314,7 +302,7 @@ export class VentasClienteComponent implements OnInit {
     if( !( moment(moment( this.filtro.fechaFinal ).format(dateFormat),dateFormat ).isValid() ) ) return false;
 
     this.loader = false;
-    this.notscrolly = true 
+    this.notscrolly = true
     this.notEmptyPost = true;
     this.dataTable.dataRows = [];
 
@@ -355,7 +343,7 @@ export class VentasClienteComponent implements OnInit {
     }
     if( obj.transportadoraSelect == "CORDINADORA") {
       Url+= `Transportadora CORDINADORA >>>>>>`;
-      this._ventas.imprimirFlete( { 
+      this._ventas.imprimirFlete( {
         codigo_remision: obj.ven_numero_guia
       }).subscribe(( res:any ) =>{
         this._tools.downloadPdf( res.data, obj.ven_numero_guia );
