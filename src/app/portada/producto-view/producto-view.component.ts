@@ -320,10 +320,13 @@ export class ProductosViewComponent implements OnInit {
       //maxHeight: "665px",
       data: { datos: this.data }
     });
-
     dialogRef.afterClosed().subscribe(result => {
       console.log(`Dialog result: ${result}`);
     });
+  }
+
+  handleSelect( item ){
+    this.data.colorSelect = item.talla;
   }
 
   validarNumero(){

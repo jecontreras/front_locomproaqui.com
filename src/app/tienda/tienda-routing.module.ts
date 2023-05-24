@@ -20,13 +20,13 @@ const routes: Routes = [
       { path: 'productos/:id', component: ProductoViewComponent },
       { path: 'testimonio', component: TestimoniosComponent },
       { path: 'login', component: LoginsComponent },
-      { path: 'login/:id', component: LoginsComponent },
+      { path: 'login/:id/:cel', component: LoginsComponent },
       { path: 'registro', component: RegistrosComponent },
       { path: 'registro/:id', component: RegistrosComponent },
     ]
   },
   {
-    path: 'config', 
+    path: 'config',
     children: [{
       path: '',
       loadChildren: () => import('./../dashboard-config/config.module').then(m => m.ConfigModule)

@@ -43,6 +43,7 @@ export class ChecktDialogComponent implements OnInit {
     console.log( this.datas );
     this.datas = this.datas.datos || {};
     this.data.talla = this.datas.talla;
+    this.data.colorSelect = this.datas.colorSelect || '';
     this.data.cantidadAd = this.datas.cantidadAd || 1;
     this.data.costo = this.datas.costo || 105000;
     this.data.opt = this.datas.opt;

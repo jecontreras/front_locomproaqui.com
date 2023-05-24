@@ -3,13 +3,11 @@ import { MediaMatcher } from '@angular/cdk/layout';
 import { Router, ActivatedRoute } from '@angular/router';
 import { MatDialog } from '@angular/material';
 import { LoginComponent } from '../../components/login/login.component';
-import { RegistroComponent } from '../../components/registro/registro.component';
 import { Store } from '@ngrx/store';
 import { CART } from 'src/app/interfaces/sotarage';
 import { BuscarAction, CartAction, UserAction, UserCabezaAction, UserprAction } from 'src/app/redux/app.actions';
 import { UsuariosService } from 'src/app/servicesComponents/usuarios.service';
 import * as _ from 'lodash';
-import { environment } from 'src/environments/environment';
 import { ToolsService } from 'src/app/services/tools.service';
 import { VentasService } from 'src/app/servicesComponents/ventas.service';
 import { NotificacionesService } from 'src/app/servicesComponents/notificaciones.service';
@@ -19,7 +17,7 @@ import { CategoriasService } from 'src/app/servicesComponents/categorias.service
 import { DialogconfirmarPedidoComponent } from '../dialogconfirmar-pedido/dialogconfirmar-pedido.component';
 import { CobrosService } from 'src/app/servicesComponents/cobros.service';
 
-const URLFRON = environment.urlFront;
+const URLFRON = location.origin;
 
 @Component({
   selector: 'app-header',
@@ -72,7 +70,7 @@ export class HeaderComponent implements OnInit {
     cobros: 0,
     ventas: 0
   };
-  urlTienda: string = `${URLFRON}/`;
+  urlTienda: string = `${ URLFRON }/portada/index/`;
   constructor(
     public changeDetectorRef: ChangeDetectorRef,
     public media: MediaMatcher, private router: Router,
@@ -94,7 +92,6 @@ export class HeaderComponent implements OnInit {
       this.userId = store.usercabeza || {};
       this.dataUser = store.user || {};
       this.userPr = store.userpr || {};
-      this.urlTienda += this.dataUser.usu_usuario;
       if( store.buscar ) {
         this.seartxt = store.buscar;
       }
@@ -132,6 +129,7 @@ export class HeaderComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.urlTienda += this.dataUser.usu_telefono;
     this.breakpoint = (window.innerWidth <= 500) ? 1 : 6;
     /*if( this.breakpoint == 1 ) {
       this.isHandset$ = false;
@@ -365,6 +363,7 @@ export class HeaderComponent implements OnInit {
     if( obj.url == 'login()' ) this.login();
     if( obj.url == 'registrar()' ) this.registrar();
     if( obj.url == 'salir()' ) this.salir();
+    if( obj.url == 'shareTienda()' ) this.shareTienda();
     if( obj.url == 'ayuda()' ) window.open("https://www.youtube.com/channel/UCVrLNcx0H2COUCBfSWcYI8g/featured");
   }
 
@@ -601,6 +600,7 @@ export class HeaderComponent implements OnInit {
   }
 
   shareTienda(){
+    console.log("***ENTre")
     const selBox = document.createElement('textarea');
     selBox.style.position = 'fixed';
     selBox.style.left = '0';

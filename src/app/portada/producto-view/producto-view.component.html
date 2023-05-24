@@ -44,7 +44,7 @@
                   <h4>Color</h4>
                      <div class="aa-color-tag">
                       <a class="pointer" *ngFor="let item of data.listColor" [ngClass]="{selecciono: item.check}"
-                        (click)="this.pedido.colorSelect = item.talla; item.check = !item.check" style="width: auto !important;">{{
+                        (click)="handleSelect( item ); item.check = !item.check" style="width: auto !important;">{{
                         item.talla }}
                       </a>
                        <!--<a href="#" class="aa-color-green"></a>
