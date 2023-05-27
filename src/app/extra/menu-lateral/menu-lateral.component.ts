@@ -22,7 +22,7 @@ export class MenuLateralComponent implements OnInit {
 
   constructor(
     private _store: Store<STORAGES>,
-  ) { 
+  ) {
     this._store.subscribe((store: any) => {
       store = store.name;
       if(!store) return false;
@@ -41,9 +41,9 @@ export class MenuLateralComponent implements OnInit {
         this.color1.nativeElement.style.backgroundColor = color
         this.color2.nativeElement.style.backgroundColor = color
         this.color3.nativeElement.style.backgroundColor = color
-        this.color4.nativeElement.style.backgroundColor = color 
+        this.color4.nativeElement.style.backgroundColor = color
       } catch (error) {
-        
+
       }
     }, 100 );
 
@@ -58,7 +58,7 @@ export class MenuLateralComponent implements OnInit {
       this.urlFacebook = this.userId.url_facebook || "";
       this.urlInstagram = this.userId.url_instagram || "";
       let validateNum = String( this.userId.usu_telefono );
-      if( Number( validateNum ) <= 10 ) validateNum = "+57"+validateNum;
+      if( validateNum.length <= 10 ) validateNum = "+57"+validateNum;
       this.urlWhatsapp = `https://wa.me/${ validateNum }?text=Hola Servicio al cliente` || "";
       this.urlYoutube = this.userId.url_youtube || "";
     }

@@ -75,6 +75,7 @@ export class FormPosiblesVentasComponent implements OnInit {
     this._ventas.getPossibleSales({ where: { id: this.id }}).subscribe(res=>{
       res = res.data[0];
       this.data = res;
+      this.data.cob_num_cedula_cliente = this.data.ven_telefono_cliente;
       this.disableSpinner = false;
       this.getArticulo();
     });

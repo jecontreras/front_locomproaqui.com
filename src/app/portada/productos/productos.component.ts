@@ -71,7 +71,8 @@ export class ProductosComponent implements OnInit {
   async ngOnInit() {
     this.id = this.activate.snapshot.paramMap.get('id');
     console.log("******ID", this.id)
-    if( this.id ) this.dataUser = await this.getUser();
+    if( this.id ) this.dataUser = ( await this.getUser() ) || { id: 1 };
+    else this.dataUser = { id: 1 }
     this.getProductos();
     this.getCategorias();
     this.getProductosRecomendado();

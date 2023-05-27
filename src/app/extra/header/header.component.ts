@@ -172,6 +172,7 @@ export class HeaderComponent implements OnInit {
   getEventos(){
     this.getRetirosCount();
     this.getVentasCount();
+    this.getVentasPosiblesCount();
 
   }
 
@@ -188,6 +189,14 @@ export class HeaderComponent implements OnInit {
       ven_estado: 0
     } } ).subscribe(( res:any )=>{
       this.eventos.ventas = res.count || 0;
+    });
+  }
+
+  getVentasPosiblesCount(){
+    this._venta.getPossibleSales( { where: {
+      ven_estado: 0
+    } } ).subscribe(( res:any )=>{
+      this.eventos.possibleBuy = res.count || 0;
     });
   }
 
@@ -399,21 +408,21 @@ export class HeaderComponent implements OnInit {
       },
       {
         icons: 'menu_book',
-        nombre: 'Realizar venta',
+        nombre: 'Realizar Venta',
         disable: this.dataUser.id,
         url: '/pedidos',
         submenus:[]
       },
       {
         icons: 'local_grocery_store',
-        nombre: 'Ventas Posibles Clientes',
+        nombre: 'Autorizar Despacho',
         disable: this.rolUser !== 'visitante' && this.rolUser != 'proveedor',
         url: '/config/ventasPosibles',
         submenus:[]
       },
       {
         icons: 'local_grocery_store',
-        nombre: 'Mis Ventas',
+        nombre: 'Historial de Ventas',
         disable: this.rolUser !== 'visitante' && this.rolUser != 'proveedor',
         url: '/config/ventas',
         submenus:[]

@@ -1,6 +1,6 @@
 <!-- catg header banner section -->
 <section id="aa-catg-head-banner">
-  <img [src]=" tiendaInfo.portada2 || './assets/img/banner.jpg'" alt="fashion img" class="anchosBanner">
+  <!--<img [src]=" tiendaInfo.portada2 || './assets/img/banner.jpg'" alt="fashion img" class="anchosBanner">-->
   <div class="aa-catg-head-banner-area">
     <div class="container">
       <div class="aa-catg-head-banner-content">
@@ -40,7 +40,7 @@
               <!-- start single product item -->
               <li *ngFor="let item of listProductos" id="anchosLi">
                 <figure class="img-contenedor">
-                  <a class="aa-product-img" href="#" [routerLink]="[ '/portada/productosView', item.id ]"><img class="anchosProductos" [src]="item.foto"
+                  <a class="aa-product-img" href="#" [routerLink]="[ '/portada/productosView', item.id, this.dataUser.usu_telefono ]"><img class="anchosProductos" [src]="item.foto"
                       alt="polo shirt img"></a>
                       <a class="aa-add-card-btn pointer" (click)="AgregarCart(item)"><span
                         class="fa fa-shopping-cart"></span>Comprar y pagar en casa Envio Gratis</a>
@@ -98,7 +98,7 @@
             <div class="aa-recently-views">
               <ul>
                 <li *ngFor="let item of listProductosHistorial">
-                  <a href="#" target="_blank" [routerLink]="[ '/tienda/productosView', item.id ]" class="aa-cartbox-img"><img alt="img"
+                  <a href="#" target="_blank" [routerLink]="[ '/portada/productosView', item.id, this.dataUser.usu_telefono ]" class="aa-cartbox-img"><img alt="img"
                       [src]="item.foto"></a>
                   <div class="aa-cartbox-info">
                     <h4><a class="pointer">{{ item.pro_nombre }}</a></h4>
@@ -114,7 +114,7 @@
             <div class="aa-recently-views">
               <ul>
                 <li *ngFor="let item of listProductosRecomendar">
-                  <a href="#" target="_blank" [routerLink]="[ '/tienda/productosView', item.id ]" class="aa-cartbox-img"><img alt="img"
+                  <a href="#" target="_blank" [routerLink]="[ '/portada/productosView', item.id, this.dataUser.usu_telefono ]" class="aa-cartbox-img"><img alt="img"
                       [src]="item.foto"></a>
                   <div class="aa-cartbox-info">
                     <h4><a class="pointer">{{ item.pro_nombre }}</a></h4>
