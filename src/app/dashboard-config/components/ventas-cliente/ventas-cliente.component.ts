@@ -118,7 +118,7 @@ export class VentasClienteComponent implements OnInit {
 
     dialogRef.afterClosed().subscribe( async ( result ) => {
       console.log(`Dialog result: ${result}`);
-      if( obj.id ) {
+      if( result && obj.id ) {
         let filtro:any = await this.getDetallado( obj.id );
           if( !filtro ) return false;
           let idx = _.findIndex( this.dataTable.dataRows, [ 'id', obj.id ] );

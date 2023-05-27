@@ -2,7 +2,7 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { CART } from 'src/app/interfaces/sotarage';
 import { ToolsService } from 'src/app/services/tools.service';
 import { Store } from '@ngrx/store';
-import { SeleccionCategoriaAction, CartAction, ProductoHistorialAction } from 'src/app/redux/app.actions';
+import { SeleccionCategoriaAction, CartAction, ProductoHistorialAction, UserCabezaAction } from 'src/app/redux/app.actions';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ProductoService } from 'src/app/servicesComponents/producto.service';
 import { NgxSpinnerService } from 'ngx-spinner';
@@ -13,6 +13,7 @@ import { NgImageSliderComponent } from 'ng-image-slider';
 import { FormatosService } from 'src/app/services/formatos.service';
 import * as moment from 'moment';
 import { ChecktDialogComponent } from '../checkt-dialog/checkt-dialog.component';
+import { UsuariosService } from 'src/app/servicesComponents/usuarios.service';
 
 @Component({
   selector: 'app-producto-view',
@@ -96,7 +97,8 @@ export class ProductosViewComponent implements OnInit {
   listGaleria:any = [];
   viewsImagen:string;
   listTallas:any = [];
-
+  number:any;
+  
   constructor(
     private _store: Store<CART>,
     private _tools: ToolsService,
@@ -106,6 +108,7 @@ export class ProductosViewComponent implements OnInit {
     private spinner: NgxSpinnerService,
     public dialog: MatDialog,
     public _formato: FormatosService,
+    private _user: UsuariosService
 
   ) {
     this._store.subscribe((store: any) => {
@@ -123,14 +126,35 @@ export class ProductosViewComponent implements OnInit {
     });
   }
 
-  ngOnInit(): void {
+  async ngOnInit() {
+    console.log("**127", this.activate.snapshot.params)
     if((this.activate.snapshot.paramMap.get('id'))){
       this.id = this.activate.snapshot.paramMap.get('id');
       this.getProducto();
       this.getProductos();
     }
+    this.number = this.activate.snapshot.paramMap.get('cel');
+    if( this.number ) this.dataUser = await this.getUser();
     window.document.scrollingElement.scrollTop=0
 
+  }
+
+  getUser(){
+    return new Promise( resolve =>{
+      this._user.get({ where:{ usu_telefono: this.number }, limit: 1 } ).subscribe( item =>{
+        item = item.data[0];
+        if( item ) {
+          this.GuardarStoreUser( item );
+          this.query.where.idPrice = item.id;
+        }
+        resolve( item );
+      },()=> resolve( false ) );
+    })
+  }
+
+  GuardarStoreUser( data:any ) {
+    let accion = new UserCabezaAction( data , 'post');
+    this._store.dispatch(accion);
   }
 
   getProducto(){

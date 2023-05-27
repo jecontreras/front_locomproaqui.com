@@ -53,7 +53,7 @@ export class LoginsComponent implements OnInit {
         this._store.dispatch(accion);
         accion = new TokenAction( { token: res.data.tokens }, 'post');
         this._store.dispatch( accion );
-        this._router.navigate(['/pedidos']);
+        this._router.navigate(['/config/perfil']);
         this._tools.basicIcons({header: "Hola Bienvenido!", subheader: `Hola ${ res.data.usu_nombre } Que tengas un buen dia`});
         setTimeout(()=>{
           location.reload();

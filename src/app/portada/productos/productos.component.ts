@@ -95,7 +95,7 @@ export class ProductosComponent implements OnInit {
   }
 
   getCategorias(){
-    this._categorias.get( { where:{ cat_activo: 0 }, limit: 100 } ).subscribe((res:any)=>{
+    this._categorias.get( { where:{ cat_activo: 0, cat_padre:null }, limit: 100 } ).subscribe((res:any)=>{
       this.listCategorias = res.data;
       listCategory = this.listCategorias;
     });
@@ -105,6 +105,7 @@ export class ProductosComponent implements OnInit {
     this.query = { where:{ pro_activo: 0 }, page: 0, limit: 10 };
     if( obj.id ) this.query.where.pro_categoria = obj.id;
     this.listProductos = [];
+    this.loader = true;
     this.getProductos();
     this.dataSeleccionda = obj.cat_nombre;
   }

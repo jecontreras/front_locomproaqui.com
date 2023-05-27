@@ -152,7 +152,9 @@ export class ChecktDialogComponent implements OnInit {
 
   mensajeWhat(){
     let mensaje: string = ``;
-    mensaje = `https://wa.me/573156027551?text=${encodeURIComponent(`
+    let validateNum = String( this.dataUser.usu_telefono );
+    if( Number( validateNum ) <= 10 ) validateNum = "+57"+validateNum;
+    mensaje = `https://wa.me/${ validateNum }?text=${encodeURIComponent(`
       Hola Servicio al cliente, como esta, saludo cordial,
       para confirmar adquiere este producto
       Nombre de cliente: ${ this.data.nombre }

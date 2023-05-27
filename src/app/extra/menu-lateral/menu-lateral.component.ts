@@ -57,7 +57,9 @@ export class MenuLateralComponent implements OnInit {
     }else{
       this.urlFacebook = this.userId.url_facebook || "";
       this.urlInstagram = this.userId.url_instagram || "";
-      this.urlWhatsapp = `https://wa.me/${ this.userId.usu_indicativo }${ this.userId.usu_telefono }?text=Hola Servicio al cliente` || "";
+      let validateNum = String( this.userId.usu_telefono );
+      if( Number( validateNum ) <= 10 ) validateNum = "+57"+validateNum;
+      this.urlWhatsapp = `https://wa.me/${ validateNum }?text=Hola Servicio al cliente` || "";
       this.urlYoutube = this.userId.url_youtube || "";
     }
   }

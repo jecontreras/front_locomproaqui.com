@@ -34,7 +34,7 @@ const routes: Routes = [
             component: ProductosComponent
           },
           {
-            path: 'productosView/:id',
+            path: 'productosView/:id/:cel',
             component: ProductosViewComponent
           },
           {
