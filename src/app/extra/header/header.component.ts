@@ -71,6 +71,8 @@ export class HeaderComponent implements OnInit {
     ventas: 0
   };
   urlTienda: string = `${ URLFRON }/portada/index/`;
+  activando:boolean = false;
+
   constructor(
     public changeDetectorRef: ChangeDetectorRef,
     public media: MediaMatcher, private router: Router,
@@ -105,6 +107,8 @@ export class HeaderComponent implements OnInit {
       //console.log( window.innerWidth )
       this.disabledSearch = window.innerWidth <= 600 ? true : false;
       if( this.dataUser.id ){
+        this.activando = false;
+        if(this.dataUser.usu_perfil.prf_descripcion == 'administrador') this.activando = true;
         try {
           if (this.dataUser.categoriaPerfil) {
             this.porcentajeUser = this.dataUser.categoriaPerfil.precioPorcentaje;
@@ -185,17 +189,25 @@ export class HeaderComponent implements OnInit {
   }
 
   getVentasCount(){
-    this._venta.get( { where: {
-      ven_estado: 0
-    } } ).subscribe(( res:any )=>{
+    let querys:any = {
+      where: {
+        ven_estado: 0
+      }
+    };
+    if( this.activando == false ) querys.where.usu_clave_int = this.dataUser.id;
+    this._venta.get( querys ).subscribe(( res:any )=>{
       this.eventos.ventas = res.count || 0;
     });
   }
 
   getVentasPosiblesCount(){
-    this._venta.getPossibleSales( { where: {
-      ven_estado: 0
-    } } ).subscribe(( res:any )=>{
+    let querys:any = {
+      where: {
+        ven_estado: 0
+      }
+    };
+    if( this.activando == false ) querys.where.usu_clave_int = this.dataUser.id;
+    this._venta.getPossibleSales( querys ).subscribe(( res:any )=>{
       this.eventos.possibleBuy = res.count || 0;
     });
   }

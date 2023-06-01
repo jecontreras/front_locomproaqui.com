@@ -16,7 +16,9 @@ import { RegistroComponent } from 'src/app/components/registro/registro.componen
 })
 export class LoginsComponent implements OnInit {
 
-  data:any = {};
+  data:any = {
+    indicative: "57"
+  };
   disableRestarure:boolean = true;
   disableSubmit:boolean = true;
   disabled:boolean = false;
@@ -44,6 +46,7 @@ export class LoginsComponent implements OnInit {
     if(!this.disableSubmit) return false;
     this.disableSubmit = false;
     this.borrarCache();
+    this.data.usu_email = this.data.usu_email.trim();
     this._user.login(this.data).subscribe((res:any)=>{
       console.log("user", res);
       this.disableSubmit = true;

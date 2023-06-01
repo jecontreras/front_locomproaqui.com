@@ -14,7 +14,7 @@ import { RegistroComponent } from '../registro/registro.component';
   styleUrls: ['./login.component.scss']
 })
 export class LoginComponent implements OnInit {
-  
+
   data:any = {};
   disableRestarure:boolean = true;
   disableSubmit: boolean = true;
@@ -38,6 +38,7 @@ export class LoginComponent implements OnInit {
     if(!this.disableSubmit) return false;
     this.disableSubmit = false;
     this.borrarCache();
+    this.data.usu_email = this.data.usu_email.trim();
     this._user.login(this.data).subscribe((res:any)=>{
       console.log("user", res);
       this.disableSubmit = true;
@@ -49,7 +50,7 @@ export class LoginComponent implements OnInit {
         this._store.dispatch( accion );
         this._router.navigate(['/pedidos']);
         this._tools.basicIcons({header: "Hola Bienvenido!", subheader: `Hola ${ res.data.usu_nombre } Que tengas un buen dia`});
-        setTimeout(()=>{ 
+        setTimeout(()=>{
           location.reload();
         }, 3000);
         this.dialog.closeAll();
@@ -77,8 +78,8 @@ export class LoginComponent implements OnInit {
       this.disabled = false;
       this.ocultar = true;
       this.disableRestarure = true;
-    },( error:any ) =>{ 
-      console.log( error); 
+    },( error:any ) =>{
+      console.log( error);
       let errors = error.error.data || "";
       this._tools.tooast( { title: "Tenemos problemas con el restablecimiento de la contraseña "+ errors, icon: "error", timer: 5000 } ); this.disabled = false; } );
   }*/
@@ -91,7 +92,7 @@ export class LoginComponent implements OnInit {
       this.disabled = false;
       this.ocultar = true;
       this.disableRestarure = true;
-      
+
     }, (error) => { console.log( error ); this._tools.tooast({ title:"Error "+ error.error.data ,icon: "error" }); this.disabled = false; } )
   }
 

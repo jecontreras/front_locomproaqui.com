@@ -1,10 +1,12 @@
 <!-- catg header banner section -->
 <section id="aa-catg-head-banner">
-  <!--<img [src]=" tiendaInfo.portada2 || './assets/img/banner.jpg'" alt="fashion img" class="anchosBanner">-->
+  <img [src]=" tiendaInfo.portada2 || './assets/img/banner.jpg'" alt="fashion img" class="anchosBanner">
   <div class="aa-catg-head-banner-area">
     <div class="container">
       <div class="aa-catg-head-banner-content">
-        <h2>Productos exclusivos</h2>
+        <!--<h2>Productos exclusivos</h2>-->
+        <br>
+          <br>
         <ol class="breadcrumb">
           <li><a href="#" [routerLink]="[ '/portada' ]">Inicio</a></li>
           <li class="active">Productos</li>
@@ -22,7 +24,7 @@
         <div class="aa-product-catg-content">
           <div class="row">
             <div class="col-12">
-              <div class="scrollmenu">
+              <div class="scrollmenu" style="    border-radius: 3px;">
                 <a class="pointer" (click)="SeleccionCategoria( item )" *ngFor="let item of listCategorias">{{ item.cat_nombre }} </a>
               </div>
             </div>

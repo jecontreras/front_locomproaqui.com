@@ -32,8 +32,19 @@
                         </span>
                     </div>
                     <div class="wrap-input100 validate-input" data-validate="Username is required">
-                        <input class="input100" type="text" name="username" [(ngModel)]="data.usu_email">
-                        <span class="focus-input100"></span>
+                      <div class="d-flex bd-highlight">
+                        <div class="p-2 bd-highlight" style="margin-top: 10px;">
+                          <select class="form-control" [(ngModel)]="data.indicative" style="width:75px;">
+                            <option>+57</option>
+                            <option>+58</option>
+                            <option>+59</option>
+                          </select>
+                        </div>
+                        <div class="p-2 flex-grow-1 bd-highlight">
+                          <input class="input100" type="text" name="username" [(ngModel)]="data.usu_email">
+                          <span class="focus-input100"></span>
+                        </div>
+                      </div>
                     </div>
 
                     <div class="p-t-13 p-b-9 " *ngIf="disableRestarure">
