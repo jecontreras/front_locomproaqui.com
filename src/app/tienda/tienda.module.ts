@@ -21,6 +21,7 @@ import { ConfigModule } from '../dashboard-config/config.module';
 import { ExtraModule } from '../extra/extra.module';
 import { NgxDropzoneModule } from 'ngx-dropzone';
 import { NgxCurrencyModule } from 'ngx-currency';
+import { ArticuloComponent } from '../components/articulo/articulo.component';
 
 
 @NgModule({
@@ -39,8 +40,9 @@ import { NgxCurrencyModule } from 'ngx-currency';
     RegistrosComponent,
     ContenidoComponent,
     ProductoViewComponent,
-    TestimoniosComponent
-    
+    TestimoniosComponent,
+    ArticuloComponent
+
   ],
   imports: [
     CommonModule,

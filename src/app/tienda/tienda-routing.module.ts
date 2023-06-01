@@ -6,6 +6,7 @@ import { TestimoniosComponent } from '../components/testimonios/testimonios.comp
 import { LoginsComponent } from '../layout/login/login.component';
 import { RegistrosComponent } from '../layout/registro/registro.component';
 import { TiendaComponent } from './tienda.component';
+import { ArticuloComponent } from '../components/articulo/articulo.component';
 
 const routes: Routes = [
   {
@@ -15,6 +16,8 @@ const routes: Routes = [
       { path: '', component: PedidosComponent, pathMatch: 'full' },
       { path: 'pedidos', component: PedidosComponent },
       { path: 'pedidos/inf/:id', component: PedidosComponent },
+      { path: 'articulo/:cel', component: ArticuloComponent },
+      { path: 'articulo/:cel/:categoria', component: ArticuloComponent },
       { path: ':id', component: PedidosComponent },
       { path: 'pedido/:categoria', component: PedidosComponent },
       { path: 'productos/:id', component: ProductoViewComponent },

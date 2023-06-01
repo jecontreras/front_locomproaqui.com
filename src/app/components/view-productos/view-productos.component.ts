@@ -96,7 +96,7 @@ export class ViewProductosComponent implements OnInit {
       }
     }
     this.procesoNext();
-    console.log( this.data.pro_categoria.cat_nombre )
+    //console.log( this.data.pro_categoria.cat_nombre )
     if( ( this.data.pro_categoria.cat_nombre == "CALZADO" ) || ( this.data.pro_categoria.cat_nombre == "ROPA" )  ) this.disabledSelect = true;
     else this.disabledSelect = false;
 

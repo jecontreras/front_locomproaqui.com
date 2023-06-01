@@ -104,40 +104,11 @@
                     <mat-tab-group mat-align-tabs="center">
                         <mat-tab label="Datos Iniciales">
                             <div class="row p-3">
-                                <!--<div class="col-12 mx-auto">
-                                    <div class="mx-auto" style="width: 200px;">
-                                        <img [src]="data.usu_imagen" class="imgPerfil" *ngIf="!croppedImage">
-                                        <img [src]="croppedImage" class="imgPerfil" *ngIf="croppedImage"/>
-                                    </div>
-                                </div>-->
-                                <div class="col-12 container">
-                                    <!--<div class="row">
-                                        <label>Subir Foto de Tienda</label>
-                                        <button class="btn btn-primary btn-just-icon btn-round"
-                                            (click)="subirFile('usu_imagen')" *ngIf="files.length > 0">
-                                            Subir Imagen
-                                        </button>
-                                    </div>-->
-                                    <!--<ngx-dropzone (change)="onSelect($event)">
-                                        <ngx-dropzone-label>Abrir archivos</ngx-dropzone-label>
-                                        <ngx-dropzone-image-preview ngProjectAs="ngx-dropzone-preview"
-                                            *ngFor="let f of files" [file]="f" [removable]="true"
-                                            (removed)="onRemove(f)" multiple="false">
-                                            <ngx-dropzone-label>{{ f.name }} ({{ f.type }})</ngx-dropzone-label>
-                                        </ngx-dropzone-image-preview>
-                                    </ngx-dropzone>-->
-                                    <!--<input type="file" (change)="fileChangeEvent($event)" />
-
-                                    <image-cropper [imageChangedEvent]="imageChangedEvent" [maintainAspectRatio]="true"
-                                        [aspectRatio]="4 / 3" format="png" (imageCropped)="imageCropped($event)"
-                                        (imageLoaded)="imageLoaded($event)" (cropperReady)="cropperReady( $event )"
-                                        (loadImageFailed)="loadImageFailed( $event )" imageQuality="95" cropperStaticHeight="1024" ></image-cropper>-->
-
-
+                                <div class="col-12 content">
 
                                     <div class="d-flex justify-content-center">
                                         <div>
-                                            <button class="contenedor-btn-file">
+                                            <button class="contenedor-btn-file" style="    margin-left: 146px;">
                                                 <i class="material-icons">file_upload</i>
                                                 Seleccionar Foto Perfil
                                                 <label for="btn-file"></label>
@@ -174,19 +145,21 @@
                                     <input type="text" [(ngModel)]="data.usu_apellido"
                                         class="form-control form-control-sm">
                                 </div>
-                                <div class="form-group col-2">
-                                    <label for="exampleFormControlInput1">Indicativo</label>
-                                    <select class="form-control form-control-sm" [(ngModel)]="data.usu_indicativo"
-                                        required>
-                                        <option [value]="item.phone_code" *ngFor="let item of listIndicativos">{{
-                                            item.nombre }}
-                                            +{{ item.phone_code }}</option>
-                                    </select>
-                                </div>
-                                <div class="col-4">
+                                <div class="col-12 col-sm-6">
                                     <label>Numero de Whatsapp</label>
-                                    <input type="text" [(ngModel)]="data.usu_telefono"
-                                        class="form-control form-control-sm">
+                                    <div class="d-flex bd-highlight mb-3">
+                                      <div class="p-2 bd-highlight" style="width: 120px; ">
+                                        <select class="form-control form-control-sm" [(ngModel)]="data.usu_indicativo" required >
+                                          <option [value]="item.phone_code" *ngFor="let item of listIndicativos">{{
+                                              item.nombre }}
+                                              +{{ item.phone_code }}
+                                          </option>
+                                      </select>
+                                      </div>
+                                      <div class="ml-auto p-2 bd-highlight">
+                                        <input type="text" [(ngModel)]="data.usu_telefono" class="form-control form-control-sm">
+                                      </div>
+                                    </div>
                                 </div>
                                 <div class="col-6">
                                     <label>Ciudad</label>
@@ -267,14 +240,32 @@
                                         Actualizar Datos
                                     </button>
                                 </div>
+                                <div class="col-12" *ngIf="disableRestaure">
+                                    <label>Clave Nueva</label>
+                                    <div class="d-flex bd-highlight">
+                                      <div class="p-2 flex-grow-1 bd-highlight">
+                                        <input [type]="fieldTextType ? 'text' : 'password'" [(ngModel)]="restaure.passNew"
+                                        class="form-control form-control-sm">
+                                      </div>
+                                      <div class="p-2 bd-highlight">
+                                        <div class="input-group-append">
+                                          <span class="input-group-text">
+                                            <i
+                                              class="fa"
+                                              [ngClass]="{
+                                                'fa-eye-slash': !fieldTextType,
+                                                'fa-eye': fieldTextType
+                                              }"
+                                              (click)="toggleFieldTextType()"
+                                            ></i>
+                                          </span>
+                                        </div>
+                                      </div>
+                                    </div>
+                                    <br>
+                                </div>
                                 <div class="col-6">
                                     <br>
-                                    <div class="col-6" *ngIf="disableRestaure">
-                                        <label>Clave Nueva</label>
-                                        <input type="password" [(ngModel)]="restaure.passNew"
-                                            class="form-control form-control-sm">
-                                        <br>
-                                    </div>
                                     <button class="p-2 btn btn-primary btn-just-icon btn-round"
                                         (click)="disableRestaure = true;" *ngIf="!disableRestaure">
                                         Cambiar Contraseña

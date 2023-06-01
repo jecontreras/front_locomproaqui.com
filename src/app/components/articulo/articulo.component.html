@@ -1,0 +1,125 @@
+<div class="main-content">
+  <div class="row">
+    <div class="col-12">
+      <div class="row" style="padding: 5px;">
+        <div class="scrollmenu" style="    border-radius: 3px;">
+          <a class="pointer" (click)="eventorOver( item )" *ngFor="let item of imageObject">{{ item.title }} </a>
+        </div>
+        <!--<span class="catEstilo" *ngFor="let item of imageObject" (click)="eventorOver( item )">
+          <h5 class="titulo2 pointer" [ngClass]="{ 'cambiaColor': item.check == true }">
+            <span *ngIf="item.title =='TODOS'" (click)="imageOnClick(0, item, 'si');"> {{ item.title }} </span>
+            <span *ngIf="item.title !=='TODOS'"> {{ item.title }} </span>
+          </h5>
+          <ul *ngIf="item.check">
+            <label class="pointer" *ngFor="let key of item.subCategoria; let idx=index"
+              (click)="imageOnClick(idx, key, 'no');" [ngClass]="{ 'cambiaColor': key.check == true }">
+              <h5 class="titulo3 estiloCategoria">{{ key.cat_nombre }}</h5>
+            </label>
+          </ul>
+        </span>-->
+      </div>
+    </div>
+    <div class="col-12" style="    padding: 33px;">
+      <div class="row">
+        <div class="col-md-2 col-sm-4 col-lg-2 col-xs-6 col-6 anchandoPr" style="padding-bottom: 5px;"
+          *ngFor="let item of listProductos" (mouseout)="eventoDes( {} )"
+        >
+          <mat-card class="example-card">
+            <figure mat-card-image data-toggle="modal" id="figura" data-target="#modalinfo" class="img-contenedor"
+                (mouseout)="eventoDes( {} )">
+                <img class="img-responsive btn-block imgProductos pointer " [src]="item.foto" (click)="agregar(item)">
+              </figure>
+            <mat-card-content>
+              <div class="row">
+                <div class="col-12" style="padding: 0;">
+                  <div class="d-flex bd-highlight">
+                    <div class="flex-grow-1 bd-highlight"><p class="titulo1 color1">{{ item.pro_nombre | slice: 0: 15 }}</p></div>
+                    <div class="p-2 bd-highlight">
+                      <h6 class="titulo1 color1">
+                        <small style="display: inline-block;  font-size: 90% !important;" class="pricesmall currency2"
+                          id="pricesmall_25">
+                          <span *ngIf="!dataUser.id" >{{ _tools.monedaChange( 3, 2, ( item.pro_vendedor || 0 ) ) }}</span>
+                        </small><br>
+                      </h6>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-12">
+                  <div class="d-flex bd-highlight">
+                    <div class="flex-grow-1 bd-highlight">
+                      <div class="plusminus2 horiz" data-after="UND">
+                        <button type="button" class="btn-number" data-type="minus"
+                          [ngStyle]="{'background-color':urlColor }" (click)="menosCantidad(item)"
+                          data-field="product_quantity_25"></button>
+                        <input (change)="manualCantidad(item)" data-clasificacion="" data-un="UND" type="number"
+                          name="product_quantity2" id="product_quantity_25" min="1"
+                          [(ngModel)]="item.cantidadAdquirir" class="input-number ">
+                        <span class="hide" *ngIf="!item.cantidadAdquirir">1</span>
+                        <button type="button" class="btn-number" data-type="plus"
+                          [ngStyle]="{'background-color':urlColor }" (click)="maxCantidad(item)"
+                          data-field="product_quantity_25"></button>
+                      </div>
+                    </div>
+                    <div class="bd-highlight">
+                      <select class="form-control form-control-sm" [(ngModel)]="item.tallasSelect">
+                            <option *ngFor="let row of item.listTallas" [value]="row.tal_descripcion">
+                              {{ row.tal_descripcion }}
+                            </option>
+                        </select>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </mat-card-content>
+            <mat-card-actions>
+              <div class="row">
+                <div class="col-12">
+                  <button type="button" data-toggle="tooltip" data-placement="right" style="width: 100%;"
+                    class="sc-logout btn btn-success btn-sm pull-right buttonAncho"
+                    [ngStyle]="{'background-color':urlColor }" (click)="AgregarCart(item)"
+                    data-original-title=" Hacer pedido">{{ titleButton }} </button>
+                </div>
+                <div class="col-12 paddins1" *ngIf="rolname != 'vendedor'">
+                  <img (click)="masInfo(item)" class="pointer" src="./assets/icons/masinformacion.png"
+                    style="width: 100%;">
+                </div>
+                <div class="col-12 paddins1" *ngIf="rolname == 'vendedor'">
+
+                </div>
+                <div class="col-12">
+                  <div class="d-flex justify-content-between">
+                    <div>
+                      <img src="./assets/icons/descargar.png" style="width: 100%;" class="pointer"
+                        (click)="descargarFoto( item )">
+                    </div>
+                    <div style="width: 200%;">
+                      <!--<h6 class="titulo1">Pago Contra Entrega</h6>-->
+                      <img src="./assets/img/pago.png" style="width: 100%;">
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </mat-card-actions>
+          </mat-card>
+        </div>
+        <div class="col-12">
+          <div class="d-flex flex-row-reverse bd-highlight">
+            <div>
+              <mat-paginator [length]="counts" [pageSize]="25" [pageSizeOptions]="[5, 10, 25, 100]"
+                (page)="pageEvent($event)">
+              </mat-paginator>
+            </div>
+          </div>
+        </div>
+        <div class="col-12 p-5">
+          <ngx-spinner bdOpacity=0.9 bdColor="" size="default" color="#581f87" type="ball-pulse-sync"
+            [fullScreen]="false">
+          </ngx-spinner>
+        </div>
+      </div>
+    </div>
+    <div class="mx-auto" style="width: 200px;" *ngIf="listProductos.length === 0">
+      No Hay Datos
+    </div>
+  </div>
+</div>

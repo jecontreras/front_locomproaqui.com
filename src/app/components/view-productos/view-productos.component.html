@@ -233,7 +233,7 @@
   <button (click)="shareUrl( )" type="button" class="btn btn-success">
     Compartir link
 </button>&nbsp;
-    <button cdkFocusInitial (click)="AgregarCart(false)" type="button" class="btn btn-primary">
+    <button cdkFocusInitial (click)="AgregarCart(false)" type="button" class="btn btn-primary" *ngIf="data.disabledBtn == false">
         {{ titleButton }}
     </button>
 </mat-dialog-actions>

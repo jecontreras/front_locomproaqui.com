@@ -17,7 +17,8 @@ import { PublicoComponent } from './publico.component';
 @NgModule({
   declarations: [
     CatalogoComponent,
-    PublicoComponent
+    PublicoComponent,
+
   ],
   imports: [
     CommonModule,

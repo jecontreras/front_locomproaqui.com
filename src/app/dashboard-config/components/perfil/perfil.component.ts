@@ -56,6 +56,8 @@ export class PerfilComponent implements OnInit {
   listCiudades:any = DANEGROUP;
   keyword = 'name';
 
+  fieldTextType: boolean;
+
   constructor(
     private _user: UsuariosService,
     private _tools: ToolsService,
@@ -344,6 +346,10 @@ export class PerfilComponent implements OnInit {
   }
   onChangeSearch( ev:any ){
     //console.log( ev )
+  }
+
+  toggleFieldTextType() {
+    this.fieldTextType = !this.fieldTextType;
   }
 
 
