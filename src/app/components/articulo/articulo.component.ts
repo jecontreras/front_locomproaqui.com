@@ -237,7 +237,10 @@ export class ArticuloComponent implements OnInit {
     console.log( item )
     item.check = !item.check;
     for( let row of this.imageObject ) { if( row.id != item.id ) row.check = false; }
-    this._router.navigate( [ "/articulo/"+this.id , item['id'] ] );
+    this.query.where.pro_categoria = item.id;
+    this.listProductos = [];
+    this.cargarProductos();
+    //this._router.navigate( [ "/articulo/"+this.id , item['id'] ] );
   }
 
   eventoDes( item:any ){
