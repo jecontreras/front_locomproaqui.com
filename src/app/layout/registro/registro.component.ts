@@ -283,6 +283,10 @@ async validador( opt:number, stepper: MatStepper ){
   }
   if( opt == 4 ){
     this.data.rol= 'proveedor';
+    this.data.queEsDropp = "si";
+    this.data.tiempoVendiendo = "mas12";
+    this.data.ventasRealizarMensual = "110";
+    this.data.pagasPublicidad = "si";
     this.submit(true)
   }
 }
