@@ -3,7 +3,7 @@
         <div class="col-12">
             <div class="d-flex justify-content-center">
                 <div>
-                    <h5 class="text-dart" style="padding: 45px;">
+                    <h5 class="text-dart" style="padding: 45px;  text-align: center;">
                         ¡Haz tu registro y automáticamente tendrás una tienda con más de 20 proveedores de distintas categorías donde podrás traer a tus clientes y
                         recibir tus pedidos vía WhatsApp tu montas cada pedido en tu plataforma y nosotros nos encargamos de hacer llegar los pedidos a tu cliente final y
                         tu te ganarás una excelente comisión por cada venta
@@ -12,28 +12,27 @@
             </div>
             <div class="d-flex justify-content-center">
                 <div>
-                    <h4 class="text-dart">Te invito {{ dataUser.usu_nombre || 'Admin' }}</h4>
+                    <h4 class="text-dart">Te Invito {{ dataUser.usu_nombre || 'Admin' }}</h4>
                     <br><br>
                 </div>
             </div>
         </div>
         <div class="col-12">
+          <div class="content">
+            <h1 style="text-align: center;">Registrarte?</h1>
+            <div style="text-align: center;">
+              <button type="button" class="btn btn-primary" (click)="view='vendedor'">Como Vendedor?</button>
+              <button type="button" class="btn btn-success" (click)="view='proveedor'">Como Proveedor?</button>
+            </div>
+          </div>
+        </div>
+        <div class="col-12" *ngIf="view === 'vendedor'">
             <div class="d-flex justify-content-center">
                 <div class="container">
                     <mat-horizontal-stepper [linear]="isLinear" #stepper>
                         <mat-step >
                             <ng-template matStepLabel>Primer Paso</ng-template>
                             <div class="form row container">
-                                <div class="form-group col-sm-6 col-12">
-                                    <label for="exampleFormControlInput1">Nombre</label>
-                                    <input type="text" [(ngModel)]="data.usu_nombre" required
-                                        class="form-control form-control-sm" placeholder="Ingrese tu nombre"  (ngModelChange)="blurApellido()">
-                                </div>
-                                <div class="form-group col-sm-6 col-12">
-                                    <label for="exampleFormControlInput1">Apellido</label>
-                                    <input type="text" [(ngModel)]="data.usu_apellido" class="form-control form-control-sm"
-                                        placeholder="Ingrese tu Apellido" (ngModelChange)="blurApellido()">
-                                </div>
                                 <div class="form-group col-sm-6 col-12">
                                     <label for="exampleFormControlInput1">Como quieres llamar tu tienda virtual</label>
                                     <input type="text" [(ngModel)]="data.usu_usuario"
@@ -44,6 +43,16 @@
                                             Otro</span>
                                     </div>
                                 </div>
+                                <div class="form-group col-sm-6 col-12">
+                                    <label for="exampleFormControlInput1">Nombre</label>
+                                    <input type="text" [(ngModel)]="data.usu_nombre" required
+                                        class="form-control form-control-sm" placeholder="Ingrese tu Nombre"  (ngModelChange)="blurApellido()">
+                                </div>
+                                <!--<div class="form-group col-sm-6 col-12">
+                                    <label for="exampleFormControlInput1">Apellido</label>
+                                    <input type="text" [(ngModel)]="data.usu_apellido" class="form-control form-control-sm"
+                                        placeholder="Ingrese tu Apellido" (ngModelChange)="blurApellido()">
+                                </div>-->
                                 <!--<div class="form-group col-sm-3 col-6">
                                     <input type="checkbox" class="form-check-input" id="exampleCheck1" [(ngModel)]="data.fileDise" (click)="eventEstado()">
                                     <label class="form-check-label" for="exampleCheck1">
@@ -92,30 +101,30 @@
                                     <input type="text" [(ngModel)]="data.usu_ciudad" class="form-control form-control-sm"
                                         placeholder="Ingrese tu Ciudad">
                                 </div>
-                                <div class="form-group col-sm-6 col-12">
+                                <!--<div class="form-group col-sm-6 col-12">
                                     <label for="exampleFormControlInput1">Dirección</label>
                                     <input type="text" [(ngModel)]="data.usu_direccion" class="form-control form-control-sm"
                                         placeholder="Ingrese tu Dirección">
-                                </div>
+                                </div>-->
                                 <div class="form-group col-sm-6 col-12">
                                     <label for="exampleFormControlInput1">Correo</label>
-                                    <input type="email" [(ngModel)]="data.usu_email" class="form-control form-control-sm"
+                                    <input type="email" [(ngModel)]="data.usu_email" class="form-control form-control-sm" autocomplete="off"
                                         (blur)="validadorEmail( data.usu_email )" placeholder="Ingrese tu Correo">
                                     <span class="text-danger">{{ error }}</span>
                                 </div>
                                 <div class="form-group col-sm-6 col-12">
                                     <label for="exampleFormControlInput1">Email Repetir</label>
-                                    <input type="email" [(ngModel)]="data.usu_emailReper"
+                                    <input type="email" [(ngModel)]="data.usu_emailReper" autocomplete="off"
                                         class="form-control form-control-sm" placeholder="Ingrese tu Email">
                                 </div>
                                 <div class="form-group col-sm-6 col-12">
                                     <label for="exampleFormControlInput1">Contraseña</label>
-                                    <input type="password" [(ngModel)]="data.usu_clave" class="form-control form-control-sm"
+                                    <input type="password" [(ngModel)]="data.usu_clave" class="form-control form-control-sm" autocomplete="off"
                                         placeholder=" Ingrese tu Contraseña">
                                 </div>
                                 <div class="form-group col-sm-6 col-12">
                                     <label for="exampleFormControlInput1">Repetir Contraseña</label>
-                                    <input type="password" [(ngModel)]="data.usu_confir"
+                                    <input type="password" [(ngModel)]="data.usu_confir" autocomplete="off"
                                         class="form-control form-control-sm" placeholder="Confirmar Contraseña">
                                 </div>
                                 <!--<div class="form-group col-sm-6 col-12">
@@ -206,7 +215,15 @@
                             </div>
                         </mat-step>
                     </mat-horizontal-stepper>
-                    <div class="row" style="    height: -webkit-fill-available; width: min-content;">
+                    <div class="d-flex justify-content-center">
+                      <div>
+                        <button type="button" class="btn btn-success" (click)="openTarget()">
+                          <span *ngIf="!printText">Ver Mi Tarjeta</span>
+                          <span *ngIf="printText">Ocultar Mi Tarjeta</span>
+                        </button>
+                      </div>
+                    </div>
+                    <div class="row" style="height: -webkit-fill-available; width: min-content;" *ngIf="printText" id="print">
                         <div class="col-12">
                             <div class="d-flex justify-content-center">
                                 <div class="row efectos">
@@ -250,68 +267,6 @@
                                     </div>
                                 </div>
                             </div>
-                            <!--<div class="d-flex justify-content-center">
-                                <div class="efectos">
-                                    <table>
-                                        <tbody>
-                                            <tr>
-                                                <th>
-                                                    <div class="d-flex justify-content-center">
-                                                        <h2>
-                                                            Lokomproaqui
-                                                        </h2>
-                                                    </div>
-                                                </th>
-                                            </tr>
-                                            <tr>
-                                                <th>
-                                                    <div class="d-flex justify-content-center">
-                                                        <h5>
-                                                            id: xxxxxxxxxxx
-                                                        </h5>
-                                                    </div>
-                                                </th>
-                                            </tr>
-                                            <tr>
-                                                <th>
-                                                    <div class="d-flex justify-content-center">
-                                                        <h5>
-                                                            Nombre: {{ data.usu_usuario }}
-                                                        </h5>
-                                                    </div>
-                                                </th>
-                                            </tr>
-                                            <tr>
-                                                <th>
-                                                    <div class="d-flex justify-content-center">
-                                                        <h5>
-                                                            Ciudad: {{ data.usu_ciudad }}
-                                                        </h5>
-                                                    </div>
-                                                </th>
-                                            </tr>
-                                            <tr>
-                                                <th>
-                                                    <div class="d-flex justify-content-center">
-                                                        <h5>
-                                                            {{ fecha }}
-                                                        </h5>
-                                                    </div>
-                                                </th>
-                                            </tr>
-                                            <tr>
-                                                <th>
-                                                    <div class="d-flex justify-content-center">
-                                                        <div>
-                                                            <p class="aligniar">Este documento es para uso vip de nuestra plataforma con este documento entras a evento exclusivos</p>
-                                                        </div>
-                                                    </div>
-                                                </th>
-                                            </tr>
-                                        </tbody>
-                                    </table>
-                                </div>
-                            </div>-->
                         </div>
                     </div>
                 </div>
@@ -319,11 +274,247 @@
             <div class="col-12">
                 <br><br>
                 <div class="d-flex justify-content-center">
-                    <h3 class="text-white pointer efectButton" [routerLink]="['/introduccion']">Ver Link de inducción
+                    <h3 class="text-white pointer efectButton" [routerLink]="['/introduccion']">Ver Link de Inducción
                     </h3>
                 </div>
                 <br><br>
             </div>
         </div>
+        <div class="col-12" *ngIf="view === 'proveedor'">
+          <div class="d-flex justify-content-center">
+              <div class="container">
+                  <mat-horizontal-stepper [linear]="isLinear" #stepper>
+                      <mat-step >
+                          <ng-template matStepLabel>Primer Paso</ng-template>
+                          <div class="form row container">
+                              <div class="form-group col-sm-6 col-12">
+                                  <label for="exampleFormControlInput1">Como Se LLama Tu Bodega</label>
+                                  <input type="text" [(ngModel)]="data.usu_usuario"
+                                      class="form-control form-control-sm"
+                                      placeholder="Ejemplos ( bodegaAlMayore ) ( BodegaEster )" (ngModelChange)="validadUsername()">
+                                  <div *ngIf="!disabledusername">
+                                      <span class="bg-danger text-white rounded">El Nombre de su tienda Ya Se Encuentra Registrado Por Favor Utilizar
+                                          Otro</span>
+                                  </div>
+                              </div>
+                              <div class="form-group col-sm-6 col-12">
+                                  <label for="exampleFormControlInput1">Nombre</label>
+                                  <input type="text" [(ngModel)]="data.usu_nombre" required
+                                      class="form-control form-control-sm" placeholder="Ingrese tu Nombre"  (ngModelChange)="blurApellido()">
+                              </div>
+                              <div class="form-group col-sm-3 col-6">
+                                  <label for="exampleFormControlInput1">Indicativo</label>
+                                  <select class="form-control form-control-sm" [(ngModel)]="data.usu_indicativo" required>
+                                      <option [value]="item.phone_code" *ngFor="let item of listIndicativos">{{
+                                          item.nombre }}
+                                          +{{ item.phone_code }}</option>
+                                  </select>
+                              </div>
+                              <div class="form-group col-sm-3 col-6">
+                                  <label for="exampleFormControlInput1">Celular</label>
+                                  <input type="number" [(ngModel)]="data.usu_telefono" required
+                                      class="form-control form-control-sm" placeholder="Ingrese tu Celular">
+                              </div>
+                              <div class="col-12">
+                                  <div class="d-flex justify-content-between">
+                                      <div>
+                                          <!--<button mat-raised-button color="warn" matStepperPrevious>Atras</button>-->
+                                      </div>
+                                      <div></div>
+                                      <div>
+                                          <button mat-raised-button color="primary" (click)="validador( 1, stepper )">Siguiente</button>
+                                      </div>
+                                  </div>
+                              </div>
+                          </div>
+                      </mat-step>
+                      <mat-step>
+                          <ng-template matStepLabel>Segundo Paso</ng-template>
+                          <div class="form row container">
+                              <div class="form-group col-sm-6 col-12">
+                                  <label for="exampleFormControlInput1">Ciudad</label>
+                                  <input type="text" [(ngModel)]="data.usu_ciudad" class="form-control form-control-sm"
+                                      placeholder="Ingrese tu Ciudad">
+                              </div>
+                              <div class="form-group col-sm-6 col-12">
+                                  <label for="exampleFormControlInput1">Dirección</label>
+                                  <input type="text" [(ngModel)]="data.usu_direccion" class="form-control form-control-sm"
+                                      placeholder="Ingrese tu Dirección">
+                              </div>
+                              <div class="form-group col-sm-6 col-12">
+                                  <label for="exampleFormControlInput1">Correo</label>
+                                  <input type="email" [(ngModel)]="data.usu_email" class="form-control form-control-sm" autocomplete="off"
+                                      (blur)="validadorEmail( data.usu_email )" placeholder="Ingrese tu Correo">
+                                  <span class="text-danger">{{ error }}</span>
+                              </div>
+                              <div class="form-group col-sm-6 col-12">
+                                  <label for="exampleFormControlInput1">Email Repetir</label>
+                                  <input type="email" [(ngModel)]="data.usu_emailReper" autocomplete="off"
+                                      class="form-control form-control-sm" placeholder="Ingrese tu Email">
+                              </div>
+                              <div class="form-group col-sm-6 col-12">
+                                  <label for="exampleFormControlInput1">Contraseña</label>
+                                  <input type="password" [(ngModel)]="data.usu_clave" class="form-control form-control-sm" autocomplete="off"
+                                      placeholder=" Ingrese tu Contraseña">
+                              </div>
+                              <div class="form-group col-sm-6 col-12">
+                                  <label for="exampleFormControlInput1">Repetir Contraseña</label>
+                                  <input type="password" [(ngModel)]="data.usu_confir" autocomplete="off"
+                                      class="form-control form-control-sm" placeholder="Confirmar Contraseña">
+                              </div>
+                              <!--<div class="form-group col-sm-6 col-12">
+                                  <label for="exampleFormControlInput1">Describenos porque aceptarte como uno de nuestros
+                                      vendedores</label>
+                                  <textarea class="form-control" [(ngModel)]="data.usu_modo" rows="3"></textarea>
+                              </div>-->
+                              <div class="form-group col-sm-6 col-12">
+                                  <input class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios2"
+                                      [(ngModel)]="data.cat_activo">
+                                  <label class="form-check-label pointer" for="exampleRadios2" (click)="terminos()">
+                                      Estoy de acuerdo con los terminos de privacidad
+                                  </label>
+                              </div>
+                              <div class="col-12">
+                                  <div class="d-flex justify-content-between">
+                                      <div>
+                                          <button mat-raised-button color="warn" matStepperPrevious>Atras</button>
+                                      </div>
+                                      <div></div>
+                                      <div>
+                                          <!--<button mat-raised-button color="primary" (click)="validador( 2, stepper )">Siguiente</button>-->
+                                          <button mat-raised-button color="primary" (click)="validador( 4, stepper )">Siguiente</button>
+                                      </div>
+                                  </div>
+                              </div>
+                          </div>
+                      </mat-step>
+                      <!--<mat-step>
+                          <ng-template matStepLabel>Terser Paso</ng-template>
+                          <div class="form row container">
+                              <div class="col-12">
+                                  <label for="exampleFormControlSelect1">Sabes qué es droppshipping</label>
+                                  <select class="form-control" [(ngModel)]="data.queEsDropp">
+                                      <option value="si">SI</option>
+                                      <option value="no">NO</option>
+                                  </select>
+                              </div>
+                              <div class="col-12" *ngIf="data.queEsDropp == 'si'">
+                                  <label for="exampleFormControlTextarea1">En cuales plataformas de dropshipping has
+                                      participado, describe cada plataforma y separa con una , cada una de estas</label>
+                                  <textarea class="form-control" [(ngModel)]="data.textoQueEsDropp" rows="3"></textarea>
+                              </div>
+                              <div class="col-12">
+                                  <label for="exampleFormControlSelect1">Cuanto tiempo llevas vendiendo de manera
+                                      virtual</label>
+                                  <select class="form-control" [(ngModel)]="data.tiempoVendiendo">
+                                      <option value="menos3">3 meses o menos</option>
+                                      <option value="mas6">De 6 meses a un año</option>
+                                      <option value="mas12">Más de un año</option>
+                                  </select>
+                              </div>
+                              <div class="col-12">
+                                  <label for="exampleFormControlSelect1">Cuantas ventas crees que puedes realizar
+                                      mensualmente</label>
+                                  <select class="form-control" [(ngModel)]="data.ventasRealizarMensual">
+                                      <option value="30">1 a 30</option>
+                                      <option value="100">de 31 a 100</option>
+                                      <option value="110">Más de 100</option>
+                                  </select>
+                              </div>
+                              <div class="col-12">
+                                  <label for="exampleFormControlSelect1">Pagas publicidad en alguna red social para
+                                      vender</label>
+                                  <select class="form-control" [(ngModel)]="data.pagasPublicidad">
+                                      <option value="si">SI</option>
+                                      <option value="no">NO</option>
+                                  </select>
+                                  <br>
+                              </div>
+                              <div class="col-12 container row" *ngIf="data.pagasPublicidad == 'si'">
+                                  <label for="exampleFormControlSelect1">Seleccione en cuales plataformas has pagado publicidad</label><br>
+                                  <mat-checkbox [(ngModel)]="item.check" *ngFor="let item of listRedes"
+                                      (ngModelChange)="selectTable( item )">
+                                      {{ item.titulo }} &nbsp;
+                                  </mat-checkbox>
+                              </div>
+                              <div class="col-12">
+                                  <div class="d-flex justify-content-between">
+                                      <div>
+                                          <button mat-raised-button color="warn" matStepperPrevious>Atras</button>
+                                      </div>
+                                      <div></div>
+                                      <div>
+                                          <button mat-raised-button color="primary" (click)="validador( 3, stepper )">Siguiente</button>
+                                      </div>
+                                  </div>
+                              </div>
+                          </div>
+                      </mat-step>-->
+                  </mat-horizontal-stepper>
+                  <div class="d-flex justify-content-center">
+                    <div>
+                      <button type="button" class="btn btn-success" (click)="openTarget()">
+                        <span *ngIf="!printText">Ver Mi Tarjeta</span>
+                        <span *ngIf="printText">Ocultar Mi Tarjeta</span>
+                      </button>
+                    </div>
+                  </div>
+                  <div class="row" style="height: -webkit-fill-available; width: min-content;" *ngIf="printText" id="print">
+                      <div class="col-12">
+                          <div class="d-flex justify-content-center">
+                              <div class="row efectos">
+                                  <div class="col-12">
+                                      <div class="d-flex justify-content-center">
+                                          <div>
+                                              <h2>ASO-VIRTUAL-CONNECTED</h2>
+                                              <p style="text-align: center;
+                                              font-size: 13px;
+                                              font-weight: bolder;">Asociacion  de Tiendas Virtuales conectadas</p>
+                                          </div>
+                                      </div>
+                                  </div>
+                                  <div class="col-4">
+                                      <img style="width: 100%;   background-attachment: fixed; background-position: center;" [src]="data.usu_imagen || '../assets/noimagen.jpg' " alt="">
+                                  </div>
+                                  <div class="col-8 row">
+                                      <div class="col-12">
+                                          <label for="exampleFormControlInput1" class="sixes">ID:</label>
+                                          <input type="text" [(ngModel)]="data.ids" required disabled
+                                              class="form-control form-control-sm sixes" placeholder="id">
+                                      </div>
+                                      <div class="col-12">
+                                          <label for="exampleFormControlInput1" class="sixes">Nombre:</label>
+                                          <input type="text" [(ngModel)]="data.usu_nombre1" required disabled
+                                              class="form-control form-control-sm sixes" placeholder="Ingrese tu nombre">
+                                      </div>
+                                      <div class="col-6">
+                                          <label for="exampleFormControlInput1" class="sixes">Ciudad</label>
+                                          <input type="text" [(ngModel)]="data.usu_ciudad" required disabled
+                                              class="form-control form-control-sm sixes" placeholder="Ingrese tu ciudad">
+                                      </div>
+                                      <div class="col-6">
+                                          <label for="exampleFormControlInput1" class="sixes">fecha</label>
+                                          <input type="text" [(ngModel)]="fecha" required disabled
+                                              class="form-control form-control-sm sixes">
+                                      </div>
+                                  </div>
+                                  <div class="col-12">
+                                      <p class="sixes"> Este documento es para uso vip de nuestra plataforma con este documento entras a evento exclusivos </p>
+                                  </div>
+                              </div>
+                          </div>
+                      </div>
+                  </div>
+              </div>
+          </div>
+          <div class="col-12">
+              <br><br>
+              <div class="d-flex justify-content-center">
+                  <h3 class="text-white pointer efectButton" [routerLink]="['/introduccion']">Ver Link de Inducción
+                  </h3>
+              </div>
+              <br><br>
+          </div>
+      </div>
     </div>
 </div>
