@@ -13,6 +13,7 @@ import { ArchivosService } from 'src/app/servicesComponents/archivos.service';
 import { MatStepper } from '@angular/material/stepper';
 import * as _ from 'lodash';
 import * as moment from 'moment';
+import { tryCatch } from 'rxjs/internal-compatibility';
 
 const indicativos = Indicativo;
 
@@ -31,7 +32,7 @@ export class RegistrosComponent implements OnInit {
   listIndicativos = indicativos;
   disableSubmit: boolean = true;
   isLinear: boolean = true;
-  
+
   fecha:string = moment().format("DD/MM/YYYY");
   dataUser: any = {};
   cabeza: any;
@@ -62,6 +63,9 @@ export class RegistrosComponent implements OnInit {
   ];
   disabledFile:boolean = false;
   disabledusername: boolean = true;
+  printText:boolean = false;
+  view:string='';
+
   constructor(
     private _user: UsuariosService,
     private _tools: ToolsService,
@@ -144,24 +148,26 @@ validadUsername() {
 }
 
 validadorEmail(email: string){
-  let validador: any = email.split("@");
-  validador = validador[1];
-  if (validador) {
-    validador = validador.toLowerCase();
-    console.log(validador);
-    //if ((validador == "gmail.com") || (validador == "hotmail.com") || (validador == "hotmail.es") || (validador == "outlook.com") || (validador == "outlook.es")) { 
-    if (validador == 'gmail.com' || validador == 'gmail.es' ) {
-      this.error = ""; return true; 
+  try {
+    let validador: any = email.split("@");
+    validador = validador[1];
+    if (validador) {
+      validador = validador.toLowerCase();
+      console.log(validador);
+      //if ((validador == "gmail.com") || (validador == "hotmail.com") || (validador == "hotmail.es") || (validador == "outlook.com") || (validador == "outlook.es")) {
+      if (validador == 'gmail.com' || validador == 'gmail.es' ) {
+        this.error = ""; return true;
+      }
+      else this.error = "Error el dominio tiene que ser gmail ";
     }
-    else this.error = "Error el dominio tiene que ser gmail ";
-  }
+  } catch (error) { }
 }
 
 getCabeza(){
-  this._user.get({ where: { 
-    usu_usuario: this.cabeza } 
-  }).subscribe((res: any) => { 
-    this.dataUser = res.data[0]; 
+  this._user.get({ where: {
+    usu_usuario: this.cabeza }
+  }).subscribe((res: any) => {
+    this.dataUser = res.data[0];
     if( !this.dataUser ) this.dataUser = {
       usu_nombre: "ejemplo1",
       usu_usuario: "LOKOMPROAQUI",
@@ -169,7 +175,7 @@ getCabeza(){
       codigo: "UVOQA"
     };
     this.GuardarStoreUser();
-    this.data.cabeza = this.dataUser.id; 
+    this.data.cabeza = this.dataUser.id;
   }, (error) => console.error(error));
 }
 
@@ -178,10 +184,10 @@ GuardarStoreUser() {
   this._store.dispatch(accion);
 }
 
-async submit(){
+async submit( opt:boolean ){
   if (!this.disableSubmit) return false;
   this.disableSubmit = false;
-  let valid: boolean = await this.validando();
+  let valid: boolean = await this.validando( opt );
   if (!valid || this.error) { this.disableSubmit = true; return false };
   if( !this.disabledusername ) return this._tools.tooast( { title: "Error tenemos problemas en el formulario por favor revisar gracias", icon: "error"})
   this.data = _.omit(this.data, [ 'id', 'usu_nombre1' ])
@@ -206,13 +212,13 @@ async submit(){
   }, (error) => { console.error(error); this.disableSubmit = true; this._tools.presentToast("Error de servidor") });
 }
 
-async validando(){
+async validando( opt:boolean ){
   if (!this.data.usu_nombre) { this._tools.tooast({ title: "Error falta el nombre", icon: "error" }); return false; }
-  if (!this.data.usu_apellido) { this._tools.tooast({ title: "Error falta el Apellido", icon: "error" }); return false; }
+  //if (!this.data.usu_apellido) { this._tools.tooast({ title: "Error falta el Apellido", icon: "error" }); return false; }
   if (!this.data.usu_indicativo) { this._tools.tooast({ title: "Error falta el Indicativo", icon: "error" }); return false; }
   if (!this.data.usu_telefono) { this._tools.tooast({ title: "Error falta el Telefono", icon: "error" }); return false; }
   if (!this.data.usu_ciudad) { this._tools.tooast({ title: "Error falta la Ciudad", icon: "error" }); return false; }
-  if (!this.data.usu_direccion) { this._tools.tooast({ title: "Error falta el Direccion", icon: "error" }); return false; }
+  //if (!this.data.usu_direccion) { this._tools.tooast({ title: "Error falta el Direccion", icon: "error" }); return false; }
   if (!this.data.usu_email) { this._tools.tooast({ title: "Error falta la Email", icon: "error" }); return false; }
   if (!this.data.usu_emailReper) { this._tools.tooast({ title: "Error falta el Email repetir", icon: "error" }); return false; }
   if (this.data.usu_emailReper != this.data.usu_email) { this._tools.tooast({ title: "Error los Emails no son iguales", icon: "error" }); return false; }
@@ -220,10 +226,12 @@ async validando(){
   if (!this.data.usu_confir) { this._tools.tooast({ title: "Error falta la clave de confirmar", icon: "error" }); return false; }
   if (this.data.usu_confir != this.data.usu_clave) { this._tools.tooast({ title: "Error las claves no son correctas", icon: "error" }); return false; }
   if (!this.data.usu_usuario) { this._tools.tooast({ title: "Error falta Tu Nombre de tienda", icon: "error" }); return false; }
-  if (!this.data.queEsDropp) { this._tools.tooast({ title: "Error falta que complete los campos de que es qué es droppshipping", icon: "error" }); return false; }
-  if (!this.data.tiempoVendiendo) { this._tools.tooast({ title: "Error falta que complete los campos Cuanto tiempo llevas vendiendo de manera virtual", icon: "error" }); return false; }
-  if (!this.data.ventasRealizarMensual) { this._tools.tooast({ title: "Error falta que complete los campos Cuantas ventas crees que puedes realizar mensualmente", icon: "error" }); return false; }
-  if (!this.data.pagasPublicidad) { this._tools.tooast({ title: "Error falta que complete los campos Pagas publicidad en alguna red social para vender", icon: "error" }); return false; }
+  if( opt === false ){
+    if (!this.data.queEsDropp) { this._tools.tooast({ title: "Error falta que complete los campos de que es qué es droppshipping", icon: "error" }); return false; }
+    if (!this.data.tiempoVendiendo) { this._tools.tooast({ title: "Error falta que complete los campos Cuanto tiempo llevas vendiendo de manera virtual", icon: "error" }); return false; }
+    if (!this.data.ventasRealizarMensual) { this._tools.tooast({ title: "Error falta que complete los campos Cuantas ventas crees que puedes realizar mensualmente", icon: "error" }); return false; }
+    if (!this.data.pagasPublicidad) { this._tools.tooast({ title: "Error falta que complete los campos Pagas publicidad en alguna red social para vender", icon: "error" }); return false; }
+  }
   //if( !this.data.usu_modo ) { this._tools.tooast( { title: "Error falta la descripcion de porque aceptarte como vendedor", icon: "error" }); return false; }
   return true;
 }
@@ -244,20 +252,20 @@ selectTable(item){
 }
 
 async validador( opt:number, stepper: MatStepper ){
-  console.log( stepper, this.disabledFile  )
+  //console.log( stepper, this.disabledFile  )
   if( opt == 1 ){
     if( !this.disabledFile ) await this.subirFile();
     if (!this.data.usu_nombre) { this._tools.tooast({ title: "Error falta el nombre", icon: "error" }); return false; }
-    if (!this.data.usu_apellido) { this._tools.tooast({ title: "Error falta el Apellido", icon: "error" }); return false; }
+    //if (!this.data.usu_apellido) { this._tools.tooast({ title: "Error falta el Apellido", icon: "error" }); return false; }
     if (!this.data.usu_indicativo) { this._tools.tooast({ title: "Error falta el Indicativo", icon: "error" }); return false; }
     if (!this.data.usu_telefono) { this._tools.tooast({ title: "Error falta el Telefono", icon: "error" }); return false; }
     if (!this.data.usu_usuario) { this._tools.tooast({ title: "Error falta Tu Nombre de tienda", icon: "error" }); return false; }
-    if (!this.data.usu_imagen) { this._tools.tooast({ title: "Error falta Tu Logo de tienda", icon: "error" }); return false; }
+    //if (!this.data.usu_imagen) { this._tools.tooast({ title: "Error falta Tu Logo de tienda", icon: "error" }); return false; }
     stepper.next();
   }
   if( opt == 2 ){
     if (!this.data.usu_ciudad) { this._tools.tooast({ title: "Error falta la Ciudad", icon: "error" }); return false; }
-    if (!this.data.usu_direccion) { this._tools.tooast({ title: "Error falta el Direccion", icon: "error" }); return false; }
+    //if (!this.data.usu_direccion) { this._tools.tooast({ title: "Error falta el Direccion", icon: "error" }); return false; }
     if (!this.data.usu_email) { this._tools.tooast({ title: "Error falta la Email", icon: "error" }); return false; }
     if (!this.data.usu_emailReper) { this._tools.tooast({ title: "Error falta el Email repetir", icon: "error" }); return false; }
     if (this.data.usu_emailReper != this.data.usu_email) { this._tools.tooast({ title: "Error los Emails no son iguales", icon: "error" }); return false; }
@@ -271,12 +279,24 @@ async validador( opt:number, stepper: MatStepper ){
     if (!this.data.tiempoVendiendo) { this._tools.tooast({ title: "Error falta que complete los campos Cuanto tiempo llevas vendiendo de manera virtual", icon: "error" }); return false; }
     if (!this.data.ventasRealizarMensual) { this._tools.tooast({ title: "Error falta que complete los campos Cuantas ventas crees que puedes realizar mensualmente", icon: "error" }); return false; }
     if (!this.data.pagasPublicidad) { this._tools.tooast({ title: "Error falta que complete los campos Pagas publicidad en alguna red social para vender", icon: "error" }); return false; }
-    this.submit()
+    this.submit(false)
+  }
+  if( opt == 4 ){
+    this.data.rol= 'proveedor';
+    this.data.queEsDropp = "si";
+    this.data.tiempoVendiendo = "mas12";
+    this.data.ventasRealizarMensual = "110";
+    this.data.pagasPublicidad = "si";
+    this.submit(true)
   }
 }
 
 eventEstado(){
   if( this.data.fileDise ) { this.disabledFile = true; this.data.usu_imagen='./assets/logo.png' }
+}
+
+openTarget(){
+  this.printText = !this.printText;
 }
 
 }
