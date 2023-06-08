@@ -5,7 +5,7 @@
 export const environment = {
   production: false,
   //url: "https://lokomproaqui.herokuapp.com",
-  url: "http://localhost:1337",
+  url: "http://localhost:1336",
   //url: "https://1337-jecontreras-backlocompr-p462cm2u50d.ws-us90.gitpod.io",
   //url: "https://backpruebaslokompro.herokuapp.com",
   //url: "https://backlocompro.herokuapp.com",
