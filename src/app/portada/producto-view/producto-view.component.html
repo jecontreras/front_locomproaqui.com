@@ -1,19 +1,21 @@
+<!-- catg header banner section -->
 <section id="aa-catg-head-banner">
-  <img [src]=" tiendaInfo.portada2 || './assets/img/banner.jpg'" alt="fashion img" class="anchosBanner">
+  <img [src]="tiendaInfo.portada3 || './assets/img/banner.jpg'" class="anchosBanner"
+    alt="fashion img">
   <div class="aa-catg-head-banner-area">
     <div class="container">
       <div class="aa-catg-head-banner-content">
-        <!--<h2>Productos exclusivos</h2>-->
-        <br>
-          <br>
+        <h2>{{ data.pro_nombre }}</h2>
         <ol class="breadcrumb">
           <li><a href="#" [routerLink]="[ '/portada' ]">Inicio</a></li>
-          <li class="active">Productos</li>
+          <li><a href="#" [routerLink]="[ '/portada/productos' ]">Productos</a></li>
+          <li class="active">{{ data.pro_nombre }}</li>
         </ol>
       </div>
     </div>
   </div>
 </section>
+<!-- / catg header banner section -->
 
 <!-- product category -->
 <section id="aa-product-details">
@@ -28,14 +30,19 @@
                 <div class="aa-product-view-slider">
                   <div id="demo-1" class="simpleLens-gallery-container">
                     <div class="simpleLens-container">
-                      <lib-ngx-image-zoom [thumbImage]=viewsImagen [fullImage]=viewsImagen [magnification]="1"
+                      <div class="image-resize img">
+                        <img [src]="viewsImagen" data-srcset="{{viewsImagen}}?auto=compress,format&optimize=medium&fit=clip&w=100%&h=auto 1x"
+                          alt data-sizes=auto data-src="{{viewsImagen}}?auto=compress,format&optimize=medium&fit=clip&w=100%&h=auto"
+                          class=lazyload style="object-fit: contain;" width=100% height=auto>
+                      </div>
+                      <!--<lib-ngx-image-zoom [thumbImage]=viewsImagen [fullImage]=viewsImagen [magnification]="1"
                         [enableScrollZoom]="true" [enableLens]="true" [lensWidth]="200" [lensHeight]="200">
-                      </lib-ngx-image-zoom>
+                      </lib-ngx-image-zoom>-->
                     </div>
                   </div>
                 </div>
                 <div class="row">
-                  <div class="col-2" *ngFor="let item of listGaleria" (click)="verImagen( item.pri_imagen )">
+                  <div class="col-2 pointer" *ngFor="let item of listGaleria" (click)="verImagen( item )">
                     <img [src]="item.pri_imagen" alt="" style="width: 120%; border-radius: 11px;">
                   </div>
                 </div>
@@ -53,23 +60,23 @@
                   <section *ngIf="data['listTallas']?.length > 0 ">
                     <h4>Talla</h4>
                     <div class="aa-prod-view-size">
-                      <a class="pointer" *ngFor="let item of listTallas" [ngClass]="{selecciono: item.check}"
-                        (click)="this.pedido.talla = item.tal_descripcion; item.check = !item.check">{{
+                      <a class="pointer" *ngFor="let item of data.listTallas" [ngClass]="{selecciono: item.check1}"
+                        (click)="checkTalla( item );">{{
                         item.tal_descripcion }}</a>
                     </div>
                   </section>
                   <h4>Color</h4>
-                     <div class="aa-color-tag">
-                      <a class="pointer" *ngFor="let item of data.listColor" [ngClass]="{selecciono: item.check}"
-                        (click)="handleSelect( item ); item.check = !item.check" style="width: auto !important;">{{
-                        item.talla }}
-                      </a>
-                       <!--<a href="#" class="aa-color-green"></a>
-                       <a href="#" class="aa-color-yellow"></a>
-                       <a href="#" class="aa-color-pink"></a>
-                       <a href="#" class="aa-color-black"></a>
-                       <a href="#" class="aa-color-white"></a>-->
-                  </div>
+                    <div class="aa-color-tag">
+                    <a class="pointer" *ngFor="let item of data.listColor" [ngClass]="{selecciono: item.check1}"
+                      (click)="handleSelect( item );" style="width: auto !important;">{{
+                      item.talla }}
+                    </a>
+                      <!--<a href="#" class="aa-color-green"></a>
+                      <a href="#" class="aa-color-yellow"></a>
+                      <a href="#" class="aa-color-pink"></a>
+                      <a href="#" class="aa-color-black"></a>
+                      <a href="#" class="aa-color-white"></a>-->
+                </div>
                   <div class="aa-prod-quantity">
                     <h4>Cantidad</h4>
                     <input class="form-control form-control-sm" type="number" placeholder=".form-control-sm" [(ngModel)]="pedido.cantidad">
@@ -85,8 +92,16 @@
                       href="https://www.facebook.com/sharer/sharer.php?kid_directed_site=0&u=https://www.locomproaqui.com/productos/15?u=https://www.locomproaqui.com/productos/{{ this.data.id }}"
                       target="_blank">Compartir</a>-->
                     <a (click)="comprarArticulo( 1, false )" class="aa-add-to-cart-btn pointer"
-                      style="    font-size: 100%; background: #008116; color: white; border-radius: 11px;"><span
+                      style="background: #008116; color: white; border-radius: 11px;"><span
                         class="fa fab fa-whatsapp"></span>Comprar y pagar en casa</a>
+                        <h2 class="text-success" *ngIf="data['pro_categoria']?.id == 16">
+                          <a (click)="comprarArticulo( 2, true )" class="aa-add-to-cart-btn pointer"
+                          style="font-size: 130%; background: #fbff00; color: #212529; border-radius: 11px;"><span
+                            class="fa fab fa-whatsapp"></span>
+                            LLEVA 2 PARES POR {{ _formato.monedaChange( 3, 2, ( ( data.pro_uni_venta * 2 ) - 20000 ) || 0 ) }}
+                            DESCUENTO 18%
+                          </a>
+                        </h2>
                     <!--<a (click)="masInfo( data )" class="aa-add-to-cart-btn pointer"><span
                       class="fa fab fa-whatsapp"></span>Pedir Informacion</a>-->
                   </div>
@@ -114,15 +129,69 @@
                     <div class="col-12">
                       <img src="./assets/img/compra.jpg" style="width: 320px;">
                     </div>
-                    <div class="col-12" *ngIf="data['pro_categoria']?.pro_categoria == 22">
+                    <div class="col-12" *ngIf="data['pro_categoria']?.pro_categoria == 16">
                       <h5> 🚚 ENVIO GRATIS Y PAGAS CUANDO RECIBES EL PRODUCTO 🚚
                         Nuestro tallaje es nacional, un poco pequeño sugerimos solicitar una talla más a la que te de en
                         la siguiente tabla
                       </h5>
                     </div>
-                    <div class="col-12" *ngIf="data['pro_categoria']?.id == 22">
+                    <div class="col-12" *ngIf="data['pro_categoria']?.id == 16">
                       <img src="./assets/img/tallas.jpg" style="width: 320px;">
                     </div>
+                  </div>
+                </div>
+                <div class="aa-product-review-area">
+                  <h4>Comentarios</h4>
+                  <ul class="aa-review-nav">
+                    <li *ngFor="let item of data.listComentarios ">
+                      <div class="media">
+                        <div class="media-left">
+                          <a href="#">
+                            <img class="media-object" [src]="item.foto" alt="girl image">
+                          </a>
+                        </div>
+                        <div class="media-body">
+                          <h4 class="media-heading"><strong>{{ item.nombre }}</strong> - <span> {{ item.fecha }} </span>
+                          </h4>
+                          <div class="aa-product-rating">
+                            <span class="fa fa-star"></span>
+                            <span class="fa fa-star"></span>
+                            <span class="fa fa-star"></span>
+                            <span class="fa fa-star"></span>
+                            <span class="fa fa-star-o"></span>
+                          </div>
+                          <p>{{ item.descripcion }}</p>
+                        </div>
+                      </div>
+                    </li>
+                  </ul>
+                  <h4>Agregar Testimonios</h4>
+                  <div class="aa-your-rating">
+                    <p>Agregar Nota</p>
+                    <a class="pointer"><span class="fa fa-star-o"></span></a>
+                    <a class="pointer"><span class="fa fa-star-o"></span></a>
+                    <a class="pointer"><span class="fa fa-star-o"></span></a>
+                    <a class="pointer"><span class="fa fa-star-o"></span></a>
+                    <a class="pointer"><span class="fa fa-star-o"></span></a>
+                  </div>
+                  <!-- review form -->
+                  <div action="" class="aa-review-form">
+                    <div class="form-group">
+                      <label for="message">Ranking</label>
+                      <textarea class="form-control" rows="3" [(ngModel)]="comentario.descripcion"></textarea>
+                    </div>
+                    <div class="form-group">
+                      <label for="name">Nombre</label>
+                      <input type="text" class="form-control" [(ngModel)]="comentario.nombre" placeholder="Name">
+                    </div>
+                    <div class="form-group">
+                      <label for="email">Email</label>
+                      <input type="email" class="form-control" [(ngModel)]="comentario.email"
+                        placeholder="example@gmail.com">
+                    </div>
+
+                    <button type="submit" class="btn btn-default aa-review-submit"
+                      (click)="guardarComentario()">Enviar</button>
                   </div>
                 </div>
               </div>
@@ -141,8 +210,48 @@
               </ng-image-slider>
             </ul>
           </div>
+          <div class="aa-product-related-item">
+            <h3>Productos Mas Vendidos</h3>
+            <ul class="aa-product-catg aa-related-item-slider">
+              <!-- start single product item -->
+              <ng-image-slider [images]="imageObject2" [infinite]="sliderInfinite" [imagePopup]="sliderImagePopup"
+                [showArrow]="sliderArrowShow" [imageSize]="{width: sliderImageWidth, height: sliderImageHeight}"
+                [autoSlide]="sliderAutoSlide ? 1 : 0" [slideImage]="sliderSlideImage"
+                [animationSpeed]="sliderAnimationSpeed" (imageClick)="imageOnClick($event)"
+                (arrowClick)="arrowOnClick($event)" (lightboxArrowClick)="lightboxArrowClick($event)" #nav>
+              </ng-image-slider>
+            </ul>
+          </div>
+          <div class="aa-product-related-item">
+            <h3>Productos Con buena reseña</h3>
+            <ul class="aa-product-catg aa-related-item-slider">
+              <!-- start single product item -->
+              <ng-image-slider [images]="imageObject3" [infinite]="sliderInfinite" [imagePopup]="sliderImagePopup"
+                [showArrow]="sliderArrowShow" [imageSize]="{width: sliderImageWidth, height: sliderImageHeight}"
+                [autoSlide]="sliderAutoSlide ? 1 : 0" [slideImage]="sliderSlideImage"
+                [animationSpeed]="sliderAnimationSpeed" (imageClick)="imageOnClick($event)"
+                (arrowClick)="arrowOnClick($event)" (lightboxArrowClick)="lightboxArrowClick($event)" #nav>
+              </ng-image-slider>
+            </ul>
+          </div>
         </div>
       </div>
     </div>
   </div>
 </section>
+
+<footer #nav style="position: fixed; top: 92%; left: auto;">
+  <div class="container">
+    <div class="row">
+      <div class="col-12">
+        <div class="d-flex justify-content-center">
+          <div>
+            <a (click)="comprarArticulo( 1, false )" class="aa-add-to-cart-btn pointer"
+              style="    font-size: 210%; background: #008116; color: white; border-radius: 11px;"><span
+                class="fa fab fa-whatsapp"></span>Comprar y pagar en casa</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</footer>
