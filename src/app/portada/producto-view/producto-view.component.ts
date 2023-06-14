@@ -161,6 +161,12 @@ export class ProductosViewComponent implements OnInit {
     this.queryId.where.id = this.id;
     this._producto.get( this.queryId ).subscribe((res:any)=>{
       this.data = res.data[0] || {};
+      try {
+        this.data.listTallas = this.data.listColor[0].tallaSelect.filter( item => item.cantidad );
+        for( let row of this.data.listTallas ) row.tal_descripcion = Number( row.tal_descripcion );
+        this.data.listTallas = _.orderBy( this.data.listTallas , ['tal_descripcion'], ['DEC'] );
+        console.log( "129", this.data )
+      } catch (error) {}
       this.viewsImagen = this.data.foto;
       if( !this.data.listComentarios ) this.data.listComentarios = [];
       this.listGaleria = this.data.galeria || [];
@@ -349,12 +355,23 @@ export class ProductosViewComponent implements OnInit {
     });
   }
 
-  handleSelect( item ){
-    this.data.colorSelect = item.talla;
-  }
-
   validarNumero(){
     return this.tiendaInfo.numeroCelular || "3156027551";
+  }
+
+  handleSelect( item ){
+    //console.log("***364", item)
+    this.viewsImagen = item.foto;
+    this.data.colorSelect = item.talla;
+    for( let row of this.data.listColor) row.check1 = false;
+    item.check1 = true;
+  }
+
+  checkTalla( item ){
+    this.pedido.talla = item.tal_descripcion; 
+    for( let row of this.data.listTallas ) row.check1 = false;
+    item.check1 = !item.check1;
+
   }
 
 
