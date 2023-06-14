@@ -1,0 +1,55 @@
+<div class="container">
+  <div class="row">
+    <div class="col-12">
+      <nav class="navbar navbar-light bg-light">
+        <a class="navbar-brand">Bodegas</a>
+        <form class="form-inline">
+          <input class="form-control mr-sm-2" type="search" placeholder="Buscar Bodega" aria-label="Search">
+          <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Buscar</button>
+        </form>
+      </nav>
+    </div>
+    <div class="col-12">
+      <div class="row">
+        <div class="col-6 col-sm-4" *ngFor="let row of listBodegas">
+          <mat-card class="example-card">
+            <mat-card-header>
+              <mat-card-title>{{ row.usu_nombre }} </mat-card-title>
+              <mat-card-subtitle>{{ row.usu_telefono }} </mat-card-subtitle>
+            </mat-card-header>
+            <img mat-card-image [src]="row.usu_imagen" alt="Photo of Perfil">
+            <mat-card-actions>
+              <button mat-raised-button color="primary" (click)="handleStore( row )">Explorar</button>
+            </mat-card-actions>
+          </mat-card>
+        </div>
+      </div>
+    </div>
+    <div class="col-12">
+      <nav class="navbar navbar-light bg-light">
+        <a class="navbar-brand">Productos Certificados</a>
+        <form class="form-inline">
+          <input class="form-control mr-sm-2" type="search" placeholder="Buscar Productos" aria-label="Search">
+          <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Buscar</button>
+        </form>
+      </nav>
+    </div>
+    <div class="col-12">
+      <div class="row">
+        <div class="col-6 col-sm-4" *ngFor="let row of listArticle" (click)="handleArticle( row )">
+          <mat-card class="example-card">
+            <mat-card-header>
+              <mat-card-subtitle>{{ row.pro_nombre }} </mat-card-subtitle>
+            </mat-card-header>
+            <img mat-card-image [src]="row.foto" alt="Photo of Perfil">
+            <mat-card-actions>
+              <button mat-raised-button color="primary" (click)="handleStore( row )">
+                <i class="material-icons">remove_red_eye</i>
+              </button>
+            </mat-card-actions>
+          </mat-card>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

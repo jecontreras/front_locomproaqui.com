@@ -62,7 +62,7 @@ export class ProductosComponent implements OnInit {
     private _productos: ProductoService,
     private spinner: NgxSpinnerService,
     private _store: Store<STORAGES>
-  ) { 
+  ) {
     this._store.subscribe( ( store: any ) => {
       store = store.name;
       if( !store ) return false;
@@ -180,6 +180,7 @@ export class ProductosComponent implements OnInit {
 
   cargarProveedor() {
     this.spinner.show();
+    if( this.rolName != 'administrador') this.query.where.pro_usu_creacion = this.dataUser.id;
     this._productos.get( this.query2 ).subscribe( ( response: any ) => {
         console.log(response);
         this.dataRows.push( ... response.data );
@@ -197,35 +198,63 @@ export class ProductosComponent implements OnInit {
       });
   }
 
-  buscar() {
+  buscar( opt:string ) {
     this.loader = false;
-    this.notscrolly = true 
+    this.notscrolly = true
     this.notEmptyPost = true;
-    this.dataTable.dataRows = [];
-    //console.log(this.datoBusqueda);
     this.datoBusqueda = this.datoBusqueda.trim();
-    this.query = {
-      where:{
-        pro_activo: 0
-      },
-      limit: 10
-    }
-    if (this.datoBusqueda != '') {
-      this.query.where.or = [
-        {
-          pro_nombre: {
-            contains: this.datoBusqueda|| ''
-          }
+    if( opt === 'provedor') {
+      this.dataRows = [];
+      this.query2 = {
+        where:{
+          pro_activo: 3
         },
-        {
-          pro_codigo: {
-            contains: this.datoBusqueda|| ''
-          }
-        }
-      ];
+        limit: 10
+      }
     }
+    else {
+      this.dataTable.dataRows = [];
+      this.query = {
+        where:{
+          pro_activo: 0
+        },
+        limit: 10
+      }
+    }
+    //console.log(this.datoBusqueda);
+    if (this.datoBusqueda != '') {
+      if( opt === 'provedor'){
+        this.query2.where.or = [
+          {
+            pro_nombre: {
+              contains: this.datoBusqueda|| ''
+            }
+          },
+          {
+            pro_codigo: {
+              contains: this.datoBusqueda|| ''
+            }
+          }
+        ];
+      }else{
+        this.query.where.or = [
+          {
+            pro_nombre: {
+              contains: this.datoBusqueda|| ''
+            }
+          },
+          {
+            pro_codigo: {
+              contains: this.datoBusqueda|| ''
+            }
+          }
+        ];
+      }
+    }
+    console.log("***254", this.query2)
     if( this.rolName != 'administrador') this.query.where.pro_usu_creacion = this.dataUser.id;
-    this.cargarTodos();
+    if( opt === 'provedor') this.cargarProveedor();
+    else this.cargarTodos();
   }
 
   updatePrecio( item, opt ){

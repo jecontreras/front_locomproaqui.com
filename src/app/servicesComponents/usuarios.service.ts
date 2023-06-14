@@ -22,6 +22,10 @@ export class UsuariosService {
     return this._model.querys('tblusuario/querysOn',query, 'post');
   }
 
+  getStore(query:any){
+    return this._model.querys('tblusuario/querysStore',query, 'post');
+  }
+
   recuperacion(query:any){
     return this._model.querys('tblusuario/resetiar',query, 'post');
   }

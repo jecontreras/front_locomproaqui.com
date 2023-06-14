@@ -4,14 +4,15 @@
 }
 
 div.scrollmenu {
-  background-color: #02a0e3;
+  background-color: #ebebeb;
   overflow: auto;
   white-space: nowrap;
+  margin: auto;
 }
 
 div.scrollmenu a {
   display: inline-block;
-  color: white;
+  color: black;
   text-align: center;
   padding: 14px;
   text-decoration: none;

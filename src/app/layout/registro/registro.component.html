@@ -298,9 +298,9 @@
                                   </div>
                               </div>
                               <div class="form-group col-sm-6 col-12">
-                                  <label for="exampleFormControlInput1">Nombre</label>
+                                  <label for="exampleFormControlInput1">Nombre y Apellidos de el Titular de la Bodega</label>
                                   <input type="text" [(ngModel)]="data.usu_nombre" required
-                                      class="form-control form-control-sm" placeholder="Ingrese tu Nombre"  (ngModelChange)="blurApellido()">
+                                      class="form-control form-control-sm" placeholder="Ingrese tu Nombre y apellido"  (ngModelChange)="blurApellido()">
                               </div>
                               <div class="form-group col-sm-3 col-6">
                                   <label for="exampleFormControlInput1">Indicativo</label>
@@ -311,9 +311,49 @@
                                   </select>
                               </div>
                               <div class="form-group col-sm-3 col-6">
-                                  <label for="exampleFormControlInput1">Celular</label>
+                                  <label for="exampleFormControlInput1">Celular Para el Soporte</label>
                                   <input type="number" [(ngModel)]="data.usu_telefono" required
                                       class="form-control form-control-sm" placeholder="Ingrese tu Celular">
+                              </div>
+                              <div class="form-group col-sm-6 col-12">
+                                <label for="exampleFormControlInput1">Tipo de Proveedor?</label>
+                                  <select class="form-control form-control-sm" [(ngModel)]="data.tipeUser" required>
+                                      <option value="1">
+                                        Fabricante
+                                      </option>
+                                      <option value="2">
+                                        Importador
+                                      </option>
+                                  </select>
+                              </div>
+                              <div class="form-group col-sm-6 col-12">
+                                <label for="exampleFormControlInput1">Tiempo de Experiencia como Proveedor Dropshipping?</label>
+                                  <select class="form-control form-control-sm" [(ngModel)]="data.tiempoVendiendo" required>
+                                      <option value="0">
+                                        0 a 6 Meses
+                                      </option>
+                                      <option value="1">
+                                        6 Meses a 1 Año
+                                      </option>
+                                      <option value="1">
+                                        Más de un Año
+                                      </option>
+                                  </select>
+                              </div>
+                              <div class="col-12">
+                                <label for="exampleFormControlSelect1">En qué Plataformas Haz Estado o Estás Como Proveedor</label>
+                                <select class="form-control" [(ngModel)]="data.pagasPublicidad">
+                                    <option value="si">SI</option>
+                                    <option value="no">NO</option>
+                                </select>
+                                <br>
+                              </div>
+                              <div class="col-12 container row" *ngIf="data.pagasPublicidad == 'si'">
+                                  <label for="exampleFormControlSelect1">Seleccione en Cuales Plataformas Has Estado o Estas Como Proveedor</label><br>
+                                  <mat-checkbox [(ngModel)]="item.check" *ngFor="let item of listPltaform"
+                                      (ngModelChange)="selectTable( item )">
+                                      {{ item.titulo }} &nbsp;
+                                  </mat-checkbox>
                               </div>
                               <div class="col-12">
                                   <div class="d-flex justify-content-between">
@@ -333,11 +373,16 @@
                           <div class="form row container">
                               <div class="form-group col-sm-6 col-12">
                                   <label for="exampleFormControlInput1">Ciudad</label>
-                                  <input type="text" [(ngModel)]="data.usu_ciudad" class="form-control form-control-sm"
-                                      placeholder="Ingrese tu Ciudad">
+                                  <select class="form-control form-control-sm" [(ngModel)]="data.usu_ciudad" required >
+                                      <option [value]="item.phone_code" *ngFor="let item of listCiudad">
+                                        {{ item.ciudad }} - {{ item.departamento }}
+                                      </option>
+                                  </select>
+                                  <!--<input type="text" [(ngModel)]="data.usu_ciudad" class="form-control form-control-sm"
+                                      placeholder="Ingrese tu Ciudad">-->
                               </div>
                               <div class="form-group col-sm-6 col-12">
-                                  <label for="exampleFormControlInput1">Dirección</label>
+                                  <label for="exampleFormControlInput1">Dirección de Recogida para el Paquete</label>
                                   <input type="text" [(ngModel)]="data.usu_direccion" class="form-control form-control-sm"
                                       placeholder="Ingrese tu Dirección">
                               </div>

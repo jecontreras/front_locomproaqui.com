@@ -55,6 +55,13 @@ const dashboardRoutes: Routes = [
      {path: 'misDespacho', component: MisDespachoComponent},
      {path: 'cursos', component: CursosComponent},
      {path: 'ventasPosibles', component: VentasClienteComponent },
+     {
+        path: 'store',
+        children: [{
+          path: '',
+          loadChildren: () => import('./bodega/bodega.module').then(m => m.BodegaModule)
+        }]
+      },
      {path: '**', redirectTo: 'categorias', pathMatch: 'full'}
    ]
   }

@@ -14,6 +14,9 @@ import { MatStepper } from '@angular/material/stepper';
 import * as _ from 'lodash';
 import * as moment from 'moment';
 import { tryCatch } from 'rxjs/internal-compatibility';
+import { DANEGROUP } from 'src/app/JSON/dane-nogroup';
+import { departamento } from 'src/app/JSON/departamentos';
+import { VentasService } from 'src/app/servicesComponents/ventas.service';
 
 const indicativos = Indicativo;
 
@@ -61,10 +64,35 @@ export class RegistrosComponent implements OnInit {
       check: false
     }
   ];
+  listPltaform: any = [
+    {
+      titulo: "Triidy",
+      check: false
+    },
+    {
+      titulo: "Hoko",
+      check: false
+    },
+    {
+      titulo: "Droppy",
+      check: false
+    },
+    {
+      titulo: "Rocketfy",
+      check: false
+    },
+    {
+      titulo: "Otro",
+      check: false
+    }
+  ];
   disabledFile:boolean = false;
   disabledusername: boolean = true;
   printText:boolean = false;
   view:string='';
+  listCiudad: any = [];
+  listCiudades:any = DANEGROUP;
+  listDepartamento: any = departamento;
 
   constructor(
     private _user: UsuariosService,
@@ -74,15 +102,27 @@ export class RegistrosComponent implements OnInit {
     private _authSrvice: AuthService,
     public dialog: MatDialog,
     private activate: ActivatedRoute,
-    private _archivos: ArchivosService
+    private _archivos: ArchivosService,
+    private _ventas: VentasService
   ) { }
 
   ngOnInit(): void {
+    for (let row of this.listDepartamento) for (let item of row.ciudades) this.listCiudad.push({ departamento: row.departamento, ciudad: item });
     if (this.activate.snapshot.paramMap.get('id')) {
       this.cabeza = (this.activate.snapshot.paramMap.get('id'));
       this.getCabeza();
     } else this.data.cabeza = 1;
     if (this._authSrvice.isLoggedIn()) this._router.navigate(['/pedidos']);
+    this.getCiudades();
+  }
+
+  async getCiudades(){
+    return new Promise( resolve => {
+      this._ventas.getCiudades( { where: { }, limit: 100000 } ).subscribe( ( res:any )=>{
+        this.listCiudades = res.data;
+        resolve( true );
+      });
+    });
   }
 
   async onSelect(event: any) {
@@ -192,6 +232,8 @@ async submit( opt:boolean ){
   if( !this.disabledusername ) return this._tools.tooast( { title: "Error tenemos problemas en el formulario por favor revisar gracias", icon: "error"})
   this.data = _.omit(this.data, [ 'id', 'usu_nombre1' ])
   this.data = _.omitBy(this.data, _.isNull);
+  if( this.data.rol == 'proveedor' ) this.data.listRedes = this.listPltaform.filter( item=> item.check == true );
+  else this.data.listRedes = this.listRedes.filter( item=> item.check == true );
   this._user.create(this.data).subscribe((res: any) => {
     console.log("user", res);
     this.disableSubmit = true;
@@ -201,7 +243,8 @@ async submit( opt:boolean ){
       this._store.dispatch(accion);
       accion = new TokenAction({ token: res.data.tokens }, 'post');
       this._store.dispatch(accion);
-      this._router.navigate(['/pedidos']);
+      if( this.data.rol == 'proveedor' ) this._router.navigate(['/config/perfil']);
+      else this._router.navigate(['/pedidos']);
       this._tools.basicIcons({ header: "Hola Bienvenido!", subheader: `Hola ${res.data.usu_nombre} Que tengas un buen dia` });
       accion = new UserCabezaAction( this.dataUser, 'drop' );
       this._store.dispatch(accion);

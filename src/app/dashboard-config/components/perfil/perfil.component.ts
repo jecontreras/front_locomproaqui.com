@@ -35,7 +35,7 @@ export class PerfilComponent implements OnInit {
   };
   files: File[] = [];
   list_files: any = [];
-  urlTienda: string = `${URLFRON}/`;
+  urlTienda: string = `${URLFRON}/portada/index/`;
   urlRegistro: string = `${URLFRON}/registro/`;
   restaure: any = {};
   disableRestaure: boolean = false;
@@ -82,7 +82,7 @@ export class PerfilComponent implements OnInit {
     this.getCiudades();
     //this.data = this._model.dataUser || {};
     if (this.data.usu_fec_nacimiento) this.data.usu_fec_nacimiento = moment(this.data.usu_fec_nacimiento).format('DD/MM/YYYY');
-    this.urlTienda += this.data.usu_usuario;
+    this.urlTienda += this.data.usu_telefono;
     this.urlRegistro += this.data.usu_usuario;
     this.getCategorias();
     for (let row of this.listDepartamento) for (let item of row.ciudades) this.listCiudad.push({ departamento: row.departamento, ciudad: item });
@@ -148,6 +148,13 @@ export class PerfilComponent implements OnInit {
     this.imageChangedEvent = event;
     console.log(this.imageChangedEvent)
   }
+  fileChangeEventPDF( event:any, opt:string ){
+    let file = event.target.files;
+    console.log("*****152", file)
+    this.files = [];
+    this.files.push( file );
+    this.subirFileTotal(opt);
+  }
   imageCropped(event: any) {
     this.croppedImage = event.base64;
     console.log(event);
@@ -174,6 +181,18 @@ export class PerfilComponent implements OnInit {
   onRemove(event) {
     //console.log(event);
     this.files.splice(this.files.indexOf(event), 1);
+  }
+
+  subirFileTotal(opt: string) {
+    let form: any = new FormData();
+    form.append('file', this.files[0]);
+    this._tools.ProcessTime({});
+    this._archivos.createFile(form).subscribe((res: any) => {
+      console.log(res);
+      this.data[opt] = res.files; //URL+`/${res}`;
+      this._tools.presentToast("Exitoso");
+      this.Actualizar();
+    }, (error) => { console.error(error); this._tools.presentToast("Error de servidor") });
   }
 
   subirFile(opt: string) {
@@ -252,11 +271,12 @@ export class PerfilComponent implements OnInit {
   async iniciarClick() {
     let respuesta = await this._tools.confirm({
       title: "SUBIR 5 IMÁGENES DE TUS MEJORES PRODUCTOS –PRECIO PARA DISTRIBUIDOR",
-      detalle: `ten en cuenta, que si los precios que quieres mostrar a nuestra enorme comunidad  de distribuidores es atractivo.
-    Ellos se motivaran a pagar marketing y publicidad para promocionar tus productos en las plataformas más grandes,
-    tendrás más posibilidades de un mayor número de ventas PRECIO SUGERIDO DE VENTA A CLIENTE FINAL`,
+      detalle: `Ten en Cuenta, que si los Precios que Quieres Mostrar a Nuestra Enorme Comunidad de Distribuidores es Atractivo.
+      Ellos se Motivarán a Pagar Marketing y Publicidad para Promocionar tus Productos en las Plataformas más Grandes,
+      Tendrás más Posibilidades de un Mayor Número de Ventas PRECIO SUGERIDO DE VENTA A CLIENTE FINAL`,
       confir: "Yes"
     });
+    console.log("**260", respuesta )
     if (!respuesta) return false;
     const dialogRef = this.dialog.open(FormproductosComponent, {
       data: {

@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { ServiciosService } from '../services/servicios.service';
 import * as firebase from "firebase/app";
-import 'firebase/storage'; 
+import 'firebase/storage';
 
 @Injectable({
   providedIn: 'root'
@@ -11,10 +11,15 @@ export class ArchivosService {
   constructor(
     private _model: ServiciosService
   ) { }
-  
+
   create(query:any){
     //this.FileFirebase( query );
     return this._model.querys('archivos/file',query, 'post');
+  }
+
+  createFile(query:any){
+    //this.FileFirebase( query );
+    return this._model.querys('archivos/fileTotal',query, 'post');
   }
 
   getBase64(file) {
@@ -42,5 +47,5 @@ export class ArchivosService {
   }
 
 
-  
+
 }

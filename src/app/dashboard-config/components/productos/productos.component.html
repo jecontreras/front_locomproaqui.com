@@ -29,10 +29,10 @@
                   </div>
                   <div id="datatables_filter" class="dataTables_filter row">
                     <label class="form-group col">
-                      <input [(ngModel)]="datoBusqueda" type="search" class="form-control form-control-sm" (change)="buscar()"
+                      <input [(ngModel)]="datoBusqueda" type="search" class="form-control form-control-sm" (change)="buscar('articulo')"
                         placeholder="Buscar Producto" aria-controls="datatables"></label>
                     <div>
-                      <button (click)="buscar()" [disabled]="loader" mat-raised-button mat-min-fab
+                      <button (click)="buscar('articulo')" [disabled]="loader" mat-raised-button mat-min-fab
                         class="btn btn-primary btn-just-icon btn-round">
                         <i class="material-icons">search</i>
                       </button>
@@ -103,7 +103,7 @@
                   </div>
                 </div>
               </mat-tab>
-              <mat-tab label="Productos por Activar de proveedor" *ngIf="rolName=='administrador'">
+              <mat-tab label="Productos por Activar de proveedor">
                 <div class="card-body">
                   <div class="toolbar">
                     <!--        Here you can write extra buttons/actions for the toolbar              -->
@@ -117,7 +117,23 @@
                       [fullScreen]="false">
                     </ngx-spinner>
                   </div>
-                  
+                  <div id="datatables_filter" class="dataTables_filter row">
+                    <label class="form-group col">
+                      <input [(ngModel)]="datoBusqueda" type="search" class="form-control form-control-sm" (change)="buscar('provedor')"
+                        placeholder="Buscar Producto" aria-controls="datatables"></label>
+                    <div>
+                      <button (click)="buscar('provedor')" [disabled]="loader" mat-raised-button mat-min-fab
+                        class="btn btn-primary btn-just-icon btn-round">
+                        <i class="material-icons">search</i>
+                      </button>
+                      <button (click)="crear(false)" class="btn btn-primary btn-just-icon btn-round" mat-raised-button
+                        mat-min-fab>
+                        <i class="material-icons">add_circle_outline</i>
+                      </button>
+                    </div>
+
+                  </div>
+
                   <div class="search-results col-12 row" infiniteScroll [infiniteScrollDistance]="3"
                     [infiniteScrollThrottle]="50" (scrolled)="onScroll2()">
 

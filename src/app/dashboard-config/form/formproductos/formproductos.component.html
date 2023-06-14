@@ -425,7 +425,7 @@
                     <angular-editor id="editor1" [(ngModel)]="data.pro_descripcion" [config]="editorConfig"
                         (ngModelChange)="eventoDescripcion()"></angular-editor>
                 </div>
-                <div class="form-group col-12">
+                <div class="form-group col-12" *ngIf="rolUser == 'administrador'">
                     <label for="exampleFormControlInput1">Estado del Producto</label>
                     <select class="form-control form-control-sm" [(ngModel)]="data.pro_activo">
                         <option type="number" value="0">Activo</option>

@@ -71,6 +71,7 @@ export class HeaderComponent implements OnInit {
     ventas: 0
   };
   urlTienda: string = `${ URLFRON }/portada/index/`;
+  urlDistribuidor:string =`${ URLFRON }/articulo/`;
   activando:boolean = false;
 
   constructor(
@@ -134,6 +135,7 @@ export class HeaderComponent implements OnInit {
 
   ngOnInit() {
     this.urlTienda += this.dataUser.usu_telefono;
+    this.urlDistribuidor +=this.dataUser.usu_telefono;
     this.breakpoint = (window.innerWidth <= 500) ? 1 : 6;
     /*if( this.breakpoint == 1 ) {
       this.isHandset$ = false;
@@ -406,7 +408,7 @@ export class HeaderComponent implements OnInit {
       {
         icons: 'menu_book',
         nombre: 'Productos',
-        disable: this.rolUser != 'proveedor',
+        disable: ( this.rolUser != 'proveedor' ),
         disabled: true,
         url: '/pedidos',
         submenus: submenus
@@ -414,35 +416,35 @@ export class HeaderComponent implements OnInit {
       {
         icons: 'menu_book',
         nombre: 'Hacer Compra',
-        disable: this.dataUser.id,
+        disable: ( this.dataUser.id ) && ( this.rolUser != 'proveedor' ),
         url: 'handleShop()',
         submenus:[]
       },
       {
         icons: 'menu_book',
         nombre: 'Realizar Venta',
-        disable: this.dataUser.id,
+        disable: ( this.dataUser.id ) && ( this.rolUser != 'proveedor' ),
         url: '/pedidos',
         submenus:[]
       },
       {
         icons: 'local_grocery_store',
         nombre: 'Autorizar Despacho',
-        disable: this.rolUser !== 'visitante' && this.rolUser != 'proveedor',
+        disable: ( this.rolUser !== 'visitante' ) && ( this.rolUser != 'proveedor' ),
         url: '/config/ventasPosibles',
         submenus:[]
       },
       {
         icons: 'local_grocery_store',
         nombre: 'Historial de Ventas',
-        disable: this.rolUser !== 'visitante' && this.rolUser != 'proveedor',
+        disable: ( this.rolUser !== 'visitante' ) && ( this.rolUser != 'proveedor' ),
         url: '/config/ventas',
         submenus:[]
       },
       {
         icons: 'shop',
         nombre: 'Mis Cobros',
-        disable: this.rolUser !== 'visitante' && this.rolUser != 'proveedor',
+        disable: ( this.rolUser !== 'visitante' ) && ( this.rolUser != 'proveedor' ),
         url: '/config/cobros',
         submenus:[]
       },
@@ -510,7 +512,7 @@ export class HeaderComponent implements OnInit {
       {
         icons: 'account_circle',
         nombre: 'Mi Cuenta',
-        disable: this.rolUser !== 'visitante',
+        disable: ( this.rolUser !== 'visitante' ),
         url: '/config/perfil',
         submenus:[]
       },
@@ -780,20 +782,25 @@ export class HeaderComponent implements OnInit {
     console.log( opt )
     if( opt == 'visitante' )
     {
-      let accion = new UserprAction( this.dataUser, 'post' );
+      /*let accion = new UserprAction( this.dataUser, 'post' );
       this._store.dispatch(accion);
       this.router.navigate(['/', this.dataUser.usu_usuario ]);
       setTimeout( () =>{
         this.salir( true );
-      }, 1000 );
+      }, 1000 );*/
+      window.open( this.urlTienda, "Ver Como Visitante");
     }
     else if( opt == 'distribuidor') {
+      /*
       this.router.navigate(['/pedidos' ]);
       let accion = new UserAction( this.dataUser.id ? this.dataUser : this.userPr, 'post');
       this._store.dispatch( accion );
       accion = new UserCabezaAction( {} , 'drop' );
       this._store.dispatch(accion);
       setTimeout( ()=> location.reload(), 1000 );
+      */
+     window.open( this.urlDistribuidor, "Ver Como Distribuidor");
+     //this.router.navigate([this.urlTienda]);
     }
     else if ( opt == 'proveedor'){
       this.router.navigate(['/config/misDespacho' ]);
