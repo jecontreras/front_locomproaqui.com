@@ -14,7 +14,7 @@ export class IndexComponent implements OnInit {
   querysStore = {
     where:{
       rol: "proveedor",
-      usu_confirmar: 0
+      //usu_confirmar: 0
     },
     limit: 10
   };
@@ -25,6 +25,7 @@ export class IndexComponent implements OnInit {
     },
     limit: 10
   };
+  filterStore = "";
   constructor(
     private _user: UsuariosService,
     private _article: ProductoService,

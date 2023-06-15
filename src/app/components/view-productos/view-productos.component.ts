@@ -80,10 +80,10 @@ export class ViewProductosComponent implements OnInit {
   }
 
   ngOnInit() {
-
     this.opcionCurrencys = this._tools.currency;
     if(Object.keys(this.datas.datos).length > 0) {
       this.data = _.clone(this.datas.datos);
+      console.log("****85", this.data)
       this.galeria = _.clone( this.data.listaGaleria || [] );
       this.data.cantidadAdquirir = 1;
       this.urlFoto = this.data.foto;

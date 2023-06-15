@@ -7,6 +7,8 @@ import { StoreComponent } from './component/store/store.component';
 import { BodegaRoutingModule } from './bodega.routing';
 import { MainComponent } from './component/main/main.component';
 import { MyOwnCustomMaterialModule } from 'src/app/app.material.module';
+import { FormsModule } from '@angular/forms';
+import { NgxSpinnerModule } from 'ngx-spinner';
 
 
 
@@ -20,6 +22,8 @@ import { MyOwnCustomMaterialModule } from 'src/app/app.material.module';
   ],
   imports: [
     CommonModule,
+    FormsModule,
+    NgxSpinnerModule,
     MyOwnCustomMaterialModule,
     BodegaRoutingModule
   ]

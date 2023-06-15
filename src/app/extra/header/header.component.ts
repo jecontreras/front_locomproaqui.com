@@ -482,6 +482,34 @@ export class HeaderComponent implements OnInit {
         url: '/config/controlInventario',
         submenus:[]
       },
+      {
+        icons: 'people_alt',
+        nombre: 'Explorar Bodegas',
+        disable: this.rolUser == 'administrador' || this.rolUser == 'proveedor',
+        url: '/config/controlInventario',
+        submenus:[
+          {
+            icons: 'settings',
+            nombre: 'Inicio',
+            url: '/config/store/index',
+          },
+          {
+            icons: 'settings',
+            nombre: 'Bodegas',
+            url: '/config/store/store',
+          },
+          {
+            icons: 'settings',
+            nombre: 'Productos',
+            url: '/config/store/product',
+          },
+          {
+            icons: 'settings',
+            nombre: 'Mis Productos Agregados',
+            url: '/config/store/myproducts',
+          },
+        ]
+      },
       /*{
         icons: 'receipt_long',
         nombre: 'Ver catalogo de proveedores',
