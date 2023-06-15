@@ -4,7 +4,7 @@
       <h3>Datos {{ data.pro_nombre }}</h3>
     </div>
     <div class="p-2 bd-highlight">
-      <button (click)="shareUrl( )" type="button" class="btn btn-success">
+      <button (click)="shareUrl( )" type="button" class="btn btn-success" *ngIf="( disabledView !== 'store' ) && ( disabledView !== 'createPrice') ">
         Compartir link
       </button>
       <button (click)="descargarFoto( data )" type="button" class="btn btn-primary">
@@ -230,10 +230,16 @@
 </mat-dialog-content>
 
 <mat-dialog-actions align="end">
-  <button (click)="shareUrl( )" type="button" class="btn btn-success">
+  <button (click)="shareUrl( )" type="button" class="btn btn-success" *ngIf="( disabledView !== 'store' ) && ( disabledView !== 'createPrice') ">
     Compartir link
 </button>&nbsp;
-    <button cdkFocusInitial (click)="AgregarCart(false)" type="button" class="btn btn-primary">
+    <button cdkFocusInitial (click)="AgregarCart(false)" type="button" class="btn btn-primary" *ngIf="( disabledView !== 'store' ) && ( disabledView !== 'createPrice') ">
         {{ titleButton }}
+    </button>
+    <button cdkFocusInitial (click)="handleAddStore()" type="button" class="btn btn-primary" *ngIf="disabledView === 'store'">
+      Agregar a mi Tienda
+    </button>
+    <button  disabled type="button" class="btn btn-primary" *ngIf="disabledView === 'createPrice'">
+      Producto ya Agregado
     </button>
 </mat-dialog-actions>

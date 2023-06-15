@@ -8,6 +8,7 @@ import { ToolsService } from 'src/app/services/tools.service';
 import { CatalogoService } from 'src/app/servicesComponents/catalogo.service';
 import { NgImageSliderComponent } from 'ng-image-slider';
 import { ActivatedRoute, Router } from '@angular/router';
+import { ProductoService } from 'src/app/servicesComponents/producto.service';
 
 @Component({
   selector: 'app-view-productos',
@@ -52,6 +53,7 @@ export class ViewProductosComponent implements OnInit {
   disabledPr:boolean = true;
   coinShop:boolean = false;
   titleButton:string = "Confirmar pedido";
+  disabledView:string = "normal";
   constructor(
     public dialogRef: MatDialogRef<ViewProductosComponent>,
     @Inject(MAT_DIALOG_DATA) public datas: any,
@@ -61,6 +63,7 @@ export class ViewProductosComponent implements OnInit {
     public dialog: MatDialog,
     private activate: ActivatedRoute,
     private _router: Router,
+    private _products: ProductoService
   ) {
 
     this._store.subscribe((store: any) => {
@@ -84,6 +87,8 @@ export class ViewProductosComponent implements OnInit {
     if(Object.keys(this.datas.datos).length > 0) {
       this.data = _.clone(this.datas.datos);
       console.log("****85", this.data)
+      if( this.data.view ) this.disabledView = this.data.view;
+      if( this.dataUser.id ) this.validPriceUser();
       this.galeria = _.clone( this.data.listaGaleria || [] );
       this.data.cantidadAdquirir = 1;
       this.urlFoto = this.data.foto;
@@ -107,6 +112,17 @@ export class ViewProductosComponent implements OnInit {
         this.colorSeleccionado( );
       } catch (error) { }
      },2000 );*/
+  }
+
+  validPriceUser(){
+    this._products.getPrice( { where:{
+      article: this.data.id,
+      user: this.dataUser.id,
+      state: 0
+    }}).subscribe( res =>{
+      res = res.data[0];
+      if( res ) this.disabledView = 'createPrice';
+    });
   }
 
   shareUrl( ){
@@ -370,6 +386,27 @@ export class ViewProductosComponent implements OnInit {
 
   alertPromocion(){
     if( this.data.checkpromo ) this._tools.confirm( { title: "Importante", detalle: "Recuerda que solo aplica despues de 2 pares en adelante la promocion no sera valido con 1 solo par tenlo en cuenta", icon: "warning"})
+  }
+
+  async handleAddStore(){
+    let coinAlert = await this._tools.alertInput({
+      title: "Valor a Vender ¡sin puntos solo numerico!",
+      input: "text",
+      value: String( this.data.pro_uni_venta ),
+      confirme: "Agregar"
+    });
+    console.log("***383", coinAlert);
+    coinAlert = Number( coinAlert['value']);
+    if( !coinAlert ) return this._tools.tooast({ icon: "error",title: "Importante", detalle: "Lo Sentimos Necesitamos un Valor de Venta Gracias!!!" } )
+    let data = {
+      article: this.data.id,
+      user: this.dataUser.id,
+      preice: coinAlert
+    };
+    this._products.createPrice( data ).subscribe( res =>{
+      this._tools.tooast({ title: "Completado", detalle: "Este Producto Esta Agregado a tu Cuentas!!!"})
+      this.dialog.closeAll();
+    });
   }
 
 

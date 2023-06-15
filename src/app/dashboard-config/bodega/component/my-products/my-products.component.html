@@ -1,1 +1,47 @@
-<p>my-products works!</p>
+<div class="container">
+  <div class="row">
+    <div class="col-12">
+      <nav class="navbar navbar-light bg-light">
+        <a class="navbar-brand">Mi Tienda {{ dataUser.usu_usuario }} </a>
+        <form class="form-inline">
+          <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
+          <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+        </form>
+      </nav>
+    </div>
+    <div class="col-12">
+      <div class="row">
+        <div class="col-12 p-5">
+          <ngx-spinner bdOpacity=0.9 bdColor="" size="default" color="#581f87" type="ball-pulse-sync"
+            [fullScreen]="false">
+          </ngx-spinner>
+        </div>
+        <div class="col-md-3 col-sm-4 col-lg-2 col-xs-6 col-6 anchandoPr" *ngFor="let row of listArticle" (click)="handleArticle( row )">
+          <mat-card class="example-card">
+            <mat-card-header>
+              <mat-card-subtitle>{{ row.article['pro_nombre'] | slice: 0: 15 }} </mat-card-subtitle>
+            </mat-card-header>
+            <figure mat-card-image data-toggle="modal" id="figura" data-target="#modalinfo" class="img-contenedor">
+              <img class="img-responsive btn-block imgProductos pointer " [src]="row.article.foto">
+            </figure>
+            <small style="display: inline-block;  font-size: 90% !important;" class="pricesmall currency2"
+              id="pricesmall_25">
+              Me Sale: {{ _tools.monedaChange( 3, 2, ( ( row.article['pro_vendedorCompra'] || 0 ) || ( row.article['pro_uni_venta'] || 0 ) || 0 ) ) }}
+            </small>
+            <small style="display: inline-block;  font-size: 90% !important;" class="pricesmall currency2"
+              id="pricesmall_25">
+              Lo Vendo: {{ _tools.monedaChange( 3, 2, ( row.article['pro_uni_venta'] || 0 ) ) }}
+            </small>
+            <mat-card-actions>
+              <button type="button" data-toggle="tooltip" data-placement="right" style="width: 100%;"
+                class="sc-logout btn btn-success btn-sm pull-right buttonAncho"
+                [ngStyle]="{'background-color':urlColor }"
+                data-original-title="Ver Articulo">Ver Articulo
+              </button>
+            </mat-card-actions>
+          </mat-card>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
