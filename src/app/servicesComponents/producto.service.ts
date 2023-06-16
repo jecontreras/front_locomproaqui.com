@@ -40,5 +40,8 @@ export class ProductoService {
   getPriceArticle( query:any ){
     return this._model.querys('priceArticle/querysProducts',query, 'post');
   }
+  updatePriceArticle( query:any ){
+    return this._model.querys('priceArticle/'+query.id,query, 'put');
+  }
 
 }

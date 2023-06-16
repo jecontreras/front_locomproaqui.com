@@ -21,10 +21,15 @@ export class MyProductsComponent implements OnInit {
     where:{
       state: 0
     },
+    page:0,
     limit: 10
   };
   urlColor = "#02a0e3";
   dataUser:any = {};
+  notscrolly:boolean=true;
+  notEmptyPost:boolean = true;
+  counts:number = 0;
+
   constructor(
     private activate: ActivatedRoute,
     private _article: ProductoService,
@@ -46,28 +51,57 @@ export class MyProductsComponent implements OnInit {
     this.getArticle();
   }
 
+  onScroll( ev:any ){
+    if (this.notscrolly && this.notEmptyPost) {
+       this.notscrolly = false;
+       this.querysArticle.page = ev.pageIndex;
+        this.querysArticle.limit = ev.pageSize;
+       this.getArticle();
+     }
+   }
+
   getArticle(){
     this.spinner.show();
     return new Promise( resolve =>{
       this._article.getPriceArticle( this.querysArticle ).subscribe( res =>{
         this.listArticle = res.data;
+        this.counts = res.count;
         this.spinner.hide();
+        if (res.data.length === 0 ) {
+          this.notEmptyPost =  false;
+        }
+        this.notscrolly = true;
         resolve( true );
       },()=> resolve( false ) )
     });
   }
 
-  handleArticle( item:any ){
-    item.coinShop = false;
-    item.view = 'store';
+  getArticleId( id:number ){
+    return new Promise( resolve =>{
+      this._article.get({ where: { id:id } } ).subscribe(res =>{
+        res = res.data[0];
+        resolve( res );
+      },()=> resolve( {} ) );
+    });
+  }
+
+  async handleArticle( item:any ){
+    console.log("***", item)
+    let result:any = await this.getArticleId( item.article.id );
+    result.coinShop = false;
+    result.idMyProduct = item.id;
+    result.view = 'store';
     const dialogRef = this.dialog.open(ViewProductosComponent, {
       width: '100%',
       maxHeight: "700%",
-      data: { datos: item }
+      data: { datos: result }
     });
 
-    dialogRef.afterClosed().subscribe(result => {
-      console.log(`Dialog result: ${result}`);
+    dialogRef.afterClosed().subscribe(res => {
+      console.log(`Dialog result: ${res}`);
+      if( res === 'update' ) {
+        this.listArticle = this.listArticle.filter( off => off.id != item.id );
+      }
       //this._router.navigate(['/pedidos']);
     });
   }

@@ -405,8 +405,18 @@ export class ViewProductosComponent implements OnInit {
     };
     this._products.createPrice( data ).subscribe( res =>{
       this._tools.tooast({ title: "Completado", detalle: "Este Producto Esta Agregado a tu Cuentas!!!"})
-      this.dialog.closeAll();
+      this.dialogRef.close('creo');
     });
+  }
+
+  async handleDroppArticle(){
+    let alert = await  this._tools.confirm({title:"Eliminar", detalle:"Deseas Eliminar Dato", confir:"Si Eliminar"});
+    if( alert.value == false ) return false;
+    this._products.updatePriceArticle( { id: this.data.idMyProduct, state: 1 }).subscribe( res=>{
+      this._tools.tooast({ title: "Completado", detalle: "Este Producto Esta Eliminado de tu Tienda!!!"})
+      this.dialogRef.close('update');
+    },()=> this._tools.tooast({ icon: "error",title: "Importante", detalle: "Problemas de Conexion !!!" } ) );
+
   }
 
 

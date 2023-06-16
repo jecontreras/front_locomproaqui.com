@@ -239,7 +239,7 @@
     <button cdkFocusInitial (click)="handleAddStore()" type="button" class="btn btn-primary" *ngIf="disabledView === 'store'">
       Agregar a mi Tienda
     </button>
-    <button  disabled type="button" class="btn btn-primary" *ngIf="disabledView === 'createPrice'">
-      Producto ya Agregado
+    <button  type="button" class="btn btn-primary" *ngIf="disabledView === 'createPrice'" (click)="handleDroppArticle()">
+      Quitar de mi lista
     </button>
 </mat-dialog-actions>

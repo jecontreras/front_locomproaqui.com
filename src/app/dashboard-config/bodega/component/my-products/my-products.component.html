@@ -41,6 +41,15 @@
             </mat-card-actions>
           </mat-card>
         </div>
+        <div class="col-12">
+          <div class="d-flex flex-row-reverse bd-highlight">
+            <div class="p-2 bd-highlight">
+              <mat-paginator [length]="counts" [pageSizeOptions]="[10, 25, 100]"
+                  (page)="onScroll($event)">
+              </mat-paginator>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   </div>

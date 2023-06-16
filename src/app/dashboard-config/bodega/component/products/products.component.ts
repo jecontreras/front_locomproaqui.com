@@ -18,9 +18,14 @@ export class ProductsComponent implements OnInit {
     where:{
       pro_estado: 0
     },
+    page:0,
     limit: 10
   };
   urlColor = "#02a0e3";
+  notscrolly:boolean=true;
+  notEmptyPost:boolean = true;
+  counts:number = 0;
+
   constructor(
     private activate: ActivatedRoute,
     private _article: ProductoService,
@@ -35,12 +40,27 @@ export class ProductsComponent implements OnInit {
     this.getArticle();
   }
 
+  onScroll( ev:any ){
+    if (this.notscrolly && this.notEmptyPost) {
+       this.notscrolly = false;
+       this.querysArticle.page = ev.pageIndex;
+        this.querysArticle.limit = ev.pageSize;
+       this.getArticle();
+     }
+   }
+
   getArticle(){
     this.spinner.show();
     return new Promise( resolve =>{
       this._article.get( this.querysArticle ).subscribe( res =>{
+        this.counts = res.count;
+        console.log("***", this.counts)
         this.listArticle = res.data;
         this.spinner.hide();
+        if (res.data.length === 0 ) {
+          this.notEmptyPost =  false;
+        }
+        this.notscrolly = true;
         resolve( true );
       },()=> resolve( false ) )
     });
