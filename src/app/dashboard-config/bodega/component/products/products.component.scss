@@ -17,3 +17,29 @@
   // height:180px;
   overflow:hidden;
   }
+
+
+  div.scrollmenu {
+    background-color: #ebebeb;
+    overflow: auto;
+    white-space: nowrap;
+    margin: auto;
+  }
+
+  div.scrollmenu a {
+    display: inline-block;
+    color: black;
+    text-align: center;
+    padding: 14px;
+    text-decoration: none;
+  }
+
+  div.scrollmenu a:hover {
+    background-color: #777;
+  }
+
+  .cambiaColor{
+    color: red;
+    border-bottom: 1px solid #f35757;
+  }
+

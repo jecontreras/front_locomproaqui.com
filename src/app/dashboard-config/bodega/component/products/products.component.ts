@@ -5,6 +5,11 @@ import { NgxSpinnerService } from 'ngx-spinner';
 import { ViewProductosComponent } from 'src/app/components/view-productos/view-productos.component';
 import { ToolsService } from 'src/app/services/tools.service';
 import { ProductoService } from 'src/app/servicesComponents/producto.service';
+import * as _ from 'lodash';
+import { CategoriasService } from 'src/app/servicesComponents/categorias.service';
+import { CART } from 'src/app/interfaces/sotarage';
+import { Store } from '@ngrx/store';
+import { UsuariosService } from 'src/app/servicesComponents/usuarios.service';
 
 @Component({
   selector: 'app-products',
@@ -14,9 +19,13 @@ import { ProductoService } from 'src/app/servicesComponents/producto.service';
 export class ProductsComponent implements OnInit {
   dataStore:any = {};
   listArticle:any = [];
-  querysArticle = {
+  listCategory: any = [];
+  querysArticle:any = {
     where:{
-      pro_estado: 0
+      pro_estado: 0,
+      idPrice: 1,
+      pro_activo: 0,
+      pro_mp_venta: 0
     },
     page:0,
     limit: 10
@@ -25,6 +34,9 @@ export class ProductsComponent implements OnInit {
   notscrolly:boolean=true;
   notEmptyPost:boolean = true;
   counts:number = 0;
+  filter = {
+    txt: ""
+  }
 
   constructor(
     private activate: ActivatedRoute,
@@ -32,11 +44,95 @@ export class ProductsComponent implements OnInit {
     public dialog: MatDialog,
     private _router: Router,
     public _tools: ToolsService,
+    private _store: Store<CART>,
     private spinner: NgxSpinnerService,
-  ) { }
+    private _category: CategoriasService,
+    private _user: UsuariosService
+  ) {
+    this._store.subscribe((store: any) => {
+      store = store.name;
+      if (!store) return false;
+     });
+  }
 
-  ngOnInit(): void {
+  async ngOnInit() {
     console.log("***", this.activate.snapshot)
+    if( this.activate.snapshot.params.idStore ) this.dataStore = await this.getStore( this.activate.snapshot.params.idStore );
+    this.getArticle();
+    this.getCategory();
+  }
+
+  getStore( id:string ){
+    return new Promise( resolve =>{
+      this._user.get( { where:{ usu_usuario: id }}).subscribe(res=>{
+        resolve( res.data[0] || { } );
+      },()=> resolve( {} ) );
+    })
+  }
+
+  getCategory(){
+    this._category.get({ where: { cat_activo: 0, cat_padre: null }, limit: 1000 }).subscribe( async (res: any) => {
+      for (let row of res.data) {
+        let datos: any = {
+          id: row.id,
+          title: row.cat_nombre,
+          subCategoria: await this.getSubCategory( row.id )
+        };
+        this.listCategory.push(datos);
+      }
+      this.listCategory.unshift({
+        id: 0,
+        title: "TODOS",
+        subCategoria: []
+      });
+    });
+  }
+
+  async getSubCategory( id:any ){
+    return new Promise ( resolve =>{
+      this._category.get( { where: { cat_padre: id, cat_activo: 0 }, limit: 1000 } ).subscribe(( res:any )=>{
+        resolve( res.data );
+      }, ()=> resolve( false ) );
+    });
+  }
+
+  handleCategorySearch( item ){
+    item.check = !item.check;
+    for( let row of this.listCategory ) { if( row.id != item.id ) row.check = false; }
+    this.querysArticle.where.pro_categoria = item.id;
+    if( this.querysArticle.where.pro_categoria == 0 ) delete this.querysArticle.where.pro_categoria;
+    this.listArticle = [];
+    this.getArticle();
+  }
+
+  handleSearch(){
+    console.log("***90", this.filter)
+    if( this.filter.txt === ''){
+      this.querysArticle = {
+        where: {
+          pro_estado: 0,
+          idPrice: 1,
+          pro_activo: 0,
+          pro_mp_venta: 0
+        },
+        limit: 10,
+        page: 0
+      };
+    }else {
+      this.querysArticle.where.or = [
+        {
+          pro_nombre: {
+            contains: this.filter.txt || ''
+          }
+        },
+        {
+          pro_codigo: {
+            contains: this.filter.txt || ''
+          }
+        }
+      ];
+    }
+    this.listArticle = [];
     this.getArticle();
   }
 
@@ -52,10 +148,11 @@ export class ProductsComponent implements OnInit {
   getArticle(){
     this.spinner.show();
     return new Promise( resolve =>{
+      if( this.dataStore.id ) this.querysArticle.where.pro_usu_creacion = this.dataStore.id;
       this._article.get( this.querysArticle ).subscribe( res =>{
         this.counts = res.count;
         console.log("***", this.counts)
-        this.listArticle = res.data;
+        this.listArticle = _.unionBy(this.listArticle || [], res.data, 'id');
         this.spinner.hide();
         if (res.data.length === 0 ) {
           this.notEmptyPost =  false;

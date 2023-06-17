@@ -3,14 +3,14 @@
     <div class="col-12">
       <nav class="navbar navbar-dark bg-primary">
         <a class="navbar-brand text-white">Bodegas Certificados</a>
-        <form class="form-inline">
-          <button class="btn btn-outline-warning my-2 my-sm-0" routerrouterLink="/config/store/store" type="submit">Ver Mas</button>
-        </form>
+        <div class="form-inline">
+          <button class="btn btn-outline-warning my-2 my-sm-0" routerLink="/config/store/stores" type="submit">Ver Mas</button>
+        </div>
       </nav>
     </div>
     <div class="col-12">
       <div class="row">
-        <div class="col-md-2 col-sm-4 col-lg-2 col-xs-6 col-6 anchandoPr" *ngFor="let row of listBodegas">
+        <div class="col-md-2 col-sm-4 col-lg-2 col-xs-6 col-6 anchandoPr" *ngFor="let row of listBodegas" (click)="handleStore( row )">
           <mat-card class="example-card">
             <mat-card-header>
               <mat-card-title>{{ row.usu_nombre }} </mat-card-title>
@@ -18,7 +18,11 @@
             </mat-card-header>
             <img mat-card-image [src]="row.usu_imagen" alt="Photo of Perfil">
             <mat-card-actions>
-              <button mat-raised-button color="primary" (click)="handleStore( row )">Explorar</button>
+              <button type="button" data-toggle="tooltip" data-placement="right" style="width: 100%;"
+                class="sc-logout btn btn-success btn-sm pull-right buttonAncho"
+                [ngStyle]="{'background-color':urlColor }"
+                data-original-title="Ver Bodega">Ver Bodega
+              </button>
             </mat-card-actions>
           </mat-card>
         </div>
@@ -27,9 +31,9 @@
     <div class="col-12">
       <nav class="navbar navbar-dark bg-primary">
         <a class="navbar-brand text-white">Productos Certificados</a>
-        <form class="form-inline">
+        <div class="form-inline">
           <button class="btn btn-outline-warning my-2 my-sm-0" routerLink="/config/store/product" type="submit">Ver Mas</button>
-        </form>
+        </div>
       </nav>
     </div>
     <div class="col-12">
@@ -41,13 +45,28 @@
             </mat-card-header>
             <img mat-card-image [src]="row.foto" alt="Photo of Perfil">
             <mat-card-actions>
-              <button mat-raised-button color="primary" (click)="handleStore( row )">
-                <i class="material-icons">remove_red_eye</i>
+              <button type="button" data-toggle="tooltip" data-placement="right" style="width: 100%;"
+                class="sc-logout btn btn-success btn-sm pull-right buttonAncho"
+                [ngStyle]="{'background-color':urlColor }"
+                data-original-title="Ver Articulo">Ver Articulo
               </button>
             </mat-card-actions>
           </mat-card>
         </div>
       </div>
+    </div>
+    <div class="col-12">
+      <ngx-spinner bdOpacity=0.9 bdColor="" size="default" color="#581f87" type="ball-pulse-sync"
+        [fullScreen]="false">
+      </ngx-spinner>
+    </div>
+    <div class="col-12">
+      <nav class="navbar navbar-dark bg-primary">
+        <a class="navbar-brand text-white"></a>
+        <div class="form-inline">
+          <button class="btn btn-outline-warning my-2 my-sm-0" routerLink="/config/store/product" type="submit">Ver Mas</button>
+        </div>
+      </nav>
     </div>
   </div>
 </div>

@@ -496,7 +496,7 @@ export class HeaderComponent implements OnInit {
           {
             icons: 'settings',
             nombre: 'Bodegas',
-            url: '/config/store/store',
+            url: '/config/store/stores',
           },
           {
             icons: 'settings',

@@ -1,1 +1,48 @@
-<p>store works!</p>
+<div class="container">
+  <div class="row">
+    <div class="col-12">
+      <nav class="navbar navbar-light bg-light">
+        <a class="navbar-brand">Lista de Bodegas</a>
+        <div class="form-inline">
+          <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search" [(ngModel)]="filter.txt" (change)="handleSearch()">
+          <button class="btn btn-outline-success my-2 my-sm-0" type="submit" (click)="handleSearch()">Search</button>
+        </div>
+      </nav>
+    </div>
+    <div class="col-12">
+      <div class="row">
+        <div class="col-md-3 col-sm-4 col-lg-2 col-xs-6 col-6 anchandoPr" *ngFor="let row of listStore" (click)="handleStore( row )">
+          <mat-card class="example-card">
+            <mat-card-header>
+              <mat-card-subtitle>{{ row.usu_usuario | slice: 0: 15 }} </mat-card-subtitle>
+            </mat-card-header>
+            <figure mat-card-image data-toggle="modal" id="figura" data-target="#modalinfo" class="img-contenedor">
+              <img class="img-responsive btn-block imgProductos pointer " [src]="row.usu_imagen">
+            </figure>
+            <mat-card-actions>
+              <button type="button" data-toggle="tooltip" data-placement="right" style="width: 100%;"
+                class="sc-logout btn btn-success btn-sm pull-right buttonAncho"
+                [ngStyle]="{'background-color':urlColor }"
+                data-original-title="Ver Bodega">Ver Bodega
+              </button>
+            </mat-card-actions>
+          </mat-card>
+        </div>
+        <div class="col-12">
+          <div class="d-flex flex-row-reverse bd-highlight">
+            <div class="p-2 bd-highlight">
+              <mat-paginator [length]="counts" [pageSizeOptions]="[10, 25, 100]"
+                  (page)="onScroll($event)">
+              </mat-paginator>
+            </div>
+          </div>
+        </div>
+        <div class="col-12">
+          <ngx-spinner bdOpacity=0.9 bdColor="" size="default" color="#581f87" type="ball-pulse-sync"
+            [fullScreen]="false">
+          </ngx-spinner>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

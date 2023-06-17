@@ -13,7 +13,7 @@ const dashboardRoutes: Routes = [
    children: [
      {path: '', redirectTo: 'index', pathMatch: 'full'},
      {path: 'index', component: IndexComponent },
-     {path: 'store', component: StoreComponent },
+     {path: 'stores', component: StoreComponent },
      {path: 'myproducts', component: MyProductsComponent },
      {path: 'product', component: ProductsComponent },
      {path: 'product/:idStore', component: ProductsComponent },
