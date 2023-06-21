@@ -427,7 +427,7 @@ export class ViewProductosComponent implements OnInit {
   handleUpdatePrice(){
     this._products.updatePriceArticle( { id: this.data.idMyProduct, state: 0, price: this.data.idPrice }).subscribe( res=>{
       this._tools.tooast({ title: "Completado", detalle: "Este Producto Se le Edito el Precio de Venta Final!!!"})
-      this.dialogRef.close('update');
+      //this.dialogRef.close('update');
     },()=> this._tools.tooast({ icon: "error",title: "Importante", detalle: "Problemas de Conexion !!!" } ) );
   }
 

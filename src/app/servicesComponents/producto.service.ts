@@ -46,5 +46,8 @@ export class ProductoService {
   updatePriceArticle( query:any ){
     return this._model.querys('priceArticle/'+query.id,query, 'put');
   }
+  createPriceArticleFull( query:any ){
+    return this._model.querys('priceArticle/createTotalProduct',query, 'post');
+  }
 
 }

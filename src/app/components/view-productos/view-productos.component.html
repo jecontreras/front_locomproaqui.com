@@ -242,8 +242,11 @@
     </div>
     <div class="col-6" *ngIf="disabledView === 'createPrice'">
         <label>Lo Vendes</label>
-        <input currencyMask [(ngModel)]="data.idPrice" class="form-control form-control-sm" [options]="opcionCurrencys"(change)="handleUpdatePrice()" />
+        <input currencyMask [(ngModel)]="data.idPrice" class="form-control form-control-sm" [options]="opcionCurrencys"(blur)="handleUpdatePrice()" />
     </div>
+    <button  type="button" class="btn btn-success" *ngIf="disabledView === 'createPrice'">
+      Actualizar
+    </button>
     <button cdkFocusInitial (click)="handleAddStore()" type="button" class="btn btn-primary" *ngIf="disabledView === 'store'">
       Agregar a mi Tienda
     </button>

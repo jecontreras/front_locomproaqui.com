@@ -7,6 +7,7 @@ import { CART } from 'src/app/interfaces/sotarage';
 import { ToolsService } from 'src/app/services/tools.service';
 import { UsuariosService } from 'src/app/servicesComponents/usuarios.service';
 import * as _ from 'lodash';
+import { ProductoService } from 'src/app/servicesComponents/producto.service';
 @Component({
   selector: 'app-store',
   templateUrl: './store.component.html',
@@ -29,7 +30,8 @@ export class StoreComponent implements OnInit {
   counts:number = 0;
   filter = {
     txt: ""
-  }
+  };
+  dataUser: any= {};
 
   constructor(
     public dialog: MatDialog,
@@ -37,11 +39,13 @@ export class StoreComponent implements OnInit {
     public _tools: ToolsService,
     private _store: Store<CART>,
     private spinner: NgxSpinnerService,
-    private _user: UsuariosService
+    private _user: UsuariosService,
+    private _product: ProductoService
   ) {
     this._store.subscribe((store: any) => {
       store = store.name;
       if (!store) return false;
+      this.dataUser = store.user || {};
      });
   }
 
@@ -120,6 +124,20 @@ export class StoreComponent implements OnInit {
         resolve( true );
       },()=> resolve( false ) )
     });
+  }
+
+  async handleProductTs( item ){
+    let alert:any = await  this._tools.confirm({title:"Importante", detalle:"Deseas! Agregar Todos Los Productos de Esta Bodega", confir:"Si Acepto"});
+    console.log("***", alert)
+    if( alert.dismiss == "cancel" ) return false;
+    let data = {
+      user: this.dataUser.id,
+      create: item.id
+    };
+    this._product.createPriceArticleFull( data ).subscribe( res =>{
+      if( res.status == 400 ) return this._tools.tooast({ icon: "error",title: "Importante", detalle: res.data } )
+      this._tools.tooast({ title: "Completado", detalle: "Se Agregaron Todos los Productos de Esta Bodega!!!"})
+    },()=> this._tools.tooast({ icon: "error",title: "Importante", detalle: "Problemas de Conexion !!!" } ) );
   }
 
   handleStore( item:any ){

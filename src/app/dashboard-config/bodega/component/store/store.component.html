@@ -11,7 +11,7 @@
     </div>
     <div class="col-12">
       <div class="row">
-        <div class="col-md-3 col-sm-4 col-lg-2 col-xs-6 col-6 anchandoPr" *ngFor="let row of listStore" (click)="handleStore( row )">
+        <div class="col-md-3 col-sm-4 col-lg-2 col-xs-6 col-6 anchandoPr" *ngFor="let row of listStore">
           <mat-card class="example-card">
             <mat-card-header>
               <mat-card-subtitle>{{ row.usu_usuario | slice: 0: 15 }} </mat-card-subtitle>
@@ -21,8 +21,14 @@
             </figure>
             <mat-card-actions>
               <button type="button" data-toggle="tooltip" data-placement="right" style="width: 100%;"
+                class="sc-logout btn btn-warning btn-sm pull-right buttonAncho"
+                (click)="handleProductTs( row )"
+                data-original-title="Todos Los Productos">Agregar Productos
+              </button>
+              <button type="button" data-toggle="tooltip" data-placement="right" style="width: 100%;"
                 class="sc-logout btn btn-success btn-sm pull-right buttonAncho"
                 [ngStyle]="{'background-color':urlColor }"
+                (click)="handleStore( row )"
                 data-original-title="Ver Bodega">Ver Bodega
               </button>
             </mat-card-actions>
