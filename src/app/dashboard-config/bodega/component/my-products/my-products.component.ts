@@ -7,7 +7,7 @@ import { ViewProductosComponent } from 'src/app/components/view-productos/view-p
 import { CART } from 'src/app/interfaces/sotarage';
 import { ToolsService } from 'src/app/services/tools.service';
 import { ProductoService } from 'src/app/servicesComponents/producto.service';
-
+import * as _ from 'lodash';
 @Component({
   selector: 'app-my-products',
   templateUrl: './my-products.component.html',
@@ -17,7 +17,7 @@ export class MyProductsComponent implements OnInit {
 
   dataStore:any = {};
   listArticle:any = [];
-  querysArticle = {
+  querysArticle:any = {
     where:{
       state: 0
     },
@@ -47,6 +47,7 @@ export class MyProductsComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.querysArticle.where.user = this.dataStore.id;
     console.log("***", this.activate.snapshot, this.dataUser)
     this.getArticle();
   }
@@ -88,8 +89,10 @@ export class MyProductsComponent implements OnInit {
   async handleArticle( item:any ){
     console.log("***", item)
     let result:any = await this.getArticleId( item.article.id );
+    //console.log("****911", result,item)
     result.coinShop = false;
     result.idMyProduct = item.id;
+    result.idPrice = item.price;
     result.view = 'store';
     const dialogRef = this.dialog.open(ViewProductosComponent, {
       width: '100%',
@@ -97,17 +100,40 @@ export class MyProductsComponent implements OnInit {
       data: { datos: result }
     });
 
-    dialogRef.afterClosed().subscribe(res => {
+    dialogRef.afterClosed().subscribe( async ( res ) => {
       console.log(`Dialog result: ${res}`);
-      if( res === 'update' ) {
+      if( res === 'drop' ) {
         this.listArticle = this.listArticle.filter( off => off.id != item.id );
+      }
+      if( res === 'update' ) {
+        let index = _.findIndex( this.listArticle, ['id', item.id ] );
+        if( index >-0 ) this.listArticle[ index ] = await this.getIdProduct( item.id, item );
       }
       //this._router.navigate(['/pedidos']);
     });
   }
 
+  getIdProduct( id:number, item ){
+    return new Promise( resolve =>{
+      this._article.getPriceArticle({where:{ id: id } } ).subscribe(res=>{
+        res = res.data[0] || item;
+        resolve( res );
+      });
+    });
+  }
+
   handleStore( item:any ){
     this._router.navigate(['/config/store/product', item.id ] );
+  }
+
+  async handleDropArticle( item:any ){
+    let alert:any = await  this._tools.confirm({title:"Eliminar", detalle:"Deseas Eliminar Dato", confir:"Si Eliminar"});
+    console.log("***", alert)
+    if( alert.dismiss == "cancel" ) return false;
+    this._article.updatePriceArticle( { id: item.id, state: 1 }).subscribe( res=>{
+      this.listArticle = this.listArticle.filter( off => off.id != item.id );
+      this._tools.tooast({ title: "Completado", detalle: "Este Producto Esta Eliminado de tu Tienda!!!"})
+    },()=> this._tools.tooast({ icon: "error",title: "Importante", detalle: "Problemas de Conexion !!!" } ) );
   }
 
 

@@ -121,7 +121,11 @@ export class ViewProductosComponent implements OnInit {
       state: 0
     }}).subscribe( res =>{
       res = res.data[0];
-      if( res ) this.disabledView = 'createPrice';
+      if( res ) {
+        this.data.idMyProduct = res.id;
+        this.disabledView = 'createPrice';
+        this.data.idPrice = res.price;
+      }
     });
   }
 
@@ -401,7 +405,7 @@ export class ViewProductosComponent implements OnInit {
     let data = {
       article: this.data.id,
       user: this.dataUser.id,
-      preice: coinAlert
+      price: coinAlert
     };
     this._products.createPrice( data ).subscribe( res =>{
       this._tools.tooast({ title: "Completado", detalle: "Este Producto Esta Agregado a tu Cuentas!!!"})
@@ -410,13 +414,21 @@ export class ViewProductosComponent implements OnInit {
   }
 
   async handleDroppArticle(){
-    let alert = await  this._tools.confirm({title:"Eliminar", detalle:"Deseas Eliminar Dato", confir:"Si Eliminar"});
-    if( alert.value == false ) return false;
+    let alert:any = await  this._tools.confirm({title:"Eliminar", detalle:"Deseas Eliminar Dato", confir:"Si Eliminar"});
+    console.log("***", alert)
+    if( alert.dismiss == "cancel" ) return false;
     this._products.updatePriceArticle( { id: this.data.idMyProduct, state: 1 }).subscribe( res=>{
       this._tools.tooast({ title: "Completado", detalle: "Este Producto Esta Eliminado de tu Tienda!!!"})
-      this.dialogRef.close('update');
+      this.dialogRef.close('drop');
     },()=> this._tools.tooast({ icon: "error",title: "Importante", detalle: "Problemas de Conexion !!!" } ) );
 
+  }
+
+  handleUpdatePrice(){
+    this._products.updatePriceArticle( { id: this.data.idMyProduct, state: 0, price: this.data.idPrice }).subscribe( res=>{
+      this._tools.tooast({ title: "Completado", detalle: "Este Producto Se le Edito el Precio de Venta Final!!!"})
+      this.dialogRef.close('update');
+    },()=> this._tools.tooast({ icon: "error",title: "Importante", detalle: "Problemas de Conexion !!!" } ) );
   }
 
 

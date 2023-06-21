@@ -36,7 +36,8 @@ export class ProductsComponent implements OnInit {
   counts:number = 0;
   filter = {
     txt: ""
-  }
+  };
+  dataUser:any = {};
 
   constructor(
     private activate: ActivatedRoute,
@@ -52,11 +53,13 @@ export class ProductsComponent implements OnInit {
     this._store.subscribe((store: any) => {
       store = store.name;
       if (!store) return false;
+      this.dataUser = store.user || {};
      });
   }
 
   async ngOnInit() {
     console.log("***", this.activate.snapshot)
+    this.querysArticle.where.user = this.dataUser.id;
     if( this.activate.snapshot.params.idStore ) this.dataStore = await this.getStore( this.activate.snapshot.params.idStore );
     this.getArticle();
     this.getCategory();

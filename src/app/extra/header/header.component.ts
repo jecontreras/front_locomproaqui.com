@@ -485,7 +485,7 @@ export class HeaderComponent implements OnInit {
       {
         icons: 'people_alt',
         nombre: 'Explorar Bodegas',
-        disable: this.rolUser == 'administrador' || this.rolUser == 'proveedor',
+        disable: this.rolUser == 'administrador' || this.rolUser == 'vendedor',
         url: '/config/controlInventario',
         submenus:[
           {

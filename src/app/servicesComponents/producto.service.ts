@@ -13,6 +13,9 @@ export class ProductoService {
   get(query:any){
     return this._model.querys('tblproductos/querys',query, 'post');
   }
+  getStore(query:any){
+    return this._model.querys('tblproductos/filtroStore',query, 'post');
+  }
   create(query:any){
     return this._model.querys('tblproductos',query, 'post');
   }

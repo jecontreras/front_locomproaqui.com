@@ -232,10 +232,18 @@
 <mat-dialog-actions align="end">
   <button (click)="shareUrl( )" type="button" class="btn btn-success" *ngIf="( disabledView !== 'store' ) && ( disabledView !== 'createPrice') ">
     Compartir link
-</button>&nbsp;
+</button>
+&nbsp;
     <button cdkFocusInitial (click)="AgregarCart(false)" type="button" class="btn btn-primary" *ngIf="( disabledView !== 'store' ) && ( disabledView !== 'createPrice') ">
         {{ titleButton }}
     </button>
+    <div>
+
+    </div>
+    <div class="col-6" *ngIf="disabledView === 'createPrice'">
+        <label>Lo Vendes</label>
+        <input currencyMask [(ngModel)]="data.idPrice" class="form-control form-control-sm" [options]="opcionCurrencys"(change)="handleUpdatePrice()" />
+    </div>
     <button cdkFocusInitial (click)="handleAddStore()" type="button" class="btn btn-primary" *ngIf="disabledView === 'store'">
       Agregar a mi Tienda
     </button>
