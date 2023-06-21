@@ -47,7 +47,7 @@ export class MyProductsComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.querysArticle.where.user = this.dataStore.id;
+    this.querysArticle.where.user = this.dataUser.id;
     console.log("***", this.activate.snapshot, this.dataUser)
     this.getArticle();
   }
