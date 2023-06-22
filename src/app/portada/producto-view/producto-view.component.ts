@@ -98,7 +98,7 @@ export class ProductosViewComponent implements OnInit {
   viewsImagen:string;
   listTallas:any = [];
   number:any;
-  
+
   constructor(
     private _store: Store<CART>,
     private _tools: ToolsService,
@@ -161,9 +161,10 @@ export class ProductosViewComponent implements OnInit {
     this.queryId.where.id = this.id;
     this._producto.get( this.queryId ).subscribe((res:any)=>{
       this.data = res.data[0] || {};
+      this.data.listComentarios = this.data.listComment || [];
       try {
         this.data.listTallas = this.data.listColor[0].tallaSelect.filter( item => item.cantidad );
-        for( let row of this.data.listTallas ) row.tal_descripcion = Number( row.tal_descripcion );
+        for( let row of this.data.listTallas ) row.tal_descripcion = ( Number( row.tal_descripcion ) || row.tal_descripcion );
         this.data.listTallas = _.orderBy( this.data.listTallas , ['tal_descripcion'], ['DEC'] );
         console.log( "129", this.data )
       } catch (error) {}
@@ -189,6 +190,7 @@ export class ProductosViewComponent implements OnInit {
     this.query.where.codigo = this.data.codigo;
     delete this.query.where.id;
     let resultado:any = await this.getArticulos();
+    this.imageObject = [];
     for( let row of resultado ){
       this.imageObject.push(
         {
@@ -206,7 +208,9 @@ export class ProductosViewComponent implements OnInit {
 
   getArticulos(){
     return new Promise (resolve =>{
-      this._producto.get( this.query ).subscribe((res:any)=>{
+      this.query.where.idPrice = this.userId.id;
+      console.log("***210", this.query)
+      this._producto.getStore( this.query ).subscribe((res:any)=>{
         resolve( res.data )
       }, ( error )=> { console.error(error); resolve( [] ); } );
     })
@@ -278,10 +282,23 @@ export class ProductosViewComponent implements OnInit {
     this._tools.presentToast("Agregado al Carro");
   }
 
-  imageOnClick(obj:any) {
-    let data =  this.listProductos.find( (row:any )=> row.id == this.imageObject[obj].id);
+  async imageOnClick(obj:any) {
+    //let data =  this.listProductosHistorial.find( (row:any )=> row.id == this.imageObject[obj].id);
+    let data = await this.getProducId( { where: {
+      idPrice: this.query.where.idPrice,
+      pro_activo: 0
+    } } );
+    console.log("**++",obj, data, this.imageObject, this.listProductosHistorial)
     if( !data ) return false;
     this.viewProducto( data );
+  }
+
+  getProducId( query){
+    return new Promise( resolve=>{
+      this._producto.get( query ).subscribe((res:any)=>{
+        resolve( res.data[0] || {});
+      });
+    })
   }
 
   arrowOnClick(event) {
@@ -368,7 +385,7 @@ export class ProductosViewComponent implements OnInit {
   }
 
   checkTalla( item ){
-    this.pedido.talla = item.tal_descripcion; 
+    this.pedido.talla = item.tal_descripcion;
     for( let row of this.data.listTallas ) row.check1 = false;
     item.check1 = !item.check1;
 

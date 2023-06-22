@@ -45,6 +45,7 @@ export class ProductosComponent implements OnInit {
   tiendaInfo:any = {};
   id:string;
   dataUser:any = {};
+  userCabeza:any = {};
 
   constructor(
     private _productos: ProductoService,
@@ -65,6 +66,7 @@ export class ProductosComponent implements OnInit {
       this.tiendaInfo = store.configuracion || {};
       if( store.buscador ) if( Object.keys(store.buscador).length > 0 ) {  if( store.buscador.search ) { this.seartxt = store.buscador.search; this.buscar(); this.borrarBusqueda(); this.dataSeleccionda = store.buscador.search } }
       if( store.usercabeza ) this.query.where.idPrice = store.usercabeza.id;
+      this.userCabeza = store.userCabeza || {};
     });
   }
 
@@ -139,7 +141,7 @@ export class ProductosComponent implements OnInit {
   }
 
   getProductosRecomendado(){
-    this._productos.getStore( { where:{ pro_activo: 0 }, sort: "createdAt DESC", page: 0, limit: 5 }).subscribe((res:any)=>{ console.log(res); this.listProductosRecomendar = res.data; }, ( error )=> { console.error(error); });
+    this._productos.getStore( { where:{ pro_activo: 0, idPrice: this.query.where.idPrice }, sort: "createdAt DESC", page: 0, limit: 5 }).subscribe((res:any)=>{ console.log(res); this.listProductosRecomendar = res.data; }, ( error )=> { console.error(error); });
   }
 
   viewProducto( obj:any ){

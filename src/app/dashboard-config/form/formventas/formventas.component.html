@@ -216,7 +216,7 @@
                 <label for="exampleFormControlInput1">número de Rastreo de guía ( DEVOLUCION )</label>
                 <input type="text" [(ngModel)]="data.ven_numero_guia" class="form-control form-control-sm" [disabled]="!superSub">
             </div>
-            <div class="form-group col-md-6 col-sm-4 col-lg-4 col-xs-6" *ngIf="data.id && listCarrito.length && !data.ven_numero_guia && superSub">
+            <div class="form-group col-md-6 col-sm-4 col-lg-4 col-xs-6" *ngIf="data.id && listCarrito.length && !data.ven_numero_guia && ( rolName == 'administrador' || rolName == 'proveedor') ">
                 <button type="button" class="btn btn-success" (click)="generarGuia()">Generar Guia</button>
             </div>
             <div class="form-group col-md-6 col-sm-4 col-lg-4 col-xs-6" *ngIf="data.id && listCarrito.length && data.ven_numero_guia && data.ven_estado == 0">

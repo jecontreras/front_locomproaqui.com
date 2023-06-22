@@ -7,6 +7,8 @@ import { ToolsService } from 'src/app/services/tools.service';
 import { ProductoService } from 'src/app/servicesComponents/producto.service';
 import * as _ from 'lodash';
 import { UsuariosService } from 'src/app/servicesComponents/usuarios.service';
+import { FormventasComponent } from '../../form/formventas/formventas.component';
+import { VentasService } from 'src/app/servicesComponents/ventas.service';
 
 @Component({
   selector: 'app-mis-despacho',
@@ -26,7 +28,7 @@ export class MisDespachoComponent implements OnInit {
     page: 0,
     limit: 10
   };
-  Header:any = [ 'Foto','Producto','Numero Guia', 'Logo', 'Estado Venta', 'Cantidad', 'Precio Distribuidor', 'Talla', 'Color', 'Creado'];
+  Header:any = [ 'Acciónes','Foto','Producto','Numero Guia', 'Logo', 'Estado Venta', 'Cantidad', 'Precio Distribuidor', 'Talla', 'Color', 'Creado'];
   $:any;
   public datoBusqueda = '';
   notscrolly:boolean=true;
@@ -41,8 +43,9 @@ export class MisDespachoComponent implements OnInit {
     private _productos: ProductoService,
     private spinner: NgxSpinnerService,
     private _store: Store<STORAGES>,
-    private _usuarios: UsuariosService
-  ) { 
+    private _usuarios: UsuariosService,
+    private _venta: VentasService
+  ) {
     this._store.subscribe( ( store: any ) => {
       store = store.name;
       if( !store ) return false;
@@ -109,7 +112,7 @@ export class MisDespachoComponent implements OnInit {
 
   buscar() {
     this.loader = false;
-    this.notscrolly = true 
+    this.notscrolly = true
     this.notEmptyPost = true;
     this.dataTable.dataRows = [];
     //console.log(this.datoBusqueda);
@@ -134,6 +137,44 @@ export class MisDespachoComponent implements OnInit {
     }
     if( this.rolName != 'administrador') this.query.where.creacion = this.dataUser.id;
     this.cargarTodos();
+  }
+  async handleOpenShop( obj:any ){
+    const dialogRef = this.dialog.open(FormventasComponent,{
+      data: { datos: await this.getVentaId( obj.ventas.id ) || {} }
+    });
+
+    dialogRef.afterClosed().subscribe( async ( result ) => {
+      console.log(`Dialog result: ${result}`);
+      if(result == 'creo') this.cargarTodos();
+      if( obj.id ) {
+        let filtro:any = await this.getDetallado( obj.id );
+          if( !filtro ) return false;
+          let idx = _.findIndex( this.dataTable.dataRows, [ 'id', obj.id ] );
+          console.log("**",idx)
+          if( idx >= 0 ) {
+            console.log("**",this.dataTable['dataRows'][idx], filtro)
+            this.dataTable['dataRows'][idx] = { ...filtro};
+          }
+      }
+    });
+  }
+
+  async getVentaId( id:any ){
+    return new Promise( resolve => {
+      this._venta.get( { where: { id: id } } ).subscribe(( res:any )=>{
+        res = res.data[0];
+        resolve( res || false )
+      },()=> resolve( false ) );
+    })
+  }
+
+  async getDetallado( id:any ){
+    return new Promise( resolve => {
+      this._productos.getVenta( { where: { id: id } } ).subscribe(( res:any )=>{
+        res = res.data[0];
+        resolve( res || false )
+      },()=> resolve( false ) );
+    })
   }
 
 }

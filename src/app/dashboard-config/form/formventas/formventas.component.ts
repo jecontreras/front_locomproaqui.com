@@ -71,6 +71,8 @@ export class FormventasComponent implements OnInit {
 
   disableSpinner:boolean = true;
   coinShop:boolean = false;
+  rolName:string;
+
   constructor(
     public dialog: MatDialog,
     private _ventas: VentasService,
@@ -97,6 +99,7 @@ export class FormventasComponent implements OnInit {
       }) || [];
       if (this.dataUser.usu_perfil.prf_descripcion == 'administrador' ) this.superSub = true;
       else this.superSub = false;
+      this.rolName = this.dataUser.usu_perfil.prf_descripcion;
       //this.superSub = false;
       try {
         this.rolUser = this.dataUser.usu_perfil.prf_descripcion;
