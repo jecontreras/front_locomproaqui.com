@@ -107,7 +107,9 @@ export class RegistrosComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
+    this.listCiudades = _.orderBy( this.listCiudades, ['ciudad'], ['asc']);
     for (let row of this.listDepartamento) for (let item of row.ciudades) this.listCiudad.push({ departamento: row.departamento, ciudad: item });
+    this.listCiudad = _.orderBy( this.listCiudad, ['ciudad'], ['asc']);
     if (this.activate.snapshot.paramMap.get('id')) {
       this.cabeza = (this.activate.snapshot.paramMap.get('id'));
       this.getCabeza();
@@ -119,7 +121,7 @@ export class RegistrosComponent implements OnInit {
   async getCiudades(){
     return new Promise( resolve => {
       this._ventas.getCiudades( { where: { }, limit: 100000 } ).subscribe( ( res:any )=>{
-        this.listCiudades = res.data;
+        this.listCiudades = _.orderBy( res.data, ['ciudad'], ['asc']);
         resolve( true );
       });
     });

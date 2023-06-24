@@ -86,6 +86,7 @@ export class PerfilComponent implements OnInit {
     this.urlRegistro += this.data.usu_usuario;
     this.getCategorias();
     for (let row of this.listDepartamento) for (let item of row.ciudades) this.listCiudad.push({ departamento: row.departamento, ciudad: item });
+    this.listCiudad = _.orderBy( this.listCiudad, ['ciudad'], ['asc']);
   }
 
   validadEmail() {

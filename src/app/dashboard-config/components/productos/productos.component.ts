@@ -8,6 +8,8 @@ import * as _ from 'lodash';
 import { ProductosOrdenarComponent } from '../../table/productos-ordenar/productos-ordenar.component';
 import { STORAGES } from 'src/app/interfaces/sotarage';
 import { Store } from '@ngrx/store';
+import { UsuariosService } from 'src/app/servicesComponents/usuarios.service';
+import { DANEGROUP } from 'src/app/JSON/dane-nogroup';
 
 declare interface DataTable {
   headerRow: string[];
@@ -56,12 +58,17 @@ export class ProductosComponent implements OnInit {
   formatoMoneda:any = {};
   counts:number = 0;
 
+  listSeller:any = DANEGROUP;
+  keyword = 'usu_usuario';
+  txtCiudad:any = {};
+
   constructor(
     public dialog: MatDialog,
     private _tools: ToolsService,
     private _productos: ProductoService,
     private spinner: NgxSpinnerService,
-    private _store: Store<STORAGES>
+    private _store: Store<STORAGES>,
+    private _user: UsuariosService
   ) {
     this._store.subscribe( ( store: any ) => {
       store = store.name;
@@ -69,11 +76,12 @@ export class ProductosComponent implements OnInit {
       this.dataUser = store.user || {};
       try {
         this.rolName =  this.dataUser.usu_perfil.prf_descripcion;
+        console.log("***72", this.rolName)
       } catch (error) {}
     });
   }
 
-  ngOnInit() {
+  async ngOnInit() {
     this.dataTable = {
       headerRow: this.Header,
       footerRow: this.Header,
@@ -82,6 +90,8 @@ export class ProductosComponent implements OnInit {
     if( this.rolName != 'administrador') this.query.where.pro_usu_creacion = this.dataUser.id;
     this.cargarTodos();
     this.cargarProveedor();
+    this.listSeller = await this.getSeller();
+    console.log( this.listSeller )
   }
 
   crear(obj:any){
@@ -180,7 +190,7 @@ export class ProductosComponent implements OnInit {
 
   cargarProveedor() {
     this.spinner.show();
-    if( this.rolName != 'administrador') this.query.where.pro_usu_creacion = this.dataUser.id;
+    if( this.rolName != 'administrador') this.query2.where.pro_usu_creacion = this.dataUser.id;
     this._productos.get( this.query2 ).subscribe( ( response: any ) => {
         console.log(response);
         this.dataRows.push( ... response.data );
@@ -267,5 +277,24 @@ export class ProductosComponent implements OnInit {
       this._tools.tooast( "Actualizado " + opt );
     },( error )=> this._tools.tooast( "Error " + opt ));
   }
+
+  getSeller(){
+    return new Promise( resolve =>{
+      this._user.getStore( { where: { rol:"proveedor" }, limit: 1000000000 } ).subscribe( res =>{
+        return resolve( res.data || [] );
+      });
+    });
+  }
+
+  handleSelectShop( ev:any ){
+    console.log("**EV", ev);
+  }
+
+  onChangeSearch( ev:any ){
+    console.log( ev )
+
+  }
+
+
 
 }
