@@ -349,12 +349,16 @@
                                 <br>
                               </div>
                               <div class="col-12 container row" *ngIf="data.pagasPublicidad == 'si'">
+                                <label for="exampleFormControlSelect1">Ingrese en Cuales Plataformas Has Estado o Estas Como Proveedor</label><br>
+                                <textarea class="form-control" [(ngModel)]="data.txtListRedes" rows="3"></textarea>
+                            </div>
+                              <!--<div class="col-12 container row" *ngIf="data.pagasPublicidad == 'si'">
                                   <label for="exampleFormControlSelect1">Seleccione en Cuales Plataformas Has Estado o Estas Como Proveedor</label><br>
                                   <mat-checkbox [(ngModel)]="item.check" *ngFor="let item of listPltaform"
                                       (ngModelChange)="selectTable( item )">
                                       {{ item.titulo }} &nbsp;
                                   </mat-checkbox>
-                              </div>
+                              </div>-->
                               <div class="col-12">
                                   <div class="d-flex justify-content-between">
                                       <div>

@@ -234,7 +234,10 @@ async submit( opt:boolean ){
   if( !this.disabledusername ) return this._tools.tooast( { title: "Error tenemos problemas en el formulario por favor revisar gracias", icon: "error"})
   this.data = _.omit(this.data, [ 'id', 'usu_nombre1' ])
   this.data = _.omitBy(this.data, _.isNull);
-  if( this.data.rol == 'proveedor' ) this.data.listRedes = this.listPltaform.filter( item=> item.check == true );
+  if( this.data.rol == 'proveedor' ) {
+    //this.data.listRedes = this.listPltaform.filter( item=> item.check == true );
+    this.data.listRedes = [ { titulo: this.data.txtListRedes } ]
+  }
   else this.data.listRedes = this.listRedes.filter( item=> item.check == true );
   this._user.create(this.data).subscribe((res: any) => {
     console.log("user", res);
