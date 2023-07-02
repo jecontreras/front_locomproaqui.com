@@ -11,12 +11,7 @@
     </div>
     <div class="col-12">
       <div class="row">
-        <div class="col-12 p-5">
-          <ngx-spinner bdOpacity=0.9 bdColor="" size="default" color="#581f87" type="ball-pulse-sync"
-            [fullScreen]="false">
-          </ngx-spinner>
-        </div>
-        <div class="col-md-3 col-sm-4 col-lg-2 col-xs-6 col-6 anchandoPr" *ngFor="let row of listArticle" (click)="handleArticle( row )">
+        <div class="col-md-3 col-sm-4 col-lg-2 col-xs-6 col-6 anchandoPr" *ngFor="let row of listArticle">
           <mat-card class="example-card">
             <mat-card-header>
               <mat-card-subtitle>{{ row.article['pro_nombre'] | slice: 0: 15 }} </mat-card-subtitle>
@@ -30,16 +25,36 @@
             </small>
             <small style="display: inline-block;  font-size: 90% !important;" class="pricesmall currency2"
               id="pricesmall_25">
-              Lo Vendo: {{ _tools.monedaChange( 3, 2, ( row.article['pro_uni_venta'] || 0 ) ) }}
+              Lo Vendo: {{ _tools.monedaChange( 3, 2, ( row.price || 0 ) ) }}
             </small>
             <mat-card-actions>
               <button type="button" data-toggle="tooltip" data-placement="right" style="width: 100%;"
                 class="sc-logout btn btn-success btn-sm pull-right buttonAncho"
                 [ngStyle]="{'background-color':urlColor }"
+                (click)="handleArticle( row )"
                 data-original-title="Ver Articulo">Ver Articulo
+              </button>
+              <button type="button" data-toggle="tooltip" data-placement="right" style="width: 100%;"
+                class="sc-logout btn btn-danger btn-sm pull-right buttonAncho"
+                (click)="handleDropArticle( row )"
+                data-original-title="Quitar Articulo">Quitar Articulo
               </button>
             </mat-card-actions>
           </mat-card>
+        </div>
+        <div class="col-12">
+          <div class="d-flex flex-row-reverse bd-highlight">
+            <div class="p-2 bd-highlight">
+              <mat-paginator [length]="counts" [pageSizeOptions]="[10, 25, 100]"
+                  (page)="onScroll($event)">
+              </mat-paginator>
+            </div>
+          </div>
+        </div>
+        <div class="col-12">
+          <ngx-spinner bdOpacity=0.9 bdColor="" size="default" color="#581f87" type="ball-pulse-sync"
+            [fullScreen]="false">
+          </ngx-spinner>
         </div>
       </div>
     </div>

@@ -261,7 +261,7 @@ export class ArticuloComponent implements OnInit {
     this.loader = true;
     //console.log( this.ultimoSeartxt );
     if( this.dataUser.id ) this.query.where.user = this.dataUser.id;
-    this.query.where.pro_usu_creacion = 1;
+    this.query.where.pro_usu_creacion = 100000;
     if( this.dataUser.id ) this.query.where.idPrice = this.dataUser.id;
     this._productos.get(this.query).subscribe((res: any) => {
       console.log("res", res);

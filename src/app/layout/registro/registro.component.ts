@@ -107,7 +107,9 @@ export class RegistrosComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
+    this.listCiudades = _.orderBy( this.listCiudades, ['ciudad'], ['asc']);
     for (let row of this.listDepartamento) for (let item of row.ciudades) this.listCiudad.push({ departamento: row.departamento, ciudad: item });
+    this.listCiudad = _.orderBy( this.listCiudad, ['ciudad'], ['asc']);
     if (this.activate.snapshot.paramMap.get('id')) {
       this.cabeza = (this.activate.snapshot.paramMap.get('id'));
       this.getCabeza();
@@ -119,7 +121,7 @@ export class RegistrosComponent implements OnInit {
   async getCiudades(){
     return new Promise( resolve => {
       this._ventas.getCiudades( { where: { }, limit: 100000 } ).subscribe( ( res:any )=>{
-        this.listCiudades = res.data;
+        this.listCiudades = _.orderBy( res.data, ['ciudad'], ['asc']);
         resolve( true );
       });
     });
@@ -232,7 +234,10 @@ async submit( opt:boolean ){
   if( !this.disabledusername ) return this._tools.tooast( { title: "Error tenemos problemas en el formulario por favor revisar gracias", icon: "error"})
   this.data = _.omit(this.data, [ 'id', 'usu_nombre1' ])
   this.data = _.omitBy(this.data, _.isNull);
-  if( this.data.rol == 'proveedor' ) this.data.listRedes = this.listPltaform.filter( item=> item.check == true );
+  if( this.data.rol == 'proveedor' ) {
+    //this.data.listRedes = this.listPltaform.filter( item=> item.check == true );
+    this.data.listRedes = [ { titulo: this.data.txtListRedes } ]
+  }
   else this.data.listRedes = this.listRedes.filter( item=> item.check == true );
   this._user.create(this.data).subscribe((res: any) => {
     console.log("user", res);

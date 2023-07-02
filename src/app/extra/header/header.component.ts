@@ -251,7 +251,7 @@ export class HeaderComponent implements OnInit {
   getCarrito(){
     setInterval(()=>{
       this.getVentas();
-    }, 5000);
+    }, 50000);
   }
 
   pedidosSubmit(){
@@ -485,7 +485,7 @@ export class HeaderComponent implements OnInit {
       {
         icons: 'people_alt',
         nombre: 'Explorar Bodegas',
-        disable: this.rolUser == 'administrador' || this.rolUser == 'proveedor',
+        disable: this.rolUser == 'administrador' || this.rolUser == 'vendedor',
         url: '/config/controlInventario',
         submenus:[
           {
@@ -496,7 +496,7 @@ export class HeaderComponent implements OnInit {
           {
             icons: 'settings',
             nombre: 'Bodegas',
-            url: '/config/store/store',
+            url: '/config/store/stores',
           },
           {
             icons: 'settings',

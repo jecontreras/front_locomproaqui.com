@@ -13,6 +13,9 @@ export class ProductoService {
   get(query:any){
     return this._model.querys('tblproductos/querys',query, 'post');
   }
+  getStore(query:any){
+    return this._model.querys('tblproductos/filtroStore',query, 'post');
+  }
   create(query:any){
     return this._model.querys('tblproductos',query, 'post');
   }
@@ -39,6 +42,12 @@ export class ProductoService {
   }
   getPriceArticle( query:any ){
     return this._model.querys('priceArticle/querysProducts',query, 'post');
+  }
+  updatePriceArticle( query:any ){
+    return this._model.querys('priceArticle/'+query.id,query, 'put');
+  }
+  createPriceArticleFull( query:any ){
+    return this._model.querys('priceArticle/createTotalProduct',query, 'post');
   }
 
 }
