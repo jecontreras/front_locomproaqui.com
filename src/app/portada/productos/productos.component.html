@@ -8,7 +8,7 @@
         <br>
           <br>
         <ol class="breadcrumb">
-          <li><a href="#" [routerLink]="[ '/portada' ]">Inicio</a></li>
+          <li><a href="#" [routerLink]="[ '/front' ]">Inicio</a></li>
           <li class="active">Productos</li>
         </ol>
       </div>
@@ -17,10 +17,10 @@
 </section>
 
 <!-- product category -->
-<section id="aa-product-category">
+<section id="aa-product-category" >
   <div class="">
     <div class="row">
-      <div class="col-lg-9 col-md-9 col-sm-8 col-md-push-3">
+      <div class="col-lg-9 col-md-9 col-sm-8 col-md-push-3" style="padding: 3%;">
         <div class="aa-product-catg-content">
           <div class="row">
             <div class="col-12">
@@ -42,7 +42,7 @@
               <!-- start single product item -->
               <li *ngFor="let item of listProductos" id="anchosLi">
                 <figure class="img-contenedor">
-                  <a class="aa-product-img" href="#" [routerLink]="[ '/portada/productosView', item.id, this.dataUser.usu_telefono ]"><img class="anchosProductos" [src]="item.foto"
+                  <a class="aa-product-img" href="#" [routerLink]="[ '/front/productosView', item.id, this.dataUser.usu_telefono ]"><img class="anchosProductos" [src]="item.foto"
                       alt="polo shirt img"></a>
                       <a class="aa-add-card-btn pointer" (click)="AgregarCart(item)"><span
                         class="fa fa-shopping-cart"></span>Comprar y pagar en casa Envio Gratis</a>
@@ -100,7 +100,7 @@
             <div class="aa-recently-views">
               <ul>
                 <li *ngFor="let item of listProductosHistorial">
-                  <a href="#" target="_blank" [routerLink]="[ '/portada/productosView', item.id, this.dataUser.usu_telefono ]" class="aa-cartbox-img"><img alt="img"
+                  <a href="#" target="_blank" [routerLink]="[ '/front/productosView', item.id, this.dataUser.usu_telefono ]" class="aa-cartbox-img"><img alt="img"
                       [src]="item.foto"></a>
                   <div class="aa-cartbox-info">
                     <h4><a class="pointer">{{ item.pro_nombre }}</a></h4>
@@ -116,7 +116,7 @@
             <div class="aa-recently-views">
               <ul>
                 <li *ngFor="let item of listProductosRecomendar">
-                  <a href="#" target="_blank" [routerLink]="[ '/portada/productosView', item.id, this.dataUser.usu_telefono ]" class="aa-cartbox-img"><img alt="img"
+                  <a href="#" target="_blank" [routerLink]="[ '/front/productosView', item.id, this.dataUser.usu_telefono ]" class="aa-cartbox-img"><img alt="img"
                       [src]="item.foto"></a>
                   <div class="aa-cartbox-info">
                     <h4><a class="pointer">{{ item.pro_nombre }}</a></h4>

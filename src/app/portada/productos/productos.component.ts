@@ -28,7 +28,7 @@ export class ProductosComponent implements OnInit {
       //pro_categoria: { '!=' : [2,3,12] }
     },
     page: 0,
-    limit: 10
+    limit: 30
   };
 
   listCategorias:any = [];

@@ -130,7 +130,7 @@ export class ViewProductosComponent implements OnInit {
   }
 
   shareUrl( ){
-    const url = window.location.origin+"/pedidos/inf/"+this.data.id;
+    const url = window.location.origin+"/front/productosView/"+this.data.id+"/"+this.dataUser.usu_telefono;
     this._tools.handleCopyHolder( url );
     return url;
   }

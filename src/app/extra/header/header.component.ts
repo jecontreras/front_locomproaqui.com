@@ -70,7 +70,7 @@ export class HeaderComponent implements OnInit {
     cobros: 0,
     ventas: 0
   };
-  urlTienda: string = `${ URLFRON }/portada/index/`;
+  urlTienda: string = `${ URLFRON }/front/index/`;
   urlDistribuidor:string =`${ URLFRON }/articulo/`;
   activando:boolean = false;
 
@@ -507,6 +507,29 @@ export class HeaderComponent implements OnInit {
             icons: 'settings',
             nombre: 'Mis Productos Agregados',
             url: '/config/store/myproducts',
+          },
+        ]
+      },
+      {
+        icons: 'people_alt',
+        nombre: 'Modulo Contable',
+        disable: this.rolUser == 'administrador' || this.rolUser == 'proveedor',
+        url: '/config/controlInventario',
+        submenus:[
+          {
+            icons: 'settings',
+            nombre: 'Inicio',
+            url: '/config/bank/index',
+          },
+          {
+            icons: 'settings',
+            nombre: 'Lista de Pagos',
+            url: '/config/bank/listPayment',
+          },
+          {
+            icons: 'settings',
+            nombre: 'Mis Bancos',
+            url: '/config/bank/bank',
           },
         ]
       },

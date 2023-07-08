@@ -62,6 +62,13 @@ const dashboardRoutes: Routes = [
           loadChildren: () => import('./bodega/bodega.module').then(m => m.BodegaModule)
         }]
       },
+      {
+        path: 'bank',
+        children: [{
+          path: '',
+          loadChildren: () => import('./bank/bank.module').then(m => m.BankModule)
+        }]
+      },
      {path: '**', redirectTo: 'categorias', pathMatch: 'full'}
    ]
   }
