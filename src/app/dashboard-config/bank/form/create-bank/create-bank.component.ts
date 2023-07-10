@@ -52,11 +52,11 @@ export class CreateBankComponent implements OnInit {
       this.data = _.clone(this.datas.datos);
       this.id = this.data.id;
       this.titulo = "Actualizar";
-      this.getCategorias();
+      this.getBank();
     }else{this.id = ""}
   }
   
-  getCategorias(){
+  getBank(){
     this._banco.get( { where: { cat_activo: 0, cat_padre: this.data.id }, limit: 1000 } ).subscribe((res:any)=>{
       this.listCategoria =_.map( res.data , ( row )=>{ 
         return {
