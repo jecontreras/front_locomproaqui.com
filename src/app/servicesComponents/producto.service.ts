@@ -31,6 +31,12 @@ export class ProductoService {
   getVenta(query:any){
     return this._model.querys('tblventasproducto/querys',query, 'post');
   }
+  getVentaComplete(query:any){
+    return this._model.querys('tblventas/getTransactions',query, 'post');
+  }
+  getVentaCompleteEarring(query:any){
+    return this._model.querys('tblventas/getTransactionsEarring',query, 'post');
+  }
   createTestimonio(query:any){
     return this._model.querys('tbltestimonio',query, 'post');
   }

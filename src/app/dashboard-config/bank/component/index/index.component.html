@@ -13,11 +13,12 @@
             <div class="row">
                 <div class="col-sm-4 col-12">
                     <div class="content">
-                        <div class="row">
+                        <div class="row p-3">
                             <div class="col-12"><h3>Dinero para solicitar desembolso</h3></div>
-                            <div class="col-12">{{ dataConfig.money }}</div>
+                            <div class="col-12"><h4 class="text-success">{{ _tools.monedaChange( 3,2,( dataConfig.money || 0 ) ) }}</h4></div>
                             <div class="col-12">
-                                <button type="button" class="btn btn-primary">Desembolsar</button>
+                                <button type="button" class="btn btn-primary" (click)="handleDisbursement({})">Desembolsar</button>
+                                <br>
                             </div>
                             <div class="col-12">
                                 <p>
@@ -28,10 +29,10 @@
                                 </p>
                             </div>
                         </div>
-                        <div class="row">
+                        <div class="row p-3">
                             <div class="col-12">
                                 <h3>Dinero recaudado en proceso de reintegro</h3>
-                                <div class="col-12">{{ dataConfig.pendingMoney }}</div>
+                                <div class="col-12"><h4 class="text-warning">{{ dataConfig.pendingMoney }}</h4></div>
                             </div>
                             <div class="col-12">
                                 <button type="button" class="btn btn-primary">Ver Envios</button>
@@ -41,7 +42,7 @@
                                     • Tus pedidos enviados contraentrega y que aún están pendientes de ser reintegrados por alguna transportadora.</p>
                             </div>
                         </div>
-                        <div class="row">
+                        <div class="row p-3">
                             <div class="col-12">
                                 <h3>Cuentas de desembolsos</h3>
                             </div>
@@ -61,19 +62,15 @@
                                 <div class="d-flex flex-wrap">
                                     <div class="mx-auto">
                                         <h4>Ingresos</h4>
-                                        <p>{{ dataConfig.income }}</p>
-                                    </div>
-                                    <div class="mx-auto">
-                                        <h4>Egresos</h4>
-                                        <p>{{ dataConfig.discharge }} </p>
+                                        <p>{{ _tools.monedaChange( 3,2,( dataConfig.income || 0 ) ) }}</p>
                                     </div>
                                     <div class="mx-auto">
                                         <h4>Recibiste</h4>
-                                        <p>{{ dataConfig.receive }} </p>
+                                        <p>{{ _tools.monedaChange( 3,2,( dataConfig.receive || 0 ) ) }} </p>
                                     </div>
                                     <div class="mx-auto">
                                         <h4>Fecha</h4>
-                                        <p>{{ dataConfig.date }} </p>
+                                        <p>{{ dataConfig.date | date: 'minum' }} </p>
                                     </div>
                                 </div>
                             </div>
@@ -93,10 +90,10 @@
                                             {{ item.transactions }}
                                         </td>
                                         <td>
-                                            {{ item.income }}
+                                            {{ _tools.monedaChange( 3,2,( item.income || 0 ) ) }}
                                         </td>
                                         <td>
-                                            {{ item.discharge }}
+                                            {{ _tools.monedaChange( 3,2,( item.discharge || 0 ) ) }}
                                         </td>
                                         <td>
                                             {{ item.receive }}

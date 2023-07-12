@@ -10,19 +10,21 @@ import { MyOwnCustomMaterialModule } from 'src/app/app.material.module';
 import { InfiniteScrollModule } from 'ngx-infinite-scroll';
 import { BankRoutingModule } from './bank.routing';
 import { ListPaymentComponent } from './component/list-payment/list-payment.component';
+import { FormDisbursementComponent } from './form/form-disbursement/form-disbursement.component';
 
 
 
 @NgModule({
   entryComponents:[
-    CreateBankComponent
+    CreateBankComponent,
+    FormDisbursementComponent
   ],
   declarations: [
       IndexComponent, 
       CreateBankComponent, 
       BankComponent, 
       MainComponent, 
-      ListPaymentComponent
+      ListPaymentComponent, FormDisbursementComponent
   ],
   imports: [
     CommonModule,
