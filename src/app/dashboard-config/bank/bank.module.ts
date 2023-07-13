@@ -11,7 +11,7 @@ import { InfiniteScrollModule } from 'ngx-infinite-scroll';
 import { BankRoutingModule } from './bank.routing';
 import { ListPaymentComponent } from './component/list-payment/list-payment.component';
 import { FormDisbursementComponent } from './form/form-disbursement/form-disbursement.component';
-
+import { NgxCurrencyModule } from "ngx-currency";
 
 
 @NgModule({
@@ -20,10 +20,10 @@ import { FormDisbursementComponent } from './form/form-disbursement/form-disburs
     FormDisbursementComponent
   ],
   declarations: [
-      IndexComponent, 
-      CreateBankComponent, 
-      BankComponent, 
-      MainComponent, 
+      IndexComponent,
+      CreateBankComponent,
+      BankComponent,
+      MainComponent,
       ListPaymentComponent, FormDisbursementComponent
   ],
   imports: [
@@ -32,6 +32,7 @@ import { FormDisbursementComponent } from './form/form-disbursement/form-disburs
     NgxSpinnerModule,
     MyOwnCustomMaterialModule,
     InfiniteScrollModule,
+    NgxCurrencyModule,
     BankRoutingModule
   ]
 })

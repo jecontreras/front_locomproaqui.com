@@ -37,6 +37,7 @@ export class FormDisbursementComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.opcionCurrencys = this._tools.currency;
     this.getBank();
   }
 
