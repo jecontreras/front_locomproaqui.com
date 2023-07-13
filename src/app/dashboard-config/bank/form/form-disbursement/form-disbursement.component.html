@@ -1,1 +1,50 @@
-<p>form-disbursement works!</p>
+<h2 mat-dialog-title>DATOS NECESARIOS PARA REALIZAR EL RETIRO DE SU DINERO</h2>
+<mat-dialog-content class="mat-typography">
+  <div class="form row">
+    <div class="form-group col-md-6 col-sm-4 col-lg-4 col-xs-4" *ngIf="data.id && superSub">
+      <label for="exampleFormControlSelect1">Estado del Cobro</label>
+      <select class="form-control form-control-sm" [(ngModel)]="data.cob_estado">
+        <option type="number" value="0">Activa</option>
+        <option type="number" value="1">Apraboda</option>
+        <option type="number" value="2">Rechazada</option>
+      </select>
+    </div>
+    <div class="form-group col-md-6 col-sm-4 col-lg-4 col-xs-4" *ngIf="data.id">
+      <label>Fecha de retiro</label>
+      <input type="text" disabled [(ngModel)]="data.createdAt" class="form-control form-control-sm">
+    </div>
+    <div class="form-group col-md-6 col-sm-4 col-lg-4 col-xs-4" *ngIf="data.id">
+      <label>Nombre vendedor</label>
+      <input type="text" disabled [(ngModel)]="data.usu_clave_int.usu_nombre" class="form-control form-control-sm">
+    </div>
+    <div class="form-group col-md-6 col-sm-4 col-lg-4 col-xs-4" *ngIf="data.id">
+      <label>Apellido vendedor</label>
+      <input type="text" disabled [(ngModel)]="data.usu_clave_int.usu_apellido" class="form-control form-control-sm">
+    </div>
+    <div class="form-group col-md-6 col-sm-4 col-lg-4 col-xs-4">
+      <label>Número Cédula</label>
+      <input type="text" [(ngModel)]="data.cob_num_cedula" class="form-control form-control-sm">
+    </div>
+    <div class="form-group col-md-6 col-sm-4 col-lg-4 col-xs-4">
+      <label>Número para llamarte en caso de falta de información</label>
+      <input type="text" [(ngModel)]="data.cob_num_celular" class="form-control form-control-sm">
+    </div>
+    <div class="form-group col-md-6 col-sm-4 col-lg-4 col-xs-4">
+      <label for="exampleFormControlSelect1">Tipo de Banco</label>
+      <select class="form-control form-control-sm" [(ngModel)]="data.bank" required="true">
+        <option type="number" value="0" *ngFor="let row of listBank" >{{ row.bank }} - {{ row.numeroCuenta }} tipo {{ row.accounType === 0 ? 'ahorros': 'corriente' }} </option>
+      </select>
+    </div>
+    <div class="form-group col-12">
+      <label>Descripcion</label>
+      <textarea class="form-control" [(ngModel)]="data.cob_descripcion" rows="3"></textarea>
+    </div>
+  </div>
+</mat-dialog-content>
+
+<mat-dialog-actions align="end">
+  <button mat-button mat-dialog-close>Cerrar</button>
+  <button mat-button cdkFocusInitial (click)="submit()" [disabled]="disabledButton">
+    <span>Enviar solicitud</span>
+  </button>
+</mat-dialog-actions>

@@ -20,7 +20,8 @@ export class IndexComponent implements OnInit {
   querysSale:any = {
     where:{
     },
-    
+    limit: 100000,
+    skip: 0
   }
   lisTransactions:any = [];
   lisTransactionsProcess:any = [];
@@ -33,7 +34,7 @@ export class IndexComponent implements OnInit {
     public _tools: ToolsService,
     private _usuarios: UsuariosService,
     public dialog: MatDialog,
-  ) { 
+  ) {
     this._store.subscribe( ( store: any ) => {
       store = store.name;
       if( !store ) return false;

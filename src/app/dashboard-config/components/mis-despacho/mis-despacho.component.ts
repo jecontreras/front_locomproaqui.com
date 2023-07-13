@@ -37,6 +37,8 @@ export class MisDespachoComponent implements OnInit {
   rolName:string;
   opcionCurrencys:any;
   reacudo:number;
+  counts:number = 0;
+
   constructor(
     public dialog: MatDialog,
     private _tools: ToolsService,
@@ -87,12 +89,19 @@ export class MisDespachoComponent implements OnInit {
      }
    }
 
+   pageEvent(ev: any) {
+    this.query.page = ev.pageIndex;
+    this.query.limit = ev.pageSize;
+    this.cargarTodos();
+  }
+
   cargarTodos() {
     this.spinner.show();
     this._productos.getVenta( this.query )
     .subscribe(
       (response: any) => {
         console.log(response);
+        this.counts = response.count;
         this.dataTable.headerRow = this.dataTable.headerRow;
         this.dataTable.footerRow = this.dataTable.footerRow;
         this.dataTable.dataRows.push(... response.data);
