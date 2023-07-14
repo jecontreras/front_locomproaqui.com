@@ -36,13 +36,13 @@
     <div class="form-group col-md-6 col-sm-4 col-lg-4 col-xs-4">
       <label for="exampleFormControlSelect1">Tipo de Banco</label>
       <select class="form-control form-control-sm" [(ngModel)]="data.bank" required="true">
-        <option type="number" value="0" *ngFor="let row of listBank" >{{ row.bank }} - {{ row.numeroCuenta }} tipo {{ row.accounType === 0 ? 'ahorros': 'corriente' }} </option>
+        <option type="number" [value]="row.id" *ngFor="let row of listBank" >{{ row.bank }} - {{ row.numeroCuenta }} tipo {{ row.accounType === 0 ? 'ahorros': 'corriente' }} </option>
       </select>
     </div>
-    <div class="form-group col-12">
+    <!--<div class="form-group col-12">
       <label>Descripcion</label>
       <textarea class="form-control" [(ngModel)]="data.cob_descripcion" rows="3"></textarea>
-    </div>
+    </div>-->
   </div>
 </mat-dialog-content>
 

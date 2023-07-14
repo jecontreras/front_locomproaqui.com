@@ -20,7 +20,7 @@ export class IndexComponent implements OnInit {
   querysSale:any = {
     where:{
     },
-    limit: 100000,
+    limit: 10,
     skip: 0
   }
   lisTransactions:any = [];
