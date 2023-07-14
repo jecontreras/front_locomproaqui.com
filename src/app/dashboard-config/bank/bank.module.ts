@@ -12,19 +12,21 @@ import { BankRoutingModule } from './bank.routing';
 import { ListPaymentComponent } from './component/list-payment/list-payment.component';
 import { FormDisbursementComponent } from './form/form-disbursement/form-disbursement.component';
 import { NgxCurrencyModule } from "ngx-currency";
+import { FormListSaleComponent } from './form/form-list-sale/form-list-sale.component';
 
 
 @NgModule({
   entryComponents:[
     CreateBankComponent,
-    FormDisbursementComponent
+    FormDisbursementComponent,
+    FormListSaleComponent
   ],
   declarations: [
       IndexComponent,
       CreateBankComponent,
       BankComponent,
       MainComponent,
-      ListPaymentComponent, FormDisbursementComponent
+      ListPaymentComponent, FormDisbursementComponent, FormListSaleComponent
   ],
   imports: [
     CommonModule,
