@@ -33,7 +33,7 @@ export class ListPaymentComponent implements OnInit {
     },
     limit: 10
   };
-  Header:any = [ 'Acciones','Banco','Numero de Cuenta','Tipo de Cuenta','Estado' ];
+  Header:any = ['Banco','Numero de Cuenta','Monto retirado','Estado', 'Fecha pago' ];
   $:any;
   public datoBusqueda = '';
   dataUser:any = {};
@@ -42,7 +42,7 @@ export class ListPaymentComponent implements OnInit {
   constructor(
     private _supplier: SupplierAccountantService,
     public dialog: MatDialog,
-    private _tools: ToolsService,
+    public _tools: ToolsService,
     private _store: Store<STORAGES>,
   ) { 
     this._store.subscribe((store: any) => {

@@ -52,18 +52,11 @@
                   <tbody>
                     <tr *ngFor="let row of dataTable.dataRows; let idx=index">
                       
-                      <td>
-                        <button (click)="crear(row)" class="btn btn-primary btn-just-icon btn-round">
-                          <i class="material-icons">remove_red_eye</i>
-                        </button>
-                        <button (click)="delete(row, idx)" class="btn btn-danger btn-just-icon btn-round">
-                          <i class="material-icons">delete_forever</i>
-                        </button>
-                      </td>
-                      <td>{{row['bank']}}</td>
-                      <td>{{row['numeroCuenta']}}</td>
-                      <td>{{ row['accounType'] === 0 ? 'Ahorros' : 'Corriente'}}</td>
-                      <td>{{ row['state'] == 0 ? 'Activo' : 'Eliminado' }}</td>
+                      <td>{{ row['bank']?.bank }}</td>
+                      <td>{{ row['bank']?.numeroCuenta }}</td>
+                      <td>{{ _tools.monedaChange( 3,2, row['amount'] || 0 ) }}</td>
+                      <td>{{ row['state'] == 0 ? 'Procesando' : 'Exitoso' }}</td>
+                      <td>{{ row['fechaPago'] }} </td>
                     </tr>
                   </tbody>
                 </table>
