@@ -35,7 +35,6 @@ export class FormListSaleComponent implements OnInit {
 
   constructor(
     private _ventas: VentasService,
-    private spinner: NgxSpinnerService,
     public dialogRef: MatDialogRef<FormlistventasComponent>,
     @Inject(MAT_DIALOG_DATA) public datas: any,
     public _tools: ToolsService,

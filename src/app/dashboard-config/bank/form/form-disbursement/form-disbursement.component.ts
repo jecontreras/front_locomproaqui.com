@@ -88,11 +88,13 @@ export class FormDisbursementComponent implements OnInit {
 
   async submit(){
     this.disabledButton = true;
+    this._tools.ProcessTime({ title: "", tiempo: 9000 })
     if( this.id ) {
       if( !this.superSub ) if( this.clone.ven_estado == 1 ) { this._tools.presentToast("Error no puedes ya editar el Cobro ya esta aprobada"); return false; }
       await this.handleUpdates();
     }
     else await this.handleAdd();
+    this.disabledButton = false;
     this.dialogRef.close('creo');
   }
 
@@ -120,7 +122,8 @@ export class FormDisbursementComponent implements OnInit {
       this.data.listVentas = _.map( this.lisTransactions, 'id' );
       this.data.user = this.dataUser.id;
       this._supplier.create( this.data ).subscribe( res =>{
-        this._tools.tooast( { title: 'Proceso de retiro confirmado! Tu proceso estará en proceso demora 3 - 6 días hábiles' } );
+        if( res.status === 400 ) this._tools.tooast( { icon: "error",title: 'Lo sentimos tenemos Problemas! '+ res.data } );
+        else this._tools.tooast( { title: 'Proceso de retiro confirmado! Tu proceso estará en proceso demora 3 - 6 días hábiles' } );
         resolve( res );
       },()=> resolve( {}) );
     });

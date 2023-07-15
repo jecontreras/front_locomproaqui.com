@@ -4,8 +4,8 @@
             <div class="d-flex bd-highlight">
                 <div class="p-2 flex-grow-1 bd-highlight"><h2>Mi Billetera</h2></div>
                 <div class="p-2 bd-highlight">
-                    <button type="button" class="btn btn-primary mx-auto">Solicitar Desembolso</button>
-                    <button type="button" class="btn btn-primary mx-auto">Exportar Transacciones</button>
+                    <button type="button" class="btn btn-primary mx-auto" (click)="handleDisbursement({})">Solicitar Desembolso</button>
+                    <!--<button type="button" class="btn btn-primary mx-auto">Exportar Transacciones</button>-->
                 </div>
             </div>
         </div>
@@ -32,10 +32,10 @@
                         <div class="row p-3">
                             <div class="col-12">
                                 <h3>Dinero recaudado en proceso de reintegro</h3>
-                                <div class="col-12"><h4 class="text-warning">{{ dataConfig.pendingMoney }}</h4></div>
+                                <div class="col-12"><h4 class="text-warning"> {{ _tools.monedaChange( 3,2,( dataConfig.pendingMoney || 0 ) ) }} </h4></div>
                             </div>
                             <div class="col-12">
-                                <button type="button" class="btn btn-primary">Ver Envios</button>
+                                <button type="button" class="btn btn-primary" (click)="handleListReinitegro()">Ver Envios</button>
                             </div>
                             <div class="col-12">
                                 <p>Aquí el dinero de:
@@ -47,10 +47,16 @@
                                 <h3>Cuentas de desembolsos</h3>
                             </div>
                             <div class="col-12">
-                                <button type="button" class="btn btn-primary">Agregar</button>
+                                <button type="button" (click)="handleCreateBank()" class="btn btn-primary">Agregar</button>
                             </div>
                             <div class="col-12">
-                                lista
+                                <ul class="list-group list-group-flush">
+                                    <li class="list-group-item"
+                                        *ngFor="let item of listBank"
+                                    >
+                                        {{ item.bank }}- {{ item.accounType === 0 ? 'Ahorros': 'Corriente' }}
+                                    </li>
+                                  </ul>
                             </div>
                         </div>
                     </div>
@@ -70,7 +76,7 @@
                                     </div>
                                     <div class="mx-auto">
                                         <h4>Fecha</h4>
-                                        <p>{{ dataConfig.date | date: 'minum' }} </p>
+                                        <p>{{ dataConfig.date | date:'medium' }} </p>
                                     </div>
                                 </div>
                             </div>

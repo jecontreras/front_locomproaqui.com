@@ -3,6 +3,8 @@ import { MatDialog } from '@angular/material';
 import { ToolsService } from 'src/app/services/tools.service';
 import { BancosService } from 'src/app/servicesComponents/bancos.service';
 import { CreateBankComponent } from '../../form/create-bank/create-bank.component';
+import { STORAGES } from 'src/app/interfaces/sotarage';
+import { Store } from '@ngrx/store';
 
 declare interface DataTable {
   headerRow: string[];
@@ -32,12 +34,23 @@ export class BankComponent implements OnInit {
   Header:any = [ 'Acciones','Banco','Numero de Cuenta','Tipo de Cuenta','Estado' ];
   $:any;
   public datoBusqueda = '';
-
+  dataUser:any = {};
+  superSub:boolean = false;
+  
   constructor(
     private _bank: BancosService,
     public dialog: MatDialog,
-    private _tools: ToolsService
-  ) { }
+    private _tools: ToolsService,
+    private _store: Store<STORAGES>,
+  ) { 
+    this._store.subscribe((store: any) => {
+      store = store.name;
+      this.dataUser = store.user || {};
+      if(this.dataUser.usu_perfil.prf_descripcion == 'administrador') this.superSub = true;
+      else this.superSub = false;
+      this.query.where.user = this.dataUser.id;
+    });
+  }
 
   ngOnInit() {
     this.cargarTodos();
@@ -58,9 +71,6 @@ export class BankComponent implements OnInit {
       this._tools.presentToast("Eliminado")
     },(error)=>{console.error(error); this._tools.presentToast("Error de servidor") })
   }
-
-
-
 
   cargarTodos() {
     this._bank.get(this.query)

@@ -54,7 +54,7 @@ const routes: Routes = [
             component: DetallePedidoComponent
           },
           {
-            path: 'catalogo/:id',
+            path: 'catalogo/:id/:cel',
             component: CatalogoComponent
           }
         ]
