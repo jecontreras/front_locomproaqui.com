@@ -51,11 +51,11 @@
                   </tfoot>
                   <tbody>
                     <tr *ngFor="let row of dataTable.dataRows; let idx=index">
-                      
+
                       <td>{{ row['bank']?.bank }}</td>
                       <td>{{ row['bank']?.numeroCuenta }}</td>
                       <td>{{ _tools.monedaChange( 3,2, row['amount'] || 0 ) }}</td>
-                      <td>{{ row['state'] == 0 ? 'Procesando' : 'Exitoso' }}</td>
+                      <td>{{ row['state'] }}</td>
                       <td>{{ row['fechaPago'] }} </td>
                     </tr>
                   </tbody>

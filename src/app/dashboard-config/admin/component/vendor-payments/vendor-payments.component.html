@@ -1,0 +1,76 @@
+<div class="content">
+  <div class="row">
+    <div class="col-12">
+      filtros
+    </div>
+    <div class="col-12">
+      <table mat-table
+       [dataSource]="dataSource" multiTemplateDataRows
+       class="mat-elevation-z8">
+        <ng-container matColumnDef="{{column}}" *ngFor="let column of columnsToDisplay">
+          <th mat-header-cell *matHeaderCellDef> {{column}} </th>
+          <td mat-cell *matCellDef="let element">
+              <span
+                *ngIf="( column !== 'Usuario' ) && ( column !== 'Email' ) &&
+                ( column !== 'Banco' ) && ( column !== 'Monto' ) && ( column !== 'FechaPago' ) &&
+                ( column !== 'Estado' )">
+                {{element[column]}}
+              </span>
+              <span *ngIf="column === 'Usuario'">{{ element['user']?.usu_usuario }} </span>
+              <span *ngIf="column === 'Email'">{{ element['user']?.usu_email }} </span>
+              <span *ngIf="column === 'Banco'">{{ element['bank']?.bank }} </span>
+              <span *ngIf="column === 'Monto'">{{ _tools.monedaChange(3,2, ( element.amount || 0) ) }} </span>
+              <span *ngIf="column === 'FechaPago'">{{ element['fechaPago'] | date:'medium' }} </span>
+              <span *ngIf="column === 'Estado'">{{ element['state'] }} </span>
+          </td>
+        </ng-container>
+
+        <!-- Expanded Content Column - The detail row is made up of this one column that spans across all columns -->
+        <ng-container matColumnDef="expandedDetail">
+          <td mat-cell *matCellDef="let element" [attr.colspan]="columnsToDisplay.length">
+            <div class="example-element-detail"
+                [@detailExpand]="element == expandedElement ? 'expanded' : 'collapsed'">
+                <div class="content">
+                  <div class="row">
+                    <div class="col-sm-3 col-6" *ngIf="element.bank">
+                      <label for="">Banco:&nbsp;</label>
+                      <span>{{ element['bank']?.bank }} </span>
+                    </div>
+                    <div class="col-sm-3 col-6" *ngIf="element.bank">
+                      <label for="">Tipo de Cuenta:&nbsp;</label>
+                      <span>{{ element['bank']?.accounType === 0 ? 'Ahorros' : 'Corriente' }} </span>
+                    </div>
+                    <div class="col-sm-3 col-6" *ngIf="element.bank">
+                      <label for="">Numero de Cuenta:&nbsp;</label>
+                      <span>{{ element['bank']?.['numeroCuenta'] }} </span>
+                    </div>
+                    <div class="col-sm-3 col-6" *ngIf="element.bank">
+                      <label for="">Numero de Cedula:&nbsp;</label>
+                      <span>{{ element['bank']?.['numberCC'] }} </span>
+                    </div>
+                    <div class="col-sm-3 col-6" *ngIf="element.bank">
+                      <label for="">Numero de Celular:&nbsp;</label>
+                      <span>{{ element['bank']?.['numberPhone'] }} </span>
+                    </div>
+                    <div class="col-sm-3 col-6" *ngIf="element.bank">
+                      <label for="">Nombre Titular de la Cuenta:&nbsp;</label>
+                      <span>{{ element['bank']?.['numberPhone'] }} </span>
+                    </div>
+                  </div>
+                </div>
+            </div>
+          </td>
+        </ng-container>
+
+        <tr mat-header-row *matHeaderRowDef="columnsToDisplay"></tr>
+        <tr mat-row *matRowDef="let element; columns: columnsToDisplay;"
+            class="example-element-row"
+            [class.example-expanded-row]="expandedElement === element"
+            (click)="expandedElement = expandedElement === element ? null : element">
+        </tr>
+        <tr mat-row *matRowDef="let row; columns: ['expandedDetail']" class="example-detail-row"></tr>
+      </table>
+      <mat-paginator [length]="resultsLength" [pageSize]="30"></mat-paginator>
+    </div>
+  </div>
+</div>

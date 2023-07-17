@@ -21,11 +21,9 @@ export class CreateBankComponent implements OnInit {
     state: 0,
     accounType: 0
   };
-  listCategorias:any = [];
   id:any;
   titulo:string = "Crear";
 
-  listCategoria:any = [];
   selectable = true;
   removable = true;
   addOnBlur = true;
@@ -40,7 +38,7 @@ export class CreateBankComponent implements OnInit {
     public dialogRef: MatDialogRef<FormcategoriasComponent>,
     @Inject(MAT_DIALOG_DATA) public datas: any,
     private _store: Store<STORAGES>,
-  ) { 
+  ) {
     this._store.subscribe((store: any) => {
       store = store.name;
       this.dataUser = store.user || {};
@@ -52,21 +50,7 @@ export class CreateBankComponent implements OnInit {
       this.data = _.clone(this.datas.datos);
       this.id = this.data.id;
       this.titulo = "Actualizar";
-      this.getBank();
     }else{this.id = ""}
-  }
-  
-  getBank(){
-    this._banco.get( { where: { cat_activo: 0, cat_padre: this.data.id }, limit: 1000 } ).subscribe((res:any)=>{
-      this.listCategoria =_.map( res.data , ( row )=>{ 
-        return {
-          id: row.id,
-          categoria: row.cat_nombre,
-          ... row
-        };
-      });
-      console.log( this.listCategoria, res )
-    }, error=> this._tools.presentToast("error servidor"));
   }
 
   submit(){
