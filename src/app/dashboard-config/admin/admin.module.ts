@@ -8,17 +8,24 @@ import { MyOwnCustomMaterialModule } from 'src/app/app.material.module';
 import { InfiniteScrollModule } from 'ngx-infinite-scroll';
 import { NgxCurrencyModule } from 'ngx-currency';
 import { MainConfigRoutingModule } from './main-routing.module';
+import { FormPaymentDetailComponent } from './form/form-payment-detail/form-payment-detail.component';
+import { AutocompleteLibModule } from 'angular-ng-autocomplete';
 
 
 
 @NgModule({
+  entryComponents:[
+    FormPaymentDetailComponent
+  ],
   declarations: [
     MainComponent,
-    VendorPaymentsComponent
+    VendorPaymentsComponent,
+    FormPaymentDetailComponent
   ],
   imports: [
     CommonModule,
     MainConfigRoutingModule,
+    AutocompleteLibModule,
     FormsModule,
     NgxSpinnerModule,
     MyOwnCustomMaterialModule,

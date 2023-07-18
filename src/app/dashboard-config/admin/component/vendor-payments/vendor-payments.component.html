@@ -1,7 +1,54 @@
 <div class="content">
   <div class="row">
     <div class="col-12">
-      filtros
+      <div class="content">
+        <div class="row">
+          <div class="form-group col-xs-5 col-sm-5 col-12">
+              <label>Buscar Bodega*</label>
+              <!-- <input type="text" class="form-control form-control-sm" [(ngModel)]="data.ciudadDestino"> -->
+              <ng-autocomplete [(ngModel)]="filter.user" [data]="listSeller" [searchKeyword]="keyword" placeHolder="Buscar Bodegero" autocomplete="off"
+                  historyIdentifier="listSeller" [itemTemplate]="itemTemplate" [notFoundTemplate]="notFoundTemplate" (selected)='handleSelectShop($event)' (inputChanged)='onChangeSearch($event)'>
+              </ng-autocomplete>
+
+              <ng-template #itemTemplate let-item>
+                  <div class="item">
+                      <!-- <img src="{{item.flag}}" height="25"> -->
+                      <span [innerHTML]="item.usu_usuario"></span> &nbsp; | &nbsp;
+                      <small>Nombe: {{ item.usu_nombre }}</small> &nbsp; | &nbsp;
+                      <small>--: {{ item.usu_email }}</small>
+                  </div>
+              </ng-template>
+
+              <ng-template #notFoundTemplate let-notFound>
+                  <div [innerHTML]="notFound"></div>
+              </ng-template>
+              <!--<div>
+                  <button type="button" class="btn btn-warning" (click)="precioRutulo( false )"> Consultar Valor del Flete </button>
+              </div>-->
+          </div>
+          <div class="form-group col-xs-5 col-sm-5 col-12">
+          <label for="exampleFormControlInput1">Estado de Retiro</label>
+          <select class="form-control" id="exampleFormControlSelect1" [(ngModel)]="filter.state" (change)="handleFilter()">
+              <option value="0">Procesando</option>
+              <option value="1">Exitoso</option>
+          </select>
+          </div>
+          <div class="form-group col-xs-5 col-sm-5 col-12">
+            <mat-form-field class="example-form-field" appearance="fill">
+              <mat-label>Buscar entre Fechas</mat-label>
+              <mat-date-range-input
+                [rangePicker]="campaignOnePicker"
+                [comparisonStart]="campaignTwo.value.start"
+                [comparisonEnd]="campaignTwo.value.end">
+                <input matStartDate placeholder="Start date" formControlName="start">
+                <input matEndDate placeholder="End date" formControlName="end">
+              </mat-date-range-input>
+              <mat-datepicker-toggle matSuffix [for]="campaignOnePicker"></mat-datepicker-toggle>
+              <mat-date-range-picker #campaignOnePicker></mat-date-range-picker>
+            </mat-form-field>
+          </div>
+        </div>
+      </div>
     </div>
     <div class="col-12">
       <table mat-table
@@ -9,7 +56,9 @@
        class="mat-elevation-z8">
         <ng-container matColumnDef="{{column}}" *ngFor="let column of columnsToDisplay">
           <th mat-header-cell *matHeaderCellDef> {{column}} </th>
-          <td mat-cell *matCellDef="let element">
+          <td mat-cell *matCellDef="let element"
+
+          >
               <span
                 *ngIf="( column !== 'Usuario' ) && ( column !== 'Email' ) &&
                 ( column !== 'Banco' ) && ( column !== 'Monto' ) && ( column !== 'FechaPago' ) &&
@@ -30,8 +79,11 @@
           <td mat-cell *matCellDef="let element" [attr.colspan]="columnsToDisplay.length">
             <div class="example-element-detail"
                 [@detailExpand]="element == expandedElement ? 'expanded' : 'collapsed'">
-                <div class="content">
+                <div class="content infoCenter">
                   <div class="row">
+                    <div class="col-sm-3 col-6">
+                      <button mat-raised-button color="primary" (click)="handlePago( element )">Pagar al Proveedor</button>
+                    </div>
                     <div class="col-sm-3 col-6" *ngIf="element.bank">
                       <label for="">Banco:&nbsp;</label>
                       <span>{{ element['bank']?.bank }} </span>
@@ -42,19 +94,30 @@
                     </div>
                     <div class="col-sm-3 col-6" *ngIf="element.bank">
                       <label for="">Numero de Cuenta:&nbsp;</label>
-                      <span>{{ element['bank']?.['numeroCuenta'] }} </span>
+                      <span>{{ element['bank']?.numeroCuenta }} </span>
                     </div>
                     <div class="col-sm-3 col-6" *ngIf="element.bank">
                       <label for="">Numero de Cedula:&nbsp;</label>
-                      <span>{{ element['bank']?.['numberCC'] }} </span>
+                      <span>{{ element['bank']?.numberCC }} </span>
                     </div>
                     <div class="col-sm-3 col-6" *ngIf="element.bank">
                       <label for="">Numero de Celular:&nbsp;</label>
-                      <span>{{ element['bank']?.['numberPhone'] }} </span>
+                      <span>{{ element['bank']?.numberPhone }} </span>
                     </div>
                     <div class="col-sm-3 col-6" *ngIf="element.bank">
                       <label for="">Nombre Titular de la Cuenta:&nbsp;</label>
-                      <span>{{ element['bank']?.['numberPhone'] }} </span>
+                      <span>{{ element['bank']?.numberPhone }} </span>
+                    </div>
+                    <div class="col-sm-3 col-6" *ngIf="element.amount">
+                      <label for="">Dinero a solicitar:&nbsp;</label>
+                      <span>{{ element['amount'] }} </span>
+                    </div>
+                    <div class="col-sm-3 col-6" *ngIf="element.state">
+                      <label for="">Estado del Retiro:&nbsp;</label>
+                      <span>{{ element['state'] }} </span>
+                    </div>
+                    <div class="col-sm-3 col-6" *ngIf="element.photo">
+                      <button mat-raised-button color="warn" (click)="handleEvidence( element )">Ver Foto de Evidencia</button>
                     </div>
                   </div>
                 </div>

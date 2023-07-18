@@ -1,7 +1,10 @@
 import { animate, state, style, transition, trigger } from '@angular/animations';
 import { Component, OnInit } from '@angular/core';
+import { MatDialog } from '@angular/material';
 import { ToolsService } from 'src/app/services/tools.service';
 import { SupplierAccountantService } from 'src/app/servicesComponents/supplier-accountant.service';
+import { FormPaymentDetailComponent } from '../../form/form-payment-detail/form-payment-detail.component';
+import { FormControl, FormGroup } from '@angular/forms';
 
 @Component({
   selector: 'app-vendor-payments',
@@ -26,14 +29,41 @@ export class VendorPaymentsComponent implements OnInit {
     },
     limit: 10,
     page: 0
-  }
+  };
+  filter:any ={
+
+  };
+  listSeller:any = [];
+  keyword:string;
+  campaignOne: FormGroup;
+  campaignTwo: FormGroup;
+
   constructor(
     private _supplier: SupplierAccountantService,
+    public dialog: MatDialog,
     public _tools: ToolsService
-  ) { }
+  ) {
+    const today = new Date();
+    const month = today.getMonth();
+    const year = today.getFullYear();
+
+    this.campaignOne = new FormGroup({
+      start: new FormControl(new Date(year, month, 13)),
+      end: new FormControl(new Date(year, month, 16))
+    });
+  }
 
   ngOnInit(): void {
     this.getSupplier();
+  }
+
+  handleSelectShop( ev:any ){
+    console.log("**EV", ev);
+  }
+
+  onChangeSearch( ev:any ){
+    console.log( ev )
+
   }
 
   getSupplier(){
@@ -46,6 +76,27 @@ export class VendorPaymentsComponent implements OnInit {
     });
   }
 
+  handleFilter(){
+
+  }
+
+  handlePago( item:itemRecaudoPR ){
+    const dialogRef = this.dialog.open(FormPaymentDetailComponent,{
+      data: {
+        list: [],
+        data: item
+      }
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      console.log(`Dialog result: ${result}`);
+    });
+  }
+
+  handleEvidence( item:itemRecaudoPR ){
+    this._tools.processPhoto( {  photo: item.photo, title: item.fechaPago } );
+  }
+
 }
 
 export interface itemRecaudoPR {
@@ -54,6 +105,7 @@ export interface itemRecaudoPR {
   amount: number;
   fechaPago: string;
   state: string;
+  photo: string;
 }
 
 const ELEMENT_DATA: itemRecaudoPR[] = [];

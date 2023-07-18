@@ -30,7 +30,8 @@ import {MatButtonModule,
    MatPaginatorModule,
    MatBottomSheetModule,
    MatMenuModule,
-   MatBadgeModule} from '@angular/material';
+   MatBadgeModule,
+   MatDatepickerModule} from '@angular/material';
    import {ScrollDispatchModule} from '@angular/cdk/scrolling';
    import {MatListModule} from '@angular/material/list';
 import { NgModule } from '@angular/core';
@@ -74,6 +75,7 @@ import {DragDropModule} from '@angular/cdk/drag-drop';
     MatTabsModule,
     MatSelectModule,
     ScrollDispatchModule,
+    MatDatepickerModule,
     DragDropModule
   ],
   exports: [
@@ -110,6 +112,7 @@ import {DragDropModule} from '@angular/cdk/drag-drop';
     MatPaginatorModule,
     MatBottomSheetModule,
     MatTabsModule,
+    MatDatepickerModule,
     MatSelectModule,
     ScrollDispatchModule,
     DragDropModule
