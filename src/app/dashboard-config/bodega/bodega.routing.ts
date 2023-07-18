@@ -1,10 +1,10 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { IndexComponent } from './component/index/index.component';
-import { MainComponent } from '../main.component';
 import { StoreComponent } from './component/store/store.component';
 import { MyProductsComponent } from './component/my-products/my-products.component';
 import { ProductsComponent } from './component/products/products.component';
+import { MainComponent } from './component/main/main.component';
 
 const dashboardRoutes: Routes = [
  {

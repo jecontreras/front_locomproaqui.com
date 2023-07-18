@@ -32,7 +32,7 @@ const dashboardRoutes: Routes = [
    component: MainComponent,
    canActivate: [AuthService],
    children: [
-     {path: '', redirectTo: 'categorias', pathMatch: 'full'},
+     {path: '', redirectTo: 'pedidos', pathMatch: 'full'},
      {path: 'categorias', component: CategoriasComponent},
      {path: 'provedores', component: ProvedoresComponent},
      {path: 'productos', component: ProductosComponent},
@@ -62,7 +62,21 @@ const dashboardRoutes: Routes = [
           loadChildren: () => import('./bodega/bodega.module').then(m => m.BodegaModule)
         }]
       },
-     {path: '**', redirectTo: 'categorias', pathMatch: 'full'}
+      {
+        path: 'bank',
+        children: [{
+          path: '',
+          loadChildren: () => import('./bank/bank.module').then(m => m.BankModule)
+        }]
+      },
+      {
+        path: 'adminF',
+        children: [{
+          path: '',
+          loadChildren: () => import('./admin/admin.module').then(m => m.AdminModule )
+        }]
+      },
+     {path: '**', redirectTo: 'pedidos', pathMatch: 'full'}
    ]
   }
 ];

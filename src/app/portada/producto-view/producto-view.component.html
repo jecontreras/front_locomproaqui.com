@@ -7,8 +7,8 @@
       <div class="aa-catg-head-banner-content">
         <h2>{{ data.pro_nombre }}</h2>
         <ol class="breadcrumb">
-          <li><a href="#" [routerLink]="[ '/portada' ]">Inicio</a></li>
-          <li><a href="#" [routerLink]="[ '/portada/productos' ]">Productos</a></li>
+          <li><a href="#" [routerLink]="[ '/front' ]">Inicio</a></li>
+          <li><a href="#" [routerLink]="[ '/front/productos' ]">Productos</a></li>
           <li class="active">{{ data.pro_nombre }}</li>
         </ol>
       </div>
@@ -33,7 +33,7 @@
                       <div class="image-resize img">
                         <img [src]="viewsImagen" data-srcset="{{viewsImagen}}?auto=compress,format&optimize=medium&fit=clip&w=100%&h=auto 1x"
                           alt data-sizes=auto data-src="{{viewsImagen}}?auto=compress,format&optimize=medium&fit=clip&w=100%&h=auto"
-                          class=lazyload style="object-fit: contain;" width=100% height=auto>
+                          class=lazyload style="object-fit: contain; height: 445px;" width=100% height=auto>
                       </div>
                       <!--<lib-ngx-image-zoom [thumbImage]=viewsImagen [fullImage]=viewsImagen [magnification]="1"
                         [enableScrollZoom]="true" [enableLens]="true" [lensWidth]="200" [lensHeight]="200">
@@ -42,8 +42,8 @@
                   </div>
                 </div>
                 <div class="row">
-                  <div class="col-2 pointer" *ngFor="let item of listGaleria" (click)="verImagen( item )">
-                    <img [src]="item.pri_imagen" alt="" style="width: 120%; border-radius: 11px;">
+                  <div class="col-3 pointer" *ngFor="let item of listGaleria" (click)="verImagen( item )">
+                    <img [src]="item.pri_imagen" alt="" style="width: 120%;">
                   </div>
                 </div>
               </div>
@@ -77,14 +77,14 @@
                       <a href="#" class="aa-color-black"></a>
                       <a href="#" class="aa-color-white"></a>-->
                 </div>
-                  <div class="aa-prod-quantity">
+                  <!--<div class="aa-prod-quantity">
                     <h4>Cantidad</h4>
                     <input class="form-control form-control-sm" type="number" placeholder=".form-control-sm" [(ngModel)]="pedido.cantidad">
                     <p class="aa-prod-category">
                       Categoria: <a class="pointer" (click)="categoriasVer()">{{ data['pro_categoria']?.cat_nombre
                         }}</a>
                     </p>
-                  </div>
+                  </div>-->
                   <div class="aa-prod-view-bottom">
                     <!--<a (click)="AgregarCart()" class="aa-add-to-cart-btn pointer"><span
                         class="fa fa-shopping-cart"></span>Agregar al Carrito</a>-->
@@ -222,9 +222,9 @@
       <div class="col-12">
         <div class="d-flex justify-content-center">
           <div>
-            <a (click)="comprarArticulo( 1, false )" class="aa-add-to-cart-btn pointer"
+            <a (click)="handleAdviser()" class="aa-add-to-cart-btn pointer"
               style="    font-size: 210%; background: #008116; color: white; border-radius: 11px;"><span
-                class="fa fab fa-whatsapp"></span>Comprar y pagar en casa</a>
+                class="fa fab fa-whatsapp"></span>Chatear Con Un Asesor</a>
           </div>
         </div>
       </div>

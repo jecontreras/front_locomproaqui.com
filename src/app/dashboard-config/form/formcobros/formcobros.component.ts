@@ -18,7 +18,7 @@ import { FormlistventasComponent } from '../formlistventas/formlistventas.compon
   styleUrls: ['./formcobros.component.scss']
 })
 export class FormcobrosComponent implements OnInit {
-  
+
   files: File[] = [];
   list_files: any = [];
   data:any = {};
@@ -30,7 +30,7 @@ export class FormcobrosComponent implements OnInit {
   clone:any = {};
   disabledButton:boolean = false;
   opcionCurrencys: any = {};
-  
+
   constructor(
     public dialog: MatDialog,
     private _cobros: CobrosService,
@@ -41,7 +41,7 @@ export class FormcobrosComponent implements OnInit {
     private _user: UsuariosService,
     private _archivos: ArchivosService,
     private _notifacion: NotificacionesService
-  ) { 
+  ) {
 
     this._store.subscribe((store: any) => {
       store = store.name;
@@ -60,9 +60,9 @@ export class FormcobrosComponent implements OnInit {
       this.id = this.data.id;
       this.titulo = "Actualizar";
       if(this.data.cat_activo === 0) this.data.cat_activo = true;
-    }else{ 
-      this.id = ""; 
-      this.data.usu_clave_int = this.dataUser.id; 
+    }else{
+      this.id = "";
+      this.data.usu_clave_int = this.dataUser.id;
       this.data.cob_num_cedula = this.dataUser.usu_documento;
       this.data.cob_num_celular = this.dataUser.usu_telefono;
       this.data.cob_pais = 'colombia';
@@ -71,8 +71,8 @@ export class FormcobrosComponent implements OnInit {
   }
 
   getInfoUser(){
-    this._user.getInfo( { where:{ id:this.dataUser.id } } ).subscribe((res:any)=>{ 
-      this.data.cob_monto = res.data.porcobrado; 
+    this._user.getInfo( { where:{ id:this.dataUser.id } } ).subscribe((res:any)=>{
+      this.data.cob_monto = res.data.porcobrado;
       this.data.devoluciones = 0 /*res.data.devoluciones*/;
       //this.data.totalrecibir = ( res.data.porcobrado - res.data.devoluciones || 0 );
       this.data.totalrecibir = res.data.porcobrado;
@@ -83,7 +83,7 @@ export class FormcobrosComponent implements OnInit {
     //console.log(event, this.files);
     this.files=[event.addedFiles[0]]
   }
-  
+
   onRemove(event) {
     //console.log(event);
     this.files.splice(this.files.indexOf(event), 1);
@@ -102,16 +102,16 @@ export class FormcobrosComponent implements OnInit {
     },(error)=>{console.error(error); this._tools.presentToast("Error de servidor")});
 
   }
-  
+
   submit(){
     this.disabledButton = true;
-    if(this.id) { 
+    if(this.id) {
       if(!this.superSub) if(this.clone.ven_estado == 1) { this._tools.presentToast("Error no puedes ya editar el Cobro ya esta aprobada"); return false; }
       this.updates();
     }
     else this.guardar();
   }
-  
+
   async guardar(){
     let validador:any = await this.validador();
     if( !validador ) return this.disabledButton = false;
@@ -166,18 +166,18 @@ export class FormcobrosComponent implements OnInit {
     if(res.cob_pais === 'colombia'){
       mensaje = `https://wa.me/${ numero }?text=info del cliente ${ this.dataUser.usu_nombre } Pais ${ res.cob_pais } cedula ${ res.cob_num_cedula } telefono ${ this.dataUser.usu_telefono || '' }  fecha de retiro ${ moment(res.createdAt).format('DD-MM-YYYY HH:MM:SS') } Tipo de Banco ${ res.cob_metodo } Numero cuenta ${ res.cob_num_cuenta } Hola Servicio al cliente, como esta, cordial saludo. Sería tan amable de solicitarme este retiro monto $ ${ ( res.cob_monto || 0 ).toLocaleString(1) } COP gracias por su tiempo ...`;
     }else{
-      mensaje = `https://wa.me/${ numero }?text=info del cliente ${ this.dataUser.usu_nombre } 
+      mensaje = `https://wa.me/${ numero }?text=info del cliente ${ this.dataUser.usu_nombre }
       Pais ${ res.cob_pais }
       Numero Cedula Bancario ${ res.cob_numero_cedula || 'nulo' }
       Ciudad o corregimiento donde deseas retirar ${ res.cob_ciudad_corregimiento || 'nulo' }
       Nombre del banco Correctamente ${ res.cob_nombre_banco || 'nulo' }
       Numero de cuenta ${ res.cob_num_cuenta || 'nulo' }
-      cedula ${ res.cob_num_cedula } telefono ${ this.dataUser.usu_telefono || '' }  
-      fecha de retiro ${ moment(res.createdAt).format('DD-MM-YYYY HH:MM:SS') } 
-      Tipo de Banco ${ res.cob_metodo || 'nulo' } 
+      cedula ${ res.cob_num_cedula } telefono ${ this.dataUser.usu_telefono || '' }
+      fecha de retiro ${ moment(res.createdAt).format('DD-MM-YYYY HH:MM:SS') }
+      Tipo de Banco ${ res.cob_metodo || 'nulo' }
       Numero cuenta ${ res.cob_num_cuenta } Hola Servicio al cliente, como esta, cordial saludo. Sería tan amable de solicitarme este retiro monto $ ${ ( res.cob_monto || 0 ).toLocaleString(1) } COP gracias por su tiempo ...`;
     }
-    
+
     window.open(mensaje);
   }
 

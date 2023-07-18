@@ -1,0 +1,35 @@
+<h2 mat-dialog-title>{{ titulo }} Bancos</h2>
+<mat-dialog-content class="mat-typography">
+    <div class="form row">
+        <div class="form-group col-12">
+            <label for="exampleFormControlInput1">Estado de Retiro</label>
+                <select class="form-control" id="exampleFormControlSelect1" [(ngModel)]="data.state" (change)="handleSubmit()">
+                    <option value="0">Procesando</option>
+                    <option value="1">Exitoso</option>
+                </select>
+        </div>
+        <div class="form-group col-12" *ngIf="data.photo">
+            <div class="mx-auto" style="width: 200px;">
+                <img style="width: 100%;" [src]="data.photo" class="fotoCategoria">
+            </div>
+        </div>
+        <div class="form-group col-12">
+          <button class="contenedor-btn-file" style="    margin-left: 146px;">
+            <i class="material-icons">file_upload</i>
+            Seleccionar Foto de Evidencia
+            <label for="btn-file"></label>
+            <input type="file" id="btn-file" (change)="fileChangeEvent($event)">
+          </button>
+        </div>
+    </div>
+</mat-dialog-content>
+
+<mat-dialog-actions align="end">
+  <button mat-button mat-dialog-close color="warn">Cerrar</button>
+  <button mat-button cdkFocusInitial (click)="handleSubmit()" *ngIf="( this.id )" color="primary">
+      <span *ngIf="!id">Guardar Cambios</span>
+      <span *ngIf="id">Actulizar Cambios</span>
+  </button>
+</mat-dialog-actions>
+
+

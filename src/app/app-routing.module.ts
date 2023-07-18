@@ -12,7 +12,14 @@ const routes: Routes = [
     pathMatch: 'full'
   },
   {
-    path: 'portada',
+    path: 'front',
+    children: [{
+      path: '',
+      loadChildren: () => import('./portada/portada.module').then(m => m.PortadaModule)
+    }]
+  },
+  {
+    path: 'front/:cell',
     children: [{
       path: '',
       loadChildren: () => import('./portada/portada.module').then(m => m.PortadaModule)

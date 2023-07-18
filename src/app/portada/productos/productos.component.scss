@@ -10,7 +10,8 @@
   -moz-transition:all .9s ease; /* Firefox */
   -o-transition:all .9s ease; /* IE 9 */
   -ms-transition:all .9s ease; /* Opera */
-  width:100%;
+    width:100%;
+    height: 300px;
   }
   .img-contenedor:hover img {
   -webkit-transform:scale(1.25);

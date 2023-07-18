@@ -103,6 +103,25 @@ export class ToolsService {
     });
   }
 
+  processPhoto( data ){
+    Swal.fire({
+      imageUrl: data.photo || 'https://placeholder.pics/svg/300x1500',
+      imageHeight: 500,
+      imageAlt: data.title || 'A tall image'
+    })
+  }
+
+  openFotoAlert( foto:string ){
+    Swal.fire({
+      title: '',
+      text: '',
+      imageUrl: foto,
+      imageWidth: 400,
+      imageHeight: 200,
+      imageAlt: '',
+    })
+  }
+
   ProcessTime(text: any) {
     let timerInterval
     Swal.fire({

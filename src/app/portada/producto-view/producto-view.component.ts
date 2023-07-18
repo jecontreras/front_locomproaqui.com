@@ -179,11 +179,13 @@ export class ProductosViewComponent implements OnInit {
         let filtro = this.listGaleria.find( item => item.pri_imagen == row.foto );
         if( !filtro ) this.listGaleria.push( { id: this._tools.codigo(), pri_imagen: row.foto } );
       }
+      this.listGaleria.push( { id: this._tools.codigo(), pri_imagen: this.data.foto})
     }, error=> { console.error(error); this._tools.presentToast('Error de servidor'); });
   }
 
-  verImagen( img:string ){
-    this.viewsImagen = img;
+  verImagen( img:any ){
+    console.log("***",img)
+    this.viewsImagen = img.pri_imagen || this.data.foto;
   }
 
   async getProductos(){
@@ -389,6 +391,14 @@ export class ProductosViewComponent implements OnInit {
     for( let row of this.data.listTallas ) row.check1 = false;
     item.check1 = !item.check1;
 
+  }
+
+  handleAdviser(){
+    let number = this.userId.usu_telefono;
+    if(number.length == 10 ) number;
+    else number='57'+number;
+    let url = `https://wa.me/${ number }?text=${encodeURIComponent(`👉Hola buenas! 🎉 Me gustaria mas informacion gracias 👈`)}`;
+    window.open( url, "Mas Informacion", "width=640, height=480");
   }
 
 

@@ -178,7 +178,7 @@ export class VentasClienteComponent implements OnInit {
         ven_sw_eliminado: 1
       };
       if( obj.ven_estado == 1 || obj.ven_estado == 2 || obj.ven_estado == 3 || obj.ven_estado == 4 ) { this._tools.presentToast("Error no puedes Eliminar esta venta por tener datos de despachado"); return resolve( false ); }
-      this._ventas.update(data).subscribe((res:any)=>{
+      this._ventas.updateDBI(data).subscribe((res:any)=>{
         this.dataTable.dataRows = _.filter( this.dataTable.dataRows, ( row:any ) => row.id != obj.id );
         this._tools.presentToast("Eliminado")
         resolve( true );

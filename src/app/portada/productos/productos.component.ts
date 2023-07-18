@@ -28,7 +28,7 @@ export class ProductosComponent implements OnInit {
       //pro_categoria: { '!=' : [2,3,12] }
     },
     page: 0,
-    limit: 10
+    limit: 30
   };
 
   listCategorias:any = [];
@@ -105,7 +105,11 @@ export class ProductosComponent implements OnInit {
   }
 
   SeleccionCategoria( obj:any ){
-    this.query = { where:{ pro_activo: 0 }, page: 0, limit: 10 };
+    //this.query = { where:{ pro_activo: 0 }, page: 0, limit: 10 };
+    this.query.page = 0;
+    this.query.limit = 0;
+    this.query.where.pro_activo = 0;
+    this.query.where.idPrice = this.query.where.idPrice;
     if( obj.id ) this.query.where.pro_categoria = obj.id;
     this.listProductos = [];
     this.loader = true;

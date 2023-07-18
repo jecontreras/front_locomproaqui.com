@@ -102,6 +102,7 @@ export class MisDespachoComponent implements OnInit {
       (response: any) => {
         this.counts = response.count;
         console.log(response);
+        this.counts = response.count;
         this.dataTable.headerRow = this.dataTable.headerRow;
         this.dataTable.footerRow = this.dataTable.footerRow;
         this.dataTable.dataRows.push(... response.data);
