@@ -4,8 +4,8 @@ import { MatDialog } from '@angular/material';
 import { ToolsService } from 'src/app/services/tools.service';
 import { SupplierAccountantService } from 'src/app/servicesComponents/supplier-accountant.service';
 import { FormPaymentDetailComponent } from '../../form/form-payment-detail/form-payment-detail.component';
-import { FormControl, FormGroup } from '@angular/forms';
-
+import { UsuariosService } from 'src/app/servicesComponents/usuarios.service';
+import * as _ from 'lodash';
 @Component({
   selector: 'app-vendor-payments',
   templateUrl: './vendor-payments.component.html',
@@ -25,59 +25,75 @@ export class VendorPaymentsComponent implements OnInit {
   resultsLength:number = 0;
   querys:any ={
     where:{
-
+      state: 0
     },
-    limit: 10,
+    limit: 30,
     page: 0
   };
-  filter:any ={
-
-  };
+  filter:any ={ };
   listSeller:any = [];
   keyword:string;
-  campaignOne: FormGroup;
-  campaignTwo: FormGroup;
+
+  notscrolly:boolean=true;
+  notEmptyPost:boolean = true;
 
   constructor(
     private _supplier: SupplierAccountantService,
     public dialog: MatDialog,
-    public _tools: ToolsService
-  ) {
-    const today = new Date();
-    const month = today.getMonth();
-    const year = today.getFullYear();
+    public _tools: ToolsService,
+    private _user: UsuariosService
+  ) { }
 
-    this.campaignOne = new FormGroup({
-      start: new FormControl(new Date(year, month, 13)),
-      end: new FormControl(new Date(year, month, 16))
+  async ngOnInit() {
+    this.getSupplier();
+    this.listSeller = await this.getSeller();
+  }
+
+  getSeller(){
+    return new Promise( resolve =>{
+      this._user.getStore( { where: { rol:"proveedor" }, limit: 1000000000 } ).subscribe( res =>{
+        return resolve( res.data || [] );
+      });
     });
   }
 
-  ngOnInit(): void {
-    this.getSupplier();
-  }
-
   handleSelectShop( ev:any ){
-    console.log("**EV", ev);
+    //console.log("**EV", ev);
   }
 
   onChangeSearch( ev:any ){
-    console.log( ev )
-
+    //console.log( ev )
   }
+
+  async onScroll( ev:any ){
+    if (this.notscrolly && this.notEmptyPost) {
+        this.querys.page = ev.pageIndex;
+        this.querys.limit = ev.pageSize;
+        this.notscrolly = false;
+        await this.getSupplier();
+     }
+   }
 
   getSupplier(){
     return new Promise( resolve =>{
       this._supplier.get( this.querys ).subscribe( res =>{
-        this.resultsLength= res.count;
-        this.dataSource = res.data;
+        this.resultsLength = res.count;
+        this.dataSource = _.unionBy(this.dataSource || [], res.data, 'id');
+        if (res.data.length === 0 ) {
+          this.notEmptyPost =  false;
+        }
+        this.notscrolly = true;
       })
       resolve( true )
     });
   }
 
   handleFilter(){
-
+    console.log( this.filter )
+    if( this.filter.state ) this.querys.where.state = this.filter.state;
+    //if( this.filter.date ) this.querys.where.date = this.filter.date;
+    this.dataSource = [];
+    this.getSupplier();
   }
 
   handlePago( item:itemRecaudoPR ){

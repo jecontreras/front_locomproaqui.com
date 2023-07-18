@@ -105,7 +105,7 @@ font-size: 18px;
 text-align: center;
 }
 } </style><div class=headline-inner style="height: 70px;">
-<h2 style="text-align: center;"><span style="color: white; background-color: rgba(0, 0, 0, 0); font-size: 200%;">HOMBRE</span>
+<h2 style="text-align: center;"><span style="color: white; background-color: rgba(0, 0, 0, 0); font-size: 200%;">{{ data['pro_categoria']?.cat_nombre }}</span>
 </h2>
 </div>
 </div>
@@ -118,7 +118,7 @@ text-align: center;
 <div class=element-wrapper>
 <div class="img el-290431" style="margin: 5px 0px 0px;">
 <style> .el-290431 { align-items: center; } </style>
-<a href="#72788" target="_self">
+<a target="_self">
   <img  src="{{data.foto}}" data-srcset="{{data.foto}} 1x" alt data-sizes=auto data-src="{{data.foto}}" class="lazyload" width=100% height=auto>
 </a>
 </div>
@@ -126,7 +126,7 @@ text-align: center;
 <div class=element-wrapper>
 <div
 style="font-size: 178%; line-height: 1; color: rgb(0, 0, 0); margin: 0px; padding: 5px; background-color: white; text-shadow: transparent 0px 0px 0px;"><div class=headline-inner style="    text-align: center;">
-<h3><strong>ANTES <s>$230.000</s></strong></h3>
+<h3><strong>ANTES <s>$150.000</s></strong></h3>
 </div>
 </div>
 </div>
@@ -198,7 +198,7 @@ style="font-size: 178%; line-height: 1; border-style: none; border-width: medium
   <div class=element-wrapper *ngIf="id == '1'">
     <div class="img el-290431" style="margin: 5px 0px 0px;">
     <style> .el-290431 { align-items: center; } </style>
-    <a href="#72788" target="_self">
+    <a target="_self">
       <img  src="assets/imagenes/foto2.webp" data-srcset="assets/imagenes/foto2.webp 1x" alt data-sizes=auto data-src="assets/imagenes/foto2.webp" class="lazyload" width=100% height=auto>
     </a>
     </div>
@@ -206,8 +206,9 @@ style="font-size: 178%; line-height: 1; border-style: none; border-width: medium
 <div class=element-wrapper>
   <div class="img el-290431" style="margin: 5px 0px 0px;">
   <style> .el-290431 { align-items: center; } </style>
-  <a href="#72788" target="_self">
-    <img  src="assets/imagenes/talla1.webp" data-srcset="assets/imagenes/talla2.webp 1x" alt data-sizes=auto data-src="assets/imagenes/talla2.webp" class="lazyload" width=100% height=auto>
+  <a target="_self">
+    <img *ngIf="data['pro_categoria']?.id == 16"  src="assets/imagenes/talla1.webp" data-srcset="assets/imagenes/talla2.webp 1x" alt data-sizes=auto data-src="assets/imagenes/talla2.webp" class="lazyload" width=100% height=auto>
+    <img *ngIf="data['pro_categoria']?.id == 14"  src="assets/img/tallM.png" data-srcset="assets/img/tallM.png 1x" alt data-sizes=auto data-src="assets/img/tallM.png" class="lazyload" width=100% height=auto>
   </a>
   </div>
   </div>
@@ -216,8 +217,10 @@ style="font-size: 178%; line-height: 1; border-style: none; border-width: medium
 <div
 style="font-size: 178%; line-height: 1; color: white; margin: 10px 0px 0px; padding: 5px; text-shadow: transparent 0px 0px 0px;">
 <h3 style="text-align: center;"><strong class=ql-font-montserrat style="color: rgb(7, 7, 7);">TALLAS DISPONIBLES</strong></h3>
-<p style="text-align: center;"><span style="background-color: rgb(0, 0, 0); font-size: 24px;">37 | 38 | 39</span><span
+<p *ngIf="data['pro_categoria']?.id == 16" style="text-align: center;"><span style="background-color: rgb(0, 0, 0); font-size: 24px;">37 | 38 | 39</span><span
 style="background-color: rgb(0, 0, 0); font-size: 24px; color: rgb(255, 255, 255);"> | 40 | 41 | 42 | 43</span>
+<p *ngIf="data['pro_categoria']?.id == 14" style="text-align: center;"><span style="background-color: rgb(0, 0, 0); font-size: 24px;">6 | 8 | 10</span><span
+  style="background-color: rgb(0, 0, 0); font-size: 24px; color: rgb(255, 255, 255);"> | 11 | 12 | 14 | 16</span>
 <h3><br></h3>
 </div>
 </div>
@@ -276,11 +279,11 @@ align-items: center;
     </span>
   </a>
   <br>
-  <a target=_self (click)="buyArticulo( 2, true )" class=btn style="border-radius: 0px; margin: 30px 0px 20px; padding: 15px; background-color: rgb(0, 0, 0);">
+  <!--<a target=_self (click)="buyArticulo( 2, true )" class=btn style="border-radius: 0px; margin: 30px 0px 20px; padding: 15px; background-color: rgb(0, 0, 0);">
     <span class=btn-headline style="font-weight: bold; font-size: 20px; text-align: center;color: rgb(255, 42, 0);">⚠ LLEVA 2 PARES <br> POR {{ _formato.monedaChange( 3, 2, ( ( data.pro_uni_venta * 2 ) - 20000 ) || 0 ) }}
       DESCUENTO 18% ⚠
     </span>
-  </a>
+  </a>-->
   </div>
   </div>
 <div class=element-wrapper>
@@ -476,11 +479,11 @@ style="line-height: 1; margin: 10px 0px; padding: 5px; text-shadow: transparent 
           <img alt="" src="{{urlFoto}}?height=220&amp;width=220&amp;auto=webp&amp;fit=bounds">
       </div>
                   <span class="pl-nvalue">
-                      <span class="name">TENIS HOMBRE</span>
+                      <span class="name">{{ data['pro_categoria']?.cat_nombre }} </span>
                   <span class="top-tag" style="background: rgb(255, 0, 0);">EL MAS VENDIDO 🔥</span></span>
               </div>
               <div class="pl-price">
-                  <span class="pl-pvalue"><p style="text-align: center;"><s>$230.000</s></p><p style="text-align: center;"><strong style="color: rgb(230, 0, 0);">{{ _tools.monedaChange( 3, 2, data.pro_uni_venta ) }} </strong></p></span>
+                  <span class="pl-pvalue"><p style="text-align: center;"><s>$150.000</s></p><p style="text-align: center;"><strong style="color: rgb(230, 0, 0);">{{ _tools.monedaChange( 3, 2, data.pro_uni_venta ) }} </strong></p></span>
               </div>
           </label>
           <!--<div class="pl-variants">
@@ -529,9 +532,9 @@ style="line-height: 1; margin: 10px 0px; padding: 5px; text-shadow: transparent 
     </div>
     <div class="os-items" style="color: rgb(37, 42, 50); font-size: 14px;">
       <div class="os-row">
-                      <div class="os-name">TENIS HOMBRE<span class="os-voption">&nbsp;&nbsp; ● &nbsp;&nbsp;</span>
+                      <div class="os-name">{{ data.pro_nombre}} <span class="os-voption">&nbsp;&nbsp; ● &nbsp;&nbsp;</span>
                       </div>
-                      <div class="os-price"><p style="text-align: center;"><s>$230.000</s></p><p style="text-align: center;"><strong style="color: rgb(230, 0, 0);"> {{ _tools.monedaChange( 3, 2, data.pro_uni_venta ) }} </strong></p></div>
+                      <div class="os-price"><p style="text-align: center;"><s>$250.000</s></p><p style="text-align: center;"><strong style="color: rgb(230, 0, 0);"> {{ _tools.monedaChange( 3, 2, data.pro_uni_venta ) }} </strong></p></div>
                   </div>
                   <div class="os-row">
                       <div class="os-name">ENVIO NACIONAL
@@ -551,7 +554,7 @@ style="line-height: 1; margin: 10px 0px; padding: 5px; text-shadow: transparent 
       style="font-family: Montserrat; font-weight: bold; font-size: 14px; text-align: left;"><input [(ngModel)]="form.checkEnvio"
         type=checkbox name=product-id data-selected=true  value=ob-1><span class=ob-headline>
         <div>ENVÍO DE 4 -8 DÍAS HÁBILES</div>
-        <div>GRATIS</div>
+        <div>NACIONALES</div>
       </span></div>
     <div class=ob-content>
       <p><span class=ql-font-montserrat>Selecciona el envío para que tu orden pueda ser despachada!</span>
@@ -589,7 +592,7 @@ style="background-size: auto; background-repeat: no-repeat;">
       align-items: center;
     }</style>
 <a href="#" target=_self>
-<img [src]="tiendaInfo.logo" data-srcset="{{tiendaInfo.logo}} 1x" alt data-sizes=auto data-src="{{ tiendaInfo.logo }}" class=lazyload style="object-fit: contain;" width=192px height=68px>
+<img [src]="tiendaInfo.usu_imagen" data-srcset="{{tiendaInfo.usu_imagen}} 1x" alt data-sizes=auto data-src="{{ tiendaInfo.usu_imagen }}" class=lazyload style="object-fit: contain;" width=192px height=68px>
 </a>
 </div>
 </div>
@@ -599,7 +602,7 @@ font-size: 18px;
 text-align: center;
 } </style><div class=paragraph-inner>
 <p style="text-align: center;"><strong
-style="color: rgb(63, 69, 71); font-size: 14px; background-color: transparent;">© {{ data.pro_nombre }} ®</strong>
+style="color: rgb(63, 69, 71); font-size: 14px; background-color: transparent;">© {{ tiendaInfo.usu_nombre }} ®</strong>
 <p style="text-align: center;"><span
 style="color: rgb(63, 69, 71); font-size: 14px; background-color: transparent;">Todos los derechos
 reservados</span>
@@ -641,1030 +644,62 @@ align-items: flex-end;
 <style id=el-hover-styles></style>
 
   <!-- Apps Body -->
-
+  <div>
+    <div class="aa-product-review-area">
+      <h4>Detalles</h4>
+      <div class="row">
+        <div class="col-12">
+          <div class="d-flex justify-content-center">
+            <div>
+              <img src="./assets/img/envios.png" style="width: 320px;">
+              <img src="./assets/img/compra.jpg" style="width: 320px;">
+              <img src="./assets/img/comercio.png" style="width: 320px;">
+            </div>
+          </div>
+        </div>
+        <div class="col-12" *ngIf="data['pro_categoria']?.pro_categoria == 16">
+          <h5> 🚚 ENVIO NACIONALES Y PAGAS CUANDO RECIBES EL PRODUCTO 🚚
+            Nuestro tallaje es nacional, un poco pequeño sugerimos solicitar una talla más a la que te de en
+            la siguiente tabla
+          </h5>
+        </div>
+        <div class="col-12" *ngIf="data['pro_categoria']?.id == 16">
+          <img src="./assets/img/tallas.jpg" style="width: 320px;">
+        </div>
+      </div>
+    </div>
+    <div class="aa-product-review-area">
+      <h4>Comentarios</h4>
+      <ul class="aa-review-nav">
+        <li *ngFor="let item of data.listComentarios ">
+          <div class="media">
+            <div class="media-left">
+              <a href="#">
+                <img class="media-object" style="    width: 60px;" [src]="item.foto" alt="girl image">
+              </a>
+            </div>
+            <div class="media-body">
+              <h4 class="media-heading"><strong>{{ item.nombre }}</strong> - <span> {{ item.fecha }} </span>
+              </h4>
+              <div class="aa-product-rating">
+                <span class="fa fa-star"></span>
+                <span class="fa fa-star"></span>
+                <span class="fa fa-star"></span>
+                <span class="fa fa-star"></span>
+                <span class="fa fa-star-o"></span>
+              </div>
+              <p>{{ item.descripcion }}</p>
+            </div>
+          </div>
+        </li>
+      </ul>
+    </div>
+  </div>
 
   <!-- Popups -->
 
 
   <script src="./assets/js/core.min.js" type="application/javascript"></script>
-
-<div
-id="vitals-end-section"
-style="box-sizing: border-box; margin: 0px auto; max-width: 1200px; width: 1100px;"
->
-<div
-  class="vtl-pr-main-widget"
-  data-track-eid="2"
-  data-track-mid="21"
-  style="box-sizing: border-box; clear: both; margin: 4rem auto 2rem; max-width: 1200px; width: 1100px;"
->
-  <div class="vtl-pr--loose-layout" style="box-sizing: border-box;">
-    <div
-      class="vtl-pr-header vtl-pr--loose-layout"
-      style="align-items: center; box-sizing: border-box; display: flex; flex-direction: row; justify-content: center; margin-bottom: 32px;"
-    >
-      <div
-        class="vtl-pr__side-column"
-        style="box-sizing: border-box; flex: 0 0 auto; width: 250px;"
-      >
-        <div
-          class="vtl-pr-totals"
-          style="box-sizing: border-box; flex-grow: 0; line-height: 1; margin-bottom: 0px; text-align: center;"
-        >
-          <span
-            class="vtl-pr-totals__score"
-            style="box-sizing: border-box; display: block; font-size: 32px; font-weight: 700; margin-bottom: 8px;"
-            >4.82</span
-          >
-          <div
-            class="vtl-pr-totals__stars"
-            style="box-sizing: border-box; display: flex; justify-content: center; margin: 0px auto 8px; position: relative;"
-          >
-            <div
-              class="vtl-pr-stars-snippet vtl-pr-review-stars-snippet__stars"
-              style="box-sizing: border-box; height: 1em; min-width: 5em; position: relative; width: 5em;"
-            >
-              <div
-                class="vtl-pr-stars-snippet__layer vtl-pr-stars-snippet__back"
-                style="box-sizing: border-box; color: #cecece; display: flex; line-height: 1;"
-              >
-                <svg
-                  aria-hidden="true"
-                  class="star-solid_svg__svg-inline--fa star-solid_svg__fa-star star-solid_svg__fa-w-18"
-                  data-icon="star"
-                  data-prefix="fas"
-                  viewbox="0 0 576 512"
-                  xmlns="http://www.w3.org/2000/svg"
-                >
-                  <path
-                    d="M259.3 17.8 194 150.2 47.9 171.5c-26.2 3.8-36.7 36.1-17.7 54.6l105.7 103-25 145.5c-4.5 26.3 23.2 46 46.4 33.7L288 439.6l130.7 68.7c23.2 12.2 50.9-7.4 46.4-33.7l-25-145.5 105.7-103c19-18.5 8.5-50.8-17.7-54.6L382 150.2 316.7 17.8c-11.7-23.6-45.6-23.9-57.4 0z"
-                    fill="currentColor"
-                  ></path></svg
-                ><svg
-                  aria-hidden="true"
-                  class="star-solid_svg__svg-inline--fa star-solid_svg__fa-star star-solid_svg__fa-w-18"
-                  data-icon="star"
-                  data-prefix="fas"
-                  viewbox="0 0 576 512"
-                  xmlns="http://www.w3.org/2000/svg"
-                >
-                  <path
-                    d="M259.3 17.8 194 150.2 47.9 171.5c-26.2 3.8-36.7 36.1-17.7 54.6l105.7 103-25 145.5c-4.5 26.3 23.2 46 46.4 33.7L288 439.6l130.7 68.7c23.2 12.2 50.9-7.4 46.4-33.7l-25-145.5 105.7-103c19-18.5 8.5-50.8-17.7-54.6L382 150.2 316.7 17.8c-11.7-23.6-45.6-23.9-57.4 0z"
-                    fill="currentColor"
-                  ></path></svg
-                ><svg
-                  aria-hidden="true"
-                  class="star-solid_svg__svg-inline--fa star-solid_svg__fa-star star-solid_svg__fa-w-18"
-                  data-icon="star"
-                  data-prefix="fas"
-                  viewbox="0 0 576 512"
-                  xmlns="http://www.w3.org/2000/svg"
-                >
-                  <path
-                    d="M259.3 17.8 194 150.2 47.9 171.5c-26.2 3.8-36.7 36.1-17.7 54.6l105.7 103-25 145.5c-4.5 26.3 23.2 46 46.4 33.7L288 439.6l130.7 68.7c23.2 12.2 50.9-7.4 46.4-33.7l-25-145.5 105.7-103c19-18.5 8.5-50.8-17.7-54.6L382 150.2 316.7 17.8c-11.7-23.6-45.6-23.9-57.4 0z"
-                    fill="currentColor"
-                  ></path></svg
-                ><svg
-                  aria-hidden="true"
-                  class="star-solid_svg__svg-inline--fa star-solid_svg__fa-star star-solid_svg__fa-w-18"
-                  data-icon="star"
-                  data-prefix="fas"
-                  viewbox="0 0 576 512"
-                  xmlns="http://www.w3.org/2000/svg"
-                >
-                  <path
-                    d="M259.3 17.8 194 150.2 47.9 171.5c-26.2 3.8-36.7 36.1-17.7 54.6l105.7 103-25 145.5c-4.5 26.3 23.2 46 46.4 33.7L288 439.6l130.7 68.7c23.2 12.2 50.9-7.4 46.4-33.7l-25-145.5 105.7-103c19-18.5 8.5-50.8-17.7-54.6L382 150.2 316.7 17.8c-11.7-23.6-45.6-23.9-57.4 0z"
-                    fill="currentColor"
-                  ></path></svg
-                ><svg
-                  aria-hidden="true"
-                  class="star-solid_svg__svg-inline--fa star-solid_svg__fa-star star-solid_svg__fa-w-18"
-                  data-icon="star"
-                  data-prefix="fas"
-                  viewbox="0 0 576 512"
-                  xmlns="http://www.w3.org/2000/svg"
-                >
-                  <path
-                    d="M259.3 17.8 194 150.2 47.9 171.5c-26.2 3.8-36.7 36.1-17.7 54.6l105.7 103-25 145.5c-4.5 26.3 23.2 46 46.4 33.7L288 439.6l130.7 68.7c23.2 12.2 50.9-7.4 46.4-33.7l-25-145.5 105.7-103c19-18.5 8.5-50.8-17.7-54.6L382 150.2 316.7 17.8c-11.7-23.6-45.6-23.9-57.4 0z"
-                    fill="currentColor"
-                  ></path>
-                </svg>
-              </div>
-              <div
-                class="vtl-pr-stars-snippet__layer vtl-pr-stars-snippet__front"
-                style="box-sizing: border-box; color: #ffce07; line-height: 1; overflow: hidden; position: absolute; top: 0px; width: 77.1094px; z-index: 1;"
-              >
-                <div
-                  class="vtl-pr-stars-snippet__front-inner"
-                  style="box-sizing: border-box; display: flex; width: 5em;"
-                >
-                  <svg
-                    aria-hidden="true"
-                    class="star-solid_svg__svg-inline--fa star-solid_svg__fa-star star-solid_svg__fa-w-18"
-                    data-icon="star"
-                    data-prefix="fas"
-                    viewbox="0 0 576 512"
-                    xmlns="http://www.w3.org/2000/svg"
-                  >
-                    <path
-                      d="M259.3 17.8 194 150.2 47.9 171.5c-26.2 3.8-36.7 36.1-17.7 54.6l105.7 103-25 145.5c-4.5 26.3 23.2 46 46.4 33.7L288 439.6l130.7 68.7c23.2 12.2 50.9-7.4 46.4-33.7l-25-145.5 105.7-103c19-18.5 8.5-50.8-17.7-54.6L382 150.2 316.7 17.8c-11.7-23.6-45.6-23.9-57.4 0z"
-                      fill="currentColor"
-                    ></path></svg
-                  ><svg
-                    aria-hidden="true"
-                    class="star-solid_svg__svg-inline--fa star-solid_svg__fa-star star-solid_svg__fa-w-18"
-                    data-icon="star"
-                    data-prefix="fas"
-                    viewbox="0 0 576 512"
-                    xmlns="http://www.w3.org/2000/svg"
-                  >
-                    <path
-                      d="M259.3 17.8 194 150.2 47.9 171.5c-26.2 3.8-36.7 36.1-17.7 54.6l105.7 103-25 145.5c-4.5 26.3 23.2 46 46.4 33.7L288 439.6l130.7 68.7c23.2 12.2 50.9-7.4 46.4-33.7l-25-145.5 105.7-103c19-18.5 8.5-50.8-17.7-54.6L382 150.2 316.7 17.8c-11.7-23.6-45.6-23.9-57.4 0z"
-                      fill="currentColor"
-                    ></path></svg
-                  ><svg
-                    aria-hidden="true"
-                    class="star-solid_svg__svg-inline--fa star-solid_svg__fa-star star-solid_svg__fa-w-18"
-                    data-icon="star"
-                    data-prefix="fas"
-                    viewbox="0 0 576 512"
-                    xmlns="http://www.w3.org/2000/svg"
-                  >
-                    <path
-                      d="M259.3 17.8 194 150.2 47.9 171.5c-26.2 3.8-36.7 36.1-17.7 54.6l105.7 103-25 145.5c-4.5 26.3 23.2 46 46.4 33.7L288 439.6l130.7 68.7c23.2 12.2 50.9-7.4 46.4-33.7l-25-145.5 105.7-103c19-18.5 8.5-50.8-17.7-54.6L382 150.2 316.7 17.8c-11.7-23.6-45.6-23.9-57.4 0z"
-                      fill="currentColor"
-                    ></path></svg
-                  ><svg
-                    aria-hidden="true"
-                    class="star-solid_svg__svg-inline--fa star-solid_svg__fa-star star-solid_svg__fa-w-18"
-                    data-icon="star"
-                    data-prefix="fas"
-                    viewbox="0 0 576 512"
-                    xmlns="http://www.w3.org/2000/svg"
-                  >
-                    <path
-                      d="M259.3 17.8 194 150.2 47.9 171.5c-26.2 3.8-36.7 36.1-17.7 54.6l105.7 103-25 145.5c-4.5 26.3 23.2 46 46.4 33.7L288 439.6l130.7 68.7c23.2 12.2 50.9-7.4 46.4-33.7l-25-145.5 105.7-103c19-18.5 8.5-50.8-17.7-54.6L382 150.2 316.7 17.8c-11.7-23.6-45.6-23.9-57.4 0z"
-                      fill="currentColor"
-                    ></path></svg
-                  ><svg
-                    aria-hidden="true"
-                    class="star-solid_svg__svg-inline--fa star-solid_svg__fa-star star-solid_svg__fa-w-18"
-                    data-icon="star"
-                    data-prefix="fas"
-                    viewbox="0 0 576 512"
-                    xmlns="http://www.w3.org/2000/svg"
-                  >
-                    <path
-                      d="M259.3 17.8 194 150.2 47.9 171.5c-26.2 3.8-36.7 36.1-17.7 54.6l105.7 103-25 145.5c-4.5 26.3 23.2 46 46.4 33.7L288 439.6l130.7 68.7c23.2 12.2 50.9-7.4 46.4-33.7l-25-145.5 105.7-103c19-18.5 8.5-50.8-17.7-54.6L382 150.2 316.7 17.8c-11.7-23.6-45.6-23.9-57.4 0z"
-                      fill="currentColor"
-                    ></path>
-                  </svg>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div
-            class="vtl-pr-totals__reviews"
-            style="box-sizing: border-box; font-size: 0.9em;"
-          >
-            <span style="box-sizing: border-box;">11</span>&nbsp;<span
-              style="box-sizing: border-box;"
-              >opiniones</span
-            >
-          </div>
-        </div>
-      </div>
-      <div
-        class="vtl-pr-stats"
-        style="box-sizing: border-box; flex-grow: 1; margin-bottom: 0px; padding: 0px 12px;"
-      >
-        <div
-          class="vtl-pr-stats__bar-holder"
-          style="box-sizing: border-box; display: flex; flex-direction: column;"
-        >
-          <div
-            class="vtl-pr-stats__bar-item"
-            style="box-sizing: border-box; display: flex; line-height: 1; padding: 2px 0px; transition: all 0.1s ease-out 0s;"
-          >
-            <div
-              class="vtl-pr-stats__bar-stars"
-              style="align-items: center; box-sizing: border-box; display: flex; font-weight: 600; width: 30px;"
-            >
-              <span
-                style="box-sizing: border-box; display: inline-block; margin-right: 4px; text-align: center; width: 10px;"
-                >5</span
-              >
-              <div
-                class="vtl-pr-stars-snippet vtl-pr-review-stars-snippet__stars"
-                style="box-sizing: border-box; height: 1em; min-width: 1em; position: relative; width: 1em;"
-              >
-                <div
-                  class="vtl-pr-stars-snippet__layer vtl-pr-stars-snippet__back"
-                  style="box-sizing: border-box; color: #cecece; display: flex; line-height: 1;"
-                >
-                  <svg
-                    aria-hidden="true"
-                    class="star-solid_svg__svg-inline--fa star-solid_svg__fa-star star-solid_svg__fa-w-18"
-                    data-icon="star"
-                    data-prefix="fas"
-                    viewbox="0 0 576 512"
-                    xmlns="http://www.w3.org/2000/svg"
-                  >
-                    <path
-                      d="M259.3 17.8 194 150.2 47.9 171.5c-26.2 3.8-36.7 36.1-17.7 54.6l105.7 103-25 145.5c-4.5 26.3 23.2 46 46.4 33.7L288 439.6l130.7 68.7c23.2 12.2 50.9-7.4 46.4-33.7l-25-145.5 105.7-103c19-18.5 8.5-50.8-17.7-54.6L382 150.2 316.7 17.8c-11.7-23.6-45.6-23.9-57.4 0z"
-                      fill="currentColor"
-                    ></path>
-                  </svg>
-                </div>
-                <div
-                  class="vtl-pr-stars-snippet__layer vtl-pr-stars-snippet__front"
-                  style="box-sizing: border-box; color: #ffce07; line-height: 1; overflow: hidden; position: absolute; top: 0px; width: 16px; z-index: 1;"
-                >
-                  <div
-                    class="vtl-pr-stars-snippet__front-inner"
-                    style="box-sizing: border-box; display: flex; width: 1em;"
-                  >
-                    <svg
-                      aria-hidden="true"
-                      class="star-solid_svg__svg-inline--fa star-solid_svg__fa-star star-solid_svg__fa-w-18"
-                      data-icon="star"
-                      data-prefix="fas"
-                      viewbox="0 0 576 512"
-                      xmlns="http://www.w3.org/2000/svg"
-                    >
-                      <path
-                        d="M259.3 17.8 194 150.2 47.9 171.5c-26.2 3.8-36.7 36.1-17.7 54.6l105.7 103-25 145.5c-4.5 26.3 23.2 46 46.4 33.7L288 439.6l130.7 68.7c23.2 12.2 50.9-7.4 46.4-33.7l-25-145.5 105.7-103c19-18.5 8.5-50.8-17.7-54.6L382 150.2 316.7 17.8c-11.7-23.6-45.6-23.9-57.4 0z"
-                        fill="currentColor"
-                      ></path>
-                    </svg>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div
-              class="vtl-pr-stats__progress"
-              style="align-items: center; box-sizing: border-box; display: flex; flex: 1 1 0%; justify-content: center; margin: 0px 10px;"
-            >
-              <div
-                class="progress-bar__bg progress-bar__element"
-                style="background: rgb(221, 221, 221); border-radius: 13px; box-sizing: border-box; height: 10px; overflow: hidden; width: 491px;"
-              >
-                <div
-                  class="progress-bar__inner progress-bar__element"
-                  style="background: rgb(255, 206, 7); border-radius: 13px; box-sizing: border-box; height: 10px; width: 397.703px;"
-                ></div>
-              </div>
-            </div>
-            <div
-              class="vtl-pr-stats__percent"
-              style="box-sizing: border-box; font-size: 14px; width: 35px;"
-            >
-              <span
-                style="box-sizing: border-box; font-size: 0.8em; margin-left: 4px;"
-                >(9)</span
-              >
-            </div>
-          </div>
-          <div
-            class="vtl-pr-stats__bar-item"
-            style="box-sizing: border-box; display: flex; line-height: 1; padding: 2px 0px; transition: all 0.1s ease-out 0s;"
-          >
-            <div
-              class="vtl-pr-stats__bar-stars"
-              style="align-items: center; box-sizing: border-box; display: flex; font-weight: 600; width: 30px;"
-            >
-              <span
-                style="box-sizing: border-box; display: inline-block; margin-right: 4px; text-align: center; width: 10px;"
-                >4</span
-              >
-              <div
-                class="vtl-pr-stars-snippet vtl-pr-review-stars-snippet__stars"
-                style="box-sizing: border-box; height: 1em; min-width: 1em; position: relative; width: 1em;"
-              >
-                <div
-                  class="vtl-pr-stars-snippet__layer vtl-pr-stars-snippet__back"
-                  style="box-sizing: border-box; color: #cecece; display: flex; line-height: 1;"
-                >
-                  <svg
-                    aria-hidden="true"
-                    class="star-solid_svg__svg-inline--fa star-solid_svg__fa-star star-solid_svg__fa-w-18"
-                    data-icon="star"
-                    data-prefix="fas"
-                    viewbox="0 0 576 512"
-                    xmlns="http://www.w3.org/2000/svg"
-                  >
-                    <path
-                      d="M259.3 17.8 194 150.2 47.9 171.5c-26.2 3.8-36.7 36.1-17.7 54.6l105.7 103-25 145.5c-4.5 26.3 23.2 46 46.4 33.7L288 439.6l130.7 68.7c23.2 12.2 50.9-7.4 46.4-33.7l-25-145.5 105.7-103c19-18.5 8.5-50.8-17.7-54.6L382 150.2 316.7 17.8c-11.7-23.6-45.6-23.9-57.4 0z"
-                      fill="currentColor"
-                    ></path>
-                  </svg>
-                </div>
-                <div
-                  class="vtl-pr-stars-snippet__layer vtl-pr-stars-snippet__front"
-                  style="box-sizing: border-box; color: #ffce07; line-height: 1; overflow: hidden; position: absolute; top: 0px; width: 16px; z-index: 1;"
-                >
-                  <div
-                    class="vtl-pr-stars-snippet__front-inner"
-                    style="box-sizing: border-box; display: flex; width: 1em;"
-                  >
-                    <svg
-                      aria-hidden="true"
-                      class="star-solid_svg__svg-inline--fa star-solid_svg__fa-star star-solid_svg__fa-w-18"
-                      data-icon="star"
-                      data-prefix="fas"
-                      viewbox="0 0 576 512"
-                      xmlns="http://www.w3.org/2000/svg"
-                    >
-                      <path
-                        d="M259.3 17.8 194 150.2 47.9 171.5c-26.2 3.8-36.7 36.1-17.7 54.6l105.7 103-25 145.5c-4.5 26.3 23.2 46 46.4 33.7L288 439.6l130.7 68.7c23.2 12.2 50.9-7.4 46.4-33.7l-25-145.5 105.7-103c19-18.5 8.5-50.8-17.7-54.6L382 150.2 316.7 17.8c-11.7-23.6-45.6-23.9-57.4 0z"
-                        fill="currentColor"
-                      ></path>
-                    </svg>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div
-              class="vtl-pr-stats__progress"
-              style="align-items: center; box-sizing: border-box; display: flex; flex: 1 1 0%; justify-content: center; margin: 0px 10px;"
-            >
-              <div
-                class="progress-bar__bg progress-bar__element"
-                style="background: rgb(221, 221, 221); border-radius: 13px; box-sizing: border-box; height: 10px; overflow: hidden; width: 491px;"
-              >
-                <div
-                  class="progress-bar__inner progress-bar__element"
-                  style="background: rgb(255, 206, 7); border-radius: 13px; box-sizing: border-box; height: 10px; width: 88.375px;"
-                ></div>
-              </div>
-            </div>
-            <div
-              class="vtl-pr-stats__percent"
-              style="box-sizing: border-box; font-size: 14px; width: 35px;"
-            >
-              <span
-                style="box-sizing: border-box; font-size: 0.8em; margin-left: 4px;"
-                >(2)</span
-              >
-            </div>
-          </div>
-          <div
-            class="vtl-pr-stats__bar-item vtl-pr-stats__bar-item--disabled"
-            style="box-sizing: border-box; display: flex; line-height: 1; padding: 2px 0px; pointer-events: none; transition: all 0.1s ease-out 0s;"
-          >
-            <div
-              class="vtl-pr-stats__bar-stars"
-              style="align-items: center; box-sizing: border-box; display: flex; font-weight: 600; opacity: 0.55; width: 30px;"
-            >
-              <span
-                style="box-sizing: border-box; display: inline-block; margin-right: 4px; text-align: center; width: 10px;"
-                >3</span
-              >
-              <div
-                class="vtl-pr-stars-snippet vtl-pr-review-stars-snippet__stars"
-                style="box-sizing: border-box; height: 1em; min-width: 1em; position: relative; width: 1em;"
-              >
-                <div
-                  class="vtl-pr-stars-snippet__layer vtl-pr-stars-snippet__back"
-                  style="box-sizing: border-box; color: #cecece; display: flex; line-height: 1;"
-                >
-                  <svg
-                    aria-hidden="true"
-                    class="star-solid_svg__svg-inline--fa star-solid_svg__fa-star star-solid_svg__fa-w-18"
-                    data-icon="star"
-                    data-prefix="fas"
-                    viewbox="0 0 576 512"
-                    xmlns="http://www.w3.org/2000/svg"
-                  >
-                    <path
-                      d="M259.3 17.8 194 150.2 47.9 171.5c-26.2 3.8-36.7 36.1-17.7 54.6l105.7 103-25 145.5c-4.5 26.3 23.2 46 46.4 33.7L288 439.6l130.7 68.7c23.2 12.2 50.9-7.4 46.4-33.7l-25-145.5 105.7-103c19-18.5 8.5-50.8-17.7-54.6L382 150.2 316.7 17.8c-11.7-23.6-45.6-23.9-57.4 0z"
-                      fill="currentColor"
-                    ></path>
-                  </svg>
-                </div>
-                <div
-                  class="vtl-pr-stars-snippet__layer vtl-pr-stars-snippet__front"
-                  style="box-sizing: border-box; color: #ffce07; line-height: 1; overflow: hidden; position: absolute; top: 0px; width: 16px; z-index: 1;"
-                >
-                  <div
-                    class="vtl-pr-stars-snippet__front-inner"
-                    style="box-sizing: border-box; display: flex; width: 1em;"
-                  >
-                    <svg
-                      aria-hidden="true"
-                      class="star-solid_svg__svg-inline--fa star-solid_svg__fa-star star-solid_svg__fa-w-18"
-                      data-icon="star"
-                      data-prefix="fas"
-                      viewbox="0 0 576 512"
-                      xmlns="http://www.w3.org/2000/svg"
-                    >
-                      <path
-                        d="M259.3 17.8 194 150.2 47.9 171.5c-26.2 3.8-36.7 36.1-17.7 54.6l105.7 103-25 145.5c-4.5 26.3 23.2 46 46.4 33.7L288 439.6l130.7 68.7c23.2 12.2 50.9-7.4 46.4-33.7l-25-145.5 105.7-103c19-18.5 8.5-50.8-17.7-54.6L382 150.2 316.7 17.8c-11.7-23.6-45.6-23.9-57.4 0z"
-                        fill="currentColor"
-                      ></path>
-                    </svg>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div
-              class="vtl-pr-stats__progress"
-              style="align-items: center; box-sizing: border-box; display: flex; flex: 1 1 0%; justify-content: center; margin: 0px 10px; opacity: 0.55;"
-            >
-              <div
-                class="progress-bar__bg progress-bar__element"
-                style="background: rgb(221, 221, 221); border-radius: 13px; box-sizing: border-box; height: 10px; overflow: hidden; width: 491px;"
-              >
-                <div
-                  class="progress-bar__inner progress-bar__element"
-                  style="background: rgb(255, 206, 7); border-radius: 13px; box-sizing: border-box; height: 10px; width: 0px;"
-                ></div>
-              </div>
-            </div>
-            <div
-              class="vtl-pr-stats__percent"
-              style="box-sizing: border-box; font-size: 14px; width: 35px;"
-            >
-              <span
-                style="box-sizing: border-box; font-size: 0.8em; margin-left: 4px;"
-                >(0)</span
-              >
-            </div>
-          </div>
-          <div
-            class="vtl-pr-stats__bar-item vtl-pr-stats__bar-item--disabled"
-            style="box-sizing: border-box; display: flex; line-height: 1; padding: 2px 0px; pointer-events: none; transition: all 0.1s ease-out 0s;"
-          >
-            <div
-              class="vtl-pr-stats__bar-stars"
-              style="align-items: center; box-sizing: border-box; display: flex; font-weight: 600; opacity: 0.55; width: 30px;"
-            >
-              <span
-                style="box-sizing: border-box; display: inline-block; margin-right: 4px; text-align: center; width: 10px;"
-                >2</span
-              >
-              <div
-                class="vtl-pr-stars-snippet vtl-pr-review-stars-snippet__stars"
-                style="box-sizing: border-box; height: 1em; min-width: 1em; position: relative; width: 1em;"
-              >
-                <div
-                  class="vtl-pr-stars-snippet__layer vtl-pr-stars-snippet__back"
-                  style="box-sizing: border-box; color: #cecece; display: flex; line-height: 1;"
-                >
-                  <svg
-                    aria-hidden="true"
-                    class="star-solid_svg__svg-inline--fa star-solid_svg__fa-star star-solid_svg__fa-w-18"
-                    data-icon="star"
-                    data-prefix="fas"
-                    viewbox="0 0 576 512"
-                    xmlns="http://www.w3.org/2000/svg"
-                  >
-                    <path
-                      d="M259.3 17.8 194 150.2 47.9 171.5c-26.2 3.8-36.7 36.1-17.7 54.6l105.7 103-25 145.5c-4.5 26.3 23.2 46 46.4 33.7L288 439.6l130.7 68.7c23.2 12.2 50.9-7.4 46.4-33.7l-25-145.5 105.7-103c19-18.5 8.5-50.8-17.7-54.6L382 150.2 316.7 17.8c-11.7-23.6-45.6-23.9-57.4 0z"
-                      fill="currentColor"
-                    ></path>
-                  </svg>
-                </div>
-                <div
-                  class="vtl-pr-stars-snippet__layer vtl-pr-stars-snippet__front"
-                  style="box-sizing: border-box; color: #ffce07; line-height: 1; overflow: hidden; position: absolute; top: 0px; width: 16px; z-index: 1;"
-                >
-                  <div
-                    class="vtl-pr-stars-snippet__front-inner"
-                    style="box-sizing: border-box; display: flex; width: 1em;"
-                  >
-                    <svg
-                      aria-hidden="true"
-                      class="star-solid_svg__svg-inline--fa star-solid_svg__fa-star star-solid_svg__fa-w-18"
-                      data-icon="star"
-                      data-prefix="fas"
-                      viewbox="0 0 576 512"
-                      xmlns="http://www.w3.org/2000/svg"
-                    >
-                      <path
-                        d="M259.3 17.8 194 150.2 47.9 171.5c-26.2 3.8-36.7 36.1-17.7 54.6l105.7 103-25 145.5c-4.5 26.3 23.2 46 46.4 33.7L288 439.6l130.7 68.7c23.2 12.2 50.9-7.4 46.4-33.7l-25-145.5 105.7-103c19-18.5 8.5-50.8-17.7-54.6L382 150.2 316.7 17.8c-11.7-23.6-45.6-23.9-57.4 0z"
-                        fill="currentColor"
-                      ></path>
-                    </svg>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div
-              class="vtl-pr-stats__progress"
-              style="align-items: center; box-sizing: border-box; display: flex; flex: 1 1 0%; justify-content: center; margin: 0px 10px; opacity: 0.55;"
-            >
-              <div
-                class="progress-bar__bg progress-bar__element"
-                style="background: rgb(221, 221, 221); border-radius: 13px; box-sizing: border-box; height: 10px; overflow: hidden; width: 491px;"
-              >
-                <div
-                  class="progress-bar__inner progress-bar__element"
-                  style="background: rgb(255, 206, 7); border-radius: 13px; box-sizing: border-box; height: 10px; width: 0px;"
-                ></div>
-              </div>
-            </div>
-            <div
-              class="vtl-pr-stats__percent"
-              style="box-sizing: border-box; font-size: 14px; width: 35px;"
-            >
-              <span
-                style="box-sizing: border-box; font-size: 0.8em; margin-left: 4px;"
-                >(0)</span
-              >
-            </div>
-          </div>
-          <div
-            class="vtl-pr-stats__bar-item vtl-pr-stats__bar-item--disabled"
-            style="box-sizing: border-box; display: flex; line-height: 1; padding: 2px 0px; pointer-events: none; transition: all 0.1s ease-out 0s;"
-          >
-            <div
-              class="vtl-pr-stats__bar-stars"
-              style="align-items: center; box-sizing: border-box; display: flex; font-weight: 600; opacity: 0.55; width: 30px;"
-            >
-              <span
-                style="box-sizing: border-box; display: inline-block; margin-right: 4px; text-align: center; width: 10px;"
-                >1</span
-              >
-              <div
-                class="vtl-pr-stars-snippet vtl-pr-review-stars-snippet__stars"
-                style="box-sizing: border-box; height: 1em; min-width: 1em; position: relative; width: 1em;"
-              >
-                <div
-                  class="vtl-pr-stars-snippet__layer vtl-pr-stars-snippet__back"
-                  style="box-sizing: border-box; color: #cecece; display: flex; line-height: 1;"
-                >
-                  <svg
-                    aria-hidden="true"
-                    class="star-solid_svg__svg-inline--fa star-solid_svg__fa-star star-solid_svg__fa-w-18"
-                    data-icon="star"
-                    data-prefix="fas"
-                    viewbox="0 0 576 512"
-                    xmlns="http://www.w3.org/2000/svg"
-                  >
-                    <path
-                      d="M259.3 17.8 194 150.2 47.9 171.5c-26.2 3.8-36.7 36.1-17.7 54.6l105.7 103-25 145.5c-4.5 26.3 23.2 46 46.4 33.7L288 439.6l130.7 68.7c23.2 12.2 50.9-7.4 46.4-33.7l-25-145.5 105.7-103c19-18.5 8.5-50.8-17.7-54.6L382 150.2 316.7 17.8c-11.7-23.6-45.6-23.9-57.4 0z"
-                      fill="currentColor"
-                    ></path>
-                  </svg>
-                </div>
-                <div
-                  class="vtl-pr-stars-snippet__layer vtl-pr-stars-snippet__front"
-                  style="box-sizing: border-box; color: #ffce07; line-height: 1; overflow: hidden; position: absolute; top: 0px; width: 16px; z-index: 1;"
-                >
-                  <div
-                    class="vtl-pr-stars-snippet__front-inner"
-                    style="box-sizing: border-box; display: flex; width: 1em;"
-                  >
-                    <svg
-                      aria-hidden="true"
-                      class="star-solid_svg__svg-inline--fa star-solid_svg__fa-star star-solid_svg__fa-w-18"
-                      data-icon="star"
-                      data-prefix="fas"
-                      viewbox="0 0 576 512"
-                      xmlns="http://www.w3.org/2000/svg"
-                    >
-                      <path
-                        d="M259.3 17.8 194 150.2 47.9 171.5c-26.2 3.8-36.7 36.1-17.7 54.6l105.7 103-25 145.5c-4.5 26.3 23.2 46 46.4 33.7L288 439.6l130.7 68.7c23.2 12.2 50.9-7.4 46.4-33.7l-25-145.5 105.7-103c19-18.5 8.5-50.8-17.7-54.6L382 150.2 316.7 17.8c-11.7-23.6-45.6-23.9-57.4 0z"
-                        fill="currentColor"
-                      ></path>
-                    </svg>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div
-              class="vtl-pr-stats__progress"
-              style="align-items: center; box-sizing: border-box; display: flex; flex: 1 1 0%; justify-content: center; margin: 0px 10px; opacity: 0.55;"
-            >
-              <div
-                class="progress-bar__bg progress-bar__element"
-                style="background: rgb(221, 221, 221); border-radius: 13px; box-sizing: border-box; height: 10px; overflow: hidden; width: 491px;"
-              >
-                <div
-                  class="progress-bar__inner progress-bar__element"
-                  style="background: rgb(255, 206, 7); border-radius: 13px; box-sizing: border-box; height: 10px; width: 0px;"
-                ></div>
-              </div>
-            </div>
-            <div
-              class="vtl-pr-stats__percent"
-              style="box-sizing: border-box; font-size: 14px; width: 35px;"
-            >
-              <span
-                style="box-sizing: border-box; font-size: 0.8em; margin-left: 4px;"
-                >(0)</span
-              >
-            </div>
-          </div>
-        </div>
-      </div>
-      <div
-        class="vtl-pr__side-column"
-        style="box-sizing: border-box; flex: 0 0 auto; width: 250px;"
-      >
-        <div
-          class="vtl-pr-reviews__write"
-          style="align-items: center; box-sizing: border-box; display: flex; flex-direction: column; flex-grow: 0; font-weight: bold; justify-content: center; margin-bottom: 0px;"
-        >
-          <span style="box-sizing: border-box; line-height: 1;"
-            >Comparte tu experiencia</span
-          >
-          <div
-            class="vtl-pr-totals__stars"
-            style="box-sizing: border-box; display: flex; justify-content: center; margin: 8px 0px; position: relative;"
-          >
-            <div
-              class="vtl-pr-stars-snippet vtl-pr-review-stars-snippet__stars vtl-pr-stars-snippet--has-event"
-              style="box-sizing: border-box; height: 1em; min-width: 5em; position: relative; width: 5em;"
-            >
-              <div
-                class="vtl-pr-stars-snippet__layer vtl-pr-stars-snippet__back"
-                style="box-sizing: border-box; color: #cecece; display: flex; line-height: 1;"
-              >
-                <svg
-                  aria-hidden="true"
-                  class="star-solid_svg__svg-inline--fa star-solid_svg__fa-star star-solid_svg__fa-w-18"
-                  data-icon="star"
-                  data-prefix="fas"
-                  viewbox="0 0 576 512"
-                  xmlns="http://www.w3.org/2000/svg"
-                >
-                  <path
-                    d="M259.3 17.8 194 150.2 47.9 171.5c-26.2 3.8-36.7 36.1-17.7 54.6l105.7 103-25 145.5c-4.5 26.3 23.2 46 46.4 33.7L288 439.6l130.7 68.7c23.2 12.2 50.9-7.4 46.4-33.7l-25-145.5 105.7-103c19-18.5 8.5-50.8-17.7-54.6L382 150.2 316.7 17.8c-11.7-23.6-45.6-23.9-57.4 0z"
-                    fill="currentColor"
-                  ></path></svg
-                ><svg
-                  aria-hidden="true"
-                  class="star-solid_svg__svg-inline--fa star-solid_svg__fa-star star-solid_svg__fa-w-18"
-                  data-icon="star"
-                  data-prefix="fas"
-                  viewbox="0 0 576 512"
-                  xmlns="http://www.w3.org/2000/svg"
-                >
-                  <path
-                    d="M259.3 17.8 194 150.2 47.9 171.5c-26.2 3.8-36.7 36.1-17.7 54.6l105.7 103-25 145.5c-4.5 26.3 23.2 46 46.4 33.7L288 439.6l130.7 68.7c23.2 12.2 50.9-7.4 46.4-33.7l-25-145.5 105.7-103c19-18.5 8.5-50.8-17.7-54.6L382 150.2 316.7 17.8c-11.7-23.6-45.6-23.9-57.4 0z"
-                    fill="currentColor"
-                  ></path></svg
-                ><svg
-                  aria-hidden="true"
-                  class="star-solid_svg__svg-inline--fa star-solid_svg__fa-star star-solid_svg__fa-w-18"
-                  data-icon="star"
-                  data-prefix="fas"
-                  viewbox="0 0 576 512"
-                  xmlns="http://www.w3.org/2000/svg"
-                >
-                  <path
-                    d="M259.3 17.8 194 150.2 47.9 171.5c-26.2 3.8-36.7 36.1-17.7 54.6l105.7 103-25 145.5c-4.5 26.3 23.2 46 46.4 33.7L288 439.6l130.7 68.7c23.2 12.2 50.9-7.4 46.4-33.7l-25-145.5 105.7-103c19-18.5 8.5-50.8-17.7-54.6L382 150.2 316.7 17.8c-11.7-23.6-45.6-23.9-57.4 0z"
-                    fill="currentColor"
-                  ></path></svg
-                ><svg
-                  aria-hidden="true"
-                  class="star-solid_svg__svg-inline--fa star-solid_svg__fa-star star-solid_svg__fa-w-18"
-                  data-icon="star"
-                  data-prefix="fas"
-                  viewbox="0 0 576 512"
-                  xmlns="http://www.w3.org/2000/svg"
-                >
-                  <path
-                    d="M259.3 17.8 194 150.2 47.9 171.5c-26.2 3.8-36.7 36.1-17.7 54.6l105.7 103-25 145.5c-4.5 26.3 23.2 46 46.4 33.7L288 439.6l130.7 68.7c23.2 12.2 50.9-7.4 46.4-33.7l-25-145.5 105.7-103c19-18.5 8.5-50.8-17.7-54.6L382 150.2 316.7 17.8c-11.7-23.6-45.6-23.9-57.4 0z"
-                    fill="currentColor"
-                  ></path></svg
-                ><svg
-                  aria-hidden="true"
-                  class="star-solid_svg__svg-inline--fa star-solid_svg__fa-star star-solid_svg__fa-w-18"
-                  data-icon="star"
-                  data-prefix="fas"
-                  viewbox="0 0 576 512"
-                  xmlns="http://www.w3.org/2000/svg"
-                >
-                  <path
-                    d="M259.3 17.8 194 150.2 47.9 171.5c-26.2 3.8-36.7 36.1-17.7 54.6l105.7 103-25 145.5c-4.5 26.3 23.2 46 46.4 33.7L288 439.6l130.7 68.7c23.2 12.2 50.9-7.4 46.4-33.7l-25-145.5 105.7-103c19-18.5 8.5-50.8-17.7-54.6L382 150.2 316.7 17.8c-11.7-23.6-45.6-23.9-57.4 0z"
-                    fill="currentColor"
-                  ></path>
-                </svg>
-              </div>
-              <div
-                class="vtl-pr-stars-snippet__layer vtl-pr-stars-snippet__front"
-                style="box-sizing: border-box; color: #ffce07; line-height: 1; overflow: hidden; position: absolute; top: 0px; width: 80px; z-index: 1;"
-              >
-                <div
-                  class="vtl-pr-stars-snippet__front-inner"
-                  style="box-sizing: border-box; display: flex; width: 5em;"
-                >
-                  <svg
-                    aria-hidden="true"
-                    class="star-solid_svg__svg-inline--fa star-solid_svg__fa-star star-solid_svg__fa-w-18"
-                    data-icon="star"
-                    data-prefix="fas"
-                    viewbox="0 0 576 512"
-                    xmlns="http://www.w3.org/2000/svg"
-                  >
-                    <path
-                      d="M259.3 17.8 194 150.2 47.9 171.5c-26.2 3.8-36.7 36.1-17.7 54.6l105.7 103-25 145.5c-4.5 26.3 23.2 46 46.4 33.7L288 439.6l130.7 68.7c23.2 12.2 50.9-7.4 46.4-33.7l-25-145.5 105.7-103c19-18.5 8.5-50.8-17.7-54.6L382 150.2 316.7 17.8c-11.7-23.6-45.6-23.9-57.4 0z"
-                      fill="currentColor"
-                    ></path></svg
-                  ><svg
-                    aria-hidden="true"
-                    class="star-solid_svg__svg-inline--fa star-solid_svg__fa-star star-solid_svg__fa-w-18"
-                    data-icon="star"
-                    data-prefix="fas"
-                    viewbox="0 0 576 512"
-                    xmlns="http://www.w3.org/2000/svg"
-                  >
-                    <path
-                      d="M259.3 17.8 194 150.2 47.9 171.5c-26.2 3.8-36.7 36.1-17.7 54.6l105.7 103-25 145.5c-4.5 26.3 23.2 46 46.4 33.7L288 439.6l130.7 68.7c23.2 12.2 50.9-7.4 46.4-33.7l-25-145.5 105.7-103c19-18.5 8.5-50.8-17.7-54.6L382 150.2 316.7 17.8c-11.7-23.6-45.6-23.9-57.4 0z"
-                      fill="currentColor"
-                    ></path></svg
-                  ><svg
-                    aria-hidden="true"
-                    class="star-solid_svg__svg-inline--fa star-solid_svg__fa-star star-solid_svg__fa-w-18"
-                    data-icon="star"
-                    data-prefix="fas"
-                    viewbox="0 0 576 512"
-                    xmlns="http://www.w3.org/2000/svg"
-                  >
-                    <path
-                      d="M259.3 17.8 194 150.2 47.9 171.5c-26.2 3.8-36.7 36.1-17.7 54.6l105.7 103-25 145.5c-4.5 26.3 23.2 46 46.4 33.7L288 439.6l130.7 68.7c23.2 12.2 50.9-7.4 46.4-33.7l-25-145.5 105.7-103c19-18.5 8.5-50.8-17.7-54.6L382 150.2 316.7 17.8c-11.7-23.6-45.6-23.9-57.4 0z"
-                      fill="currentColor"
-                    ></path></svg
-                  ><svg
-                    aria-hidden="true"
-                    class="star-solid_svg__svg-inline--fa star-solid_svg__fa-star star-solid_svg__fa-w-18"
-                    data-icon="star"
-                    data-prefix="fas"
-                    viewbox="0 0 576 512"
-                    xmlns="http://www.w3.org/2000/svg"
-                  >
-                    <path
-                      d="M259.3 17.8 194 150.2 47.9 171.5c-26.2 3.8-36.7 36.1-17.7 54.6l105.7 103-25 145.5c-4.5 26.3 23.2 46 46.4 33.7L288 439.6l130.7 68.7c23.2 12.2 50.9-7.4 46.4-33.7l-25-145.5 105.7-103c19-18.5 8.5-50.8-17.7-54.6L382 150.2 316.7 17.8c-11.7-23.6-45.6-23.9-57.4 0z"
-                      fill="currentColor"
-                    ></path></svg
-                  ><svg
-                    aria-hidden="true"
-                    class="star-solid_svg__svg-inline--fa star-solid_svg__fa-star star-solid_svg__fa-w-18"
-                    data-icon="star"
-                    data-prefix="fas"
-                    viewbox="0 0 576 512"
-                    xmlns="http://www.w3.org/2000/svg"
-                  >
-                    <path
-                      d="M259.3 17.8 194 150.2 47.9 171.5c-26.2 3.8-36.7 36.1-17.7 54.6l105.7 103-25 145.5c-4.5 26.3 23.2 46 46.4 33.7L288 439.6l130.7 68.7c23.2 12.2 50.9-7.4 46.4-33.7l-25-145.5 105.7-103c19-18.5 8.5-50.8-17.7-54.6L382 150.2 316.7 17.8c-11.7-23.6-45.6-23.9-57.4 0z"
-                      fill="currentColor"
-                    ></path>
-                  </svg>
-                </div>
-              </div>
-            </div>
-          </div>
-          <button
-            style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); background: rgb(0, 0, 0); border-color: initial; border-radius: 4px; border-style: none; border-width: initial; color: white; cursor: pointer; line-height: 36px; min-width: 64px; outline: none; padding: 0px 32px; position: relative; vertical-align: baseline; width: auto;"
-            type="button"
-          >
-            <span style="box-sizing: border-box;" (click)="activates()"
-              >Escribe una opinión</span
-            >
-          </button>
-        </div>
-      </div>
-    </div>
-    <div class="cantainer" *ngIf="view">
-      <h4>Agregar Testimonios</h4>
-      <div class="aa-your-rating">
-        <p>Agregar Nota</p>
-        <a class="pointer"><span class="fa fa-star-o"></span></a>
-        <a class="pointer"><span class="fa fa-star-o"></span></a>
-        <a class="pointer"><span class="fa fa-star-o"></span></a>
-        <a class="pointer"><span class="fa fa-star-o"></span></a>
-        <a class="pointer"><span class="fa fa-star-o"></span></a>
-      </div>
-      <!-- review form -->
-      <div action="" class="aa-review-form">
-        <div class="form-group">
-          <label for="message">Ranking</label>
-          <textarea class="form-control" rows="3" [(ngModel)]="comentario.descripcion"></textarea>
-        </div>
-        <div class="form-group">
-          <label for="name">Nombre</label>
-          <input type="text" class="form-control" [(ngModel)]="comentario.nombre" placeholder="Name">
-        </div>
-        <div class="form-group">
-          <label for="email">Email</label>
-          <input type="email" class="form-control" [(ngModel)]="comentario.email"
-            placeholder="example@gmail.com">
-        </div>
-
-        <button type="submit" class="btn btn-default aa-review-submit"
-          (click)="guardarComentario()">Enviar</button>
-      </div>
-    </div>
-    <div
-      class="vtl-pr-main-widget__cards"
-      style="box-sizing: border-box; margin: 0px auto;"
-    >
-      <div class="row">
-        <div class="col-6 col-sm-3"
-          *ngFor="let item of listComentario"
-        >
-        <div
-          class="vtl-pr-review-card"
-          style="box-sizing: border-box; padding: 0px;"
-        >
-          <div
-            class="vtl-pr-review-card__content"
-            style="background-color: white; border-radius: 4px; box-shadow: rgb(234, 234, 234) 1px 1px 5px; box-sizing: border-box; break-inside: avoid; display: inline-block; font-size: 14px; height: auto; line-height: 1.4; padding: 0px; position: relative; transition: transform 0.1s ease-in 0s, box-shadow 0.1s ease 0s; width: 263px;"
-          >
-            <div
-              class="vtl-pr-review-card__details"
-              style="align-items: flex-start; box-sizing: border-box; display: flex; flex-direction: column; padding: 10px;"
-            >
-              <div
-                class="vtl-pr-review-card__review-author-wrapper"
-                style="align-items: center; box-sizing: border-box; color: #222222; display: flex; margin-bottom: 4px; width: 243px;"
-              >
-                <span
-                  class="vtl-pr-review-card__review-author"
-                  style="box-sizing: border-box; display: block; font-size: 16px; font-weight: 600; line-height: 1; overflow: hidden; text-overflow: ellipsis;"
-                  ><span style="box-sizing: border-box;"
-                    >{{ item.nombre }}</span
-                  ></span
-                >
-              </div>
-              <div
-                class="vtl-pr-review-card__stars-snippet"
-                style="box-sizing: border-box; margin-bottom: 10px;"
-              >
-                <div
-                  class="vtl-pr-review-stars-snippet"
-                  style="align-items: center; box-sizing: border-box; display: flex; font-size: 19px; justify-content: flex-start; line-height: 1em; margin-bottom: 0px; margin-top: 0px;"
-                >
-                  <div
-                    class="vtl-pr-stars-snippet vtl-pr-review-stars-snippet__stars"
-                    style="box-sizing: border-box; height: 1em; min-width: 5em; position: relative; width: 5em;"
-                  >
-                    <div
-                      class="vtl-pr-stars-snippet__layer vtl-pr-stars-snippet__back"
-                      style="box-sizing: border-box; color: #cecece; display: flex; line-height: 1;"
-                    >
-                      <svg
-                        aria-hidden="true"
-                        class="star-solid_svg__svg-inline--fa star-solid_svg__fa-star star-solid_svg__fa-w-18"
-                        data-icon="star"
-                        data-prefix="fas"
-                        viewbox="0 0 576 512"
-                        xmlns="http://www.w3.org/2000/svg"
-                      >
-                        <path
-                          d="M259.3 17.8 194 150.2 47.9 171.5c-26.2 3.8-36.7 36.1-17.7 54.6l105.7 103-25 145.5c-4.5 26.3 23.2 46 46.4 33.7L288 439.6l130.7 68.7c23.2 12.2 50.9-7.4 46.4-33.7l-25-145.5 105.7-103c19-18.5 8.5-50.8-17.7-54.6L382 150.2 316.7 17.8c-11.7-23.6-45.6-23.9-57.4 0z"
-                          fill="currentColor"
-                        ></path></svg
-                      ><svg
-                        aria-hidden="true"
-                        class="star-solid_svg__svg-inline--fa star-solid_svg__fa-star star-solid_svg__fa-w-18"
-                        data-icon="star"
-                        data-prefix="fas"
-                        viewbox="0 0 576 512"
-                        xmlns="http://www.w3.org/2000/svg"
-                      >
-                        <path
-                          d="M259.3 17.8 194 150.2 47.9 171.5c-26.2 3.8-36.7 36.1-17.7 54.6l105.7 103-25 145.5c-4.5 26.3 23.2 46 46.4 33.7L288 439.6l130.7 68.7c23.2 12.2 50.9-7.4 46.4-33.7l-25-145.5 105.7-103c19-18.5 8.5-50.8-17.7-54.6L382 150.2 316.7 17.8c-11.7-23.6-45.6-23.9-57.4 0z"
-                          fill="currentColor"
-                        ></path></svg
-                      ><svg
-                        aria-hidden="true"
-                        class="star-solid_svg__svg-inline--fa star-solid_svg__fa-star star-solid_svg__fa-w-18"
-                        data-icon="star"
-                        data-prefix="fas"
-                        viewbox="0 0 576 512"
-                        xmlns="http://www.w3.org/2000/svg"
-                      >
-                        <path
-                          d="M259.3 17.8 194 150.2 47.9 171.5c-26.2 3.8-36.7 36.1-17.7 54.6l105.7 103-25 145.5c-4.5 26.3 23.2 46 46.4 33.7L288 439.6l130.7 68.7c23.2 12.2 50.9-7.4 46.4-33.7l-25-145.5 105.7-103c19-18.5 8.5-50.8-17.7-54.6L382 150.2 316.7 17.8c-11.7-23.6-45.6-23.9-57.4 0z"
-                          fill="currentColor"
-                        ></path></svg
-                      ><svg
-                        aria-hidden="true"
-                        class="star-solid_svg__svg-inline--fa star-solid_svg__fa-star star-solid_svg__fa-w-18"
-                        data-icon="star"
-                        data-prefix="fas"
-                        viewbox="0 0 576 512"
-                        xmlns="http://www.w3.org/2000/svg"
-                      >
-                        <path
-                          d="M259.3 17.8 194 150.2 47.9 171.5c-26.2 3.8-36.7 36.1-17.7 54.6l105.7 103-25 145.5c-4.5 26.3 23.2 46 46.4 33.7L288 439.6l130.7 68.7c23.2 12.2 50.9-7.4 46.4-33.7l-25-145.5 105.7-103c19-18.5 8.5-50.8-17.7-54.6L382 150.2 316.7 17.8c-11.7-23.6-45.6-23.9-57.4 0z"
-                          fill="currentColor"
-                        ></path></svg
-                      ><svg
-                        aria-hidden="true"
-                        class="star-solid_svg__svg-inline--fa star-solid_svg__fa-star star-solid_svg__fa-w-18"
-                        data-icon="star"
-                        data-prefix="fas"
-                        viewbox="0 0 576 512"
-                        xmlns="http://www.w3.org/2000/svg"
-                      >
-                        <path
-                          d="M259.3 17.8 194 150.2 47.9 171.5c-26.2 3.8-36.7 36.1-17.7 54.6l105.7 103-25 145.5c-4.5 26.3 23.2 46 46.4 33.7L288 439.6l130.7 68.7c23.2 12.2 50.9-7.4 46.4-33.7l-25-145.5 105.7-103c19-18.5 8.5-50.8-17.7-54.6L382 150.2 316.7 17.8c-11.7-23.6-45.6-23.9-57.4 0z"
-                          fill="currentColor"
-                        ></path>
-                      </svg>
-                    </div>
-                    <div
-                      class="vtl-pr-stars-snippet__layer vtl-pr-stars-snippet__front"
-                      style="box-sizing: border-box; color: #ffce07; line-height: 1; overflow: hidden; position: absolute; top: 0px; width: 95px; z-index: 1;"
-                    >
-                      <div
-                        class="vtl-pr-stars-snippet__front-inner"
-                        style="box-sizing: border-box; display: flex; width: 5em;"
-                      >
-                        <svg
-                          aria-hidden="true"
-                          class="star-solid_svg__svg-inline--fa star-solid_svg__fa-star star-solid_svg__fa-w-18"
-                          data-icon="star"
-                          data-prefix="fas"
-                          viewbox="0 0 576 512"
-                          xmlns="http://www.w3.org/2000/svg"
-                        >
-                          <path
-                            d="M259.3 17.8 194 150.2 47.9 171.5c-26.2 3.8-36.7 36.1-17.7 54.6l105.7 103-25 145.5c-4.5 26.3 23.2 46 46.4 33.7L288 439.6l130.7 68.7c23.2 12.2 50.9-7.4 46.4-33.7l-25-145.5 105.7-103c19-18.5 8.5-50.8-17.7-54.6L382 150.2 316.7 17.8c-11.7-23.6-45.6-23.9-57.4 0z"
-                            fill="currentColor"
-                          ></path></svg
-                        ><svg
-                          aria-hidden="true"
-                          class="star-solid_svg__svg-inline--fa star-solid_svg__fa-star star-solid_svg__fa-w-18"
-                          data-icon="star"
-                          data-prefix="fas"
-                          viewbox="0 0 576 512"
-                          xmlns="http://www.w3.org/2000/svg"
-                        >
-                          <path
-                            d="M259.3 17.8 194 150.2 47.9 171.5c-26.2 3.8-36.7 36.1-17.7 54.6l105.7 103-25 145.5c-4.5 26.3 23.2 46 46.4 33.7L288 439.6l130.7 68.7c23.2 12.2 50.9-7.4 46.4-33.7l-25-145.5 105.7-103c19-18.5 8.5-50.8-17.7-54.6L382 150.2 316.7 17.8c-11.7-23.6-45.6-23.9-57.4 0z"
-                            fill="currentColor"
-                          ></path></svg
-                        ><svg
-                          aria-hidden="true"
-                          class="star-solid_svg__svg-inline--fa star-solid_svg__fa-star star-solid_svg__fa-w-18"
-                          data-icon="star"
-                          data-prefix="fas"
-                          viewbox="0 0 576 512"
-                          xmlns="http://www.w3.org/2000/svg"
-                        >
-                          <path
-                            d="M259.3 17.8 194 150.2 47.9 171.5c-26.2 3.8-36.7 36.1-17.7 54.6l105.7 103-25 145.5c-4.5 26.3 23.2 46 46.4 33.7L288 439.6l130.7 68.7c23.2 12.2 50.9-7.4 46.4-33.7l-25-145.5 105.7-103c19-18.5 8.5-50.8-17.7-54.6L382 150.2 316.7 17.8c-11.7-23.6-45.6-23.9-57.4 0z"
-                            fill="currentColor"
-                          ></path></svg
-                        ><svg
-                          aria-hidden="true"
-                          class="star-solid_svg__svg-inline--fa star-solid_svg__fa-star star-solid_svg__fa-w-18"
-                          data-icon="star"
-                          data-prefix="fas"
-                          viewbox="0 0 576 512"
-                          xmlns="http://www.w3.org/2000/svg"
-                        >
-                          <path
-                            d="M259.3 17.8 194 150.2 47.9 171.5c-26.2 3.8-36.7 36.1-17.7 54.6l105.7 103-25 145.5c-4.5 26.3 23.2 46 46.4 33.7L288 439.6l130.7 68.7c23.2 12.2 50.9-7.4 46.4-33.7l-25-145.5 105.7-103c19-18.5 8.5-50.8-17.7-54.6L382 150.2 316.7 17.8c-11.7-23.6-45.6-23.9-57.4 0z"
-                            fill="currentColor"
-                          ></path></svg
-                        ><svg
-                          aria-hidden="true"
-                          class="star-solid_svg__svg-inline--fa star-solid_svg__fa-star star-solid_svg__fa-w-18"
-                          data-icon="star"
-                          data-prefix="fas"
-                          viewbox="0 0 576 512"
-                          xmlns="http://www.w3.org/2000/svg"
-                        >
-                          <path
-                            d="M259.3 17.8 194 150.2 47.9 171.5c-26.2 3.8-36.7 36.1-17.7 54.6l105.7 103-25 145.5c-4.5 26.3 23.2 46 46.4 33.7L288 439.6l130.7 68.7c23.2 12.2 50.9-7.4 46.4-33.7l-25-145.5 105.7-103c19-18.5 8.5-50.8-17.7-54.6L382 150.2 316.7 17.8c-11.7-23.6-45.6-23.9-57.4 0z"
-                            fill="currentColor"
-                          ></path>
-                        </svg>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <div
-                class="vtl-pr-review-card__review-date"
-                style="box-sizing: border-box; color: #737373; font-size: 11px; line-height: 1; margin-bottom: 10px;"
-              >
-                <span style="box-sizing: border-box;"
-                  >{{ item.fecha }}</span
-                >
-              </div>
-              <div
-                class="vtl-pr-review-card__review-text"
-                style="box-sizing: border-box; color: #5e5e5e; line-height: 19px; white-space: pre-wrap; width: 243px; word-break: break-word;"
-              >
-                {{ item.descripcion }}
-              </div>
-            </div>
-          </div>
-        </div>
-        </div>
-      </div>
-    </div>
-  </div>
-</div>
-</div>
 <footer #nav style="position: fixed; top: 87%; left: auto;">
   <div class="container">
     <div class="row">
