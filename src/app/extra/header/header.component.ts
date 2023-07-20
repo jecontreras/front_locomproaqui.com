@@ -430,7 +430,7 @@ export class HeaderComponent implements OnInit {
       {
         icons: 'local_grocery_store',
         nombre: 'Autorizar Despacho',
-        disable: ( this.rolUser !== 'visitante' ) && ( this.rolUser != 'proveedor' ),
+        disable: ( this.rolUser !== 'visitante' ) && ( this.rolUser != 'proveedor' ) && ( this.rolUser != 'administrador' ),
         url: '/config/ventasPosibles',
         submenus:[]
       },

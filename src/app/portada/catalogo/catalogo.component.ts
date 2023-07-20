@@ -12,6 +12,8 @@ import { MatDialog, MatSnackBar } from '@angular/material';
 import { setTimeout } from 'timers';
 import { ChecktDialogComponent } from '../checkt-dialog/checkt-dialog.component';
 import { FormatosService } from 'src/app/services/formatos.service';
+import { UsuariosService } from 'src/app/servicesComponents/usuarios.service';
+import { UserCabezaAction } from 'src/app/redux/app.actions';
 @Component({
   selector: 'app-catalogo',
   templateUrl: './catalogo.component.html',
@@ -55,38 +57,47 @@ export class CatalogoComponent implements OnInit {
   comentario:any = {};
   view:boolean = false;
   listComentario:any = [{
+    foto: './assets/noimagen.jpg',
     nombre: "Ainhoa Pabón",
     fecha: "2023-05-05",
     descripcion: " Ordenado para mi esposo, esta muy felices, suave, el tamaño es correcto, hecho con cuidado, embalado de forma segura, la entrega es rápida"
   },{
+    foto: './assets/noimagen.jpg',
     nombre: "Rayan Ybarra",
     fecha: "2023-05-04",
     descripcion: " Lo que necesito gracias,"
   },{
+    foto: './assets/noimagen.jpg',
     nombre: "Alejandro Almaráz",
     fecha: "2023-04-06",
     descripcion: " Excelente"
   },{
+    foto: './assets/noimagen.jpg',
     nombre: "Rosa Pérez",
     fecha: "2022-11-26",
     descripcion: "Me gustó el material bueno y llegué a tiempo"
   },{
+    foto: './assets/noimagen.jpg',
     nombre: "Dario Soria",
     fecha: "2023-04-27",
     descripcion: "Super rápido, buen producto,"
   },{
+    foto: './assets/noimagen.jpg',
     nombre: "Arnau Pardo",
     fecha: "2023-03-29",
     descripcion: "excelentes Calzado, tenia duda en pedirlas pero están super tal y cual en la imagen, las recomiendo....."
   },{
+    foto: './assets/noimagen.jpg',
     nombre: "María Pilar Viera",
     fecha: "2022-11-21",
     descripcion: "Es realmente hermoso me gusta"
   },{
+    foto: './assets/noimagen.jpg',
     nombre: "Eduardo Alaniz",
     fecha: "2023-04-17",
     descripcion: "lindas"
   },{
+    foto: './assets/noimagen.jpg',
     nombre: "Julia Melgar",
     fecha: "2023-03-16",
     descripcion: "Son bellos"
@@ -94,6 +105,15 @@ export class CatalogoComponent implements OnInit {
 
   durationInSeconds = 5;
   pedido:any = { cantidad:1 };
+  number:any;
+  dataUser:any = {};
+  query:any = {
+    where:{
+
+    },
+    limit: 1,
+    page: 0
+  }
 
   constructor(
     private activate: ActivatedRoute,
@@ -104,6 +124,7 @@ export class CatalogoComponent implements OnInit {
     public dialog: MatDialog,
     private _snackBar: MatSnackBar,
     public _formato: FormatosService,
+    private _user: UsuariosService
   ) {
     this.configTime();
     this._store.subscribe((store: any) => {
@@ -116,17 +137,39 @@ export class CatalogoComponent implements OnInit {
     }, 50000 );
   }
 
-  ngOnInit(): void {
+  async ngOnInit() {
     this.id = ( this.activate.snapshot.paramMap.get('id') );
+    if( this.id ) this.query.where.id = this.id;
+    this.number = this.activate.snapshot.paramMap.get('cel');
+    if( this.number ) this.dataUser = await this.getUser();
+    window.document.scrollingElement.scrollTop=0
     this.getArticulos();
+  }
+
+  getUser(){
+    return new Promise( resolve =>{
+      this._user.get({ where:{ usu_telefono: this.number }, limit: 1 } ).subscribe( item =>{
+        item = item.data[0];
+        if( item ) {
+          this.GuardarStoreUser( item );
+          this.query.where.idPrice = item.id;
+        }
+        resolve( item );
+      },()=> resolve( false ) );
+    })
+  }
+
+  GuardarStoreUser( data:any ) {
+    let accion = new UserCabezaAction( data , 'post');
+    this._store.dispatch(accion);
   }
 
   getArticulos(){
     this.imageObject = [];
-    this._producto.get( { where: { id: this.id } } ).subscribe(( res:any )=>{
+    this._producto.get( this.query ).subscribe(( res:any )=>{
       this.data = res.data[0] || {}
       try {
-        if( this.data.listComentarios ) this.listComentario.push( ...this.data.listComentarios )
+        if( this.data.listComment ) this.listComentario.push( ...this.data.listComment )
       } catch (error) { }
       this.urlFoto = this.data.foto;
       for( let row of this.data.listColor ){

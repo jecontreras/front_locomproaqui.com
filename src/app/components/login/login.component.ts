@@ -34,6 +34,10 @@ export class LoginComponent implements OnInit {
   ngOnInit() {
   }
 
+  handleValidate(){
+    this.data.usu_email = this.data.usu_email.replace(/ /g, '');
+  }
+
   submit(){
     if(!this.disableSubmit) return false;
     this.disableSubmit = false;

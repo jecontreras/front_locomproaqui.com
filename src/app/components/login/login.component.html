@@ -41,7 +41,7 @@
                           </select>
                         </div>
                         <div class="p-2 flex-grow-1 bd-highlight">
-                          <input class="input100" type="text" name="username" [(ngModel)]="data.usu_email">
+                          <input class="input100" type="text" name="username" [(ngModel)]="data.usu_email" (blur)="handleValidate()">
                           <span class="focus-input100"></span>
                         </div>
                       </div>
