@@ -18,6 +18,8 @@ import { VentasService } from 'src/app/servicesComponents/ventas.service';
 export class MisDespachoComponent implements OnInit {
 
   dataTable: DataTable;
+  dataTable2: DataTable;
+  dataTable3: DataTable;
   pagina = 10;
   paginas = 0;
   loader = true;
@@ -28,7 +30,7 @@ export class MisDespachoComponent implements OnInit {
     page: 0,
     limit: 10
   };
-  Header:any = [ 'Acciónes','Foto','Producto','Numero Guia', 'Logo', 'Estado Venta', 'Cantidad', 'Precio Distribuidor', 'Talla', 'Color', 'Creado'];
+  Header:any = [ 'Acciónes','Foto','Producto','Numero Guia', 'Estado Venta', 'Cantidad', 'Dinero','Plataforma',"Dinero Proveedor", 'Talla', 'Color', 'Creado'];
   $:any;
   public datoBusqueda = '';
   notscrolly:boolean=true;
@@ -37,16 +39,32 @@ export class MisDespachoComponent implements OnInit {
   rolName:string;
   opcionCurrencys:any;
   reacudo:number;
+  Pdreacudo:number;
+  Pcreacudo:number;
   counts:number = 0;
+  counts2:number = 0;
+  querysSale:any = {
+    where:{
+    },
+    limit: 10,
+    skip: 0
+  }
+
+  querysComplete:any = {
+    where:{
+    },
+    limit: 10,
+    skip: 0
+  }
 
   constructor(
     public dialog: MatDialog,
-    private _tools: ToolsService,
+    public _tools: ToolsService,
     private _productos: ProductoService,
     private spinner: NgxSpinnerService,
     private _store: Store<STORAGES>,
     private _usuarios: UsuariosService,
-    private _venta: VentasService
+    private _venta: VentasService,
   ) {
     this._store.subscribe( ( store: any ) => {
       store = store.name;
@@ -54,6 +72,8 @@ export class MisDespachoComponent implements OnInit {
       this.dataUser = store.user || {};
       try {
         this.rolName =  this.dataUser.usu_perfil.prf_descripcion;
+        this.querysSale.where.creacion = this.dataUser.id;
+        this.querysComplete.where.creacion = this.dataUser.id;
       } catch (error) {}
     });
   }
@@ -65,12 +85,26 @@ export class MisDespachoComponent implements OnInit {
       footerRow: this.Header,
       dataRows: []
     };
+    this.dataTable2 = {
+      headerRow: this.Header,
+      footerRow: this.Header,
+      dataRows: []
+    };
+    this.dataTable3 = {
+      headerRow: this.Header,
+      footerRow: this.Header,
+      dataRows: []
+    };
     if( this.rolName != 'administrador') this.query.where.creacion = this.dataUser.id;
     this.cargarTodos();
-    this.getDineros();
+    this.cargarTodos2();
+    this.cargarTodos3();
+    //this.getDineros();
   }
 
-  getDineros(){
+
+
+  /*getDineros(){
     this._usuarios.getRecaudo( { where: { usuario: this.dataUser.id } } )
     .subscribe( (res: any ) => {
       try {
@@ -79,7 +113,7 @@ export class MisDespachoComponent implements OnInit {
         this.reacudo = 0;
       }
     });
-  }
+  }*/
 
   onScroll(){
     if (this.notscrolly && this.notEmptyPost) {
@@ -94,30 +128,73 @@ export class MisDespachoComponent implements OnInit {
     this.query.limit = ev.pageSize;
     this.cargarTodos();
   }
-
-  cargarTodos() {
+  pageEvent2(ev: any) {
+    this.querysSale.page = ev.pageIndex;
+    this.querysSale.limit = ev.pageSize;
+    this.cargarTodos2();
+  }
+  pageEvent3(ev: any) {
+    this.querysComplete.page = ev.pageIndex;
+    this.querysComplete.limit = ev.pageSize;
+    this.cargarTodos2();
+  }
+  cargarTodos3() {
     this.spinner.show();
-    this._productos.getVenta( this.query )
-    .subscribe(
-      (response: any) => {
-        this.counts = response.count;
-        console.log(response);
-        this.counts = response.count;
-        this.dataTable.headerRow = this.dataTable.headerRow;
-        this.dataTable.footerRow = this.dataTable.footerRow;
-        this.dataTable.dataRows.push(... response.data);
-        this.dataTable.dataRows =_.unionBy(this.dataTable.dataRows || [], response.data, 'id');
-        this.loader = false;
+    this._productos.getVentaCompleteComplete( this.querysComplete ).subscribe(res=>{
+      //console.log("****55", res)
+      this.counts2 = res.count;
+      this.Pcreacudo = res.total;
+      this.dataTable3.headerRow = this.dataTable3.headerRow;
+      this.dataTable3.footerRow = this.dataTable3.footerRow;
+      this.dataTable3.dataRows.push(... res.data);
+      this.dataTable3.dataRows =_.unionBy(this.dataTable3.dataRows || [], res.data, 'id');
+      this.loader = false;
         this.spinner.hide();
 
-        if (response.data.length === 0 ) {
+        if (res.data.length === 0 ) {
           this.notEmptyPost =  false;
         }
         this.notscrolly = true;
-      },
-      error => {
-        console.log('Error', error);
-      });
+    });
+  }
+  cargarTodos2() {
+    this.spinner.show();
+    this._productos.getVentaCompleteEarring( this.querysSale ).subscribe(res=>{
+      //console.log("****55", res)
+      this.counts2 = res.count;
+      this.Pdreacudo = res.total;
+      this.dataTable2.headerRow = this.dataTable2.headerRow;
+      this.dataTable2.footerRow = this.dataTable2.footerRow;
+      this.dataTable2.dataRows.push(... res.data);
+      this.dataTable2.dataRows =_.unionBy(this.dataTable2.dataRows || [], res.data, 'id');
+      this.loader = false;
+        this.spinner.hide();
+
+        if (res.data.length === 0 ) {
+          this.notEmptyPost =  false;
+        }
+        this.notscrolly = true;
+    });
+  }
+
+  cargarTodos() {
+    this.spinner.show();
+    this._productos.getVentaComplete( this.querysSale ).subscribe(res=>{
+      //console.log("****55", res)
+      this.counts = res.count;
+      this.reacudo = res.total;
+      this.dataTable.headerRow = this.dataTable.headerRow;
+      this.dataTable.footerRow = this.dataTable.footerRow;
+      this.dataTable.dataRows.push(... res.data);
+      this.dataTable.dataRows =_.unionBy(this.dataTable.dataRows || [], res.data, 'id');
+      this.loader = false;
+        this.spinner.hide();
+
+        if (res.data.length === 0 ) {
+          this.notEmptyPost =  false;
+        }
+        this.notscrolly = true;
+    });
   }
 
   buscar() {
