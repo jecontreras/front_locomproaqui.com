@@ -61,6 +61,60 @@ export class ProductosComponent implements OnInit {
   listSeller:any = DANEGROUP;
   keyword = 'usu_usuario';
   txtCiudad:any = {};
+  _dataConfig:any = {
+    tablet:{
+      dataTable: {
+        headerRow: this.Header,
+        footerRow: this.Header,
+        dataRows: []
+      },
+      pagina: 10
+    },
+    loader:true,
+    query: {
+      where:{
+        pro_activo: 0
+      },
+      page: 0,
+      limit: 10
+    }
+  };
+  _dataConfig2:any = {
+    tablet:{
+      dataTable: {
+        headerRow: this.Header,
+        footerRow: this.Header,
+        dataRows: []
+      },
+      pagina: 10
+    },
+    loader:true,
+    query: {
+      where:{
+        pro_activo: 0
+      },
+      page: 0,
+      limit: 10
+    }
+  };
+  _dataConfig3:any = {
+    tablet:{
+      dataTable: {
+        headerRow: this.Header,
+        footerRow: this.Header,
+        dataRows: []
+      },
+      pagina: 10
+    },
+    loader:true,
+    query: {
+      where:{
+        pro_activo: 3
+      },
+      page: 0,
+      limit: 10
+    }
+  };
 
   constructor(
     public dialog: MatDialog,
@@ -87,11 +141,13 @@ export class ProductosComponent implements OnInit {
       footerRow: this.Header,
       dataRows: []
     };
-    if( this.rolName != 'administrador') this.query.where.pro_usu_creacion = this.dataUser.id;
-    this.cargarTodos();
+    this._dataConfig.query.where.pro_usu_creacion = {'!=' : this.dataUser.id };
+    if( this.rolName != 'administrador') this._dataConfig2.query.where.pro_usu_creacion = this.dataUser.id;
+    if( this.rolName != 'administrador') this._dataConfig3.query.where.pro_usu_creacion = this.dataUser.id;
+    //this.cargarTodos();
     this.cargarProveedor();
     this.listSeller = await this.getSeller();
-    console.log( this.listSeller )
+    console.log( this._dataConfig )
   }
 
   crear(obj:any){
