@@ -113,7 +113,8 @@ export class ProductosComponent implements OnInit {
       },
       page: 0,
       limit: 10
-    }
+    },
+    view: "check"
   };
 
   constructor(
@@ -147,7 +148,7 @@ export class ProductosComponent implements OnInit {
     //this.cargarTodos();
     this.cargarProveedor();
     this.listSeller = await this.getSeller();
-    console.log( this._dataConfig )
+    console.log( this._dataConfig, this._dataConfig2, this._dataConfig3 )
   }
 
   crear(obj:any){

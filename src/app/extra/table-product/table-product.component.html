@@ -75,9 +75,12 @@
               <button (click)="crear(row)" class="btn btn-primary btn-just-icon btn-round">
                 <i class="material-icons">remove_red_eye</i>
               </button>
-              <button (click)="delete(row, idx)" class="btn btn-danger btn-just-icon btn-round">
+              <button *ngIf="_dataConfig.view !== 'check'" (click)="handleDelete(row, idx)" class="btn btn-danger btn-just-icon btn-round">
                 <i class="material-icons">delete_forever</i>
               </button>
+              <div *ngIf="_dataConfig.view === 'check'">
+                <mat-checkbox class="example-margin" [(ngModel)]="row.stateH" (ngModelChange)="updatePrecio( row, 'pro_estado')">Activar</mat-checkbox>
+              </div>
             </td>
             <td>
               <img [src]="row['foto'] || './assets/noimagen.jpg'" class="foto">

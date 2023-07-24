@@ -81,7 +81,7 @@ export class TableProductComponent implements OnInit {
     //this._dataConfig.query.where.pro_usu_creacion = this.dataUser.id;
     this.cargarTodos();
     this.listSeller = await this.getSeller();
-    console.log( this.listSeller )
+    console.log( this._dataConfig )
   }
 
   crear(obj:any){
@@ -95,7 +95,7 @@ export class TableProductComponent implements OnInit {
       console.log(`Dialog result: ${result}`);
     });
   }
-  delete(obj:any, idx:any){
+  handleDelete(obj:any, idx:any){
     let datos = {
       id: obj.id,
       pro_activo: 1
@@ -186,7 +186,6 @@ export class TableProductComponent implements OnInit {
     if( this.rolName != 'administrador') this._dataConfig.query.where.pro_usu_creacion = this.dataUser.id;
     this.cargarTodos();
   }
-
   updatePrecio( item, opt ){
     let data:any ={
       id: item.id
