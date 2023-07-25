@@ -15,10 +15,6 @@
             </ngx-dropzone>
             <div class="content">
                 <div class="row">
-                    <!-- <div class="form-group col-md-4 col-sm-4 col-lg-4 col-xs-4">
-                        <label>Precio Vendedor</label>
-                        <input currencyMask class="form-control form-control-sm" [(ngModel)]="data.precioFabrica" [options]="formatoMoneda" />
-                    </div> -->
                     <div class="form-group col-md-4 col-sm-4 col-lg-4 col-xs-4">
                         <label>Precio Cliente final</label>
                         <input currencyMask class="form-control form-control-sm" [(ngModel)]="data.pro_uni_venta"
@@ -49,7 +45,34 @@
                 </div>
             </div>
         </div>
-        <div class="col-4" *ngIf="id && titulo == 'Crear'">
+        <div cdkDropListGroup *ngIf="id">
+          <div class="example-container" *ngFor="let item of listGaleria">
+            <h2>Principal</h2>
+            <p> <img [src]="item.foto" style="width: 100%;" alt=""> </p>
+            <div
+              cdkDropList
+              [cdkDropListData]="todoArmare"
+              class="example-list"
+              (cdkDropListDropped)="drop($event)">
+              <div class="example-box" *ngFor="let key of item.todoArmare" cdkDrag>
+                <img [src]="key.foto" style="width: 50%;" alt="">
+              </div>
+            </div>
+          </div>
+
+         <!--<div class="example-container">
+            <h2>Done</h2>
+
+            <div
+              cdkDropList
+              [cdkDropListData]="done"
+              class="example-list"
+              (cdkDropListDropped)="drop($event)">
+              <div class="example-box" *ngFor="let item of done" cdkDrag>{{item}}</div>
+            </div>
+          </div>-->
+        </div>
+        <!--<div class="col-4" *ngIf="id && titulo == 'Crear'">
             <div class="d-flex flex-row-reverse bd-highlight">
                 <div class="p-2 bd-highlight">
                     <button type="button" class="btn btn-success" (click)="ordenActualizar()">Actualizar orden de
@@ -137,10 +160,6 @@
                     <input type="checkbox" [(ngModel)]="data.checkMayor" value="second_checkbox"> <label
                         for="cbox2">Precios al Mayor</label>
                 </div>
-                <!-- <div class="form-group col-md-6 col-sm-4 col-lg-4 col-xs-6">
-                    <label>Precio Vendedor</label>
-                    <input currencyMask class="form-control form-control-sm"  [(ngModel)]="data.precioFabrica" [options]="formatoMoneda" />
-                </div> -->
                 <div class="form-group col-md-6 col-sm-4 col-lg-4 col-xs-6">
                     <label>Precio Cliente Final</label>
                     <input currencyMask class="form-control form-control-sm" [(ngModel)]="data.pro_uni_venta"
@@ -283,10 +302,6 @@
                                 <div class="form-group col-12" *ngIf="item.checkFoto">
                                     <div class="row">
                                         <label class="col">Subir Imagen</label>
-                                        <!--<button class="btn btn-primary btn-just-icon btn-round"
-                                            (click)="subirFile(item)" *ngIf="files.length > 0">
-                                            Subir Imagen
-                                        </button>-->
                                         <button type="button" (click)="item.checkFoto = false"
                                             class="btn btn-success">Ocultar</button>
                                     </div>
@@ -325,10 +340,6 @@
                                 <div class="form-group col-12" *ngIf="item.checkFotoGaleri">
                                     <div class="row">
                                         <label class="col">Subir Imagen Galeria</label>
-                                        <!--<button class="btn btn-primary btn-just-icon btn-round"
-                                            (click)="subirFile(item)" *ngIf="files.length > 0">
-                                            Subir Imagen
-                                        </button>-->
                                         <button type="button" (click)="item.checkFotoGaleri = false"
                                             class="btn btn-success">Ocultar</button>
                                     </div>
@@ -376,14 +387,6 @@
                         </div>
                     </div>
                 </div>
-                <!--<div class="form-group col-md-6 col-sm-4 col-lg-4 col-xs-6" *ngIf="tallaSelect.length > 0">
-                    <label for="exampleFormControlSelect1">Medidas Disponibles:</label>
-                    <div class="row">
-                        <div class="col-6 col-sm-4 col-md-3 col-xs-2 col-lg-4" *ngFor="let tallas of tallaSelect">
-                            <mat-checkbox (ngModelChange)="tallaSeleccionando( tallas )"  [(ngModel)]="tallas.check" class="example-margin">{{ tallas.tal_descripcion }}</mat-checkbox>
-                        </div>
-                    </div>
-                </div>-->
                 <div class="form-group col-12">
                     <label for="exampleFormControlSelect1">Galeria:</label>
                     <div class="row">
@@ -433,7 +436,7 @@
                     </select>
                 </div>
             </div>
-        </div>
+        </div> -->
     </div>
 </mat-dialog-content>
 <mat-dialog-actions align="end">

@@ -14,6 +14,7 @@ import { Store } from '@ngrx/store';
 import { Fruit } from 'src/app/interfaces/interfaces';
 import {COMMA, ENTER} from '@angular/cdk/keycodes';
 import {MatChipInputEvent} from '@angular/material/chips';
+import { CdkDragDrop, moveItemInArray, transferArrayItem } from '@angular/cdk/drag-drop';
 
 const URL = environment.url;
 
@@ -59,6 +60,7 @@ export class FormproductosComponent implements OnInit {
 
   imageChangedEvent: any = '';
   croppedImage: any = '';
+  todoArmare = [];
 
   constructor(
     public dialog: MatDialog,
@@ -449,10 +451,21 @@ export class FormproductosComponent implements OnInit {
         if (!result) resolve(false);
         this.data.id = result.id;
         this.id = result.id;
+        this.data.todoArmare = []
         this.listGaleria.push(this.data);
+        this.validador();
         resolve(true);
       }, (error) => { console.error(error); this._tools.presentToast("Error de servidor"); });
     });
+  }
+
+  validador(){
+    for( let row of this.listGaleria){
+      for( let item of this.listGaleria ){
+        row.todoArmare.push( item );
+        row.todoArmare = _.unionBy(row.todoArmare || [], row.todoArmare, 'id');
+      }
+    }
   }
 
   blurTalla(opt:number = 1) {
@@ -649,6 +662,19 @@ export class FormproductosComponent implements OnInit {
 
   eventoDescripcion() {
     // console.log("HP")
+  }
+
+  drop(event: CdkDragDrop<string[]>) {
+    if (event.previousContainer === event.container) {
+      moveItemInArray(event.container.data, event.previousIndex, event.currentIndex);
+    } else {
+      transferArrayItem(
+        event.previousContainer.data,
+        event.container.data,
+        event.previousIndex,
+        event.currentIndex,
+      );
+    }
   }
 
 }
