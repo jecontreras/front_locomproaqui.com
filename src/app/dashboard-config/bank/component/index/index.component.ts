@@ -115,6 +115,7 @@ export class IndexComponent implements OnInit {
 
     dialogRef.afterClosed().subscribe( async ( result ) => {
       console.log(`Dialog result: ${result}`);
+      if( result === 'creo' ) location.reload();
     });
   }
 

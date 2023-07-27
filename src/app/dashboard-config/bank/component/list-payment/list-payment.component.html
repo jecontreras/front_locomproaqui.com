@@ -50,7 +50,12 @@
                     </tr>
                   </tfoot>
                   <tbody>
-                    <tr *ngFor="let row of dataTable.dataRows; let idx=index">
+                    <tr *ngFor="let row of dataTable.dataRows; let idx=index"
+                      [ngClass]="{
+                        'colorPendiente':row['idState'] == 0,
+                        'colorPagado':row['idState'] >= 1
+                      }"
+                    >
 
                       <td>{{ row['bank']?.bank }}</td>
                       <td>{{ row['bank']?.numeroCuenta }}</td>

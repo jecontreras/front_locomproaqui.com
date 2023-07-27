@@ -22,6 +22,9 @@ export class ProductoService {
   update(query:any){
     return this._model.querys('tblproductos/'+query.id, query, 'put');
   }
+  updateState(query:any){
+    return this._model.querys('tblproductos/updateState', query, 'post');
+  }
   delete(query:any){
     return this._model.querys('tblproductos/'+query.id, query, 'delete');
   }

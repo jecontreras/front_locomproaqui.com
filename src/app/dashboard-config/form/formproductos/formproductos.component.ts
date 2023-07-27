@@ -469,6 +469,7 @@ export class FormproductosComponent implements OnInit {
   }
 
   blurTalla(opt:number = 1) {
+    console.log("****",this.data)
     let filtro = this.listTipoTallas.find(t => t.id == this.data.pro_sw_tallas);
     if (!filtro)
       return !1;

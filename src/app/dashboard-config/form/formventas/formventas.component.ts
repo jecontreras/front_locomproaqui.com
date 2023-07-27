@@ -606,6 +606,8 @@ export class FormventasComponent implements OnInit {
       this.data.ven_imagen_guia = result.urlRotulos;
       if( this.data.transportadoraSelect === "CORDINADORA") this.imprimirGuia();
       if( this.data.transportadoraSelect === "ENVIA") this.viewRotulo( this.data.ven_imagen_guia );
+      if( this.data.transportadoraSelect === "TCC") this.imprimirGuia();
+      this.data.ven_estado = 3;
       this.updates();
     });
   }
