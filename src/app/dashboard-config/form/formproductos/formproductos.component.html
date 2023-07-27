@@ -46,7 +46,7 @@
             </div>
         </div>
         <div cdkDropListGroup *ngIf="id">
-          <div class="example-container" *ngFor="let item of listGaleria">
+          <!--<div class="example-container" *ngFor="let item of listGaleria">
             <h2>Principal</h2>
             <p> <img [src]="item.foto" style="width: 100%;" alt=""> </p>
             <div
@@ -58,7 +58,7 @@
                 <img [src]="key.foto" style="width: 50%;" alt="">
               </div>
             </div>
-          </div>
+          </div>-->
 
          <!--<div class="example-container">
             <h2>Done</h2>
@@ -72,7 +72,7 @@
             </div>
           </div>-->
         </div>
-        <!--<div class="col-4" *ngIf="id && titulo == 'Crear'">
+        <div class="col-4" *ngIf="id && titulo == 'Crear'">
             <div class="d-flex flex-row-reverse bd-highlight">
                 <div class="p-2 bd-highlight">
                     <button type="button" class="btn btn-success" (click)="ordenActualizar()">Actualizar orden de
@@ -436,7 +436,7 @@
                     </select>
                 </div>
             </div>
-        </div> -->
+        </div>
     </div>
 </mat-dialog-content>
 <mat-dialog-actions align="end">
