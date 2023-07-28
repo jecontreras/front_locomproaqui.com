@@ -3,13 +3,12 @@ import { MatDialog } from '@angular/material';
 import { Store } from '@ngrx/store';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { DANEGROUP } from 'src/app/JSON/dane-nogroup';
-import { FormproductosComponent } from 'src/app/dashboard-config/form/formproductos/formproductos.component';
-import { ProductosOrdenarComponent } from 'src/app/dashboard-config/table/productos-ordenar/productos-ordenar.component';
 import { STORAGES } from 'src/app/interfaces/sotarage';
 import { ToolsService } from 'src/app/services/tools.service';
 import { ProductoService } from 'src/app/servicesComponents/producto.service';
 import { UsuariosService } from 'src/app/servicesComponents/usuarios.service';
 import * as _ from 'lodash';
+import { FormProductComponent } from 'src/app/dashboard-config/form/form-product/form-product.component';
 
 declare interface DataTable {
   headerRow: string[];
@@ -85,7 +84,7 @@ export class TableProductComponent implements OnInit {
   }
 
   crear(obj:any){
-    const dialogRef = this.dialog.open(FormproductosComponent,{
+    const dialogRef = this.dialog.open(FormProductComponent,{
       data: {datos: obj || {}},
       // height:  '550px',
       width: '100%'
