@@ -77,7 +77,8 @@ export class ToolsService {
       showCancelButton: true,
       confirmButtonColor: text.confirColor || '#3085d6',
       cancelButtonColor: text.cancelColor || '#d33',
-      confirmButtonText: text.confir || 'Aceptar!'
+      confirmButtonText: text.confir || 'Aceptar!',
+      cancelButtonText: text.cancel || 'Cancelar!'
     });
   }
 

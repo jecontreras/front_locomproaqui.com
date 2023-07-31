@@ -9,6 +9,7 @@ import { ProductoService } from 'src/app/servicesComponents/producto.service';
 import { UsuariosService } from 'src/app/servicesComponents/usuarios.service';
 import * as _ from 'lodash';
 import { FormProductComponent } from 'src/app/dashboard-config/form/form-product/form-product.component';
+import { FormproductosComponent } from 'src/app/dashboard-config/form/formproductos/formproductos.component';
 
 declare interface DataTable {
   headerRow: string[];
@@ -83,8 +84,30 @@ export class TableProductComponent implements OnInit {
     console.log( this._dataConfig )
   }
 
+  async handleCreate(){
+    let validate = await this._tools.confirm( { 
+        title: "Versiones nuevas", 
+        detalle: "",
+        confir: "Version nueva", 
+        cancel: "Version anterior" 
+      } );
+    if( validate.value ) this.crear(false);
+    else this.crearAnt(false);
+  }
+
   crear(obj:any){
     const dialogRef = this.dialog.open(FormProductComponent,{
+      data: {datos: obj || {}},
+      // height:  '550px',
+      width: '100%'
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      console.log(`Dialog result: ${result}`);
+    });
+  }
+  crearAnt(obj:any){
+    const dialogRef = this.dialog.open(FormproductosComponent,{
       data: {datos: obj || {}},
       // height:  '550px',
       width: '100%'
