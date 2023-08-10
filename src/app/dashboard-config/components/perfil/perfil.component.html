@@ -325,27 +325,32 @@
                                       </div>
                                     </div>
                                     <div class="col-12">
-                                      <h3>1.Enviar Rut actializado</h3>
-                                      <button class="contenedor-btn-file" style="    margin-left: 146px;">
-                                        <i class="material-icons">file_upload</i>
-                                          PDF Rut
-                                        <label for="btn-file"></label>
-                                        <input type="file" id="btn-file" accept="application/pdf" (change)="fileChangeEventPDF($event, 'pdfRut')">
-                                      </button>
-                                        <h3>2.Enviar Copia de la Cedula Ampliada al 150%</h3>
-                                        <button class="contenedor-btn-file" style="    margin-left: 146px;">
-                                          <i class="material-icons">file_upload</i>
-                                            PDF Cedula Ampliada al 150%
-                                          <label for="btn-file"></label>
-                                        <input type="file" id="btn-file" accept="application/pdf" (change)="fileChangeEventPDF($event, 'pdfCc')">
-                                      </button>
-                                        <h3>3.Enviar Camara de Comercio Actualizada</h3>
-                                        <button class="contenedor-btn-file" style="    margin-left: 146px;">
-                                          <i class="material-icons">file_upload</i>
-                                            PDF Camara de Comercio
-                                          <label for="btn-file"></label>
-                                          <input type="file" id="btn-file" accept="application/pdf" (change)="fileChangeEventPDF($event, 'pdfCComercio')">
-                                      </button>
+                                      <span>
+                                        <h3>1.Enviar Rut actializado 
+                                            <button (click)="openFile(this.data.pdfRut)" *ngIf="data.pdfRut" class="btn btn-primary btn-just-icon btn-round">
+                                                <i class="material-icons">remove_red_eye</i>
+                                            </button>
+                                            </h3>
+                                            <input type="file" id="btn-file" accept="application/pdf" (change)="fileChangeEventPDF($event, 'pdfRut')"/> PDF Rut
+                                      </span>
+                                      <span>
+                                        <h3>
+                                            2.Enviar Copia de la Cedula Ampliada al 150%
+                                            <button (click)="openFile(this.data.pdfCc)" *ngIf="data.pdfCc" class="btn btn-primary btn-just-icon btn-round">
+                                                <i class="material-icons">remove_red_eye</i>
+                                            </button>
+                                        </h3>
+                                        <input type="file" id="btn-file" accept="application/pdf" (change)="fileChangeEventPDF($event, 'pdfCc')"/> PDF Cedula Ampliada al 150%
+                                      </span>
+                                      <span>
+                                        <h3>
+                                            3.Enviar Camara de Comercio Actualizada
+                                            <button (click)="openFile(this.data.pdfCComercio)" *ngIf="data.pdfCComercio" class="btn btn-primary btn-just-icon btn-round">
+                                                <i class="material-icons">remove_red_eye</i>
+                                            </button>
+                                        </h3>
+                                        <input type="file" id="btn-file" accept="application/pdf" (change)="fileChangeEventPDF($event, 'pdfCComercio')"/> PDF Camara de Comercio
+                                      </span>
                                     </div>
                                     <div class="col-12">
                                         <br>

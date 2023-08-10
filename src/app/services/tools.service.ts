@@ -275,6 +275,15 @@ export class ToolsService {
     return blob;
   }
 
+  getBase64(file) {
+    return new Promise((resolve, reject) => {
+        const reader = new FileReader();
+        reader.readAsDataURL(file);
+        reader.onload = () => resolve(reader.result);
+        reader.onerror = error => reject(error);
+   });
+}
+
   downloadPdf(base64String, fileName){
 
     // data should be your response data in base64 format

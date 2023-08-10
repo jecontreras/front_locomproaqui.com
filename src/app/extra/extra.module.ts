@@ -16,12 +16,14 @@ import { TableProductComponent } from './table-product/table-product.component';
 import { NgxSpinnerModule } from 'ngx-spinner';
 import { AutocompleteLibModule } from 'angular-ng-autocomplete';
 import { InfiniteScrollModule } from 'ngx-infinite-scroll';
+import { OpenIframeComponent } from './open-iframe/open-iframe.component';
 
 @NgModule({
   entryComponents:[
     DialogconfirmarPedidoComponent,
     MediosPagosComponent,
-    ImprimirTarjetaComponent
+    ImprimirTarjetaComponent,
+    OpenIframeComponent
   ],
   declarations: [
     HeaderComponent,
@@ -32,6 +34,7 @@ import { InfiniteScrollModule } from 'ngx-infinite-scroll';
     AlertaGanadorComponent,
     ImprimirTarjetaComponent,
     TableProductComponent,
+    OpenIframeComponent,
   ],
   imports: [
     MyOwnCustomMaterialModule,

@@ -82,9 +82,9 @@
             </div>
           </div>-->
         </div>
-        <div class="col" *ngIf="id && viewRt === 'end'">
+        <div class="col" *ngIf="id && viewRt === 'end' ">
             <div class="form row">
-                <div class="col-12">
+                <div class="col-12" *ngIf="titulo ==='Crear'">
                     <div class="d-flex flex-row-reverse bd-highlight">
                         <div class="p-2 bd-highlight">
                             <button mat-raised-button color="warn" (click)="viewRt='start'">Volver</button>
