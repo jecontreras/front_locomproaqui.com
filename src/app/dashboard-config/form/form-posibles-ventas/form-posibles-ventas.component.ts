@@ -316,7 +316,7 @@ export class FormPosiblesVentasComponent implements OnInit {
       "transportadoraSelect": this.data.transportadoraSelect,
       "fleteManejo": this.data.fleteManejo,
       "flteTotal": this.data.flteTotal,
-      "ven_estado": 3,
+      "ven_estado": 0,
       "create": this.data.ven_fecha_venta,
       "ven_empresa": this.data.ven_empresa,
       "listaArticulo": this.listCarrito
