@@ -20,6 +20,7 @@ import pdfMake from 'pdfmake/build/pdfmake';
 import pdfFonts from 'pdfmake/build/vfs_fonts';
 import { DANEGROUP } from 'src/app/JSON/dane-nogroup';
 import { VentasService } from 'src/app/servicesComponents/ventas.service';
+import { OpenIframeComponent } from 'src/app/extra/open-iframe/open-iframe.component';
 
 pdfMake.vfs = pdfFonts.pdfMake.vfs;
 
@@ -149,12 +150,32 @@ export class PerfilComponent implements OnInit {
     this.imageChangedEvent = event;
     console.log(this.imageChangedEvent)
   }
-  fileChangeEventPDF( event:any, opt:string ){
-    let file = event.target.files;
-    console.log("*****152", file)
-    this.files = [];
+  openFile( urlText ){
+    const dialogRef = this.dialog.open(OpenIframeComponent,{
+      data: {
+        url: urlText
+      },
+      // height:  '550px',
+      width: '100%',
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      console.log(`Dialog result: ${result}`);
+    });
+  }
+  async fileChangeEventPDF( event:any, opt:string ){
+    let file = event.target.files[0];
+    let base = await this._tools.getBase64( file );
+    this._archivos.createFile( {
+      fileBase64: base
+    } ).subscribe( res =>{
+      this.data[opt] = res.url;
+      this.Actualizar();
+    });
+    //var file = this._tools.converBase64ImgToBynare(this.croppedImage,'hello');
+    /*this.files = [];
     this.files.push( file );
-    this.subirFileTotal(opt);
+    this.subirFileTotal(opt);*/
   }
   imageCropped(event: any) {
     this.croppedImage = event.base64;

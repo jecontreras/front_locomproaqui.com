@@ -77,7 +77,8 @@ export class ToolsService {
       showCancelButton: true,
       confirmButtonColor: text.confirColor || '#3085d6',
       cancelButtonColor: text.cancelColor || '#d33',
-      confirmButtonText: text.confir || 'Aceptar!'
+      confirmButtonText: text.confir || 'Aceptar!',
+      cancelButtonText: text.cancel || 'Cancelar!'
     });
   }
 
@@ -273,6 +274,15 @@ export class ToolsService {
     const blob = new Blob([int8Array], { type: 'application/pdf'});
     return blob;
   }
+
+  getBase64(file) {
+    return new Promise((resolve, reject) => {
+        const reader = new FileReader();
+        reader.readAsDataURL(file);
+        reader.onload = () => resolve(reader.result);
+        reader.onerror = error => reject(error);
+   });
+}
 
   downloadPdf(base64String, fileName){
 

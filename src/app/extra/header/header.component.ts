@@ -605,6 +605,11 @@ export class HeaderComponent implements OnInit {
           },
           {
             icons: 'settings',
+            nombre: 'Administracion Retiros de Dinero de Proveedores',
+            url: '/config/adminF/vendorpayment',
+          },
+          {
+            icons: 'settings',
             nombre: 'Configuracion',
             url: '/config/configuracion',
           },

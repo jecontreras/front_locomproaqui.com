@@ -36,6 +36,14 @@
                             <option [value]="item.id" *ngFor="let item of listCategorias">{{ item.cat_nombre }}</option>
                         </select>
                     </div>
+                    <div class="form-group col-md-6 col-sm-4 col-lg-4 col-xs-6">
+                        <label for="exampleFormControlSelect1">Tipo de medida:</label>
+                        <select class="form-control form-control-sm" [(ngModel)]="data.pro_sw_tallas"
+                            (change)="blurTalla()">
+                            <option [value]="item.id" *ngFor="let item of listTipoTallas">{{ item.tit_descripcion }}
+                            </option>
+                        </select>
+                    </div>
                     <div class="col-12">
                         <div class="d-flex justify-content-center">
                             <button type="button" class="btn btn-success" (click)="subirFiles()"
@@ -45,20 +53,22 @@
                 </div>
             </div>
         </div>
-        <div cdkDropListGroup *ngIf="id">
-          <!--<div class="example-container" *ngFor="let item of listGaleria">
+        <div cdkDropListGroup *ngIf="id && viewRt === 'start'">
+          <div class="example-container" *ngFor="let item of listGaleria">
             <h2>Principal</h2>
+            <button mat-raised-button color="primary" (click)="seleccionandoImg( item )">Detallar</button>
+            <button mat-raised-button color="warn" (click)="eliminarSeleccion( item )">Borrar</button>
             <p> <img [src]="item.foto" style="width: 100%;" alt=""> </p>
             <div
               cdkDropList
-              [cdkDropListData]="todoArmare"
+              [cdkDropListData]="item.todoArmare"
               class="example-list"
               (cdkDropListDropped)="drop($event)">
               <div class="example-box" *ngFor="let key of item.todoArmare" cdkDrag>
                 <img [src]="key.foto" style="width: 50%;" alt="">
               </div>
             </div>
-          </div>-->
+          </div>
 
          <!--<div class="example-container">
             <h2>Done</h2>
@@ -72,38 +82,15 @@
             </div>
           </div>-->
         </div>
-        <div class="col-4" *ngIf="id && titulo == 'Crear'">
-            <div class="d-flex flex-row-reverse bd-highlight">
-                <div class="p-2 bd-highlight">
-                    <button type="button" class="btn btn-success" (click)="ordenActualizar()">Actualizar orden de
-                        lista</button>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-12 col-sm-6 col-md-6 col-lg-4" *ngFor="let item of listGaleria"
-                    (click)="seleccionandoImg( item )">
-                    <mat-card class="example-card" [ngClass]="{seleccionado: item.check}">
-                        <img mat-card-image style="width: 100%;" [src]="item.foto" alt="Photo of a Shiba Inu">
-                        <mat-card-content>
-                            <h6>{{ item.pro_nombre }}</h6>
-                        </mat-card-content>
-                        <mat-card-actions>
-                            <button mat-button color="primary" [disabled]="disableEliminar"
-                                (click)="eliminarSeleccion( item )">
-                                <span>Eliminar</span>
-                            </button>
-                        </mat-card-actions>
-                    </mat-card>
-                </div>
-                <div class="d-flex justify-content-center">
-                    <div class="d-flex justify-content-center" *ngIf="listGaleria.length == 0">
-                        <span>No hay items</span>
+        <div class="col" *ngIf="id && viewRt === 'end' ">
+            <div class="form row">
+                <div class="col-12" *ngIf="titulo ==='Crear'">
+                    <div class="d-flex flex-row-reverse bd-highlight">
+                        <div class="p-2 bd-highlight">
+                            <button mat-raised-button color="warn" (click)="viewRt='start'">Volver</button>
+                        </div>
                     </div>
                 </div>
-            </div>
-        </div>
-        <div class="col" *ngIf="id">
-            <div class="form row">
                 <div class="form-group col-md-12" *ngIf="data.foto">
                     <div class="mx-auto" style="width: 335px;">
                         <img [src]="data.foto" class="imgFoto" *ngIf="!croppedImage">
@@ -440,8 +427,11 @@
     </div>
 </mat-dialog-content>
 <mat-dialog-actions align="end">
-    <button mat-button mat-dialog-close>Cerrar</button>
-    <button mat-button cdkFocusInitial (click)="submit()" *ngIf="( this.id ) ">
+    <button mat-button mat-dialog-close color="warn">Cerrar</button>
+    <button mat-button cdkFocusInitial color="primary" (click)="nexFunction()" *ngIf="( this.id ) && viewRt === 'start'">
+        <span>Actulizar Cambios</span>
+    </button>
+    <button mat-button cdkFocusInitial color="primary" (click)="submit()" *ngIf="( this.id ) && viewRt === 'end'">
         <span *ngIf="!id">Guardar Cambios</span>
         <span *ngIf="id">Actulizar Cambios</span>
     </button>

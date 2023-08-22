@@ -160,7 +160,7 @@ export class MisDespachoComponent implements OnInit {
   cargarTodos2() {
     this.spinner.show();
     this._productos.getVentaCompleteEarring( this.querysSale ).subscribe(res=>{
-      //console.log("****55", res)
+      console.log("****55", res)
       this.counts2 = res.count;
       this.Pdreacudo = res.total;
       this.dataTable2.headerRow = this.dataTable2.headerRow;
@@ -224,6 +224,8 @@ export class MisDespachoComponent implements OnInit {
     }
     if( this.rolName != 'administrador') this.query.where.creacion = this.dataUser.id;
     this.cargarTodos();
+    this.cargarTodos2();
+    this.cargarTodos3();
   }
   async handleOpenShop( obj:any ){
     const dialogRef = this.dialog.open(FormventasComponent,{

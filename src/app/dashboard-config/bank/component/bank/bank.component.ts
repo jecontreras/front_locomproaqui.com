@@ -149,7 +149,8 @@ export class BankComponent implements OnInit {
     this.datoBusqueda = this.datoBusqueda.trim();
     this.query = {
       where:{
-        state: 0
+        state: 0,
+        user: this.dataUser.id
       },
       limit: 100      
     };

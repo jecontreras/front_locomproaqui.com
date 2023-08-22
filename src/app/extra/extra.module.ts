@@ -12,12 +12,18 @@ import { DialogconfirmarPedidoComponent } from './dialogconfirmar-pedido/dialogc
 import { MediosPagosComponent } from './medios-pagos/medios-pagos.component';
 import { AlertaGanadorComponent } from './alerta-ganador/alerta-ganador.component';
 import { ImprimirTarjetaComponent } from './imprimir-tarjeta/imprimir-tarjeta.component';
+import { TableProductComponent } from './table-product/table-product.component';
+import { NgxSpinnerModule } from 'ngx-spinner';
+import { AutocompleteLibModule } from 'angular-ng-autocomplete';
+import { InfiniteScrollModule } from 'ngx-infinite-scroll';
+import { OpenIframeComponent } from './open-iframe/open-iframe.component';
 
 @NgModule({
   entryComponents:[
     DialogconfirmarPedidoComponent,
     MediosPagosComponent,
-    ImprimirTarjetaComponent
+    ImprimirTarjetaComponent,
+    OpenIframeComponent
   ],
   declarations: [
     HeaderComponent,
@@ -27,6 +33,8 @@ import { ImprimirTarjetaComponent } from './imprimir-tarjeta/imprimir-tarjeta.co
     MediosPagosComponent,
     AlertaGanadorComponent,
     ImprimirTarjetaComponent,
+    TableProductComponent,
+    OpenIframeComponent,
   ],
   imports: [
     MyOwnCustomMaterialModule,
@@ -35,13 +43,17 @@ import { ImprimirTarjetaComponent } from './imprimir-tarjeta/imprimir-tarjeta.co
     ExtraRoutingModule,
     RouterModule,
     CommonModule,
+    NgxSpinnerModule,
     NgImageSliderModule,
+    AutocompleteLibModule,
+    InfiniteScrollModule
   ],
   exports: [
     HeaderComponent,
     FooterComponent,
     MenuLateralComponent,
-    ImprimirTarjetaComponent
+    ImprimirTarjetaComponent,
+    TableProductComponent
   ]
 })
 export class ExtraModule { }

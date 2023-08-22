@@ -59,7 +59,7 @@ export class LoginComponent implements OnInit {
         }, 3000);
         this.dialog.closeAll();
       }else{
-        this._tools.presentToast("Error de sesión")
+        this._tools.presentToast( res.message )
       }
     },(error)=>{ console.error(error); this.disableSubmit = true; this._tools.presentToast("Error de servidor")});
   }

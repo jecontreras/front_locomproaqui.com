@@ -1,32 +1,31 @@
-import { Component, OnInit, Inject } from '@angular/core';
-import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
-import { ProductoService } from 'src/app/servicesComponents/producto.service';
+import { Component, Inject, OnInit } from '@angular/core';
+import { MAT_DIALOG_DATA, MatChipInputEvent, MatDialog, MatDialogRef } from '@angular/material';
 import { ToolsService } from 'src/app/services/tools.service';
-import * as _ from 'lodash';
 import { CategoriasService } from 'src/app/servicesComponents/categorias.service';
+import { ProductoService } from 'src/app/servicesComponents/producto.service';
 import { TipoTallasService } from 'src/app/servicesComponents/tipo-tallas.service';
+import { FormproductosComponent } from '../formproductos/formproductos.component';
 import { ArchivosService } from 'src/app/servicesComponents/archivos.service';
-import { environment } from 'src/environments/environment';
-import { AngularEditorConfig } from '@kolkov/angular-editor';
-import { ProductosOrdenarComponent } from '../../table/productos-ordenar/productos-ordenar.component';
 import { STORAGES } from 'src/app/interfaces/sotarage';
 import { Store } from '@ngrx/store';
+import { environment } from 'src/environments/environment';
 import { Fruit } from 'src/app/interfaces/interfaces';
-import {COMMA, ENTER} from '@angular/cdk/keycodes';
-import {MatChipInputEvent} from '@angular/material/chips';
+import { COMMA, ENTER } from '@angular/cdk/keycodes';
+import * as _ from 'lodash';
+import { ProductosOrdenarComponent } from '../../table/productos-ordenar/productos-ordenar.component';
+import { AngularEditorConfig } from '@kolkov/angular-editor';
 import { CdkDragDrop, moveItemInArray, transferArrayItem } from '@angular/cdk/drag-drop';
 
 const URL = environment.url;
 
 @Component({
-  selector: 'app-formproductos',
-  templateUrl: './formproductos.component.html',
-  styleUrls: ['./formproductos.component.scss']
+  selector: 'app-form-product',
+  templateUrl: './form-product.component.html',
+  styleUrls: ['./form-product.component.scss']
 })
-export class FormproductosComponent implements OnInit {
-
+export class FormProductComponent implements OnInit {
   data: any = {};
-  id: any;
+  id: any = 577;
   titulo: string = "Crear";
   files: File[] = [];
   files2: File[] = [];
@@ -38,7 +37,186 @@ export class FormproductosComponent implements OnInit {
   editorConfig: any;
   listPrecios: any = [];
   listPreciosCliente:any = [];
-  listGaleria: any = [];
+  listGaleria: any = [
+    /*{
+      cat_activo: 1,
+      checkMayor: 0,
+      foto: "https://segundav1.s3.amazonaws.com/optional/f18395a1-abfb-478c-b937-fc8fa7d4c149.jpeg.webp",
+      id: 576,
+      limit: 10,
+      listaTallas:[
+        {
+          check: true,
+          createdAt: "2021-02-26T19:07:14.585Z",
+          id: 11,
+          tal_descripcion: "35",
+          tal_sw_activo: 0,
+          tal_tipo: 1,
+          updatedAt: "2021-02-26T19:07:14.585Z"
+        }
+      ],
+      precioFabrica: 0,
+      pro_activo: 3,
+      pro_categoria: "84",
+      pro_codigo: "3DBG1F",
+      pro_descripcion: "disponibles desde la talla 36 a la talla 43 echos en material sintético de muy buena calidad",
+      pro_nombre: "0E0J88",
+      pro_sw_tallas: 1,
+      pro_uni_venta: 110000,
+      pro_usu_creacion: 23150,
+      pro_vendedor: 70000,
+      pro_vendedorCompra: 50000,
+      todoArmare: [
+        {
+          cat_activo: 1,
+          checkMayor: 0,
+          foto: "https://segundav1.s3.amazonaws.com/optional/f18395a1-abfb-478c-b937-fc8fa7d4c149.jpeg.webp",
+          id: 576,
+          limit: 10,
+          listaTallas:[
+            {
+              check: true,
+              createdAt: "2021-02-26T19:07:14.585Z",
+              id: 11,
+              tal_descripcion: "35",
+              tal_sw_activo: 0,
+              tal_tipo: 1,
+              updatedAt: "2021-02-26T19:07:14.585Z"
+            }
+          ],
+          precioFabrica: 0,
+          pro_activo: 3,
+          pro_categoria: "84",
+          pro_codigo: "3DBG1F",
+          pro_descripcion: "disponibles desde la talla 36 a la talla 43 echos en material sintético de muy buena calidad",
+          pro_nombre: "0E0J88",
+          pro_sw_tallas: 1,
+          pro_uni_venta: 110000,
+          pro_usu_creacion: 23150,
+          pro_vendedor: 70000,
+          pro_vendedorCompra: 50000,
+        },
+        {
+          cat_activo: 1,
+          checkMayor: 0,
+          foto: "https://segundav1.s3.amazonaws.com/optional/1670bf04-74ff-4d83-ad0a-3b466631b59f.jpeg.webp",
+          id: 577,
+          limit: 10,
+          listaTallas:[
+            {
+              check: true,
+              createdAt: "2021-02-26T19:07:14.585Z",
+              id: 11,
+              tal_descripcion: "35",
+              tal_sw_activo: 0,
+              tal_tipo: 1,
+              updatedAt: "2021-02-26T19:07:14.585Z"
+            }
+          ],
+          precioFabrica: 0,
+          pro_activo: 3,
+          pro_categoria: "84",
+          pro_codigo: "3DBG1F",
+          pro_descripcion: "disponibles desde la talla 36 a la talla 43 echos en material sintético de muy buena calidad",
+          pro_nombre: "0E0J88",
+          pro_sw_tallas: 1,
+          pro_uni_venta: 110000,
+          pro_usu_creacion: 23150,
+          pro_vendedor: 70000,
+          pro_vendedorCompra: 50000,
+        }
+      ],
+    },
+    {
+      cat_activo: 1,
+      checkMayor: 0,
+      foto: "https://segundav1.s3.amazonaws.com/optional/1670bf04-74ff-4d83-ad0a-3b466631b59f.jpeg.webp",
+      id: 577,
+      limit: 10,
+      listaTallas:[
+        {
+          check: true,
+          createdAt: "2021-02-26T19:07:14.585Z",
+          id: 11,
+          tal_descripcion: "35",
+          tal_sw_activo: 0,
+          tal_tipo: 1,
+          updatedAt: "2021-02-26T19:07:14.585Z"
+        }
+      ],
+      precioFabrica: 0,
+      pro_activo: 3,
+      pro_categoria: "84",
+      pro_codigo: "3DBG1F",
+      pro_descripcion: "disponibles desde la talla 36 a la talla 43 echos en material sintético de muy buena calidad",
+      pro_nombre: "0E0J88",
+      pro_sw_tallas: 1,
+      pro_uni_venta: 110000,
+      pro_usu_creacion: 23150,
+      pro_vendedor: 70000,
+      pro_vendedorCompra: 50000,
+      todoArmare: [
+        {
+          cat_activo: 1,
+          checkMayor: 0,
+          foto: "https://segundav1.s3.amazonaws.com/optional/f18395a1-abfb-478c-b937-fc8fa7d4c149.jpeg.webp",
+          id: 576,
+          limit: 10,
+          listaTallas:[
+            {
+              check: true,
+              createdAt: "2021-02-26T19:07:14.585Z",
+              id: 11,
+              tal_descripcion: "35",
+              tal_sw_activo: 0,
+              tal_tipo: 1,
+              updatedAt: "2021-02-26T19:07:14.585Z"
+            }
+          ],
+          precioFabrica: 0,
+          pro_activo: 3,
+          pro_categoria: "84",
+          pro_codigo: "3DBG1F",
+          pro_descripcion: "disponibles desde la talla 36 a la talla 43 echos en material sintético de muy buena calidad",
+          pro_nombre: "0E0J88",
+          pro_sw_tallas: 1,
+          pro_uni_venta: 110000,
+          pro_usu_creacion: 23150,
+          pro_vendedor: 70000,
+          pro_vendedorCompra: 50000,
+        },
+        {
+          cat_activo: 1,
+          checkMayor: 0,
+          foto: "https://segundav1.s3.amazonaws.com/optional/1670bf04-74ff-4d83-ad0a-3b466631b59f.jpeg.webp",
+          id: 577,
+          limit: 10,
+          listaTallas:[
+            {
+              check: true,
+              createdAt: "2021-02-26T19:07:14.585Z",
+              id: 11,
+              tal_descripcion: "35",
+              tal_sw_activo: 0,
+              tal_tipo: 1,
+              updatedAt: "2021-02-26T19:07:14.585Z"
+            }
+          ],
+          precioFabrica: 0,
+          pro_activo: 3,
+          pro_categoria: "84",
+          pro_codigo: "3DBG1F",
+          pro_descripcion: "disponibles desde la talla 36 a la talla 43 echos en material sintético de muy buena calidad",
+          pro_nombre: "0E0J88",
+          pro_sw_tallas: 1,
+          pro_uni_venta: 110000,
+          pro_usu_creacion: 23150,
+          pro_vendedor: 70000,
+          pro_vendedorCompra: 50000,
+        }
+      ],
+    },*/
+  ];
 
   btnDisabled: boolean = false;
   disableEliminar: boolean = false;
@@ -60,7 +238,7 @@ export class FormproductosComponent implements OnInit {
 
   imageChangedEvent: any = '';
   croppedImage: any = '';
-  todoArmare = [];
+  viewRt = "start";
 
   constructor(
     public dialog: MatDialog,
@@ -92,6 +270,7 @@ export class FormproductosComponent implements OnInit {
     if (Object.keys(this.datas.datos).length > 0) {
       this.data = _.clone(this.datas.datos);
       this.id = this.data.id;
+      this.viewRt = "end";
       if( !this.id ) {
         this.titulo = "Crear";
         this.id = ""; this.data.pro_codigo = this.codigo(); this.data.pro_sw_tallas = 1; this.disableSpinner = false; this.listFotos = [];
@@ -273,18 +452,22 @@ export class FormproductosComponent implements OnInit {
     });
   }
 
-  EliminarFoto( item:any, key:any = {} ){
+  async EliminarFoto( item:any, key:any = {} ){
     this.data.listaGaleria = this.listFotos.filter( ( row:any )=> row.id != item.id );
     this.listFotos = this.listFotos.filter( ( row:any )=> row.id != item.id );
     console.log( item, this.data  );
     if( key.galeriaList ) if( key.galeriaList.length ) key.galeriaList = key.galeriaList.filter( ( row:any )=> row.id != item.id );
-    this.updates();
+    await this.updates();
   }
 
-  guardarColor() {
+  async guardarColor() {
     //item.check = true;
-    this.data.listColor = this.listColor;
-    if (this.id) this.submit();
+    return new Promise( async ( resolve ) =>{
+      this.data.listColor = this.listColor;
+      console.log(this.data, this.listColor)
+      if (this.id) await this.submit();
+      resolve( true );
+    });
   }
   EliminarColor(idx: any) {
     this.listColor.splice(idx, 1);
@@ -292,18 +475,21 @@ export class FormproductosComponent implements OnInit {
     if (this.id) this.submit();
   }
 
-  submit() {
-    // valida si es el administrador
-    // if( !this.data.activarBTN ) return false;
-    ///////////////////////////////////////////
-    if (this.data.cat_activo) this.data.cat_activo = 0;
-    else this.data.cat_activo = 1;
-    if (this.data.checkMayor) this.data.checkMayor = 1;
-    else this.data.checkMayor = 0;
-    if (this.id) {
-      this.updates();
-    }
-    else { this.guardar(); }
+  async submit() {
+    return new Promise( async ( resolve )=>{
+      // valida si es el administrador
+      // if( !this.data.activarBTN ) return false;
+      ///////////////////////////////////////////
+      if (this.data.cat_activo) this.data.cat_activo = 0;
+      else this.data.cat_activo = 1;
+      if (this.data.checkMayor) this.data.checkMayor = 1;
+      else this.data.checkMayor = 0;
+      if (this.id) {
+        await this.updates();
+      }
+      else { this.guardar(); }
+      resolve( true );
+    });
   }
 
   TallaPush() {
@@ -324,14 +510,14 @@ export class FormproductosComponent implements OnInit {
     }
   }
 
-  guardarPrecios(item: any, opt:string) {
+  async guardarPrecios(item: any, opt:string) {
     item.check = true;
     if( opt == 'vendedor'){
       this.data.listPrecios = this.listPrecios;
     }else{
       this.data.listPreciosCliente = this.listPreciosCliente;
     }
-    if ( this.id ) this.submit();
+    if ( this.id ) await this.submit();
   }
 
   EliminarTalla( idx: any, opt:string ) {
@@ -360,18 +546,21 @@ export class FormproductosComponent implements OnInit {
     //this.dialog.closeAll();
   }
   updates() {
-    this.data = _.omit(this.data, [ 'pro_usu_creacion' ])
-    this.data = _.omitBy(this.data, _.isNull);
-    if( this.rolUser == 'administrador' ) this.data.pro_activo = 0;
-    this._productos.update(this.data).subscribe((res: any) => {
-      this._tools.presentToast("Actualizado");
-      res.listColor = this.data.listColor;
-      this.data = res;
-      if( this.data.pro_sw_tallas ) this.data.pro_sw_tallas = this.data.pro_sw_tallas.id;
-      if ( this.data.pro_sub_categoria ) this.data.pro_sub_categoria = this.data.pro_sub_categoria.id;
-      console.log( this.data )
-      this.procesoEdision();
-    }, (error) => { console.error(error); this._tools.presentToast("Error de servidor") });
+    return new Promise( resolve =>{
+      this.data = _.omit(this.data, [ 'pro_usu_creacion','todoArmare' ])
+      this.data = _.omitBy(this.data, _.isNull);
+      if( this.rolUser == 'administrador' ) this.data.pro_activo = 0;
+      this._productos.update(this.data).subscribe((res: any) => {
+        this._tools.presentToast("Actualizado");
+        res.listColor = this.data.listColor;
+        this.data = res;
+        if( this.data.pro_sw_tallas ) this.data.pro_sw_tallas = this.data.pro_sw_tallas.id;
+        if ( this.data.pro_sub_categoria ) this.data.pro_sub_categoria = this.data.pro_sub_categoria.id;
+        console.log( this.data )
+        this.procesoEdision();
+        resolve( true );
+      }, (error) => { console.error(error); this._tools.presentToast("Error de servidor"); resolve( false ); });
+    })
   }
   onSelects(event: any, opt:string = 'foto') {
     //console.log(event, this.files);
@@ -389,6 +578,7 @@ export class FormproductosComponent implements OnInit {
   async seleccionandoImg(item: any) {
     if (!item.id && this.btnDisabled == true) return false;
     for (let row of this.listGaleria) row.check = false;
+    this.viewRt = "end";
     item.check = !item.check;
     this.btnDisabled = true;
     this.data = await this.getProducto(item);
@@ -398,6 +588,7 @@ export class FormproductosComponent implements OnInit {
     this.blurTalla(0);
     this.croppedImage = "";
     this.imageChangedEvent = "";
+    this.listColor = this.data.listColor || []
   }
 
   getProducto(obj: any) {
@@ -421,6 +612,7 @@ export class FormproductosComponent implements OnInit {
     this._tools.presentToast("Exitoso");
     if( !this.data.id ) return false;
     this.getSubCategorias( this.data.pro_categoria );
+    this.validador();
 
   }
 
@@ -437,7 +629,7 @@ export class FormproductosComponent implements OnInit {
           "foto": res.files,
           "pro_descripcion": `disponibles desde la talla 36 a la talla 43 echos en material sintético de muy buena calidad`,
           "pro_codigo": "3DBG1F",
-          "pro_sw_tallas": 1,
+          "pro_sw_tallas": this.data.pro_sw_tallas,
           "pro_categoria": this.data.pro_categoria,
           "cat_activo": 1,
           "checkMayor": 0,
@@ -453,7 +645,6 @@ export class FormproductosComponent implements OnInit {
         this.id = result.id;
         this.data.todoArmare = []
         this.listGaleria.push(this.data);
-        this.validador();
         resolve(true);
       }, (error) => { console.error(error); this._tools.presentToast("Error de servidor"); });
     });
@@ -461,11 +652,13 @@ export class FormproductosComponent implements OnInit {
 
   validador(){
     for( let row of this.listGaleria){
+      if( !row.todoArmare ) row.todoArmare = [];
       for( let item of this.listGaleria ){
         row.todoArmare.push( item );
         row.todoArmare = _.unionBy(row.todoArmare || [], row.todoArmare, 'id');
       }
     }
+    console.log("****", this.listGaleria)
   }
 
   blurTalla(opt:number = 1) {
@@ -560,34 +753,50 @@ export class FormproductosComponent implements OnInit {
     })
   }
 
-  add(event: MatChipInputEvent) {
-    const value = (event.value || '').trim();
-    let  listas:any = [];
-    let filtro = this.listColor.filter(( item:any ) => item.talla == value );
-    if( filtro ) if( filtro.length > 0 ) return false;
-    // Add our fruit
-    for( let row of this.data.listaTallas ) listas.push( { tal_descripcion: row.tal_descripcion, id: row.id, tal_sw_activo: row.tal_sw_activo } );
-    console.log( listas );
-    if (value) {
-      let data:any = {
-        talla: value,
-        id: this._tools.codigo(),
-        check: true,
-        tallaSelect: [],
-        galeriaList: []
-      };
-      data.tallaSelect.push( ... _.clone( listas ) );
-      this.listColor.push( data );
+  async nexFunction( ){
+    for( let row of this.listGaleria ){
+      this.data = row;
+      //console.log( this.data )
+      for( let item of row.todoArmare ){
+        await this.add( { value: this._tools.codigo(), foto: item.foto } );
+      }
     }
-    console.log( event )
-    event.value = "";
-    this.guardarColor( );
-    // Clear the input value
-    try {
-      event['chipInput']!.clear();
-    } catch (error) {
+    this.viewRt = 'end';
+    this.data = this.listGaleria[0];
+  }
 
-    }
+  add(event: any ) {
+    return new Promise( async ( resolve ) =>{
+      const value = (event.value || '').trim();
+      let  listas:any = [];
+      let filtro = this.listColor.filter(( item:any ) => item.talla == value );
+      if( filtro ) if( filtro.length > 0 ) return resolve( false );
+      // Add our fruit
+      for( let row of this.data.listaTallas ) listas.push( { tal_descripcion: row.tal_descripcion, id: row.id, tal_sw_activo: row.tal_sw_activo } );
+      console.log( listas );
+      if (value) {
+        let data:any = {
+          talla: value,
+          id: this._tools.codigo(),
+          check: true,
+          foto: event.foto || '',
+          tallaSelect: [],
+          galeriaList: []
+        };
+        data.tallaSelect.push( ... _.clone( listas ) );
+        this.listColor.push( data );
+      }
+      console.log( event )
+      event.value = "";
+      await this.guardarColor( );
+      // Clear the input value
+      try {
+        event['chipInput']!.clear();
+      } catch (error) {
+  
+      }
+      resolve( true );
+    });
   }
 
   remove(item: Fruit): void {
