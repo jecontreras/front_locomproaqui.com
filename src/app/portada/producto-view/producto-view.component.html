@@ -2,7 +2,7 @@
 <section id="aa-catg-head-banner">
   <img [src]="tiendaInfo.portada3 || './assets/img/banner.jpg'" class="anchosBanner"
     alt="fashion img">
-  <div class="aa-catg-head-banner-area">
+  <!--<div class="aa-catg-head-banner-area">
     <div class="container">
       <div class="aa-catg-head-banner-content">
         <h2>{{ data.pro_nombre }}</h2>
@@ -13,7 +13,7 @@
         </ol>
       </div>
     </div>
-  </div>
+  </div>-->
 </section>
 <!-- / catg header banner section -->
 
@@ -54,9 +54,15 @@
                   <div class="aa-price-block">
                     <span class="aa-product-view-price precio">{{ _formato.monedaChange( 3, 2, data.pro_uni_venta || 0 )
                       }}</span>
+                      <div class="aa-product-rating">
+                        <span class="fa fa-star"></span>
+                        <span class="fa fa-star"></span>
+                        <span class="fa fa-star"></span>
+                        <span class="fa fa-star"></span>
+                        <span class="fa fa-star-o"></span>
+                      </div>
                     <p class="aa-product-avilability">Disponibilidad: <span>En stock</span></p>
                   </div>
-                  <p [innerHtml]="data.pro_descripcion "></p>
                   <section *ngIf="data['listTallas']?.length > 0 ">
                     <h4>Talla</h4>
                     <div class="aa-prod-view-size">
@@ -65,18 +71,27 @@
                         item.tal_descripcion }}</a>
                     </div>
                   </section>
-                  <h4>Color</h4>
-                    <div class="aa-color-tag">
-                    <a class="pointer" *ngFor="let item of data.listColor" [ngClass]="{selecciono: item.check1}"
-                      (click)="handleSelect( item );" style="width: auto !important;">{{
-                      item.talla }}
+                  <section *ngIf="data['listColor']?.length > 0 ">
+                    <h4>Color</h4>
+                    <div class="aa-prod-view-size">
+                      <a class="pointer" *ngFor="let item of data.listColor" [ngClass]="{selecciono: item.check1}"
+                        (click)="handleSelect( item );">{{
+                          item.talla }}</a>
+                    </div>
+                  </section>
+                  <a (click)="comprarArticulo( 1, false )" class="aa-add-to-cart-btn pointer ov-btn-slide-close">Comprar y pagar en casa</a>
+                  <h2 class="text-success" *ngIf="data['pro_categoria']?.id == 16">
+                    <a (click)="comprarArticulo( 2, true )" class="aa-add-to-cart-btn pointer"
+                    style="font-size: 130%; background: #fbff00; color: #212529; border-radius: 11px;"><span
+                      class="fa fab fa-whatsapp"></span>
+                      LLEVA 2 PARES POR {{ _formato.monedaChange( 3, 2, ( ( data.pro_uni_venta * 2 ) - 20000 ) || 0 ) }}
+                      DESCUENTO 18%
                     </a>
-                      <!--<a href="#" class="aa-color-green"></a>
-                      <a href="#" class="aa-color-yellow"></a>
-                      <a href="#" class="aa-color-pink"></a>
-                      <a href="#" class="aa-color-black"></a>
-                      <a href="#" class="aa-color-white"></a>-->
-                </div>
+                  </h2>
+                  <br>
+                  <img src="./assets/imagenes/enviosG.jpg" alt="" style="width: 45px;">&nbsp; <span class="text-success">Envio Gratis</span>
+                    <br>
+                  <p [innerHtml]="data.pro_descripcion "></p>
                   <!--<div class="aa-prod-quantity">
                     <h4>Cantidad</h4>
                     <input class="form-control form-control-sm" type="number" placeholder=".form-control-sm" [(ngModel)]="pedido.cantidad">
@@ -85,26 +100,6 @@
                         }}</a>
                     </p>
                   </div>-->
-                  <div class="aa-prod-view-bottom">
-                    <!--<a (click)="AgregarCart()" class="aa-add-to-cart-btn pointer"><span
-                        class="fa fa-shopping-cart"></span>Agregar al Carrito</a>-->
-                    <!--<a class="aa-add-to-cart-btn"
-                      href="https://www.facebook.com/sharer/sharer.php?kid_directed_site=0&u=https://www.locomproaqui.com/productos/15?u=https://www.locomproaqui.com/productos/{{ this.data.id }}"
-                      target="_blank">Compartir</a>-->
-                    <a (click)="comprarArticulo( 1, false )" class="aa-add-to-cart-btn pointer"
-                      style="background: #008116; color: white; border-radius: 11px;"><span
-                        class="fa fab fa-whatsapp"></span>Comprar y pagar en casa</a>
-                        <h2 class="text-success" *ngIf="data['pro_categoria']?.id == 16">
-                          <a (click)="comprarArticulo( 2, true )" class="aa-add-to-cart-btn pointer"
-                          style="font-size: 130%; background: #fbff00; color: #212529; border-radius: 11px;"><span
-                            class="fa fab fa-whatsapp"></span>
-                            LLEVA 2 PARES POR {{ _formato.monedaChange( 3, 2, ( ( data.pro_uni_venta * 2 ) - 20000 ) || 0 ) }}
-                            DESCUENTO 18%
-                          </a>
-                        </h2>
-                    <!--<a (click)="masInfo( data )" class="aa-add-to-cart-btn pointer"><span
-                      class="fa fab fa-whatsapp"></span>Pedir Informacion</a>-->
-                  </div>
                 </div>
               </div>
             </div>
@@ -127,7 +122,8 @@
                   <h4>Detalles</h4>
                   <div class="row">
                     <div class="col-12">
-                      <img src="./assets/img/compra.jpg" style="width: 320px;">
+                      <img src="./assets/imagenes/completo.webp" style="width: 100%">
+                      <img src="./assets/imagenes/camara.webp" style="width: 50%;">
                     </div>
                     <div class="col-12" *ngIf="data['pro_categoria']?.pro_categoria == 16">
                       <h5> 🚚 ENVIO GRATIS Y PAGAS CUANDO RECIBES EL PRODUCTO 🚚

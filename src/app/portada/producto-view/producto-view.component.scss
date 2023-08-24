@@ -6,6 +6,10 @@
     background: #dff907;
 }
 
+.fa-star{
+  color: #ff6600;
+}
+
 .ancho {
     width: 100%;
   }
@@ -64,4 +68,47 @@ div.scrollmenu a {
 
 div.scrollmenu a:hover {
   background-color: #777;
+}
+
+
+
+
+/*** ESTILOS BOTÓN SLIDE LEFT ***/
+
+.ov-btn-slide-close {
+  background: #008116; /* color de fondo */
+  color: #f2f4f3 !important; /* color de fuente */
+  border: 2px solid #008116; /* tamaño y color de borde */
+  padding: 16px 20px;
+  border-radius: 3px; /* redondear bordes */
+  position: relative;
+  z-index: 1;
+  overflow: hidden;
+  display: inline-block;
+}
+.ov-btn-slide-close:before, .ov-btn-slide-close:after {
+  content: "";
+  z-index: -1;
+  position: absolute;
+  width: 50%;
+  height: 100%;
+  top: 0;
+  left: -50%;
+  background-color: #f9f9f9; /* color de fondo hover */
+  -webkit-transition: all 0.3s ease-in-out;
+  -o-transition: all 0.3s ease-in-out;
+  transition: all 0.3s ease-in-out;
+}
+.ov-btn-slide-close:after {
+  left: 100%;
+}
+.ov-btn-slide-close:hover {
+  color: #0d0d0d !important; /* color de fuente hover */
+
+}
+.ov-btn-slide-close:hover:before {
+  left: 0;
+}
+.ov-btn-slide-close:hover:after {
+  left: 50%;
 }

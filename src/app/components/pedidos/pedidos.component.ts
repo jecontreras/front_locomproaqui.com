@@ -35,7 +35,7 @@ export class PedidosComponent implements OnInit {
       pro_mp_venta: 0
     },
     page: 0,
-    limit: 18
+    limit: 30
   };
   seartxt: string = '';
   ultimoSeartxt:string = '';

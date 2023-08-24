@@ -162,6 +162,7 @@ export class ProductosViewComponent implements OnInit {
     this._producto.get( this.queryId ).subscribe((res:any)=>{
       this.data = res.data[0] || {};
       this.data.listComentarios = this.data.listComment || [];
+      console.log("***165", this.data.listComentarios)
       try {
         this.data.listTallas = this.data.listColor[0].tallaSelect.filter( item => item.cantidad );
         for( let row of this.data.listTallas ) row.tal_descripcion = ( Number( row.tal_descripcion ) || row.tal_descripcion );

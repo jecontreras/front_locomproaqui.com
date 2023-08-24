@@ -3,15 +3,17 @@
     <div class="p-2 flex-grow-1 bd-highlight">
       <h3>Datos {{ data.pro_nombre }}</h3>
     </div>
-    <div class="p-2 bd-highlight">
-      <span *ngIf="( disabledView !== 'store' )">
-        <button (click)="shareUrl( )" type="button" class="btn btn-success">
+    <div class="p-2 bd-highlight ">
+        <button (click)="shareUrl( )" type="button" class="btn btn-success" *ngIf="( disabledView !== 'store' )">
             Compartir link
-          </button>
-      </span>
-      <button (click)="descargarFoto( data )" type="button" class="btn btn-primary">
+        </button>
+      &nbsp;
+      <button (click)="openUrl( )" type="button" class="btn btn-primary">
+        Piezas gráficas
+      </button>
+      <!--<button (click)="descargarFoto( data )" type="button" class="btn btn-primary">
         Descargar Foto
-    </button>
+      </button>-->
     </div>
     <div class="p-2 bd-highlight">
       <button mat-raised-button color="warn" mat-dialog-close>

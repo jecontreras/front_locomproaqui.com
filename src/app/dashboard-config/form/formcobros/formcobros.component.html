@@ -37,9 +37,9 @@
             <label for="exampleFormControlSelect1">Estado del Cobro</label>
             <select class="form-control form-control-sm" [(ngModel)]="data.cob_estado">
                 <option type="number" value="0">Activa</option>
-                <option type="number" value="1">Apraboda</option>
+                <option type="number" value="1">Aprabado</option>
                 <option type="number" value="2">Rechazada</option>
-                <option type="number" value="3">Eliminado</option>
+                <!--<option type="number" value="3">Eliminado</option>-->
             </select>
         </div>
         <div class="form-group col-md-6 col-sm-4 col-lg-4 col-xs-4" *ngIf="data.id">
@@ -144,8 +144,8 @@
     </div>
 </mat-dialog-content>
 <mat-dialog-actions align="end">
-    <button mat-button mat-dialog-close>Cerrar</button>
-    <button mat-button cdkFocusInitial (click)="submit()" [disabled]="disabledButton">
+    <button mat-button mat-dialog-close mat-raised-button color="warn">Cerrar</button>
+    <button mat-button cdkFocusInitial (click)="submit()" [disabled]="disabledButton" mat-raised-button color="primary">
         <span *ngIf="!id">Enviar solicitud</span>
         <span *ngIf="id">Actulizar Cambios</span>
     </button>

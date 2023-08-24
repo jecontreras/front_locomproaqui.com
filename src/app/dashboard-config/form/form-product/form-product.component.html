@@ -129,6 +129,10 @@
                     <label>Nombre</label>
                     <input type="text" [(ngModel)]="data.pro_nombre" class="form-control form-control-sm">
                 </div>
+                <div class="form-group col-md-6 col-sm-4 col-lg-4 col-xs-4">
+                    <label>URL DE MEDIOS DRIVE</label>
+                    <input type="text" [(ngModel)]="data.urlMedios" class="form-control form-control-sm">
+                </div>
                 <div class="form-group col-md-6 col-sm-4 col-lg-4 col-xs-6">
                     <label for="exampleFormControlSelect1">Categoria:</label>
                     <select class="form-control form-control-sm" [(ngModel)]="data.pro_categoria"
@@ -427,7 +431,7 @@
     </div>
 </mat-dialog-content>
 <mat-dialog-actions align="end">
-    <button mat-button mat-dialog-close color="warn">Cerrar</button>
+    <button mat-button mat-dialog-close mat-raised-button color="warn">Cerrar</button>
     <button mat-button cdkFocusInitial color="primary" (click)="nexFunction()" *ngIf="( this.id ) && viewRt === 'start'">
         <span>Actulizar Cambios</span>
     </button>

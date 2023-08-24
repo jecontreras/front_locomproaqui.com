@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { ProductoService } from 'src/app/servicesComponents/producto.service';
 import { CategoriasService } from 'src/app/servicesComponents/categorias.service';
 import { NgxSpinnerService } from 'ngx-spinner';
@@ -46,6 +46,8 @@ export class ProductosComponent implements OnInit {
   id:string;
   dataUser:any = {};
   userCabeza:any = {};
+  @ViewChild('toolbar',{static: false} ) private nav: any;
+  userId:any;
 
   constructor(
     private _productos: ProductoService,
@@ -66,18 +68,29 @@ export class ProductosComponent implements OnInit {
       this.tiendaInfo = store.configuracion || {};
       if( store.buscador ) if( Object.keys(store.buscador).length > 0 ) {  if( store.buscador.search ) { this.seartxt = store.buscador.search; this.buscar(); this.borrarBusqueda(); this.dataSeleccionda = store.buscador.search } }
       if( store.usercabeza ) this.query.where.idPrice = store.usercabeza.id;
-      this.userCabeza = store.userCabeza || {};
+      this.userCabeza = store.usercabeza || {};
+      this.userId = store.usercabeza || {};
     });
   }
 
   async ngOnInit() {
     this.id = this.activate.snapshot.paramMap.get('id');
-    console.log("******ID", this.id)
+    console.log("******ID", this.id, this.userCabeza)
     if( this.id ) this.dataUser = ( await this.getUser() ) || { id: 1 };
     else this.dataUser = { id: 1 }
     this.getProductos();
     this.getCategorias();
     this.getProductosRecomendado();
+    setInterval(()=> {
+      //console.log( this.nav)
+      let color:string = ( this.dataUser.usu_color || "#02a0e3" );
+      if( this.userId.id ) {
+        //console.log("**NO ENTRE",this.userId)
+        color = this.userId.usu_color || "#02a0e3";
+      }
+      //console.log("***144",color, this.dataUser )
+      this.nav.nativeElement.style.backgroundColor = color;
+    }, 1000 );
   }
   getUser(){
     return new Promise( resolve =>{

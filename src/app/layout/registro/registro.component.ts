@@ -89,7 +89,7 @@ export class RegistrosComponent implements OnInit {
   disabledFile:boolean = false;
   disabledusername: boolean = true;
   printText:boolean = false;
-  view:string='';
+  view:string='vendedor';
   listCiudad: any = [];
   listCiudades:any = DANEGROUP;
   listDepartamento: any = departamento;

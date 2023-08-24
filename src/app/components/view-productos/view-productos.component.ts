@@ -123,7 +123,7 @@ export class ViewProductosComponent implements OnInit {
       res = res.data[0];
       if( res ) {
         this.data.idMyProduct = res.id;
-        this.disabledView = 'createPrice';
+        if( this.data.view === "store") this.disabledView = 'createPrice';
         this.data.idPrice = res.price;
       }
     });
@@ -429,6 +429,10 @@ export class ViewProductosComponent implements OnInit {
       this._tools.tooast({ title: "Completado", detalle: "Este Producto Se le Edito el Precio de Venta Final!!!"})
       //this.dialogRef.close('update');
     },()=> this._tools.tooast({ icon: "error",title: "Importante", detalle: "Problemas de Conexion !!!" } ) );
+  }
+
+  openUrl( ){
+    window.open(this.data.urlMedios)
   }
 
 

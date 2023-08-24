@@ -58,6 +58,7 @@ export class PerfilComponent implements OnInit {
   keyword = 'name';
 
   fieldTextType: boolean;
+  viewOpt:string;
 
   constructor(
     private _user: UsuariosService,
@@ -138,12 +139,17 @@ export class PerfilComponent implements OnInit {
     }, () => this._tools.tooast("Error de servidor"));
   }
 
-  finixCorteImg(){
+  openView( opt:string ){
+    console.log("***143", opt)
+    this.viewOpt = opt;
+  }
+
+  finixCorteImg( opt:string ){
     //Usage example:
     var file = this._tools.converBase64ImgToBynare(this.croppedImage,'hello');
     //console.log(file);
     this.files.push( file );
-    this.subirFile('usu_imagen');
+    this.subirFile(opt);
   }
 
   fileChangeEvent(event: any): void {

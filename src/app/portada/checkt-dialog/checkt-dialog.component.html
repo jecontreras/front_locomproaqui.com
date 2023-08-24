@@ -124,47 +124,47 @@
             </div>
 
         </div>
-        <div class="form-group col-12">
+        <div class="form-group col-6 col-sm-4">
             <label for="exampleFormControlInput1">Nombre y Apellido</label>
             <input type="text" [(ngModel)]="data.nombre" class="form-control form-control-sm"
                 placeholder="Nombre y Apellido" required>
         </div>
-        <div class="form-group col-12">
+        <div class="form-group col-6 col-sm-4">
             <label for="exampleFormControlInput1">Numero de Telefono</label>
             <input type="text" [(ngModel)]="data.telefono" class="form-control form-control-sm"
                 placeholder="Numero Telefono" required>
         </div>
-        <div class="form-group col-12">
+        <div class="form-group col-6 col-sm-4">
             <label for="exampleFormControlInput1">Dirección de Entrega</label>
             <input type="text" [(ngModel)]="data.direccion" class="form-control form-control-sm"
                 placeholder="Direccion de Entrega" required>
         </div>
-        <div class="form-group col-12">
+        <div class="form-group col-6 col-sm-4">
             <label for="exampleFormControlInput1">Ciudad o Municipio</label>
             <input type="text" [(ngModel)]="data.ciudad" class="form-control form-control-sm"
                 placeholder="Ciudad o Municipio" required>
         </div>
-        <div class="form-group col-12">
+        <div class="form-group col-6 col-sm-4">
             <label for="exampleFormControlInput1">Barrio o Localidad</label>
             <input type="text" [(ngModel)]="data.barrio" class="form-control form-control-sm"
                 placeholder="Barrio o Localidad" required>
         </div>
-        <div class="form-group col-12">
+        <div class="form-group col-6 col-sm-4">
             <label for="exampleFormControlInput1">Talla</label>
             <input type="text" [(ngModel)]="data.talla" class="form-control form-control-sm"
                 placeholder="talla del Producto" required>
         </div>
-        <div class="form-group col-12">
+        <div class="form-group col-4">
             <label for="exampleFormControlInput1">Color</label>
             <input type="text" [(ngModel)]="data.colorSelect" class="form-control form-control-sm"
                 placeholder="Color del Producto" required>
         </div>
-        <div class="form-group col-12">
+        <div class="form-group col-2">
             <label for="exampleFormControlInput1">Cantidad</label>
             <input type="text" [(ngModel)]="data.cantidadAd" class="form-control form-control-sm" (change)="suma()"
                 placeholder="Cantidad de Producto" required [disabled]="data.opt">
         </div>
-        <!--<div class="form-group col-12" *ngIf="!dataUser.id">
+        <!--<div class="form-group col-6 col-sm-4" *ngIf="!dataUser.id">
             <button type="button" class="btn btn-primary" (click)="logearFacebook()">Iniciar seccion <img src="./assets/icons/facebook.png" alt="" class="altosIcons"></button>
         </div>-->
     </div>
@@ -181,7 +181,7 @@
 </mat-dialog-content>
 
 <mat-dialog-actions align="end">
-    <button mat-button mat-dialog-close>Cerrar</button>
+    <button mat-button mat-dialog-close mat-raised-button color="warn">Cerrar</button>
     <button mat-button cdkFocusInitial mat-raised-button color="primary" (click)="finalizando()" *ngIf="!data.id">
         <span>Confirmar Compra</span>
     </button>

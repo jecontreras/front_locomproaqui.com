@@ -1,4 +1,4 @@
-<div class="container">
+<div style="    padding: 20px;">
   <div class="main-content">
     <div class="row">
       <div class="col-12">
@@ -79,29 +79,30 @@
                 <div class="row">
                   <div class="col-12">
                     <button type="button" data-toggle="tooltip" data-placement="right" style="width: 100%;"
-                      class="sc-logout btn btn-success btn-sm pull-right buttonAncho"
+                      class="sc-logout btn btn-success btn-sm pull-right buttonAncho font-weight-bold"
                       [ngStyle]="{'background-color':urlColor }" (click)="AgregarCart(item)"
                       data-original-title=" Hacer pedido">{{ titleButton }} </button>
                   </div>
-                  <div class="col-12 paddins1" *ngIf="rolname != 'vendedor'">
-                    <img (click)="masInfo(item)" class="pointer" src="./assets/icons/masinformacion.png"
-                      style="width: 100%;">
+                  <div class="col-12" *ngIf="rolname != 'vendedor'">
+                    <div class="mx-auto" style="width: 65%;">
+                      <img (click)="masInfo(item)" class="pointer" src="./assets/icons/masinformacion.png"
+                          style="    width: 100%;">
+                    </div>
                   </div>
                   <div class="col-12 paddins1" *ngIf="rolname == 'vendedor'">
   
                   </div>
-                  <div class="col-12">
+                  <!--<div class="col-12">
                     <div class="d-flex justify-content-between">
                       <div>
                         <img src="./assets/icons/descargar.png" style="width: 100%;" class="pointer"
                           (click)="descargarFoto( item )">
                       </div>
                       <div style="width: 200%;">
-                        <!--<h6 class="titulo1">Pago Contra Entrega</h6>-->
                         <img src="./assets/img/pago.png" style="width: 100%;">
                       </div>
                     </div>
-                  </div>
+                  </div>-->
                 </div>
               </mat-card-actions>
             </mat-card>

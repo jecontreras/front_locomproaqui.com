@@ -113,17 +113,15 @@
               <h3
                 style="box-sizing: border-box; color: inherit; font-family: inherit; font-size: 1.75rem; font-weight: 500; line-height: 1.2; margin-bottom: 0.5rem; margin-top: 0px;">
                 <a [routerLink]="[ '/pedidos' ]">
-                  <img [src]="urlLogo" style="width: 177px; height: 55px;">
+                  <img [src]="urlLogo" style="width: 58%;     margin-left: 40px; border-radius: 10px;">
                 </a>
                 <a class="pointer text-white" style="position: initial;" (click)="drawer.toggle()">
                   <i class="material-icons" aria-hidden="true" style="position: absolute;
                   left: 216px;">close</i>
                 </a>
               </h3>
-            </div>
-            <cdk-virtual-scroll-viewport appendOnly itemSize="50" class="example-viewport">
-              <div data-spy="scroll" data-target="#navbar-example3" data-offset="0">
-                <ul class="list-unstyled CTAs"
+              <br>
+              <ul class="list-unstyled CTAs"
                   style="box-sizing: border-box; list-style: none; margin-bottom: 1rem; margin-top: 0px;">
                   <li style="box-sizing: border-box;" *ngFor="let item of menus2">
                     <a class="download pointer" (click)="EventMenus(item)"
@@ -132,6 +130,9 @@
                     </a>
                   </li>
                 </ul>
+            </div>
+            <cdk-virtual-scroll-viewport appendOnly itemSize="50" class="example-viewport">
+              <div data-spy="scroll" data-target="#navbar-example3" data-offset="0">
                 <ul class="list-unstyled components"
                   style="border-bottom: 1px solid rgb(71, 116, 139); box-sizing: border-box; list-style: none; margin-bottom: 1rem; margin-top: 0px; padding: 20px 0px;">
                   <!--<p
@@ -173,6 +174,9 @@
           <button mat-icon-button (click)="drawer.toggle()" translate="no">
             <i class="material-icons icoss">menu</i>
           </button>
+          <a [routerLink]="[ '/pedidos' ]">
+            <img src="./assets/logo.png" style="width: 177px; height: 55px;">
+          </a>
         </div>
         <div class="buscadorOcultar">
           <input type="text" style="border-radius: 11px;" [(ngModel)]="seartxt" (change)="buscar()"
@@ -265,12 +269,12 @@
         </div>
       </div>
       <div class="d-flex justify-content-center">
-        <h4 *ngIf="dataUser.id" class="text-center text-dark altos titulo1">
+        <h2 *ngIf="dataUser.id" class="text-center text-dark altos titulo1">
           BIENVENIDO A TU OFICINA VIRTUAL " {{ dataUser.usu_usuario }} "
-        </h4>
-        <h4 *ngIf="!dataUser.id" class="text-center text-dark altos titulo1">
+        </h2>
+        <h2 *ngIf="!dataUser.id" class="text-center text-dark altos titulo1">
           BIENVENIDO A {{ userId.usu_usuario || 'LOKOMPROAQUI'}}
-        </h4>
+        </h2>
       </div>
     </div>
     <div class="alert alert-warning alert-dismissible fade show" role="alert" *ngFor="let item of listAlert">

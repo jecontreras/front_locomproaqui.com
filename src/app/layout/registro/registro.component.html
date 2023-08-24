@@ -1,18 +1,33 @@
 <div class="content" style="height: 56pc;">
     <div class="row">
         <div class="col-12">
-            <div class="d-flex justify-content-center">
-                <div>
+            <div class="row" style=" color: white; padding: 15px;">
+                <div class="col-12 col-sm-6" style="    background: #02a0e3;">
+                    <div style="text-align: center;">
+                        <img src="./assets/logo.png" alt="">
+                    </div>
+                </div>
+                <div class="col-12 col-sm-6" style="background: #00aaff;">
+                    <div style="margin: 0 112px 0 3px; text-align: center;">
+                        <h5 class="text-dart" style="padding: 45px;  text-align: center;">
+                            ¡Haz tu registro y automáticamente tendrás una tienda con más de 20 proveedores de distintas categorías donde podrás traer a tus clientes y
+                            recibir tus pedidos vía WhatsApp tu montas cada pedido en tu plataforma y nosotros nos encargamos de hacer llegar los pedidos a tu cliente final y
+                            tu te ganarás una excelente comisión por cada venta
+                        </h5>
+                    </div>
+                </div>
+            </div>
+            <!--<div class="d-flex justify-content-center"><div>
                     <h5 class="text-dart" style="padding: 45px;  text-align: center;">
                         ¡Haz tu registro y automáticamente tendrás una tienda con más de 20 proveedores de distintas categorías donde podrás traer a tus clientes y
                         recibir tus pedidos vía WhatsApp tu montas cada pedido en tu plataforma y nosotros nos encargamos de hacer llegar los pedidos a tu cliente final y
                         tu te ganarás una excelente comisión por cada venta
                     </h5>
                 </div>
-            </div>
+            </div>-->
             <div class="d-flex justify-content-center">
                 <div>
-                    <h4 class="text-dart">Te Invito {{ dataUser.usu_nombre || 'Admin' }}</h4>
+                    <h2 class="text-dart">Te Invitó {{ dataUser.usu_nombre || 'Admin' }}</h2>
                     <br><br>
                 </div>
             </div>
@@ -156,7 +171,7 @@
                             <ng-template matStepLabel>Terser Paso</ng-template>
                             <div class="form row container">
                                 <div class="col-12">
-                                    <label for="exampleFormControlSelect1">Sabes qué es droppshipping</label>
+                                    <label for="exampleFormControlSelect1">¿Sabes qué es droppshipping?</label>
                                     <select class="form-control" [(ngModel)]="data.queEsDropp">
                                         <option value="si">SI</option>
                                         <option value="no">NO</option>
@@ -168,8 +183,8 @@
                                     <textarea class="form-control" [(ngModel)]="data.textoQueEsDropp" rows="3"></textarea>
                                 </div>
                                 <div class="col-12">
-                                    <label for="exampleFormControlSelect1">Cuanto tiempo llevas vendiendo de manera
-                                        virtual</label>
+                                    <label for="exampleFormControlSelect1">¿Cuanto tiempo llevas vendiendo de manera
+                                        virtual?</label>
                                     <select class="form-control" [(ngModel)]="data.tiempoVendiendo">
                                         <option value="menos3">3 meses o menos</option>
                                         <option value="mas6">De 6 meses a un año</option>
@@ -177,8 +192,8 @@
                                     </select>
                                 </div>
                                 <div class="col-12">
-                                    <label for="exampleFormControlSelect1">Cuantas ventas crees que puedes realizar
-                                        mensualmente</label>
+                                    <label for="exampleFormControlSelect1">¿Cuantas ventas crees que puedes realizar
+                                        mensualmente?</label>
                                     <select class="form-control" [(ngModel)]="data.ventasRealizarMensual">
                                         <option value="30">1 a 30</option>
                                         <option value="100">de 31 a 100</option>
@@ -186,8 +201,8 @@
                                     </select>
                                 </div>
                                 <div class="col-12">
-                                    <label for="exampleFormControlSelect1">Pagas publicidad en alguna red social para
-                                        vender</label>
+                                    <label for="exampleFormControlSelect1">¿Pagas publicidad en alguna red social para
+                                        vender?</label>
                                     <select class="form-control" [(ngModel)]="data.pagasPublicidad">
                                         <option value="si">SI</option>
                                         <option value="no">NO</option>
@@ -273,10 +288,10 @@
             </div>
             <div class="col-12">
                 <br><br>
-                <div class="d-flex justify-content-center">
+                <!--<div class="d-flex justify-content-center">
                     <h3 class="text-white pointer efectButton" [routerLink]="['/introduccion']">Ver Link de Inducción
                     </h3>
-                </div>
+                </div>-->
                 <br><br>
             </div>
         </div>
@@ -340,8 +355,9 @@
                                       </option>
                                   </select>
                               </div>
-                              <div class="col-12">
-                                <label for="exampleFormControlSelect1">En qué Plataformas Haz Estado o Estás Como Proveedor</label>
+                              <div class="form-group col-sm-6 col-12">
+                                <!--<label for="exampleFormControlSelect1">En qué Plataformas Haz Estado o Estás Como Proveedor</label>-->
+                                <label for="exampleFormControlSelect1">¿Estás vinculado alguna plataforma de dropshipping?</label>
                                 <select class="form-control" [(ngModel)]="data.pagasPublicidad">
                                     <option value="si">SI</option>
                                     <option value="no">NO</option>
@@ -564,6 +580,14 @@
               </div>
               <br><br>
           </div>
-      </div>
+        </div>
+        <div class="col-12">
+            <h1 style="text-align: center;">¿QUÉ ES LOKOMPROAQUI?</h1>
+            <div class="d-flex justify-content-center">
+                <div>
+                    <iframe width="560" height="315" src="https://www.youtube.com/embed/qMYKvn5dbvg?si=d1e8bC_bHLgKaJdn" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+                </div>
+            </div>
+        </div>
     </div>
 </div>

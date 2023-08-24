@@ -1,10 +1,9 @@
 <!-- catg header banner section -->
-<section id="aa-catg-head-banner">
+<!--<section id="aa-catg-head-banner">
   <img [src]=" tiendaInfo.portada2 || './assets/img/banner.jpg'" alt="fashion img" class="anchosBanner">
   <div class="aa-catg-head-banner-area">
     <div class="container">
       <div class="aa-catg-head-banner-content">
-        <!--<h2>Productos exclusivos</h2>-->
         <br>
           <br>
         <ol class="breadcrumb">
@@ -14,17 +13,36 @@
       </div>
     </div>
   </div>
+</section>-->
+<section id="aa-catg-head-banner">
+  <div class="row">
+    <div class="col-12"><img [src]=" userCabeza.portada2 || './assets/img/banner.jpg'" alt="fashion img" class="anchosBanner"></div>
+    <!--<div class="col-3">
+      <div class="mx-auto" style="width: 457px; margin-top: 32px;">
+        <img [src]=" userCabeza.usu_imagen || './assets/img/banner.jpg'" alt="fashion img" class="" style="    width: 55%;">
+      </div>
+    </div>
+    <div class="col-9">
+      <img [src]=" userCabeza.portada2 || './assets/img/banner.jpg'" alt="fashion img" class="anchosBanner">
+    </div>-->
+  </div>
 </section>
 
 <!-- product category -->
 <section id="aa-product-category" >
   <div class="">
     <div class="row">
+      <div class="col-12">
+        <div class="mx-auto" style="width: 200px;">
+          <br><br>
+          <img [src]=" userCabeza.usu_imagen || './assets/img/banner.jpg'" alt="fashion img" class="" style="    width: 90%;">
+        </div>
+      </div>
       <div class="col-lg-9 col-md-9 col-sm-8 col-md-push-3" style="padding: 3%;">
         <div class="aa-product-catg-content">
           <div class="row">
             <div class="col-12">
-              <div class="scrollmenu" style="    border-radius: 3px;">
+              <div class="scrollmenu" style="    border-radius: 3px;" #toolbar>
                 <a class="pointer" (click)="SeleccionCategoria( item )" *ngFor="let item of listCategorias">{{ item.cat_nombre }} </a>
               </div>
             </div>
@@ -79,23 +97,7 @@
       </div>
       <div class="col-lg-3 col-md-3 col-sm-4 col-md-pull-9">
         <aside class="aa-sidebar">
-          <!-- single sidebar -->
-          <div class="aa-sidebar-widget">
-            <h3>Categorias</h3>
-            <ul class="aa-catg-nav">
-              <li *ngFor="let item of listCategorias"><a class="pointer" style="font-size: 140%;" (click)="SeleccionCategoria(item)">
-                  {{ item.cat_nombre }}</a></li>
-            </ul>
-          </div>
-          <!-- single sidebar -->
-          <div class="aa-sidebar-widget">
-            <h3>Etiquetas</h3>
-            <div class="tag-cloud">
-              <a class="pointer">{{ dataSeleccionda }}</a>
-            </div>
-          </div>
-          <!-- single sidebar -->
-          <div class="aa-sidebar-widget">
+          <div class="aa-sidebar-widget" *ngIf="listProductosHistorial.length">
             <h3>Vistas recientes</h3>
             <div class="aa-recently-views">
               <ul>
@@ -119,7 +121,13 @@
                   <a href="#" target="_blank" [routerLink]="[ '/front/productosView', item.id, this.dataUser.usu_telefono ]" class="aa-cartbox-img"><img alt="img"
                       [src]="item.foto"></a>
                   <div class="aa-cartbox-info">
-                    <h4><a class="pointer">{{ item.pro_nombre }}</a></h4>
+                    <h4><a class="pointer"><div class="aa-product-rating">
+                      <span class="fa fa-star"></span>
+                      <span class="fa fa-star"></span>
+                      <span class="fa fa-star"></span>
+                      <span class="fa fa-star"></span>
+                      <span class="fa fa-star-o"></span>
+                    </div>{{ item.pro_nombre }}</a></h4>
                     <p>{{ _formato.monedaChange( 3, 2, item.pro_uni_venta ) }}</p>
                   </div>
                 </li>
