@@ -1,7 +1,26 @@
 <div style="    padding: 20px;">
   <div class="main-content">
     <div class="row">
-      <div class="col-12">
+        <div class="scrollmenu" style="    border-radius: 3px;" #toolbar1>
+          <a class="pointer" (click)="eventorOver( item )" *ngFor="let item of imageObject; let idx1=index">
+            <button mat-button [matMenuTriggerFor]="idx1">
+              <span *ngIf="item.title =='TODOS'" (click)="imageOnClick(0, item, 'si');"> {{ item.title }} </span>
+              <span *ngIf="item.title !=='TODOS'"> {{ item.title }} </span>
+            </button>
+            <mat-menu #idx1="matMenu" xPosition="after" *ngFor="let key of item.subCategoria; let idx=index"
+              (click)="imageOnClick(idx, key, 'no');" [ngClass]="{ 'cambiaColor': key.check == true }"
+            >
+              <button mat-menu-item>
+                <h5 class="titulo3 estiloCategoria">{{ key.cat_nombre }}</h5>
+              </button>
+            </mat-menu>
+            <!--<h5 class="titulo2 pointer" [ngClass]="{ 'cambiaColor': item.check == true }">
+              <span *ngIf="item.title =='TODOS'" (click)="imageOnClick(0, item, 'si');"> {{ item.title }} </span>
+              <span *ngIf="item.title !=='TODOS'"> {{ item.title }} </span>
+            </h5>-->
+          </a>
+        </div>
+      <!--<div class="col-12">
         <div class="row" style="padding: 5px;">
           <span class="catEstilo" *ngFor="let item of imageObject" (click)="eventorOver( item )">
             <h5 class="titulo2 pointer" [ngClass]="{ 'cambiaColor': item.check == true }">
@@ -16,8 +35,9 @@
             </ul>
           </span>
         </div>
-      </div>
+      </div>-->
       <div class="col-12" style="    padding: 33px;">
+        <br><br>
         <div class="row">
           <div class="col-md-3 col-sm-4 col-lg-2 col-xs-6 col-6 anchandoPr" style="padding-bottom: 5px;"
             *ngFor="let item of listProductos" (mouseout)="eventoDes( {} )"
@@ -51,26 +71,30 @@
                   <div class="col-12">
                     <div class="d-flex bd-highlight">
                       <div class="flex-grow-1 bd-highlight">
-                        <div class="plusminus2 horiz" data-after="UND">
-                          <button type="button" class="btn-number" data-type="minus"
-                            [ngStyle]="{'background-color':urlColor }" (click)="menosCantidad(item)"
-                            data-field="product_quantity_25"></button>
-                          <input (change)="manualCantidad(item)" data-clasificacion="" data-un="UND" type="number"
-                            name="product_quantity2" id="product_quantity_25" min="1"
-                            [(ngModel)]="item.cantidadAdquirir" class="input-number ">
-                          <span class="hide" *ngIf="!item.cantidadAdquirir">1</span>
-                          <button type="button" class="btn-number" data-type="plus"
-                            [ngStyle]="{'background-color':urlColor }" (click)="maxCantidad(item)"
-                            data-field="product_quantity_25"></button>
+                        <div class="d-flex justify-content-center">
+                          <div>
+                            <div class="plusminus2 horiz" data-after="UND" style="    width: 100px;">
+                              <button type="button" class="btn-number" data-type="minus"
+                                [ngStyle]="{'background-color':urlColor }" (click)="menosCantidad(item)"
+                                data-field="product_quantity_25"></button>
+                              <input (change)="manualCantidad(item)" data-clasificacion="" data-un="UND" type="number"
+                                name="product_quantity2" id="product_quantity_25" min="1"
+                                [(ngModel)]="item.cantidadAdquirir" class="input-number ">
+                              <span class="hide" *ngIf="!item.cantidadAdquirir">1</span>
+                              <button type="button" class="btn-number" data-type="plus"
+                                [ngStyle]="{'background-color':urlColor }" (click)="maxCantidad(item)"
+                                data-field="product_quantity_25"></button>
+                            </div>
+                          </div>
                         </div>
                       </div>
-                      <div class="bd-highlight">
+                      <!--<div class="bd-highlight">
                         <select class="form-control form-control-sm" [(ngModel)]="item.tallasSelect">
                               <option *ngFor="let row of item.listTallas" [value]="row.tal_descripcion">
                                 {{ row.tal_descripcion }}
                               </option>
                           </select>
-                      </div>
+                      </div>-->
                     </div>
                   </div>
                 </div>
@@ -84,7 +108,7 @@
                       data-original-title=" Hacer pedido">{{ titleButton }} </button>
                   </div>
                   <div class="col-12" *ngIf="rolname != 'vendedor'">
-                    <div class="mx-auto" style="width: 65%;">
+                    <div class="mx-auto" style="width: 120px;">
                       <img (click)="masInfo(item)" class="pointer" src="./assets/icons/masinformacion.png"
                           style="    width: 100%;">
                     </div>

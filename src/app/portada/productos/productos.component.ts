@@ -47,6 +47,7 @@ export class ProductosComponent implements OnInit {
   dataUser:any = {};
   userCabeza:any = {};
   @ViewChild('toolbar',{static: false} ) private nav: any;
+  @ViewChild('toolbar1',{static: false} ) private nav1: any;
   userId:any;
 
   constructor(
@@ -90,6 +91,7 @@ export class ProductosComponent implements OnInit {
       }
       //console.log("***144",color, this.dataUser )
       this.nav.nativeElement.style.backgroundColor = color;
+      this.nav1.nativeElement.style.backgroundColor = color;
     }, 1000 );
   }
   getUser(){

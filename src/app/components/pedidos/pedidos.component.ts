@@ -62,6 +62,7 @@ export class PedidosComponent implements OnInit {
   coinShop:boolean = false;
   titleButton:string = "Hacer pedido";
   opcionCurrencys: any = {};
+  afterMenu:any
 
   constructor(
     private _productos: ProductoService,
@@ -243,8 +244,21 @@ export class PedidosComponent implements OnInit {
     console.log( item )
     item.check = !item.check;
     for( let row of this.imageObject ) { if( row.id != item.id ) row.check = false; }
-    this._router.navigate( [ "/pedido", item['id'] ] );
+    //this._router.navigate( [ "/pedido", item['id'] ] );
   }
+
+  SeleccionCategoria( obj:any ){
+    //this.query = { where:{ pro_activo: 0 }, page: 0, limit: 10 };
+    this.query.page = 0;
+    this.query.limit = 0;
+    this.query.where.pro_activo = 0;
+    this.query.where.idPrice = this.query.where.idPrice;
+    if( obj.id ) this.query.where.pro_categoria = obj.id;
+    this.listProductos = [];
+    this.loader = true;
+    this._router.navigate( [ "/pedido", obj['id'] ] );
+  }
+
 
   eventoDes( item:any ){
     for( let row of this.imageObject ) row.check = false;
