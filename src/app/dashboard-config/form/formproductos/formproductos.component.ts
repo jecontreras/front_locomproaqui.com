@@ -62,6 +62,18 @@ export class FormproductosComponent implements OnInit {
   croppedImage: any = '';
   todoArmare = [];
 
+
+  autoTicks = false;
+  invert = false;
+  max = 100;
+  min = 0;
+  showTicks = false;
+  step = 1;
+  thumbLabel = false;
+  value = 0;
+  vertical = false;
+  tickInterval = 1;
+
   constructor(
     public dialog: MatDialog,
     private _productos: ProductoService,
@@ -596,6 +608,14 @@ export class FormproductosComponent implements OnInit {
     if ( index >= 0 ) {
       this.listColor.splice(index, 1);
     }
+  }
+
+  getSliderTickInterval(): number | 'auto' {
+    if (this.showTicks) {
+      return this.autoTicks ? 'auto' : this.tickInterval;
+    }
+
+    return 0;
   }
 
   editor() {

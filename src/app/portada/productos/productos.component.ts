@@ -47,7 +47,6 @@ export class ProductosComponent implements OnInit {
   dataUser:any = {};
   userCabeza:any = {};
   @ViewChild('toolbar',{static: false} ) private nav: any;
-  @ViewChild('toolbar1',{static: false} ) private nav1: any;
   userId:any;
 
   constructor(
@@ -91,7 +90,6 @@ export class ProductosComponent implements OnInit {
       }
       //console.log("***144",color, this.dataUser )
       this.nav.nativeElement.style.backgroundColor = color;
-      this.nav1.nativeElement.style.backgroundColor = color;
     }, 1000 );
   }
   getUser(){
@@ -160,7 +158,7 @@ export class ProductosComponent implements OnInit {
   }
 
   getProductosRecomendado(){
-    this._productos.getStore( { where:{ pro_activo: 0, idPrice: this.query.where.idPrice }, sort: "createdAt DESC", page: 0, limit: 5 }).subscribe((res:any)=>{ console.log(res); this.listProductosRecomendar = res.data; }, ( error )=> { console.error(error); });
+    this._productos.getStore( { where:{ pro_activo: 0, idPrice: this.query.where.idPrice, position: 100 }, sort: "createdAt DESC", page: 0, limit: 6 }).subscribe((res:any)=>{ console.log(res); this.listProductosRecomendar = res.data; }, ( error )=> { console.error(error); });
   }
 
   viewProducto( obj:any ){

@@ -146,11 +146,11 @@
                         <option [value]="item.id" *ngFor="let item of listSubCategorias">{{ item.cat_nombre }}</option>
                     </select>
                 </div>
-                <div class="form-group col-md-6 col-sm-4 col-lg-4 col-xs-6">
+                <!--<div class="form-group col-md-6 col-sm-4 col-lg-4 col-xs-6">
                     <br>
                     <input type="checkbox" [(ngModel)]="data.checkMayor" value="second_checkbox"> <label
                         for="cbox2">Precios al Mayor</label>
-                </div>
+                </div>-->
                 <div class="form-group col-md-6 col-sm-4 col-lg-4 col-xs-6">
                     <label>Precio Cliente Final</label>
                     <input currencyMask class="form-control form-control-sm" [(ngModel)]="data.pro_uni_venta"
@@ -161,11 +161,11 @@
                     <input currencyMask class="form-control form-control-sm" [(ngModel)]="data.pro_vendedor"
                         [options]="formatoMoneda" />
                 </div>
-                <div class="form-group col-md-6 col-sm-4 col-lg-4 col-xs-6">
+                <!--<div class="form-group col-md-6 col-sm-4 col-lg-4 col-xs-6">
                   <label>Precio Vendedor Compra</label>
                   <input currencyMask class="form-control form-control-sm" [(ngModel)]="data.pro_vendedorCompra"
                       [options]="formatoMoneda" />
-              </div>
+                </div>-->
                 <div class="form-group col-md-6 col-sm-6 col-lg-6 col-xs-6" *ngIf="data.checkMayor">
                     <header class="main-box-header clearfix col-12 row">
                         <h2 class="col">Precios por cantidad Vendedor</h2>
@@ -245,6 +245,21 @@
                         <option [value]="item.id" *ngFor="let item of listTipoTallas">{{ item.tit_descripcion }}
                         </option>
                     </select>
+                </div>
+
+                <div class="form-group col-md-6 col-sm-4 col-lg-4 col-xs-6" *ngIf="rolUser ==='administrador'">
+                    <label for="exampleFormControlSelect1">Posicion:</label>
+                    <mat-slider
+                        class="example-margin"
+                        [invert]="invert"
+                        [max]="max"
+                        [min]="min"
+                        [step]="step"
+                        [thumbLabel]="thumbLabel"
+                        [tickInterval]="getSliderTickInterval()"
+                        [(ngModel)]="data.position"
+                        [vertical]="vertical">
+                    </mat-slider>
                 </div>
 
                 <div class="form-group col-12">

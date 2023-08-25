@@ -212,6 +212,38 @@ export function appReducer(state: STORAGES = APP, action: _action.actions) {
         break;
       }
     }
+    case _action.CATEGORIA: {
+      switch (action.opt){
+        case 'post': {
+          // console.log(action.payload);
+          if(!state.categoria) state.categoria = [];
+          data = proceso_data(state.categoria,action.payload, 'post');
+          state.categoria = data;
+          return local_Storage(state);
+        }
+        break;
+        case 'put': {
+          data = proceso_data(state.categoria,action.payload, 'put');
+          state.categoria = data;
+          return local_Storage(state);
+        }
+        break;
+        case 'delete': {
+          data = proceso_data(state.categoria,action.payload, 'delete');
+          state.categoria = data;
+          return local_Storage(state);
+        }
+        break;
+        case 'drop': {
+          state.categoria = [];
+          return local_Storage(state);
+        }
+        break;
+        default:
+        return local_Storage(state);
+        break;
+      }
+    }
     
     /*case _action.ARTICULOS:{
       switch (action.opt){

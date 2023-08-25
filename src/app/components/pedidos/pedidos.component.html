@@ -1,25 +1,46 @@
 <div style="    padding: 20px;">
   <div class="main-content">
+    <div class="col-12">
+      <div class="scrollmenu" style="    border-radius: 3px;" #toolbar>
+        <a class="pointer" *ngFor="let item of imageObject" (click)="eventorOver( item )">
+          <button mat-button [matMenuTriggerFor]="belowMenu">
+            <span *ngIf="item.title =='TODOS'" (click)="imageOnClick(0, item, 'si');"> {{ item.title }} </span>
+            <span *ngIf="item.title !=='TODOS'"> {{ item.title }} </span>
+          </button>
+          <mat-menu #belowMenu="matMenu" yPosition="below">
+            <button mat-menu-item (click)="eventorOver( item )" > {{ item.title }} </button>
+            <button mat-menu-item
+              *ngFor="let key of item.subCategoria; let idx=index"
+              (click)="imageOnClick(idx, key, 'no');" [ngClass]="{ 'cambiaColor': key.check == true }"
+            >
+              {{ key.cat_nombre }}
+            </button>
+          </mat-menu>
+        </a>
+      </div>
+    </div>
+
     <div class="row">
-        <div class="scrollmenu" style="    border-radius: 3px;" #toolbar1>
-          <a class="pointer" (click)="eventorOver( item )" *ngFor="let item of imageObject; let idx1=index">
-            <button mat-button [matMenuTriggerFor]="idx1">
+     <!--   <div class="scrollmenu" style="    border-radius: 3px;" #toolbar1>
+          <a class="pointer" (click)="eventorOver( item )" *ngFor="let item of imageObject">
+            <button mat-button [matMenuTriggerFor]="afterMenu">
               <span *ngIf="item.title =='TODOS'" (click)="imageOnClick(0, item, 'si');"> {{ item.title }} </span>
               <span *ngIf="item.title !=='TODOS'"> {{ item.title }} </span>
             </button>
-            <mat-menu #idx1="matMenu" xPosition="after" *ngFor="let key of item.subCategoria; let idx=index"
+            <mat-menu #afterMenu="matMenu" xPosition="after" *ngFor="let key of item.subCategoria; let idx=index"
               (click)="imageOnClick(idx, key, 'no');" [ngClass]="{ 'cambiaColor': key.check == true }"
             >
               <button mat-menu-item>
                 <h5 class="titulo3 estiloCategoria">{{ key.cat_nombre }}</h5>
               </button>
             </mat-menu>
-            <!--<h5 class="titulo2 pointer" [ngClass]="{ 'cambiaColor': item.check == true }">
+            <h5 class="titulo2 pointer" [ngClass]="{ 'cambiaColor': item.check == true }">
               <span *ngIf="item.title =='TODOS'" (click)="imageOnClick(0, item, 'si');"> {{ item.title }} </span>
               <span *ngIf="item.title !=='TODOS'"> {{ item.title }} </span>
-            </h5>-->
+            </h5>
           </a>
         </div>
+      </div>-->
       <!--<div class="col-12">
         <div class="row" style="padding: 5px;">
           <span class="catEstilo" *ngFor="let item of imageObject" (click)="eventorOver( item )">
@@ -36,9 +57,9 @@
           </span>
         </div>
       </div>-->
-      <div class="col-12" style="    padding: 33px;">
+      <div class="col-12" style="padding: 33px;">
         <br><br>
-        <div class="row">
+        <div class="row" *ngIf="listProductos">
           <div class="col-md-3 col-sm-4 col-lg-2 col-xs-6 col-6 anchandoPr" style="padding-bottom: 5px;"
             *ngFor="let item of listProductos" (mouseout)="eventoDes( {} )"
           >

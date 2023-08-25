@@ -6,7 +6,12 @@ export interface STORAGES {
     buscar?: BUSCAR;
     configuracion?: CONFIGURACION;
     userpr?: USERPR;
+    categoria?: CATEGORIA
 };
+
+export interface CATEGORIA{
+
+}
 
 export interface USERPR{
 
