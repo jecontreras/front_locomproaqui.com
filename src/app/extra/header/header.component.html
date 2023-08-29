@@ -169,7 +169,7 @@
 
   <mat-drawer-content>
     <nav class="navbar navbar-expand-lg navbar-light headerColor" #toolbar>
-      <div class="d-flex justify-content-between col-12">
+      <!--<div class="d-flex justify-content-between col-12">
         <div>
           <button mat-icon-button (click)="drawer.toggle()" translate="no">
             <i class="material-icons icoss">menu</i>
@@ -184,11 +184,11 @@
         </div>
         <div style="width: 25%;">
           <div class="d-flex flex-row-reverse bd-highlight" style="margin-top: 15px;">
-            <!--<div class="anchoReal12 anchos2" *ngIf="userId.id && !dataUser.id">
+            <div class="anchoReal12 anchos2" *ngIf="userId.id && !dataUser.id">
               <a [routerLink]="[ '/registro', this.userId.id ]" class="p-1 pointer espacios" matBadgeColor="accent">
                 <i class="material-icons icoss">person_add</i>
               </a>
-            </div>-->
+            </div>
             <div class="anchoReal12 anchos2" *ngIf="!dataUser.id && !userId.id">
               <a [routerLink]="[ '/login' ]" class="p-1 pointer espacios">
                 <i class="material-icons icoss">person</i>
@@ -219,6 +219,43 @@
             <div *ngIf="dataUser.id" style="margin-right: 4%;" class="buscadorOcultar">
               <a class="text-white" routerLink="/config/cobros">
                 $ {{ ( ( dataInfo?.porcobrado ) || 0 ).toLocaleString(1) }} COP
+              </a>
+            </div>
+            <div class="anchoReal12 anchos2" *ngIf="!dataUser.id">
+              <button mat-button cdkFocusInitial (click)="registrar()">
+                  Registrarse
+              </button>
+            </div>
+            <div class="anchoReal12 anchos2" *ngIf="!dataUser.id">
+              <button mat-button cdkFocusInitial (click)="login()">
+                  Iniciar Sesion
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>-->
+      <div class="row" style="width: 100%;">
+        <div class="col-12">
+          <div class="d-flex bd-highlight mb-3">
+            <div class="mr-auto p-2 bd-highlight">
+              <button mat-icon-button (click)="drawer.toggle()" translate="no">
+                <i class="material-icons icoss">menu</i>
+              </button>
+              <a [routerLink]="[ '/pedidos' ]">
+                <img src="./assets/logo.png" style="width: 177px; height: 55px;">
+              </a>
+
+            </div>
+            <div class="p-2 bd-highlight">
+              <button type="button" class="btn btn-light" (click)="registrar()">Iniciar Sesion</button>
+            </div>
+            <div class="p-2 bd-highlight">
+              <button type="button" class="btn btn-light" (click)="login()">Registrarse</button>
+            </div>
+            <div class="p-2 bd-highlight">
+              <a (click)="this.opcionoView = 'carro'; sidenav.toggle();" class="p-1 pointer espacios"
+                [matBadge]="listCart.length" matBadgePosition="before" matBadgeColor="accent">
+                <i class="material-icons icoss">shopping_cart</i>
               </a>
             </div>
           </div>
