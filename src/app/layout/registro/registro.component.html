@@ -1,6 +1,23 @@
 <div class="content" style="height: 56pc;">
     <div class="row">
         <div class="col-12">
+          <div class="row">
+            <div class="col-12" style="    text-align: center;
+              background: #0db1f8;
+              padding: 20px 35px;
+              color: white;"
+            >
+              <h3>Tu tienda aliada para vender en internet</h3>
+              <p class="text-white">
+                Vende, recibe tus pagos y gestiona envios desde un solo lugar.
+              </p>
+              <div>
+                  <div>
+                    <input type="text" [(ngModel)]="data.usu_email" > <button style="height: 56px;" type="button" class="btn btn-danger" (click)="openEmail()">Crear negocio</button>
+                  </div>
+              </div>
+            </div>
+          </div>
             <div class="row" style=" color: white; padding: 15px;">
                 <div class="col-12 col-sm-6" style="    background: #02a0e3;     padding: 1%;">
                     <div style="text-align: center;">
@@ -25,6 +42,7 @@
                     </h5>
                 </div>
             </div>-->
+
             <div class="d-flex justify-content-center">
                 <div>
                     <h2 class="text-dart">Te Invitó {{ dataUser.usu_nombre || 'Admin' }}</h2>

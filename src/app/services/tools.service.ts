@@ -333,6 +333,21 @@ export class ToolsService {
 
       return new File([u8arr], filename, {type:mime});
   }
+
+  getScrollRoot(){
+    var html = document.documentElement, body = document.body,
+        cacheTop:any = ((typeof window.pageYOffset !== "undefined") ? window.pageYOffset : null) || body.scrollTop || html.scrollTop, // cache the window's current scroll position
+        root;
+
+    html.scrollTop = body.scrollTop = cacheTop + (cacheTop > 0) ? -1 : 1;
+    // find root by checking which scrollTop has a value larger than the cache.
+    root = (html.scrollTop !== cacheTop) ? html : body;
+
+    root.scrollTop = cacheTop; // restore the window's scroll position to cached value
+
+    return root; // return the scrolling root element
+  }
+
   handleCopyHolder( url:string ){
     const selBox = document.createElement('textarea');
     selBox.style.position = 'fixed';

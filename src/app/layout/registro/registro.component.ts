@@ -142,6 +142,13 @@ export class RegistrosComponent implements OnInit {
     fr.readAsDataURL(image);*/
 }
 
+openEmail(){
+  console.log("**ENTRE")
+  let scrollRoot = this._tools.getScrollRoot();
+  scrollRoot.scrollTop = 500; // set the scroll position to 10 pixels from the top
+  //scrollRoot.scrollTop = 0; // set the scroll position to the top of the window
+}
+
 blurApellido(){
   this.data.usu_nombre1 = ( this.data.usu_nombre || "" ) + " " + ( this.data.usu_apellido || "" );
 }
