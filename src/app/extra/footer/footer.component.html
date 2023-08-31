@@ -1,50 +1,50 @@
-<footer #nav>
+<footer #nav style="    padding-top: 15px;">
   <div class="d-flex justify-content-around" *ngIf="breakpoint === 6">
     <div>
       <ul class="list-group">
-        <li class="disabled text-white text-dart" aria-disabled="true">
+        <li class="disabled text-white text-dart">
           <h5 class="text-white text-dart">Nosotros</h5>
         </li>
-        <li class="disabled text-white text-dart" aria-disabled="true">
-          <a href="#" class="text-white text-dart">hola@lokomproaqui</a>
+        <li class="disabled text-white text-dart">
+          <a  class="text-white text-dart pointer">hola@lokomproaqui</a>
         </li>
-        <li class="disabled text-white text-dart" aria-disabled="true">
-          <a href="#" class="text-white text-dart">Cúcuta - Colombia</a>
+        <li class="disabled text-white text-dart">
+          <a  class="text-white text-dart pointer">Cúcuta - Colombia</a>
         </li>
       </ul>
     </div>
     <div>
       <ul class="list-group">
-          <li class="disabled text-white text-dart" aria-disabled="true">
+          <li class="disabled text-white text-dart">
             <h5 class="text-white text-dart">Legal</h5>
           </li>
-          <li class="disabled text-white text-dart" aria-disabled="true">
-            <a href="#" class="text-white text-dart">Politica de tratamiento de datos</a>
+          <li class="disabled text-white text-dart">
+            <a  class="text-white text-dart pointer">Politica de tratamiento de datos</a>
           </li>
         </ul>
     </div>
     <div>
       <ul class="list-group">
-        <li class="disabled text-white text-dart" aria-disabled="true">
+        <li class="disabled text-white text-dart">
           <h5 class="text-white text-dart">Extras</h5>
         </li>
-        <li class="disabled text-white text-dart" aria-disabled="true">
-          <a href="#" class="text-white text-dart">Servicio de ayuda</a>
+        <li class="disabled text-white text-dart">
+          <a  class="text-white text-dart pointer">Servicio de ayuda</a>
         </li>
-        <li class="disabled text-white text-dart" aria-disabled="true">
-          <a href="#" class="text-white text-dart">Universo LOKOMPROAQUI </a>
+        <li class="disabled text-white text-dart">
+          <a  class="text-white text-dart pointer">Universo LOKOMPROAQUI </a>
         </li>
-        <li class="disabled text-white text-dart" aria-disabled="true">
-          <a href="#" class="text-white text-dart">Blog </a>
+        <li class="disabled text-white text-dart">
+          <a  class="text-white text-dart pointer">Blog </a>
         </li>
-        <li class="disabled text-white text-dart" aria-disabled="true">
-          <a href="#" class="text-white text-dart">Guias de usuario </a>
+        <li class="disabled text-white text-dart">
+          <a  class="text-white text-dart pointer">Guias de usuario </a>
         </li>
-        <li class="disabled text-white text-dart" aria-disabled="true">
-          <a href="#" class="text-white text-dart">Preguntas Frecuente </a>
+        <li class="disabled text-white text-dart">
+          <a  class="text-white text-dart pointer">Preguntas Frecuente </a>
         </li>
-        <li class="disabled text-white text-dart" aria-disabled="true">
-          <a href="#" class="text-white text-dart">Prensa </a>
+        <li class="disabled text-white text-dart">
+          <a  class="text-white text-dart pointer">Prensa </a>
         </li>
       </ul>
     </div>
@@ -52,50 +52,50 @@
   <div class="row" *ngIf="breakpoint === 1">
     <div class="col-6">
       <ul class="list-group">
-        <li class="disabled text-white text-dart" aria-disabled="true">
+        <li class="disabled text-white text-dart">
           <h5 class="text-white text-dart">Nosotros</h5>
         </li>
-        <li class="disabled text-white text-dart" aria-disabled="true">
-          <a href="#" class="text-white text-dart">hola@lokomproaqui</a>
+        <li class="disabled text-white text-dart">
+          <a  class="text-white text-dart pointer">hola@lokomproaqui</a>
         </li>
-        <li class="disabled text-white text-dart" aria-disabled="true">
-          <a href="#" class="text-white text-dart">Cúcuta - Colombia</a>
+        <li class="disabled text-white text-dart">
+          <a  class="text-white text-dart pointer">Cúcuta - Colombia</a>
         </li>
       </ul>
     </div>
     <div class="col-6">
       <ul class="list-group">
-        <li class="disabled text-white text-dart" aria-disabled="true">
+        <li class="disabled text-white text-dart">
           <h5 class="text-white text-dart">Legal</h5>
         </li>
-        <li class="disabled text-white text-dart" aria-disabled="true">
-          <a href="#" class="text-white text-dart">Politica de tratamiento de datos</a>
+        <li class="disabled text-white text-dart" (click)="terminos()">
+          <a  class="text-white text-dart pointer">Politica de tratamiento de datos</a>
         </li>
       </ul>
     </div>
     <div class="col-6">
       <br><br>
       <ul class="list-group">
-        <li class="disabled text-white text-dart" aria-disabled="true">
+        <li class="disabled text-white text-dart">
           <h5 class="text-white text-dart">Extras</h5>
         </li>
-        <li class="disabled text-white text-dart" aria-disabled="true">
-          <a href="#" class="text-white text-dart">Servicio de ayuda</a>
+        <li class="disabled text-white text-dart" (click)="handleWhatsapp()">
+          <a class="text-white text-dart pointer" >Servicio de ayuda</a>
         </li>
-        <li class="disabled text-white text-dart" aria-disabled="true">
-          <a href="#" class="text-white text-dart">Universo LOKOMPROAQUI </a>
+        <li class="disabled text-white text-dart">
+          <a  class="text-white text-dart pointer">Universo LOKOMPROAQUI </a>
         </li>
-        <li class="disabled text-white text-dart" aria-disabled="true">
-          <a href="#" class="text-white text-dart">Blog </a>
+        <li class="disabled text-white text-dart">
+          <a  class="text-white text-dart pointer">Blog </a>
         </li>
-        <li class="disabled text-white text-dart" aria-disabled="true">
-          <a href="#" class="text-white text-dart">Guias de usuario </a>
+        <li class="disabled text-white text-dart">
+          <a  class="text-white text-dart pointer">Guias de usuario </a>
         </li>
-        <li class="disabled text-white text-dart" aria-disabled="true">
-          <a href="#" class="text-white text-dart">Preguntas Frecuente </a>
+        <li class="disabled text-white text-dart">
+          <a  class="text-white text-dart pointer">Preguntas Frecuente </a>
         </li>
-        <li class="disabled text-white text-dart" aria-disabled="true">
-          <a href="#" class="text-white text-dart">Prensa </a>
+        <li class="disabled text-white text-dart">
+          <a  class="text-white text-dart pointer">Prensa </a>
         </li>
       </ul>
     </div>

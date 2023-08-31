@@ -72,8 +72,13 @@
                     <div class="form row container">
                         <div class="form-group col-sm-6 col-12">
                             <label for="exampleFormControlInput1">Ciudad</label>
-                            <input type="text" [(ngModel)]="data.usu_ciudad" class="form-control form-control-sm"
-                                placeholder="Ingrese tu Ciudad">
+                            <select class="form-control form-control-sm" [(ngModel)]="data.usu_ciudad" required >
+                              <option [value]="item.phone_code" *ngFor="let item of listCiudad">
+                                {{ item.ciudad }} - {{ item.departamento }}
+                              </option>
+                          </select>
+                            <!--<input type="text" [(ngModel)]="data.usu_ciudad" class="form-control form-control-sm"
+                                placeholder="Ingrese tu Ciudad">-->
                         </div>
                         <!--<div class="form-group col-sm-6 col-12">
                             <label for="exampleFormControlInput1">Dirección</label>
@@ -227,8 +232,13 @@
                                 </div>
                                 <div class="col-6">
                                     <label for="exampleFormControlInput1" class="sixes">Ciudad</label>
-                                    <input type="text" [(ngModel)]="data.usu_ciudad" required disabled
-                                        class="form-control form-control-sm sixes" placeholder="Ingrese tu ciudad">
+                                    <select class="form-control form-control-sm" [(ngModel)]="data.usu_ciudad" required >
+                                      <option [value]="item.phone_code" *ngFor="let item of listCiudad">
+                                        {{ item.ciudad }} - {{ item.departamento }}
+                                      </option>
+                                  </select>
+                                    <!--<input type="text" [(ngModel)]="data.usu_ciudad" required disabled
+                                        class="form-control form-control-sm sixes" placeholder="Ingrese tu ciudad">-->
                                 </div>
                                 <div class="col-6">
                                     <label for="exampleFormControlInput1" class="sixes">fecha</label>
@@ -513,8 +523,13 @@
                               </div>
                               <div class="col-6">
                                   <label for="exampleFormControlInput1" class="sixes">Ciudad</label>
-                                  <input type="text" [(ngModel)]="data.usu_ciudad" required disabled
-                                      class="form-control form-control-sm sixes" placeholder="Ingrese tu ciudad">
+                                  <select class="form-control form-control-sm" [(ngModel)]="data.usu_ciudad" required >
+                                    <option [value]="item.phone_code" *ngFor="let item of listCiudad">
+                                      {{ item.ciudad }} - {{ item.departamento }}
+                                    </option>
+                                </select>
+                                  <!--<input type="text" [(ngModel)]="data.usu_ciudad" required disabled
+                                      class="form-control form-control-sm sixes" placeholder="Ingrese tu ciudad">-->
                               </div>
                               <div class="col-6">
                                   <label for="exampleFormControlInput1" class="sixes">fecha</label>
@@ -533,3 +548,6 @@
   </div>
 </div>
 </div>
+<mat-dialog-actions align="end">
+  <button mat-button mat-dialog-close mat-raised-button color="warn">Cerrar</button>
+</mat-dialog-actions>

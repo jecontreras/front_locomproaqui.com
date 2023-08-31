@@ -84,6 +84,12 @@ export class FooterComponent implements OnInit {
     });
   }
 
+  handleWhatsapp(){
+    console.log("*88ENTRE")
+    let url = "https://wa.me/573213692393?text=Hola Servicio al cliente";
+    window.open(url);
+  }
+
   openaVenta() {
     let url: string = `https://publihazclickcom.wixsite.com/misitio`;
     window.open(url);
