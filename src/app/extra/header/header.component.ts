@@ -640,7 +640,7 @@ export class HeaderComponent implements OnInit {
     this.menus2 = [
       {
         icons: 'account_circle',
-        nombre: 'Iniciar Sección',
+        nombre: 'Iniciar Sesión',
         disable: this.rolUser === 'visitante',
         url: 'login()',
         submenus:[]

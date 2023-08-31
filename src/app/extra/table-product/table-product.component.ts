@@ -208,14 +208,16 @@ export class TableProductComponent implements OnInit {
     if( this.rolName != 'administrador') this._dataConfig.query.where.pro_usu_creacion = this.dataUser.id;
     this.cargarTodos();
   }
-  updateState( item, opt ){
+  async updateState( item, opt ){
+    let validate = await this._tools.confirm({title:"Actualizar", detalle:"¿Deseas cambiar de estado este producto?", confir:"Si activar"});
+    if( !validate ) return false;
     let data:any ={
       id: item.id
     };
     data[opt] = item[opt];
     if( item.pro_uni_venta ) data.pro_activo = 0;
     this._productos.updateState( data ).subscribe(( res:any )=>{
-      this._tools.tooast( "Actualizado " + opt );
+      this._tools.tooast( {title: "Actualizado " + opt } );
     },( error )=> this._tools.tooast( "Error " + opt ));
   }
   updatePrecio( item, opt ){

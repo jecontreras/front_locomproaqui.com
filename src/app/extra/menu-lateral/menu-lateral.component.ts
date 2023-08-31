@@ -41,7 +41,7 @@ export class MenuLateralComponent implements OnInit {
         this.color1.nativeElement.style.backgroundColor = color
         this.color2.nativeElement.style.backgroundColor = color
         this.color3.nativeElement.style.backgroundColor = color
-        this.color4.nativeElement.style.backgroundColor = color
+        //this.color4.nativeElement.style.backgroundColor = color
       } catch (error) {
 
       }

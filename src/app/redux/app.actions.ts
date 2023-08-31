@@ -10,6 +10,7 @@ export let USERPR        = '[App] Userpr';
 export let SELECCIONCATEGORIA = '[App] SeleccionCategoria';
 export let BUSCADOR      = '[App] Buscador';
 export let PRODUCTOHISTORIAL = '[App] Productohistorial';
+export let CATEGORIA     = '[App] Categoria';
 
 export class CartAction implements Action {
     readonly type = CART;
@@ -59,6 +60,10 @@ export class ProductoHistorialAction implements Action {
   readonly type = PRODUCTOHISTORIAL;
   constructor( public payload: object,  public opt: string){}
 }
+export class CategoriaAction implements Action {
+    readonly type = CATEGORIA;
+    constructor( public payload: object,  public opt: string){}
+  }
 
 export type actions = CartAction         |
                       UserAction         |
@@ -68,4 +73,5 @@ export type actions = CartAction         |
                       UserprAction       |
                       SeleccionCategoriaAction |
                       ConfiguracionAction  |
-                      ProductoHistorialAction ;
+                      ProductoHistorialAction |
+                      CategoriaAction         ;

@@ -4,7 +4,7 @@ import { MatDialog } from '@angular/material';
 import { ViewProductosComponent } from '../view-productos/view-productos.component';
 import { CART } from 'src/app/interfaces/sotarage';
 import { Store } from '@ngrx/store';
-import { BuscarAction, CartAction, UserCabezaAction } from 'src/app/redux/app.actions';
+import { BuscarAction, CartAction, CategoriaAction, UserCabezaAction } from 'src/app/redux/app.actions';
 import { ToolsService } from 'src/app/services/tools.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { UsuariosService } from 'src/app/servicesComponents/usuarios.service';
@@ -62,6 +62,8 @@ export class PedidosComponent implements OnInit {
   coinShop:boolean = false;
   titleButton:string = "Hacer pedido";
   opcionCurrencys: any = {};
+  afterMenu:any
+  @ViewChild('toolbar',{static: false} ) private nav: any;
 
   constructor(
     private _productos: ProductoService,
@@ -85,6 +87,7 @@ export class PedidosComponent implements OnInit {
       if( this.seartxt != store.buscar && store.buscar ) {
         this.seartxt = store.buscar;
       }
+      this.imageObject = store.categoria || [];
       if( this.dataUser.id ){
         try {
           if (this.dataUser.usu_perfil) {
@@ -123,6 +126,18 @@ export class PedidosComponent implements OnInit {
       this.titleButton = "Hacer Compra";
       this.cargarProductos();
     }
+
+    setInterval(()=> {
+      //console.log( this.nav)
+      let color:string = ( this.dataUser.usu_color || "#02a0e3" );
+      if( this.userId.id ) {
+        //console.log("**NO ENTRE",this.userId)
+        color = this.userId.usu_color || "#02a0e3";
+      }
+      //console.log("***144",color, this.dataUser )
+      this.nav.nativeElement.style.backgroundColor = color;
+    }, 1000 );
+
   }
 
   getId( id:string ){
@@ -214,37 +229,58 @@ export class PedidosComponent implements OnInit {
       if( this.userId ) this.GuardarStoreUser()
     }, (error) => { console.error(error); this.userId = ''; });
   }
+
   GuardarStoreUser() {
     let accion = new UserCabezaAction(this.userId, 'post');
     this._store.dispatch(accion);
   }
+
   getCategorias() {
-    this._categorias.get({ where: { cat_activo: 0, cat_padre: null }, limit: 1000 }).subscribe( async (res: any) => {
-      this.imageObject = [];
-      for (let row of res.data) {
-        let datos: any = {
-          id: row.id,
-          title: row.cat_nombre,
-          subCategoria: await this.getSubcategoria( row.id )
-        };
-        if (row.id == this.idCategoria) datos.check = true;
-        this.imageObject.push(datos);
-      }
-      this.imageObject.unshift({
-        id: 0,
-        title: "TODOS",
-        subCategoria: []
+    if( this.imageObject.length === 0 ){
+      this._categorias.get({ where: { cat_activo: 0, cat_padre: null }, limit: 1000 }).subscribe( async (res: any) => {
+        this.imageObject = [];
+        for (let row of res.data) {
+          let datos: any = {
+            id: row.id,
+            title: row.cat_nombre,
+            subCategoria: await this.getSubcategoria( row.id )
+          };
+          if (row.id == this.idCategoria) datos.check = true;
+          this.imageObject.push(datos);
+        }
+        this.imageObject.unshift({
+          id: 0,
+          title: "TODOS",
+          subCategoria: []
+        });
+        console.log( this.imageObject );
+        for( let row of this.imageObject ){
+          let accion = new CategoriaAction(row, 'post');
+          this._store.dispatch( accion );
+        }
       });
-      console.log( this.imageObject );
-    });
+    }
   }
 
   eventorOver( item:any ){
-    console.log( item )
+    //console.log( item )
     item.check = !item.check;
     for( let row of this.imageObject ) { if( row.id != item.id ) row.check = false; }
-    this._router.navigate( [ "/pedido", item['id'] ] );
+    if( item.subCategoria.length === 0 ) this._router.navigate( [ "/pedido", item['id'] ] );
   }
+
+  SeleccionCategoria( obj:any ){
+    //this.query = { where:{ pro_activo: 0 }, page: 0, limit: 10 };
+    this.query.page = 0;
+    this.query.limit = 0;
+    this.query.where.pro_activo = 0;
+    this.query.where.idPrice = this.query.where.idPrice;
+    if( obj.id ) this.query.where.pro_categoria = obj.id;
+    this.listProductos = [];
+    this.loader = true;
+    this._router.navigate( [ "/pedido", obj['id'] ] );
+  }
+
 
   eventoDes( item:any ){
     for( let row of this.imageObject ) row.check = false;
@@ -271,7 +307,7 @@ export class PedidosComponent implements OnInit {
       this.loader = false;
       this.counts = res.count;
       this.spinner.hide();
-      this.listProductos = _.unionBy( this.listProductos || [], res.data, 'id' );
+      this.listProductos = ( _.unionBy( this.listProductos || [], res.data, 'id' ) ) || [];
       try {
         this.listTallas = this.listProductos[0].listaTallas;
       } catch (error) { }

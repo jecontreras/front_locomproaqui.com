@@ -27,10 +27,12 @@ export class FooterComponent implements OnInit {
   sliderAnimationSpeed: any = 2.4;
   imageObject: any = [];
 
+  breakpoint: number;
+
   constructor(
     public dialog: MatDialog,
     private _store: Store<CART>,
-  ) { 
+  ) {
     console.log("**",window.innerWidth)
     if( (window.innerWidth >= 1000) ) this.sliderImageWidth = 900;
     if( (window.innerWidth <= 1000) ) this.sliderImageWidth = 700;
@@ -53,7 +55,9 @@ export class FooterComponent implements OnInit {
       if( this.userId.id ) color = this.userId.usu_color || "#02a0e3";
       this.nav.nativeElement.style.backgroundColor = color;
     }, 100 );
-    this.listaBanner();
+    //this.listaBanner();
+    this.breakpoint = (window.innerWidth <= 500) ? 1 : 6;
+    console.log("****60", this.breakpoint)
   }
 
   listaBanner() {
@@ -78,6 +82,12 @@ export class FooterComponent implements OnInit {
     dialogRef.afterClosed().subscribe(result => {
       console.log(`Dialog result: ${result}`);
     });
+  }
+
+  handleWhatsapp(){
+    console.log("*88ENTRE")
+    let url = "https://wa.me/573213692393?text=Hola Servicio al cliente";
+    window.open(url);
   }
 
   openaVenta() {
