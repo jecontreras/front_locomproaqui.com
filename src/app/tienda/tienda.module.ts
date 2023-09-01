@@ -22,13 +22,17 @@ import { ExtraModule } from '../extra/extra.module';
 import { NgxDropzoneModule } from 'ngx-dropzone';
 import { NgxCurrencyModule } from 'ngx-currency';
 import { ArticuloComponent } from '../components/articulo/articulo.component';
+import { TerminosGeneralesComponent } from '../layout/terminos-generales/terminos-generales.component';
+import { TratamientoDatoComponent } from '../layout/tratamiento-dato/tratamiento-dato.component';
 
 
 @NgModule({
   entryComponents:[
     LoginComponent,
     ViewProductosComponent,
-    TerminosComponent
+    TerminosComponent,
+    TerminosGeneralesComponent,
+    TratamientoDatoComponent
   ],
   declarations: [
     TiendaComponent,
@@ -36,6 +40,8 @@ import { ArticuloComponent } from '../components/articulo/articulo.component';
     LoginComponent,
     ViewProductosComponent,
     TerminosComponent,
+    TerminosGeneralesComponent,
+    TratamientoDatoComponent,
     LoginsComponent,
     RegistrosComponent,
     ContenidoComponent,

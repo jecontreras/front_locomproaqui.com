@@ -48,7 +48,7 @@ import { PortadaModule } from './portada/portada.module';
   declarations: [
     AppComponent,
     RegistroComponent,
-    IntroduccionComponent
+    IntroduccionComponent,
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'serverApp' }),

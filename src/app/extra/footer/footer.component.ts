@@ -3,7 +3,9 @@ import { MatDialog } from '@angular/material';
 import { Store } from '@ngrx/store';
 import { NgImageSliderComponent } from 'ng-image-slider';
 import { CART } from 'src/app/interfaces/sotarage';
+import { TerminosGeneralesComponent } from 'src/app/layout/terminos-generales/terminos-generales.component';
 import { TerminosComponent } from 'src/app/layout/terminos/terminos.component';
+import { TratamientoDatoComponent } from 'src/app/layout/tratamiento-dato/tratamiento-dato.component';
 
 @Component({
   selector: 'app-footer',
@@ -75,6 +77,28 @@ export class FooterComponent implements OnInit {
 
   terminos() {
     const dialogRef = this.dialog.open(TerminosComponent, {
+      width: '461px',
+      data: { datos: {} }
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      console.log(`Dialog result: ${result}`);
+    });
+  }
+
+  handleOpenTermino(){
+    const dialogRef = this.dialog.open(TerminosGeneralesComponent, {
+      width: '461px',
+      data: { datos: {} }
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      console.log(`Dialog result: ${result}`);
+    });
+  }
+
+  handleOpenTratamientoD(){
+    const dialogRef = this.dialog.open(TratamientoDatoComponent, {
       width: '461px',
       data: { datos: {} }
     });
