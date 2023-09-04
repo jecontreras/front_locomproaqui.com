@@ -118,7 +118,7 @@
                                             </button>
                                             <span *ngIf="viewOpt==='usu_imagen'">
                                                 <button *ngIf="croppedImage" style="height: 55px;" type="button" class="btn btn-success" (click)="finixCorteImg('usu_imagen')">Terminar y Subir Imagen</button>
-    
+
                                                 <image-cropper style="width: 570px;" [imageChangedEvent]="imageChangedEvent" [maintainAspectRatio]="true"
                                                     [aspectRatio]="400 / 400" format="png" (imageCropped)="imageCropped( $event )"
                                                     (imageLoaded)="imageLoaded( $event )" (cropperReady)="cropperReady( $event )"
@@ -132,12 +132,21 @@
                                     <br>
                                     <div class="d-flex justify-content-center">
                                         <div>
-                                            <button class="contenedor-btn-file" style="margin-left: 146px;" (click)="openView('us_banner')">
+                                          <span>
+                                            <h3>Subir banner 1024px / 340px
+                                                <button (click)="openFile(this.data.pdfRut)" *ngIf="data.pdfRut" class="btn btn-primary btn-just-icon btn-round">
+                                                    <i class="material-icons">remove_red_eye</i>
+                                                </button>
+                                                </h3>
+                                                <input type="file" id="btn-file" accept="application/image/*" (change)="openView('us_banner'); fileChangeEvent($event)"/> Subir banner
+                                          </span>
+
+                                            <!--<button class="contenedor-btn-file" style="margin-left: 146px;" (click)="openView('us_banner')">
                                                 <i class="material-icons">file_upload</i>
                                                 Subir banner 1024px / 340px
                                                 <label for="btn-file"></label>
                                                 <input type="file" id="btn-file" (change)="fileChangeEvent($event)">
-                                            </button>
+                                            </button>-->
 
                                             <span *ngIf="viewOpt==='us_banner'">
                                                 <button *ngIf="croppedImage" style="height: 55px;" type="button" class="btn btn-success" (click)="finixCorteImg('us_banner')">Terminar y Subir Imagen</button>
@@ -350,7 +359,7 @@
                                     </div>
                                     <div class="col-12">
                                       <span>
-                                        <h3>1.Enviar Rut actializado 
+                                        <h3>1.Enviar Rut actializado
                                             <button (click)="openFile(this.data.pdfRut)" *ngIf="data.pdfRut" class="btn btn-primary btn-just-icon btn-round">
                                                 <i class="material-icons">remove_red_eye</i>
                                             </button>

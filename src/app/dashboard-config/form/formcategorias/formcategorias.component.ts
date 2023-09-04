@@ -108,8 +108,8 @@ export class FormcategoriasComponent implements OnInit {
   }
 
   updates( item:any = this.data ){
-    this.data = _.omit(this.data, [ 'cat_usu_actualiz' ])
-    this.data = _.omitBy(this.data, _.isNull);
+    item = _.omit(item, [ 'cat_usu_actualiz' ])
+    item = _.omitBy(item, _.isNull);
     this._categoria.update( item ).subscribe((res:any)=>{
       this._tools.presentToast("Actualizado");
     },(error)=>{console.error(error); this._tools.presentToast("Error de servidor")});
