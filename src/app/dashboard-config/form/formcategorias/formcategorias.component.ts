@@ -17,7 +17,7 @@ const URL = environment.url;
   styleUrls: ['./formcategorias.component.scss']
 })
 export class FormcategoriasComponent implements OnInit {
-  
+
   files: File[] = [];
   list_files: any = [];
   data:any = {
@@ -56,15 +56,15 @@ export class FormcategoriasComponent implements OnInit {
     //console.log(event, this.files);
     this.files=[event.addedFiles[0]]
   }
-  
+
   onRemove(event) {
     //console.log(event);
     this.files.splice(this.files.indexOf(event), 1);
   }
-  
+
   getCategorias(){
     this._categoria.get( { where: { cat_activo: 0, cat_padre: this.data.id }, limit: 1000 } ).subscribe((res:any)=>{
-      this.listCategoria =_.map( res.data , ( row )=>{ 
+      this.listCategoria =_.map( res.data , ( row )=>{
         return {
           id: row.id,
           categoria: row.cat_nombre,
@@ -74,7 +74,7 @@ export class FormcategoriasComponent implements OnInit {
       console.log( this.listCategoria, res )
     }, error=> this._tools.presentToast("error servidor"));
   }
-  
+
   subirFile(){
     let form:any = new FormData();
     form.append('file', this.files[0]);
@@ -108,6 +108,8 @@ export class FormcategoriasComponent implements OnInit {
   }
 
   updates( item:any = this.data ){
+    this.data = _.omit(this.data, [ 'cat_usu_actualiz' ])
+    this.data = _.omitBy(this.data, _.isNull);
     this._categoria.update( item ).subscribe((res:any)=>{
       this._tools.presentToast("Actualizado");
     },(error)=>{console.error(error); this._tools.presentToast("Error de servidor")});
@@ -146,7 +148,7 @@ export class FormcategoriasComponent implements OnInit {
     try {
       event['chipInput']!.clear();
     } catch (error) {
-      
+
     }
   }
 

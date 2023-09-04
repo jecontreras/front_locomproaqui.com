@@ -396,7 +396,7 @@ export class ProductosViewComponent implements OnInit {
 
   handleAdviser(){
     let number = this.userId.usu_telefono;
-    if(number.length == 10 ) number;
+    if(number.length == 12 ) number;
     else number='57'+number;
     let url = `https://wa.me/${ number }?text=${encodeURIComponent(`👉Hola buenas! 🎉 Me gustaria mas informacion gracias 👈`)}`;
     window.open( url, "Mas Informacion", "width=640, height=480");
