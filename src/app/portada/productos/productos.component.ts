@@ -218,7 +218,7 @@ export class ProductosComponent implements OnInit {
     this.listProductos = [];
     this.notscrolly = true;
     this.notEmptyPost = true;
-    this.query = { where:{ pro_activo: 0 } ,limit: 15, page: 0 };
+    this.query = { where:{ pro_activo: 0, user: this.dataUser.id } ,limit: 15, page: 0 };
     if (this.seartxt) {
       this.query.where.or = [
         {

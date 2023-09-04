@@ -384,7 +384,7 @@ export class PedidosComponent implements OnInit {
     let cerialNumero: any = '';
     let numeroSplit: any;
     let cabeza: any = this.dataUser.cabeza;
-    if (!obj.tallasSelect) return this._tools.tooast({ title: "Por Favor debes seleccionar una talla", icon: "warning" });
+    //if (!obj.tallasSelect) return this._tools.tooast({ title: "Por Favor debes seleccionar una talla", icon: "warning" });
     if (cabeza) {
       numeroSplit = _.split(cabeza.usu_telefono, "+57", 2);
       if (numeroSplit[1]) cabeza.usu_telefono = numeroSplit[1];
