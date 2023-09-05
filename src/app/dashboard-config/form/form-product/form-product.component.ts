@@ -549,6 +549,8 @@ export class FormProductComponent implements OnInit {
       if( this.data.opt == 'demo' ) this.data.pro_mp_venta = 1;
       if( this.rolUser != 'administrador') this.data.pro_activo = 3;
       this.data.pro_usu_creacion = this.dataUser.id;
+      this.data = _.omit(this.data, [ 'todoArmare' ])
+      this.data = _.omitBy(this.data, _.isNull);
       this._productos.create(this.data).subscribe((res: any) => {
         //console.log(res);
         this._tools.presentToast("Exitoso");
@@ -594,7 +596,9 @@ export class FormProductComponent implements OnInit {
     this.viewRt = "end";
     item.check = !item.check;
     this.btnDisabled = true;
-    this.data = await this.getProducto(item);
+    let result = await this.getProducto(item);
+    if( result === false ) return false;
+    this.data = result;
     this.id = this.data.id;
     this.btnDisabled = false;
     this.procesoEdision();
@@ -806,7 +810,7 @@ export class FormProductComponent implements OnInit {
       try {
         event['chipInput']!.clear();
       } catch (error) {
-  
+
       }
       resolve( true );
     });

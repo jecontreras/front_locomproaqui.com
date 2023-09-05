@@ -362,6 +362,8 @@ export class FormproductosComponent implements OnInit {
       if( this.data.opt == 'demo' ) this.data.pro_mp_venta = 1;
       if( this.rolUser != 'administrador') this.data.pro_activo = 3;
       this.data.pro_usu_creacion = this.dataUser.id;
+      this.data = _.omit(this.data, [ 'todoArmare' ])
+    this.data = _.omitBy(this.data, _.isNull);
       this._productos.create(this.data).subscribe((res: any) => {
         //console.log(res);
         this._tools.presentToast("Exitoso");
@@ -372,9 +374,10 @@ export class FormproductosComponent implements OnInit {
     //this.dialog.closeAll();
   }
   updates() {
-    this.data = _.omit(this.data, [ 'pro_usu_creacion' ])
+    this.data = _.omit(this.data, [ 'pro_usu_creacion', 'todoArmare' ])
     this.data = _.omitBy(this.data, _.isNull);
     if( this.rolUser == 'administrador' ) this.data.pro_activo = 0;
+    console.log("error", this.data, this._productos )
     this._productos.update(this.data).subscribe((res: any) => {
       this._tools.presentToast("Actualizado");
       res.listColor = this.data.listColor;
@@ -403,7 +406,9 @@ export class FormproductosComponent implements OnInit {
     for (let row of this.listGaleria) row.check = false;
     item.check = !item.check;
     this.btnDisabled = true;
-    this.data = await this.getProducto(item);
+    let result = await this.getProducto(item);
+    if( result === false ) return false;
+    this.data = result;
     this.id = this.data.id;
     this.btnDisabled = false;
     this.procesoEdision();
