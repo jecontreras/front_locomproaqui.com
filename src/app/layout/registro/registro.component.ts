@@ -51,6 +51,7 @@ export class RegistrosComponent implements OnInit {
       width: '100%',
       data: {
         view: opt,
+        title: opt === "proveedor" ? "Registrate y muestra tus productos a cientos de vendedores": "Crea tu tienda virtual y compartela",
         cabeza: this.cabeza,
         usu_email: this.data.usu_email
       }

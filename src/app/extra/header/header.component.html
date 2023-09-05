@@ -247,16 +247,26 @@
 
             </div>
             <div class="p-2 bd-highlight" *ngIf="!dataUser.id">
-              <button type="button" class="btn btn-light" (click)="registrar()" style="font-size: 10px; margin-bottom: 5px;">Iniciar Sesion</button>
-              <button type="button" *ngIf="breakpoint == 1" class="btn btn-light" style="font-size: 10px; " (click)="login()">Registrarse</button>
+              <button type="button" class="btn btn-light" (click)="login()" style="font-size: 10px; margin-bottom: 5px;">Iniciar Sesion</button>
+              <button type="button" *ngIf="breakpoint == 1" class="btn btn-light" style="font-size: 10px; " (click)="registrar()">Registrarse</button>
             </div>
             <div class="p-2 bd-highlight" *ngIf="breakpoint == 6 && !dataUser.id">
               <button type="button" class="btn btn-light" (click)="login()" style="font-size: 10px;">Registrarse</button>
+            </div>
+            <div *ngIf="dataUser.id" class="p-2 bd-highlight">
+              <a class="text-white" routerLink="/config/cobros">
+                $ {{ ( ( dataInfo?.porcobrado ) || 0 ).toLocaleString(1) }} COP
+              </a>
             </div>
             <div class="p-2 bd-highlight">
               <a (click)="this.opcionoView = 'carro'; sidenav.toggle();" class="p-1 pointer espacios"
                 [matBadge]="listCart.length" matBadgePosition="before" matBadgeColor="accent">
                 <i class="material-icons icoss">shopping_cart</i>
+              </a>
+            </div>
+            <div class="p-2 bd-highlight" *ngIf="dataUser.id">
+              <a [routerLink]="[ '/config/perfil' ]" class=" altoNull buscadorOcultar2p-1 pointer espacios">
+                <i class="material-icons icoss">person</i>
               </a>
             </div>
           </div>

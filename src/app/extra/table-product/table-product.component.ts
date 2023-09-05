@@ -85,6 +85,8 @@ export class TableProductComponent implements OnInit {
   }
 
   async handleCreate(){
+    return this.crearAnt(false);
+    /*
     let validate = await this._tools.confirm( { 
         title: "Versiones nuevas", 
         detalle: "",
@@ -92,7 +94,7 @@ export class TableProductComponent implements OnInit {
         cancel: "Version anterior" 
       } );
     if( validate.value ) this.crear(false);
-    else this.crearAnt(false);
+    else this.crearAnt(false);*/
   }
 
   crear(obj:any){

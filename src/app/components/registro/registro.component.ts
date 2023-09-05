@@ -115,6 +115,7 @@ export class RegistroComponent implements OnInit {
       this.view = this.datas.view;
       this.data.usu_email = this.datas.usu_email;
       this.data.usu_emailReper = this.datas.usu_email;
+      this.data.title = this.datas.title;
       this.getCabeza();
     } else this.data.cabeza = 1;
     if (this._authSrvice.isLoggedIn()) this._router.navigate(['/pedidos']);
@@ -242,7 +243,7 @@ async submit( opt:boolean ){
   let valid: boolean = await this.validando( opt );
   if (!valid || this.error) { this.disableSubmit = true; return false };
   if( !this.disabledusername ) return this._tools.tooast( { title: "Error tenemos problemas en el formulario por favor revisar gracias", icon: "error"})
-  this.data = _.omit(this.data, [ 'id', 'usu_nombre1' ])
+  this.data = _.omit(this.data, [ 'id', 'usu_nombre1', 'title' ])
   this.data = _.omitBy(this.data, _.isNull);
   if( this.data.rol == 'proveedor' ) {
     //this.data.listRedes = this.listPltaform.filter( item=> item.check == true );

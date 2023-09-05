@@ -63,7 +63,7 @@
 
               </div>
               <mat-tab-group mat-align-tabs="center" [color]="'accent'" [backgroundColor]="'primary'">
-                <mat-tab label="PEDIDOS PENDIENTES">
+                <mat-tab label="GUIAS POR IMPRIMIR">
                   <div class="search-results col-12 row" infiniteScroll [infiniteScrollDistance]="3"
                       [infiniteScrollThrottle]="50" (scrolled)="onScroll()">
 
@@ -134,7 +134,78 @@
                       </div>
                     </div>
                 </mat-tab>
-                <mat-tab label="PEDIDOS COMPLETADO">
+                <mat-tab label="GUIAS DESPACHADAS">
+                  <div class="search-results col-12 row" infiniteScroll [infiniteScrollDistance]="3"
+                      [infiniteScrollThrottle]="50" (scrolled)="onScroll()">
+
+                      <div class="col-12 material-datatables" *ngIf="!loader">
+                        <table id="datatables" class="table table-striped table-no-bordered table-hover" cellspacing="0"
+                          width="100%" style="width:100%">
+                          <thead>
+                            <tr>
+                              <th *ngFor="let row of dataTable2.headerRow">{{ row }}</th>
+                            </tr>
+                          </thead>
+                          <tfoot>
+                            <tr>
+                              <th *ngFor="let row of dataTable2.headerRow">{{ row }}</th>
+                            </tr>
+                          </tfoot>
+                          <tbody>
+                            <tr *ngFor="let row of dataTable2.dataRows; let idx=index"
+                              [ngClass]="{
+                                'colorFondo':row['ventas']['ven_subVendedor'] == 1,
+                                'colorCompletado':row['ventas']['ven_estado'] == 1,
+                                'colorDespachado':row['ventas']['ven_estado'] == 3,
+                                'colorEntrante':row['ventas']['ven_estado'] == 0,
+                                'colorDevolucion':row['ventas']['ven_estado'] == 2,
+                                'colorEliminado':row['ventas']['ven_estado'] == 5
+                              }"
+                            >
+                              <td>
+                                <div>
+                                  <button mat-mini-fab color="primary" (click)="handleOpenShop(row)">
+                                    <i class="material-icons">remove_red_eye</i>
+                                  </button><br>
+                                </div>
+                              </td>
+                              <td>
+                                <img [src]="row['producto']['foto'] || './assets/noimagen.jpg'" class="foto">
+                              </td>
+                              <td>{{ row['producto']['pro_nombre'] }}</td>
+                              <td> {{ row['ventas']['ven_numero_guia'] }} </td>
+                              <td>
+                                <span *ngIf="row['ventas']['ven_estado'] == 0">Pendiente</span>
+                                <span *ngIf="row['ventas']['ven_estado'] == 1">Exitosa</span>
+                                <span *ngIf="row['ventas']['ven_estado'] == 2">Rechazada</span>
+                                <span *ngIf="row['ventas']['ven_estado'] == 3">Despachado</span>
+                              </td>
+                              <td>{{ row['cantidad'] }}</td>
+                              <td>{{ _tools.monedaChange(3,2, ( row['precioVendedor'] || 0) ) }} </td>
+                              <td>{{ _tools.monedaChange(3,2, ( row['pricePlatform'] || 0) ) }} </td>
+                              <td>{{ _tools.monedaChange(3,2, ( ( row['precioVendedor'] - row['pricePlatform'] ) || 0) )  }}</td>
+                              <td>{{ row['tallaSelect'] }}</td>
+                              <td>{{ row['colorSelect'] }}</td>
+                              <td>{{ row['createdAt'] | date:'medium' }}</td>
+                            </tr>
+                          </tbody>
+                        </table>
+                        <div class="col-md-12 p-5">
+                          <ngx-spinner bdOpacity=0.9 bdColor="" size="default" color="#581f87" type="ball-pulse-sync"
+                              [fullScreen]="false">
+                          </ngx-spinner>
+                        </div>
+                        <div class="col-12">
+                          <div class="d-flex flex-row-reverse bd-highlight">
+                            <mat-paginator [length]="counts2" [pageSizeOptions]="[10, 25, 100]"
+                                (page)="pageEvent2($event)">
+                            </mat-paginator>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                </mat-tab>
+                <mat-tab label="GUIAS COMPLETADAS">
                   <div class="search-results col-12 row" infiniteScroll [infiniteScrollDistance]="3"
                 [infiniteScrollThrottle]="50" (scrolled)="onScroll()">
 
@@ -205,7 +276,78 @@
                 </div>
                   </div>
                 </mat-tab>
-                <mat-tab label="PEDIDOS PAGADOS AL PROVEEDOR">
+                <mat-tab label="GUIAS PAGADAS AL PROVEEDOR">
+                  <div class="search-results col-12 row" infiniteScroll [infiniteScrollDistance]="3"
+                [infiniteScrollThrottle]="50" (scrolled)="onScroll()">
+
+                <div class="col-12 material-datatables" *ngIf="!loader">
+                  <table id="datatables" class="table table-striped table-no-bordered table-hover" cellspacing="0"
+                    width="100%" style="width:100%">
+                    <thead>
+                      <tr>
+                        <th *ngFor="let row of dataTable.headerRow">{{ row }}</th>
+                      </tr>
+                    </thead>
+                    <tfoot>
+                      <tr>
+                        <th *ngFor="let row of dataTable.headerRow">{{ row }}</th>
+                      </tr>
+                    </tfoot>
+                    <tbody>
+                      <tr *ngFor="let row of dataTable3.dataRows; let idx=index"
+                        [ngClass]="{
+                          'colorFondo':row['ventas']['ven_subVendedor'] == 1,
+                          'colorCompletado':row['ventas']['ven_estado'] == 1,
+                          'colorDespachado':row['ventas']['ven_estado'] == 3,
+                          'colorEntrante':row['ventas']['ven_estado'] == 0,
+                          'colorDevolucion':row['ventas']['ven_estado'] == 2,
+                          'colorEliminado':row['ventas']['ven_estado'] == 5
+                        }"
+                      >
+                        <td>
+                          <div>
+                            <button mat-mini-fab color="primary" (click)="handleOpenShop(row)">
+                              <i class="material-icons">remove_red_eye</i>
+                            </button><br>
+                          </div>
+                        </td>
+                        <td>
+                          <img [src]="row['producto']['foto'] || './assets/noimagen.jpg'" class="foto">
+                        </td>
+                        <td>{{ row['producto']['pro_nombre'] }}</td>
+                        <td> {{ row['ventas']['ven_numero_guia'] }} </td>
+                        <td>
+                          <span *ngIf="row['ventas']['ven_estado'] == 0">Pendiente</span>
+                          <span *ngIf="row['ventas']['ven_estado'] == 1">Exitosa</span>
+                          <span *ngIf="row['ventas']['ven_estado'] == 2">Rechazada</span>
+                          <span *ngIf="row['ventas']['ven_estado'] == 3">Despachado</span>
+                        </td>
+                        <td>{{ row['cantidad'] }}</td>
+                        <td>{{ _tools.monedaChange(3,2, ( row['precioVendedor'] || 0) ) }} </td>
+                        <td>{{ _tools.monedaChange(3,2, ( row['pricePlatform'] || 0) ) }} </td>
+                        <td>{{ _tools.monedaChange(3,2, ( ( row['precioVendedor'] - row['pricePlatform'] ) || 0) )  }}</td>
+                        <td>{{ row['tallaSelect'] }}</td>
+                        <td>{{ row['colorSelect'] }}</td>
+                        <td>{{ row['createdAt'] | date:'medium' }}</td>
+                      </tr>
+                    </tbody>
+                  </table>
+                  <div class="col-md-12 p-5">
+                    <ngx-spinner bdOpacity=0.9 bdColor="" size="default" color="#581f87" type="ball-pulse-sync"
+                        [fullScreen]="false">
+                    </ngx-spinner>
+                  </div>
+                  <div class="col-12">
+                    <div class="d-flex flex-row-reverse bd-highlight">
+                      <mat-paginator [length]="counts" [pageSizeOptions]="[10, 25, 100]"
+                          (page)="pageEvent3($event)">
+                      </mat-paginator>
+                    </div>
+                  </div>
+                </div>
+                  </div>
+                </mat-tab>
+                <mat-tab label="GUIAS EN DEVOLUCION">
                   <div class="search-results col-12 row" infiniteScroll [infiniteScrollDistance]="3"
                 [infiniteScrollThrottle]="50" (scrolled)="onScroll()">
 

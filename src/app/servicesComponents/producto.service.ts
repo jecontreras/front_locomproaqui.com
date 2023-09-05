@@ -40,6 +40,9 @@ export class ProductoService {
   getVentaCompleteEarring(query:any){
     return this._model.querys('tblventas/getTransactionsEarring',query, 'post');
   }
+  getVentaCompletePendients(query:any){
+    return this._model.querys('tblventas/getTransactionsPendients',query, 'post');
+  }
   getVentaCompleteComplete(query:any){
     return this._model.querys('tblventas/getTransactionsComplete',query, 'post');
   }

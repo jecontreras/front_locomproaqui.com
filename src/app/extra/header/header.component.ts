@@ -490,7 +490,7 @@ export class HeaderComponent implements OnInit {
         submenus:[
           {
             icons: 'settings',
-            nombre: 'Inicio',
+            nombre: 'Proveedores Verficados',
             url: '/config/store/index',
           },
           {
@@ -518,7 +518,7 @@ export class HeaderComponent implements OnInit {
         submenus:[
           {
             icons: 'settings',
-            nombre: 'Inicio',
+            nombre: 'Mi Billetera',
             url: '/config/bank/index',
           },
           {

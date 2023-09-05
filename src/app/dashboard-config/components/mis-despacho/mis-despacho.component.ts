@@ -20,6 +20,7 @@ export class MisDespachoComponent implements OnInit {
   dataTable: DataTable;
   dataTable2: DataTable;
   dataTable3: DataTable;
+  dataTable4: DataTable;
   pagina = 10;
   paginas = 0;
   loader = true;
@@ -138,6 +139,26 @@ export class MisDespachoComponent implements OnInit {
     this.querysComplete.limit = ev.pageSize;
     this.cargarTodos2();
   }
+  cargarTodos4() {
+    this.spinner.show();
+    this._productos.getVentaCompletePendients( this.querysSale ).subscribe(res=>{
+      console.log("****55", res)
+      this.counts2 = res.count;
+      this.Pdreacudo = res.total;
+      this.dataTable4.headerRow = this.dataTable4.headerRow;
+      this.dataTable4.footerRow = this.dataTable4.footerRow;
+      this.dataTable4.dataRows.push(... res.data);
+      this.dataTable4.dataRows =_.unionBy(this.dataTable4.dataRows || [], res.data, 'id');
+      this.loader = false;
+        this.spinner.hide();
+
+        if (res.data.length === 0 ) {
+          this.notEmptyPost =  false;
+        }
+        this.notscrolly = true;
+    });
+  }
+
   cargarTodos3() {
     this.spinner.show();
     this._productos.getVentaCompleteComplete( this.querysComplete ).subscribe(res=>{
