@@ -46,6 +46,9 @@ export class ProductoService {
   getVentaCompleteComplete(query:any){
     return this._model.querys('tblventas/getTransactionsComplete',query, 'post');
   }
+  getVentaCompletePago(query:any){
+    return this._model.querys('tblventas/getTransactionsPagados',query, 'post');
+  }
   createTestimonio(query:any){
     return this._model.querys('tbltestimonio',query, 'post');
   }

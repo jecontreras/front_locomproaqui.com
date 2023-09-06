@@ -35,7 +35,7 @@ import { FormListSaleComponent } from './form/form-list-sale/form-list-sale.comp
     MyOwnCustomMaterialModule,
     InfiniteScrollModule,
     NgxCurrencyModule,
-    BankRoutingModule
+    BankRoutingModule,
   ]
 })
 export class BankModule { }

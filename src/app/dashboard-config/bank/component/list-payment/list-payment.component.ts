@@ -6,7 +6,11 @@ import { ToolsService } from 'src/app/services/tools.service';
 import { BancosService } from 'src/app/servicesComponents/bancos.service';
 import { SupplierAccountantService } from 'src/app/servicesComponents/supplier-accountant.service';
 import { CreateBankComponent } from '../../form/create-bank/create-bank.component';
-
+import { itemRecaudoPR } from 'src/app/dashboard-config/admin/component/vendor-payments/vendor-payments.component';
+import * as _ from 'lodash';
+import { animate, state, style, transition, trigger } from '@angular/animations';
+import { FormListSaleComponent } from '../../form/form-list-sale/form-list-sale.component';
+import { ProductoService } from 'src/app/servicesComponents/producto.service';
 declare interface DataTable {
   headerRow: string[];
   footerRow: string[];
@@ -20,6 +24,13 @@ declare const $: any;
 @Component({
   selector: 'app-list-payment',
   templateUrl: './list-payment.component.html',
+  animations: [
+    trigger('detailExpand', [
+      state('collapsed', style({height: '0px', minHeight: '0'})),
+      state('expanded', style({height: '*'})),
+      transition('expanded <=> collapsed', animate('225ms cubic-bezier(0.4, 0.0, 0.2, 1)')),
+    ]),
+  ],
   styleUrls: ['./list-payment.component.scss']
 })
 export class ListPaymentComponent implements OnInit {
@@ -38,13 +49,22 @@ export class ListPaymentComponent implements OnInit {
   public datoBusqueda = '';
   dataUser:any = {};
   superSub:boolean = false;
-  
+
+  dataSource = ELEMENT_DATA;
+  columnsToDisplay = ['Usuario', 'Email', 'Banco', 'Monto', 'FechaPago', 'Estado'];
+  expandedElement: itemRecaudoPR | null;
+  resultsLength:number = 0;
+  notscrolly:boolean=true;
+  notEmptyPost:boolean = true;
+
+
   constructor(
     private _supplier: SupplierAccountantService,
     public dialog: MatDialog,
     public _tools: ToolsService,
     private _store: Store<STORAGES>,
-  ) { 
+    private _product: ProductoService
+  ) {
     this._store.subscribe((store: any) => {
       store = store.name;
       this.dataUser = store.user || {};
@@ -55,7 +75,7 @@ export class ListPaymentComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.cargarTodos();
+    this.getSupplier();
   }
 
   crear(obj:any){
@@ -98,6 +118,22 @@ export class ListPaymentComponent implements OnInit {
         console.log('Error', error);
       });
   }
+  getSupplier(){
+    return new Promise( resolve =>{
+      this._supplier.get( this.query ).subscribe( res =>{
+        this.resultsLength = res.count;
+        this.dataSource = _.unionBy(this.dataSource || [], res.data, 'id');
+        console.log("**", this.dataSource, this.resultsLength)
+        this.loader = false;
+        if (res.data.length === 0 ) {
+          this.notEmptyPost =  false;
+        }
+        this.notscrolly = true;
+      })
+      resolve( true )
+    });
+  }
+
   config() {
     if(!this.$)return false;
     $('#datatables').DataTable({
@@ -146,17 +182,21 @@ export class ListPaymentComponent implements OnInit {
   buscar() {
     this.loader = true;
     this.dataTable.dataRows = [];
+    this.notEmptyPost =  true;
+    this.notscrolly = true;
+    this.dataSource = [];
     this.query = {};
     //console.log(this.datoBusqueda);
     this.datoBusqueda = this.datoBusqueda.trim();
     this.query = {
       where:{
-        state: 0
+        //state: 0
+        user: this.dataUser.id
       },
-      limit: 100      
+      limit: 100
     };
     if (this.datoBusqueda != '') {
-      this.query.where.or = [
+      /*this.query.where.or = [
         {
           cat_nombre: {
             contains: this.datoBusqueda|| ''
@@ -167,9 +207,50 @@ export class ListPaymentComponent implements OnInit {
             contains: this.datoBusqueda|| ''
           }
         },
-      ];
-    } 
-    this.cargarTodos();
+      ];*/
+    }
+    this.getSupplier();
+  }
+
+  async onScroll( ev:any ){
+    if (this.notscrolly && this.notEmptyPost) {
+        this.query.page = ev.pageIndex;
+        this.query.limit = ev.pageSize;
+        this.notscrolly = false;
+        await this.getSupplier();
+     }
+   }
+
+   getPagoComplet( item:itemRecaudoPR ){
+    return new Promise( resolve =>{
+      this._product.getVentaCompletePago( { checkPaySupplier: item.id } ).subscribe( res =>{
+        resolve( res.data );
+      });
+    });
+   }
+
+  async handleBuy( item:itemRecaudoPR ){
+    let listData = await this.getPagoComplet( item );
+    console.log("**", listData)
+    //return false;
+    const dialogRef = this.dialog.open(FormListSaleComponent,{
+      data: {
+        datos: {
+          list: listData,
+          data: {}
+        }
+      }
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      console.log(`Dialog result: ${result}`);
+    });
+  }
+
+  handleEvidence( item:itemRecaudoPR ){
+    this._tools.processPhoto( {  photo: item.photo, title: item.fechaPago } );
   }
 
 }
+
+const ELEMENT_DATA: itemRecaudoPR[] = [];
