@@ -75,8 +75,11 @@
               <button (click)="crear(row)" class="btn btn-primary btn-just-icon btn-round">
                 <i class="material-icons">remove_red_eye</i>
               </button>
-              <button *ngIf="_dataConfig.view !== 'check'" (click)="handleDelete(row, idx)" class="btn btn-danger btn-just-icon btn-round">
+              <button (click)="handleDelete(row, idx)" class="btn btn-danger btn-just-icon btn-round">
                 <i class="material-icons">delete_forever</i>
+              </button>
+              <button (click)="handleDouble(row)" class="btn btn-warning btn-just-icon btn-round" [disabled]="row.btnDisabled">
+                Duplicar
               </button>
               <div *ngIf="_dataConfig.view === 'check' && rolName === 'administrador'">
                 <mat-checkbox class="example-margin" [(ngModel)]="row.stateH" (ngModelChange)="updateState( row, 'pro_estado')">Activar</mat-checkbox>
