@@ -16,6 +16,7 @@ import { FormtestimoniosComponent } from 'src/app/dashboard-config/form/formtest
 import { CategoriasService } from 'src/app/servicesComponents/categorias.service';
 import { DialogconfirmarPedidoComponent } from '../dialogconfirmar-pedido/dialogconfirmar-pedido.component';
 import { CobrosService } from 'src/app/servicesComponents/cobros.service';
+import { ProductoService } from 'src/app/servicesComponents/producto.service';
 
 const URLFRON = location.origin;
 
@@ -74,6 +75,14 @@ export class HeaderComponent implements OnInit {
   urlDistribuidor:string =`${ URLFRON }/articulo/`;
   activando:boolean = false;
 
+  querysSale:any = {
+    where:{
+    },
+    limit: 10,
+    skip: 0
+  };
+  reacudo:number;
+
   constructor(
     public changeDetectorRef: ChangeDetectorRef,
     public media: MediaMatcher, private router: Router,
@@ -84,7 +93,8 @@ export class HeaderComponent implements OnInit {
     private _notificaciones: NotificacionesService,
     private _venta: VentasService,
     private _categorias: CategoriasService,
-    private _retiros: CobrosService
+    private _retiros: CobrosService,
+    private _productos: ProductoService,
 
   ) {
     this._store.subscribe((store: any) => {
@@ -95,6 +105,7 @@ export class HeaderComponent implements OnInit {
       this.userId = store.usercabeza || {};
       this.dataUser = store.user || {};
       this.userPr = store.userpr || {};
+      this.querysSale.where.creacion = this.dataUser.id;
       if( store.buscar ) {
         this.seartxt = store.buscar;
       }
@@ -108,6 +119,7 @@ export class HeaderComponent implements OnInit {
       //console.log( window.innerWidth )
       this.disabledSearch = window.innerWidth <= 600 ? true : false;
       if( this.dataUser.id ){
+        this.rolUser = this.dataUser.usu_perfil.prf_descripcion;
         this.activando = false;
         if(this.dataUser.usu_perfil.prf_descripcion == 'administrador') this.activando = true;
         try {
@@ -134,6 +146,7 @@ export class HeaderComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.loadCoin();
     this.urlTienda += this.dataUser.usu_telefono;
     this.urlDistribuidor +=this.dataUser.usu_telefono;
     this.breakpoint = (window.innerWidth <= 500) ? 1 : 6;
@@ -167,12 +180,20 @@ export class HeaderComponent implements OnInit {
     try {
       if( Object.keys( this.userPr ).length > 0 ) this.rolUser1 = this.userPr.usu_perfil.prf_descripcion;
     } catch (error) {
-      console.log(error)
+      //console.log(error)
     }
+    console.log("***149", this.rolUser)
     this.listMenus();
     if( this.dataUser.id )this.getCarrito();
     if( this.dataUser.id ) this.getAlert();
     this.getEventos();
+  }
+
+  loadCoin() {
+    this._productos.getVentaComplete( this.querysSale ).subscribe(res=>{
+      //console.log("***191",res)
+      this.reacudo = res.total;
+    });
   }
 
   getEventos(){

@@ -32,7 +32,9 @@ export class FormListSaleComponent implements OnInit {
   counts:number = 0;
   dataUser:any = {};
   superSub:boolean = false;
-
+  suma:number = 0;
+  formatoMoneda:any = {};
+  
   constructor(
     private _ventas: VentasService,
     public dialogRef: MatDialogRef<FormlistventasComponent>,
@@ -50,6 +52,7 @@ export class FormListSaleComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.formatoMoneda = this._tools.currency;
     this.dataTable = {
       headerRow: this.Header,
       footerRow: this.Header,
@@ -76,11 +79,13 @@ export class FormListSaleComponent implements OnInit {
   }
 
   populateList(){
+    let suma = 0;
     for( let row of this.data.list ){
       let gananciaLk = 0;
       try { gananciaLk = ( row.precio * ( row.producto.precioLokompro || 5 ) ) / 100; } catch (error) { }
 
-      console.log("***83", gananciaLk)
+      if( !row.ventas ) continue;
+      console.log("***83", row, row.id)
       let data:any = {
         code: row.titulo,
         foto: row.fotoproducto,
@@ -90,12 +95,16 @@ export class FormListSaleComponent implements OnInit {
         talla: row.tallaSelect,
         pricePlatform: gananciaLk,
         ven_numero_guia: row.ventas.ven_numero_guia,
-        fecha: row.ventas.ven_fecha_venta,
+        fecha: row.ventas.ven_fecha_venta || row.ventas.createdAt,
         estado: row.ventas.ven_estado ? 'Exitoso' : 'Reexpedición'
       }
-      this.dataTable.dataRows.push( data );
+      if( data.ven_numero_guia ) {
+        this.dataTable.dataRows.push( data );
+        suma+=data.miGanancia;
+      }
     }
     this.loader = false;
+    this.suma = suma;
     console.log("****82", this.dataTable)
   }
 

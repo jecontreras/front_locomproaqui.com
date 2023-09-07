@@ -40,7 +40,9 @@
                 </span>
             </td>
             <td>{{ row['talla']}} </td>
-            <td>{{ row['fecha'] | date:'medium' }}</td>
+            <td>
+              <span *ngIf="row.fecha">{{ row['fecha']  }}</span>
+            </td>
             <td>{{ row['estado']}} </td>
           </tr>
         </tbody>
@@ -56,5 +58,10 @@
   </div>
 </mat-dialog-content>
 <mat-dialog-actions align="end">
+    <div>
+      <label for="exampleFormControlSelect1">Total de ganancia:</label>
+      <input currencyMask class="form-control form-control-sm" [(ngModel)]="suma"
+      [options]="formatoMoneda" disabled/>
+    </div>
     <button mat-button mat-dialog-close>Cerrar</button>
 </mat-dialog-actions>
