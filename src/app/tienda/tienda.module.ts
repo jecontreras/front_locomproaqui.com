@@ -24,6 +24,7 @@ import { NgxCurrencyModule } from 'ngx-currency';
 import { ArticuloComponent } from '../components/articulo/articulo.component';
 import { TerminosGeneralesComponent } from '../layout/terminos-generales/terminos-generales.component';
 import { TratamientoDatoComponent } from '../layout/tratamiento-dato/tratamiento-dato.component';
+import { InfoComponent } from '../layout/info/info.component';
 
 
 @NgModule({
@@ -47,7 +48,8 @@ import { TratamientoDatoComponent } from '../layout/tratamiento-dato/tratamiento
     ContenidoComponent,
     ProductoViewComponent,
     TestimoniosComponent,
-    ArticuloComponent
+    ArticuloComponent,
+    InfoComponent
 
   ],
   imports: [

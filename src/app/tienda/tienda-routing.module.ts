@@ -7,6 +7,7 @@ import { LoginsComponent } from '../layout/login/login.component';
 import { RegistrosComponent } from '../layout/registro/registro.component';
 import { TiendaComponent } from './tienda.component';
 import { ArticuloComponent } from '../components/articulo/articulo.component';
+import { InfoComponent } from '../layout/info/info.component';
 
 const routes: Routes = [
   {
@@ -18,7 +19,7 @@ const routes: Routes = [
       { path: 'pedidos/inf/:id', component: PedidosComponent },
       { path: 'articulo/:cel', component: ArticuloComponent },
       { path: 'articulo/:cel/:categoria', component: ArticuloComponent },
-      { path: ':id', component: PedidosComponent },
+      //{ path: ':id', component: PedidosComponent },
       { path: 'pedido/:categoria', component: PedidosComponent },
       { path: 'productos/:id', component: ProductoViewComponent },
       { path: 'testimonio', component: TestimoniosComponent },
@@ -26,6 +27,7 @@ const routes: Routes = [
       { path: 'login/:id/:cel', component: LoginsComponent },
       { path: 'registro', component: RegistrosComponent },
       { path: 'registro/:id', component: RegistrosComponent },
+      { path: 'info', component: InfoComponent },
     ]
   },
   {
