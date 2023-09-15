@@ -8,13 +8,14 @@ import { RegistrosComponent } from '../layout/registro/registro.component';
 import { TiendaComponent } from './tienda.component';
 import { ArticuloComponent } from '../components/articulo/articulo.component';
 import { InfoComponent } from '../layout/info/info.component';
+import { InfoSupplierComponent } from '../layout/info-supplier/info-supplier.component';
 
 const routes: Routes = [
   {
     path: '',
     component: TiendaComponent,
     children: [
-      { path: '', component: PedidosComponent, pathMatch: 'full' },
+      { path: '', component: InfoComponent, pathMatch: 'full' },
       { path: 'pedidos', component: PedidosComponent },
       { path: 'pedidos/inf/:id', component: PedidosComponent },
       { path: 'articulo/:cel', component: ArticuloComponent },
@@ -28,6 +29,7 @@ const routes: Routes = [
       { path: 'registro', component: RegistrosComponent },
       { path: 'registro/:id', component: RegistrosComponent },
       { path: 'info', component: InfoComponent },
+      { path: 'infoSupplier', component: InfoSupplierComponent },
     ]
   },
   {

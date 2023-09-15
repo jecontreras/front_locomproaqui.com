@@ -1,0 +1,42 @@
+<app-menu></app-menu>
+
+<div class="row" style="    margin: 5px;">
+    <div class="col-12" class="colorFondo1">
+      <div class="row" >
+        <div class="col-12 col-sm-6" style="    margin-top: 20px; margin: auto; ">
+            <div class="h_iframe">
+                <iframe  frameborder="0" allowfullscreen  src="https://www.youtube.com/embed/qMYKvn5dbvg?si=d1e8bC_bHLgKaJdn"></iframe>
+            </div>
+        </div>
+        <div class="col-12 col-sm-6" style="margin: auto;">
+            <h5>
+                Te doy la bienvenida a nuestro nuevo portal de proveedores verificados lokomproaqui, aquí vas a encontrar a los mejores y más confiables proveedores de nuestra plataforma.
+                Ellos te entregarán material gráfico para tus campañas, podremos conocer sus políticas de garantías y si quieres hacer dropshipping con ellos te dejarémos un botón de contacto para que un asesor te atienda en el menor tiempo posible. ¡Ve y conócelos!
+            </h5>
+        </div>
+      </div>
+    </div>
+    <div class="col-12">
+        <app-contador-shipping></app-contador-shipping>
+    </div>
+    <div class="col-12">
+        <section style="    text-align: center; color: #02a0e3;">
+            <h2>Nuestros</h2>
+            <h1>PROVEEDORES</h1>
+        </section>
+    </div>
+    <div class="col-12">
+        <div class="row">
+            <div class="col-6 col-sm-4" *ngFor="let item of listSupplier">
+                LOGO
+            </div>
+        </div>
+    </div>
+    <div class="col-12">
+        <div class="d-flex justify-content-center">
+            <div>
+                <button type="button" class="btn btn-dark">Registrarme como Proveedor</button>
+            </div>
+        </div>
+    </div>
+</div>

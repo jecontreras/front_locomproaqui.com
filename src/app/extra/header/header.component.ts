@@ -82,7 +82,7 @@ export class HeaderComponent implements OnInit {
     skip: 0
   };
   reacudo:number;
-
+  routName:string = "";
   constructor(
     public changeDetectorRef: ChangeDetectorRef,
     public media: MediaMatcher, private router: Router,
@@ -147,6 +147,7 @@ export class HeaderComponent implements OnInit {
 
   ngOnInit() {
     this.loadCoin();
+    this.routName = window.location.pathname;
     this.urlTienda += this.dataUser.usu_telefono;
     this.urlDistribuidor +=this.dataUser.usu_telefono;
     this.breakpoint = (window.innerWidth <= 500) ? 1 : 6;

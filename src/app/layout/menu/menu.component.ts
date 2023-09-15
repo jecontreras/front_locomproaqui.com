@@ -6,36 +6,16 @@ import { OpenIframeComponent } from 'src/app/extra/open-iframe/open-iframe.compo
 import { STORAGES } from 'src/app/interfaces/sotarage';
 
 @Component({
-  selector: 'app-info',
-  templateUrl: './info.component.html',
-  styleUrls: ['./info.component.scss']
+  selector: 'app-menu',
+  templateUrl: './menu.component.html',
+  styleUrls: ['./menu.component.scss']
 })
-export class InfoComponent implements OnInit {
-  contect = {
-    contadorC: 100,
-    titleC: "Comercio <br> Registrados",
-    contadorD: 100,
-    titleD: "Proveedores <br> dropshipping",
-    contadorE: 1150,
-    titleE: "Envios diarios",
-    contadorM: 1150,
-    titleM: "Municipios bajo <br> Cobertura"
-  };
-  numberInf:number = 0;
+export class MenuComponent implements OnInit {
+
   constructor(
     public dialog: MatDialog,
     private _store: Store<STORAGES>,
-  ) { 
-    this._store.subscribe((store: any) => {
-      store = store.name;
-      if(!store) return false;
-      try {
-        this.numberInf = store.configuracion.clInformacion
-      } catch (error) {
-        this.numberInf = 3213692393;
-      }
-    });
-  }
+  ) { }
 
   ngOnInit(): void {
   }
@@ -66,10 +46,6 @@ export class InfoComponent implements OnInit {
     dialogRef.afterClosed().subscribe(result => {
       console.log(`Dialog result: ${result}`);
     });
-  }
-
-  handleInfo(){
-    let url = `https://wa.me/57${ this.numberInf }?text=Hola Servicio al cliente`
   }
 
 }

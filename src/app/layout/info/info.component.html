@@ -1,104 +1,136 @@
-<nav class="navbar navbar-light bg-light">
-  <div class="d-flex justify-content-center" style="width: 100%;">
-    <div class="p-3">
-      <a href="">¿Cómo funciona? </a>
-    </div>
-    <div class="p-3">
-      <a href="">¿Cómo funciona? </a>
-    </div>
-    <div class="p-3">
-      <a href="">¿Cómo funciona? </a>
-    </div>
-    <div class="p-3">
-      <a href="">¿Cómo funciona? </a>
-    </div>
-  </div>
-</nav>
+<app-menu></app-menu>
 
 <div class="row" style="    margin: 5px;">
   <div class="col-12" class="colorFondo1">
     <div class="row" >
-      <div class="col-12 col-sm-6" style="margin-top: 20px;">
-        <h1>SOMOS TU<br> MEJOR ALIADO</h1>
-        <p class="text-white">Compra vede, Publica y genera<br> Ingreso de forma rapida y segura</p>
-        <button type="button" class="btn btn-dark">Registrate Gratis</button>
+      <div class="col-12 col-sm-6" style="    margin-top: 20px; margin: auto; padding-left: 10%;">
+        <h1 style="    font-size: 320%;">SOMOS TU<br> MEJOR ALIADO</h1>
+        <h5 class="text-white">Compra vede, Publica y genera<br> Ingreso de forma rapida y segura</h5><br><br>
+        <button type="button" class="btn btn-dark" style="    width: 100%; font-size: 168%;" (click)="handleOpenCheckIn('vendedor')">Registrate Gratis</button>
       </div>
       <div class="col-12 col-sm-6">
-        <img src="./assets/imagenes/DINERO.png" alt="" style="width: 360px;">
+        <img src="./assets/imagenes/BANNER 1.png" alt="" style="    width: 112%;">
       </div>
     </div>
   </div>
-  <div class="col-12" class="colorFondo2" style="width: 100%;">
-    <div class="d-flex justify-content-center" style="width: 100%;">
-      <div class="paddingG">
-        <h2>+{{ contect.contadorC }}</h2>
-        <p [innerHTML]="contect.titleC"></p>
-      </div>
-      <div class="paddingG">
-        <h2>+{{ contect.contadorD }}</h2>
-        <p [innerHTML]="contect.titleD"></p>
-      </div>
-      <div class="paddingG">
-        <h2>+{{ contect.contadorE }}</h2>
-        <p [innerHTML]="contect.titleE"></p>
-      </div>
-      <div class="paddingG">
-        <h2>+{{ contect.contadorM }}</h2>
-        <p [innerHTML]="contect.titleM"> </p>
-      </div>
-    </div>
+  <div class="col-12">
+    <app-contador-shipping></app-contador-shipping>
   </div>
   <div class="col-12" class="colorFondo3" style="width: 100%;">
     <div class="row" style="margin: 5px">
       <div class="col-12">
         <div class="d-flex justify-content-center" style="width: 100%;">
-          <div class="p-3" style="    text-align: center;">
-            <img src="./assets/noimagen.jpg" alt="" style="width: 100px;">
-            <h6>Dropshipping</h6>
-          </div>
-          <div class="p-3" style="    text-align: center;">
-            <img src="./assets/noimagen.jpg" alt="" style="width: 100px;">
-            <h6>Envios Contraentrega</h6>
-          </div>
-          <div class="p-3" style="    text-align: center;">
-            <img src="./assets/noimagen.jpg" alt="" style="width: 100px;">
-            <h6>Envios y Logistica</h6>
-          </div>
-          <div class="p-3" style="    text-align: center;">
-            <img src="./assets/noimagen.jpg" alt="" style="width: 100px;">
-            <h6>Envios y Logistica</h6>
-          </div>
-          <div class="p-3" style="    text-align: center;">
-            <img src="./assets/noimagen.jpg" alt="" style="width: 100px;">
-            <h6>Desembolso Rapido</h6>
+          <div class="row">
+            <div class="p-3 col-4 col-sm-3" style="    text-align: center;">
+              <img src="./assets/noimagen.jpg" alt="" style="width: 100px;">
+              <h6>Dropshipping</h6>
+            </div>
+            <div class="p-3 col-4 col-sm-2" style="    text-align: center;">
+              <img src="./assets/noimagen.jpg" alt="" style="width: 100px;">
+              <h6>Envios Contraentrega</h6>
+            </div>
+            <div class="p-3 col-4 col-sm-2" style="    text-align: center;">
+              <img src="./assets/noimagen.jpg" alt="" style="width: 100px;">
+              <h6>Envios y Logistica</h6>
+            </div>
+            <div class="p-3 col-4 col-sm-2" style="    text-align: center;">
+              <img src="./assets/noimagen.jpg" alt="" style="width: 100px;">
+              <h6>Envios y Logistica</h6>
+            </div>
+            <div class="p-3 col-4 col-sm-3" style="    text-align: center;">
+              <img src="./assets/noimagen.jpg" alt="" style="width: 100px;">
+              <h6>Desembolso Rapido</h6>
+            </div>
           </div>
         </div>
       </div>
-      <div class="row" style="margin: 5px;">
-        <div class="col-12 col-sm-6">
-          <img src="./assets/imgagenes/DINERO.png" alt="" style="width: 360px;">
-        </div>
-        <div class="col-12 col-sm-6">
-          <h3>¿Que Hacemos?</h3>
-          <label for=""><i class="material-icons" aria-hidden="true">check_circle</i> Somos el aliado más confiable para nuestros proveedores.</label>
-          <label for=""><i class="material-icons" aria-hidden="true">check_circle</i> Somos el apoyo para aquellas personas que quieren generar ingresos reales y sin invertir..</label>
-          <label for=""><i class="material-icons" aria-hidden="true">check_circle</i> Nos encargamos de que los vendedores compartan y vendas tus productos.</label>
-          <label for=""><i class="material-icons" aria-hidden="true">check_circle</i> Nos encargamos de la logística de venta que seria preparar tu pedido y enviarlo a su respectivo cliente.</label>
-          <label for=""><i class="material-icons" aria-hidden="true">check_circle</i> Nos encargamos de realizar los pagos rápidamente el mismo día que el cliente recibe su producto.</label>
+    </div>
+  </div>
+  <div class="col-12 row" style="    margin: 3% 0%; padding: 4% 3%; background: white;">
+    <div class="col-12 col-sm-6">
+      <img src="./assets/imagenes/fondo1.png" alt="" style="width: 109%">
+    </div>
+    <div class="col-12 col-sm-6">
+      <h3>¿Que Hacemos?</h3>
+      <label for=""><i class="material-icons" aria-hidden="true">check_circle</i> Somos el aliado más confiable para nuestros proveedores.</label><br>
+      <label for=""><i class="material-icons" aria-hidden="true">check_circle</i> Somos el apoyo para aquellas personas que quieren generar ingresos reales y sin invertir..</label><br>
+      <label for=""><i class="material-icons" aria-hidden="true">check_circle</i> Nos encargamos de que los vendedores compartan y vendas tus productos.</label><br>
+      <label for=""><i class="material-icons" aria-hidden="true">check_circle</i> Nos encargamos de la logística de venta que seria preparar tu pedido y enviarlo a su respectivo cliente.</label><br>
+      <label for=""><i class="material-icons" aria-hidden="true">check_circle</i> Nos encargamos de realizar los pagos rápidamente el mismo día que el cliente recibe su producto.</label><br>
+    </div>
+  </div>
+  <div class="col-12 row" style="margin: 3% 0%; padding: 4% 3%; background: white;">
+    <div class="col-12 col-sm-6">
+      <h3>¿Por qué lokomproaqui?</h3>
+      <label for=""><i class="material-icons" aria-hidden="true">check_circle</i> Tienes tu dinero en 24 horas.</label><br>
+      <label for=""><i class="material-icons" aria-hidden="true">check_circle</i> Tenemos las mejores tarifas del mercado.</label><br>
+      <label for=""><i class="material-icons" aria-hidden="true">check_circle</i> Somos una plataforma amigable y fácil de usar.</label><br>
+      <label for=""><i class="material-icons" aria-hidden="true">check_circle</i> Puedes gestionar tu inventario facil.</label><br>
+      <label for=""><i class="material-icons" aria-hidden="true">check_circle</i> Creamos tu tienda virtual gratis y fácil.</label><br>
+      <label for=""><i class="material-icons" aria-hidden="true">check_circle</i> Capacitaciones gratis de marketing.</label><br>
+      <br><br>
+    </div>
+    <div class="col-12 col-sm-6">
+      <img src="./assets/imagenes/fondo2.png" alt="" style="width: 109%;">
+    </div>
+  </div>
+  <div class="col-12 row" style=" margin:  5px;">
+    
+    <div class="col-12 col-sm-4">
+      <div class="colorFondo4">
+        <span style="padding: 50px;">
+          <h3>Registro Proveedor</h3>
+          <p class="text-light">Empieza con tu red de ventas</p>
+          <button type="button" class="btn btn-dark" (click)="handleOpenCheckIn('proveedor')" >Registrarme -></button><br>
+        </span>
+        <img src="./assets/imagenes/REGISTROPROVEEDOR.png" alt="" style="width: 100%;">
+      </div>
+      <br>
+    </div>
+    <div class="col-12 col-sm-4">
+      <div class="colorFondo4">
+        <span style="padding: 50px;">
+          <h3>Registro Vendedor</h3>
+          <p class="text-light">Empieza a generar venta sin invertir</p>
+          <button type="button" class="btn btn-dark" (click)="handleOpenCheckIn('proveedor')" >Registrarme -></button><br>
+        </span>
+        <img src="./assets/imagenes/REGISTROVENDEDOR.png" alt="" style="width: 100%;">
+      </div>
+      <br>
+    </div>
+    <div class="col-12 col-sm-4">
+      <div class="colorFondo4">
+        <span style="padding: 50px;">
+          <h3>Contactar Asesor</h3>
+          <p class="text-light">La Información que necesitas a un click</p>
+          <button type="button" class="btn btn-dark" (click)="handleInfo()">Contactar -></button><br>
+        </span>
+        <img src="./assets/imagenes/CONTACTARASESOR.png" alt="" style="width: 100%;">
+      </div>
+      <br>
+    </div>
+  </div>
+  <div class="col-12 row colorFondo5" style="margin: 5px;">
+    <div class="col-12">
+      <div class="d-flex justify-content-center">
+        <div style="    text-align: center; width: 100%;">
+          <h2>Registrate no <br> Pierdas Más Dinero</h2>
+          <button type="button" class="btn btn-dark" style="    width: 376px; font-size: 25px; height: 70px;" (click)="handleOpenCheckIn('vendedor')">Registrate Gratis</button>
         </div>
       </div>
-      <div class="row" style="margin: 5px;">
-        <div class="col-12 col-sm-6">
-          <h3>¿Por qué lokomproaqui?</h3>
-          <label for=""><i class="material-icons" aria-hidden="true">check_circle</i> Tienes tu dinero en 24 horas.</label>
-          <label for=""><i class="material-icons" aria-hidden="true">check_circle</i> Tenemos las mejores tarifas del mercado.</label>
-          <label for=""><i class="material-icons" aria-hidden="true">check_circle</i> Somos una plataforma amigable y fácil de usar.</label>
-          <label for=""><i class="material-icons" aria-hidden="true">check_circle</i> Puedes gestionar tu inventario facil.</label>
-          <label for=""><i class="material-icons" aria-hidden="true">check_circle</i> Creamos tu tienda virtual gratis y fácil.</label>
-          <label for=""><i class="material-icons" aria-hidden="true">check_circle</i> Capacitaciones gratis de marketing.</label>
-        </div>
-        <div class="col-12 col-sm-6">
-          <img src="./assets/imgagenes/DINERO.png" alt="" style="width: 360px;">
+    </div>
+  </div>
+  <div class="col-12 row" style="margin: 5px;">
+    <div class="col-12">
+      <div class="d-flex justify-content-center">
+        <div style="    text-align: center;">
+          <div class="row">
+            <div class="col-12">
+              <img src="./assets/imagenes/transportadora.png" alt="" style="
+              width: 100%;
+          ">
+            </div>
+          </div>
         </div>
       </div>
     </div>

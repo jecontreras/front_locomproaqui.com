@@ -25,6 +25,9 @@ import { ArticuloComponent } from '../components/articulo/articulo.component';
 import { TerminosGeneralesComponent } from '../layout/terminos-generales/terminos-generales.component';
 import { TratamientoDatoComponent } from '../layout/tratamiento-dato/tratamiento-dato.component';
 import { InfoComponent } from '../layout/info/info.component';
+import { InfoSupplierComponent } from '../layout/info-supplier/info-supplier.component';
+import { MenuComponent } from '../layout/menu/menu.component';
+import { ContadorShippingComponent } from '../layout/contador-shipping/contador-shipping.component';
 
 
 @NgModule({
@@ -49,7 +52,10 @@ import { InfoComponent } from '../layout/info/info.component';
     ProductoViewComponent,
     TestimoniosComponent,
     ArticuloComponent,
-    InfoComponent
+    InfoComponent,
+    InfoSupplierComponent,
+    MenuComponent,
+    ContadorShippingComponent
 
   ],
   imports: [
