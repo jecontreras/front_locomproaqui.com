@@ -21,21 +21,33 @@
     </div>
     <div class="col-12">
         <section style="    text-align: center; color: #02a0e3;">
-            <h2>Nuestros</h2>
-            <h1>PROVEEDORES</h1>
+            <h3 class="font-weight-bold">Nuestros</h3>
+            <h1 class="font-weight-bold">PROVEEDORES</h1>
         </section>
     </div>
     <div class="col-12">
         <div class="row">
             <div class="col-6 col-sm-4" *ngFor="let item of listSupplier">
-                LOGO
+                <mat-card class="example-card">
+                    <figure mat-card-image data-toggle="modal" id="figura" data-target="#modalinfo" class="img-contenedor">
+                      <img class="img-responsive btn-block imgProductos pointer " [src]="item.usu_imagen">
+                    </figure>
+                </mat-card>
+            </div>
+        </div>
+    </div>
+    <div class="col-12">
+        <br>
+        <div class="d-flex justify-content-center">
+            <div>
+                <p>+ {{ counts }} Proveedores</p>
             </div>
         </div>
     </div>
     <div class="col-12">
         <div class="d-flex justify-content-center">
             <div>
-                <button type="button" class="btn btn-dark">Registrarme como Proveedor</button>
+                <button type="button" class="btn btn-dark" (click)="handleOpenCheckIn('proveedor')">Registrarme como Proveedor</button>
             </div>
         </div>
     </div>

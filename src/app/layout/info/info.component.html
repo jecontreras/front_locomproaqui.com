@@ -16,35 +16,8 @@
   <div class="col-12">
     <app-contador-shipping></app-contador-shipping>
   </div>
-  <div class="col-12" class="colorFondo3" style="width: 100%;">
-    <div class="row" style="margin: 5px">
-      <div class="col-12">
-        <div class="d-flex justify-content-center" style="width: 100%;">
-          <div class="row">
-            <div class="p-3 col-4 col-sm-3" style="    text-align: center;">
-              <img src="./assets/noimagen.jpg" alt="" style="width: 100px;">
-              <h6>Dropshipping</h6>
-            </div>
-            <div class="p-3 col-4 col-sm-2" style="    text-align: center;">
-              <img src="./assets/noimagen.jpg" alt="" style="width: 100px;">
-              <h6>Envios Contraentrega</h6>
-            </div>
-            <div class="p-3 col-4 col-sm-2" style="    text-align: center;">
-              <img src="./assets/noimagen.jpg" alt="" style="width: 100px;">
-              <h6>Envios y Logistica</h6>
-            </div>
-            <div class="p-3 col-4 col-sm-2" style="    text-align: center;">
-              <img src="./assets/noimagen.jpg" alt="" style="width: 100px;">
-              <h6>Envios y Logistica</h6>
-            </div>
-            <div class="p-3 col-4 col-sm-3" style="    text-align: center;">
-              <img src="./assets/noimagen.jpg" alt="" style="width: 100px;">
-              <h6>Desembolso Rapido</h6>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
+  <div class="col-12">
+    <app-listmenu></app-listmenu>
   </div>
   <div class="col-12 row" style="    margin: 3% 0%; padding: 4% 3%; background: white;">
     <div class="col-12 col-sm-6">
@@ -75,6 +48,27 @@
     </div>
   </div>
   <div class="col-12 row" style=" margin:  5px;">
+    
+    <div class="col-12 col-sm-4">
+      <div class="card">
+        <img src="./assets/imagenes/foto1.jpeg" class="card-img-top pointer" alt="..." (click)="handleOpenCheckIn('proveedor')">
+      </div>
+      <br>
+    </div>
+    <div class="col-12 col-sm-4">
+      <div class="card">
+        <img src="./assets/imagenes/foto2.jpeg" class="card-img-top pointer" alt="..." (click)="handleOpenCheckIn('proveedor')">
+      </div>
+      <br>
+    </div>
+    <div class="col-12 col-sm-4">
+      <div class="card">
+        <img src="./assets/imagenes/foto3.jpeg" class="card-img-top pointer" alt="..." (click)="handleInfo()">
+      </div>
+      <br>
+    </div>
+  </div>
+  <!--<div class="col-12 row" style=" margin:  5px;">
     
     <div class="col-12 col-sm-4">
       <div class="colorFondo4">
@@ -109,8 +103,8 @@
       </div>
       <br>
     </div>
-  </div>
-  <div class="col-12 row colorFondo5" style="margin: 5px;">
+  </div>-->
+  <div class="col-12 row colorFondo5" style="margin: 0 -1px;">
     <div class="col-12">
       <div class="d-flex justify-content-center">
         <div style="    text-align: center; width: 100%;">

@@ -28,6 +28,8 @@ import { InfoComponent } from '../layout/info/info.component';
 import { InfoSupplierComponent } from '../layout/info-supplier/info-supplier.component';
 import { MenuComponent } from '../layout/menu/menu.component';
 import { ContadorShippingComponent } from '../layout/contador-shipping/contador-shipping.component';
+import { PortalComponent } from '../layout/portal/portal.component';
+import { ListmenuComponent } from '../layout/listmenu/listmenu.component';
 
 
 @NgModule({
@@ -55,7 +57,9 @@ import { ContadorShippingComponent } from '../layout/contador-shipping/contador-
     InfoComponent,
     InfoSupplierComponent,
     MenuComponent,
-    ContadorShippingComponent
+    ContadorShippingComponent,
+    PortalComponent,
+    ListmenuComponent
 
   ],
   imports: [

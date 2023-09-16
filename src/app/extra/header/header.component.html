@@ -296,7 +296,7 @@
     </nav>
     <br>
     <div class="container">
-      <div class="d-flex justify-content-center" *ngIf="( dataUser.id || userPr.id ) && routName !== '/info' ">
+      <div class="d-flex justify-content-center" *ngIf="( dataUser.id || userPr.id ) && ( routName !== '/info' ) && ( routName !== '/infoSupplier' ) && ( routName !== '/portal' ) ">
         <div style="width: 100%;">
           <div class="d-flex justify-content-around" *ngIf="rolUser1 != 'proveedor'">
             <div>
@@ -322,7 +322,7 @@
           </div>
         </div>
       </div>
-      <div class="d-flex justify-content-center" *ngIf="routName !== '/info'">
+      <div class="d-flex justify-content-center" *ngIf="( routName !== '/info' ) && ( routName !== '/infoSupplier' ) && ( routName !== '/portal' ) ">
         <h2 *ngIf="dataUser.id" class="text-center text-dark altos titulo1">
           BIENVENIDO A TU OFICINA VIRTUAL " {{ dataUser.usu_usuario }} "
         </h2>

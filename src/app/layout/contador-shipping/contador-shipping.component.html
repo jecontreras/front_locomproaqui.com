@@ -3,20 +3,20 @@
       <div class="paddingG">
         <div class="row" style="margin: 4%;">
           <div class="col-4 col-sm-3 paddingG">
-            <h1 class="font-weight-bold">+{{ contect.contadorC }}</h1>
-            <p class="font-weight-bold" [innerHTML]="contect.titleC"></p>
+            <h1 class="textInfo font-weight-bold text-primary">+{{ _tools.monedaChange2( 3,2, ( contect.contadorC || 0 ) ) }}</h1>
+            <p class="font-weight-bold colorExtra1" [innerHTML]="contect.titleC"></p>
           </div>
           <div class="col-4 col-sm-3 paddingG">
-            <h1 class="font-weight-bold">+{{ contect.contadorD }}</h1>
-            <p class="font-weight-bold" [innerHTML]="contect.titleD"></p>
+            <h1 class="textInfo font-weight-bold colorExtra1">+{{ _tools.monedaChange2( 3,2, ( contect.contadorD || 0 ) ) }}</h1>
+            <p class="font-weight-bold colorExtra1" [innerHTML]="contect.titleD"></p>
           </div>
           <div class="col-4 col-sm-3 paddingG">
-            <h1 class="font-weight-bold">+{{ contect.contadorE }}</h1>
-            <p class="font-weight-bold" [innerHTML]="contect.titleE"></p>
+            <h1 class="textInfo font-weight-bold colorExtra1">+{{ _tools.monedaChange2( 3,2, ( contect.contadorE || 0 ) ) }}</h1>
+            <p class="font-weight-bold colorExtra1" [innerHTML]="contect.titleE"></p>
           </div>
           <div class="col-4 col-sm-3 paddingG">
-            <h1 class="font-weight-bold">+{{ contect.contadorM }}</h1>
-            <p class="font-weight-bold" [innerHTML]="contect.titleM"> </p>
+            <h1 class="textInfo font-weight-bold colorExtra1">+{{ _tools.monedaChange2(3,2, ( contect.contadorM || 0 ) ) }}</h1>
+            <p class="font-weight-bold colorExtra1" [innerHTML]="contect.titleM"> </p>
           </div>
         </div>
       </div>

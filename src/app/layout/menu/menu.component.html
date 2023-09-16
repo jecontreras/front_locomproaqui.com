@@ -1,5 +1,13 @@
 <nav class="navbar navbar-light bg-light">
-    <div class="d-flex justify-content-center" style="width: 100%;">
+  <div class="d-flex justify-content-center" style="width: 100%;">
+    <div class="scrollmenu" style="    border-radius: 3px;" #toolbar>
+      <a class="pointer text-primary" (click)="handleOpenView('https://www.youtube.com/embed/qMYKvn5dbvg?si=d1e8bC_bHLgKaJdn')"><h5>¿Como Funciona?</h5> </a>
+      <a class="pointer text-primary" (click)="handleOpenView('https://www.youtube.com/embed/qMYKvn5dbvg?si=d1e8bC_bHLgKaJdn')"><h5>¿Por donde Inicio?</h5> </a>
+      <a class="pointer text-primary" [routerLink]="[ '/infoSupplier']"><h5>Soy Proveedor</h5> </a>
+      <a class="pointer text-primary" (click)="handleOpenView('https://www.youtube.com/embed/qMYKvn5dbvg?si=d1e8bC_bHLgKaJdn')"><h5>Quiero Vender</h5> </a>
+    </div>
+  </div>
+    <!--<div class="d-flex justify-content-center" style="width: 100%;">
       <div class="p-3">
         <a class="pointer text-primary" (click)="handleOpenView('https://www.youtube.com/embed/qMYKvn5dbvg?si=d1e8bC_bHLgKaJdn')">¿Cómo funciona? </a>
       </div>
@@ -12,5 +20,5 @@
       <div class="p-3">
         <a class="pointer text-primary" (click)="handleOpenView('https://www.youtube.com/embed/qMYKvn5dbvg?si=d1e8bC_bHLgKaJdn')">¿Quiero Vender? </a>
       </div>
-    </div>
+    </div>-->
   </nav>

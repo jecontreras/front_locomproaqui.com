@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { ToolsService } from 'src/app/services/tools.service';
 
 @Component({
   selector: 'app-contador-shipping',
@@ -16,7 +17,9 @@ export class ContadorShippingComponent implements OnInit {
     contadorM: 1150,
     titleM: "Municipios bajo <br> Cobertura"
   };
-  constructor() { }
+  constructor(
+    public _tools: ToolsService
+  ) { }
 
   ngOnInit(): void {
   }
