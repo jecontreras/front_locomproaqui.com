@@ -87,11 +87,11 @@ export class TableProductComponent implements OnInit {
   async handleCreate(){
     return this.crearAnt(false);
     /*
-    let validate = await this._tools.confirm( { 
-        title: "Versiones nuevas", 
+    let validate = await this._tools.confirm( {
+        title: "Versiones nuevas",
         detalle: "",
-        confir: "Version nueva", 
-        cancel: "Version anterior" 
+        confir: "Version nueva",
+        cancel: "Version anterior"
       } );
     if( validate.value ) this.crear(false);
     else this.crearAnt(false);*/
@@ -107,6 +107,34 @@ export class TableProductComponent implements OnInit {
     dialogRef.afterClosed().subscribe(result => {
       console.log(`Dialog result: ${result}`);
     });
+  }
+  async handleDouble(row){
+    if( row.btnDisabled === true ) return false;
+    let validate = await this._tools.confirm({title:"Duplicar Item", detalle:"¿Deseas duplicar este producto?", confir:"Si duplicar"});
+    if( !validate.value ) return false;
+    row.btnDisabled = true;
+    let data = row;
+    data = _.omit(data, [ 'id', 'createdAt', 'updatedAt', 'listComment', 'idAleatorio'])
+    data = _.omitBy(data, _.isNull);
+    data.pro_usu_creacion = row.pro_usu_creacion.id;
+    data.pro_categoria = row.pro_categoria.id;
+    data.pro_codigo = 'copia '+ row.pro_codigo;
+    this._productos.create( data ).subscribe( async ( res ) =>{
+      this._tools.presentToast("Duplicado exitoso");
+      let dts = await this.getId( res.id );
+      if( dts ) this.crearAnt( dts );
+      row.btnDisabled = false;
+    },( )=> {
+      this._tools.presentToast("Problemas actualizar pagina...")
+      row.btnDisabled = false;
+    } );
+  }
+  getId( id:number ){
+    return new Promise( resolve =>{
+      this._productos.get( { where:{ id: id } } ).subscribe( res =>{
+        resolve( res.data[0] || false );
+      })
+    })
   }
   crearAnt(obj:any){
     const dialogRef = this.dialog.open(FormproductosComponent,{
@@ -212,7 +240,7 @@ export class TableProductComponent implements OnInit {
   }
   async updateState( item, opt ){
     let validate = await this._tools.confirm({title:"Actualizar", detalle:"¿Deseas cambiar de estado este producto?", confir:"Si activar"});
-    if( !validate ) return false;
+    if( !validate.value ) return false;
     let data:any ={
       id: item.id
     };

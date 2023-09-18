@@ -13,7 +13,6 @@
             </div>
             <div class="card-body">
               <div class="toolbar">
-                <!--        Here you can write extra buttons/actions for the toolbar              -->
               </div>
               <div *ngIf="loader" class="loader">
                 <svg class="circular" viewBox="25 25 50 50">
@@ -37,6 +36,98 @@
 
               </div>
               <div class="col-12 material-datatables" *ngIf="!loader">
+                <table mat-table
+                  [dataSource]="dataSource" multiTemplateDataRows
+                  class="mat-elevation-z8">
+                    <ng-container matColumnDef="{{column}}" *ngFor="let column of columnsToDisplay">
+                      <th mat-header-cell *matHeaderCellDef> {{column}} </th>
+                      <td mat-cell *matCellDef="let element"
+                          [ngClass]="
+                          {
+                            'medium': element.idState == 0,
+                            'full': element.idState == 1
+                          }
+                        "
+                      >
+                          <span
+                            *ngIf="( column !== 'Usuario' ) && ( column !== 'Email' ) &&
+                            ( column !== 'Banco' ) && ( column !== 'Monto' ) && ( column !== 'FechaPago' ) &&
+                            ( column !== 'Estado' )">
+                            {{element[column]}}
+                          </span>
+                          <span *ngIf="column === 'Usuario'">{{ element['user']?.usu_usuario }} </span>
+                          <span *ngIf="column === 'Email'">{{ element['user']?.usu_email }} </span>
+                          <span *ngIf="column === 'Banco'">{{ element['bank']?.bank }} </span>
+                          <span *ngIf="column === 'Monto'">{{ _tools.monedaChange(3,2, ( element.amount || 0) ) }} </span>
+                          <span *ngIf="column === 'FechaPago'">{{ element['fechaPago'] | date:'medium' }} </span>
+                          <span *ngIf="column === 'Estado'">{{ element['state'] }} </span>
+                      </td>
+                    </ng-container>
+
+                    <!-- Expanded Content Column - The detail row is made up of this one column that spans across all columns -->
+                    <ng-container matColumnDef="expandedDetail">
+                      <td mat-cell *matCellDef="let element" [attr.colspan]="columnsToDisplay.length">
+                        <div class="example-element-detail"
+                            [@detailExpand]="element == expandedElement ? 'expanded' : 'collapsed'">
+                            <div class="content infoCenter">
+                              <div class="row">
+                                <div class="col-sm-3 col-6">
+                                  <button mat-raised-button color="primary" (click)="handleBuy( element )">Ver Guias Solicitada</button>
+                                </div>
+                                <div class="col-sm-3 col-6" *ngIf="element.bank">
+                                  <label for="">Banco:&nbsp;</label>
+                                  <span>{{ element['bank']?.bank }} </span>
+                                </div>
+                                <div class="col-sm-3 col-6" *ngIf="element.bank">
+                                  <label for="">Tipo de Cuenta:&nbsp;</label>
+                                  <span>{{ element['bank']?.accounType === 0 ? 'Ahorros' : 'Corriente' }} </span>
+                                </div>
+                                <div class="col-sm-3 col-6" *ngIf="element.bank">
+                                  <label for="">Numero de Cuenta:&nbsp;</label>
+                                  <span>{{ element['bank']?.numeroCuenta }} </span>
+                                </div>
+                                <div class="col-sm-3 col-6" *ngIf="element.bank">
+                                  <label for="">Numero de Cedula:&nbsp;</label>
+                                  <span>{{ element['bank']?.numberCC }} </span>
+                                </div>
+                                <div class="col-sm-3 col-6" *ngIf="element.bank">
+                                  <label for="">Numero de Celular:&nbsp;</label>
+                                  <span>{{ element['bank']?.numberPhone }} </span>
+                                </div>
+                                <div class="col-sm-3 col-6" *ngIf="element.bank">
+                                  <label for="">Nombre Titular de la Cuenta:&nbsp;</label>
+                                  <span>{{ element['bank']?.nameHeadline }} </span>
+                                </div>
+                                <div class="col-sm-3 col-6" *ngIf="element.amount">
+                                  <label for="">Dinero a solicitar:&nbsp;</label>
+                                  <span>
+                                    {{ _tools.monedaChange(3,2, ( element.amount || 0) ) }}
+                                  </span>
+                                </div>
+                                <div class="col-sm-3 col-6" *ngIf="element.state">
+                                  <label for="">Estado del Retiro:&nbsp;</label>
+                                  <span>{{ element['state'] }} </span>
+                                </div>
+                                <div class="col-sm-3 col-6" *ngIf="element.photo">
+                                  <button mat-raised-button color="warn" (click)="handleEvidence( element )">Ver Foto de Evidencia</button>
+                                </div>
+                              </div>
+                            </div>
+                        </div>
+                      </td>
+                    </ng-container>
+
+                    <tr mat-header-row *matHeaderRowDef="columnsToDisplay"></tr>
+                    <tr mat-row *matRowDef="let element; columns: columnsToDisplay;"
+                        class="example-element-row"
+                        [class.example-expanded-row]="expandedElement === element"
+                        (click)="expandedElement = expandedElement === element ? null : element">
+                    </tr>
+                    <tr mat-row *matRowDef="let row; columns: ['expandedDetail']" class="example-detail-row"></tr>
+                  </table>
+                  <mat-paginator (page)="onScroll($event)" [length]="resultsLength" [pageSize]="30"></mat-paginator>
+              </div>
+              <!--<div class="col-12 material-datatables" *ngIf="!loader">
                 <table id="datatables" class="table table-striped table-no-bordered table-hover" cellspacing="0"
                   width="100%" style="width:100%">
                   <thead>
@@ -65,7 +156,7 @@
                     </tr>
                   </tbody>
                 </table>
-              </div>
+              </div>-->
             </div>
           </div>
         </div>

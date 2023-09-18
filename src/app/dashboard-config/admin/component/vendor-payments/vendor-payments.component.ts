@@ -116,6 +116,7 @@ export class VendorPaymentsComponent implements OnInit {
 }
 
 export interface itemRecaudoPR {
+  id?: number;
   user: string;
   bank: string;
   amount: number;

@@ -21,6 +21,8 @@ export class MisDespachoComponent implements OnInit {
   dataTable2: DataTable;
   dataTable3: DataTable;
   dataTable4: DataTable;
+  dataTable5: DataTable;
+
   pagina = 10;
   paginas = 0;
   loader = true;
@@ -96,10 +98,22 @@ export class MisDespachoComponent implements OnInit {
       footerRow: this.Header,
       dataRows: []
     };
+    this.dataTable4 = {
+      headerRow: this.Header,
+      footerRow: this.Header,
+      dataRows: []
+    };
+    this.dataTable5 = {
+      headerRow: this.Header,
+      footerRow: this.Header,
+      dataRows: []
+    };
     if( this.rolName != 'administrador') this.query.where.creacion = this.dataUser.id;
     this.cargarTodos();
     this.cargarTodos2();
     this.cargarTodos3();
+    this.cargarTodos4();
+    this.cargarTodos5();
     //this.getDineros();
   }
 
@@ -138,6 +152,35 @@ export class MisDespachoComponent implements OnInit {
     this.querysComplete.page = ev.pageIndex;
     this.querysComplete.limit = ev.pageSize;
     this.cargarTodos2();
+  }
+  pageEvent4(ev: any) {
+    this.querysComplete.page = ev.pageIndex;
+    this.querysComplete.limit = ev.pageSize;
+    this.cargarTodos4();
+  }
+  pageEvent5(ev: any) {
+    this.querysComplete.page = ev.pageIndex;
+    this.querysComplete.limit = ev.pageSize;
+    this.cargarTodos5();
+  }
+  cargarTodos5() {
+    this.spinner.show();
+    this._productos.getVentaDevolution( this.querysSale ).subscribe(res=>{
+      console.log("****55", res)
+      this.counts2 = res.count;
+      this.Pdreacudo = res.total;
+      this.dataTable5.headerRow = this.dataTable5.headerRow;
+      this.dataTable5.footerRow = this.dataTable5.footerRow;
+      this.dataTable5.dataRows.push(... res.data);
+      this.dataTable5.dataRows =_.unionBy(this.dataTable5.dataRows || [], res.data, 'id');
+      this.loader = false;
+        this.spinner.hide();
+
+        if (res.data.length === 0 ) {
+          this.notEmptyPost =  false;
+        }
+        this.notscrolly = true;
+    });
   }
   cargarTodos4() {
     this.spinner.show();

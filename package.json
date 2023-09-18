@@ -38,7 +38,7 @@
     "angular-ng-autocomplete": "^2.0.1",
     "angularx-social-login": "^3.5.7",
     "base64-img": "^1.0.4",
-    "bootstrap": "^4.4.1",
+    "bootstrap": "^5.0.1",
     "cropperjs": "^1.5.11",
     "express": "^4.17.1",
     "firebase": "^7.9.3",

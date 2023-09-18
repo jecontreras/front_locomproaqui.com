@@ -118,7 +118,10 @@ export class RegistroComponent implements OnInit {
       this.data.title = this.datas.title;
       this.getCabeza();
     } else this.data.cabeza = 1;
-    if (this._authSrvice.isLoggedIn()) this._router.navigate(['/pedidos']);
+    if (this._authSrvice.isLoggedIn()) {
+      this._router.navigate(['/pedidos']);
+      setTimeout(()=> this.dialog.closeAll(), 100 )
+    }
     this.getCiudades();
   }
 

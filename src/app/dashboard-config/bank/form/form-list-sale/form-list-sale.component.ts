@@ -23,16 +23,18 @@ export class FormListSaleComponent implements OnInit {
     page: 0,
     limit: 100
   };
-  Header:any = [ 'Codigo','Foto','Precio de Venta','Ganancia de la plataforma','Mi Ganacia', 'Talla', 'Fecha Venta', 'Estado' ];
+  Header:any = [ 'Codigo','Numero de Guia','Foto','Precio de Venta','Ganancia de la plataforma','Mi Ganacia', 'Talla', 'Fecha Venta', 'Estado' ];
   $:any;
-  
+
   notscrolly:boolean=true;
   notEmptyPost:boolean = true;
   data:any = {};
   counts:number = 0;
   dataUser:any = {};
   superSub:boolean = false;
-
+  suma:number = 0;
+  formatoMoneda:any = {};
+  
   constructor(
     private _ventas: VentasService,
     public dialogRef: MatDialogRef<FormlistventasComponent>,
@@ -40,7 +42,7 @@ export class FormListSaleComponent implements OnInit {
     public _tools: ToolsService,
     public dialog: MatDialog,
     private _store: Store<STORAGES>,
-  ) { 
+  ) {
     this._store.subscribe((store: any) => {
       store = store.name;
       this.dataUser = store.user || {};
@@ -50,6 +52,7 @@ export class FormListSaleComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.formatoMoneda = this._tools.currency;
     this.dataTable = {
       headerRow: this.Header,
       footerRow: this.Header,
@@ -76,23 +79,32 @@ export class FormListSaleComponent implements OnInit {
   }
 
   populateList(){
+    let suma = 0;
     for( let row of this.data.list ){
-      let gananciaLk = ( row.precio * ( row.producto.precioLokompro || 5 ) ) / 100;
-      console.log("***83", gananciaLk)
+      let gananciaLk = 0;
+      try { gananciaLk = ( row.precio * ( row.producto.precioLokompro || 5 ) ) / 100; } catch (error) { }
+
+      if( !row.ventas ) continue;
+      console.log("***83", row, row.id)
       let data:any = {
         code: row.titulo,
         foto: row.fotoproducto,
         loVendio: row.precio,
-        miGanancia: row.precioVendedor - gananciaLk, 
+        miGanancia: row.precioVendedor - gananciaLk,
         precioVendedor: row.precioVendedor,
         talla: row.tallaSelect,
         pricePlatform: gananciaLk,
-        fecha: row.ventas.ven_fecha_venta,
+        ven_numero_guia: row.ventas.ven_numero_guia,
+        fecha: row.ventas.ven_fecha_venta || row.ventas.createdAt,
         estado: row.ventas.ven_estado ? 'Exitoso' : 'Reexpedición'
       }
-      this.dataTable.dataRows.push( data );
+      if( data.ven_numero_guia ) {
+        this.dataTable.dataRows.push( data );
+        suma+=data.miGanancia;
+      }
     }
     this.loader = false;
+    this.suma = suma;
     console.log("****82", this.dataTable)
   }
 
@@ -107,7 +119,7 @@ export class FormListSaleComponent implements OnInit {
         this.dataTable.dataRows.push(... response.data)
         this.dataTable.dataRows = _.unionBy(this.dataTable.dataRows || [], this.dataTable.dataRows, 'id');
         this.loader = false;
-          
+
           if (response.data.length === 0 ) {
             this.notEmptyPost =  false;
           }

@@ -24,6 +24,12 @@ import { NgxCurrencyModule } from 'ngx-currency';
 import { ArticuloComponent } from '../components/articulo/articulo.component';
 import { TerminosGeneralesComponent } from '../layout/terminos-generales/terminos-generales.component';
 import { TratamientoDatoComponent } from '../layout/tratamiento-dato/tratamiento-dato.component';
+import { InfoComponent } from '../layout/info/info.component';
+import { InfoSupplierComponent } from '../layout/info-supplier/info-supplier.component';
+import { MenuComponent } from '../layout/menu/menu.component';
+import { ContadorShippingComponent } from '../layout/contador-shipping/contador-shipping.component';
+import { PortalComponent } from '../layout/portal/portal.component';
+import { ListmenuComponent } from '../layout/listmenu/listmenu.component';
 
 
 @NgModule({
@@ -47,7 +53,13 @@ import { TratamientoDatoComponent } from '../layout/tratamiento-dato/tratamiento
     ContenidoComponent,
     ProductoViewComponent,
     TestimoniosComponent,
-    ArticuloComponent
+    ArticuloComponent,
+    InfoComponent,
+    InfoSupplierComponent,
+    MenuComponent,
+    ContadorShippingComponent,
+    PortalComponent,
+    ListmenuComponent
 
   ],
   imports: [

@@ -35,7 +35,7 @@ export class PedidosComponent implements OnInit {
       pro_mp_venta: 0
     },
     page: 0,
-    limit: 30
+    limit: 54
   };
   seartxt: string = '';
   ultimoSeartxt:string = '';
@@ -300,7 +300,7 @@ export class PedidosComponent implements OnInit {
     this.loader = true;
     //console.log( this.ultimoSeartxt );
     if( this.dataUser.id ) this.query.where.user = this.dataUser.id;
-    this.query.where.pro_usu_creacion = 100000;
+    //this.query.where.pro_usu_creacion = 100000;
     if( this.dataUser.id ) this.query.where.idPrice = this.dataUser.id;
     this._productos.get(this.query).subscribe((res: any) => {
       console.log("res", res);

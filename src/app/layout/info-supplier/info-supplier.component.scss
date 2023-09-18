@@ -1,0 +1,67 @@
+.colorFondo1{
+    padding: 7% 10%;
+    background: #02a0e3;
+    color: white;
+    width: 100%;
+  }
+  
+  .colorFondo2{
+    padding: 5% 0%;
+    background: #eef0f7;
+  }
+  
+  .colorFondo3{
+    padding: 5% 3%;
+    background: #ffffff;
+  }
+  .colorFondo4{
+    background: #02a0e3;
+      color: white;
+      text-align: center;
+  }
+  .colorFondo5{
+    margin: 5px;
+    color: white;
+    background: #02a0e3;
+    padding: 3% 0;
+  }
+  .paddingG{
+    padding: 0 5%;
+    text-align: center;
+    width: 100%;
+  }
+  
+
+  html, body {
+    height:100%;
+    width:100%;
+    margin:0;
+}
+.h_iframe iframe {
+    width:100%;
+    height:100%;
+}
+.h_iframe {
+    height: 300px;
+    width:100%;
+}
+
+.img-contenedor img {
+  -webkit-transition:all .9s ease; /* Safari y Chrome */
+  -moz-transition:all .9s ease; /* Firefox */
+  -o-transition:all .9s ease; /* IE 9 */
+  -ms-transition:all .9s ease; /* Opera */
+  width:100%;
+  }
+  .img-contenedor:hover img {
+  -webkit-transform:scale(1.25);
+  -moz-transform:scale(1.25);
+  -ms-transform:scale(1.25);
+  -o-transform:scale(1.25);
+  transform:scale(1.25);
+  }
+  .img-contenedor {/*Ancho y altura son modificables al requerimiento de cada uno*/
+  // width:300px;
+  // height:180px;
+  overflow:hidden;
+  }

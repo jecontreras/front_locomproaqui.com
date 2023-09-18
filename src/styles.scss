@@ -324,6 +324,10 @@ footer {
   transform: scale(1.4)
 }
 
+.textInfo{
+  font-size: 40px;
+}
+
 /*.ng-star-inserted{
   color: #3f51b5 !important;
 }*/
@@ -353,6 +357,9 @@ footer {
   }
   #anchosLi {
     width: 15pc !important;
+  }
+  .textInfo{
+    font-size: 30px;
   }
 }
 /* Small devices (portrait tablets and large phones, 600px and up) */
@@ -408,8 +415,8 @@ footer {
   .ancho {
     width: 85%;
   }
-  .textInf {
-    font-size: 11px;
+  .textInfo {
+    font-size: 16px;
   }
   .ngxImageZoomContainer{
     max-width: 384px !important;
@@ -435,8 +442,14 @@ footer {
   #anchosLi {
     width: 15pc !important;
   }
+  .textInf{
+    font-size: 30px;
+  }
 }
 @media only screen and (max-width: 600px) {
+  .textInfo {
+    font-size: 30px;
+  }
   .ocultacion{
     display: none;
   }
@@ -499,6 +512,9 @@ footer {
 }
 /* Small devices (portrait tablets and large phones, 600px and up) */
 @media only screen and (min-width: 600px) {
+  .textInfo {
+    font-size: 40px;
+  }
   .ocultacion{
     display: inline;
   }

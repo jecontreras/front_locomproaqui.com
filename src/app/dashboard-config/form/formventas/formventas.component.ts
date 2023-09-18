@@ -320,7 +320,12 @@ export class FormventasComponent implements OnInit {
     let total1: number = 0;
     this.data.ven_ganancias = 0;
     //console.log( this.listCarrito)
-    let namePorcentaje = this.data.usu_clave_int.categoriaPerfil;
+    let namePorcentaje = 0;
+    try {
+      namePorcentaje = this.data.usu_clave_int.categoriaPerfil;
+    } catch (error) {
+
+    }
     for (let row of this.listCarrito) {
       if (!row.costo || !row.cantidad) continue;
       total += ( Number( row.costo ) * Number( row.cantidad ) );
