@@ -10,9 +10,9 @@
   </nav>-->
     <section class="iphone-menu" style="text-align: center;">
   <ul>
-      <li><a href="#">Inicio</a></li>
-      <li><a href="#">Productos</a></li>
-      <li><a href="#">Acerca de</a></li>
-      <li><a href="#">Contacto</a></li>
+      <li><a class="pointer" (click)="handleOpenView('https://www.youtube.com/embed/qMYKvn5dbvg?si=d1e8bC_bHLgKaJdn')">¿Como Funciona?</a></li>
+      <li><a class="pointer" (click)="handleOpenView('https://www.youtube.com/embed/qMYKvn5dbvg?si=d1e8bC_bHLgKaJdn')">¿Por donde Inicio?</a></li>
+      <li><a class="pointer" [routerLink]="[ '/infoSupplier']">Soy Proveedor</a></li>
+      <li><a class="pointer" (click)="handleOpenView('https://www.youtube.com/embed/qMYKvn5dbvg?si=d1e8bC_bHLgKaJdn')">Quiero Vender</a></li>
   </ul>
     </section>

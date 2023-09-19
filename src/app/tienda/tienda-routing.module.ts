@@ -10,6 +10,7 @@ import { ArticuloComponent } from '../components/articulo/articulo.component';
 import { InfoComponent } from '../layout/info/info.component';
 import { InfoSupplierComponent } from '../layout/info-supplier/info-supplier.component';
 import { PortalComponent } from '../layout/portal/portal.component';
+import { SignUpComponent } from '../layout/sign-up/sign-up.component';
 
 const routes: Routes = [
   {
@@ -27,7 +28,8 @@ const routes: Routes = [
       { path: 'testimonio', component: TestimoniosComponent },
       { path: 'login', component: LoginsComponent },
       { path: 'login/:id/:cel', component: LoginsComponent },
-      { path: 'registro', component: RegistrosComponent },
+      //{ path: 'registro', component: RegistrosComponent },
+      { path: 'registro', component: SignUpComponent },
       { path: 'registro/:id', component: RegistrosComponent },
       { path: 'info', component: InfoComponent },
       { path: 'infoSupplier', component: InfoSupplierComponent },

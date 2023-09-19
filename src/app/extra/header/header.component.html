@@ -236,52 +236,62 @@
       </div>-->
       <div class="row" style="width: 100%;">
         <div class="col-12">
-          <div class="d-flex bd-highlight mb-3">
-            <div class="mr-auto p-2 bd-highlight">
+          <div class="d-flex bd-highlight">
+            <div class="p-2 bd-highlight">
               <button mat-icon-button (click)="drawer.toggle()" translate="no">
                 <i class="material-icons icoss">menu</i>
               </button>
+
+            </div>
+            <div class="p-2 bd-highlight">
               <a [routerLink]="[ '/pedidos' ]">
                 <img src="./assets/logo.png" style="width: 177px; height: 55px;">
               </a>
-
             </div>
-            <div class="p-2 bd-highlight" *ngIf="!dataUser.id">
-              <button type="button" class="btn btn-light" (click)="login()" style="font-size: 10px; margin-bottom: 5px;">Iniciar Sesion</button>
-              <button type="button" *ngIf="breakpoint == 1" class="btn btn-light" style="font-size: 10px; " (click)="registrar()">Registrarse</button>
+            <div *ngIf="!dataUser.id" class="ms-auto p-2 bd-highlight">
+              <div class="d-flex bd-highlight">
+                <div class="p-2 bd-highlight">
+                  <button type="button" class="btn btn-dark" (click)="login()" style="font-size: 10px; margin-bottom: 5px;">Iniciar Sesion</button>
+                  <button type="button" *ngIf="breakpoint == 1" class="btn btn-dark" style="font-size: 10px; " (click)="registrar()">Registrarse</button>    
+                </div>
+                <div class="p-2 bd-highlight" *ngIf="breakpoint == 6">
+                  <button type="button" class="btn btn-dark" (click)="registrar()" style="font-size: 10px;">Registrarse</button>    
+                </div>
+              </div>
             </div>
-            <div class="p-2 bd-highlight" *ngIf="breakpoint == 6 && !dataUser.id">
-              <button type="button" class="btn btn-light" (click)="login()" style="font-size: 10px;">Registrarse</button>
-            </div>
-            <div *ngIf="dataUser.id" class="p-2 bd-highlight">
-              <a class="text-white" routerLink="/config/cobros" *ngIf="rolUser !== 'proveedor'">
-                {{ _tools.monedaChange( 3,2, ( dataInfo?.porcobrado ) || 0 ) }}
-              </a>
-              <a class="text-white" [routerLink]="[ '/config/bank/index' ]" *ngIf="rolUser === 'proveedor'">
-                {{ _tools.monedaChange( 3,2, ( reacudo ) || 0 ) }}
-              </a>
-            </div>
-            <div class="p-2 bd-highlight">
-              <a (click)="this.opcionoView = 'carro'; sidenav.toggle();" class="p-1 pointer espacios"
-                [matBadge]="listCart.length" matBadgePosition="before" matBadgeColor="accent">
-                <i class="material-icons icoss">shopping_cart</i>
-              </a>
-            </div>
-            <div class="p-2 bd-highlight" *ngIf="dataUser.id">
-              <a [routerLink]="[ '/config/perfil' ]" class=" altoNull buscadorOcultar2p-1 pointer espacios">
-                <i class="material-icons icoss">person</i>
-              </a>
+            <div *ngIf="dataUser.id" class="ms-auto p-2 bd-highlight">
+              <div class="d-flex bd-highlight">
+                <div class="p-2 bd-highlight">
+                  <span class="text-white" [routerLink]="[ '/config/cobros' ]" *ngIf="rolUser !== 'proveedor'">
+                    {{ _tools.monedaChange( 3,2,( dataInfo?.porcobrado ) || 0 ) }}
+                  </span>
+                  <span class="text-white" [routerLink]="[ '/config/bank/index' ]" *ngIf="rolUser === 'proveedor'">
+                    {{ _tools.monedaChange( 3,2, ( reacudo ) || 0 ) }}
+                  </span>
+                </div>
+                <div class="p-2 bd-highlight">
+                  <a (click)="this.opcionoView = 'carro'; sidenav.toggle();" class="p-1 pointer espacios"
+                    [matBadge]="listCart.length" matBadgePosition="before" matBadgeColor="accent">
+                    <i class="material-icons icoss">shopping_cart</i>
+                  </a>
+                </div>
+                <div class="p-2 bd-highlight">
+                  <a [routerLink]="[ '/config/perfil' ]" class=" altoNull buscadorOcultar2p-1 pointer espacios">
+                    <i class="material-icons icoss">person</i>
+                  </a>
+                </div>
+              </div>
             </div>
           </div>
         </div>
       </div>
-      <div class="d-flex justify-content-between col-12" style="width: 100%;" *ngIf="disabledSearch">
+      <!--<div class="d-flex justify-content-between col-12" style="width: 100%;" *ngIf="disabledSearch">
         <div style="width: 100%;">
           <input type="text" style="border-radius: 11px;" [(ngModel)]="seartxt" (change)="buscar()"
             class="form-control form-control-sm" placeholder="Buscar Productos">
         </div>
-      </div>
-      <div class="d-flex flex-row-reverse bd-highlight col-12" style="width: 100%;"
+      </div>-->
+      <!--<div class="d-flex flex-row-reverse bd-highlight col-12" style="width: 100%;"
         *ngIf="disabledSearch && dataUser.id">
         <div>
           <span class="text-white" [routerLink]="[ '/config/cobros' ]" *ngIf="rolUser !== 'proveedor'">
@@ -291,12 +301,11 @@
             {{ _tools.monedaChange( 3,2, ( reacudo ) || 0 ) }}
           </span>
         </div>
-      </div>
+      </div>-->
       <app-menu-lateral></app-menu-lateral>
     </nav>
-    <br>
     <div class="container">
-      <div class="d-flex justify-content-center" *ngIf="( dataUser.id || userPr.id ) && ( routName !== '/info' ) && ( routName !== '/infoSupplier' ) && ( routName !== '/portal' ) ">
+      <div class="d-flex justify-content-center" *ngIf="( dataUser.id || userPr.id ) && ( routName !== '/info' ) && ( routName !== '/infoSupplier' ) && ( routName !== '/portal' ) && ( routName !== '/registro' ) ">
         <div style="width: 100%;">
           <div class="d-flex justify-content-around" *ngIf="rolUser1 != 'proveedor'">
             <div>
@@ -322,7 +331,7 @@
           </div>
         </div>
       </div>
-      <div class="d-flex justify-content-center" *ngIf="( routName !== '/info' ) && ( routName !== '/infoSupplier' ) && ( routName !== '/portal' ) ">
+      <div class="d-flex justify-content-center" *ngIf="( routName !== '/info' ) && ( routName !== '/infoSupplier' ) && ( routName !== '/portal' ) && ( routName !== '/registro' ) ">
         <h2 *ngIf="dataUser.id" class="text-center text-dark altos titulo1">
           BIENVENIDO A TU OFICINA VIRTUAL " {{ dataUser.usu_usuario }} "
         </h2>

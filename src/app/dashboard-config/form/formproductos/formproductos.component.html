@@ -16,20 +16,20 @@
             <div class="content">
                 <div class="row">
                     <div class="form-group col-md-4 col-sm-4 col-lg-4 col-xs-4">
-                        <label>Precio Cliente final</label>
-                        <input currencyMask class="form-control form-control-sm" [(ngModel)]="data.pro_uni_venta"
-                            [options]="formatoMoneda" />
-                    </div>
-                    <div class="form-group col-md-4 col-sm-4 col-lg-4 col-xs-4">
-                        <label>Precio dropshipping pro</label>
+                        <label>Precio a distribuidor</label>
                         <input currencyMask class="form-control form-control-sm" [(ngModel)]="data.pro_vendedor"
                             [options]="formatoMoneda" (keyup)="data.pro_vendedorCompra = data.pro_vendedor" />
                     </div>
-                    <div class="form-group col-md-6 col-sm-4 col-lg-4 col-xs-6">
+                    <div class="form-group col-md-4 col-sm-4 col-lg-4 col-xs-4">
+                        <label>Precio sugerido de venta</label>
+                        <input currencyMask class="form-control form-control-sm" [(ngModel)]="data.pro_uni_venta"
+                            [options]="formatoMoneda" />
+                    </div>
+                    <!--<div class="form-group col-md-6 col-sm-4 col-lg-4 col-xs-6">
                       <label>Precio Vendedor Compra</label>
                       <input currencyMask class="form-control form-control-sm" [(ngModel)]="data.pro_vendedorCompra"
                           [options]="formatoMoneda" />
-                  </div>
+                  </div>-->
                     <div class="form-group col-md-4 col-sm-4 col-lg-4 col-xs-4">
                         <label for="exampleFormControlSelect1">Categoria:</label>
                         <select class="form-control form-control-sm" [(ngModel)]="data.pro_categoria" required>
@@ -165,13 +165,13 @@
                         for="cbox2">Precios al Mayor</label>
                 </div>-->
                 <div class="form-group col-md-6 col-sm-4 col-lg-4 col-xs-6">
-                    <label>Precio Cliente Final</label>
-                    <input currencyMask class="form-control form-control-sm" [(ngModel)]="data.pro_uni_venta"
+                    <label>Precio a distribuidor</label>
+                    <input currencyMask class="form-control form-control-sm" [(ngModel)]="data.pro_vendedor"
                         [options]="formatoMoneda" />
                 </div>
                 <div class="form-group col-md-6 col-sm-4 col-lg-4 col-xs-6">
-                    <label>Precio dropshipping pro</label>
-                    <input currencyMask class="form-control form-control-sm" [(ngModel)]="data.pro_vendedor"
+                    <label>Precio sugerido de venta</label>
+                    <input currencyMask class="form-control form-control-sm" [(ngModel)]="data.pro_uni_venta"
                         [options]="formatoMoneda" />
                 </div>
                 <!--<div class="form-group col-md-6 col-sm-4 col-lg-4 col-xs-6">

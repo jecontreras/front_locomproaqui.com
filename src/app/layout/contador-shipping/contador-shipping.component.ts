@@ -25,8 +25,8 @@ export class ContadorShippingComponent implements OnInit {
     setInterval(()=>{
       if( this.contect.contadorC <= 800 ) this.contect.contadorC++;
       if( this.contect.contadorD <= 50 ) this.contect.contadorD++;
-      if( this.contect.contadorE <= 100000 ) this.contect.contadorE+=10;
-      if( this.contect.contadorM <= 80 ) this.contect.contadorM++;
+      if( this.contect.contadorE <= 1000 ) this.contect.contadorE+=10;
+      if( this.contect.contadorM <= 520 ) this.contect.contadorM++;
     }, 5 )
   }
 

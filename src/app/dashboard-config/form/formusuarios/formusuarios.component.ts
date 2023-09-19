@@ -22,7 +22,8 @@ export class FormusuariosComponent implements OnInit {
   listPerfil:any = [];
   opcionCurrencys:any = {};
   listNivel:any = [];
-  
+  rolName:string = "";
+
   constructor(
     public dialog: MatDialog,
     private _usuarios: UsuariosService,
@@ -39,6 +40,9 @@ export class FormusuariosComponent implements OnInit {
       console.log(this.data);
       this.id = this.data.id;
       this.titulo = "Actualizar";
+      try {
+        this.rolName = this.data.usu_perfil.prf_descripcion;
+      } catch (error) { }
       if(this.data.cat_activo === 0) this.data.cat_activo = true;
       this.data.usu_perfil = this.data.usu_perfil.id;
       if( this.data.categoriaPerfil ) this.data.categoriaPerfil = this.data.categoriaPerfil.id;

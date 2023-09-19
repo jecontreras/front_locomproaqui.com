@@ -1,4 +1,4 @@
-<div class="limiter">
+<!--<div class="limiter">
   <div class="container-login100" style="background-image: url('images/bg-01.jpg');">
       <div class="wrap-login100">
           <form class="login100-form validate-form flex-sb flex-w">
@@ -47,10 +47,6 @@
               </div>
 
               <div class="w-full text-center p-t-55">
-                  <!--<span class="txt2">
-                      Not a member?
-                  </span>-->
-
                   <a href="#" class="txt2 bo1" *ngIf="disableRestarure" (click)="disableRestarure = false;">
                       ¿Olvidaste tu constraseña?
                   </a>
@@ -60,5 +56,55 @@
               </div>
           </form>
       </div>
+  </div>
+</div>-->
+<div class="row" style="background: #02a0e3; height: -webkit-fill-available;">
+  <div class="col-12 row colorFondo5" style="margin: 0 -1px; margin-top: 70px;">
+    <div class="d-flex justify-content-center">
+      <div>
+        <img src="./assets/logo.png" alt="" style="width: 250px;">
+      </div>
+    </div>
+    <div class="col-12">
+      <div class="d-flex justify-content-center">
+        <div style="    text-align: center; " style="width: 520px;     background: white;
+            padding: 10px 40px;
+            border-radius: 5px; color: #02a0e3;">
+          <h2 style="text-align: center;">Bienvenido</h2>
+          <p style="text-align: center;">Ingresa tus Credenciales</p>
+          <div class="row">
+            <div class="col-12">
+              <div class="mb-3">
+                <label for="exampleInputEmail1" class="form-label">Usuario</label>
+                <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Correo o Numero de Celular">
+                <!--<div id="emailHelp" class="form-text">C.</div>-->
+              </div>
+            </div>
+            <div class="col-12">
+              <div class="mb-3">
+                <label for="exampleInputPassword1" class="form-label">Contraseña</label>
+                <input type="password" class="form-control" id="exampleInputPassword1" placeholder="Contraseña">
+              </div>
+            </div>
+            <div class="col-12">
+              <div class="mb-3 form-check">
+                <input type="checkbox" class="form-check-input" id="exampleCheck1">
+                <label class="form-check-label" for="exampleCheck1">Recordarme</label>
+              </div>
+            </div>
+            <div class="col-12">
+              <div class="d-flex flex-row-reverse bd-highlight">
+                <div class="p-2 bd-highlight">
+                  <button type="submit" class="btn btn-primary">Iniciar Sesión</button>
+                </div>
+              </div>
+            </div>
+            <div class="col-12">
+              <h6 style="text-align: center; color: #646464;">Ya tienes una cuenta? <a style="color: #02a0e3;" class="pointer" [routerLink]="[ '/login' ]">Iniciar Sesion</a></h6>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
 </div>

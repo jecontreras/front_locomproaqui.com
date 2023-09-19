@@ -1,21 +1,4 @@
-
-div.scrollmenu {
-    overflow: auto;
-    white-space: nowrap;
-  }
-
-  div.scrollmenu a {
-    display: inline-block;
-    text-align: center;
-    padding: 14px;
-    text-decoration: none;
-  }
-
-  div.scrollmenu a:hover {
-    background-color: #777;
-  }
-
-  /* Estilos generales */
+/* Estilos generales */
 body {
   margin: 0;
   padding: 0;
@@ -44,7 +27,7 @@ li {
 
 .button {
   display: inline-block;
-  background-color: #007BFF;
+  background-color: #000000;
   color: white;
   padding: 10px 20px;
   text-decoration: none;
@@ -115,7 +98,7 @@ li {
 .frame-33 {
   background: #1e1e1e;
   padding: 10px;
-  display: flex;
+  display: table;
   flex-direction: row;
   align-items: center;
   justify-content: center;
@@ -175,12 +158,12 @@ font-size: 18px;
 padding: 10px 20px;
 border: none; /* Elimina el borde */
 border-radius: 30px;
-box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.3); /* Agrega una sombra al botón */
+/*box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.3); /* Agrega una sombra al botón */
 transition: background-color 0.3s, color 0.3s, transform 0.3s; /* Agrega una transición para la sombra */
 }
 
-ul {
-padding: 15px;
+ul{
+padding: 2px;
 margin: auto;
 }
 
@@ -194,7 +177,7 @@ box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.5); /* Aumenta la sombra al pasar el mo
 @media screen and (max-width: 768px) {
 .iphone-menu ul {
     text-align: center; /* Centra los elementos de la lista horizontalmente */
-
+    
 }
 
 .iphone-menu li {
@@ -220,13 +203,24 @@ box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.5); /* Aumenta la sombra al pasar el mo
 /* Estilos generales para las cajas de características */
 .feature-box {
 text-align: center;
-flex-basis: calc(25% - 20px); /* Ancho de 25% con margen de 20px entre cajas en pantallas grandes */
-padding: 20px;
+flex-basis: calc(15% - 20px); /* Ancho de 25% con margen de 20px entre cajas en pantallas grandes */
+padding: 0px;
 background-color: #fff;
 border: 1px solid #ddd;
 border-radius: 5px;
-margin: 10px;
+margin: 0%, 6%, 0, 6% ;
 box-sizing: border-box;
+}
+
+.caja-esp {
+  text-align: center;
+  flex-basis: calc(25% - 20px); /* Ancho de 25% con margen de 20px entre cajas en pantallas grandes */
+  padding: 20px;
+  background-color: #ffffff00;
+  border: 1px solid #ffffff00;
+  border-radius: 5px;
+  margin: 10px;
+  box-sizing: border-box;
 }
 
 /* Estilos para la sección de características en pantallas grandes */
@@ -234,7 +228,7 @@ box-sizing: border-box;
 display: flex;
 flex-wrap: wrap; /* Permite que las cajas se envuelvan en múltiples líneas */
 justify-content: space-between;
-padding: 20px;
+padding: 2%;
 background-color: #f2f2f2;
 }
 
@@ -254,4 +248,172 @@ font-size: 16px;
 .feature-box {
     flex-basis: calc(50% - 20px); /* Ancho de 50% con margen de 20px entre cajas en pantallas pequeñas */
 }
+
+.feature-section {
+  padding: 12%;
 }
+
+
+}
+
+
+/* Media query para pantallas pequeñas (por ejemplo, dispositivos móviles) */
+@media screen and (max-width: 480px) {
+  .feature-box {
+      flex-basis: calc(50% - 20px); /* Ancho de 50% con margen de 20px entre cajas en pantallas pequeñas */
+  }
+
+  .feature-section {
+    padding: 6%;
+  }
+
+
+}
+
+
+.seccion-dos-cajas {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 20px;
+  margin: 20px;
+  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+  border-radius: 10px;
+}
+
+.caja {
+  flex: 0 0 calc(50% - 20px);
+  background-color: #ffffff;
+  padding: 20px;
+  margin-bottom: 20px;
+  
+ 
+}
+
+.contenido-caja {
+  text-align: center;
+}
+
+.imagen img {
+  max-width: 100%;
+  height: auto;
+}
+
+ul{
+  width: 60%;
+}
+
+h1 {
+  font-size: 24px;
+  margin: 10px 0;
+}
+
+h2 {
+  font-size: 18px;
+  margin: 10px 0;
+}
+
+p {
+  font-size: 16px;
+}
+
+/* Media Query para dispositivos móviles */
+@media screen and (max-width: 768px) {
+  .seccion-dos-cajas {
+    flex-direction: column;
+  }
+
+  ul{
+      width: 100%;
+    }
+
+  .caja {
+    flex: 0 0 calc(100% - 20px);
+  }
+
+  .contenido-caja {
+      text-align: center;
+    }
+}
+
+
+
+
+
+
+
+
+
+.servicios {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 20px;
+  padding: 20px;
+  background-color: #f5f5f5; /* Color de fondo */
+}
+
+.servicio {
+  flex: 1;
+  max-width: 300px;
+  padding: 20px;
+  background-color: #ffffff; /* Color de fondo de cada servicio */
+  border-radius: 10px; /* Bordes redondeados */
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Sombra suave */
+}
+
+.servicio img {
+  max-width: 60px; /* Tamaño máximo de la imagen del servicio */
+  height: auto;
+  margin-bottom: 10px; /* Espacio entre la imagen y el título */
+}
+
+.servicio h2 {
+  font-size: 20px;
+  margin: 0;
+}
+
+.servicio p {
+  font-size: 16px;
+  color: #666666; /* Color del texto de descripción */
+  margin-top: 10px; /* Espacio entre el título y la descripción */
+}
+
+/* Media query para dispositivos móviles */
+@media (max-width: 768px) {
+  .servicios {
+    flex-direction: column; /* Cambiamos la dirección a columna */
+    align-items: center; /* Centramos los elementos horizontalmente */
+  }
+
+  .servicio {
+    max-width: 100%; /* Ocupa todo el ancho del contenedor padre */
+    text-align: center; /* Centramos el texto */
+  }
+
+  .servicio img {
+    margin: 0 auto 10px; /* Centramos la imagen horizontalmente */
+  }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

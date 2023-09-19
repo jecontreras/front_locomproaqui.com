@@ -34,7 +34,7 @@ import { OpenIframeComponent } from './open-iframe/open-iframe.component';
     AlertaGanadorComponent,
     ImprimirTarjetaComponent,
     TableProductComponent,
-    OpenIframeComponent,
+    OpenIframeComponent
   ],
   imports: [
     MyOwnCustomMaterialModule,

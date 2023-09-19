@@ -11,16 +11,6 @@ import { STORAGES } from 'src/app/interfaces/sotarage';
   styleUrls: ['./info.component.scss']
 })
 export class InfoComponent implements OnInit {
-  contect = {
-    contadorC: 100,
-    titleC: "Comercio <br> Registrados",
-    contadorD: 100,
-    titleD: "Proveedores <br> dropshipping",
-    contadorE: 1150,
-    titleE: "Envios diarios",
-    contadorM: 1150,
-    titleM: "Municipios bajo <br> Cobertura"
-  };
   numberInf:number = 0;
   constructor(
     public dialog: MatDialog,

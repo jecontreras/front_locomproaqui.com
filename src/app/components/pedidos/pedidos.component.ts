@@ -236,30 +236,33 @@ export class PedidosComponent implements OnInit {
   }
 
   getCategorias() {
-    if( this.imageObject.length === 0 ){
-      this._categorias.get({ where: { cat_activo: 0, cat_padre: null }, limit: 1000 }).subscribe( async (res: any) => {
-        this.imageObject = [];
-        for (let row of res.data) {
-          let datos: any = {
-            id: row.id,
-            title: row.cat_nombre,
-            subCategoria: await this.getSubcategoria( row.id )
-          };
-          if (row.id == this.idCategoria) datos.check = true;
-          this.imageObject.push(datos);
+    this._categorias.get({ where: { cat_activo: 0, cat_padre: null }, limit: 1000 }).subscribe( async (res: any) => {
+      //this.imageObject = [];
+      for (let row of res.data) {
+        let datos: any = {
+          id: row.id,
+          title: row.cat_nombre,
+          subCategoria: await this.getSubcategoria( row.id )
+        };
+        if (row.id == this.idCategoria) datos.check = true;
+        let idx = _.findIndex(this.imageObject, [ 'id', datos.id ]);
+        if( idx == -1 ) this.imageObject.push(datos);
+        else {
+          this.imageObject[idx]= datos;
         }
-        this.imageObject.unshift({
-          id: 0,
-          title: "TODOS",
-          subCategoria: []
-        });
-        console.log( this.imageObject );
-        for( let row of this.imageObject ){
-          let accion = new CategoriaAction(row, 'post');
-          this._store.dispatch( accion );
-        }
+      }
+      this.imageObject.unshift({
+        id: 0,
+        title: "TODOS",
+        subCategoria: []
       });
-    }
+      console.log( this.imageObject );
+      for( let row of this.imageObject ){
+        let accion = new CategoriaAction(row, 'post');
+        this._store.dispatch( accion );
+      }
+      this.imageObject = ( _.unionBy( this.imageObject || [], this.imageObject, 'id' ) ) || [];
+    });
   }
 
   eventorOver( item:any ){

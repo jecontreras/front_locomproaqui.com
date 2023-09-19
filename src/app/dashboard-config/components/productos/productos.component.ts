@@ -10,6 +10,7 @@ import { Store } from '@ngrx/store';
 import { UsuariosService } from 'src/app/servicesComponents/usuarios.service';
 import { DANEGROUP } from 'src/app/JSON/dane-nogroup';
 import { FormProductComponent } from '../../form/form-product/form-product.component';
+import { FormproductosComponent } from '../../form/formproductos/formproductos.component';
 
 declare interface DataTable {
   headerRow: string[];
@@ -152,7 +153,7 @@ export class ProductosComponent implements OnInit {
   }
 
   crear(obj:any){
-    const dialogRef = this.dialog.open(FormProductComponent,{
+    const dialogRef = this.dialog.open(FormproductosComponent,{
       data: {datos: obj || {}},
       height:  '900px',
       width: '100%'

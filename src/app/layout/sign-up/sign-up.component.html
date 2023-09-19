@@ -1,0 +1,106 @@
+<div class="row" style="">
+    <div class="col-12">
+        <div class="col-12 row colorFondo5" style="margin: 0 -1px;">
+            <div class="col-12">
+              <div class="d-flex justify-content-center">
+                <div style="    text-align: center; " style="width: 520px;     background: white;
+                padding: 10px 40px;
+                border-radius: 5px; color: #02a0e3;">
+                  <h2 style="text-align: center;">Registrarme</h2>
+                  <p style="text-align: center;">Rellena el Siguiente formulario para crear una cuenta</p>
+                  <div class="row">
+                    <div class="col-12">
+                        <div class="input-group mb-3">
+                            <span class="input-group-text" id="basic-addon1">
+                                <i class="fa fa-address-book" aria-hidden="true"></i>
+                            </span>
+                            <input type="text" class="form-control" placeholder="Apellido" aria-label="Username" aria-describedby="basic-addon1" [(ngModel)]="data.lastname">
+                          </div>
+                    </div>
+                    <div class="col-12">
+                        <div class="input-group mb-3">
+                            <span class="input-group-text" id="basic-addon1">
+                                <i class="fa fa-address-book" aria-hidden="true"></i>
+                            </span>
+                            <input type="text" class="form-control" placeholder="Nombre" aria-label="Username" aria-describedby="basic-addon1" [(ngModel)]="data.name">
+                          </div>
+                    </div>
+                    <div class="col-12">
+                        <div class="d-flex bd-highlight">
+                            <div class="bd-highlight" style="width: 90px;">
+                                <select class="form-control form-control" [(ngModel)]="data.usu_indicativo" required>
+                                    <option [value]="item.phone_code" *ngFor="let item of listIndicativos">{{
+                                        item.nombre }}
+                                        +{{ item.phone_code }}</option>
+                                </select>
+                            </div>
+                            <div class="flex-grow-1 bd-highlight">
+                                <input type="text" class="form-control" placeholder="Escriba numero del Cel" aria-label="cel" aria-describedby="basic-addon1" [(ngModel)]="data.usu_telefono">
+                            </div>
+                          </div>
+                    </div>
+                    <div class="col-12">
+                        <br>
+                        <div class="input-group mb-3">
+                            <span class="input-group-text" id="basic-addon1">
+                                <i class="fa fa-address-book" aria-hidden="true"></i>
+                            </span>
+                            <input type="text" class="form-control" placeholder="Correo" aria-label="Correo" aria-describedby="basic-addon1" [(ngModel)]="data.email">
+                          </div>
+                    </div>
+                    <div class="col-12">
+                        <div class="input-group mb-3">
+                            <span class="input-group-text" id="basic-addon1">
+                                <i class="fa fa-address-book" aria-hidden="true"></i>
+                            </span>
+                            <input type="text" class="form-control" placeholder="Contraseña" aria-label="Contraseña" aria-describedby="basic-addon1" [(ngModel)]="data.lastname">
+                          </div>
+                    </div>
+                    <div class="col-12">
+                        <div class="input-group mb-3">
+                            <span class="input-group-text" id="basic-addon1">
+                                <i class="fa fa-address-book" aria-hidden="true"></i>
+                            </span>
+                            <input type="text" class="form-control" placeholder="Confirnar Contraseña" aria-label="Confirmar Contraseña" aria-describedby="basic-addon1" [(ngModel)]="data.usu_confir">
+                          </div>
+                    </div>
+                    <div class="col-12">
+                        <div class="d-flex bd-highlight mb-3">
+                            <div class="p-2 bd-highlight">
+                                <div class="form-check">
+                                    <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault1">
+                                    <label class="form-check-label" for="flexRadioDefault1">
+                                      Vendedor
+                                    </label>
+                                  </div>
+                            </div>
+                            <div class="p-2 bd-highlight">
+                                <div class="form-check">
+                                    <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault2" checked>
+                                    <label class="form-check-label" for="flexRadioDefault2">
+                                      Proveedor
+                                    </label>
+                                  </div>
+                            </div>
+                            <div class="ms-auto p-2 bd-highlight"></div>
+                          </div>
+                    </div>
+                    <div class="col-12">
+                        <div class="d-flex bd-highlight mb-3">
+                            <div class="p-2 bd-highlight"></div>
+                            <div class="p-2 bd-highlight"></div>
+                            <div class="ms-auto p-2 bd-highlight">
+                                <button type="button" class="btn btn-primary">Crear Cuenta</button>
+                            </div>
+                          </div>
+                    </div>
+                    <div class="col-12">
+                        <h6 style="text-align: center; color: #646464;">Ya tienes una cuenta? <a style="color: #02a0e3;" class="pointer" [routerLink]="[ '/login' ]">Iniciar Sesion</a></h6>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+    </div>
+</div>
