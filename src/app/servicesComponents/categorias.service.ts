@@ -22,4 +22,10 @@ export class CategoriasService {
   delete(query:any){
     return this._model.querys('tblcategorias/'+query.id, query, 'delete');
   }
+  createUser(query:any){
+    return this._model.querys('tblusuarioCategoria',query, 'post');
+  }
+  getUser(query:any){
+    return this._model.querys('tblusuarioCategoria/querys',query, 'post');
+  }
 }

@@ -103,7 +103,7 @@
                             </div>
                         </div>
                     </div>
-                    <mat-tab-group mat-align-tabs="center">
+                    <mat-tab-group mat-align-tabs="center" [color]="'accent'" [backgroundColor]="'primary'">
                         <mat-tab label="Datos Iniciales" >
                             <div class="row" style=" padding: 20px ">
                                 <div class="col-12 content">
@@ -196,7 +196,7 @@
                                       </div>
                                     </div>
                                 </div>
-                                <div class="col-6">
+                                <div class="col-12 col-sm-6">
                                     <label>Ciudad</label>
                                     <ng-autocomplete [(ngModel)]="data.usu_ciudad" [data]="listCiudades" [searchKeyword]="keyword" placeHolder="Buscar Ciudad" autocomplete="off"
                                         historyIdentifier="listCiudades" [itemTemplate]="itemTemplate" [notFoundTemplate]="notFoundTemplate"  (inputChanged)='onChangeSearch($event)'>
@@ -217,12 +217,12 @@
                                     <!--<input type="text" [(ngModel)]="data.usu_ciudad"
                                         class="form-control form-control-sm">-->
                                 </div>
-                                <div class="col-6">
+                                <div class="col-12 col-sm-6">
                                     <label>Dirección</label>
                                     <input type="text" [(ngModel)]="data.usu_direccion"
                                         class="form-control form-control-sm">
                                 </div>
-                                <div class="col-6">
+                                <div class="col-12 col-sm-6">
                                     <label>Correo Electronico</label>
                                     <input type="text" [(ngModel)]="data.usu_email" class="form-control form-control-sm"
                                         (ngModelChange)="validadEmail()">
@@ -231,17 +231,17 @@
                                             Dominio Gmail</span>
                                     </div>
                                 </div>
-                                <div class="col-6">
+                                <div class="col-12 col-sm-6">
                                     <label>Url de Facebook</label>
                                     <input type="text" [(ngModel)]="data.url_facebook"
                                         class="form-control form-control-sm">
                                 </div>
-                                <div class="col-6">
+                                <div class="col-12 col-sm-6">
                                     <label>Url de Instagram</label>
                                     <input type="text" [(ngModel)]="data.url_instagram"
                                         class="form-control form-control-sm">
                                 </div>
-                                <div class="col-6">
+                                <div class="col-12 col-sm-6">
                                     <label>Url de youtube</label>
                                     <input type="text" [(ngModel)]="data.url_youtube"
                                         class="form-control form-control-sm">
@@ -269,11 +269,14 @@
                                     <label>Confirmar Contraseña Para Actualizar</label>
                                     <input type="text" [(ngModel)]="data.cat_nombre" class="form-control form-control-sm">
                                 </div>-->
-                                <div class="col-6">
-                                    <br>
-                                    <button class="p-2 btn btn-success btn-just-icon btn-round" (click)="Actualizar()">
-                                        Actualizar Datos
-                                    </button>
+                                <div class="col-12">
+                                    <div class="d-flex flex-row-reverse bd-highlight">
+                                        <div class="p-2 bd-highlight">
+                                            <button class="p-2 btn btn-success btn-just-icon btn-round" (click)="Actualizar()">
+                                                Actualizar Datos
+                                            </button>
+                                        </div>
+                                    </div>
                                 </div>
                                 <div class="col-12" *ngIf="disableRestaure">
                                     <label>Clave Nueva</label>
@@ -316,33 +319,78 @@
                         <mat-tab label="Datos de bodegas" *ngIf="textPerfil==='proveedor'" style=" padding: 20px ">
                             <div class="container">
                                 <div class="row">
-                                    <div class="col-6 col-sm-3">
+                                    <div class="col-12 col-sm-6">
                                         <label for="exampleFormControlInput1">Nombre de tu bodega</label>
                                         <input type="text" [(ngModel)]="data.usu_usuario"
                                             class="form-control form-control-sm">
                                     </div>
-                                    <div class="col-6 col-sm-3">
+                                    <div class="col-12 col-sm-6">
                                         <label for="exampleFormControlInput1">Numero contacto de soporte</label>
                                         <input type="number" [(ngModel)]="data.usu_telefono"
                                             class="form-control form-control-sm">
                                     </div>
-                                    <div class="col-6 col-sm-3">
+                                    <div class="col-12 col-sm-6">
                                         <label for="exampleFormControlInput1">Correo electrónico soporte</label>
                                         <input type="email" [(ngModel)]="data.usu_email"
                                             class="form-control form-control-sm">
                                     </div>
-                                    <div class="col-6 col-sm-3">
-                                        <label for="exampleFormControlInput1">Ciudad</label>
-                                        <select class="form-control form-control-sm" [(ngModel)]="data.usu_ciudad" required >
-                                            <option [value]="item.phone_code" *ngFor="let item of listCiudad">
-                                              {{ item.ciudad }} - {{ item.departamento }}
-                                            </option>
-                                        </select>
+                                    <div class="col-12 col-sm-6">
+                                        <label>Ciudad</label>
+                                        <ng-autocomplete [(ngModel)]="data.usu_ciudad" [data]="listCiudades" [searchKeyword]="keyword" placeHolder="Buscar Ciudad" autocomplete="off"
+                                            historyIdentifier="listCiudades" [itemTemplate]="itemTemplate" [notFoundTemplate]="notFoundTemplate"  (inputChanged)='onChangeSearch($event)'>
+                                        </ng-autocomplete>
+    
+                                        <ng-template #itemTemplate let-item>
+                                            <div class="item">
+                                                <!-- <img src="{{item.flag}}" height="25"> -->
+                                                <span [innerHTML]="item.city"></span> &nbsp; | &nbsp;
+                                                <small>Departamento: {{ item.state }}</small> &nbsp; | &nbsp;
+                                                <small>--: {{ item.name }}</small>
+                                            </div>
+                                        </ng-template>
+    
+                                        <ng-template #notFoundTemplate let-notFound>
+                                          <div [innerHTML]="notFound"></div>
+                                      </ng-template>
+                                        <!--<input type="text" [(ngModel)]="data.usu_ciudad"
+                                            class="form-control form-control-sm">-->
                                     </div>
-                                    <div class="col-6 col-sm-3">
+                                    <div class="col-12 col-sm-6">
                                         <label for="exampleFormControlInput1">Dirección de bodega para mensajeria</label>
                                         <input type="text" [(ngModel)]="data.usu_direccion"
                                             class="form-control form-control-sm">
+                                    </div>
+                                    <div class="col-12 col-sm-6">
+                                        <label for="exampleFormControlInput1">Tipo de Proveedor?</label>
+                                        <select class="form-control form-control-sm" [(ngModel)]="data.tipeUser" required>
+                                            <option value="1">
+                                              Fabricante
+                                            </option>
+                                            <option value="2">
+                                              Importador
+                                            </option>
+                                        </select>
+                                    </div>
+                                    <div class="col-12 col-sm-3">
+                                        <label for="exampleFormControlInput1">Tiempo de Experiencia como Proveedor Dropshipping?</label>
+                                        <select class="form-control form-control-sm" [(ngModel)]="data.tiempoVendiendo" required>
+                                            <option value="0">
+                                              0 a 6 Meses
+                                            </option>
+                                            <option value="1">
+                                              6 Meses a 1 Año
+                                            </option>
+                                            <option value="1">
+                                              Más de un Año
+                                            </option>
+                                        </select>
+                                    </div>
+                                    <div class="col-12 col-sm-3">
+                                        <label for="exampleFormControlSelect1">¿Estás vinculado alguna plataforma de dropshipping?</label>
+                                        <select class="form-control" [(ngModel)]="data.pagasPublicidad">
+                                            <option value="si">SI</option>
+                                            <option value="no">NO</option>
+                                        </select>
                                     </div>
                                     <div class="col-12 col-sm-6">
                                       <label for="exampleFormControlInput1">Seleccionar la o las categorías del tipo
@@ -350,7 +398,7 @@
                                       <div class="row">
                                           <div class="col-6 col-sm-4 col-md-3 col-xs-2 col-lg-4"
                                               *ngFor="let item of listCategorias">
-                                              <mat-checkbox (ngModelChange)="tallaSeleccionando( item )"
+                                              <mat-checkbox
                                                   [(ngModel)]="item.check" class="example-margin">
                                                   {{ item.cat_nombre }}
                                               </mat-checkbox>
@@ -384,6 +432,9 @@
                                         </h3>
                                         <input type="file" id="btn-file" accept="application/pdf" (change)="fileChangeEventPDF($event, 'pdfCComercio')"/> PDF Camara de Comercio
                                       </span>
+                                    </div>
+                                    <div class="col-12">
+
                                     </div>
                                     <div class="col-12">
                                         <br>

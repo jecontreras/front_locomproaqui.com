@@ -134,9 +134,22 @@ export class PerfilComponent implements OnInit {
   }
 
   getCategorias() {
-    this._categorias.get({ where: { cat_activo: 0, cat_padre: null }, limit: 1000 }).subscribe((res: any) => {
+    this._categorias.get({ where: { cat_activo: 0, cat_padre: null }, limit: 1000 }).subscribe(async (res: any) => {
       this.listCategorias = res.data;
+      let userC:any = await this.getUserCategory();
+      for( let row of userC ){
+        let filtro = this.listCategorias.filter( item => item.id == row.cat_categoria );
+        if( filtro ) row.check = true;
+      }
     }, () => this._tools.tooast("Error de servidor"));
+  }
+
+  getUserCategory(){
+    return new Promise( resolve =>{
+      this._categorias.getUser( { where:{ cat_usu: this.data.id }, limit: 10000 } ).subscribe( res => {
+        resolve( res.data || [] );
+      });
+    })
   }
 
   openView( opt:string ){
@@ -244,6 +257,7 @@ export class PerfilComponent implements OnInit {
 
   Actualizar() {
     if (!this.disabledusername || !this.disabledemail) return this._tools.tooast({ title: "Error tenemos problemas en el formulario por favor revisar gracias", icon: "error" })
+
     this.data = _.omit(this.data, ['usu_perfil', 'cabeza', 'nivel', 'empresa', 'createdAt', 'updatedAt', 'categoriaPerfil']); this.data = _.omitBy(this.data, _.isNull);
     try { this.data.usu_ciudad = this.data.usu_ciudad.name; } catch (error) { error }
     this._user.update(this.data).subscribe((res: any) => {
@@ -251,6 +265,7 @@ export class PerfilComponent implements OnInit {
       this._tools.presentToast("Actualizado");
       let accion = new UserAction(res, 'put');
       this._store.dispatch(accion);
+      this.handleCategorySelect();
     }, (error) => { console.error(error); this._tools.presentToast("Error de Servidor") })
   }
 
@@ -292,8 +307,21 @@ export class PerfilComponent implements OnInit {
     console.log(this.data);
   }
 
-  tallaSeleccionando(t) {
-
+  handleCategorySelect() {
+    let dataEnd = [];
+    for( let row of this.listCategorias ){
+      if( row.check === true ){
+        dataEnd.push( {
+          cat_categoria: row.id,
+          check: true,
+          cat_usu: this.data.id
+        } );
+      }
+    }
+    if( dataEnd.length === 0 ) return false;
+    this._categorias.createUser( {listCategory: dataEnd } ).subscribe( res =>{
+      this._tools.presentToast("Actualizado...");
+    });
   }
 
   async iniciarClick() {

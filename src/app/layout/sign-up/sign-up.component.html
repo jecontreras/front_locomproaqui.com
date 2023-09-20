@@ -3,6 +3,12 @@
         <div class="col-12 row colorFondo5" style="margin: 0 -1px;">
             <div class="col-12">
               <div class="d-flex justify-content-center">
+                <div>
+                  <img src="./assets/logo.png" alt="" style="width: 250px;">
+                  <br>
+                </div>
+              </div>
+              <div class="d-flex justify-content-center" style="margin-top: 25px;">
                 <div style="    text-align: center; " style="width: 520px;     background: white;
                 padding: 10px 40px;
                 border-radius: 5px; color: #02a0e3;">
@@ -10,19 +16,31 @@
                   <p style="text-align: center;">Rellena el Siguiente formulario para crear una cuenta</p>
                   <div class="row">
                     <div class="col-12">
-                        <div class="input-group mb-3">
-                            <span class="input-group-text" id="basic-addon1">
-                                <i class="fa fa-address-book" aria-hidden="true"></i>
-                            </span>
-                            <input type="text" class="form-control" placeholder="Apellido" aria-label="Username" aria-describedby="basic-addon1" [(ngModel)]="data.lastname">
+                      <div class="input-group mb-3">
+                          <span class="input-group-text" id="basic-addon1">
+                            <i class="fa fa-id-badge" aria-hidden="true"></i>
+                          </span>
+                          <input type="text" class="form-control" placeholder="Nombre de la tienda" aria-label="usu_usuario" aria-describedby="basic-addon1" [(ngModel)]="data.usu_usuario" (ngModelChange)="validadUsername()">
+                          <div *ngIf="!disabledusername">
+                            <span class="bg-danger text-white rounded">El Nombre de su tienda Ya Se Encuentra Registrado Por Favor Utilizar
+                                Otro</span>
                           </div>
-                    </div>
+                        </div>
+                  </div>
                     <div class="col-12">
                         <div class="input-group mb-3">
                             <span class="input-group-text" id="basic-addon1">
                                 <i class="fa fa-address-book" aria-hidden="true"></i>
                             </span>
-                            <input type="text" class="form-control" placeholder="Nombre" aria-label="Username" aria-describedby="basic-addon1" [(ngModel)]="data.name">
+                            <input type="text" class="form-control" placeholder="Apellido" aria-label="Username" aria-describedby="basic-addon1" [(ngModel)]="data.usu_apellido">
+                          </div>
+                    </div>
+                    <div class="col-12">
+                        <div class="input-group mb-3">
+                            <span class="input-group-text" id="basic-addon1">
+                              <i class="fa fa-id-card" aria-hidden="true"></i>
+                            </span>
+                            <input type="text" class="form-control" placeholder="Nombre" aria-label="Username" aria-describedby="basic-addon1" [(ngModel)]="data.usu_nombre">
                           </div>
                     </div>
                     <div class="col-12">
@@ -34,8 +52,8 @@
                                         +{{ item.phone_code }}</option>
                                 </select>
                             </div>
-                            <div class="flex-grow-1 bd-highlight">
-                                <input type="text" class="form-control" placeholder="Escriba numero del Cel" aria-label="cel" aria-describedby="basic-addon1" [(ngModel)]="data.usu_telefono">
+                            <div class="flex-grow-1 bd-highlight" style="margin-left: 15px;">
+                                <input type="number" class="form-control" placeholder="Escriba numero del Cel" aria-label="cel" aria-describedby="basic-addon1" [(ngModel)]="data.usu_telefono">
                             </div>
                           </div>
                     </div>
@@ -43,32 +61,33 @@
                         <br>
                         <div class="input-group mb-3">
                             <span class="input-group-text" id="basic-addon1">
-                                <i class="fa fa-address-book" aria-hidden="true"></i>
+                              <i class="fa fa-envelope" aria-hidden="true"></i>
                             </span>
-                            <input type="text" class="form-control" placeholder="Correo" aria-label="Correo" aria-describedby="basic-addon1" [(ngModel)]="data.email">
+                            <input type="text" class="form-control" placeholder="Correo" aria-label="Correo" aria-describedby="basic-addon1" [(ngModel)]="data.usu_email" (blur)="validadorEmail( data.usu_email )">
+                            <span class="text-danger">{{ error }}</span>
                           </div>
                     </div>
                     <div class="col-12">
                         <div class="input-group mb-3">
                             <span class="input-group-text" id="basic-addon1">
-                                <i class="fa fa-address-book" aria-hidden="true"></i>
+                              <i class="fa fa-key" aria-hidden="true"></i>
                             </span>
-                            <input type="text" class="form-control" placeholder="Contraseña" aria-label="Contraseña" aria-describedby="basic-addon1" [(ngModel)]="data.lastname">
+                            <input type="password" class="form-control" placeholder="Contraseña" aria-label="Contraseña" aria-describedby="basic-addon1" [(ngModel)]="data.usu_clave">
                           </div>
                     </div>
                     <div class="col-12">
                         <div class="input-group mb-3">
                             <span class="input-group-text" id="basic-addon1">
-                                <i class="fa fa-address-book" aria-hidden="true"></i>
+                              <i class="fa fa-key" aria-hidden="true"></i>
                             </span>
-                            <input type="text" class="form-control" placeholder="Confirnar Contraseña" aria-label="Confirmar Contraseña" aria-describedby="basic-addon1" [(ngModel)]="data.usu_confir">
+                            <input type="password" class="form-control" placeholder="Confirnar Contraseña" aria-label="Confirmar Contraseña" aria-describedby="basic-addon1" [(ngModel)]="data.usu_confir">
                           </div>
                     </div>
                     <div class="col-12">
                         <div class="d-flex bd-highlight mb-3">
                             <div class="p-2 bd-highlight">
                                 <div class="form-check">
-                                    <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault1">
+                                    <input class="form-check-input" type="checkbox" name="flexRadioDefault" id="flexRadioDefault1" [(ngModel)]="data.optVendedor" (click)="validateClick()">
                                     <label class="form-check-label" for="flexRadioDefault1">
                                       Vendedor
                                     </label>
@@ -76,7 +95,7 @@
                             </div>
                             <div class="p-2 bd-highlight">
                                 <div class="form-check">
-                                    <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault2" checked>
+                                    <input class="form-check-input" type="checkbox" name="flexRadioDefault" id="flexRadioDefault2" [(ngModel)]="data.optProveedor" (click)="validateClick()">
                                     <label class="form-check-label" for="flexRadioDefault2">
                                       Proveedor
                                     </label>
@@ -90,7 +109,7 @@
                             <div class="p-2 bd-highlight"></div>
                             <div class="p-2 bd-highlight"></div>
                             <div class="ms-auto p-2 bd-highlight">
-                                <button type="button" class="btn btn-primary">Crear Cuenta</button>
+                                <button type="button" class="btn btn-primary" style="    font-size: 20px; background: #02a0e3;" (click)="submit()">Crear Cuenta</button>
                             </div>
                           </div>
                     </div>

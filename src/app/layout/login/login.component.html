@@ -60,13 +60,15 @@
 </div>-->
 <div class="row" style="background: #02a0e3; height: -webkit-fill-available;">
   <div class="col-12 row colorFondo5" style="margin: 0 -1px; margin-top: 70px;">
-    <div class="d-flex justify-content-center">
-      <div>
-        <img src="./assets/logo.png" alt="" style="width: 250px;">
-      </div>
-    </div>
     <div class="col-12">
       <div class="d-flex justify-content-center">
+        <div>
+          <img src="./assets/logo.png" alt="" style="width: 250px;">
+          <br>
+        </div>
+      </div>
+      <div class="d-flex justify-content-center" style="
+      margin-top: 25px;">
         <div style="    text-align: center; " style="width: 520px;     background: white;
             padding: 10px 40px;
             border-radius: 5px; color: #02a0e3;">
@@ -76,14 +78,14 @@
             <div class="col-12">
               <div class="mb-3">
                 <label for="exampleInputEmail1" class="form-label">Usuario</label>
-                <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Correo o Numero de Celular">
+                <input type="email" class="form-control" id="exampleInputEmail1" [(ngModel)]="data.usu_email" aria-describedby="emailHelp" placeholder="Correo o Numero de Celular">
                 <!--<div id="emailHelp" class="form-text">C.</div>-->
               </div>
             </div>
             <div class="col-12">
               <div class="mb-3">
                 <label for="exampleInputPassword1" class="form-label">Contraseña</label>
-                <input type="password" class="form-control" id="exampleInputPassword1" placeholder="Contraseña">
+                <input type="password" class="form-control" id="exampleInputPassword1" [(ngModel)]="data.usu_clave" placeholder="Contraseña">
               </div>
             </div>
             <div class="col-12">
@@ -95,14 +97,20 @@
             <div class="col-12">
               <div class="d-flex flex-row-reverse bd-highlight">
                 <div class="p-2 bd-highlight">
-                  <button type="submit" class="btn btn-primary">Iniciar Sesión</button>
+                  <button type="submit" class="btn btn-primary" (click)="submit()" style="background: #02a0e3 !important;     font-size: 20px;">Iniciar Sesión</button>
                 </div>
               </div>
             </div>
             <div class="col-12">
-              <h6 style="text-align: center; color: #646464;">Ya tienes una cuenta? <a style="color: #02a0e3;" class="pointer" [routerLink]="[ '/login' ]">Iniciar Sesion</a></h6>
+              <h6 style="text-align: center; color: #646464;">No tienes una cuenta? <a style="color: #02a0e3;" class="pointer" [routerLink]="[ '/registro' ]">Registrate Gratis</a></h6>
             </div>
           </div>
+        </div>
+      </div>
+      <div class="d-flex justify-content-center">
+        <div>
+          <h6 class="text-light" style="    margin-top: 20px;">2023 Lokomproaqui ❣️</h6>
+          <br>
         </div>
       </div>
     </div>
