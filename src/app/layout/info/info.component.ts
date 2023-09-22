@@ -34,7 +34,7 @@ export class InfoComponent implements OnInit {
 
   handleOpenView( url:string ){
     const dialogRef = this.dialog.open(OpenIframeComponent, {
-      width: '100%',
+      width: '50%',
       data: {
         url: url
       }

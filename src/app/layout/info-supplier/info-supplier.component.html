@@ -6,6 +6,7 @@
         <div class="col-12 col-sm-6" style="    margin-top: 20px; margin: auto; ">
             <div class="h_iframe">
                 <iframe  frameborder="0" allowfullscreen  src="https://www.youtube.com/embed/qMYKvn5dbvg?si=d1e8bC_bHLgKaJdn"></iframe>
+                <br><br>
             </div>
         </div>
         <div class="col-12 col-sm-6" style="margin: auto;">
@@ -27,11 +28,9 @@
     </div>
     <div class="col-12">
         <div class="row">
-            <div class="col-6 col-sm-4" *ngFor="let item of listSupplier">
+            <div class="col-6 col-sm-3" *ngFor="let item of listSupplier">
                 <mat-card class="example-card">
-                    <figure mat-card-image data-toggle="modal" id="figura" data-target="#modalinfo" class="img-contenedor">
-                      <img class="img-responsive btn-block imgProductos pointer " [src]="item.usu_imagen">
-                    </figure>
+                      <img style="    padding: 5%;" mat-card-image class="img-responsive btn-block imgProductos pointer " [src]="item.usu_imagen">
                 </mat-card>
             </div>
         </div>
