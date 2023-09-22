@@ -168,7 +168,7 @@
   </mat-drawer>
 
   <mat-drawer-content>
-    <nav class="navbar navbar-expand-lg navbar-light headerColor" #toolbar>
+    <nav class="navbar navbar-expand-lg navbar-light headerColor" #toolbar *ngIf="( routName !== '/login' ) &&  (routName !== '/registro' )">
       <!--<div class="d-flex justify-content-between col-12">
         <div>
           <button mat-icon-button (click)="drawer.toggle()" translate="no">
@@ -252,10 +252,10 @@
               <div class="d-flex bd-highlight">
                 <div class="p-2 bd-highlight">
                   <button type="button" class="btn btn-dark" (click)="login()" style="font-size: 10px; margin-bottom: 5px;">Iniciar Sesion</button>
-                  <button type="button" *ngIf="breakpoint == 1" class="btn btn-dark" style="font-size: 10px; " (click)="registrar()">Registrarse</button>    
+                  <button type="button" *ngIf="breakpoint == 1" class="btn btn-dark" style="font-size: 10px; " (click)="registrar()">Registrarse</button>
                 </div>
                 <div class="p-2 bd-highlight" *ngIf="breakpoint == 6">
-                  <button type="button" class="btn btn-dark" (click)="registrar()" style="font-size: 10px;">Registrarse</button>    
+                  <button type="button" class="btn btn-dark" (click)="registrar()" style="font-size: 10px;">Registrarse</button>
                 </div>
               </div>
             </div>
@@ -355,8 +355,8 @@
       </div>
     </div>
     <ng-content> </ng-content>
-    
-    <app-footer></app-footer>
+
+    <app-footer *ngIf="( routName !== '/login' ) &&  (routName !== '/registro' )"></app-footer>
   </mat-drawer-content>
 
 </mat-drawer-container>

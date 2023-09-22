@@ -4,6 +4,7 @@ import { UsuariosService } from 'src/app/servicesComponents/usuarios.service';
 import * as _ from 'lodash';
 import { RegistroComponent } from 'src/app/components/registro/registro.component';
 import { MatDialog } from '@angular/material';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-info-supplier',
@@ -29,6 +30,7 @@ export class InfoSupplierComponent implements OnInit {
     private _user: UsuariosService,
     private spinner: NgxSpinnerService,
     public dialog: MatDialog,
+    private _router: Router,
   ) { }
 
   ngOnInit(): void {
@@ -55,7 +57,8 @@ export class InfoSupplierComponent implements OnInit {
   }
 
   handleOpenCheckIn( opt:string ){
-    const dialogRef = this.dialog.open(RegistroComponent, {
+    this._router.navigate(['/registro']);
+    /*const dialogRef = this.dialog.open(RegistroComponent, {
       width: '100%',
       data: {
         view: opt,
@@ -66,7 +69,7 @@ export class InfoSupplierComponent implements OnInit {
 
     dialogRef.afterClosed().subscribe(result => {
       console.log(`Dialog result: ${result}`);
-    });
+    });*/
   }
 
 

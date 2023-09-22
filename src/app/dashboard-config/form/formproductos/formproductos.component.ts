@@ -368,6 +368,7 @@ export class FormproductosComponent implements OnInit {
         //console.log(res);
         this._tools.presentToast("Exitoso");
         this.data.id = res.id;
+        this.updateCache();
         resolve(res);
       }, (error) => { this._tools.presentToast("Error"); resolve(false) });
     });
@@ -380,6 +381,7 @@ export class FormproductosComponent implements OnInit {
     console.log("error", this.data, this._productos )
     this._productos.update(this.data).subscribe((res: any) => {
       this._tools.presentToast("Actualizado");
+      this.updateCache();
       res.listColor = this.data.listColor;
       this.data = res;
       if( this.data.pro_sw_tallas ) this.data.pro_sw_tallas = this.data.pro_sw_tallas.id;
@@ -392,6 +394,11 @@ export class FormproductosComponent implements OnInit {
     //console.log(event, this.files);
     if( opt !== 'galeria') this.files.push( ...event.addedFiles );
     else this.files2.push( ...event.addedFiles );
+  }
+
+  updateCache(){
+    console.log("***UPDATE CACHE1")
+    this._productos.updateCache({}).subscribe( res => {} );
   }
 
 

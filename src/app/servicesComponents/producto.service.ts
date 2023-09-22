@@ -25,6 +25,9 @@ export class ProductoService {
   updateState(query:any){
     return this._model.querys('tblproductos/updateState', query, 'post');
   }
+  updateCache(query:any){
+    return this._model.querys('tblproductos/updateCache', query, 'post');
+  }
   delete(query:any){
     return this._model.querys('tblproductos/'+query.id, query, 'delete');
   }

@@ -158,16 +158,21 @@ export class HeaderComponent implements OnInit {
     //console.log( this.isHandset$, this.breakpoint, window.innerWidth )
 
     setInterval(()=> {
-      //console.log( this.nav)
-      let color:string = ( this.dataUser.usu_color || "#02a0e3" );
-      if( this.userId.id ) {
-        //console.log("**NO ENTRE",this.userId)
-        color = this.userId.usu_color || "#02a0e3";
-        this.urlLogo = this.userId.usu_imagen || './assets/logo.png';
+      this.routName = window.location.pathname;
+      try {
+        //console.log( this.nav)
+        let color:string = ( this.dataUser.usu_color || "#02a0e3" );
+        if( this.userId.id ) {
+          //console.log("**NO ENTRE",this.userId)
+          color = this.userId.usu_color || "#02a0e3";
+          this.urlLogo = this.userId.usu_imagen || './assets/logo.png';
+        }
+        if( this.dataUser.id ) this.urlLogo = this.dataUser.usu_imagen || './assets/logo.png';
+        //console.log("***144",color, this.dataUser )
+        this.nav.nativeElement.style.backgroundColor = color;
+      } catch (error) {
+
       }
-      if( this.dataUser.id ) this.urlLogo = this.dataUser.usu_imagen || './assets/logo.png';
-      //console.log("***144",color, this.dataUser )
-      this.nav.nativeElement.style.backgroundColor = color;
     }, 1000 );
 
     this.onResize(null);
@@ -769,14 +774,15 @@ export class HeaderComponent implements OnInit {
   }
 
   login(){
-    const dialogRef = this.dialog.open(LoginComponent,{
+    this.router.navigate(['/login']);
+    /*const dialogRef = this.dialog.open(LoginComponent,{
       width: '461px',
       data: { datos: {} }
     });
 
     dialogRef.afterClosed().subscribe(result => {
       console.log(`Dialog result: ${result}`);
-    });
+    });*/
   }
 
   handleShop(){

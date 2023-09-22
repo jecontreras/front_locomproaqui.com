@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material';
+import { Router } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { RegistroComponent } from 'src/app/components/registro/registro.component';
 import { OpenIframeComponent } from 'src/app/extra/open-iframe/open-iframe.component';
@@ -15,7 +16,8 @@ export class InfoComponent implements OnInit {
   constructor(
     public dialog: MatDialog,
     private _store: Store<STORAGES>,
-  ) { 
+    private _router: Router,
+  ) {
     this._store.subscribe((store: any) => {
       store = store.name;
       if(!store) return false;
@@ -44,7 +46,8 @@ export class InfoComponent implements OnInit {
   }
 
   handleOpenCheckIn( opt:string ){
-    const dialogRef = this.dialog.open(RegistroComponent, {
+    this._router.navigate(['/registro']);
+    /*const dialogRef = this.dialog.open(RegistroComponent, {
       width: '100%',
       data: {
         view: opt,
@@ -55,11 +58,12 @@ export class InfoComponent implements OnInit {
 
     dialogRef.afterClosed().subscribe(result => {
       console.log(`Dialog result: ${result}`);
-    });
+    });*/
   }
 
   handleInfo(){
     let url = `https://wa.me/57${ this.numberInf }?text=Hola Servicio al cliente`
+    window.open( url )
   }
 
 }
