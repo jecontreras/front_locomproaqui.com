@@ -541,10 +541,13 @@ export class FormventasComponent implements OnInit {
   updates( opt:boolean = false ) {
     if( !opt ) if (!this.superSub) if ( ( this.clone.ven_estado == 1 || this.clone.ven_estado == 2 || this.clone.ven_estado == 3 || this.clone.ven_estado == 4 ) || ( this.clone.ven_numero_guia ) ) { this._tools.presentToast("Error no puedes ya editar la venta ya esta aprobada"); return false; }
     let data = _.clone( this.data );
-    data = _.omit( data, ['usu_clave_int']);
+    /*data = _.omit( data, ['usu_clave_int']);
     if( this.superSub == false ) {
       data = _.omit( data, ['usu_clave_int']);
-  }
+    } */
+    try {
+      data.usu_clave_int = data.usu_clave_int.id || data.usu_clave_int;
+    } catch (error) { data.usu_clave_int = data.usu_clave_int; }
     data = _.omitBy(data, _.isNull);
     this._ventas.update( data ).subscribe((res: any) => {
       this._tools.presentToast("Actualizado");
@@ -556,7 +559,7 @@ export class FormventasComponent implements OnInit {
           titulo: "VENTA DESPACHADO " + res.ven_nombre_cliente,
           descripcion: "SIGNIFICA QUE YA TU PAQUETE ESTA EN CAMINO",
           venta: res.id,
-          user: res.usu_clave_int.id,
+          user: res.usu_clave_int,
           tipoDe: 0
         };
         if (this.data.ven_estado == 2) {

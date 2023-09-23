@@ -297,16 +297,17 @@ export class MisDespachoComponent implements OnInit {
     });
 
     dialogRef.afterClosed().subscribe( async ( result ) => {
-      console.log(`Dialog result: ${result}`);
+      //console.log(`Dialog result: ${result}`);
       if(result == 'creo') this.cargarTodos();
       if( obj.id ) {
         let filtro:any = await this.getDetallado( obj.id );
           if( !filtro ) return false;
-          let idx = _.findIndex( this.dataTable.dataRows, [ 'id', obj.id ] );
-          console.log("**",idx)
+          let idx = _.findIndex( this.dataTable4.dataRows, [ 'id', obj.id ] );
+          //console.log("**",idx)
           if( idx >= 0 ) {
-            console.log("**",this.dataTable['dataRows'][idx], filtro)
-            this.dataTable['dataRows'][idx] = { ...filtro};
+            console.log("**",this.dataTable4['dataRows'][idx], filtro)
+            this.dataTable4['dataRows'][idx]['ventas']['ven_estado'] = filtro['ventas']['ven_estado'];
+            this.dataTable4['dataRows'][idx]['ventas']['ven_numero_guia'] = filtro['ventas']['ven_numero_guia'];
           }
       }
     });

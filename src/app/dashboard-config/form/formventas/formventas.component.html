@@ -15,7 +15,7 @@
                 <option value="whatsapp">Whatsapp</option>
             </select>
         </div> -->
-        <div class="form-group col-md-6 col-sm-4 col-lg-4 col-xs-6" *ngIf="data.id && superSub">
+        <div class="form-group col-md-6 col-sm-4 col-lg-4 col-xs-6" *ngIf="data.id">
             <label for="exampleFormControlSelect1">Estado de la Venta</label>
             <select class="form-control form-control-sm" [(ngModel)]="data.ven_estado" (change)="submit()">
                 <option type="number" value="0">Pendiente</option>
