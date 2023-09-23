@@ -141,7 +141,7 @@ export class VentasClienteComponent implements OnInit {
 
   async getDetallado( id:any ){
     return new Promise( resolve => {
-      this._ventas.get( { where: { id: id } } ).subscribe(( res:any )=>{
+      this._ventas.getPossibleSales( { where: { id: id } } ).subscribe(( res:any )=>{
         res = res.data[0];
         resolve( res || false )
       },()=> resolve( false ) );

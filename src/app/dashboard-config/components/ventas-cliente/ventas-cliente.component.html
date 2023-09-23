@@ -90,6 +90,9 @@
                           <div *ngIf="row.ven_estado == 0">
                             <span class="text-warning fondos" >Debes Autorizar Despacho </span><br>
                           </div>
+                          <div *ngIf="row.ven_estado == 1">
+                            <span class="text-warning fondos pointer" [routerLink]="[ '/config/ventas' ]" >Venta Generada Esperando guia </span><br>
+                          </div>
                           <div>
                             <button (click)="crear(row)" class="btn btn-primary btn-just-icon btn-round">
                               <i class="material-icons">remove_red_eye</i>

@@ -543,7 +543,7 @@ export class FormventasComponent implements OnInit {
     let data = _.clone( this.data );
     data = _.omit( data, ['usu_clave_int']);
     if( this.superSub == false ) {
-      data = _.omit( data, ['usu_clave_int','ven_estado']);
+      data = _.omit( data, ['usu_clave_int']);
   }
     data = _.omitBy(data, _.isNull);
     this._ventas.update( data ).subscribe((res: any) => {
