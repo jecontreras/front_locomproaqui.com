@@ -355,7 +355,7 @@ export class HeaderComponent implements OnInit {
     let texto:string = "";
     this.data.total = 0;
     this.data.totalGanancias = 0;
-    console.log( this.porcentajeUser,this.namePorcentaje )
+//    console.log( this.porcentajeUser,this.namePorcentaje )
     for(let row of this.listCart){
       //texto+= ` productos: ${ row.titulo } codigo: ${ row.codigo } talla: ${ row.tallaSelect } cantidad: ${ row.cantidad } precio: ${ row.costo } precio Total: ${ row.costoTotal } foto: ${ row.foto } color ${ row.color || 'default'}`;
       texto+= `${ encodeURIComponent(`

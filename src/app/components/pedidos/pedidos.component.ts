@@ -21,8 +21,8 @@ import { CatalogoService } from 'src/app/servicesComponents/catalogo.service';
 export class PedidosComponent implements OnInit {
   @ViewChild('nav', { static: true }) ds: NgImageSliderComponent;
   sliderWidth: Number = 1204;
-  sliderImageWidth: Number = 211;
-  sliderImageHeight: Number = 44;
+  sliderImageWidth: Number = 1200;
+  sliderImageHeight: Number = 400;
   sliderArrowShow: Boolean = true;
   sliderInfinite: Boolean = false;
   sliderImagePopup: Boolean = true;
@@ -64,7 +64,21 @@ export class PedidosComponent implements OnInit {
   opcionCurrencys: any = {};
   afterMenu:any
   @ViewChild('toolbar',{static: false} ) private nav: any;
+  listBanner: any = [
+    {
+      id: 0,
+      title: "",
+      image: "./assets/imagenes/banner2.png",
+      thumbImage: "./assets/imagenes/banner2.png",
+    },
+    {
+      id: 1,
+      title: "",
+      image: "./assets/imagenes/banner2.png",
+      thumbImage: "./assets/imagenes/banner2.png",
+    },
 
+  ];
   constructor(
     private _productos: ProductoService,
     private _store: Store<CART>,
@@ -128,14 +142,16 @@ export class PedidosComponent implements OnInit {
     }
 
     setInterval(()=> {
-      //console.log( this.nav)
-      let color:string = ( this.dataUser.usu_color || "#02a0e3" );
-      if( this.userId.id ) {
-        //console.log("**NO ENTRE",this.userId)
-        color = this.userId.usu_color || "#02a0e3";
-      }
-      //console.log("***144",color, this.dataUser )
-      this.nav.nativeElement.style.backgroundColor = color;
+      try {
+        //console.log( this.nav)
+        let color:string = ( this.dataUser.usu_color || "#02a0e3" );
+        if( this.userId.id ) {
+          //console.log("**NO ENTRE",this.userId)
+          color = this.userId.usu_color || "#02a0e3";
+        }
+        //console.log("***144",color, this.dataUser )
+        this.nav.nativeElement.style.backgroundColor = color;
+      } catch (error) { }
     }, 1000 );
 
   }
@@ -440,6 +456,10 @@ export class PedidosComponent implements OnInit {
     let accion = new CartAction(data, 'post');
     this._store.dispatch(accion);
     this._tools.presentToast("Agregado al Carro");
+  }
+
+  async imageOnClick2(obj:any) {
+    //let data =  this.listProductosHistorial.find( (row:any )=> row.id == this.imageObject[obj].id);
   }
 
   imageOnClick(index: any, obj: any, opt:string ) {

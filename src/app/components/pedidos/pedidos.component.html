@@ -1,4 +1,4 @@
-<br><br>
+<!--<br><br>
 <div style="padding: 0 1px;">
   <div class="main-content">
     <div class="col-12">
@@ -22,42 +22,6 @@
     </div>
 
     <div class="row">
-     <!--   <div class="scrollmenu" style="    border-radius: 3px;" #toolbar1>
-          <a class="pointer" (click)="eventorOver( item )" *ngFor="let item of imageObject">
-            <button mat-button [matMenuTriggerFor]="afterMenu">
-              <span *ngIf="item.title =='TODOS'" (click)="imageOnClick(0, item, 'si');"> {{ item.title }} </span>
-              <span *ngIf="item.title !=='TODOS'"> {{ item.title }} </span>
-            </button>
-            <mat-menu #afterMenu="matMenu" xPosition="after" *ngFor="let key of item.subCategoria; let idx=index"
-              (click)="imageOnClick(idx, key, 'no');" [ngClass]="{ 'cambiaColor': key.check == true }"
-            >
-              <button mat-menu-item>
-                <h5 class="titulo3 estiloCategoria">{{ key.cat_nombre }}</h5>
-              </button>
-            </mat-menu>
-            <h5 class="titulo2 pointer" [ngClass]="{ 'cambiaColor': item.check == true }">
-              <span *ngIf="item.title =='TODOS'" (click)="imageOnClick(0, item, 'si');"> {{ item.title }} </span>
-              <span *ngIf="item.title !=='TODOS'"> {{ item.title }} </span>
-            </h5>
-          </a>
-        </div>
-      </div>-->
-      <!--<div class="col-12">
-        <div class="row" style="padding: 5px;">
-          <span class="catEstilo" *ngFor="let item of imageObject" (click)="eventorOver( item )">
-            <h5 class="titulo2 pointer" [ngClass]="{ 'cambiaColor': item.check == true }">
-              <span *ngIf="item.title =='TODOS'" (click)="imageOnClick(0, item, 'si');"> {{ item.title }} </span>
-              <span *ngIf="item.title !=='TODOS'"> {{ item.title }} </span>
-            </h5>
-            <ul *ngIf="item.check">
-              <label class="pointer" *ngFor="let key of item.subCategoria; let idx=index"
-                (click)="imageOnClick(idx, key, 'no');" [ngClass]="{ 'cambiaColor': key.check == true }">
-                <h5 class="titulo3 estiloCategoria">{{ key.cat_nombre }}</h5>
-              </label>
-            </ul>
-          </span>
-        </div>
-      </div>-->
       <div class="col-12" style="padding: 0px 10px;">
         <br><br>
         <div class="row g-3" *ngIf="listProductos">
@@ -110,13 +74,6 @@
                           </div>
                         </div>
                       </div>
-                      <!--<div class="bd-highlight">
-                        <select class="form-control form-control-sm" [(ngModel)]="item.tallasSelect">
-                              <option *ngFor="let row of item.listTallas" [value]="row.tal_descripcion">
-                                {{ row.tal_descripcion }}
-                              </option>
-                          </select>
-                      </div>-->
                     </div>
                   </div>
                 </div>
@@ -138,17 +95,6 @@
                   <div class="col-12 paddins1" *ngIf="rolname == 'vendedor'">
 
                   </div>
-                  <!--<div class="col-12">
-                    <div class="d-flex justify-content-between">
-                      <div>
-                        <img src="./assets/icons/descargar.png" style="width: 100%;" class="pointer"
-                          (click)="descargarFoto( item )">
-                      </div>
-                      <div style="width: 200%;">
-                        <img src="./assets/img/pago.png" style="width: 100%;">
-                      </div>
-                    </div>
-                  </div>-->
                 </div>
               </mat-card-actions>
             </mat-card>
@@ -172,6 +118,60 @@
       <div class="mx-auto" style="width: 200px;" *ngIf="listProductos.length === 0">
         No Hay Datos
       </div>
+    </div>
+  </div>
+</div>-->
+
+<div class="row" style="margin: 5px;">
+  <div class="col-12">
+    <div class="d-flex justify-content-center">
+      <div style="width: 80%;">
+        <ng-image-slider [images]="listBanner" [infinite]="sliderInfinite" [imagePopup]="sliderImagePopup"
+          [showArrow]="sliderArrowShow" [imageSize]="{width: sliderImageWidth, height: sliderImageHeight}"
+          [autoSlide]="sliderAutoSlide ? 1 : 0" [slideImage]="sliderSlideImage"
+          [animationSpeed]="sliderAnimationSpeed" (imageClick)="imageOnClick2($event)"
+          (arrowClick)="arrowOnClick($event)" (lightboxArrowClick)="lightboxArrowClick($event)" #nav>
+        </ng-image-slider>
+      </div>
+    </div>
+    <div class="d-flex justify-content-center">
+      <div>
+        <div>
+          <a class="pointer" style="    background: #02a0e3;
+            color: white;
+            padding: 5px;
+            border-radius: 5px;
+            margin: auto;
+            text-align: center;">
+            Registrate Gratis, Nosotros Nos Encargamos tu Solo Vende
+          </a>
+          <a class="pointer mat-elevation-z8" style="color: #60e300;     margin-left: 40px;     padding: 5px;">
+            Envío Contra Entrega Más Posibilidad de Concretar Ventas
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="col-12">
+    <div class="scrollmenu" style="    border-radius: 3px; text-align: center; background: white; color: black;">
+      <a class="pointer" (click)="SeleccionCategoria( item )" *ngFor="let item of imageObject" style="color: black !important;  width: 210px;">
+        <span><img src="./assets/imagenes/arrow-icon-01-2-12.png" alt="" style="width: 50%;"></span><br>
+        <span>{{ item.title }}</span>
+      </a>
+    </div>
+  </div>
+  <div class="col-12">
+    <h5>MAS VENDIDOS</h5>
+  </div>
+  <div class="col-12">
+    <div class="scrollmenu" style="    border-radius: 3px; text-align: center; background: white; color: black;">
+      <a class="pointer" (click)="SeleccionCategoria( item )" *ngFor="let item of imageObject" style="color: black !important;  width: 445px;">
+        <label for="">
+          <span><img src="./assets/img/producto.jpg" alt="" style="width: 50%;"></span><br>
+          <span>{{ item.title }}</span><br>
+          <span>Ver Más...</span>
+        </label>
+      </a>
     </div>
   </div>
 </div>
