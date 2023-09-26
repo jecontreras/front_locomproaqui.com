@@ -79,6 +79,115 @@ export class PedidosComponent implements OnInit {
     },
 
   ];
+  listNovedades:any = [
+    {
+      id: 1,
+      tipe: 1,
+      user:{
+        id: 1,
+        name: "Victor",
+        subtipe: "cliente premium",
+        foto: "./assets/noimagen.jpg"
+      },
+      titulo: "Productos mas Vendido",
+      subtitle: "",
+      foto: "./assets/imagenes/banner2.png",
+      article: [
+        {
+          id: 1,
+          foto: "./assets/imagenes/banner2.png",
+          title: "Adidas"
+        },
+        {
+          id: 2,
+          foto: "./assets/imagenes/banner2.png",
+          title: "Adidas"
+        },
+        {
+          id: 3,
+          foto: "./assets/imagenes/banner2.png",
+          title: "Adidas"
+        },
+        {
+          id: 4,
+          foto: "./assets/imagenes/banner2.png",
+          title: "Adidas"
+        },
+
+      ]
+    },
+    {
+      id: 2,
+      tipe: 2,
+      user:{
+        id: 1,
+        name: "Victor",
+        subtipe: "cliente premium",
+        foto: "./assets/noimagen.jpg"
+      },
+      titulo: "Productos Nuevos Con alto margen de ganancia",
+      foto: "./assets/imagenes/banner2.png",
+      subtitle: "",
+      article: [
+        {
+          id: 1,
+          foto: "./assets/imagenes/banner2.png",
+          title: "Adidas"
+        },
+        {
+          id: 2,
+          foto: "./assets/imagenes/banner2.png",
+          title: "Adidas"
+        },
+        {
+          id: 3,
+          foto: "./assets/imagenes/banner2.png",
+          title: "Adidas"
+        },
+        {
+          id: 4,
+          foto: "./assets/imagenes/banner2.png",
+          title: "Adidas"
+        },
+      ]
+    },
+    {
+      id: 3,
+      tipe: 3,
+      user:{
+        id: 1,
+        name: "Victor",
+        subtipe: "cliente premium",
+        foto: "./assets/noimagen.jpg"
+      },
+      titulo: "Nuevas capacitaciones ",
+      foto: "./assets/imagenes/banner2.png",
+      subtitle: "Lunes 25 de septiembre gran lanzamiento | que esperas entradas ilimitadas",
+      article: [
+        {
+          id: 1,
+          foto: "./assets/imagenes/banner2.png",
+          title: "Adidas"
+        },
+        {
+          id: 2,
+          foto: "./assets/imagenes/banner2.png",
+          title: "Adidas"
+        },
+        {
+          id: 3,
+          foto: "./assets/imagenes/banner2.png",
+          title: "Adidas"
+        },
+        {
+          id: 4,
+          foto: "./assets/imagenes/banner2.png",
+          title: "Adidas"
+        },
+      ]
+    },
+
+  ]
   constructor(
     private _productos: ProductoService,
     private _store: Store<CART>,

@@ -178,6 +178,32 @@
     <h5>NOVEDADES</h5>
   </div>
   <div class="col-12">
-
+    <div class="d-flex justify-content-center">
+      <div>
+        <div class="container">
+          <div class="row">
+            <div class="col-4 p-3" *ngFor="let item of listNovedades">
+              <div class="card mb-3" style="max-width: 18rem;">
+                <div class="card-header bg-transparent">
+                  <div class="d-flex flex-row bd-highlight mb-3">
+                    <div class="p-2 bd-highlight">
+                      <img [src]="item.user.foto" alt="" style="    width: 100px;">
+                    </div>
+                    <div class="p-2 bd-highlight" style="    margin: auto; margin-left: -10px;">
+                      Hola, {{ item['user']?.name }}
+                    </div>
+                  </div>
+                </div>
+                <div class="card-body text-success">
+                  <h5 class="card-title">Success card title</h5>
+                  <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+                </div>
+                <div class="card-footer bg-transparent">Footer</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
 </div>
