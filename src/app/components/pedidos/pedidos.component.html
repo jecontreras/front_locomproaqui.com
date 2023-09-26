@@ -153,53 +153,145 @@
     </div>
   </div>
   <div class="col-12">
-    <div class="scrollmenu" style="    border-radius: 3px; text-align: center; background: white; color: black;">
-      <a class="pointer" (click)="SeleccionCategoria( item )" *ngFor="let item of imageObject" style="color: black !important;  width: 210px;">
-        <span><img src="./assets/imagenes/arrow-icon-01-2-12.png" alt="" style="width: 50%;"></span><br>
-        <span>{{ item.title }}</span>
-      </a>
+    <div class="d-flex justify-content-center">
+      <div class="container">
+        <div class="col-12">
+          <div class="scrollmenu" style="    border-radius: 3px; text-align: center; background: white; color: black;">
+            <a class="pointer mat-elevation-z8" (click)="SeleccionCategoria( item )" *ngFor="let item of imageObject" style="color: black !important;  width: 210px;">
+              <span><img [src]="item.foto || './assets/imagenes/arrow-icon-01-2-12.png' " alt="" style="width: 50%;"></span><br>
+              <span>{{ item.title }}</span>
+            </a>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
   <div class="col-12">
-    <h5>MAS VENDIDOS</h5>
-  </div>
-  <div class="col-12">
-    <div class="scrollmenu" style="    border-radius: 3px; text-align: center; background: white; color: black;">
-      <a class="pointer" (click)="SeleccionCategoria( item )" *ngFor="let item of imageObject" style="color: black !important;  width: 445px;">
-        <label for="">
-          <span><img src="./assets/img/producto.jpg" alt="" style="width: 50%;"></span><br>
-          <span>{{ item.title }}</span><br>
-          <span>Ver Más...</span>
-        </label>
-      </a>
+    <div class="d-flex justify-content-center">
+      <div class="container">
+        <div class="col-12">
+          <h5>MAS VENDIDOS</h5>
+        </div>
+        <div class="col-12">
+          <div class="scrollmenu" style="    border-radius: 3px; text-align: center; background: white; color: black;">
+            <a class="pointer mat-elevation-z8" (click)="SeleccionCategoria( item )" *ngFor="let item of listProductSlider" style="color: black !important;  width: 200px;">
+              <label for="" style="    margin-left: -10px;">
+                <span><img [src]="item.foto" alt="" style="    width: 100%;  height: 90px;"></span><br>
+                <span>{{ item.pro_nombre }}</span><br>
+                <span>Ver Más...</span>
+              </label>
+            </a>
+          </div>
+        </div>
+      </div>
     </div>
-  </div>
-  <div class="col-12">
-    <h5>NOVEDADES</h5>
   </div>
   <div class="col-12">
     <div class="d-flex justify-content-center">
       <div>
         <div class="container">
           <div class="row">
-            <div class="col-4 p-3" *ngFor="let item of listNovedades">
-              <div class="card mb-3" style="max-width: 18rem;">
-                <div class="card-header bg-transparent">
-                  <div class="d-flex flex-row bd-highlight mb-3">
-                    <div class="p-2 bd-highlight">
-                      <img [src]="item.user.foto" alt="" style="    width: 100px;">
-                    </div>
-                    <div class="p-2 bd-highlight" style="    margin: auto; margin-left: -10px;">
-                      Hola, {{ item['user']?.name }}
+            <div class="col-12">
+              <h5>NOVEDADES</h5>
+            </div>
+            <div class="col-12 col-sm-4" *ngFor="let item of listNovedades">
+              <section style="    padding: 5%;" *ngIf="item.tipe === 1">
+                <div class="card mat-elevation-z8" style="width: 100%; padding: 10px;">
+                  <div class="card-header bg-transparent">
+                    <div class="d-flex flex-row bd-highlight mb-3">
+                      <div class="p-2 bd-highlight">
+                        <img [src]="item.user.foto" alt="" style="    width: 100px;">
+                      </div>
+                      <div class="p-2 bd-highlight" style="    margin: auto; margin-left: -10px;">
+                        <h6>Hola, {{ dataUser.usu_nombre }}</h6>
+                        <h6>{{ item['user']?.subtipe }} </h6>
+                      </div>
                     </div>
                   </div>
+                  <div class="card-body text-success">
+                    <h6 class="card-title">{{ item.title }} </h6>
+                    <section class="card-text">
+                      <div class="container">
+                        <div class="row">
+                          <div class="col-6" *ngFor="let key of item.article">
+                            <img style="    width: 100%;" [src]="key.foto" alt="">
+                            <h6 style="text-align: center;">{{ key.title }} </h6>
+                          </div>
+                        </div>
+                      </div>
+                    </section>
+                  </div>
                 </div>
-                <div class="card-body text-success">
-                  <h5 class="card-title">Success card title</h5>
-                  <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+              </section>
+
+              <section style="    padding: 5%;" *ngIf="item.tipe === 2">
+                <div class="card mat-elevation-z8" style="width: 100%; padding: 10px;" >
+                  <div class="card-header bg-transparent">
+                    <h5>{{ item.title }} </h5>
+                  </div>
+                  <div class="card-body text-success">
+                    <img [src]="item.foto" alt="" style="width: 100%;">
+                    <a class="pointer">Ver Mas</a>
+                  </div>
                 </div>
-                <div class="card-footer bg-transparent">Footer</div>
-              </div>
+              </section>
+
+              <section style="    padding: 5%;" *ngIf="item.tipe === 3">
+                <div class="card mat-elevation-z8" style="width: 100%; padding: 10px;">
+                  <div class="card-header bg-transparent">
+                    <h5>{{ item.title }} </h5>
+                    <p>{{ item.subtitle }} </p>
+                    <a class="pointer">link: clicleo aqui </a>
+                  </div>
+                </div>
+              </section>
+
+
+
+
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="col-12">
+    <div class="d-flex justify-content-center">
+      <div>
+        <div class="container">
+          <div class="row">
+            <div class="col-12">
+              <h5>ULTIMAS PUBLICACIONES DE PROVEEDORES</h5>
+            </div>
+            <div class="col-12 col-sm-4" *ngFor="let item of listPublicaciones">
+              <section style="    padding: 5%;" *ngIf="item.tipe === 1">
+                <div class="card mat-elevation-z8" style="width: 100%; padding: 10px;">
+                  <div class="card-header bg-transparent">
+                    <div class="d-flex flex-row bd-highlight mb-3">
+                      <div class="p-2 bd-highlight">
+                        <img [src]="item.user.foto" alt="" style="    width: 100px;">
+                      </div>
+                      <div class="p-2 bd-highlight" style="    margin: auto; margin-left: -10px;">
+                        <h6>Hola, {{ dataUser.usu_nombre }}</h6>
+                        <h6>{{ item['user']?.subtipe }} </h6>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="card-body text-success">
+                    <h6 class="card-title">{{ item.title }} </h6>
+                    <section class="card-text">
+                      <div class="container">
+                        <div class="row">
+                          <div class="col-6" *ngFor="let key of item.article">
+                            <img style="    width: 100%;" [src]="key.foto" alt="">
+                            <h6 style="text-align: center;">{{ key.title }} </h6>
+                          </div>
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </div>
+              </section>
             </div>
           </div>
         </div>
