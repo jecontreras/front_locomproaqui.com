@@ -56,7 +56,7 @@
               </li>
             </ul>
             <div class="col-12">
-              <button type="button" class="btn btn-primary" (click)="pedidosSubmit()">
+              <button type="button" class="btn btn-primary" (click)="articuloSubmit()">
                 <span *ngIf="dataUser.id">Realizar guía de despacho</span>
                 <span *ngIf="!dataUser.id">Hacer pedido</span>
               </button><br>
@@ -305,7 +305,7 @@
       <app-menu-lateral></app-menu-lateral>
     </nav>
     <div class="container">
-      <div class="d-flex justify-content-center" *ngIf="( dataUser.id || userPr.id ) && ( routName !== '/info' ) && ( routName !== '/infoSupplier' ) && ( routName !== '/portal' ) && ( routName !== '/registro' ) && ( routName !== '/login' ) ">
+      <div class="d-flex justify-content-center" *ngIf="( dataUser.id || userPr.id ) && ( routName !== '/info' ) && ( routName !== '/infoSupplier' ) && ( routName !== '/portal' ) && ( routName !== '/registro' ) && ( routName !== '/login' ) && ( routName !== '/articulo' ) ">
         <div style="width: 100%;">
           <div class="d-flex justify-content-around" *ngIf="rolUser1 != 'proveedor'">
             <div>
@@ -331,7 +331,7 @@
           </div>
         </div>
       </div>
-      <div class="d-flex justify-content-center" *ngIf="( routName !== '/info' ) && ( routName !== '/infoSupplier' ) && ( routName !== '/portal' ) && ( routName !== '/registro' ) && ( routName !== '/login' ) ">
+      <div class="d-flex justify-content-center" *ngIf="( routName !== '/info' ) && ( routName !== '/infoSupplier' ) && ( routName !== '/portal' ) && ( routName !== '/registro' ) && ( routName !== '/login' ) && ( routName !== '/articulo' ) ">
         <h2 *ngIf="dataUser.id" class="text-center text-dark altos titulo1">
           BIENVENIDO A TU OFICINA VIRTUAL " {{ dataUser.usu_usuario }} "
         </h2>

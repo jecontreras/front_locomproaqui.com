@@ -11,7 +11,7 @@ import { ProductoService } from 'src/app/servicesComponents/producto.service';
 import { UsuariosService } from 'src/app/servicesComponents/usuarios.service';
 import * as _ from 'lodash';
 import { NgImageSliderComponent } from 'ng-image-slider';
-import { BuscarAction, CartAction, UserCabezaAction } from 'src/app/redux/app.actions';
+import { BuscarAction, CartAction, CategoriaAction, UserCabezaAction } from 'src/app/redux/app.actions';
 import { ViewProductosComponent } from '../view-productos/view-productos.component';
 
 @Component({
@@ -22,12 +22,12 @@ import { ViewProductosComponent } from '../view-productos/view-productos.compone
 export class ArticuloComponent implements OnInit {
   @ViewChild('nav', { static: true }) ds: NgImageSliderComponent;
   sliderWidth: Number = 1204;
-  sliderImageWidth: Number = 211;
-  sliderImageHeight: Number = 44;
+  sliderImageWidth: Number = 1200;
+  sliderImageHeight: Number = 400;
   sliderArrowShow: Boolean = true;
-  sliderInfinite: Boolean = false;
+  sliderInfinite: Boolean = true;
   sliderImagePopup: Boolean = true;
-  sliderAutoSlide: Number = 1;
+  sliderAutoSlide: Number = 0;
   sliderSlideImage: Number = 1;
   sliderAnimationSpeed: any = 1;
   query: any = {
@@ -36,7 +36,7 @@ export class ArticuloComponent implements OnInit {
       pro_mp_venta: 0
     },
     page: 0,
-    limit: 18
+    limit: 54
   };
   seartxt: string = '';
   ultimoSeartxt:string = '';
@@ -63,7 +63,13 @@ export class ArticuloComponent implements OnInit {
   coinShop:boolean = false;
   titleButton:string = "Hacer pedido";
   opcionCurrencys: any = {};
-  id:string;
+  afterMenu:any
+  @ViewChild('toolbar',{static: false} ) private nav: any;
+  listProductSlider:any = [];
+  listBanner: any = [  ];
+  listNovedades:any = [];
+  listPublicaciones:any = [];
+
 
   constructor(
     private _productos: ProductoService,
@@ -87,6 +93,7 @@ export class ArticuloComponent implements OnInit {
       if( this.seartxt != store.buscar && store.buscar ) {
         this.seartxt = store.buscar;
       }
+      this.imageObject = store.categoria || [];
       if( this.dataUser.id ){
         try {
           if (this.dataUser.usu_perfil) {
@@ -104,9 +111,10 @@ export class ArticuloComponent implements OnInit {
     this.opcionCurrencys = this._tools.currency;
     let urlPath = window.location;
     const pr = urlPath.pathname.split("/");
-    //if( pr[1] && pr[2] && pr[3] ) this.getId( pr[3] )
-    console.log("****", urlPath, pr );
-    this.id = pr[2];
+    if( pr[1] && pr[2] && pr[3] ) this.getId( pr[3] )
+    console.log("****", urlPath );
+
+
     setInterval(()=> {
       try {
         let color:string = ( this.dataUser.usu_color || "#02a0e3" );
@@ -115,8 +123,30 @@ export class ArticuloComponent implements OnInit {
       } catch (error) {}
     }, 100 );
 
-    this.cargarProductos();
-    //this.getCategorias();
+    if ( ( this.activate.snapshot.paramMap.get('id') ) && ( ( this.activate.snapshot.paramMap.get('categoria') ) != '0') ) { this.userId = ( this.activate.snapshot.paramMap.get('id') ); this.getUser(); }
+    setInterval( ()=>{
+      //console.log( this.seartxt, this.ultimoSeartxt );
+      if( this.seartxt !== this.ultimoSeartxt ) this.buscar();
+    }, 1000 );
+    if( ( this.activate.snapshot.paramMap.get('categoria') ) === '0' ){
+      this.coinShop = true;
+      this.titleButton = "Hacer Compra";
+      this.cargarProductos();
+    }
+
+    setInterval(()=> {
+      try {
+        //console.log( this.nav)
+        let color:string = ( this.dataUser.usu_color || "#02a0e3" );
+        if( this.userId.id ) {
+          //console.log("**NO ENTRE",this.userId)
+          color = this.userId.usu_color || "#02a0e3";
+        }
+        //console.log("***144",color, this.dataUser )
+        this.nav.nativeElement.style.backgroundColor = color;
+      } catch (error) { }
+    }, 1000 );
+
   }
 
   getId( id:string ){
@@ -187,6 +217,27 @@ export class ArticuloComponent implements OnInit {
     }
   }
 
+  getListInitProduct(){
+    this._productos.getListInit( { } ).subscribe( res => {
+      console.log( res.data )
+      this.listPublicaciones = res.data;
+    })
+  }
+
+  getListInitNews(){
+    this._productos.getListgetNews( { } ).subscribe( res => {
+      console.log( res.data )
+      this.listNovedades = res.data;
+    })
+  }
+
+  getListInitBanner(){
+    this._productos.getListgetBanner( { } ).subscribe( res => {
+      console.log( res.data )
+      this.listBanner = res.data;
+    })
+  }
+
   pageEvent(ev: any) {
     this.query.page = ev.pageIndex;
     this.query.limit = ev.pageSize;
@@ -197,7 +248,14 @@ export class ArticuloComponent implements OnInit {
   nextConsulta() {
     if (this.idCategoria) this.query.where.pro_categoria = this.idCategoria;
     this.getCategorias();
+    this.getListInitProduct();
+    this.getListInitNews();
+    this.getListInitBanner();
     setTimeout(()=> this.cargarProductos(), 1000 )
+  }
+
+  handleOpenCheckIn( ){
+    this._router.navigate(['/registro']);
   }
 
   getUser() {
@@ -208,40 +266,67 @@ export class ArticuloComponent implements OnInit {
       if( this.userId ) this.GuardarStoreUser()
     }, (error) => { console.error(error); this.userId = ''; });
   }
+
   GuardarStoreUser() {
     let accion = new UserCabezaAction(this.userId, 'post');
     this._store.dispatch(accion);
   }
+
   getCategorias() {
     this._categorias.get({ where: { cat_activo: 0, cat_padre: null }, limit: 1000 }).subscribe( async (res: any) => {
-      this.imageObject = [];
+      //this.imageObject = [];
       for (let row of res.data) {
         let datos: any = {
           id: row.id,
           title: row.cat_nombre,
+          foto: row.foto || './assets/categoria.jpeg',
           subCategoria: await this.getSubcategoria( row.id )
         };
         if (row.id == this.idCategoria) datos.check = true;
-        this.imageObject.push(datos);
+        let idx = _.findIndex(this.imageObject, [ 'id', datos.id ]);
+        if( idx == -1 ) this.imageObject.push(datos);
+        else {
+          this.imageObject[idx]= datos;
+        }
       }
       this.imageObject.unshift({
         id: 0,
         title: "TODOS",
+        foto: "./assets/logo.png",
         subCategoria: []
       });
       console.log( this.imageObject );
+      for( let row of this.imageObject ){
+        let accion = new CategoriaAction(row, 'post');
+        this._store.dispatch( accion );
+      }
+      this.imageObject = ( _.unionBy( this.imageObject || [], this.imageObject, 'id' ) ) || [];
     });
   }
 
   eventorOver( item:any ){
-    console.log( item )
+    //console.log( item )
     item.check = !item.check;
     for( let row of this.imageObject ) { if( row.id != item.id ) row.check = false; }
-    this.query.where.pro_categoria = item.id;
-    this.listProductos = [];
-    this.cargarProductos();
-    //this._router.navigate( [ "/articulo/"+this.id , item['id'] ] );
+    if( item.subCategoria.length === 0 ) this._router.navigate( [ "/pedido", item['id'] ] );
   }
+
+  SeleccionCategoria( obj:any ){
+    //this.query = { where:{ pro_activo: 0 }, page: 0, limit: 10 };
+    this.query.page = 0;
+    this.query.limit = 0;
+    this.query.where.pro_activo = 0;
+    this.query.where.idPrice = this.query.where.idPrice;
+    if( obj.id ) this.query.where.pro_categoria = obj.id;
+    this.listProductos = [];
+    this.loader = true;
+    this._router.navigate( [ "/pedido", obj['id'] ] );
+  }
+
+  handleSelectArticle( obj:any ){
+    this.agregar( obj );
+  }
+
 
   eventoDes( item:any ){
     for( let row of this.imageObject ) row.check = false;
@@ -261,14 +346,15 @@ export class ArticuloComponent implements OnInit {
     this.loader = true;
     //console.log( this.ultimoSeartxt );
     if( this.dataUser.id ) this.query.where.user = this.dataUser.id;
-    this.query.where.pro_usu_creacion = 100000;
+    //this.query.where.pro_usu_creacion = 100000;
     if( this.dataUser.id ) this.query.where.idPrice = this.dataUser.id;
     this._productos.get(this.query).subscribe((res: any) => {
       console.log("res", res);
       this.loader = false;
       this.counts = res.count;
       this.spinner.hide();
-      this.listProductos = _.unionBy( this.listProductos || [], res.data, 'id' );
+      this.listProductos = ( _.unionBy( this.listProductos || [], res.data, 'id' ) ) || [];
+      this.listProductSlider = this.listProductos;
       try {
         this.listTallas = this.listProductos[0].listaTallas;
       } catch (error) { }
@@ -330,7 +416,6 @@ export class ArticuloComponent implements OnInit {
   }
   agregar(obj) {
     obj.coinShop = this.coinShop;
-    obj.disabledBtn = true;
     const dialogRef = this.dialog.open(ViewProductosComponent, {
       width: '100%',
       maxHeight: "700%",
@@ -346,7 +431,7 @@ export class ArticuloComponent implements OnInit {
     let cerialNumero: any = '';
     let numeroSplit: any;
     let cabeza: any = this.dataUser.cabeza;
-    if (!obj.tallasSelect) return this._tools.tooast({ title: "Por Favor debes seleccionar una talla", icon: "warning" });
+    //if (!obj.tallasSelect) return this._tools.tooast({ title: "Por Favor debes seleccionar una talla", icon: "warning" });
     if (cabeza) {
       numeroSplit = _.split(cabeza.usu_telefono, "+57", 2);
       if (numeroSplit[1]) cabeza.usu_telefono = numeroSplit[1];
@@ -399,6 +484,10 @@ export class ArticuloComponent implements OnInit {
     let accion = new CartAction(data, 'post');
     this._store.dispatch(accion);
     this._tools.presentToast("Agregado al Carro");
+  }
+
+  async imageOnClick2(obj:any) {
+    //let data =  this.listProductosHistorial.find( (row:any )=> row.id == this.imageObject[obj].id);
   }
 
   imageOnClick(index: any, obj: any, opt:string ) {
@@ -504,4 +593,5 @@ export class ArticuloComponent implements OnInit {
   }
 
 }
+
 

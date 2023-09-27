@@ -24,9 +24,9 @@ export class PedidosComponent implements OnInit {
   sliderImageWidth: Number = 1200;
   sliderImageHeight: Number = 400;
   sliderArrowShow: Boolean = true;
-  sliderInfinite: Boolean = false;
+  sliderInfinite: Boolean = true;
   sliderImagePopup: Boolean = true;
-  sliderAutoSlide: Number = 1;
+  sliderAutoSlide: Number = 0;
   sliderSlideImage: Number = 1;
   sliderAnimationSpeed: any = 1;
   query: any = {
@@ -65,268 +65,11 @@ export class PedidosComponent implements OnInit {
   afterMenu:any
   @ViewChild('toolbar',{static: false} ) private nav: any;
   listProductSlider:any = [];
-  listBanner: any = [
-    {
-      id: 0,
-      title: "",
-      image: "./assets/imagenes/banner2.png",
-      thumbImage: "./assets/imagenes/banner2.png",
-    },
-    {
-      id: 1,
-      title: "",
-      image: "./assets/imagenes/banner2.png",
-      thumbImage: "./assets/imagenes/banner2.png",
-    },
+  listBanner: any = [  ];
+  listNovedades:any = [];
+  listPublicaciones:any = [];
 
-  ];
-  listNovedades:any = [
-    {
-      id: 1,
-      tipe: 1,
-      user:{
-        id: 1,
-        name: "Victor",
-        subtipe: "cliente premium",
-        foto: "./assets/noimagen.jpg"
-      },
-      title: "Productos mas Vendido",
-      subtitle: "",
-      foto: "./assets/imagenes/banner2.png",
-      article: [
-        {
-          id: 1,
-          foto: "./assets/noimagen.jpg",
-          title: "Adidas"
-        },
-        {
-          id: 2,
-          foto: "./assets/noimagen.jpg",
-          title: "Adidas"
-        },
-        {
-          id: 3,
-          foto: "./assets/noimagen.jpg",
-          title: "Adidas"
-        },
-        {
-          id: 4,
-          foto: "./assets/noimagen.jpg",
-          title: "Adidas"
-        }
-      ]
-    },
-    {
-      id: 2,
-      tipe: 2,
-      user:{
-        id: 1,
-        name: "Victor",
-        subtipe: "cliente premium",
-        foto: "./assets/noimagen.jpg"
-      },
-      title: "Productos Nuevos Con alto margen de ganancia",
-      foto: "./assets/imagenes/arrow-icon-01-1-2.png",
-      subtitle: "",
-      article: [
-        {
-          id: 1,
-          foto: "./assets/noimagen.jpg",
-          title: "Adidas"
-        },
-        {
-          id: 2,
-          foto: "./assets/noimagen.jpg",
-          title: "Adidas"
-        },
-        {
-          id: 3,
-          foto: "./assets/noimagen.jpg",
-          title: "Adidas"
-        },
-        {
-          id: 4,
-          foto: "./assets/noimagen.jpg",
-          title: "Adidas"
-        }
-      ]
-    },
-    {
-      id: 3,
-      tipe: 3,
-      user:{
-        id: 1,
-        name: "Victor",
-        subtipe: "cliente premium",
-        foto: "./assets/noimagen.jpg"
-      },
-      title: "Nuevas capacitaciones ",
-      foto: "./assets/imagenes/banner2.png",
-      subtitle: "Lunes 25 de septiembre gran lanzamiento | que esperas entradas ilimitadas",
-      article: [
-        {
-          id: 1,
-          foto: "./assets/noimagen.jpg",
-          title: "Adidas"
-        },
-        {
-          id: 2,
-          foto: "./assets/noimagen.jpg",
-          title: "Adidas"
-        },
-        {
-          id: 3,
-          foto: "./assets/noimagen.jpg",
-          title: "Adidas"
-        },
-        {
-          id: 4,
-          foto: "./assets/noimagen.jpg",
-          title: "Adidas"
-        }
-      ]
-    },
 
-  ];
-  listPublicaciones:any = [
-    {
-      id: 1,
-      tipe: 1,
-      user:{
-        id: 1,
-        name: "Victor",
-        subtipe: "cliente premium",
-        foto: "./assets/noimagen.jpg"
-      },
-      title: "Productos mas Vendido",
-      subtitle: "",
-      foto: "./assets/imagenes/banner2.png",
-      article: [
-        {
-          id: 1,
-          foto: "./assets/noimagen.jpg",
-          title: "Adidas"
-        },
-        {
-          id: 2,
-          foto: "./assets/noimagen.jpg",
-          title: "Adidas"
-        },
-        {
-          id: 3,
-          foto: "./assets/noimagen.jpg",
-          title: "Adidas"
-        },
-        {
-          id: 4,
-          foto: "./assets/noimagen.jpg",
-          title: "Adidas"
-        }
-      ]
-    },{
-      id: 2,
-      tipe: 1,
-      user:{
-        id: 1,
-        name: "Victor",
-        subtipe: "cliente premium",
-        foto: "./assets/noimagen.jpg"
-      },
-      title: "Productos mas Vendido",
-      subtitle: "",
-      foto: "./assets/imagenes/banner2.png",
-      article: [
-        {
-          id: 1,
-          foto: "./assets/noimagen.jpg",
-          title: "Adidas"
-        },
-        {
-          id: 2,
-          foto: "./assets/noimagen.jpg",
-          title: "Adidas"
-        },
-        {
-          id: 3,
-          foto: "./assets/noimagen.jpg",
-          title: "Adidas"
-        },
-        {
-          id: 4,
-          foto: "./assets/noimagen.jpg",
-          title: "Adidas"
-        }
-      ]
-    },{
-      id: 3,
-      tipe: 1,
-      user:{
-        id: 1,
-        name: "Victor",
-        subtipe: "cliente premium",
-        foto: "./assets/noimagen.jpg"
-      },
-      title: "Productos mas Vendido",
-      subtitle: "",
-      foto: "./assets/imagenes/banner2.png",
-      article: [
-        {
-          id: 1,
-          foto: "./assets/noimagen.jpg",
-          title: "Adidas"
-        },
-        {
-          id: 2,
-          foto: "./assets/noimagen.jpg",
-          title: "Adidas"
-        },
-        {
-          id: 3,
-          foto: "./assets/noimagen.jpg",
-          title: "Adidas"
-        },
-        {
-          id: 4,
-          foto: "./assets/noimagen.jpg",
-          title: "Adidas"
-        }
-      ]
-    },{
-      id: 5,
-      tipe: 1,
-      user:{
-        id: 1,
-        name: "Victor",
-        subtipe: "cliente premium",
-        foto: "./assets/noimagen.jpg"
-      },
-      title: "Productos mas Vendido",
-      subtitle: "",
-      foto: "./assets/imagenes/banner2.png",
-      article: [
-        {
-          id: 1,
-          foto: "./assets/noimagen.jpg",
-          title: "Adidas"
-        },
-        {
-          id: 2,
-          foto: "./assets/noimagen.jpg",
-          title: "Adidas"
-        },
-        {
-          id: 3,
-          foto: "./assets/noimagen.jpg",
-          title: "Adidas"
-        },
-        {
-          id: 4,
-          foto: "./assets/noimagen.jpg",
-          title: "Adidas"
-        }
-      ]
-    },
-  ];
   constructor(
     private _productos: ProductoService,
     private _store: Store<CART>,
@@ -369,6 +112,7 @@ export class PedidosComponent implements OnInit {
     const pr = urlPath.pathname.split("/");
     if( pr[1] && pr[2] && pr[3] ) this.getId( pr[3] )
     console.log("****", urlPath );
+
 
     setInterval(()=> {
       try {
@@ -472,6 +216,27 @@ export class PedidosComponent implements OnInit {
     }
   }
 
+  getListInitProduct(){
+    this._productos.getListInit( { } ).subscribe( res => {
+      console.log( res.data )
+      this.listPublicaciones = res.data;
+    })
+  }
+
+  getListInitNews(){
+    this._productos.getListgetNews( { } ).subscribe( res => {
+      console.log( res.data )
+      this.listNovedades = res.data;
+    })
+  }
+
+  getListInitBanner(){
+    this._productos.getListgetBanner( { } ).subscribe( res => {
+      console.log( res.data )
+      this.listBanner = res.data;
+    })
+  }
+
   pageEvent(ev: any) {
     this.query.page = ev.pageIndex;
     this.query.limit = ev.pageSize;
@@ -482,7 +247,14 @@ export class PedidosComponent implements OnInit {
   nextConsulta() {
     if (this.idCategoria) this.query.where.pro_categoria = this.idCategoria;
     this.getCategorias();
+    this.getListInitProduct();
+    this.getListInitNews();
+    this.getListInitBanner();
     setTimeout(()=> this.cargarProductos(), 1000 )
+  }
+
+  handleOpenCheckIn( ){
+    this._router.navigate(['/registro']);
   }
 
   getUser() {
@@ -548,6 +320,10 @@ export class PedidosComponent implements OnInit {
     this.listProductos = [];
     this.loader = true;
     this._router.navigate( [ "/pedido", obj['id'] ] );
+  }
+
+  handleSelectArticle( obj:any ){
+    this.agregar( obj );
   }
 
 

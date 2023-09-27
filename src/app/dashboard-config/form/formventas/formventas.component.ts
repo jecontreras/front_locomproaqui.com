@@ -150,8 +150,10 @@ export class FormventasComponent implements OnInit {
     this.progreses = false;
     this.disableSpinner = false;
     this.disabledButton = false;
-    console.log(  this.listCarrito[0].coinShop )
-    if( this.listCarrito[0].coinShop == true ){ this.coinShop = this.listCarrito[0].coinShop; this.changeCity();}
+    try {
+      console.log(  this.listCarrito[0].coinShop )
+      if( this.listCarrito[0].coinShop == true ){ this.coinShop = this.listCarrito[0].coinShop; this.changeCity();}
+    } catch (error) { }
     await this.getCiudades();
     this.listCiudades = this.listCiudades.filter( ( row:any )=> row.code > 0 );
     //this.listValidar();

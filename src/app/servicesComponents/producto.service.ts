@@ -31,6 +31,15 @@ export class ProductoService {
   delete(query:any){
     return this._model.querys('tblproductos/'+query.id, query, 'delete');
   }
+  getListInit(query:any){
+    return this._model.querys('tblproductos/getInit',query, 'post');
+  }
+  getListgetNews(query:any){
+    return this._model.querys('tblproductos/getNews',query, 'post');
+  }
+  getListgetBanner(query:any){
+    return this._model.querys('tblproductos/getBanners',query, 'post');
+  }
   ordenar(query:any){
     return this._model.querys('tblproductos/ordenar', query, 'post');
   }

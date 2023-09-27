@@ -919,4 +919,14 @@ export class HeaderComponent implements OnInit {
     }
   }
 
+  articuloSubmit(){
+    const dialogRef = this.dialog.open(FormventasComponent,{
+      data: {datos: {}}
+    });
+
+    dialogRef.afterClosed().subscribe( async ( result ) => {
+      console.log(`Dialog result: ${result}`);
+    });
+  }
+
 }
