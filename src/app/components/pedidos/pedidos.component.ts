@@ -20,9 +20,9 @@ import { CatalogoService } from 'src/app/servicesComponents/catalogo.service';
 })
 export class PedidosComponent implements OnInit {
   @ViewChild('nav', { static: true }) ds: NgImageSliderComponent;
-  sliderWidth: Number = 1204;
-  sliderImageWidth: Number = 1200;
-  sliderImageHeight: Number = 400;
+  sliderWidth: Number = 1000;
+  sliderImageWidth: Number = 1500;
+  sliderImageHeight: Number = 360;
   sliderArrowShow: Boolean = true;
   sliderInfinite: Boolean = true;
   sliderImagePopup: Boolean = true;
@@ -589,6 +589,10 @@ export class PedidosComponent implements OnInit {
       this._tools.presentToast("Actualizado el precio...!");
       this.disabledBtn = false;
     },()=> this.disabledBtn = false );
+  }
+
+  handleOpenStore( item ){
+    this._router.navigate( [ "/listproduct", item['user']['usu_usuario'] ] );
   }
 
 }

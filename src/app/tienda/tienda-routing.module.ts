@@ -11,6 +11,7 @@ import { InfoComponent } from '../layout/info/info.component';
 import { InfoSupplierComponent } from '../layout/info-supplier/info-supplier.component';
 import { PortalComponent } from '../layout/portal/portal.component';
 import { SignUpComponent } from '../layout/sign-up/sign-up.component';
+import { ListArticleComponent } from '../components/list-article/list-article.component';
 
 const routes: Routes = [
   {
@@ -33,6 +34,9 @@ const routes: Routes = [
       { path: 'info', component: InfoComponent },
       { path: 'infoSupplier', component: InfoSupplierComponent },
       { path: 'portal', component: PortalComponent },
+      {path: 'listproduct/:idStore', component: ListArticleComponent },
+      {path: 'listproduct/:id', component: ListArticleComponent },
+      {path: 'listproduct', component: ListArticleComponent },
     ]
   },
   {

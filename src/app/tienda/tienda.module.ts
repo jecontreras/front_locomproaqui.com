@@ -31,6 +31,7 @@ import { ContadorShippingComponent } from '../layout/contador-shipping/contador-
 import { PortalComponent } from '../layout/portal/portal.component';
 import { ListmenuComponent } from '../layout/listmenu/listmenu.component';
 import { SignUpComponent } from '../layout/sign-up/sign-up.component';
+import { ListArticleComponent } from '../components/list-article/list-article.component';
 
 
 @NgModule({
@@ -61,7 +62,8 @@ import { SignUpComponent } from '../layout/sign-up/sign-up.component';
     ContadorShippingComponent,
     PortalComponent,
     ListmenuComponent,
-    SignUpComponent
+    SignUpComponent,
+    ListArticleComponent
 
   ],
   imports: [

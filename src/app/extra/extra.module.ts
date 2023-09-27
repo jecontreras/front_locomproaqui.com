@@ -17,6 +17,7 @@ import { NgxSpinnerModule } from 'ngx-spinner';
 import { AutocompleteLibModule } from 'angular-ng-autocomplete';
 import { InfiniteScrollModule } from 'ngx-infinite-scroll';
 import { OpenIframeComponent } from './open-iframe/open-iframe.component';
+import { ListArticleStoreComponent } from './list-article-store/list-article-store.component';
 
 @NgModule({
   entryComponents:[
@@ -34,7 +35,8 @@ import { OpenIframeComponent } from './open-iframe/open-iframe.component';
     AlertaGanadorComponent,
     ImprimirTarjetaComponent,
     TableProductComponent,
-    OpenIframeComponent
+    OpenIframeComponent,
+    ListArticleStoreComponent
   ],
   imports: [
     MyOwnCustomMaterialModule,
@@ -53,7 +55,8 @@ import { OpenIframeComponent } from './open-iframe/open-iframe.component';
     FooterComponent,
     MenuLateralComponent,
     ImprimirTarjetaComponent,
-    TableProductComponent
+    TableProductComponent,
+    ListArticleStoreComponent
   ]
 })
 export class ExtraModule { }

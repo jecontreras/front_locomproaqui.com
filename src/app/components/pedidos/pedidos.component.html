@@ -139,7 +139,7 @@
     <div class="d-flex justify-content-center">
       <div class="container">
         <div class="col-12">
-          <div class="scrollmenu" style="    border-radius: 3px; text-align: center; background: white; color: black;">
+          <div class="scrollmenu contenedor" style="    border-radius: 3px; text-align: center; background: white; color: black;">
             <a class="pointer mat-elevation-z8" (click)="SeleccionCategoria( item )" *ngFor="let item of imageObject" style="color: black !important;  width: 210px;">
               <span>
                 <figure class="figure">
@@ -157,20 +157,30 @@
   <div class="col-12" style="    margin-top: 20px;">
     <div class="d-flex justify-content-center">
       <div>
-        <div>
-          <a class="pointer" style="    background: #02a0e3;
-            color: white;
+        <div class="row" style="
+        width: 102%;">
+          <div class="col-12 col-sm-6">
+            <a class="pointer" style="    background: #02a0e3;
+              color: white;
+              padding: 5px;
+              border-radius: 5px;
+              margin: auto;
+              text-align: center;"
+              (click)="handleOpenCheckIn()"
+              >
+              Registrate Gratis, Nosotros Nos Encargamos tu Solo Vende
+            </a>
+          </div>
+          <div class="col-12 col-sm-6">
+            <a class="pointer mat-elevation-z8" style="color: #60e300;
             padding: 5px;
             border-radius: 5px;
             margin: auto;
-            text-align: center;"
-            (click)="handleOpenCheckIn()"
-            >
-            Registrate Gratis, Nosotros Nos Encargamos tu Solo Vende
-          </a>
-          <a class="pointer mat-elevation-z8" style="color: #60e300;     margin-left: 40px;     padding: 5px;">
-            Envío Contra Entrega Más Posibilidad de Concretar Ventas
-          </a><br>
+            text-align: center;">
+              Envío Contra Entrega Más Posibilidad de Concretar Ventas
+            </a>
+          </div>
+          <br>
         </div>
       </div>
     </div>
@@ -182,17 +192,22 @@
           <h5>MAS VENDIDOS</h5>
         </div>
         <div class="col-12">
-          <div class="scrollmenu" style="    border-radius: 3px; text-align: center; background: white; color: black;">
-            <a class="pointer mat-elevation-z8" (click)="handleSelectArticle( item )" *ngFor="let item of listProductSlider" style="color: black !important;  width: 200px;">
+          <div class="scrollmenu contenedor" style="    border-radius: 3px; text-align: center; background: white; color: black;">
+            <a class="pointer mat-elevation-z8" (click)="handleSelectArticle( item )" *ngFor="let item of listProductSlider" style="
+              color: black !important;  width: 200px;
+              border: 1px solid #c5c5c5;
+              border-radius: 15px;
+              margin: 5px;
+              ">
               <label for="" style="    margin-left: -10px;">
                 <span>
                   <figure class="figure pointer">
-                    <img [src]="item.foto" alt="" style="    width: 100px;     max-height: 97px;
-                    min-height: 97px;" class="rounded">
+                    <img [src]="item.foto" alt="" style="    width: 160px;     max-height: 165px;
+                    min-height: 165px;" class="rounded">
                   </figure>
                 </span><br>
                 <span>{{ item.pro_nombre }}</span><br>
-                <span>Ver Más...</span>
+                <span class="text-primary pointer" [routerLink]="[ '/listproduct' ]">Ver Más...</span>
               </label>
             </a>
           </div>
@@ -313,7 +328,7 @@
                           </div>
                           <div class="col-12" style="    margin: 16px 0;">
                             <p style="    text-align: center; font-size: 10px;     margin-bottom: 10px;">{{ item.title }} </p>
-                            <button class="btn btn-primary" type="button" style="    width: 100% !important;
+                            <button (click)="handleOpenStore( item )" class="btn btn-primary" type="button" style="    width: 100% !important;
                               padding: 10px;">Vender Este Producto</button>
                           </div>
                         </div>
@@ -322,6 +337,13 @@
                   </div>
                 </div>
               </section>
+            </div>
+            <div class="col-12">
+              <div class="d-flex justify-content-center">
+                <div>
+                  <a [routerLink]="[ '/listproduct' ]" class="pointer text-primary">VER MÁS PUBLICACIONES </a>
+                </div>
+              </div>
             </div>
           </div>
         </div>

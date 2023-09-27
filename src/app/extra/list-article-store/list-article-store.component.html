@@ -1,0 +1,78 @@
+<div class="container">
+  <div class="row">
+    <div class="col-12" *ngIf="dataStore.id">
+      <ul class="aa-review-nav">
+        <li>
+          <div class="media">
+            <div class="media-left">
+              <a href="#">
+                <img class="media-object" style="width: 155px; margin-top: 26px; margin-right: 15px;" [src]="dataStore.usu_imagen" alt="girl image">
+              </a>
+            </div>
+            <div class="media-body">
+              <h4 class="media-heading"><strong>{{ dataStore.usu_usuario }}</strong> </h4>
+              <p> Email: {{ dataStore.usu_email }} </p>
+              <p> Celular: {{ dataStore.usu_telefono }} </p>
+              <p> Ciudad: {{ dataStore.usu_ciudad }} </p>
+            </div>
+          </div>
+        </li>
+      </ul>
+    </div>
+    <div class="col-12">
+      <nav class="navbar navbar-light bg-light">
+        <a class="navbar-brand">Articulo de Bodega {{ dataStore.usu_usuario }} </a>
+        <div class="form-inline">
+          <input class="form-control mr-sm-2" type="search" placeholder="Buscar" aria-label="Buscar" [(ngModel)]="filter.txt" (change)="handleSearch()">
+          <button class="btn btn-outline-success my-2 my-sm-0" type="submit" (click)="handleSearch()">Buscar</button>
+        </div>
+      </nav>
+    </div>
+    <div class="col-12">
+      <div class="row">
+        <div class="col-12">
+          <div class="scrollmenu" style="    border-radius: 3px;">
+            <a class="pointer" (click)="handleCategorySearch( item )" *ngFor="let item of listCategory"
+              [ngClass]="{ 'cambiaColor': item.check == true }"
+            >{{ item.title }} </a>
+          </div>
+        </div>
+        <div class="col-md-3 col-sm-4 col-lg-2 col-xs-6 col-6 anchandoPr" *ngFor="let row of listArticle" (click)="handleArticle( row )">
+          <mat-card class="example-card">
+            <mat-card-header>
+              <mat-card-subtitle>{{ row.pro_nombre | slice: 0: 15 }} </mat-card-subtitle>
+            </mat-card-header>
+            <figure mat-card-image data-toggle="modal" id="figura" data-target="#modalinfo" class="img-contenedor">
+              <img class="img-responsive btn-block imgProductos pointer " [src]="row.foto">
+            </figure>
+            <small style="display: inline-block;  font-size: 90% !important;" class="pricesmall currency2"
+              id="pricesmall_25">
+              {{ _tools.monedaChange( 3, 2, ( row.pro_vendedorCompra || row.pro_uni_venta || 0 ) ) }}
+            </small>
+            <mat-card-actions>
+              <button type="button" data-toggle="tooltip" data-placement="right" style="width: 100%;"
+                class="sc-logout btn btn-success btn-sm pull-right buttonAncho"
+                [ngStyle]="{'background-color':urlColor }"
+                data-original-title="Ver Articulo">Ver Articulo
+              </button>
+            </mat-card-actions>
+          </mat-card>
+        </div>
+        <div class="col-12">
+          <div class="d-flex flex-row-reverse bd-highlight">
+            <div class="p-2 bd-highlight">
+              <mat-paginator [length]="counts" [pageSizeOptions]="[10, 25, 100]"
+                  (page)="onScroll($event)">
+              </mat-paginator>
+            </div>
+          </div>
+        </div>
+        <div class="col-12">
+          <ngx-spinner bdOpacity=0.9 bdColor="" size="default" color="#581f87" type="ball-pulse-sync"
+            [fullScreen]="false">
+          </ngx-spinner>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

@@ -78,8 +78,9 @@ mat-sidenav {
 }
 
 .example-viewport {
-  height: 555px;
+  max-height: 820px;
   width: 100%;
+  min-height: 806px;
 }
 
 .example-item {
@@ -267,24 +268,24 @@ h1.example-app-name {
 }
 
 #mCSB_1{
-  box-sizing: border-box; 
-  direction: ltr; 
-  height: 937px; 
-  max-height: none; 
-  max-width: 100%; 
-  outline: 0px; 
-  overflow: hidden; 
+  box-sizing: border-box;
+  direction: ltr;
+  height: 937px;
+  max-height: none;
+  max-width: 100%;
+  outline: 0px;
+  overflow: hidden;
   position: relative;
 }
 
 #mCSB_1_container{
-  box-sizing: border-box; 
-  height: auto; 
-  left: 0px; 
-  margin-right: 0px; 
-  overflow: hidden; 
-  position: relative; 
-  top: 0px; 
+  box-sizing: border-box;
+  height: auto;
+  left: 0px;
+  margin-right: 0px;
+  overflow: hidden;
+  position: relative;
+  top: 0px;
   width: auto;
 }
 
@@ -318,14 +319,14 @@ h1.example-app-name {
 }
 
 #lista{
-  background: rgb(109, 127, 204); 
-  box-sizing: border-box; 
-  color: white; 
-  display: block; 
-  font-size: 1.1em; 
-  padding: 10px; 
-  position: relative; 
-  text-decoration-line: none; 
+  background: rgb(109, 127, 204);
+  box-sizing: border-box;
+  color: white;
+  display: block;
+  font-size: 1.1em;
+  padding: 10px;
+  position: relative;
+  text-decoration-line: none;
   transition: all 0.3s ease 0s;
 
 }

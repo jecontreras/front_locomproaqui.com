@@ -10,6 +10,7 @@ import { MyOwnCustomMaterialModule } from 'src/app/app.material.module';
 import { FormsModule } from '@angular/forms';
 import { NgxSpinnerModule } from 'ngx-spinner';
 import { InfiniteScrollModule } from 'ngx-infinite-scroll';
+import { ExtraModule } from 'src/app/extra/extra.module';
 
 
 
@@ -23,6 +24,7 @@ import { InfiniteScrollModule } from 'ngx-infinite-scroll';
   ],
   imports: [
     CommonModule,
+    ExtraModule,
     FormsModule,
     NgxSpinnerModule,
     MyOwnCustomMaterialModule,

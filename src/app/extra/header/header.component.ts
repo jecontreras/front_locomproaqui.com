@@ -429,7 +429,7 @@ export class HeaderComponent implements OnInit {
         icons: 'home',
         nombre: 'Inicio',
         disable: true,
-        url: '/pedidos',
+        url: '/articulo',
         submenus:[]
       },
       {
@@ -729,6 +729,7 @@ export class HeaderComponent implements OnInit {
     if( item.submenus ) if( item.submenus.length >0 ) return false;
     if( item.opt ) this.router.navigate(item.url);
     else this.router.navigate([ item.url ]);
+    //this.drawer.toggle();
 
   }
 
