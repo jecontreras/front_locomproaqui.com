@@ -124,31 +124,28 @@
 
 <div class="row" style="margin: 5px;">
   <div class="col-12">
-    <div class="d-flex justify-content-center">
-      <div style="width: 80%;">
-        <app-slider [listGaleria]="listBanner"></app-slider>
-        <!--<ng-image-slider [images]="listBanner" [infinite]="sliderInfinite" [imagePopup]="sliderImagePopup"
-          [showArrow]="sliderArrowShow" [imageSize]="{width: sliderImageWidth, height: sliderImageHeight}"
-          [autoSlide]="sliderAutoSlide ? 1 : 0" [slideImage]="sliderSlideImage"
-          [animationSpeed]="sliderAnimationSpeed" (imageClick)="imageOnClick2($event)"
-          (arrowClick)="arrowOnClick($event)" (lightboxArrowClick)="lightboxArrowClick($event)" #nav>
-        </ng-image-slider>-->
-      </div>
-    </div>
+    <app-slider [listGaleria]="listBanner"></app-slider>
   </div>
   <div class="col-12">
     <div class="d-flex justify-content-center">
       <div class="container">
         <div class="col-12">
           <div class="scrollmenu contenedor" style="    border-radius: 3px; text-align: center; background: white; color: black;">
-            <a class="pointer mat-elevation-z8" (click)="SeleccionCategoria( item )" *ngFor="let item of imageObject" style="color: black !important;  width: 210px;">
-              <span>
-                <figure class="figure">
-                  <img [src]="item.foto || './assets/imagenes/arrow-icon-01-2-12.png' " alt="" style="    width: 100px;     max-height: 97px;
-                  min-height: 97px;" class="rounded">
-                </figure>
-              </span><br>
-              <span>{{ item.title }}</span>
+            <a class="pointer mat-elevation-z8" (click)="SeleccionCategoria( item )" *ngFor="let item of imageObject" style="
+              color: black !important;  width: 200px;
+              border: 1px solid #c5c5c5;
+              border-radius: 15px;
+              margin: 5px;
+              ">
+              <label for="" style="    margin-left: -10px;">
+                <span>
+                  <figure class="figure">
+                    <img [src]="item.foto || './assets/imagenes/arrow-icon-01-2-12.png' " alt="" style="    width: 100px;     max-height: 97px;
+                    min-height: 97px;" class="rounded">
+                  </figure>
+                </span><br>
+                <span>{{ item.title }}</span>
+              </label>
             </a>
           </div>
         </div>

@@ -721,15 +721,17 @@ export class HeaderComponent implements OnInit {
     this._tools.openSnack('Copiado:' + ' ' + this.urlTienda, 'completado', false);
   }
 
-  navegar( item:any ){
+  navegar( item:any, obj:any = null ){
     console.log("*", item, item.url[1])
     for( let row of this.menus ) row.check = false;
     item.check = true;
+    if( obj ) obj.check = true;
     if( item.url == 'handleShop()' ) return this.handleShop();
     if( item.submenus ) if( item.submenus.length >0 ) return false;
     if( item.opt ) this.router.navigate(item.url);
     else this.router.navigate([ item.url ]);
-    //this.drawer.toggle();
+    this.sidenav.close();
+    console.log("*SALIR")
 
   }
 

@@ -20,9 +20,10 @@ export class SliderComponent implements OnInit {
   }
 
   getListInitNews(){
-    this._productos.getListgetNews( { } ).subscribe( res => {
-      this.listGaleria = res.data.filter( item => item.foto != null );
-      console.log( res.data, this.listGaleria )
+    this._productos.getListgetBanner( { } ).subscribe( res => {
+      this.listGaleria = res.data;
+      console.log( this.listGaleria,this.listGaleria[1] )
+      this.foto = this.listGaleria[ 1 ].foto;
     })
   }
 

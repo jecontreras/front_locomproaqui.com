@@ -28,7 +28,7 @@ export class ListArticleStoreComponent implements OnInit {
       pro_mp_venta: 0
     },
     page:0,
-    limit: 10
+    limit: 50
   };
   urlColor = "#02a0e3";
   notscrolly:boolean=true;
@@ -118,7 +118,7 @@ export class ListArticleStoreComponent implements OnInit {
           pro_activo: 0,
           pro_mp_venta: 0
         },
-        limit: 10,
+        limit: 50,
         page: 0
       };
     }else {

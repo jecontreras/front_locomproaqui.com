@@ -1,5 +1,5 @@
 <div class="container">
-  <div id="myCarousel" class="carousel slide" data-ride="carousel">
+  <div id="myCarousel" class="carousel slide" data-ride="carousel" *ngIf="listGaleria.length">
       <!-- Indicadores -->
       <ol class="carousel-indicators">
           <li data-target="#myCarousel" data-slide-to="0" class="active"></li>
@@ -10,10 +10,10 @@
       <!-- Slides -->
       <div class="carousel-inner">
           <div class="carousel-item active" >
-              <img [src]="foto" alt="Imagen 1" class="d-block w-100">
+              <img [src]="listGaleria[1].image" alt="Imagen 1" class="d-block w-100">
           </div>
           <div class="carousel-item" *ngFor="let item of listGaleria">
-              <img [src]="item.foto" alt="Imagen 2" class="d-block w-100">
+              <img [src]="item.image" alt="Imagen 2" class="d-block w-100">
           </div>
       </div>
 

@@ -494,14 +494,14 @@ export class ArticuloComponent implements OnInit {
     //con
     for ( let row of this.imageObject ) { row.check = false; for( let key of row.subCategoria ) key.check = false; }
     obj.check = true;
-    this.query = { where: { pro_activo: 0 }, page: 0, limit: 18 };
+    this.query = { where: { pro_activo: 0 }, page: 0, limit: 54 };
     this.seartxt = "";
-    if ( obj.id > 0 ) this.query = { where: { pro_activo: 0, pro_sub_categoria: obj.id }, page: 0, limit: 10 };
+    if ( obj.id > 0 ) this.query = { where: { pro_activo: 0, pro_sub_categoria: obj.id }, page: 0, limit: 54 };
     this.listProductos = [];
     this.notscrolly = true;
     this.notEmptyPost = true;
     console.log("****412", opt, index)
-    if( opt == 'no' ) this.cargarProductos();
+    this.cargarProductos();
   }
 
   arrowOnClick(event) {
@@ -556,7 +556,7 @@ export class ArticuloComponent implements OnInit {
       },
       filtro: this.filtro,
       page: 0,
-      limit: 18
+      limit: 54
     };
     this.loader = true;
     this.listProductos = [];
@@ -571,7 +571,7 @@ export class ArticuloComponent implements OnInit {
         pro_mp_venta: 0
       },
       page: 0,
-      limit: 18
+      limit: 54
     };
     this.loader = true;
     this.listProductos = [];
