@@ -68,7 +68,7 @@ export class PedidosComponent implements OnInit {
   listBanner: any = [  ];
   listNovedades:any = [];
   listPublicaciones:any = [];
-
+  listGaleria:any = [];
 
   constructor(
     private _productos: ProductoService,

@@ -18,6 +18,7 @@ import { AutocompleteLibModule } from 'angular-ng-autocomplete';
 import { InfiniteScrollModule } from 'ngx-infinite-scroll';
 import { OpenIframeComponent } from './open-iframe/open-iframe.component';
 import { ListArticleStoreComponent } from './list-article-store/list-article-store.component';
+import { SliderComponent } from './slider/slider.component';
 
 @NgModule({
   entryComponents:[
@@ -36,7 +37,8 @@ import { ListArticleStoreComponent } from './list-article-store/list-article-sto
     ImprimirTarjetaComponent,
     TableProductComponent,
     OpenIframeComponent,
-    ListArticleStoreComponent
+    ListArticleStoreComponent,
+    SliderComponent
   ],
   imports: [
     MyOwnCustomMaterialModule,
@@ -56,7 +58,8 @@ import { ListArticleStoreComponent } from './list-article-store/list-article-sto
     MenuLateralComponent,
     ImprimirTarjetaComponent,
     TableProductComponent,
-    ListArticleStoreComponent
+    ListArticleStoreComponent,
+    SliderComponent
   ]
 })
 export class ExtraModule { }
