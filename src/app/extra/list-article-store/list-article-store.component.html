@@ -1,4 +1,4 @@
-<div class="container">
+<div class="">
   <div class="row">
     <div class="col-12" *ngIf="dataStore.id">
       <ul class="aa-review-nav">
@@ -37,26 +37,55 @@
             >{{ item.title }} </a>
           </div>
         </div>
-        <div class="col-md-3 col-sm-4 col-lg-2 col-xs-6 col-6 anchandoPr" *ngFor="let row of listArticle" (click)="handleArticle( row )">
-          <mat-card class="example-card">
-            <mat-card-header>
-              <mat-card-subtitle>{{ row.pro_nombre | slice: 0: 15 }} </mat-card-subtitle>
-            </mat-card-header>
-            <figure mat-card-image data-toggle="modal" id="figura" data-target="#modalinfo" class="img-contenedor">
-              <img class="img-responsive btn-block imgProductos pointer " [src]="row.foto">
-            </figure>
-            <small style="display: inline-block;  font-size: 90% !important;" class="pricesmall currency2"
-              id="pricesmall_25">
-              {{ _tools.monedaChange( 3, 2, ( row.pro_vendedorCompra || row.pro_uni_venta || 0 ) ) }}
-            </small>
-            <mat-card-actions>
-              <button type="button" data-toggle="tooltip" data-placement="right" style="width: 100%;"
-                class="sc-logout btn btn-success btn-sm pull-right buttonAncho"
-                [ngStyle]="{'background-color':urlColor }"
-                data-original-title="Ver Articulo">Ver Articulo
-              </button>
-            </mat-card-actions>
-          </mat-card>
+        <div class="container">
+          <div class="row">
+            <ul class="aa-product-catg">
+              <!-- start single product item -->
+              <li *ngFor="let item of listArticle" id="anchosLi" (click)="handleArticle(item)" style="    height: 325px;">
+                <figure class="img-contenedor">
+                  <a class="aa-product-img pointer"><img class="anchosProductos" [src]="item.foto" style="height: 250px;"
+                      alt="polo shirt img"></a>
+                      <a class="aa-add-card-btn pointer"><span
+                        class="fa fa-shopping-cart"></span>Ver Articulo</a>
+                  <figcaption>
+                    <h4 class="aa-product-title"><a href="#">{{ item.pro_nombre }}</a></h4>
+                    <span class="aa-product-price"><del>{{ _formato.monedaChange( 3, 2, item.pro_vendedorCompra*2 ) }}</del></span>
+                    <span class="aa-product-price">{{ _formato.monedaChange( 3, 2, ( item.pro_vendedorCompra || item.pro_uni_venta || 0 ) ) }}</span>
+                  </figcaption>
+                </figure>
+                <!--<div class="aa-product-hvr-content">
+                  <a href="https://www.facebook.com/sharer/sharer.php?kid_directed_site=0&u=https://www.locomproaqui.com/productos/15?u=https://www.locomproaqui.com/productos/{{ item.id }}"
+                    target="_blank" data-toggle="tooltip" data-placement="top" title="Compartir"><span
+                      class="fa fa-exchange"></span></a>
+                  <a class="pointer" (click)="viewProducto( item )" title="Ver Producto"><span
+                      class="fa fa-search"></span></a>
+                </div>-->
+                <!-- product badge -->
+                <span class="aa-badge aa-sale" href="#">SALE!</span>
+              </li>
+            </ul>
+            <!--<div class="col" *ngFor="let row of listArticle" (click)="handleArticle( row )">
+              <mat-card class="example-card" style="    width: 250px; height: 350px;">
+                <mat-card-header>
+                  <mat-card-subtitle>{{ row.pro_nombre | slice: 0: 15 }} </mat-card-subtitle>
+                </mat-card-header>
+                <figure mat-card-image data-toggle="modal" id="figura" data-target="#modalinfo" class="img-contenedor">
+                  <img class="img-responsive btn-block imgProductos pointer " [src]="row.foto">
+                </figure>
+                <small style="display: inline-block;  font-size: 90% !important;" class="pricesmall currency2"
+                  id="pricesmall_25">
+                  {{ _tools.monedaChange( 3, 2, ( row.pro_vendedorCompra || row.pro_uni_venta || 0 ) ) }}
+                </small>
+                <mat-card-actions>
+                  <button type="button" data-toggle="tooltip" data-placement="right" style="width: 100%;"
+                    class="sc-logout btn btn-success btn-sm pull-right buttonAncho"
+                    [ngStyle]="{'background-color':urlColor }"
+                    data-original-title="Ver Articulo">Ver Articulo
+                  </button>
+                </mat-card-actions>
+              </mat-card>
+            </div>-->
+          </div>
         </div>
         <div class="col-12">
           <div class="d-flex flex-row-reverse bd-highlight">

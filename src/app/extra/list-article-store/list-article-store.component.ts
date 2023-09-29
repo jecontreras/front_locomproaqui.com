@@ -10,6 +10,7 @@ import { CategoriasService } from 'src/app/servicesComponents/categorias.service
 import { CART } from 'src/app/interfaces/sotarage';
 import { Store } from '@ngrx/store';
 import { UsuariosService } from 'src/app/servicesComponents/usuarios.service';
+import { FormatosService } from 'src/app/services/formatos.service';
 
 @Component({
   selector: 'app-list-article-store',
@@ -45,6 +46,7 @@ export class ListArticleStoreComponent implements OnInit {
     public dialog: MatDialog,
     private _router: Router,
     public _tools: ToolsService,
+    public _formato: FormatosService,
     private _store: Store<CART>,
     private spinner: NgxSpinnerService,
     private _category: CategoriasService,

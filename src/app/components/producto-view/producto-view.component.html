@@ -4,7 +4,7 @@
         <a [routerLink]="[ '/pedidos' ]">Volver Productos</a>
     </p>
     <div class="row">
-        <div class="col-md-6 col-sm-12 col-lg-6 col-xs-6">
+        <div class="col-md-6 col-sm-6 col-lg-6 col-xs-6 col-12">
             <lib-ngx-image-zoom
                 [thumbImage]=data.foto
                 [fullImage]=data.foto
@@ -16,7 +16,7 @@
             ></lib-ngx-image-zoom>
         </div>
         <!-- <img class="imgProducto col-md-6 col-sm-8 col-lg-6 col-xs-6" [src]="data.foto || './assets/img/producto.jpg'"> -->
-        <div class="col-md-6 col-sm-12 col-lg-6 col-xs-6 content row">
+        <div class="col-md-6 col-sm-6 col-lg-6 col-xs-6 content row col-12">
             <div class="col-12">
                 <h3 class="text-primary">$ {{ ( data.pro_uni_venta || 0).toLocaleString(1) }} COP</h3>
                 <select class="form-control form-control-sm" [(ngModel)]="data.color" (change)="cambioImgs()" *ngIf="data.listColor?.length">
