@@ -19,6 +19,7 @@ import { InfiniteScrollModule } from 'ngx-infinite-scroll';
 import { OpenIframeComponent } from './open-iframe/open-iframe.component';
 import { ListArticleStoreComponent } from './list-article-store/list-article-store.component';
 import { SliderComponent } from './slider/slider.component';
+import { SwiperModule } from 'swiper/angular';
 
 @NgModule({
   entryComponents:[
@@ -50,7 +51,8 @@ import { SliderComponent } from './slider/slider.component';
     NgxSpinnerModule,
     NgImageSliderModule,
     AutocompleteLibModule,
-    InfiniteScrollModule
+    InfiniteScrollModule,
+    SwiperModule
   ],
   exports: [
     HeaderComponent,

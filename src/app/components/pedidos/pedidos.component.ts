@@ -278,7 +278,7 @@ export class PedidosComponent implements OnInit {
         let datos: any = {
           id: row.id,
           title: row.cat_nombre,
-          foto: row.foto || './assets/categoria.jpeg',
+          image: row.foto || './assets/categoria.jpeg',
           subCategoria: await this.getSubcategoria( row.id )
         };
         if (row.id == this.idCategoria) datos.check = true;
@@ -291,7 +291,7 @@ export class PedidosComponent implements OnInit {
       this.imageObject.unshift({
         id: 0,
         title: "TODOS",
-        foto: "./assets/logo.png",
+        image: "./assets/logo.png",
         subCategoria: []
       });
       console.log( this.imageObject );

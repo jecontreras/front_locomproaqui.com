@@ -1,13 +1,12 @@
-<div class="container">
+<!--<div class="container">
   <div id="myCarousel" class="carousel slide" data-ride="carousel" *ngIf="listGaleria.length">
-      <!-- Indicadores -->
+
       <ol class="carousel-indicators">
           <li data-target="#myCarousel" data-slide-to="0" class="active"></li>
           <li data-target="#myCarousel" data-slide-to="1"></li>
           <li data-target="#myCarousel" data-slide-to="2"></li>
       </ol>
 
-      <!-- Slides -->
       <div class="carousel-inner">
           <div class="carousel-item active" >
               <img [src]="listGaleria[1].image" alt="Imagen 1" class="d-block w-100">
@@ -17,7 +16,6 @@
           </div>
       </div>
 
-      <!-- Controles -->
       <a class="carousel-control-prev" href="#myCarousel" data-slide="prev">
           <span class="carousel-control-prev-icon"></span>
       </a>
@@ -26,3 +24,24 @@
       </a>
   </div>
 </div>
+-->
+
+<main>
+	<div>
+		<swiper *ngIf="view === 1" [loop]="true" [autoHeight]="true" [allowTouchMove]="false"
+        [autoplay]="{ delay: 5000, disableOnInteraction: false }" [pagination]="{ clickable: true }" [navigation]="true">
+			<ng-template  class="swiper-slide" swiperSlide *ngFor="let item of listGaleria">
+        <img [src]="item[lyImg]" alt="Imagen 2" class="d-block w-100">
+      </ng-template>
+		</swiper>
+    <swiper *ngIf="view === 2" [slidesPerView]="5" [loop]="true" [autoHeight]="true" [allowTouchMove]="false"
+        [autoplay]="{ delay: 5000, disableOnInteraction: false }" [pagination]="{ clickable: true }" [navigation]="true">
+			<ng-template  class="swiper-slide" swiperSlide *ngFor="let item of listGaleria">
+        <figure class="figure pointer">
+          <img [src]="item[lyImg]" alt="Imagen 2" class="d-block w-100 rounded" style=" width: 160px !important;     max-height: 165px;
+          min-height: 165px;">
+        </figure>
+      </ng-template>
+		</swiper>
+	</div>
+</main>

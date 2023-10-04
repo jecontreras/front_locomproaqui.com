@@ -42,6 +42,7 @@ import { ExtraModule } from './extra/extra.module';
     registerLocaleData(localeEn, 'en')
     import  { FacebookLoginProvider, GoogleLoginProvider, SocialLoginModule, SocialAuthServiceConfig } from 'angularx-social-login';
 import { PortadaModule } from './portada/portada.module';
+import { SwiperModule } from 'swiper/angular';
 @NgModule({
   entryComponents:[],
   declarations: [
@@ -74,7 +75,8 @@ import { PortadaModule } from './portada/portada.module';
     MatVideoModule,
     NgxCurrencyModule,
     ExtraModule,
-    SocialLoginModule
+    SocialLoginModule,
+    SwiperModule
   ],
   providers: [
     { provide: LOCALE_ID, useValue: 'es-Co', },

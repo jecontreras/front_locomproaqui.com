@@ -32,7 +32,7 @@ import { PortalComponent } from '../layout/portal/portal.component';
 import { ListmenuComponent } from '../layout/listmenu/listmenu.component';
 import { SignUpComponent } from '../layout/sign-up/sign-up.component';
 import { ListArticleComponent } from '../components/list-article/list-article.component';
-
+import { SwiperModule } from "swiper/angular";
 
 @NgModule({
   entryComponents:[
@@ -79,7 +79,8 @@ import { ListArticleComponent } from '../components/list-article/list-article.co
     NgxImageZoomModule,
     ConfigModule,
     ExtraModule,
-    NgxCurrencyModule
+    NgxCurrencyModule,
+    SwiperModule
   ],
   exports: [
     LoginComponent,

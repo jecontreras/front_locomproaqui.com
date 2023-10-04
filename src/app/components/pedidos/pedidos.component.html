@@ -124,10 +124,17 @@
 
 <div class="row" style="margin: 5px;">
   <div class="col-12">
-    <app-slider [listGaleria]="listBanner"></app-slider>
+    <app-slider [listGaleria]="listBanner" [view]="1" [lyImg]="'image'"></app-slider>
   </div>
   <div class="col-12">
     <div class="d-flex justify-content-center">
+      <div>
+        <div class="container">
+          <app-slider [listGaleria]="imageObject" [view]="2" [lyImg]="'image'"></app-slider>
+        </div>
+      </div>
+    </div>
+    <!--<div class="d-flex justify-content-center">
       <div class="container">
         <div class="col-12">
           <div class="scrollmenu contenedor" style="    border-radius: 3px; text-align: center; background: white; color: black;">
@@ -150,7 +157,7 @@
           </div>
         </div>
       </div>
-    </div>
+    </div>-->
   </div>
   <div class="col-12" style="    margin-top: 20px;">
     <div class="d-flex justify-content-center">
@@ -190,7 +197,14 @@
           <h5>MAS VENDIDOS</h5>
         </div>
         <div class="col-12">
-          <div class="scrollmenu contenedor" style="    border-radius: 3px; text-align: center; background: white; color: black;">
+          <div class="d-flex justify-content-center">
+            <div>
+              <div class="container">
+                <app-slider [listGaleria]="listProductSlider" [view]="2" [lyImg]="'foto'"></app-slider>
+              </div>
+            </div>
+          </div>
+          <!--<div class="scrollmenu contenedor" style="    border-radius: 3px; text-align: center; background: white; color: black;">
             <a class="pointer mat-elevation-z8" (click)="handleSelectArticle( item )" *ngFor="let item of listProductSlider" style="
               color: black !important;  width: 200px;
               border: 1px solid #c5c5c5;
@@ -208,7 +222,7 @@
                 <span class="text-primary pointer" [routerLink]="[ '/listproduct' ]">Ver Más...</span>
               </label>
             </a>
-          </div>
+          </div>-->
         </div>
       </div>
     </div>

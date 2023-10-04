@@ -1,5 +1,5 @@
 @import 'material-icons/iconfont/material-icons.css';
-
+@import "~swiper/swiper-bundle";
 html, body {
     height: 100%;
     margin: 0;
@@ -11,6 +11,18 @@ html, body {
     scrollbar-arrow-color:yellow;
     scrollbar-track-color:aqua;
 }
+
+.swiper-container {
+  width: 100%;
+  margin: 10px;
+}
+
+.swiper-slide {
+  color: #000;
+  text-align: center;
+  line-height: 300px;
+}
+
 
 .headerColor{
   background: #02a0e3;
