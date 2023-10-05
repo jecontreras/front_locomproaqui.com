@@ -16,6 +16,7 @@ import SwiperCore , {
 } from 'swiper';
 import { BehaviorSubject } from "rxjs";
 import Swiper from "swiper/types/swiper-class";
+import { Router } from '@angular/router';
 
 // install Swiper components
 SwiperCore.use([
@@ -65,15 +66,24 @@ export class SliderComponent implements OnInit {
   show: boolean;
   thumbs: any;
   slides$ = new BehaviorSubject<string[]>(['']);
+  cantDs:number = 5;
+  breakpoint: number;
 
   constructor(
     private _productos: ProductoService,
     private cd: ChangeDetectorRef,
+    private _router: Router,
     private ngZone: NgZone
   ) { }
 
   ngOnInit(): void {
     //this.getListInitNews();
+    setInterval(()=>{
+      this.breakpoint = (window.innerWidth <= 500) ? 1 : 6;
+      //console.log( this.breakpoint, window.innerWidth)
+      if( this.breakpoint === 1 ) this.cantDs = 3;
+      else this.cantDs = 5;
+    }, 100 );
   }
 
   getListInitNews(){
@@ -94,6 +104,7 @@ export class SliderComponent implements OnInit {
   }
   controlledSwiper: any;
   setControlledSwiper(swiper) {
+    console.log("**105", swiper)
     this.controlledSwiper = swiper;
   }
 
@@ -161,6 +172,11 @@ export class SliderComponent implements OnInit {
       });
       console.log(this.slidesEx);
     }
+  }
+
+  handleSelect( item ){
+    console.log("***176", item)
+    this._router.navigate( [ "/pedido", item['id'] ] );
   }
 
 }

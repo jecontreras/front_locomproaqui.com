@@ -26,22 +26,48 @@
 </div>
 -->
 
-<main>
-	<div>
-		<swiper *ngIf="view === 1" [loop]="true" [autoHeight]="true" [allowTouchMove]="false"
-        [autoplay]="{ delay: 5000, disableOnInteraction: false }" [pagination]="{ clickable: true }" [navigation]="true">
-			<ng-template  class="swiper-slide" swiperSlide *ngFor="let item of listGaleria">
-        <img [src]="item[lyImg]" alt="Imagen 2" class="d-block w-100">
-      </ng-template>
-		</swiper>
-    <swiper *ngIf="view === 2" [slidesPerView]="5" [loop]="true" [autoHeight]="true" [allowTouchMove]="false"
-        [autoplay]="{ delay: 5000, disableOnInteraction: false }" [pagination]="{ clickable: true }" [navigation]="true">
-			<ng-template  class="swiper-slide" swiperSlide *ngFor="let item of listGaleria">
-        <figure class="figure pointer">
-          <img [src]="item[lyImg]" alt="Imagen 2" class="d-block w-100 rounded" style=" width: 160px !important;     max-height: 165px;
-          min-height: 165px;">
-        </figure>
-      </ng-template>
-		</swiper>
-	</div>
-</main>
+<swiper *ngIf="view === 1" [loop]="true" [autoHeight]="true" [allowTouchMove]="false"
+  [autoplay]="{ delay: 5000, disableOnInteraction: false }" [pagination]="{ clickable: true }" [navigation]="true">
+  <ng-template  class="swiper-slide" swiperSlide *ngFor="let item of listGaleria">
+    <img [src]="item[lyImg]" alt="Imagen 2" class="d-block w-100">
+  </ng-template>
+</swiper>
+<swiper
+  *ngIf="view === 2"
+  [slidesPerView]="cantDs"
+  [spaceBetween]="10"
+  (swiper)="setControlledSwiper($event)"
+  [navigation]="{}"
+  [watchSlidesProgress]="true"
+  >
+  <ng-template swiperSlide *ngFor="let item of listGaleria; index as i">
+    <section style="text-align: center;     height: 308px; border-radius: 5px; padding: 10px; width: 100%;" class="border border-4 rounder pointer">
+      <figure class="figure pointer">
+        <img [src]="item[lyImg]" alt="Imagen 2" class="d-block w-100 rounded" style="width: 100%; height: 115px;">
+      </figure>
+      <h5 style="    font-size: 15px;">{{ item.pro_nombre }} </h5>
+      <p style="text-align: center;     font-size: 8px !important;" [innerHTML]="item.pro_descripcion | slice:0:100"></p>
+      <a class="pointer text-primary" (click)="handleSelect( { id: item.pro_categoria.id})">Ver Mas</a>
+    </section>
+  </ng-template>
+</swiper>
+
+<swiper
+  *ngIf="view === 3"
+  [slidesPerView]="cantDs"
+  [spaceBetween]="10"
+  (swiper)="setControlledSwiper($event)"
+  [navigation]="{}"
+  [watchSlidesProgress]="true"
+  >
+  <ng-template swiperSlide *ngFor="let item of listGaleria; index as i">
+    <section style="text-align: center;  " class="" (click)="handleSelect( item )">
+      <figure class="figure pointer">
+        <img [src]="item[lyImg]" alt="Imagen 2" class="d-block w-100 rounded" style="     width: 122px !important;
+        max-height: 81px;
+        min-height: 107px;">
+      </figure>
+      <h6>{{ item.title }} </h6>
+    </section>
+  </ng-template>
+</swiper>

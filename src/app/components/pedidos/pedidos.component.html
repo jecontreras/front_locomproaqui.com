@@ -126,11 +126,11 @@
   <div class="col-12">
     <app-slider [listGaleria]="listBanner" [view]="1" [lyImg]="'image'"></app-slider>
   </div>
-  <div class="col-12">
+  <div class="col-12" style="margin: auto;">
     <div class="d-flex justify-content-center">
-      <div>
-        <div class="container">
-          <app-slider [listGaleria]="imageObject" [view]="2" [lyImg]="'image'"></app-slider>
+      <div class="container">
+        <div class="col-12" style="width: 90%; margin: auto;">
+          <app-slider [listGaleria]="imageObject" [view]="3" [lyImg]="'image'"></app-slider>
         </div>
       </div>
     </div>
@@ -197,13 +197,7 @@
           <h5>MAS VENDIDOS</h5>
         </div>
         <div class="col-12">
-          <div class="d-flex justify-content-center">
-            <div>
-              <div class="container">
-                <app-slider [listGaleria]="listProductSlider" [view]="2" [lyImg]="'foto'"></app-slider>
-              </div>
-            </div>
-          </div>
+          <app-slider [listGaleria]="listProductSlider" [view]="2" [lyImg]="'foto'"></app-slider>
           <!--<div class="scrollmenu contenedor" style="    border-radius: 3px; text-align: center; background: white; color: black;">
             <a class="pointer mat-elevation-z8" (click)="handleSelectArticle( item )" *ngFor="let item of listProductSlider" style="
               color: black !important;  width: 200px;
@@ -257,13 +251,20 @@
                         <div class="row" style="    margin: 5px; margin-top: 20px; ">
                           <div class="col-6" *ngFor="let key of item.article">
                             <figure class="figure pointer" (click)="handleSelectArticle( key )">
-                              <img [src]="key.foto" class="img-thumbnail figure-img img-fluid rounded" style="    max-height: 210px; min-height: 210px;     max-width: 160px; min-width: 160px;">
+                              <img [src]="key.foto"
+                              class="img-thumbnail figure-img img-fluid rounded"
+                              style="
+                                 max-height: 150px;
+                                 min-height: 150px;
+                                 max-width: 160px;
+                                 min-width: 160px;
+                            ">
                             </figure>
                             <h6 style="text-align: center;">{{ key.title }} </h6>
                           </div>
                           <div class="col-12" style="    margin: 16px 0;">
                             <p style="    text-align: center; font-size: 10px;     margin-bottom: 10px;">{{ item.title }} </p>
-                            <button class="btn btn-primary" type="button" style="    width: 100% !important;
+                            <button (click)="handleOpenStore( item )" class="btn btn-primary" type="button" style="    width: 100% !important;
                               padding: 10px;">Vender Este Producto</button>
                           </div>
                         </div>
@@ -278,8 +279,14 @@
                   <div class="card-header bg-transparent">
                     <h5 style="margin: 15px;">{{ item.title }} </h5>
                   </div>
-                  <div class="card-body text-success">
-                    <img class="pointer" [src]="item.foto" (click)="handleSelectArticle( item['article'][0] )" alt="" style="width: 100%;     padding: 10px;">
+                  <div class="card-body text-success" style="    margin-top: 30px;">
+                    <img class="pointer" [src]="item.foto" (click)="handleSelectArticle( item['article'][0] )" alt=""
+                      style="
+                        width: 100%;
+                        max-height: 403px;
+                        min-height: 400px;
+                        padding: 10px;
+                      ">
                     <a class="pointer text-primary">Ver Mas</a>
                   </div>
                 </div>
@@ -291,6 +298,14 @@
                     <h5 style="    margin-bottom: 10px;">{{ item.title }} </h5>
                     <p style="    margin-bottom: 10px;">{{ item.subtitle }} </p>
                     <a style="    margin-bottom: 10px;" class="pointer text-primary">link: clicleo aqui </a>
+                  </div>
+                </div>
+              </section>
+
+              <section style="    padding: 5%;" *ngIf="item.tipe === 3">
+                <div class="card mat-elevation-z8" style="width: 100%; padding: 15px; height: 365px;">
+                  <div class="card-header">
+
                   </div>
                 </div>
               </section>
@@ -334,7 +349,12 @@
                         <div class="row" style="    margin: 5px; margin-top: 20px; ">
                           <div class="col-6" *ngFor="let key of item.article">
                             <figure class="figure pointer" (click)="handleSelectArticle( key )">
-                              <img [src]="key.foto" class="img-thumbnail figure-img img-fluid rounded" style="    max-height: 210px; min-height: 210px;     max-width: 160px; min-width: 160px;">
+                              <img [src]="key.foto" class="img-thumbnail figure-img img-fluid rounded" style="
+                                 max-height: 150px;
+                                 min-height: 150px;
+                                 max-width: 160px;
+                                 min-width: 160px;"
+                                >
                             </figure>
                             <h6 style="text-align: center;">{{ key.title }} </h6>
                           </div>
