@@ -254,7 +254,7 @@
                               <img [src]="key.foto"
                               class="img-thumbnail figure-img img-fluid rounded"
                               style="
-                                 max-height: 150px;
+                                 max-height: 160px;
                                  min-height: 150px;
                                  max-width: 160px;
                                  min-width: 160px;
@@ -350,10 +350,8 @@
                           <div class="col-6" *ngFor="let key of item.article">
                             <figure class="figure pointer" (click)="handleSelectArticle( key )">
                               <img [src]="key.foto" class="img-thumbnail figure-img img-fluid rounded" style="
-                                 max-height: 150px;
-                                 min-height: 150px;
-                                 max-width: 160px;
-                                 min-width: 160px;"
+                                 height: 150px;
+                                 width: auto;"
                                 >
                             </figure>
                             <h6 style="text-align: center;">{{ key.title }} </h6>
