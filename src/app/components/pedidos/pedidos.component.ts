@@ -69,6 +69,7 @@ export class PedidosComponent implements OnInit {
   listNovedades:any = [];
   listPublicaciones:any = [];
   listGaleria:any = [];
+  breakpoint: number;
 
   constructor(
     private _productos: ProductoService,
@@ -135,6 +136,7 @@ export class PedidosComponent implements OnInit {
 
     setInterval(()=> {
       try {
+        this.breakpoint = (window.innerWidth <= 500) ? 1 : 6;
         //console.log( this.nav)
         let color:string = ( this.dataUser.usu_color || "#02a0e3" );
         if( this.userId.id ) {

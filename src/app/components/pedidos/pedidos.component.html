@@ -254,10 +254,8 @@
                               <img [src]="key.foto"
                               class="img-thumbnail figure-img img-fluid rounded"
                               style="
-                                 max-height: 160px;
-                                 min-height: 150px;
-                                 max-width: 160px;
-                                 min-width: 160px;
+                                 height: 150px;
+                                 width: auto;
                             ">
                             </figure>
                             <h6 style="text-align: center;">{{ key.title }} </h6>
@@ -302,7 +300,7 @@
                 </div>
               </section>
 
-              <section style="    padding: 5%;" *ngIf="item.tipe === 3">
+              <section style="    padding: 5%;" *ngIf="item.tipe === 3 && breakpoint === 6 ">
                 <div class="card mat-elevation-z8" style="width: 100%; padding: 15px; height: 365px;">
                   <div class="card-header">
 
