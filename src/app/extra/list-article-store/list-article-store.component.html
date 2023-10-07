@@ -1,69 +1,71 @@
-<div class="">
-  <div class="row">
-    <div class="col-12" *ngIf="dataStore.id">
-      <ul class="aa-review-nav">
-        <li>
-          <div class="media">
-            <div class="media-left">
-              <a href="#">
-                <img class="media-object" style="width: 155px; margin-top: 26px; margin-right: 15px;" [src]="dataStore.usu_imagen" alt="girl image">
-              </a>
-            </div>
-            <div class="media-body">
-              <h4 class="media-heading"><strong>{{ dataStore.usu_usuario }}</strong> </h4>
-              <p> Email: {{ dataStore.usu_email }} </p>
-              <p> Celular: {{ dataStore.usu_telefono }} </p>
-              <p> Ciudad: {{ dataStore.usu_ciudad }} </p>
-            </div>
+<div class="row">
+  <div class="col-12" *ngIf="dataStore.id">
+    <ul class="aa-review-nav">
+      <li>
+        <div class="media">
+          <div class="media-left">
+            <a href="#">
+              <img class="media-object" style="width: 155px; margin-top: 26px; margin-right: 15px;" [src]="dataStore.usu_imagen" alt="girl image">
+            </a>
           </div>
-        </li>
-      </ul>
-    </div>
-    <div class="col-12">
-      <nav class="navbar navbar-light bg-light">
-        <a class="navbar-brand">Articulo de Bodega {{ dataStore.usu_usuario }} </a>
-        <div class="form-inline">
-          <input class="form-control mr-sm-2" type="search" placeholder="Buscar" aria-label="Buscar" [(ngModel)]="filter.txt" (change)="handleSearch()">
-          <button class="btn btn-outline-success my-2 my-sm-0" type="submit" (click)="handleSearch()">Buscar</button>
-        </div>
-      </nav>
-    </div>
-    <div class="col-12">
-      <div class="row">
-        <div class="col-12">
-          <div class="scrollmenu" style="    border-radius: 3px;">
-            <a class="pointer" (click)="handleCategorySearch( item )" *ngFor="let item of listCategory"
-              [ngClass]="{ 'cambiaColor': item.check == true }"
-            >{{ item.title }} </a>
+          <div class="media-body">
+            <h4 class="media-heading"><strong>{{ dataStore.usu_usuario }}</strong> </h4>
+            <p> Email: {{ dataStore.usu_email }} </p>
+            <p> Celular: {{ dataStore.usu_telefono }} </p>
+            <p> Ciudad: {{ dataStore.usu_ciudad }} </p>
           </div>
         </div>
-        <div class="container">
+      </li>
+    </ul>
+  </div>
+  <div class="col-12">
+    <nav class="navbar navbar-light bg-light">
+      <a class="navbar-brand">Articulo de Bodega {{ dataStore.usu_usuario }} </a>
+      <div class="form-inline">
+        <input class="form-control mr-sm-2" type="search" placeholder="Buscar" aria-label="Buscar" [(ngModel)]="filter.txt" (change)="handleSearch()">
+        <button class="btn btn-outline-success my-2 my-sm-0" type="submit" (click)="handleSearch()">Buscar</button>
+      </div>
+    </nav>
+  </div>
+  <div class="col-12">
+    <div class="row">
+      <div class="col-12">
+        <div class="scrollmenu" style="    border-radius: 3px;">
+          <a class="pointer" (click)="handleCategorySearch( item )" *ngFor="let item of listCategory"
+            [ngClass]="{ 'cambiaColor': item.check == true }"
+          >{{ item.title }} </a>
+        </div>
+      </div>
+      <div class="col-12">
+        <div class="content" style="    margin-top: 20px;">
           <div class="row">
-            <ul class="aa-product-catg">
-              <!-- start single product item -->
-              <li *ngFor="let item of listArticle" id="anchosLi" (click)="handleArticle(item)" style="    height: 325px;">
-                <figure class="img-contenedor" style="height: 315px;">
-                  <a class="aa-product-img pointer"><img class="anchosProductos" [src]="item.foto" style="height: 250px;"
-                      alt="polo shirt img"></a>
-                      <a class="aa-add-card-btn pointer"><span
-                        class="fa fa-shopping-cart"></span>Ver Articulo</a>
-                  <figcaption>
-                    <h4 class="aa-product-title"><a href="#">{{ item.pro_nombre }}</a></h4>
-                    <span class="aa-product-price"><del>{{ _formato.monedaChange( 3, 2, item.pro_vendedorCompra*2 ) }}</del></span>
-                    <span class="aa-product-price">{{ _formato.monedaChange( 3, 2, ( item.pro_vendedorCompra || item.pro_uni_venta || 0 ) ) }}</span>
-                  </figcaption>
-                </figure>
-                <!--<div class="aa-product-hvr-content">
-                  <a href="https://www.facebook.com/sharer/sharer.php?kid_directed_site=0&u=https://www.locomproaqui.com/productos/15?u=https://www.locomproaqui.com/productos/{{ item.id }}"
-                    target="_blank" data-toggle="tooltip" data-placement="top" title="Compartir"><span
-                      class="fa fa-exchange"></span></a>
-                  <a class="pointer" (click)="viewProducto( item )" title="Ver Producto"><span
-                      class="fa fa-search"></span></a>
-                </div>-->
-                <!-- product badge -->
-                <span class="aa-badge aa-sale" href="#">SALE!</span>
-              </li>
-            </ul>
+            <div class="col-12">
+              <ul class="aa-product-catg">
+                <!-- start single product item -->
+                <li *ngFor="let item of listArticle" id="anchosLi" (click)="handleArticle(item)" style="    height: 325px;">
+                  <figure class="img-contenedor" style="height: 315px;">
+                    <a class="aa-product-img pointer"><img class="anchosProductos" [src]="item.foto" style="height: 250px;"
+                        alt="polo shirt img"></a>
+                        <a class="aa-add-card-btn pointer"><span
+                          class="fa fa-shopping-cart"></span>Ver Articulo</a>
+                    <figcaption>
+                      <h4 class="aa-product-title"><a href="#">{{ item.pro_nombre }}</a></h4>
+                      <span class="aa-product-price"><del>{{ _formato.monedaChange( 3, 2, item.pro_vendedorCompra*2 ) }}</del></span>
+                      <span class="aa-product-price">{{ _formato.monedaChange( 3, 2, ( item.pro_vendedorCompra || item.pro_uni_venta || 0 ) ) }}</span>
+                    </figcaption>
+                  </figure>
+                  <!--<div class="aa-product-hvr-content">
+                    <a href="https://www.facebook.com/sharer/sharer.php?kid_directed_site=0&u=https://www.locomproaqui.com/productos/15?u=https://www.locomproaqui.com/productos/{{ item.id }}"
+                      target="_blank" data-toggle="tooltip" data-placement="top" title="Compartir"><span
+                        class="fa fa-exchange"></span></a>
+                    <a class="pointer" (click)="viewProducto( item )" title="Ver Producto"><span
+                        class="fa fa-search"></span></a>
+                  </div>-->
+                  <!-- product badge -->
+                  <span class="aa-badge aa-sale" href="#">SALE!</span>
+                </li>
+              </ul>
+            </div>
             <!--<div class="col" *ngFor="let row of listArticle" (click)="handleArticle( row )">
               <mat-card class="example-card" style="    width: 250px; height: 350px;">
                 <mat-card-header>
@@ -87,20 +89,20 @@
             </div>-->
           </div>
         </div>
-        <div class="col-12">
-          <div class="d-flex flex-row-reverse bd-highlight">
-            <div class="p-2 bd-highlight">
-              <mat-paginator [length]="counts" [pageSizeOptions]="[10, 25, 100]"
-                  (page)="onScroll($event)">
-              </mat-paginator>
-            </div>
+      </div>
+      <div class="col-12">
+        <div class="d-flex flex-row-reverse bd-highlight">
+          <div class="p-2 bd-highlight">
+            <mat-paginator [length]="counts" [pageSizeOptions]="[10, 25, 100]"
+                (page)="onScroll($event)">
+            </mat-paginator>
           </div>
         </div>
-        <div class="col-12">
-          <ngx-spinner bdOpacity=0.9 bdColor="" size="default" color="#581f87" type="ball-pulse-sync"
-            [fullScreen]="false">
-          </ngx-spinner>
-        </div>
+      </div>
+      <div class="col-12">
+        <ngx-spinner bdOpacity=0.9 bdColor="" size="default" color="#581f87" type="ball-pulse-sync"
+          [fullScreen]="false">
+        </ngx-spinner>
       </div>
     </div>
   </div>

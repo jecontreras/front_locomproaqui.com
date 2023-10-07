@@ -8,7 +8,7 @@
             Compartir link
         </button>
       &nbsp;
-      <button (click)="openUrl( )" type="button" class="btn btn-primary">
+      <button (click)="openUrl( )" type="button" class="btn btn-primary" *ngIf="dataUser.id">
         Piezas gráficas
       </button>
       <!--<button (click)="descargarFoto( data )" type="button" class="btn btn-primary">
@@ -16,8 +16,8 @@
       </button>-->
     </div>
     <div class="p-2 bd-highlight">
-      <button mat-raised-button color="warn" mat-dialog-close>
-        <i class="fa fa-window-close-o" aria-hidden="true"></i>
+      <button type="button" class="btn btn-danger" mat-dialog-close>
+        X
       </button>
     </div>
   </div>
@@ -252,7 +252,7 @@
     <button  type="button" class="btn btn-success" *ngIf="disabledView === 'createPrice'">
       Actualizar
     </button>
-    <button cdkFocusInitial (click)="handleAddStore()" type="button" class="btn btn-primary" *ngIf="disabledView === 'store'">
+    <button cdkFocusInitial (click)="handleAddStore()" type="button" class="btn btn-primary" *ngIf="disabledView === 'store' && dataUser.id">
       Agregar a mi Tienda
     </button>
     <button  type="button" class="btn btn-primary" *ngIf="disabledView === 'createPrice'" (click)="handleDroppArticle()">
