@@ -26,9 +26,10 @@ p,
 span,
 label,
 a{
-    font-family: 'LaBelleAurore' !important;
+   //font-family: 'LaBelleAurore' !important;
+   font-family: 'Inter', sans-serif;
+   font-family: 'Maven Pro', sans-serif;
 }
-
 .headerColor{
   background: #02a0e3;
 }
@@ -77,18 +78,18 @@ a{
 }
 
 .titulo1{
-  font-family: Geomanist;
+  /*font-family: Geomanist;*/
   color: #17a8e5;
 }
 
 .titulo2{
-  font-family: Geomanist2;
+  /*font-family: Geomanist2;*/
   font-size: 110%;
   color: #6c6c6c;
 }
 
 .titulo3{
-  font-family: Geomanist3;
+  /*font-family: Geomanist3;*/
   font-size: 110%;
   color: #fff;
 }
