@@ -80,7 +80,7 @@ export class SliderComponent implements OnInit {
     //this.getListInitNews();
     setInterval(()=>{
       let tamaño:number = window.innerWidth;
-      console.log("**83", tamaño)
+      //console.log("**83", tamaño)
       this.breakpoint = (window.innerWidth <= 500) ? 1 : 6;
       //console.log( this.breakpoint, window.innerWidth)
       if( tamaño >= 100 ) this.cantDs = 2;
@@ -93,7 +93,7 @@ export class SliderComponent implements OnInit {
   getListInitNews(){
     this._productos.getListgetBanner( { } ).subscribe( res => {
       this.listGaleria = res.data;
-      console.log( this.listGaleria,this.listGaleria[1] )
+      //console.log( this.listGaleria,this.listGaleria[1] )
       this.foto = this.listGaleria[ 1 ].foto;
     })
   }
