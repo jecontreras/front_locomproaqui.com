@@ -12,3 +12,35 @@
   word-break : break-word;
   width: 100%;
 }
+
+.square-image {
+  width: 100%;
+  object-fit: cover; /* Maintain the aspect ratio while covering the area */
+}
+
+/* Add some styles for the navigation arrows */
+.swiper-button-next,
+.swiper-button-prev {
+  position: absolute;
+  top: 50%;
+  width: 30px;
+  height: 30px;
+  margin-top: -15px;
+  z-index: 10;
+  cursor: pointer;
+  background-color: rgba(0, 0, 0, 0.5);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  font-size: 20px;
+}
+
+.swiper-button-next {
+  right: 10px;
+}
+
+.swiper-button-prev {
+  left: 10px;
+}
