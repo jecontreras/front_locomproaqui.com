@@ -25,7 +25,7 @@
 <mat-dialog-content class="mat-typography">
   <div class="container">
     <div class="row">
-        <div class="col-6">
+        <div class="col-12 col-sm-6">
             <div class="row">
                 <div class="col-12">
                     <br><br>
@@ -46,7 +46,7 @@
             </div>
         </div>
 
-        <div class="col-6">
+        <div class="col-12 col-sm-6">
             <div class="content">
                 <div class="row">
                     <div class="col-12">
@@ -234,28 +234,30 @@
     </div>-->
 </mat-dialog-content>
 
-<mat-dialog-actions align="end">
-  <button (click)="shareUrl( )" type="button" class="btn btn-success" *ngIf="( disabledView !== 'store' ) && ( disabledView !== 'createPrice') ">
+<mat-dialog-actions class="custom-dialog-actions" align="center">
+  <button (click)="shareUrl()" type="button" class="btn btn-success" *ngIf="(disabledView !== 'store') && (disabledView !== 'createPrice')">
     Compartir link
-</button>
-&nbsp;
-    <button cdkFocusInitial (click)="AgregarCart(false)" type="button" class="btn btn-primary" *ngIf="( disabledView !== 'store' ) && ( disabledView !== 'createPrice') ">
-        {{ titleButton }}
-    </button>
-    <div>
+  </button>
 
-    </div>
-    <div class="col-6" *ngIf="disabledView === 'createPrice'">
-        <label>Lo Vendes</label>
-        <input currencyMask [(ngModel)]="data.idPrice" class="form-control form-control-sm" [options]="opcionCurrencys"(blur)="handleUpdatePrice()" />
-    </div>
-    <button  type="button" class="btn btn-success" *ngIf="disabledView === 'createPrice'">
-      Actualizar
-    </button>
-    <button cdkFocusInitial (click)="handleAddStore()" type="button" class="btn btn-primary" *ngIf="disabledView === 'store' && dataUser.id">
-      Agregar a mi Tienda
-    </button>
-    <button  type="button" class="btn btn-primary" *ngIf="disabledView === 'createPrice'" (click)="handleDroppArticle()">
-      Quitar de mi lista
-    </button>
+  <button cdkFocusInitial (click)="AgregarCart(false)" type="button" class="btn btn-primary" *ngIf="(disabledView !== 'store') && (disabledView !== 'createPrice')">
+    {{ titleButton }}
+  </button>
+
+  <div class="col-6" *ngIf="disabledView === 'createPrice'">
+    <label>Lo Vendes</label>
+    <input currencyMask [(ngModel)]="data.idPrice" class="form-control form-control-sm" [options]="opcionCurrencys" (blur)="handleUpdatePrice()" />
+  </div>
+
+  <button type="button" class="btn btn-success" *ngIf="disabledView === 'createPrice'">
+    Actualizar
+  </button>
+
+  <button cdkFocusInitial (click)="handleAddStore()" type="button" class="btn btn-primary" *ngIf="disabledView === 'store' && dataUser.id">
+    Agregar a mi Tienda
+  </button>
+
+  <button type="button" class="btn btn-primary" *ngIf="disabledView === 'createPrice'" (click)="handleDroppArticle()">
+    Quitar de mi lista
+  </button>
 </mat-dialog-actions>
+
