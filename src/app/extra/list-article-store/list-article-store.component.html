@@ -20,21 +20,26 @@
   </div>
   <div class="col-12">
     <nav class="navbar navbar-light bg-light">
-      <a class="navbar-brand">Articulo de Bodega {{ dataStore.usu_usuario }} </a>
-      <div class="form-inline">
-        <input class="form-control mr-sm-2" type="search" placeholder="Buscar" aria-label="Buscar" [(ngModel)]="filter.txt" (change)="handleSearch()">
-        <button class="btn btn-outline-success my-2 my-sm-0" type="submit" (click)="handleSearch()">Buscar</button>
+      <div class="container-fluid">
+        <a class="navbar-brand">Articulo de Bodega {{ dataStore.usu_usuario }} </a>
+        <div class="d-flex">
+          <input class="form-control mr-sm-2" type="search" placeholder="Buscar" aria-label="Buscar" [(ngModel)]="filter.txt" (change)="handleSearch()">
+          <button class="btn btn-outline-success my-2 my-sm-0" type="submit" (click)="handleSearch()">Buscar</button>
+        </div>
       </div>
     </nav>
   </div>
   <div class="col-12">
     <div class="row">
       <div class="col-12">
-        <div class="scrollmenu" style="    border-radius: 3px;">
-          <a class="pointer" (click)="handleCategorySearch( item )" *ngFor="let item of listCategory"
-            [ngClass]="{ 'cambiaColor': item.check == true }"
-          >{{ item.title }} </a>
+        <div class="scrollmenu" style="border-radius: 3px; display: flex; justify-content: center;">
+          <a class="pointer" (click)="handleCategorySearch(item)" *ngFor="let item of listCategory"
+            [ngClass]="{ 'cambiaColor': item.check }"
+          >
+            {{ item.title }}
+          </a>
         </div>
+
       </div>
       <div class="col-12">
         <div class="content" style="    margin-top: 20px;">

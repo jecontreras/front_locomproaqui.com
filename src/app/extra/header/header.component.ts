@@ -742,7 +742,7 @@ export class HeaderComponent implements OnInit {
           return {
             'nombre': row['cat_nombre'],
             icons: "settings",
-            url: [ "/pedido", row['id'] ],
+            url: [ "/pedidos", row['id'] ],
             opt: true
             //subCategoria: await this.getSubcategoria( row.id )
           }
@@ -789,8 +789,8 @@ export class HeaderComponent implements OnInit {
   }
 
   handleShop(){
-    this.router.navigate(['/pedido']);
-    setTimeout(()=>this.router.navigate(['/pedido',0]), 1000 );
+    this.router.navigate(['/pedidos']);
+    setTimeout(()=>this.router.navigate(['/pedidos',0]), 1000 );
     //location.reload();
   }
 

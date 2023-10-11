@@ -94,6 +94,9 @@ export class ArticuloComponent implements OnInit {
         this.seartxt = store.buscar;
       }
       this.imageObject = store.categoria || [];
+      if( this.imageObject.length ){
+        for( let row of this.imageObject ) { row.check= false;  if (row.id == this.idCategoria) row.check = true; }
+      }
       if( this.dataUser.id ){
         try {
           if (this.dataUser.usu_perfil) {
@@ -279,7 +282,7 @@ export class ArticuloComponent implements OnInit {
         let datos: any = {
           id: row.id,
           title: row.cat_nombre,
-          foto: row.foto || './assets/categoria.jpeg',
+          foto: row.cat_imagen || './assets/categoria.jpeg',
           subCategoria: await this.getSubcategoria( row.id )
         };
         if (row.id == this.idCategoria) datos.check = true;
@@ -289,18 +292,19 @@ export class ArticuloComponent implements OnInit {
           this.imageObject[idx]= datos;
         }
       }
-      this.imageObject.unshift({
+      this.imageObject = ( _.unionBy( this.imageObject || [], this.imageObject, 'id' ) ) || [];
+      /*this.imageObject.unshift({
         id: 0,
         title: "TODOS",
         foto: "./assets/logo.png",
         subCategoria: []
-      });
+      });*/
       console.log( this.imageObject );
       for( let row of this.imageObject ){
+        delete row.check;
         let accion = new CategoriaAction(row, 'post');
         this._store.dispatch( accion );
       }
-      this.imageObject = ( _.unionBy( this.imageObject || [], this.imageObject, 'id' ) ) || [];
     });
   }
 
@@ -308,7 +312,7 @@ export class ArticuloComponent implements OnInit {
     //console.log( item )
     item.check = !item.check;
     for( let row of this.imageObject ) { if( row.id != item.id ) row.check = false; }
-    if( item.subCategoria.length === 0 ) this._router.navigate( [ "/pedido", item['id'] ] );
+    if( item.subCategoria.length === 0 ) this._router.navigate( [ "/pedidos", item['id'] ] );
   }
 
   SeleccionCategoria( obj:any ){
@@ -320,7 +324,7 @@ export class ArticuloComponent implements OnInit {
     if( obj.id ) this.query.where.pro_categoria = obj.id;
     this.listProductos = [];
     this.loader = true;
-    this._router.navigate( [ "/pedido", obj['id'] ] );
+    this._router.navigate( [ "/pedidos", obj['id'] ] );
   }
 
   handleSelectArticle( obj:any ){
@@ -355,19 +359,6 @@ export class ArticuloComponent implements OnInit {
       this.spinner.hide();
       this.listProductos = ( _.unionBy( this.listProductos || [], res.data, 'id' ) ) || [];
       this.listProductSlider = this.listProductos;
-      try {
-        this.listTallas = this.listProductos[0].listaTallas;
-      } catch (error) { }
-      /*for( let row of this.listProductos ){
-        if( !row.listColor22 ) row.listColor = [];
-        let lleno = []
-        for( let key of row.listColor ) {
-          console.log(":::", key)
-          lleno.push( ... key.tallaSelect || [] );
-        }
-        row.listColor22 = _.unionBy( row.listColor || [], lleno, 'tal_descripcion');
-      }*/
-
       if (res.data.length === 0) {
         this.notEmptyPost = false;
       }

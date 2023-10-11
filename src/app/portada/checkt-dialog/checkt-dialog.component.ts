@@ -20,6 +20,7 @@ export class ChecktDialogComponent implements OnInit {
   disabled:boolean = false;
   valor:number = 0;
   dataUser:any = {};
+  tiendaInfo:any = {};
 
   constructor(
     public dialogRef: MatDialogRef<ChecktDialogComponent>,
@@ -36,6 +37,7 @@ export class ChecktDialogComponent implements OnInit {
       if( !store ) return false;
       this.dataUser = store.user || {};
       if( store.usercabeza ) this.dataUser = store.usercabeza || {}
+      this.tiendaInfo = store.usercabeza || {};
     });
   }
 
@@ -62,8 +64,8 @@ export class ChecktDialogComponent implements OnInit {
     if( !validador ) { this.disabled = false; return false;}
     let data:any = {
       "ven_tipo": "whatsapp",
-      "usu_clave_int": 1,
-      "ven_usu_creacion": "joseeduar147@gmail.com",
+      "usu_clave_int": this.tiendaInfo.id,
+      "ven_usu_creacion": this.tiendaInfo.usu_email,
       "ven_fecha_venta": moment().format("DD/MM/YYYY"),
       "cob_num_cedula_cliente": this.data.cedula,
       "ven_nombre_cliente": this.data.nombre,

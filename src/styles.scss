@@ -16,6 +16,14 @@ html, body {
   src: url('./assets/fonts/axiforma/Axiforma-Regular.ttf');
 }
 
+.zoom-on-hover {
+  transition: transform 0.3s ease;
+}
+
+.zoom-on-hover:hover {
+  transform: scale(1.1); /* Cambia el valor para controlar la cantidad de zoom */
+}
+
 h1,
 h2,
 h3,

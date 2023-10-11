@@ -83,6 +83,7 @@ export class ListArticleStoreComponent implements OnInit {
           title: row.cat_nombre,
           subCategoria: await this.getSubCategory( row.id )
         };
+        if(datos.id === Number( this.activate.snapshot.params.idCategoria ) ) datos.check = true;
         this.listCategory.push(datos);
       }
       this.listCategory.unshift({
@@ -106,8 +107,9 @@ export class ListArticleStoreComponent implements OnInit {
     for( let row of this.listCategory ) { if( row.id != item.id ) row.check = false; }
     this.querysArticle.where.pro_categoria = item.id;
     if( this.querysArticle.where.pro_categoria == 0 ) delete this.querysArticle.where.pro_categoria;
+    this._router.navigate( [ "/listproduct/categoria", item['id'] ] );
     this.listArticle = [];
-    this.getArticle();
+    setTimeout(()=> this.getArticle(), 200 )
   }
 
   handleSearch(){
@@ -153,6 +155,7 @@ export class ListArticleStoreComponent implements OnInit {
   getArticle(){
     this.spinner.show();
     return new Promise( resolve =>{
+      if( this.activate.snapshot.params.idCategoria ) this.querysArticle.where.pro_categoria = this.activate.snapshot.params.idCategoria;
       if( this.dataStore.id ) this.querysArticle.where.pro_usu_creacion = this.dataStore.id;
       this._article.get( this.querysArticle ).subscribe( res =>{
         this.counts = res.count;

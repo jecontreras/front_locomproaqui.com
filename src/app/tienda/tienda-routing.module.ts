@@ -23,7 +23,7 @@ const routes: Routes = [
       { path: 'pedidos/inf/:id', component: ArticuloComponent },
       { path: 'articulo', component: PedidosComponent },
       //{ path: ':id', component: ArticuloComponent },
-      { path: 'pedido/:categoria', component: ArticuloComponent },
+      { path: 'pedidos/:categoria', component: ArticuloComponent },
       { path: 'productos/:id', component: ProductoViewComponent },
       { path: 'testimonio', component: TestimoniosComponent },
       { path: 'login', component: LoginsComponent },
@@ -35,7 +35,7 @@ const routes: Routes = [
       { path: 'infoSupplier', component: InfoSupplierComponent },
       { path: 'portal', component: PortalComponent },
       {path: 'listproduct/:idStore', component: ListArticleComponent },
-      {path: 'listproduct/:id', component: ListArticleComponent },
+      {path: 'listproduct/categoria/:idCategoria', component: ListArticleComponent },
       {path: 'listproduct', component: ListArticleComponent },
     ]
   },

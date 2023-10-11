@@ -309,7 +309,7 @@ export class PedidosComponent implements OnInit {
     //console.log( item )
     item.check = !item.check;
     for( let row of this.imageObject ) { if( row.id != item.id ) row.check = false; }
-    if( item.subCategoria.length === 0 ) this._router.navigate( [ "/pedido", item['id'] ] );
+    if( item.subCategoria.length === 0 ) this._router.navigate( [ "/pedidos", item['id'] ] );
   }
 
   SeleccionCategoria( obj:any ){
@@ -321,7 +321,7 @@ export class PedidosComponent implements OnInit {
     if( obj.id ) this.query.where.pro_categoria = obj.id;
     this.listProductos = [];
     this.loader = true;
-    this._router.navigate( [ "/pedido", obj['id'] ] );
+    this._router.navigate( [ "/pedidos", obj['id'] ] );
   }
 
   handleSelectArticle( obj:any ){
@@ -417,6 +417,7 @@ export class PedidosComponent implements OnInit {
   }
   agregar(obj) {
     obj.coinShop = this.coinShop;
+    obj.view = "store";
     const dialogRef = this.dialog.open(ViewProductosComponent, {
       width: '100%',
       maxHeight: "700%",
@@ -595,6 +596,11 @@ export class PedidosComponent implements OnInit {
 
   handleOpenStore( item ){
     this._router.navigate( [ "/listproduct", item['user']['usu_usuario'] ] );
+  }
+
+  handleImageError(event: any) {
+    event.target.src = 'assets/avatar.png'; // Ruta a una imagen predeterminada para mostrar en caso de error
+    event.target.alt = 'Imagen no disponible';
   }
 
 }

@@ -56,7 +56,12 @@ export class LoginsComponent implements OnInit {
         this._store.dispatch(accion);
         accion = new TokenAction( { token: res.data.tokens }, 'post');
         this._store.dispatch( accion );
-        this._router.navigate(['/articulo']);
+        try {
+          if( res.data.usu_perfil.prf_descripcion === 'vendedor') this._router.navigate(['/articulo']);
+          if( res.data.usu_perfil.prf_descripcion === 'proveedor') this._router.navigate(['/infoSupplier']);
+        } catch (error) {
+          this._router.navigate(['/pedido']);
+        }
         this._tools.basicIcons({header: "Hola Bienvenido!", subheader: `Hola ${ res.data.usu_nombre } Que tengas un buen dia`});
         setTimeout(()=>{
           location.reload();

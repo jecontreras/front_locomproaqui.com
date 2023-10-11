@@ -51,7 +51,7 @@
                   </tfoot>
                   <tbody>
                     <tr *ngFor="let row of dataTable.dataRows; let idx=index">
-                      
+
                       <td>
                         <button (click)="crear(row)" class="btn btn-primary btn-just-icon btn-round">
                           <i class="material-icons">remove_red_eye</i>
@@ -67,7 +67,7 @@
                       <td>{{row['cat_descripcion']}}</td>
                       <td>{{row['cat_padre']?.cat_nombre}}</td>
                       <td>{{ row['cat_activo'] == 0 ? 'Activo' : 'Eliminado' }}</td>
-                      
+
                     </tr>
                   </tbody>
                 </table>

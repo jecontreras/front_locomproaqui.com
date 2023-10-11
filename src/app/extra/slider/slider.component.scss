@@ -18,29 +18,35 @@
   object-fit: cover; /* Maintain the aspect ratio while covering the area */
 }
 
-/* Add some styles for the navigation arrows */
-.swiper-button-next,
-.swiper-button-prev {
-  position: absolute;
-  top: 50%;
-  width: 30px;
-  height: 30px;
-  margin-top: -15px;
-  z-index: 10;
-  cursor: pointer;
-  background-color: rgba(0, 0, 0, 0.5);
+/* Estilos para los botones de navegación */
+.swiper-button-next, .swiper-button-prev {
+  width: 40px;
+  height: 40px;
+  background-color: #ffffff;
   border-radius: 50%;
   display: flex;
   align-items: center;
   justify-content: center;
-  color: white;
-  font-size: 20px;
+  cursor: pointer;
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  transition: background-color 0.3s ease;
 }
 
-.swiper-button-next {
-  right: 10px;
+.swiper-button-next:hover, .swiper-button-prev:hover {
+  background-color: #e0e0e0;
 }
 
-.swiper-button-prev {
-  left: 10px;
+.swiper-button-next::before, .swiper-button-prev::before {
+  content: '';
+  width: 10px;
+  height: 10px;
+  border-left: 2px solid #333333;
+  border-top: 2px solid #333333;
+  transform: rotate(45deg);
+}
+
+.swiper-button-prev::before {
+  transform: rotate(-135deg);
 }

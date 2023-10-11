@@ -3,6 +3,14 @@
   font-size: 20px;
 }
 
+.checkTrue{
+  background: #e5e5e5;
+}
+
+.checkFalse{
+  background: red;
+}
+
 div.scrollmenu {
   background-color: #ebebeb;
   overflow: auto;
@@ -21,6 +29,64 @@ div.scrollmenu a {
 div.scrollmenu a:hover {
   background-color: #777;
 }
+
+.scrollmenu {
+  display: flex;
+  overflow-x: auto;
+  justify-content: center;
+}
+
+.menu-button {
+  margin: 0 10px;
+  white-space: nowrap;
+  padding: 10px;
+  border: none;
+  background-color: transparent;
+  color: #000; /* Color del texto normal */
+  transition: color 0.3s ease;
+}
+
+.menu-button:hover {
+  color: #FF0000; /* Color del texto al hacer hover */
+}
+
+.cambiaColor {
+  color: #00FF00; /* Color del texto para elementos seleccionados */
+}
+
+/* Ajustes para móviles */
+@media (max-width: 767px) {
+  .scrollmenu {
+    display: block;
+    text-align: center;
+  }
+}
+
+
+/* Estilo para los Cards */
+.mat-card.example-card {
+  width: 100%;
+  max-width: 250px; /* Tamaño fijo */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Sombra */
+  margin-bottom: 15px;
+  height: 400px;
+}
+
+/* Estilo para centrar las imágenes */
+.mat-card.example-card .img-contenedor {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 200px;; /* Tamaño fijo para la imagen */
+}
+
+.mat-card.example-card img.imgProductos {
+  max-width: 100%;
+  max-height: 100%;
+  object-fit: cover;
+}
+
+
 
 
 .estiloCategoria{

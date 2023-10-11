@@ -79,7 +79,7 @@
                           <i class="material-icons">add_circle_outline</i>
                       </button>
                   </div>
-  
+
                 </div>
               </div>
               <div class="search-results col-12 row" infiniteScroll [infiniteScrollDistance]="3" [infiniteScrollThrottle]="50"
@@ -100,7 +100,7 @@
                     </tfoot>
                     <tbody>
                       <tr *ngFor="let row of dataTable.dataRows; let idx=index">
-                        
+
                         <td>
                           <button (click)="crear(row)" class="btn btn-primary btn-just-icon btn-round">
                             <i class="material-icons">remove_red_eye</i>

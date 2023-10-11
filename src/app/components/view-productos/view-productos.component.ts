@@ -217,9 +217,12 @@ export class ViewProductosComponent implements OnInit {
     }else{
       encuanto = this.data.encuanto || precio;
     }*/
-    let codigoImg:any = this.data.listColor.find( ( row:any )=> row.talla == this.data.color );
-    if( !codigoImg ) codigoImg = "NO CODIGO";
-    else codigoImg = codigoImg['id']
+    let codigoImg:string
+    try {
+      codigoImg = this.data.listColor.find( ( row:any )=> row.talla == this.data.color );
+      if( !codigoImg ) codigoImg = "NO CODIGO";
+      else codigoImg = codigoImg['id']
+    } catch (error) { codigoImg = "NO CODIGO"; }
     let data = {
       articulo: this.data.id,
       codigo: this.data.pro_codigo,

@@ -240,16 +240,17 @@ export class CatalogoComponent implements OnInit {
       "ven_precio": this.data.pro_uni_venta,
       "ven_total": this.data.pro_uni_venta || 0,
       "ven_ganancias": 0,
-      "ven_observacion": "ok la talla es " + this.form.talla + " y el color " + this.form.color,
-      "nombreProducto": "ok la talla es " + this.form.talla + " y el color " + this.form.color,
+      "ven_observacion": "talla" + this.form.talla + " color " + this.form.color,
+      "nombreProducto": this.data.pro_nombre,
       "ven_estado": 0,
       "create": moment().format("DD/MM/YYYY"),
-      "apartamento": '',
-      "departamento":'',
-      "ven_imagen_producto": this.data.foto
+      "apartamento": this.form.apartamento || '',
+      "departamento": this.form.ciudad || '',
+      "ven_imagen_producto": this.data.foto,
+      "pro_clave_int": this.data.id,
     };
 
-    this._ventas.create( formsData ).subscribe(( res:any )=>{
+    this._ventas.create2( formsData ).subscribe(( res:any )=>{
       this._tools.presentToast("Exitoso Tu pedido esta en proceso. un accesor se pondra en contacto contigo!");
     },( error:any )=> { } );
 

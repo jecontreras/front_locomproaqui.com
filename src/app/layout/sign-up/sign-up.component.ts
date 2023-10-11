@@ -177,8 +177,14 @@ export class SignUpComponent implements OnInit {
         this._store.dispatch(accion);
         accion = new TokenAction({ token: res.data.tokens }, 'post');
         this._store.dispatch(accion);
-        if( this.data.rol == 'proveedor' ) this._router.navigate(['/config/perfil']);
-        else this._router.navigate(['/pedidos']);
+        try {
+          if( res.data.usu_perfil.prf_descripcion === 'vendedor') this._router.navigate(['/articulo']);
+          if( res.data.usu_perfil.prf_descripcion === 'proveedor') this._router.navigate(['/infoSupplier']);
+        } catch (error) {
+          this._router.navigate(['/pedido']);
+        }
+        /*if( this.data.rol == 'proveedor' ) this._router.navigate(['/config/perfil']);
+        else this._router.navigate(['/pedidos']);*/
         this._tools.basicIcons({ header: "Hola Bienvenido!", subheader: `Hola ${res.data.usu_nombre} Que tengas un buen dia` });
         accion = new UserCabezaAction( this.dataUser, 'drop' );
         this._store.dispatch(accion);

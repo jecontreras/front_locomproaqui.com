@@ -30,7 +30,7 @@
                     <i class="material-icons">search</i>
                   </button>
                 </div>
-  
+
               </div>
               <div class="search-results col-12 row" infiniteScroll [infiniteScrollDistance]="3"
                 [infiniteScrollThrottle]="50" (scrolled)="onScroll()">
@@ -49,7 +49,7 @@
                     </tfoot>
                     <tbody>
                       <tr *ngFor="let row of dataTable.dataRows; let idx=index">
-  
+
                         <td>
                           <button (click)="crear(row)" class="btn btn-primary btn-just-icon btn-round">
                             <i class="material-icons">remove_red_eye</i>

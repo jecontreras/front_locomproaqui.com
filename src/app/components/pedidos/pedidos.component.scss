@@ -685,3 +685,19 @@ li {
     bottom: -1px;
     right: 0;
 }
+
+.img-profile {
+  width: 70px;
+  max-height: 70px;
+  min-height: 70px;
+}
+
+.img-content {
+  height: 300px;
+  width: auto;
+}
+
+.img-content:hover {
+  border-radius: 15px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+}

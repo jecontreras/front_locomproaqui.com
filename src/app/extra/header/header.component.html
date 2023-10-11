@@ -361,56 +361,41 @@
       </div>-->
       <app-menu-lateral></app-menu-lateral>
     </nav>
-    <div class="container">
-      <div class="d-flex justify-content-center" *ngIf="( dataUser.id || userPr.id ) && ( routName !== '/info' ) && ( routName !== '/infoSupplier' ) && ( routName !== '/portal' ) && ( routName !== '/registro' ) && ( routName !== '/login' ) && ( routName !== '/articulo' ) ">
-        <div style="width: 100%;">
-          <div class="d-flex justify-content-around" *ngIf="rolUser1 != 'proveedor'">
-            <div>
-              <button type="button" class="btn btn-primary" (click)="openTienda('distribuidor')">Ver como
-                Distribuidor</button>
-            </div>
-            <div></div>
-            <div>
-              <button type="button" class="btn btn-success" (click)="openTienda('visitante')">Ver como
-                Visitante</button>
-            </div>
+    <div class="container" *ngIf="( routName !== '/login' ) &&  (routName !== '/registro' ) && dataUser.id ">
+      <div class="row justify-content-center" style="width: 100%;">
+        <div class="col-12 col-md-6">
+          <!-- Botones -->
+          <div class="d-flex justify-content-between mb-3">
+            <button type="button" class="btn btn-primary" (click)="openTienda('distribuidor')">Ver como Distribuidor</button>
+            <button type="button" class="btn btn-success" (click)="openTienda('visitante')">Ver como Visitante</button>
           </div>
-          <div class="d-flex justify-content-around" *ngIf="rolUser1 == 'proveedor'">
-            <div>
-              <button type="button" class="btn btn-primary" (click)="openTienda('proveedor')">Ver como
-                Proveedor</button>
-            </div>
-            <div></div>
-            <div>
-              <button type="button" class="btn btn-success" (click)="openTienda('distribuidorpr')">Ver como
-                Distribuidor</button>
+          <!-- Bienvenida -->
+          <h2 class="text-center text-dark altos titulo1" *ngIf="dataUser.id">
+            BIENVENIDO A TU OFICINA VIRTUAL " {{ dataUser.usu_usuario }} "
+          </h2>
+          <h2 class="text-center text-dark altos titulo1" *ngIf="!dataUser.id">
+            BIENVENIDO A {{ userId.usu_usuario || 'LOKOMPROAQUI'}}
+          </h2>
+        </div>
+      </div>
+
+      <!-- Alertas -->
+      <div class="row">
+        <div class="col-12">
+          <div *ngFor="let item of listAlert" class="alert alert-warning alert-dismissible fade show">
+            <div class="d-flex align-items-center">
+              <img class="foto" *ngIf="item.foto" [src]="item.foto">
+              <strong>{{ item.titulo }}!</strong> {{ item.descripcion }}
+              <button *ngIf="item.tipoDe == 1" (click)="crear(item)" class="btn btn-primary btn-sm ml-2">Crear Comentario</button>
+              <button type="button" class="close" data-dismiss="alert" (click)="closeAlert(item)" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
             </div>
           </div>
         </div>
       </div>
-      <div class="d-flex justify-content-center" *ngIf="( routName !== '/info' ) && ( routName !== '/infoSupplier' ) && ( routName !== '/portal' ) && ( routName !== '/registro' ) && ( routName !== '/login' ) && ( routName !== '/articulo' ) ">
-        <h2 *ngIf="dataUser.id" class="text-center text-dark altos titulo1">
-          BIENVENIDO A TU OFICINA VIRTUAL " {{ dataUser.usu_usuario }} "
-        </h2>
-        <h2 *ngIf="!dataUser.id" class="text-center text-dark altos titulo1">
-          BIENVENIDO A {{ userId.usu_usuario || 'LOKOMPROAQUI'}}
-        </h2>
-      </div>
     </div>
-    <div class="alert alert-warning alert-dismissible fade show" role="alert" *ngFor="let item of listAlert">
-      <div class="d-flex justify-content-center">
-        <div style="width: 100%;">
-          <img class="foto" *ngIf="item.foto" [src]="item.foto"> <strong>{{ item.titulo }}!</strong> {{
-          item.descripcion
-          }}.
-          <button *ngIf="item.tipoDe == 1" (click)="crear( item )" class="btn btn-primary btn-just-icon btn-round"
-            mat-raised-button mat-min-fab>Crear Comentario</button>
-          <button type="button" class="close" data-dismiss="alert" (click)="closeAlert( item )" aria-label="Close">
-            <span aria-hidden="true">&times;</span>
-          </button>
-        </div>
-      </div>
-    </div>
+
     <ng-content> </ng-content>
 
     <app-footer *ngIf="( routName !== '/login' ) &&  (routName !== '/registro' )"></app-footer>

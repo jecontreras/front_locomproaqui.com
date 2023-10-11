@@ -17,6 +17,9 @@ import SwiperCore , {
 import { BehaviorSubject } from "rxjs";
 import Swiper from "swiper/types/swiper-class";
 import { Router } from '@angular/router';
+import { ViewProductosComponent } from 'src/app/components/view-productos/view-productos.component';
+import { MatDialog } from '@angular/material';
+import { ToolsService } from 'src/app/services/tools.service';
 
 // install Swiper components
 SwiperCore.use([
@@ -73,7 +76,9 @@ export class SliderComponent implements OnInit {
     private _productos: ProductoService,
     private cd: ChangeDetectorRef,
     private _router: Router,
-    private ngZone: NgZone
+    private ngZone: NgZone,
+    public dialog: MatDialog,
+    public _tools: ToolsService
   ) { }
 
   ngOnInit(): void {
@@ -180,7 +185,22 @@ export class SliderComponent implements OnInit {
 
   handleSelect( item ){
     console.log("***176", item)
-    this._router.navigate( [ "/pedido", item['id'] ] );
+    this._router.navigate( [ "/listproduct/categoria", item['id'] ] );
+  }
+
+  handleView(obj) {
+    obj.coinShop = false;
+    obj.view = "store";
+    const dialogRef = this.dialog.open(ViewProductosComponent, {
+      width: '100%',
+      maxHeight: "700%",
+      data: { datos: obj }
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      console.log(`Dialog result: ${result}`);
+      //this._router.navigate(['/pedidos']);
+    });
   }
 
 }
