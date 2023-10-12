@@ -438,5 +438,11 @@ export class ViewProductosComponent implements OnInit {
     window.open(this.data.urlMedios)
   }
 
+  handleRelation(){
+    console.log( this.data )
+    this._router.navigate( [ "/listproduct/categoria", this.data['pro_categoria'] ] );
+    this.dialogRef.close();
+  }
+
 
 }

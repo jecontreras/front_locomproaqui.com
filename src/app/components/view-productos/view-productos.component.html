@@ -243,21 +243,24 @@
     {{ titleButton }}
   </button>
 
-  <div class="col-6" *ngIf="disabledView === 'createPrice'">
+  <!--<div class="col-6" *ngIf="disabledView === 'createPrice'">
     <label>Lo Vendes</label>
     <input currencyMask [(ngModel)]="data.idPrice" class="form-control form-control-sm" [options]="opcionCurrencys" (blur)="handleUpdatePrice()" />
-  </div>
+  </div>-->
 
-  <button type="button" class="btn btn-success" *ngIf="disabledView === 'createPrice'">
-    Actualizar
+  <button type="button" class="btn btn-success" *ngIf="disabledView === 'createPrice'" (click)="handleAddStore()">
+    Actualizar Precio
   </button>
 
   <button cdkFocusInitial (click)="handleAddStore()" type="button" class="btn btn-primary" *ngIf="disabledView === 'store' && dataUser.id">
     Agregar a mi Tienda
   </button>
 
-  <button type="button" class="btn btn-primary" *ngIf="disabledView === 'createPrice'" (click)="handleDroppArticle()">
+  <button type="button" class="btn btn-danger" *ngIf="disabledView === 'createPrice'" (click)="handleDroppArticle()">
     Quitar de mi lista
+  </button>
+  <button type="button" class="btn btn-warning" *ngIf="disabledView === 'createPrice'" (click)="handleRelation()">
+    ver productos similares
   </button>
 </mat-dialog-actions>
 

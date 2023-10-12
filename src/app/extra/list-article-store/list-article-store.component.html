@@ -47,7 +47,7 @@
             <div class="col-12">
               <ul class="aa-product-catg">
                 <!-- start single product item -->
-                <li *ngFor="let item of listArticle" id="anchosLi" (click)="handleArticle(item)" style="    height: 325px;">
+                <li *ngFor="let item of listArticle" id="anchosLi" (click)="handleArticle(item)" style="    height: 325px; padding: 2px; border-radius: 20px;" class="mat-elevation-z8">
                   <figure class="img-contenedor" style="height: 315px;">
                     <a class="aa-product-img pointer"><img class="anchosProductos" [src]="item.foto" style="height: 250px;"
                         alt="polo shirt img"></a>
@@ -55,7 +55,6 @@
                           class="fa fa-shopping-cart"></span>Ver Articulo</a>
                     <figcaption>
                       <h4 class="aa-product-title"><a href="#">{{ item.pro_nombre }}</a></h4>
-                      <span class="aa-product-price"><del>{{ _formato.monedaChange( 3, 2, item.pro_vendedorCompra*2 ) }}</del></span>
                       <span class="aa-product-price">{{ _formato.monedaChange( 3, 2, ( item.pro_vendedorCompra || item.pro_uni_venta || 0 ) ) }}</span>
                     </figcaption>
                   </figure>
@@ -67,7 +66,6 @@
                         class="fa fa-search"></span></a>
                   </div>-->
                   <!-- product badge -->
-                  <span class="aa-badge aa-sale" href="#">SALE!</span>
                 </li>
               </ul>
             </div>
