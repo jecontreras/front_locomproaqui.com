@@ -440,7 +440,7 @@ export class ViewProductosComponent implements OnInit {
 
   handleRelation(){
     console.log( this.data )
-    this._router.navigate( [ "/listproduct/categoria", this.data['pro_categoria'] ] );
+    //this._router.navigate( [ "/listproduct/categoria", this.data['pro_categoria'] ] );
     this.dialogRef.close();
   }
 

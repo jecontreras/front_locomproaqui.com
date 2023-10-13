@@ -234,7 +234,7 @@
     </div>-->
 </mat-dialog-content>
 
-<mat-dialog-actions class="custom-dialog-actions" align="center">
+<mat-dialog-actions class="custom-dialog-actions" align="center" style="padding-bottom: 20px;">
   <button (click)="shareUrl()" type="button" class="btn btn-success" *ngIf="(disabledView !== 'store') && (disabledView !== 'createPrice')">
     Compartir link
   </button>
@@ -259,8 +259,6 @@
   <button type="button" class="btn btn-danger" *ngIf="disabledView === 'createPrice'" (click)="handleDroppArticle()">
     Quitar de mi lista
   </button>
-  <button type="button" class="btn btn-warning" *ngIf="disabledView === 'createPrice'" (click)="handleRelation()">
-    ver productos similares
-  </button>
+  <a target="_blank" [routerLink]="[ '/listproduct/categoria', data['pro_categoria'].id ] " class="btn btn-warning"> ver productos similares </a>
 </mat-dialog-actions>
 

@@ -44,11 +44,11 @@
                   <div class="card-header bg-transparent" style="height: 90px;">
                     <div class="d-flex flex-row bd-highlight mb-3">
                       <div class="p-2 bd-highlight">
-                        <img [src]="item['user']?.usu_imagen" alt="" class="rounded-circle img-profile" (error)="handleImageError($event)">
+                        <img [src]="dataUser.usu_imagen" alt="" class="rounded-circle img-profile" (error)="handleImageError($event)">
                       </div>
                       <div class="p-2 bd-highlight" style="margin: auto; margin-left: -10px;">
-                        <h6>Hola, {{ item['user']?.usu_nombre }}</h6>
-                        <h6>Proveedor</h6>
+                        <h6>Hola, {{ dataUser.usu_nombre }}</h6>
+                        <h6>Cliente Premium</h6>
                       </div>
                     </div>
                   </div>
@@ -57,14 +57,16 @@
                     <section class="card-text">
                       <div class="container">
                         <div class="row" style="margin: 5px; margin-top: 20px;">
-                          <figure class="figure pointer">
-                            <img [src]="item.article[0].foto" class="img-thumbnail figure-img img-fluid rounded img-content" (click)="handleSelectArticle(item.article[0])">
-                            <figcaption class="figure-caption text-center">{{ item.article[0].title }}</figcaption>
+                          <figure class="figure pointer" (click)="handleSelectArticle(item['article'][0])">
+                            <img class="img-fluid rounded zoom-on-hover" [src]="item.article[0].foto" alt="Imagen de artículo" style="height: 300px;">
+                            <figcaption class="figure-caption text-center">{{ item['article'][0].title }}</figcaption>
                           </figure>
                           <h6 style="text-align: center;">{{ item.article[0].title }}</h6>
                           <div class="col-12" style="margin: 16px 0;">
                             <p style="text-align: center; font-size: 10px; margin-bottom: 10px;">{{ item.title }}</p>
-                            <button (click)="handleSelectArticle(item.article[0])  " class="btn btn-primary" type="button" style="width: 100% !important; padding: 10px;">Vender Este Producto</button>
+                            <section style="text-align: center;">
+                              <button routerLink="/config/cobros" class="btn btn-primary" type="button" style="padding: 10px 71px; text-align: center;">Ver</button>
+                            </section>
                           </div>
                         </div>
                       </div>
@@ -87,7 +89,7 @@
                       </figure>
                     </div>
                     <div class="text-left mt-2">
-                      <a class="pointer text-primary" (click)="handleOpenStore(item)">Ver Más</a>
+                      <a class="pointer text-primary" target="_blank" [routerLink]="[ '/listproduct',item['user']['usu_usuario'] ]">Ver Más</a>
                     </div>
                   </div>
                 </div>
@@ -147,9 +149,9 @@
                     <section class="card-text">
                       <div class="container">
                         <div class="row" style="margin: 5px; margin-top: 20px;">
-                          <figure class="figure pointer">
-                            <img [src]="item.article[0].foto" class="img-thumbnail figure-img img-fluid rounded img-content" (click)="handleSelectArticle(item.article[0])">
-                            <figcaption class="figure-caption text-center">{{ item.article[0].title }}</figcaption>
+                          <figure class="figure pointer" (click)="handleSelectArticle(item['article'][0])">
+                            <img class="img-fluid rounded zoom-on-hover" [src]="item.article[0].foto" alt="Imagen de artículo" style="height: 300px;">
+                            <figcaption class="figure-caption text-center">{{ item['article'][0].title }}</figcaption>
                           </figure>
                           <h6 style="text-align: center;">{{ item.article[0].title }}</h6>
                           <div class="col-12" style="margin: 16px 0;">
@@ -168,7 +170,7 @@
             <div class="col-12">
               <div class="d-flex justify-content-center">
                 <div>
-                  <a [routerLink]="[ '/listproduct' ]" class="pointer text-primary">VER MÁS PUBLICACIONES </a>
+                  <a [routerLink]="[ '/listproduct' ]" target="_blank" class="pointer text-primary">VER MÁS PUBLICACIONES </a>
                 </div>
               </div>
             </div>

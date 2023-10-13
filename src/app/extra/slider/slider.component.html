@@ -40,18 +40,17 @@
               (click)="handleView( item )"   tabindex="-1">{{ (item.pro_nombre.length > 10) ? (item.pro_nombre | slice:0:10) + '...' : item.pro_nombre }} </a>
 
               <div class="poly-price poly-column__price">
-                  <s class="andes-money-amount andes-money-amount--previous andes-money-amount--cents-comma">
-                      {{ item.pro_uni_venta * 2 }}
-                  </s>
                   <div class="poly-price-current">
                       <span class="andes-money-amount andes-money-amount--cents-superscript">
-                          {{ _tools.monedaChange( 3,2,( item.pro_uni_venta || 0 ) )  }}
+                          Tu lo Vendes: {{ _tools.monedaChange( 3,2,( item.pro_uni_venta || 0 ) )  }}
                       </span>
-                      <span class="andes-money-amount__discount">20</span>
+                      <span class="andes-money-amount andes-money-amount--cents-superscript">
+                        Tu le Sales: {{ _tools.monedaChange( 3,2,( item.pro_vendedorCompra || 0 ) )  }}
+                    </span>
                   </div>
               </div>
               <section class="poly-text poly-shipping poly-column__shipping poly-text-positive poly-fw-semibold poly-fs-s" style="text-align: center;">
-                  <a class="pointer text-primary" style="font-size: 15px;" (click)="handleSelect( { id: item.pro_categoria.id})" >Ver Más</a>
+                  <a class="pointer text-primary" style="font-size: 15px;" target="_blank" [routerLink]="[ '/listproduct/categoria', item.pro_categoria.id ] " >Ver Más</a>
               </section>
           </div>
       </div>
