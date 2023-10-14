@@ -173,8 +173,10 @@ export class CatalogoComponent implements OnInit {
       } catch (error) { }
       this.urlFoto = this.data.foto;
       for( let row of this.data.listColor ){
+        row.tal_descripcion = Number( row.tal_descripcion );
         if( row.galeriaList)for( let key of row.galeriaList ) this.listGaleria.push( { ... key, name: row.talla } );
       }
+      this.data.listColor = _.orderBy( this.data.listColor, ['tal_descripcion'], ['desc']);
       if( this.data.galeria ) for( let key of this.data.galeria ) this.listGaleria.push( { ...key, foto:key.pri_imagen  } );
       if( this.data.listaGaleria ) for( let key of this.data.listaGaleria ) this.listGaleria.push( { ...key, foto:key.foto  } );
       for( let row of this.listGaleria ) this.imageObject.push( {
@@ -265,7 +267,7 @@ export class CatalogoComponent implements OnInit {
     if( !this.form.celular ) { this._tools.tooast( { title: "Error falta el celular ( whatsapp)", icon: "error"}); return false; }
     if( !this.form.direccion ) { this._tools.tooast( { title: "Error falta la direccion ", icon: "error"}); return false; }
     if( !this.form.ciudad  ) { this._tools.tooast( { title: "Error falta la ciudad ", icon: "error"}); return false; }
-    if( !this.form.talla ) { this._tools.tooast( { title: "Error falta la talla ", icon: "error"}); return false; }
+    if( ( this.data['pro_categoria']?.id == 16 ) || ( this.data['pro_categoria']?.id == 14 ) || ( this.data['pro_categoria']?.id == 84 ) ) if( !this.form.talla ) { this._tools.tooast( { title: "Error falta la talla ", icon: "error"}); return false; }
     if( !this.form.color ) { this._tools.tooast( { title: "Error falta el color ", icon: "error"}); return false; }
     return true;
   }

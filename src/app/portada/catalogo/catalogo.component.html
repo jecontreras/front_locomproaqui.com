@@ -218,12 +218,15 @@ style="font-size: 178%; line-height: 1; border-style: none; border-width: medium
 
 <div class=element-wrapper>
 <div
-style="font-size: 178%; line-height: 1; color: white; margin: 10px 0px 0px; padding: 5px; text-shadow: transparent 0px 0px 0px;">
+  *ngIf="( data['pro_categoria']?.id == 16 ) || ( data['pro_categoria']?.id == 14 ) || ( data['pro_categoria']?.id == 84 )"
+  style="font-size: 178%; line-height: 1; color: white; margin: 10px 0px 0px; padding: 5px; text-shadow: transparent 0px 0px 0px;">
 <h3 style="text-align: center;"><strong class=ql-font-montserrat style="color: rgb(7, 7, 7);">TALLAS DISPONIBLES</strong></h3>
 <p *ngIf="data['pro_categoria']?.id == 16" style="text-align: center;"><span style="background-color: rgb(0, 0, 0); font-size: 24px;">37 | 38 | 39</span><span
 style="background-color: rgb(0, 0, 0); font-size: 24px; color: rgb(255, 255, 255);"> | 40 | 41 | 42 | 43</span>
 <p *ngIf="data['pro_categoria']?.id == 14" style="text-align: center;"><span style="background-color: rgb(0, 0, 0); font-size: 24px;">6 | 8 | 10</span><span
   style="background-color: rgb(0, 0, 0); font-size: 24px; color: rgb(255, 255, 255);"> | 11 | 12 | 14 | 16</span>
+<p *ngIf="data['pro_categoria']?.id == 84" style="text-align: center;"><span style="background-color: rgb(0, 0, 0); font-size: 24px;">6 | 8 | 10</span><span
+  style="background-color: rgb(0, 0, 0); font-size: 24px; color: rgb(255, 255, 255);"> | 12 | 14 | 16 </span>
 <h3><br></h3>
 </div>
 </div>
@@ -240,7 +243,7 @@ style="padding: 0px; background-size: auto; background-repeat: no-repeat;">
 </div>
 </div>
 <div class=element-wrapper>
-<div class="btn-container el-16716">
+<div class="btn-container el-16716" *ngIf="( data['pro_categoria']?.id == 16 ) || ( data['pro_categoria']?.id == 14 ) || ( data['pro_categoria']?.id == 84 )">
 <style>
   .el-16716 {
 align-items: stretch;
@@ -399,7 +402,7 @@ style="line-height: 1; margin: 10px 0px; padding: 5px; text-shadow: transparent 
           style="background-color: rgb(255, 255, 255); color: rgb(37, 42, 50); text-align: left; font-weight: normal; font-style: normal;">
       </div>
     </div>
-    <div>
+    <div *ngIf="( data['pro_categoria']?.id == 16 ) || ( data['pro_categoria']?.id == 14 ) || ( data['pro_categoria']?.id == 84 )">
       <div class="form-element required input" style="margin: 10px 0px 0px;" index=3 step=1 >
         <label class=fe-label style="color: rgb(37, 42, 50); text-align: left; font-weight: normal; font-style: normal;">Talla &nbsp;
         </label>
@@ -647,55 +650,55 @@ align-items: flex-end;
 <style id=el-hover-styles></style>
 
   <!-- Apps Body -->
-  <div>
-    <div class="aa-product-review-area">
-      <h4>Detalles</h4>
-      <div class="row">
-        <div class="col-12">
-          <div class="d-flex justify-content-center">
-            <div>
-              <img src="./assets/img/envios.png" style="width: 320px;">
-              <img src="./assets/img/compra.jpg" style="width: 320px;">
-              <img src="./assets/img/comercio.png" style="width: 320px;">
+  <div class="container">
+    <div>
+      <div class="aa-product-review-area">
+        <h4>Detalles</h4>
+        <div class="row">
+          <div class="col-12">
+            <div class="d-flex justify-content-center">
+              <div>
+                <img src="./assets/img/envios.png" style="width: 320px;">
+                <img src="./assets/img/compra.jpg" style="width: 320px;">
+                <img src="./assets/img/comercio.png" style="width: 320px;">
+              </div>
             </div>
           </div>
-        </div>
-        <div class="col-12" *ngIf="data['pro_categoria']?.pro_categoria == 16">
-          <h5> 🚚 ENVIO NACIONALES Y PAGAS CUANDO RECIBES EL PRODUCTO 🚚
-            Nuestro tallaje es nacional, un poco pequeño sugerimos solicitar una talla más a la que te de en
-            la siguiente tabla
-          </h5>
-        </div>
-        <div class="col-12" *ngIf="data['pro_categoria']?.id == 16">
-          <img src="./assets/img/tallas.jpg" style="width: 320px;">
+          <div class="col-12" *ngIf="data['pro_categoria']?.pro_categoria == 16">
+            <h5> 🚚 ENVIO NACIONALES Y PAGAS CUANDO RECIBES EL PRODUCTO 🚚
+              Nuestro tallaje es nacional, un poco pequeño sugerimos solicitar una talla más a la que te de en
+              la siguiente tabla
+            </h5>
+          </div>
+          <div class="col-12" *ngIf="data['pro_categoria']?.id == 16">
+            <img src="./assets/img/tallas.jpg" style="width: 320px;">
+          </div>
         </div>
       </div>
-    </div>
-    <div class="aa-product-review-area">
-      <h4>Comentarios</h4>
-      <ul class="aa-review-nav">
-        <li *ngFor="let item of listComentario ">
-          <div class="media">
-            <div class="media-left">
-              <a href="#">
-                <img class="media-object" style="    width: 60px;" [src]="item.foto" alt="girl image">
-              </a>
-            </div>
-            <div class="media-body">
-              <h4 class="media-heading"><strong>{{ item.nombre }}</strong> - <span> {{ item.fecha }} </span>
-              </h4>
-              <div class="aa-product-rating">
-                <span class="fa fa-star"></span>
-                <span class="fa fa-star"></span>
-                <span class="fa fa-star"></span>
-                <span class="fa fa-star"></span>
-                <span class="fa fa-star-o"></span>
+      <div class="aa-product-review-area">
+        <h4>Comentarios</h4>
+        <ul class="testimonial-list">
+          <li *ngFor="let item of listComentario">
+            <div class="testimonial-item">
+              <div class="testimonial-image">
+                <img src="{{ item.foto }}" alt="{{ item.nombre }}">
               </div>
-              <p>{{ item.descripcion }}</p>
+              <div class="testimonial-content">
+                <h4 class="testimonial-author">{{ item.nombre }}</h4>
+                <p class="testimonial-date">{{ item.fecha }}</p>
+                <div class="testimonial-rating">
+                  <span class="fa fa-star"></span>
+                  <span class="fa fa-star"></span>
+                  <span class="fa fa-star"></span>
+                  <span class="fa fa-star"></span>
+                  <span class="fa fa-star-o"></span>
+                </div>
+                <p class="testimonial-description">{{ item.descripcion }}</p>
+              </div>
             </div>
-          </div>
-        </li>
-      </ul>
+          </li>
+        </ul>
+      </div>
     </div>
   </div>
 

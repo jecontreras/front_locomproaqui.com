@@ -151,7 +151,7 @@ export class PedidosComponent implements OnInit {
   }
 
   getId( id:string ){
-    this._productos.get( { where: { id: id } } ).subscribe(res=>{
+    this._productos.get( { where: { id: id, user: this.dataUser.id } } ).subscribe(res=>{
       res = res.data[0];
       if( res ) this.agregar( res );
     })
@@ -324,8 +324,9 @@ export class PedidosComponent implements OnInit {
     this._router.navigate( [ "/pedidos", obj['id'] ] );
   }
 
-  handleSelectArticle( obj:any ){
-    this.agregar( obj );
+  async handleSelectArticle( obj:any ){
+    this.getId( obj.id );
+    //this.agregar( obj );
   }
 
 
