@@ -57,10 +57,12 @@
                     <section class="card-text">
                       <div class="container">
                         <div class="row" style="margin: 5px; margin-top: 20px;">
-                          <figure class="figure pointer" (click)="handleSelectArticle(item['article'][0])">
-                            <img class="img-fluid rounded zoom-on-hover" [src]="item.article[0].foto" alt="Imagen de artículo" style="height: 300px;">
-                            <figcaption class="figure-caption text-center">{{ item['article'][0].title }}</figcaption>
-                          </figure>
+                          <div class="d-flex justify-content-center">
+                            <figure class="figure pointer" (click)="handleSelectArticle(item['article'][0])">
+                              <img class="img-fluid rounded zoom-on-hover" [src]="item.article[0].foto" alt="Imagen de artículo" style="height: 300px;">
+                              <figcaption class="figure-caption text-center">{{ item['article'][0].title }}</figcaption>
+                            </figure>
+                          </div>
                           <h6 style="text-align: center;">{{ item.article[0].title }}</h6>
                           <div class="col-12" style="margin: 16px 0;">
                             <p style="text-align: center; font-size: 10px; margin-bottom: 10px;">{{ item.title }}</p>
@@ -139,7 +141,7 @@
                         <img [src]="item['user']?.usu_imagen" alt="" class="rounded-circle img-profile" (error)="handleImageError($event)">
                       </div>
                       <div class="p-2 bd-highlight" style="margin: auto; margin-left: -10px;">
-                        <h6>Hola, {{ item['user']?.usu_nombre }}</h6>
+                        <h6>{{ item['user']?.usu_nombre }}</h6>
                         <h6>Proveedor</h6>
                       </div>
                     </div>
@@ -149,10 +151,12 @@
                     <section class="card-text">
                       <div class="container">
                         <div class="row" style="margin: 5px; margin-top: 20px;">
-                          <figure class="figure pointer" (click)="handleSelectArticle(item['article'][0])">
-                            <img class="img-fluid rounded zoom-on-hover" [src]="item.article[0].foto" alt="Imagen de artículo" style="height: 300px;">
-                            <figcaption class="figure-caption text-center">{{ item['article'][0].title }}</figcaption>
-                          </figure>
+                          <div class="d-flex justify-content-center">
+                            <figure class="figure pointer" (click)="handleSelectArticle(item['article'][0])">
+                              <img class="img-fluid rounded zoom-on-hover" [src]="item.article[0].foto" alt="Imagen de artículo" style="height: 300px;">
+                              <figcaption class="figure-caption text-center">{{ item['article'][0].title }}</figcaption>
+                            </figure>
+                          </div>
                           <h6 style="text-align: center;">{{ item.article[0].title }}</h6>
                           <div class="col-12" style="margin: 16px 0;">
                             <p style="text-align: center; font-size: 10px; margin-bottom: 10px;">{{ item.title }}</p>

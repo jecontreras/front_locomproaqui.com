@@ -1,28 +1,9 @@
 <div mat-dialog-title>
-  <!--<div class="d-flex bd-highlight">
-    <div class="p-2 flex-grow-1 bd-highlight">
-      <h3>Datos {{ data.pro_nombre }}</h3>
-    </div>
-    <div class="p-2 bd-highlight ">
-        <button (click)="shareUrl( )" type="button" class="btn btn-success" *ngIf="( disabledView !== 'store' )">
-            Compartir link
-        </button>
-      &nbsp;
-      <button (click)="openUrl( )" type="button" class="btn btn-primary" *ngIf="dataUser.id">
-        Piezas gráficas
-      </button>
-    </div>
-    <div class="p-2 bd-highlight">
-      <button type="button" class="btn btn-danger" mat-dialog-close>
-        X
-      </button>
-    </div>
-  </div>-->
   <div class="row">
     <div class="col-12 shadow" style="border-radius: 20px;">
-      <div class="d-flex bd-highlight p-3">
+      <div class="d-flex bd-highlight p-2" style="padding-top: 0px;">
         <div class="p-2 flex-grow-1 bd-highlight">
-          <h1 style="text-align: center;" class="fw-bold">{{ data.pro_nombre | slice: 0:12 }} ... </h1>
+          <h3 style="text-align: center;" class="fw-bold">{{ data.pro_nombre | slice: 0:12 }} ... </h3>
         </div>
         <div class="p-2 bd-highlight">
           <button type="button" class="btn btn-danger" mat-dialog-close>
@@ -32,19 +13,19 @@
       </div>
     </div>
     <div class="col-6">
-      <section style="text-align: center; border-radius: 20px;" class="shadow p-3">
-        <h3 class="" *ngIf="data.precio_vendedor">
+      <section style="text-align: center; border-radius: 20px; padding-top: 5px;" class="shadow p-2">
+        <h4 class="" *ngIf="data.precio_vendedor">
           Precio a distribuidor:
-        </h3>
-        <h3>{{ _tools.monedaChange( 3, 2, ( coinShop == true ? ( data.pro_vendedorCompra || data.precio_vendedor ) : data.precio_vendedor ) ) }}</h3>
+        </h4>
+        <h4>{{ _tools.monedaChange( 3, 2, ( coinShop == true ? ( data.pro_vendedorCompra || data.precio_vendedor ) : data.precio_vendedor ) ) }}</h4>
       </section>
     </div>
     <div class="col-6">
-      <section style="text-align: center; border-radius: 20px;" class="shadow p-3">
-        <h3 class="" *ngIf="dataUser.id">Precio Sugerido:</h3>
-          <h3 class="" *ngIf="dataUser.id">{{ _tools.monedaChange( 3, 2, data.pro_uni_venta ) }}</h3>
-          <h3 class="" *ngIf="!dataUser.id">Precio:</h3>
-          <h3 class="" *ngIf="!dataUser.id">{{ _tools.monedaChange( 3, 2, data.pro_uni_venta ) }}</h3>
+      <section style="text-align: center; border-radius: 20px; padding-top: 5px;" class="shadow p-2">
+        <h4 class="" *ngIf="dataUser.id">Precio Sugerido:</h4>
+          <h4 class="" *ngIf="dataUser.id">{{ _tools.monedaChange( 3, 2, data.pro_uni_venta ) }}</h4>
+          <h4 class="" *ngIf="!dataUser.id">Precio:</h4>
+          <h4 class="" *ngIf="!dataUser.id">{{ _tools.monedaChange( 3, 2, data.pro_uni_venta ) }}</h4>
           <span *ngIf="!data.precio_vendedor && dataUser.id" class="precios">Ganas el {{ porcentajeMostrar }} % : &nbsp; {{ gananciaEstimada }}</span>
       </section>
     </div>
@@ -53,7 +34,7 @@
 <mat-dialog-content class="mat-typography">
   <div class="container scrollTodo" [style.max-height.px]="trHeight" style="overflow-y: auto;">
     <div class="row">
-      <div class="col-12 col-sm-6 shadow" style="padding-right: 25px;">
+      <div class="col-12 col-sm-6 shadow" style="padding-right: 25px; border-radius: 20px;">
         <div class="row ">
           <div class="col-12">
             <br><br>
@@ -66,7 +47,7 @@
           </div>
           <div class="col-12">
             <!-- ng-image-slider -->
-            <div class=" p-3"> <!-- Aplicamos sombra y espaciado -->
+            <div class=" p-1"> <!-- Aplicamos sombra y espaciado -->
               <ng-image-slider [images]="imageObject" [infinite]="sliderInfinite" [imagePopup]="sliderImagePopup"
                 [showArrow]="sliderArrowShow" [imageSize]="{width: sliderImageWidth, height: sliderImageHeight}"
                 [autoSlide]="sliderAutoSlide ? 1 : 0" [slideImage]="sliderSlideImage" [animationSpeed]="sliderAnimationSpeed"
@@ -84,8 +65,8 @@
                 <div class="row shadow">
                   <div class="col-12">
                     <div class="row">
-                      <div class="col-6 p-3" style="text-align: center;">
-                        <section class=" shadow p-3" style="text-align: center; border-radius: 20px;     height: 175px;">
+                      <div class="col-6 p-1" style="text-align: center;">
+                        <section class=" shadow p-2" style="text-align: center; border-radius: 20px;     height: 175px;">
                           <div class="row">
                             <div class="col-12" style="text-align: center;">
                               <section class="paddinLader">
@@ -108,8 +89,8 @@
                           </div>
                         </section>
                       </div>
-                      <div class="col-6 p-3" style="text-align: center;">
-                        <section class=" shadow p-3" style="text-align: center; border-radius: 20px;     height: 175px;">
+                      <div class="col-6 p-1" style="text-align: center;">
+                        <section class=" shadow p-2" style="text-align: center; border-radius: 20px;     height: 175px;">
                           <div class="row">
                             <div class="col-12">
                               <section class="paddinLader">
@@ -149,7 +130,7 @@
                     <h3>DESCRIPCION:</h3>
                     <p [innerHtml]="data.pro_descripcion"></p>
                   </div>
-                  <div class="col-12 shadow p-3" style="border-radius: 20px;">
+                  <div class="col-12 shadow" style="border-radius: 20px;">
                     <div class="d-flex justify-content-around">
                       <div>
                         <button (click)="shareUrl()" type="button" class="btn btn-success">

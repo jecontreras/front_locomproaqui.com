@@ -111,7 +111,7 @@ export class ViewProductosComponent implements OnInit {
     setTimeout(()=>{
       try {
         this.breakpoint = (window.innerWidth <= 500) ? 1 : 6;
-        if( this.breakpoint === 6 ) this.trHeight = 530;
+        if( this.breakpoint === 6 ) this.trHeight = 700;
       } catch (error) { }
      },2000 );
   }
