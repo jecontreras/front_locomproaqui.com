@@ -69,7 +69,7 @@ export class ArticuloComponent implements OnInit {
   listBanner: any = [  ];
   listNovedades:any = [];
   listPublicaciones:any = [];
-
+  breakpoint: number;
 
   constructor(
     private _productos: ProductoService,
@@ -120,6 +120,7 @@ export class ArticuloComponent implements OnInit {
 
     setInterval(()=> {
       try {
+        this.breakpoint = (window.innerWidth <= 500) ? 1 : 6;
         let color:string = ( this.dataUser.usu_color || "#02a0e3" );
         if( this.userId.id ) color = this.userId.usu_color || "#02a0e3";
         this.urlColor = color;
@@ -408,8 +409,7 @@ export class ArticuloComponent implements OnInit {
   agregar(obj) {
     obj.coinShop = this.coinShop;
     const dialogRef = this.dialog.open(ViewProductosComponent, {
-      width: '100%',
-      maxHeight: "700%",
+      width: this.breakpoint == 6 ? '80%' : "100%",
       data: { datos: obj }
     });
 

@@ -21,7 +21,7 @@
   <div class="col-12">
     <nav class="navbar navbar-light bg-light">
       <div class="container-fluid">
-        <a class="navbar-brand">Articulo de Bodega {{ dataStore.usu_usuario }} </a>
+        <a class="navbar-brand">Articulo de Bodega {{ dataStore.usu_usuario }}</a>
         <div class="d-flex">
           <input class="form-control mr-sm-2" type="search" placeholder="Buscar" aria-label="Buscar" [(ngModel)]="filter.txt" (change)="handleSearch()">
           <button class="btn btn-outline-success my-2 my-sm-0" type="submit" (click)="handleSearch()">Buscar</button>
@@ -30,21 +30,18 @@
     </nav>
   </div>
   <div class="col-12">
-    <div class="row">
-      <div class="col-12">
-        <div class="scrollmenu" style="border-radius: 3px; display: flex; justify-content: center;">
-          <a class="pointer" (click)="handleCategorySearch(item)" *ngFor="let item of listCategory"
-            [ngClass]="{ 'cambiaColor': item.check }"
-          >
-            {{ item.title }}
-          </a>
-        </div>
-
-      </div>
-      <div class="col-12">
-        <div class="content" style="    margin-top: 20px;">
-          <div class="row">
-            <div class="col-12">
+    <div class="scrollmenu" style="border-radius: 3px; display: flex; justify-content: center;">
+      <a class="pointer" (click)="handleCategorySearch(item)" *ngFor="let item of listCategory" [ngClass]="{ 'cambiaColor': item.check }">
+        {{ item.title }}
+      </a>
+    </div>
+  </div>
+  <div class="col-12">
+    <div class="container" style="margin-top: 20px;">
+      <div class="row">
+        <div class="col-12">
+          <div class="d-flex justify-content-center">
+            <div >
               <ul class="aa-product-catg">
                 <!-- start single product item -->
                 <li *ngFor="let item of listArticle" id="anchosLi" (click)="handleArticle(item)" style="    height: 325px; padding: 2px; border-radius: 20px;" class="mat-elevation-z8">
@@ -69,44 +66,20 @@
                 </li>
               </ul>
             </div>
-            <!--<div class="col" *ngFor="let row of listArticle" (click)="handleArticle( row )">
-              <mat-card class="example-card" style="    width: 250px; height: 350px;">
-                <mat-card-header>
-                  <mat-card-subtitle>{{ row.pro_nombre | slice: 0: 15 }} </mat-card-subtitle>
-                </mat-card-header>
-                <figure mat-card-image data-toggle="modal" id="figura" data-target="#modalinfo" class="img-contenedor">
-                  <img class="img-responsive btn-block imgProductos pointer " [src]="row.foto">
-                </figure>
-                <small style="display: inline-block;  font-size: 90% !important;" class="pricesmall currency2"
-                  id="pricesmall_25">
-                  {{ _tools.monedaChange( 3, 2, ( row.pro_vendedorCompra || row.pro_uni_venta || 0 ) ) }}
-                </small>
-                <mat-card-actions>
-                  <button type="button" data-toggle="tooltip" data-placement="right" style="width: 100%;"
-                    class="sc-logout btn btn-success btn-sm pull-right buttonAncho"
-                    [ngStyle]="{'background-color':urlColor }"
-                    data-original-title="Ver Articulo">Ver Articulo
-                  </button>
-                </mat-card-actions>
-              </mat-card>
-            </div>-->
           </div>
         </div>
-      </div>
-      <div class="col-12">
-        <div class="d-flex flex-row-reverse bd-highlight">
-          <div class="p-2 bd-highlight">
-            <mat-paginator [length]="counts" [pageSizeOptions]="[10, 25, 100]"
-                (page)="onScroll($event)">
-            </mat-paginator>
-          </div>
-        </div>
-      </div>
-      <div class="col-12">
-        <ngx-spinner bdOpacity=0.9 bdColor="" size="default" color="#581f87" type="ball-pulse-sync"
-          [fullScreen]="false">
-        </ngx-spinner>
       </div>
     </div>
+  </div>
+  <div class="col-12">
+    <div class="d-flex flex-row-reverse bd-highlight">
+      <div class="p-2 bd-highlight">
+        <mat-paginator [length]="counts" [pageSizeOptions]="[10, 25, 100]" (page)="onScroll($event)"></mat-paginator>
+      </div>
+    </div>
+  </div>
+  <div class="col-12">
+    <ngx-spinner bdOpacity=0.9 bdColor="" size="default" color="#581f87" type="ball-pulse-sync" [fullScreen]="false">
+    </ngx-spinner>
   </div>
 </div>

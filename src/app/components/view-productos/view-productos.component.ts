@@ -54,6 +54,8 @@ export class ViewProductosComponent implements OnInit {
   coinShop:boolean = false;
   titleButton:string = "Confirmar pedido";
   disabledView:string = "normal";
+  breakpoint: number;
+
   constructor(
     public dialogRef: MatDialogRef<ViewProductosComponent>,
     @Inject(MAT_DIALOG_DATA) public datas: any,
@@ -105,13 +107,16 @@ export class ViewProductosComponent implements OnInit {
     if( ( this.data.pro_categoria.cat_nombre == "CALZADO" ) || ( this.data.pro_categoria.cat_nombre == "ROPA" )  ) this.disabledSelect = true;
     else this.disabledSelect = false;
 
-    /*setTimeout(()=>{
+    setTimeout(()=>{
       try {
-        this.data.color = this.data.listColor[0].talla;
-        this.cambioImgs();
-        this.colorSeleccionado( );
+        this.breakpoint = (window.innerWidth <= 500) ? 1 : 6;
       } catch (error) { }
-     },2000 );*/
+     },2000 );
+  }
+
+  handleImageError(event: any) {
+    event.target.src = 'assets/avatar.png'; // Ruta a una imagen predeterminada para mostrar en caso de error
+    event.target.alt = 'Imagen no disponible';
   }
 
   validPriceUser(){

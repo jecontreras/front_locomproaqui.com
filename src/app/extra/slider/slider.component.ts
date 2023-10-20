@@ -191,9 +191,9 @@ export class SliderComponent implements OnInit {
   handleView(obj) {
     obj.coinShop = false;
     obj.view = "store";
+
     const dialogRef = this.dialog.open(ViewProductosComponent, {
-      width: '100%',
-      maxHeight: "700%",
+      width: this.breakpoint == 6 ? '80%' : "100%",
       data: { datos: obj }
     });
 

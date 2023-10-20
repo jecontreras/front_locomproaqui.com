@@ -420,8 +420,7 @@ export class PedidosComponent implements OnInit {
     obj.coinShop = this.coinShop;
     obj.view = "store";
     const dialogRef = this.dialog.open(ViewProductosComponent, {
-      width: '100%',
-      maxHeight: "700%",
+      width: this.breakpoint == 6 ? '80%' : "100%",
       data: { datos: obj }
     });
 

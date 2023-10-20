@@ -26,7 +26,8 @@
     [navigation]="( cantDs === 2 || cantDs === 3 ) ? false : true "
   >
   <ng-container style="margin-left: 50px;">
-    <ng-template swiperSlide *ngFor="let item of listGaleria; index as i">
+    <ng-template swiperSlide *ngFor="let item of listGaleria; index as i" class="mat-elevation-z3" style="border: 1px solid #ededed !important;
+    border-radius: 20px !important;">
       <div role="group" class="andes-carousel-snapped__slide andes-carousel-snapped__slide--spacing-12 "
         [style.width.%]="50" [style.margin-right.px]="10" [style.margin-left.px]="i == 0 ? 40 : 20"
         [attr.aria-label]="i + 1 + ' de ' + listGaleria.length" [attr.data-slider]="i">
