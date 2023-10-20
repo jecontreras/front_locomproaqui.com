@@ -30,7 +30,19 @@
 
 
 .img-profile {
-  width: 90px;
-  max-height: 88px;
-  min-height: 88px;
+  width: 100px;
+  max-height: 110px;
+  min-height: 100px;
+}
+.text-align{
+  text-align: center !important;
+}
+
+.paddinLader{
+  padding: 0 10%;
+}
+
+.scrollTodo{
+  max-height: 200px; /* Establece la altura máxima según tus necesidades */
+    overflow-y: auto; /* Habilita el desplazamiento vertical */
 }

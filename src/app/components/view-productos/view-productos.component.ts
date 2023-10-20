@@ -55,6 +55,7 @@ export class ViewProductosComponent implements OnInit {
   titleButton:string = "Confirmar pedido";
   disabledView:string = "normal";
   breakpoint: number;
+  trHeight:number = 430;
 
   constructor(
     public dialogRef: MatDialogRef<ViewProductosComponent>,
@@ -110,6 +111,7 @@ export class ViewProductosComponent implements OnInit {
     setTimeout(()=>{
       try {
         this.breakpoint = (window.innerWidth <= 500) ? 1 : 6;
+        if( this.breakpoint === 6 ) this.trHeight = 530;
       } catch (error) { }
      },2000 );
   }
@@ -165,9 +167,16 @@ export class ViewProductosComponent implements OnInit {
   }
 
   llenandoGaleria(){
+    this.data.nameColores = "";
+    this.data.nemeTalla = "";
     try {
-      for( let row of this.data.listColor )
-      this.galeria.push({ id: row.id, foto: row.foto });
+      for( let row of this.data.listColor ){
+        this.galeria.push({ id: row.id, foto: row.foto });
+        this.data.nameColores+=row.talla +", "
+      }
+      for( let key of this.data.listColor[0].tallaSelect ) {
+        this.data.nemeTalla+= key.tal_descripcion+ ", ";
+      }
     } catch (error) {}
   }
 
@@ -305,6 +314,7 @@ export class ViewProductosComponent implements OnInit {
       this.data.tallas = "";
       this.seleccionnTalla = {};
       this.seleccionoColor = this.data.listColor.find( row => row.talla == this.data.color );
+      this.data.tallas = this.seleccionoColor[0];
       this.llenadoGaleria();
       this.seleccionTalla();
       this.cambioImgs();
