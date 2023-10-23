@@ -4,15 +4,34 @@
       [autoHeight]="true"
       [allowTouchMove]="false"
       [navigation]="( cantDs === 2 || cantDs === 3 ) ? false : true "
-      [pagination]="{ clickable: true }">
+      [pagination]="{ clickable: true }"
+      [allowTouchMove]="false"
+			[autoplay]="{ delay: 1000, disableOnInteraction: false }"
+      >
       <ng-container>
-        <ng-template  class="swiper-slide" swiperSlide *ngFor="let item of listGaleria">
+        <ng-template  data-swiper-autoplay="6000"  class="swiper-slide" swiperSlide *ngFor="let item of listGaleria">
           <img [src]="item[lyImg]" alt="Imagen 2" class="d-block w-100">
+        </ng-template>
+        <ng-template data-swiper-autoplay="60000" swiperSlide>
+          <img *ngIf="listGaleria[1]" [src]="listGaleria[1][lyImg]" alt="Imagen 2" class="d-block w-100">
         </ng-template>
       </ng-container>
     </swiper>
 
 </section>
+
+<!--<div *ngIf="view === 1">
+  <h4>data-swiper-autoplay</h4>
+  <swiper [loop]="true" [autoHeight]="true" [allowTouchMove]="false"
+    [autoplay]="{ delay: 1000, disableOnInteraction: false }" [pagination]="{ clickable: true }" [navigation]="( cantDs === 2 || cantDs === 3 ) ? false : true ">
+    <ng-template data-swiper-autoplay="6000" swiperSlide *ngFor="let item of listGaleria">
+      Slide 1
+    </ng-template>
+    <ng-template data-swiper-autoplay="60000" swiperSlide>
+      Slide 3
+    </ng-template>
+  </swiper>
+</div>-->
 
 <section
 *ngIf="view === 2"

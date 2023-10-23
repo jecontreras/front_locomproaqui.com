@@ -4,7 +4,7 @@
   <div class="d-flex justify-content-center">
     <div class="container">
       <div class="col-12">
-        <app-slider [listGaleria]="listBanner" [view]="1" [lyImg]="'image'"></app-slider>
+        <app-slider *ngIf="listBanner.length" [listGaleria]="listBanner" [view]="1" [lyImg]="'image'"></app-slider>
       </div>
     </div>
   </div>

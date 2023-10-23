@@ -4,7 +4,7 @@
             <div class="col-12">
               <div class="d-flex justify-content-center">
                 <div>
-                  <img src="./assets/logo.png" alt="" style="width: 250px;" [routerLink]="[ '/articulo' ]">
+                  <img src="./assets/logo.svg" alt="" style="width: 250px;" [routerLink]="[ '/articulo' ]">
                   <br>
                 </div>
               </div>
@@ -18,7 +18,7 @@
                     <div class="col-12">
                       <div class="input-group mb-3">
                           <span class="input-group-text" id="basic-addon1">
-                            <i class="fa fa-id-badge" aria-hidden="true"></i>
+                            <span class="lnr lnr-user"></span>
                           </span>
                           <input type="text" class="form-control" placeholder="Nombre de la tienda" aria-label="usu_usuario" aria-describedby="basic-addon1" [(ngModel)]="data.usu_usuario" (ngModelChange)="validadUsername()">
                           <div *ngIf="!disabledusername">
@@ -30,7 +30,7 @@
                     <div class="col-12">
                         <div class="input-group mb-3">
                             <span class="input-group-text" id="basic-addon1">
-                                <i class="fa fa-address-book" aria-hidden="true"></i>
+                              <span class="lnr lnr-users"></span>
                             </span>
                             <input type="text" class="form-control" placeholder="Apellido" aria-label="Username" aria-describedby="basic-addon1" [(ngModel)]="data.usu_apellido">
                           </div>
@@ -38,7 +38,7 @@
                     <div class="col-12">
                         <div class="input-group mb-3">
                             <span class="input-group-text" id="basic-addon1">
-                              <i class="fa fa-id-card" aria-hidden="true"></i>
+                              <span class="lnr lnr-shirt"></span>
                             </span>
                             <input type="text" class="form-control" placeholder="Nombre" aria-label="Username" aria-describedby="basic-addon1" [(ngModel)]="data.usu_nombre">
                           </div>
@@ -61,26 +61,32 @@
                         <br>
                         <div class="input-group mb-3">
                             <span class="input-group-text" id="basic-addon1">
-                              <i class="fa fa-envelope" aria-hidden="true"></i>
+                              <span class="lnr lnr-envelope"></span>
                             </span>
                             <input type="text" class="form-control" placeholder="Correo" aria-label="Correo" aria-describedby="basic-addon1" [(ngModel)]="data.usu_email" (blur)="validadorEmail( data.usu_email )">
                             <span class="text-danger">{{ error }}</span>
                           </div>
                     </div>
                     <div class="col-12">
-                        <div class="input-group mb-3">
-                            <span class="input-group-text" id="basic-addon1">
-                              <i class="fa fa-key" aria-hidden="true"></i>
-                            </span>
-                            <input type="password" class="form-control" placeholder="Contraseña" aria-label="Contraseña" aria-describedby="basic-addon1" [(ngModel)]="data.usu_clave">
-                          </div>
+                      <div class="input-group mb-3">
+                        <span class="input-group-text" id="basic-addon1">
+                          <span class="lnr lnr-lock"></span>
+                        </span>
+                        <input type="password" class="form-control" placeholder="Contraseña" aria-label="Contraseña" aria-describedby="basic-addon1" [(ngModel)]="data.usu_clave" #passwordInput>
+                        <button class="btn btn-outline-secondary" type="button" (click)="togglePasswordVisibility(passwordInput)">
+                          <span [ngClass]="{'lnr lnr-enter': !showPassword, 'lnr lnr-eye-off': showPassword}" class="lnr lnr-eye"></span>
+                        </button>
+                      </div>
                     </div>
                     <div class="col-12">
                         <div class="input-group mb-3">
                             <span class="input-group-text" id="basic-addon1">
-                              <i class="fa fa-key" aria-hidden="true"></i>
+                              <span class="lnr lnr-lock"></span>
                             </span>
-                            <input type="password" class="form-control" placeholder="Confirnar Contraseña" aria-label="Confirmar Contraseña" aria-describedby="basic-addon1" [(ngModel)]="data.usu_confir">
+                            <input type="password" class="form-control" placeholder="Confirnar Contraseña" aria-label="Confirmar Contraseña" aria-describedby="basic-addon1" [(ngModel)]="data.usu_confir" #passwordInputC>
+                            <button class="btn btn-outline-secondary" type="button" (click)="togglePasswordVisibility(passwordInputC)">
+                              <span [ngClass]="{'lnr lnr-enter': !showPassword, 'lnr lnr-eye-off': showPassword}" class="lnr lnr-eye"></span>
+                            </button>
                           </div>
                     </div>
                     <div class="col-12">

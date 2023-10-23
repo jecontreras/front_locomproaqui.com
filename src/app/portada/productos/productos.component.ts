@@ -81,6 +81,7 @@ export class ProductosComponent implements OnInit {
     if( this.id ) {
       this.dataUser = ( await this.getUser() ) || { id: 1 };
       this.listBanner.push( { image: this.dataUser.us_banner, id: 1 } )
+      this.listBanner.push( { image: this.dataUser.us_banner, id: 2 } )
     }
     else this.dataUser = { id: 1 }
     this.getProductos();

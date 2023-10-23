@@ -24,6 +24,7 @@ export class LoginsComponent implements OnInit {
   disabled:boolean = false;
   vista:string = "inicial";
   ocultar:boolean = false;
+  showPassword = false;
 
   constructor(
     private _user: UsuariosService,
@@ -40,6 +41,15 @@ export class LoginsComponent implements OnInit {
     console.log("***", this.activate.snapshot.params )
     if( this.activate.snapshot.paramMap.get('id') ) this.data.usu_email = this.activate.snapshot.paramMap.get('id');
     if( this.activate.snapshot.paramMap.get('cel') ) {this.data.IDL = true; this.data.usu_clave = this.activate.snapshot.paramMap.get('cel');}
+  }
+
+  togglePasswordVisibility(passwordInput: HTMLInputElement): void {
+    this.showPassword = !this.showPassword;
+    if (this.showPassword) {
+      passwordInput.type = 'text'; // Mostrar la contraseña
+    } else {
+      passwordInput.type = 'password'; // Ocultar la contraseña
+    }
   }
 
   submit(){

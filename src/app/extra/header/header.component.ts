@@ -796,7 +796,7 @@ export class HeaderComponent implements OnInit {
   }
 
   registrar(){
-    this.router.navigate(['/registro','lokomproaqui']);
+    this.router.navigate(['/singUp','vendedor','3213692393']);
     /*const dialogRef = this.dialog.open(RegistroComponent,{
       width: '461px',
       data: { datos: {} }

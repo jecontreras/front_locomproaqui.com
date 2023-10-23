@@ -63,7 +63,7 @@
     <div class="col-12">
       <div class="d-flex justify-content-center">
         <div>
-          <img src="./assets/logo.png" alt="" style="width: 250px;" [routerLink]="[ '/articulo' ]">
+          <img src="./assets/logo.svg" alt="" style="width: 250px;" [routerLink]="[ '/articulo' ]">
           <br>
         </div>
       </div>
@@ -76,16 +76,24 @@
           <p style="text-align: center;">Ingresa tus Credenciales</p>
           <div class="row">
             <div class="col-12">
-              <div class="mb-3">
-                <label for="exampleInputEmail1" class="form-label">Usuario</label>
-                <input type="email" class="form-control" id="exampleInputEmail1" [(ngModel)]="data.usu_email" aria-describedby="emailHelp" placeholder="Correo o Numero de Celular">
-                <!--<div id="emailHelp" class="form-text">C.</div>-->
+              <label for="exampleInputEmail1" class="form-label">Usuario</label>
+              <div class="input-group mb-3">
+                <span class="input-group-text" id="basic-addon1">
+                  <span class="lnr lnr-user"></span>
+                </span>
+                <input type="email" class="form-control" placeholder="Correo o Numero de Celular" aria-label="Username" aria-describedby="basic-addon1" [(ngModel)]="data.usu_email">
               </div>
             </div>
             <div class="col-12">
-              <div class="mb-3">
-                <label for="exampleInputPassword1" class="form-label">Contraseña</label>
-                <input type="password" class="form-control" id="exampleInputPassword1" [(ngModel)]="data.usu_clave" placeholder="Contraseña">
+              <label for="exampleInputPassword1" class="form-label">Contraseña</label>
+              <div class="input-group mb-3">
+                <span class="input-group-text" id="basic-addon1">
+                  <span class="lnr lnr-lock"></span>
+                </span>
+                <input type="password" class="form-control" placeholder="Contraseña" aria-label="Contraseña" aria-describedby="basic-addon1" [(ngModel)]="data.usu_clave" #passwordInput>
+                <button class="btn btn-outline-secondary" type="button" (click)="togglePasswordVisibility(passwordInput)">
+                  <span [ngClass]="{'lnr lnr-enter': !showPassword, 'lnr lnr-eye-off': showPassword}" class="lnr lnr-eye"></span>
+                </button>
               </div>
             </div>
             <div class="col-12">

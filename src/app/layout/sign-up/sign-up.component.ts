@@ -77,6 +77,7 @@ export class SignUpComponent implements OnInit {
   ];
   typeRol:string;
   number:string;
+  showPassword = false;
 
   constructor(
     private _tools: ToolsService,
@@ -103,6 +104,15 @@ export class SignUpComponent implements OnInit {
         this._router.navigate(['/pedidos']);
       }
     }
+
+  togglePasswordVisibility(passwordInput: HTMLInputElement): void {
+    this.showPassword = !this.showPassword;
+    if (this.showPassword) {
+      passwordInput.type = 'text'; // Mostrar la contraseña
+    } else {
+      passwordInput.type = 'password'; // Ocultar la contraseña
+    }
+  }
   getCabeza(){
     this._user.get({ where: {
       usu_telefono: this.number }

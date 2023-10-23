@@ -82,6 +82,7 @@ export class SliderComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
+    console.log( this.listGaleria )
     //this.getListInitNews();
     setInterval(()=>{
       let tamaño:number = window.innerWidth;
