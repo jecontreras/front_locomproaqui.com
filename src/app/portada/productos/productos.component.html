@@ -32,67 +32,87 @@
 <section id="aa-product-category" >
   <div class="">
     <div class="row">
-      <div class="col-12">
+      <div class="col-12" *ngIf="userCabeza.id">
+        <ul class="aa-review-nav">
+          <li>
+            <div class="media" style="text-align: center;">
+              <div class="media-left">
+                <a href="#">
+                  <img class="media-object" style="width: 155px; margin-top: 26px; margin-right: 15px;" [src]=" userCabeza.usu_imagen || './assets/img/banner.jpg'" alt="girl image">
+                </a>
+              </div>
+              <div class="media-body">
+                <h4 class="media-heading"><strong>{{ userCabeza.usu_usuario }}</strong> </h4>
+                <p> Email: {{ userCabeza.usu_email }} </p>
+                <a class="pointer text-success" (click)="handleWhatsapp()"> Celular: {{ userCabeza.usu_telefono }} </a>
+                <p> Ciudad: {{ userCabeza.usu_ciudad }} </p>
+              </div>
+            </div>
+          </li>
+        </ul>
+      </div>
+      <!--<div class="col-12">
         <div class="mx-auto" style="width: 200px;">
           <br><br>
           <img [src]=" userCabeza.usu_imagen || './assets/img/banner.jpg'" alt="fashion img" class="" style="    width: 90%;">
         </div>
-      </div>
+      </div>-->
       <div class="col-lg-9 col-md-9 col-sm-8 col-md-push-3" style="padding: 3%;">
         <div class="aa-product-catg-content">
           <div class="row">
             <div class="col-12">
-              <div class="scrollmenu" style="    border-radius: 3px;" #toolbar>
-                <a class="pointer" (click)="SeleccionCategoria( item )" *ngFor="let item of listCategorias">{{ item.cat_nombre }} </a>
+              <div class="scrollmenu" style="border-radius: 3px; " #toolbar>
+                <a class="pointer" (click)="SeleccionCategoria(item)" *ngFor="let item of listCategorias" [ngClass]="{ 'cambiaColor': item.check }">
+                  {{ item.cat_nombre }}
+                </a>
               </div>
             </div>
-            <div class="col">
-              <input type="text" [(ngModel)]="seartxt" (change)="buscar()" class="form-control form-control-sm"
-                placeholder="Buscar Productos" id="exampleFormControlInput1">
-            </div>
-            <div class="pbutton">
-              <i class="material-icons pointer" (click)="buscar()" *ngIf="!loader" >search</i>
+            <div class="col-12">
+              <div class="d-flex bd-highlight">
+                <div class="p-2 flex-grow-1 bd-highlight">
+                  <input type="text" [(ngModel)]="seartxt" (change)="buscar()" class="form-control form-control-sm" placeholder="Buscar Productos" id="exampleFormControlInput1">
+                </div>
+                <div class="p-2 bd-highlight">
+                  <i class="material-icons pointer" (click)="buscar()" *ngIf="!loader">search</i>
+                </div>
+              </div>
             </div>
           </div>
-          <div class="aa-product-catg-body" infiniteScroll [infiniteScrollDistance]="2" [infiniteScrollThrottle]="30"
-            (scrolled)="onScroll()">
-            <ul class="aa-product-catg">
-              <!-- start single product item -->
-              <li *ngFor="let item of listProductos" id="anchosLi">
-                <figure class="img-contenedor">
-                  <a class="aa-product-img" href="#" [routerLink]="[ '/front/productosView', item.id, this.dataUser.usu_telefono ]"><img class="anchosProductos" [src]="item.foto"
-                      alt="polo shirt img"></a>
-                      <a class="aa-add-card-btn pointer" (click)="AgregarCart(item)"><span
-                        class="fa fa-shopping-cart"></span>Comprar y pagar en casa Envio Gratis</a>
-                  <figcaption>
-                    <h4 class="aa-product-title"><a href="#">{{ item.pro_nombre }}</a></h4>
-                    <span class="aa-product-price"><del>{{ _formato.monedaChange( 3, 2, item.pro_uni_venta*2 ) }}</del></span>
-                    <span class="aa-product-price">{{ _formato.monedaChange( 3, 2, item.pro_uni_venta ) }}</span>
-                  </figcaption>
-                </figure>
-                <!--<div class="aa-product-hvr-content">
-                  <a href="https://www.facebook.com/sharer/sharer.php?kid_directed_site=0&u=https://www.locomproaqui.com/productos/15?u=https://www.locomproaqui.com/productos/{{ item.id }}"
-                    target="_blank" data-toggle="tooltip" data-placement="top" title="Compartir"><span
-                      class="fa fa-exchange"></span></a>
-                  <a class="pointer" (click)="viewProducto( item )" title="Ver Producto"><span
-                      class="fa fa-search"></span></a>
-                </div>-->
-                <!-- product badge -->
-                <span class="aa-badge aa-sale" href="#">SALE!</span>
-              </li>
-            </ul>
-            <div>
-              <div class="mx-auto" style="width: 200px;" *ngIf="listProductos.length == 0 && !loader">
-                NO SE ENCONTRO PRODUCTOS
+          <div class="col-12">
+            <div class="d-flex justify-content-center">
+              <div>
+                <div class="aa-product-catg-body" infiniteScroll [infiniteScrollDistance]="2" [infiniteScrollThrottle]="30" (scrolled)="onScroll()">
+                  <ul class="aa-product-catg">
+                    <li *ngFor="let item of listProductos" id="anchosLi" class="product-list-item">
+                      <figure class="img-contenedor">
+                        <a class="aa-product-img" href="#" [routerLink]="[ '/front/productosView', item.id, this.dataUser.usu_telefono ]">
+                          <img class="anchosProductos" [src]="item.foto" alt="polo shirt img">
+                        </a>
+                        <a class="aa-add-card-btn pointer" (click)="AgregarCart(item)">
+                          <span class="fa fa-shopping-cart"></span>Comprar y pagar en casa Envío Gratis
+                        </a>
+                        <figcaption>
+                          <h4 class="aa-product-title"><a href="#">{{ item.pro_nombre }}</a></h4>
+                          <span class="aa-product-price"><del>{{ _formato.monedaChange( 3, 2, item.pro_uni_venta*2 ) }}</del></span>
+                          <span class="aa-product-price">{{ _formato.monedaChange( 3, 2, item.pro_uni_venta ) }}</span>
+                        </figcaption>
+                      </figure>
+                      <span class="aa-badge aa-sale" href="#">OFERTA!</span>
+                    </li>
+                  </ul>
+                  <div class="mx-auto" style="width: 200px;" *ngIf="listProductos.length == 0 && !loader">
+                    NO SE ENCONTRARON PRODUCTOS
+                  </div>
+                  <div class="mx-auto" style="width: 200px;" *ngIf="loader">
+                    <mat-spinner></mat-spinner>
+                  </div>
+                  <ngx-spinner bdOpacity="0.9" bdColor="" size="default" color="#581f87" type="ball-pulse-sync" [fullScreen]="false">
+                  </ngx-spinner>
+                </div>
               </div>
-              <div class="mx-auto" style="width: 200px;" *ngIf="loader">
-                <mat-spinner></mat-spinner>
-              </div>
-              <ngx-spinner bdOpacity=0.9 bdColor="" size="default" color="#581f87" type="ball-pulse-sync"
-                [fullScreen]="false">
-              </ngx-spinner>
             </div>
           </div>
+
         </div>
       </div>
       <div class="col-lg-3 col-md-3 col-sm-4 col-md-pull-9">

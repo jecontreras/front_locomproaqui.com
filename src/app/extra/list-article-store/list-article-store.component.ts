@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { MatDialog } from '@angular/material';
 import { ActivatedRoute, Router } from '@angular/router';
 import { NgxSpinnerService } from 'ngx-spinner';
@@ -39,6 +39,8 @@ export class ListArticleStoreComponent implements OnInit {
     txt: ""
   };
   dataUser:any = {};
+  breakpoint: number;
+  @ViewChild('toolbar',{static: false} ) private nav: any;
 
   constructor(
     private activate: ActivatedRoute,
@@ -65,6 +67,18 @@ export class ListArticleStoreComponent implements OnInit {
     if( this.activate.snapshot.params.idStore ) this.dataStore = await this.getStore( this.activate.snapshot.params.idStore );
     this.getArticle();
     this.getCategory();
+    setInterval(()=> {
+      try {
+        this.breakpoint = (window.innerWidth <= 500) ? 1 : 6;
+        let color:string = ( this.dataUser.usu_color || "#02a0e3" );
+        if( this.dataUser.id ) {
+          //console.log("**NO ENTRE",this.dataUser)
+          color = this.dataUser.usu_color || "#02a0e3";
+        }
+        //console.log("***144",color, this.dataUser )
+        this.nav.nativeElement.style.backgroundColor = color;
+      } catch (error) {}
+    }, 100 );
   }
 
   getStore( id:string ){
@@ -89,6 +103,7 @@ export class ListArticleStoreComponent implements OnInit {
       this.listCategory.unshift({
         id: 0,
         title: "TODOS",
+        foto: "./assets/imagenes/todos.png",
         subCategoria: []
       });
     });
@@ -175,8 +190,7 @@ export class ListArticleStoreComponent implements OnInit {
     item.coinShop = false;
     item.view = 'store';
     const dialogRef = this.dialog.open(ViewProductosComponent, {
-      width: '100%',
-      maxHeight: "700%",
+      width: this.breakpoint == 6 ? '80%' : "100%",
       data: { datos: item }
     });
 

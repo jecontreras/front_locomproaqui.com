@@ -33,17 +33,14 @@
                       <div class="image-resize img">
                         <img [src]="viewsImagen" data-srcset="{{viewsImagen}}?auto=compress,format&optimize=medium&fit=clip&w=100%&h=auto 1x"
                           alt data-sizes=auto data-src="{{viewsImagen}}?auto=compress,format&optimize=medium&fit=clip&w=100%&h=auto"
-                          class=lazyload style="object-fit: contain; height: 445px;" width=100% height=auto>
+                          class="lazyload" id="product-image" style="object-fit: contain; height: 445px;" width="100%" height="auto">
                       </div>
-                      <!--<lib-ngx-image-zoom [thumbImage]=viewsImagen [fullImage]=viewsImagen [magnification]="1"
-                        [enableScrollZoom]="true" [enableLens]="true" [lensWidth]="200" [lensHeight]="200">
-                      </lib-ngx-image-zoom>-->
                     </div>
                   </div>
                 </div>
-                <div class="row">
-                  <div class="col-3 pointer" *ngFor="let item of listGaleria" (click)="verImagen( item )">
-                    <img [src]="item.pri_imagen" alt="" style="width: 120%;">
+                <div class="row image-list">
+                  <div class="col-3 pointer" *ngFor="let item of listGaleria" (click)="verImagen(item)">
+                    <img [src]="item.pri_imagen" alt="" class="thumbnail-image">
                   </div>
                 </div>
               </div>
@@ -55,11 +52,11 @@
                     <span class="aa-product-view-price precio">{{ _formato.monedaChange( 3, 2, data.pro_uni_venta || 0 )
                       }}</span>
                       <div class="aa-product-rating">
-                        <span class="fa fa-star"></span>
-                        <span class="fa fa-star"></span>
-                        <span class="fa fa-star"></span>
-                        <span class="fa fa-star"></span>
-                        <span class="fa fa-star-o"></span>
+                        <span class="lnr lnr-star"></span>
+                        <span class="lnr lnr-star"></span>
+                        <span class="lnr lnr-star"></span>
+                        <span class="lnr lnr-star"></span>
+                        <span class="lnr lnr-star-empty"></span>
                       </div>
                     <p class="aa-product-avilability">Disponibilidad: <span>En stock</span></p>
                   </div>
@@ -117,93 +114,85 @@
               <!--<div *ngIf="view == 'descripcion'">
                 <h5 [innerHtml]="data.pro_descripcion"></h5>
               </div>-->
-              <div>
-                <div class="aa-product-review-area">
-                  <h4>Detalles</h4>
-                  <div class="row">
-                    <div class="col-12">
-                      <img src="./assets/imagenes/completo.webp" style="width: 100%">
-                      <img src="./assets/imagenes/camara.webp" style="width: 50%;">
+              <div class="aa-product-review-area">
+                <h4>Detalles</h4>
+                <div class="row">
+                  <div class="col-12">
+                    <div class="image-container">
+                      <img src="./assets/imagenes/completo.webp" alt="Imagen 1">
+                      <div class="image-caption">Compra segura</div>
                     </div>
-                    <div class="col-12" *ngIf="data['pro_categoria']?.pro_categoria == 16">
-                      <h5> 🚚 ENVIO GRATIS Y PAGAS CUANDO RECIBES EL PRODUCTO 🚚
-                        Nuestro tallaje es nacional, un poco pequeño sugerimos solicitar una talla más a la que te de en
-                        la siguiente tabla
-                      </h5>
-                    </div>
-                    <div class="col-12" *ngIf="data['pro_categoria']?.id == 16">
-                      <img src="./assets/img/tallas.jpg" style="width: 320px;">
+                    <div class="image-container">
+                      <img src="./assets/imagenes/camara.webp" alt="Imagen 2">
+                      <div class="image-caption">Compra segura</div>
                     </div>
                   </div>
-                </div>
-                <div class="aa-product-review-area">
-                  <h4>Comentarios</h4>
-                  <ul class="aa-review-nav">
-                    <li *ngFor="let item of data.listComentarios ">
-                      <div class="media">
-                        <div class="media-left">
-                          <a href="#">
-                            <img class="media-object" [src]="item.foto" alt="girl image">
-                          </a>
-                        </div>
-                        <div class="media-body">
-                          <h4 class="media-heading"><strong>{{ item.nombre }}</strong> - <span> {{ item.fecha }} </span>
-                          </h4>
-                          <div class="aa-product-rating">
-                            <span class="fa fa-star"></span>
-                            <span class="fa fa-star"></span>
-                            <span class="fa fa-star"></span>
-                            <span class="fa fa-star"></span>
-                            <span class="fa fa-star-o"></span>
-                          </div>
-                          <p>{{ item.descripcion }}</p>
-                        </div>
-                      </div>
-                    </li>
-                  </ul>
-                  <h4>Agregar Testimonios</h4>
-                  <div class="aa-your-rating">
-                    <p>Agregar Nota</p>
-                    <a class="pointer"><span class="fa fa-star-o"></span></a>
-                    <a class="pointer"><span class="fa fa-star-o"></span></a>
-                    <a class="pointer"><span class="fa fa-star-o"></span></a>
-                    <a class="pointer"><span class="fa fa-star-o"></span></a>
-                    <a class="pointer"><span class="fa fa-star-o"></span></a>
+                  <div class="col-12" *ngIf="data['pro_categoria']?.pro_categoria == 16">
+                    <h5> 🚚 ENVIO GRATIS Y PAGAS CUANDO RECIBES EL PRODUCTO 🚚
+                      Nuestro tallaje es nacional, un poco pequeño sugerimos solicitar una talla más a la que te de en
+                      la siguiente tabla
+                    </h5>
                   </div>
-                  <!-- review form -->
-                  <div action="" class="aa-review-form">
-                    <div class="form-group">
-                      <label for="message">Ranking</label>
-                      <textarea class="form-control" rows="3" [(ngModel)]="comentario.descripcion"></textarea>
-                    </div>
-                    <div class="form-group">
-                      <label for="name">Nombre</label>
-                      <input type="text" class="form-control" [(ngModel)]="comentario.nombre" placeholder="Name">
-                    </div>
-                    <div class="form-group">
-                      <label for="email">Email</label>
-                      <input type="email" class="form-control" [(ngModel)]="comentario.email"
-                        placeholder="example@gmail.com">
-                    </div>
-
-                    <button type="submit" class="btn btn-default aa-review-submit"
-                      (click)="guardarComentario()">Enviar</button>
+                  <div class="col-12" *ngIf="data['pro_categoria']?.id == 16">
+                    <img src="./assets/img/tallas.jpg" style="width: 320px;">
                   </div>
                 </div>
               </div>
+              <div class="testimonial-section">
+                <h2>Testimonios de nuestros clientes</h2>
+                <ul class="testimonial-list">
+                  <li *ngFor="let item of data.listComentarios">
+                    <div class="testimonial-item">
+                      <div class="testimonial-image">
+                        <img src="{{ item.foto }}" alt="{{ item.nombre }}">
+                      </div>
+                      <div class="testimonial-content">
+                        <h4 class="testimonial-author">{{ item.nombre }}</h4>
+                        <p class="testimonial-date">{{ item.fecha }}</p>
+                        <div class="testimonial-rating">
+                          <span class="fa fa-star"></span>
+                          <span class="fa fa-star"></span>
+                          <span class="fa fa-star"></span>
+                          <span class="fa fa-star"></span>
+                          <span class="fa fa-star-o"></span>
+                        </div>
+                        <p class="testimonial-description">{{ item.descripcion }}</p>
+                      </div>
+                    </div>
+                  </li>
+                </ul>
+              </div>
             </div>
           </div>
+          <!--<div class="aa-product-related-item" *ngIf="listEvidencia.length">
+            <div class="d-flex justify-content-center">
+              <div>
+                <ul>
+                  <li *ngFor="let item of data.listEvidencia">
+                    <img [src]="item.foto" alt="" style="width: 100%;">
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </div>-->
           <!-- Related product -->
           <div class="aa-product-related-item">
-            <h3>Productos Relacionados</h3>
+            <h3 class="related-products-title">Productos Relacionados</h3>
             <ul class="aa-product-catg aa-related-item-slider">
               <!-- start single product item -->
-              <ng-image-slider [images]="imageObject" [infinite]="sliderInfinite" [imagePopup]="sliderImagePopup"
-                [showArrow]="sliderArrowShow" [imageSize]="{width: sliderImageWidth, height: sliderImageHeight}"
-                [autoSlide]="sliderAutoSlide ? 1 : 0" [slideImage]="sliderSlideImage"
-                [animationSpeed]="sliderAnimationSpeed" (imageClick)="imageOnClick($event)"
-                (arrowClick)="arrowOnClick($event)" (lightboxArrowClick)="lightboxArrowClick($event)" #nav>
-              </ng-image-slider>
+              <li *ngFor="let product of imageObject" class="aa-product-item pointer" (click)="viewProducto( product )">
+                <div class="product-image-container">
+                  <div class="image-zoom">
+                    <img [src]="product.image" alt="Product Image" style="    height: 325px; width: 100%;">
+                  </div>
+                </div>
+
+                <div class="product-description">
+                  <h4 class="product-title">{{ product.title }}</h4>
+                  <p class="product-price">{{ product.pro_uni_venta }}</p>
+                </div>
+              </li>
+              <!-- end single product item -->
             </ul>
           </div>
         </div>

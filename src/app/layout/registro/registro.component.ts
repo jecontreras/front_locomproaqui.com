@@ -47,6 +47,8 @@ export class RegistrosComponent implements OnInit {
   }
 
   handleOpenDialog( opt:string ){
+    this._router.navigate(['/singUp', opt, ( this.data.usu_telefono || '3213692393' ) ])
+    return false;
     const dialogRef = this.dialog.open(RegistroComponent, {
       width: '100%',
       data: {

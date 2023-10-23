@@ -225,7 +225,7 @@
   </mat-drawer>
 
   <mat-drawer-content class="contenedor">
-    <nav class="navbar navbar-expand-lg navbar-light headerColor" #toolbar *ngIf="( routName !== '/login' ) &&  (routName !== '/registro' )">
+    <nav class="navbar navbar-expand-lg navbar-light headerColor" #toolbar *ngIf="( routName !== 'login' ) &&  (routName !== 'singUp' )">
       <!--<div class="d-flex justify-content-between col-12">
         <div>
           <button mat-icon-button (click)="drawer.toggle()" translate="no">
@@ -361,8 +361,8 @@
       </div>-->
       <app-menu-lateral></app-menu-lateral>
     </nav>
-    <div class="container" *ngIf="( routName !== '/login' ) &&  (routName !== '/registro' ) && dataUser.id ">
-      <div class="row justify-content-center" style="width: 100%;">
+    <div class="container" *ngIf="( routName !== 'login' ) &&  (routName !== 'singUp' ) && dataUser.id ">
+      <div class="row justify-content-center" style="width: 110%;">
         <div class="col-12 col-md-6">
           <!-- Botones -->
           <div class="d-flex justify-content-between mb-3">
@@ -396,9 +396,11 @@
       </div>
     </div>
 
-    <ng-content> </ng-content>
+    <div class="content">
+      <ng-content> </ng-content>
 
-    <app-footer *ngIf="( routName !== '/login' ) &&  (routName !== '/registro' )"></app-footer>
+      <app-footer *ngIf="( routName !== 'login' ) &&  (routName !== 'singUp' )"></app-footer>
+    </div>
   </mat-drawer-content>
 
 </mat-drawer-container>

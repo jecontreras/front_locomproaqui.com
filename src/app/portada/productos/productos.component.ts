@@ -48,6 +48,7 @@ export class ProductosComponent implements OnInit {
   userCabeza:any = {};
   @ViewChild('toolbar',{static: false} ) private nav: any;
   userId:any;
+  breakpoint: number;
 
   constructor(
     private _productos: ProductoService,
@@ -83,6 +84,7 @@ export class ProductosComponent implements OnInit {
     this.getProductosRecomendado();
     setInterval(()=> {
       //console.log( this.nav)
+      this.breakpoint = (window.innerWidth <= 500) ? 1 : 6;
       let color:string = ( this.dataUser.usu_color || "#02a0e3" );
       if( this.userId.id ) {
         //console.log("**NO ENTRE",this.userId)
@@ -92,6 +94,12 @@ export class ProductosComponent implements OnInit {
       this.nav.nativeElement.style.backgroundColor = color;
     }, 1000 );
   }
+
+  handleWhatsapp(){
+    let url = `https://wa.me/57${ this.userCabeza.usu_telefono }?text=${encodeURIComponent(` Hola servicio al cliente necesito mas informacion gracias`)}`;
+    window.open( url, "Mas Informacion", "width=640, height=480");
+  }
+
   getUser(){
     return new Promise( resolve =>{
       this._user.get({ where:{ usu_telefono: this.id }, limit: 1 } ).subscribe( item =>{
@@ -114,6 +122,12 @@ export class ProductosComponent implements OnInit {
     this._categorias.get( { where:{ cat_activo: 0, cat_padre:null }, limit: 100 } ).subscribe((res:any)=>{
       this.listCategorias = res.data;
       listCategory = this.listCategorias;
+      this.listCategorias.unshift({
+        id: 0,
+        cat_nombre: "TODOS",
+        foto: "./assets/imagenes/todos.png",
+        subCategoria: []
+      });
     });
   }
 

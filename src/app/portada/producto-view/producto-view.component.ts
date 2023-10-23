@@ -35,7 +35,7 @@ export class ProductosViewComponent implements OnInit {
       pro_activo: 0
     },
     page: 0,
-    limit: 10
+    limit: 30
   };
   queryId:any = {
     where:{
@@ -253,7 +253,7 @@ export class ProductosViewComponent implements OnInit {
   }
 
   viewProducto( obj:any ){
-    const dialogRef = this.dialog.open(InfoProductoComponent,{
+    /*const dialogRef = this.dialog.open(InfoProductoComponent,{
       width: '855px',
       maxHeight: "665px",
       data: { datos: obj }
@@ -261,11 +261,14 @@ export class ProductosViewComponent implements OnInit {
 
     dialogRef.afterClosed().subscribe(result => {
       console.log(`Dialog result: ${result}`);
-    });
+    });*/
     let filtro = this.listProductosHistorial.filter( ( row:any ) => row.id == obj.id );
-    if(filtro) return false;
-    let accion = new ProductoHistorialAction( obj , 'post');
-    this._store.dispatch( accion );
+    if(!filtro) {
+      let accion = new ProductoHistorialAction( obj , 'post');
+      this._store.dispatch( accion );
+    }
+    this.Router.navigate(['/front/productosView', obj.id, this.dataUser.usu_telefono ]);
+    location.reload();
   }
 
   AgregarCart2( item:any ){

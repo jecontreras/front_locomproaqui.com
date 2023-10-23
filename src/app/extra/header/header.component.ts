@@ -158,7 +158,7 @@ export class HeaderComponent implements OnInit {
     //console.log( this.isHandset$, this.breakpoint, window.innerWidth )
 
     setInterval(()=> {
-      this.routName = window.location.pathname;
+      this.routName = ( window.location.pathname.split("/"))[1];
       try {
         //console.log( this.nav)
         let color:string = ( this.dataUser.usu_color || "#02a0e3" );

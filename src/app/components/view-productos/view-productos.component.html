@@ -1,6 +1,6 @@
 <div mat-dialog-title>
   <div class="row">
-    <div class="col-12 shadow" style="border-radius: 20px;">
+    <div class="col-12" style="border-radius: 20px;">
       <div class="d-flex bd-highlight p-2" style="padding-top: 0px;">
         <div class="p-2 flex-grow-1 bd-highlight">
           <h3 style="text-align: center;" class="fw-bold">{{ data.pro_nombre | slice: 0:12 }} ... </h3>
@@ -13,7 +13,7 @@
       </div>
     </div>
     <div class="col-6">
-      <section style="text-align: center; border-radius: 20px; padding-top: 5px;" class="shadow p-2">
+      <section style="text-align: center; border-radius: 20px; padding-top: 5px;" class="p-2">
         <h4 class="" *ngIf="data.precio_vendedor">
           Precio a distribuidor:
         </h4>
@@ -21,7 +21,7 @@
       </section>
     </div>
     <div class="col-6">
-      <section style="text-align: center; border-radius: 20px; padding-top: 5px;" class="shadow p-2">
+      <section style="text-align: center; border-radius: 20px; padding-top: 5px;" class="p-2">
         <h4 class="" *ngIf="dataUser.id">Precio Sugerido:</h4>
           <h4 class="" *ngIf="dataUser.id">{{ _tools.monedaChange( 3, 2, data.pro_uni_venta ) }}</h4>
           <h4 class="" *ngIf="!dataUser.id">Precio:</h4>
@@ -34,200 +34,219 @@
 <mat-dialog-content class="mat-typography">
   <div class="container scrollTodo" [style.max-height.px]="trHeight" style="overflow-y: auto;">
     <div class="row">
-      <div class="col-12 col-sm-6 shadow" style="padding-right: 25px; border-radius: 20px;">
-        <div class="row ">
-          <div class="col-12">
-            <br><br>
-            <!-- lib-ngx-image-zoom -->
-            <div class="" style="width: 100%; max-height: 60vh;"> <!-- Aplicamos sombra y controlamos el alto máximo -->
-              <lib-ngx-image-zoom [thumbImage]="urlFoto" [fullImage]="urlFoto" [magnification]="1" [enableScrollZoom]="true"
-                [enableLens]="true" [lensWidth]="200" [lensHeight]="200">
-              </lib-ngx-image-zoom>
-            </div>
-          </div>
-          <div class="col-12">
-            <!-- ng-image-slider -->
-            <div class=" p-1"> <!-- Aplicamos sombra y espaciado -->
-              <ng-image-slider [images]="imageObject" [infinite]="sliderInfinite" [imagePopup]="sliderImagePopup"
-                [showArrow]="sliderArrowShow" [imageSize]="{width: sliderImageWidth, height: sliderImageHeight}"
-                [autoSlide]="sliderAutoSlide ? 1 : 0" [slideImage]="sliderSlideImage" [animationSpeed]="sliderAnimationSpeed"
-                (imageClick)="imageOnClick($event)" (arrowClick)="arrowOnClick($event)"
-                (lightboxArrowClick)="lightboxArrowClick($event)" #nav (mouseover)="eventoFoto($event)">
-              </ng-image-slider>
+      <div class="col-12 col-sm-6" style="border-radius: 20px;">
+        <div class="container shadow" style="height: 100%;">
+          <div class="content" style="width: 100%;">
+            <div class="row ">
+              <div class="col-12 borderBotton">
+                <!-- lib-ngx-image-zoom -->
+                <div class="" style="width: 100%; max-height: 60vh;"> <!-- Aplicamos sombra y controlamos el alto máximo -->
+                  <lib-ngx-image-zoom [thumbImage]="urlFoto" [fullImage]="urlFoto" [magnification]="1" [enableScrollZoom]="true"
+                    [enableLens]="true" [lensWidth]="200" [lensHeight]="200">
+                  </lib-ngx-image-zoom>
+                </div>
+              </div>
+              <div class="col-12">
+                <!-- ng-image-slider -->
+                <div class=" p-1"> <!-- Aplicamos sombra y espaciado -->
+                  <ng-image-slider [images]="imageObject" [infinite]="sliderInfinite" [imagePopup]="sliderImagePopup"
+                    [showArrow]="sliderArrowShow" [imageSize]="{width: sliderImageWidth, height: sliderImageHeight}"
+                    [autoSlide]="sliderAutoSlide ? 1 : 0" [slideImage]="sliderSlideImage" [animationSpeed]="sliderAnimationSpeed"
+                    (imageClick)="imageOnClick($event)" (arrowClick)="arrowOnClick($event)"
+                    (lightboxArrowClick)="lightboxArrowClick($event)" #nav (mouseover)="eventoFoto($event)">
+                  </ng-image-slider>
+                </div>
+              </div>
             </div>
           </div>
         </div>
       </div>
 
 
-        <div class="col-12 col-sm-6 shadow" style="padding-left: 25px; border-radius: 20px;">
-            <div class="content">
-                <div class="row shadow">
-                  <div class="col-12">
-                    <div class="row">
-                      <div class="col-6 p-1" style="text-align: center;">
-                        <section class=" shadow p-2" style="text-align: center; border-radius: 20px;     height: 175px;">
-                          <div class="row">
-                            <div class="col-12" style="text-align: center;">
-                              <section class="paddinLader">
-                                <label for="exampleFormControlSelect1">Colores disponibles:</label>
-                              <select class="form-control form-control-sm text-align" [(ngModel)]="data.color"
-                                  (change)="colorSeleccionado( );">
-                                  <option value="null">Todos</option>
-                                  <option [value]="item.talla" *ngFor="let item of data.listColor">{{
-                                      item.talla }}
-                                  </option>
-                              </select>
-                              </section>
-                            </div>
-                            <div class="col-12" style="text-align: center;">
-                              <section class="paddinLader">
-                                <label>Cantidad Adquirir</label>
-                                <input type="number" [(ngModel)]="data.cantidadAdquirir" class="form-control form-control-sm text-align">
-                              </section>
-                            </div>
-                          </div>
-                        </section>
-                      </div>
-                      <div class="col-6 p-1" style="text-align: center;">
-                        <section class=" shadow p-2" style="text-align: center; border-radius: 20px;     height: 175px;">
-                          <div class="row">
-                            <div class="col-12">
-                              <section class="paddinLader">
-                                <label for="exampleFormControlSelect1">Tallas disponibles:</label>
-                                <select class="form-control form-control-sm text-align" [(ngModel)]="data.tallas"
-                                    (change)="seleccionTalla()" [disabled]="!data.color">
-                                    <option [value]="item.tal_descripcion" *ngFor="let item of seleccionoColor.tallaSelect">
-                                        Tamaño: {{
-                                        item.tal_descripcion }} UND: {{ item.cantidad }}</option>
-                                </select>
-                              </section>
-                            </div>
-                            <div class="col-12">
-                              <section class="paddinLader">
-                                <label>Lo Vendiste</label>
-                                <input currencyMask [(ngModel)]="data.encuanto" class="form-control form-control-sm text-align" [options]="opcionCurrencys" (blur)="validando()"/>
-                              </section>
-                            </div>
-                          </div>
-                        </section>
-                      </div>
-                    </div>
-                  </div>
-                  <div class="col-12 shadow">
-                    <div class="d-flex flex-row bd-highlight mb-3" style="    margin-top: 15px; border-radius: 20px;">
-                      <div class="p-2 bd-highlight">
-                        <img [src]="urlFoto" alt="" class="img-profile" (error)="handleImageError($event)" loading="lazy">
-                      </div>
-                      <div class="p-2 bd-highlight" style="margin: auto; margin-left: -10px;">
-                        <h2>{{ data.pro_nombre }} </h2>
-                        <h5>Colores:{{ data.nameColores }} </h5>
-                        <h5>Tamaños Disponibles: {{ data.nemeTalla }} </h5>
-                      </div>
-                    </div>
-                  </div>
-                  <div class="col-12 p-3 shadow" style="max-height: 200px; overflow-y: auto;">
-                    <h3>DESCRIPCION:</h3>
-                    <p [innerHtml]="data.pro_descripcion"></p>
-                  </div>
-                  <div class="col-12 shadow" style="border-radius: 20px;">
-                    <div class="d-flex justify-content-around">
-                      <div>
-                        <button (click)="shareUrl()" type="button" class="btn btn-success">
-                          Compartir link
-                        </button>
-                      </div>
-                      <div></div>
-                      <div>
-                        <button (click)="openUrl( )" type="button" class="btn btn-primary" *ngIf="dataUser.id">
-                          Piezas gráficas
-                        </button>
-                      </div>
-                    </div>
-                  </div>
-
-                    <!--<div class="col-12">
-                        <div class="d-flex justify-content-between">
-                            <div>
-                                <h3 class="precios" *ngIf="data.precio_vendedor">Precio a distribuidor: {{ _tools.monedaChange( 3, 2, ( coinShop == true ? ( data.pro_vendedorCompra || data.precio_vendedor ) : data.precio_vendedor ) ) }}</h3>
-                                <img (click)="masInfo( data )" class="pointer" src="./assets/icons/masinformacion.png" style="width: 216px;">
-                            </div>
-                            <div>
-                                <h3 class="precios" *ngIf="dataUser.id">Precio Sugerido: {{ _tools.monedaChange( 3, 2, data.pro_uni_venta ) }}</h3>
-                                <h3 class="precios" *ngIf="!dataUser.id">Precio: {{ _tools.monedaChange( 3, 2, data.pro_uni_venta ) }}</h3>
-                                <span *ngIf="!data.precio_vendedor && dataUser.id" class="precios">Ganas el {{ porcentajeMostrar }} % : &nbsp; {{ gananciaEstimada }}</span>
-                            </div>
-                        </div>
-                    </div>
+        <div class="col-12 col-sm-6" style="border-radius: 20px;">
+            <div class="container shadow" style="height: 100%;">
+                <div class="content" style="width: 100%;">
+                  <div class="row ">
                     <div class="col-12">
-                        <div class="d-flex justify-content-between">
-                            <div>
-                                <h3>{{ data.pro_nombre }}</h3>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-6 col-sm-4" *ngIf="data.listTallas">
-                        <label for="exampleFormControlSelect1">Colores disponibles:</label>
-                        <select class="form-control form-control-sm" [(ngModel)]="data.color"
-                            (change)="colorSeleccionado( );">
-                            <option value="null">Todos</option>
-                            <option [value]="item.talla" *ngFor="let item of data.listColor">{{
-                                item.talla }}
-                            </option>
-                        </select>
-                    </div>
-                    <div class="col-6 col-sm-4" *ngIf="data.listTallas && disabledSelect">
-                        <label for="exampleFormControlSelect1">Tallas disponibles:</label>
-                        <select class="form-control form-control-sm" [(ngModel)]="data.tallas"
-                            (change)="seleccionTalla()" [disabled]="!data.color">
-                            <option [value]="item.tal_descripcion" *ngFor="let item of seleccionoColor.tallaSelect">
-                                talla: {{
-                                item.tal_descripcion }} UND: {{ item.cantidad }}</option>
-                        </select>
-                    </div>
-                    <div class="col-6 col-sm-4" *ngIf="seleccionnTalla">
-                        <label>Cantidades disponibles</label>
-                        <input type="number" [(ngModel)]="seleccionnTalla.cantidad" disabled
-                            class="form-control form-control-sm">
-                    </div>
-                    <div class="col-4">
-                        <label>Cantidad Adquirir</label>
-                        <input type="number" [(ngModel)]="data.cantidadAdquirir" class="form-control form-control-sm">
-                    </div>
-                    <div class="col-4" *ngIf="data.precio_vendedor && dataUser.id && coinShop == false">
-                        <label>Lo Vendiste</label>
-                        <input currencyMask [(ngModel)]="data.encuanto" class="form-control form-control-sm" [options]="opcionCurrencys" (blur)="validando()"/>
-                    </div>
-                    <div class="col-4" *ngIf="!data.precio_vendedor">
-                        <img style="width: 50%;" src="./assets/img/gratis.jpg" alt="">
-                    </div>
-                    <div class="col-12" *ngIf="data.checkMayor == 1">
-                        <mat-list>
-                            <div mat-subheader>Lista de precios al Mayor</div>
-                            <mat-list-item *ngFor="let item of data.listPrecios" class="pointer"
-                                (click)="AgregarCart(item)" [ngClass]="{
-                                'colorSeleccionado':item.selecciono == true
-                              }">
-                                <div mat-line class="row">
-                                    <div class="col-6">
-                                        <span>Cantidad: {{ item.cantidad }}</span>
-                                        &nbsp;&nbsp;
-                                        <span>Precios: {{ ( item.precios || 0 ).toLocaleString(1) }} COP</span>
-                                    </div>
+                      <div class="container borderBotton">
+                        <div class="row">
+                          <div class="col-6 p-1" style="text-align: center;">
+                            <section class="  p-2" style="text-align: center; border-radius: 20px; ">
+                              <div class="row">
+                                <div class="col-12" style="text-align: center;">
+                                  <section class="paddinLader">
+                                    <label for="exampleFormControlSelect1">Colores disponibles:</label>
+                                  <select class="form-control form-control-sm text-align" [(ngModel)]="data.color"
+                                      (change)="colorSeleccionado( );">
+                                      <option value="null">Todos</option>
+                                      <option [value]="item.talla" *ngFor="let item of data.listColor">{{
+                                          item.talla }}
+                                      </option>
+                                  </select>
+                                  </section>
                                 </div>
-                            </mat-list-item>
-                        </mat-list>
+                                <div class="col-12" style="text-align: center;">
+                                  <section class="paddinLader">
+                                    <label>Cantidad Adquirir</label>
+                                    <input type="number" [(ngModel)]="data.cantidadAdquirir" class="form-control form-control-sm text-align">
+                                  </section>
+                                </div>
+                              </div>
+                            </section>
+                          </div>
+                          <div class="col-6 p-1" style="text-align: center;">
+                            <section class="  p-2" style="text-align: center; border-radius: 20px; ">
+                              <div class="row">
+                                <div class="col-12">
+                                  <section class="paddinLader">
+                                    <label for="exampleFormControlSelect1">Tallas disponibles:</label>
+                                    <select class="form-control form-control-sm text-align" [(ngModel)]="data.tallas"
+                                        (change)="seleccionTalla()" [disabled]="!data.color">
+                                        <option [value]="item.tal_descripcion" *ngFor="let item of seleccionoColor.tallaSelect">
+                                            Tamaño: {{
+                                            item.tal_descripcion }} UND: {{ item.cantidad }}</option>
+                                    </select>
+                                  </section>
+                                </div>
+                                <div class="col-12">
+                                  <section class="paddinLader">
+                                    <label>Lo Vendiste</label>
+                                    <input currencyMask [(ngModel)]="data.encuanto" class="form-control form-control-sm text-align" [options]="opcionCurrencys" (blur)="validando()"/>
+                                  </section>
+                                </div>
+                              </div>
+                            </section>
+                          </div>
+                        </div>
+                      </div>
                     </div>
-                    <div class="col-12 content container" style="height: 225px; overflow: scroll; overflow-x: hidden">
+                    <div class="col-12 ">
+                      <div class="container borderBotton">
+                        <div class="row">
+                          <div class="col-12">
+                            <div class="d-flex flex-row bd-highlight mb-3" style="    margin-top: 15px; border-radius: 20px;">
+                              <div class="p-2 bd-highlight">
+                                <img [src]="urlFoto" alt="" class="img-profile" (error)="handleImageError($event)" loading="lazy">
+                              </div>
+                              <div class="p-2 bd-highlight" style="margin: auto; margin-left: -10px;">
+                                <h2>{{ data.pro_nombre }} </h2>
+                                <h5>Colores:{{ data.nameColores }} </h5>
+                                <h5>Tamaños Disponibles: {{ data.nemeTalla }} </h5>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="col-12 p-3" style="max-height: 200px; overflow-y: auto;">
+                      <div class="container borderBotton">
                         <div class="row">
                             <div class="col-12">
-                                <h5>Descripcion: </h5>
-                            </div>
-                            <div class="col-12">
-                                <p [innerHtml]="data.pro_descripcion"></p>
+                              <h3>DESCRIPCION:</h3>
+                              <p [innerHtml]="data.pro_descripcion"></p>
                             </div>
                         </div>
-                    </div>-->
+                      </div>
+                    </div>
+                    <div class="col-12" style="border-radius: 20px;">
+                      <div class="d-flex justify-content-around">
+                        <div>
+                          <button (click)="shareUrl()" type="button" class="btn btn-success">
+                            Compartir link
+                          </button>
+                        </div>
+                        <div></div>
+                        <div>
+                          <button (click)="openUrl( )" type="button" class="btn btn-primary" *ngIf="dataUser.id">
+                            Piezas gráficas
+                          </button>
+                        </div>
+                      </div>
+                    </div>
+
+                      <!--<div class="col-12">
+                          <div class="d-flex justify-content-between">
+                              <div>
+                                  <h3 class="precios" *ngIf="data.precio_vendedor">Precio a distribuidor: {{ _tools.monedaChange( 3, 2, ( coinShop == true ? ( data.pro_vendedorCompra || data.precio_vendedor ) : data.precio_vendedor ) ) }}</h3>
+                                  <img (click)="masInfo( data )" class="pointer" src="./assets/icons/masinformacion.png" style="width: 216px;">
+                              </div>
+                              <div>
+                                  <h3 class="precios" *ngIf="dataUser.id">Precio Sugerido: {{ _tools.monedaChange( 3, 2, data.pro_uni_venta ) }}</h3>
+                                  <h3 class="precios" *ngIf="!dataUser.id">Precio: {{ _tools.monedaChange( 3, 2, data.pro_uni_venta ) }}</h3>
+                                  <span *ngIf="!data.precio_vendedor && dataUser.id" class="precios">Ganas el {{ porcentajeMostrar }} % : &nbsp; {{ gananciaEstimada }}</span>
+                              </div>
+                          </div>
+                      </div>
+                      <div class="col-12">
+                          <div class="d-flex justify-content-between">
+                              <div>
+                                  <h3>{{ data.pro_nombre }}</h3>
+                              </div>
+                          </div>
+                      </div>
+                      <div class="col-6 col-sm-4" *ngIf="data.listTallas">
+                          <label for="exampleFormControlSelect1">Colores disponibles:</label>
+                          <select class="form-control form-control-sm" [(ngModel)]="data.color"
+                              (change)="colorSeleccionado( );">
+                              <option value="null">Todos</option>
+                              <option [value]="item.talla" *ngFor="let item of data.listColor">{{
+                                  item.talla }}
+                              </option>
+                          </select>
+                      </div>
+                      <div class="col-6 col-sm-4" *ngIf="data.listTallas && disabledSelect">
+                          <label for="exampleFormControlSelect1">Tallas disponibles:</label>
+                          <select class="form-control form-control-sm" [(ngModel)]="data.tallas"
+                              (change)="seleccionTalla()" [disabled]="!data.color">
+                              <option [value]="item.tal_descripcion" *ngFor="let item of seleccionoColor.tallaSelect">
+                                  talla: {{
+                                  item.tal_descripcion }} UND: {{ item.cantidad }}</option>
+                          </select>
+                      </div>
+                      <div class="col-6 col-sm-4" *ngIf="seleccionnTalla">
+                          <label>Cantidades disponibles</label>
+                          <input type="number" [(ngModel)]="seleccionnTalla.cantidad" disabled
+                              class="form-control form-control-sm">
+                      </div>
+                      <div class="col-4">
+                          <label>Cantidad Adquirir</label>
+                          <input type="number" [(ngModel)]="data.cantidadAdquirir" class="form-control form-control-sm">
+                      </div>
+                      <div class="col-4" *ngIf="data.precio_vendedor && dataUser.id && coinShop == false">
+                          <label>Lo Vendiste</label>
+                          <input currencyMask [(ngModel)]="data.encuanto" class="form-control form-control-sm" [options]="opcionCurrencys" (blur)="validando()"/>
+                      </div>
+                      <div class="col-4" *ngIf="!data.precio_vendedor">
+                          <img style="width: 50%;" src="./assets/img/gratis.jpg" alt="">
+                      </div>
+                      <div class="col-12" *ngIf="data.checkMayor == 1">
+                          <mat-list>
+                              <div mat-subheader>Lista de precios al Mayor</div>
+                              <mat-list-item *ngFor="let item of data.listPrecios" class="pointer"
+                                  (click)="AgregarCart(item)" [ngClass]="{
+                                  'colorSeleccionado':item.selecciono == true
+                                }">
+                                  <div mat-line class="row">
+                                      <div class="col-6">
+                                          <span>Cantidad: {{ item.cantidad }}</span>
+                                          &nbsp;&nbsp;
+                                          <span>Precios: {{ ( item.precios || 0 ).toLocaleString(1) }} COP</span>
+                                      </div>
+                                  </div>
+                              </mat-list-item>
+                          </mat-list>
+                      </div>
+                      <div class="col-12 content container" style="height: 225px; overflow: scroll; overflow-x: hidden">
+                          <div class="row">
+                              <div class="col-12">
+                                  <h5>Descripcion: </h5>
+                              </div>
+                              <div class="col-12">
+                                  <p [innerHtml]="data.pro_descripcion"></p>
+                              </div>
+                          </div>
+                      </div>-->
+                  </div>
                 </div>
             </div>
         </div>

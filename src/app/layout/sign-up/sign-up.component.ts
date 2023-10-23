@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Indicativo } from 'src/app/JSON/indicativo';
 import { AuthService } from 'src/app/services/auth.service';
 import { ToolsService } from 'src/app/services/tools.service';
@@ -75,6 +75,8 @@ export class SignUpComponent implements OnInit {
       check: false
     }
   ];
+  typeRol:string;
+  number:string;
 
   constructor(
     private _tools: ToolsService,
@@ -83,13 +85,32 @@ export class SignUpComponent implements OnInit {
     private _user: UsuariosService,
     private _store: Store<STORAGES>,
     public dialog: MatDialog,
-  ) { }
+    private activate: ActivatedRoute,
+  ) {
+    window.document.scrollingElement.scrollTop=0
+    this.typeRol = ( this.activate.snapshot.paramMap.get('type'));
+    this.number = ( this.activate.snapshot.paramMap.get('cel') )
+    if( this.number ) this.getCabeza();
+    if( this.typeRol ){
+      this.data.optVendedor = this.typeRol === 'vendedor' ? true : false;
+      this.data.optProveedor = this.typeRol === 'proveedor' ? true : false;
+    }
+    this.data.rol = this.typeRol;
+  }
 
   ngOnInit(): void {
       if (this._authSrvice.isLoggedIn()) {
         this._router.navigate(['/pedidos']);
       }
     }
+  getCabeza(){
+    this._user.get({ where: {
+      usu_telefono: this.number }
+    }).subscribe((res: any) => {
+      if( !res.data[0]) this.data.cabeza = 1;
+      else this.data.cabeza = res.data[0].id;
+    }, (error) => console.error(error));
+  }
 
   openEmail(){
     console.log("**ENTRE")

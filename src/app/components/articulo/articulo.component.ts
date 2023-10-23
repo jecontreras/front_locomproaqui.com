@@ -13,6 +13,7 @@ import * as _ from 'lodash';
 import { NgImageSliderComponent } from 'ng-image-slider';
 import { BuscarAction, CartAction, CategoriaAction, UserCabezaAction } from 'src/app/redux/app.actions';
 import { ViewProductosComponent } from '../view-productos/view-productos.component';
+import { FormatosService } from 'src/app/services/formatos.service';
 
 @Component({
   selector: 'app-articulo',
@@ -82,6 +83,7 @@ export class ArticuloComponent implements OnInit {
     private spinner: NgxSpinnerService,
     private _catalago: CatalogoService,
     private _router: Router,
+    public _formato: FormatosService,
   ) {
     this._store.subscribe((store: any) => {
       store = store.name;
@@ -294,12 +296,12 @@ export class ArticuloComponent implements OnInit {
         }
       }
       this.imageObject = ( _.unionBy( this.imageObject || [], this.imageObject, 'id' ) ) || [];
-      /*this.imageObject.unshift({
+      this.imageObject.unshift({
         id: 0,
         title: "TODOS",
-        foto: "./assets/logo.png",
+        foto: "./assets/imagenes/todos.png",
         subCategoria: []
-      });*/
+      });
       console.log( this.imageObject );
       for( let row of this.imageObject ){
         delete row.check;
@@ -310,7 +312,7 @@ export class ArticuloComponent implements OnInit {
   }
 
   eventorOver( item:any ){
-    //console.log( item )
+    console.log( item )
     item.check = !item.check;
     for( let row of this.imageObject ) { if( row.id != item.id ) row.check = false; }
     if( item.subCategoria.length === 0 ) this._router.navigate( [ "/pedidos", item['id'] ] );
@@ -492,6 +494,7 @@ export class ArticuloComponent implements OnInit {
     this.notscrolly = true;
     this.notEmptyPost = true;
     console.log("****412", opt, index)
+    this._router.navigate( [ "/pedidos", obj['cat_padre']?.id ] );
     this.cargarProductos();
   }
 

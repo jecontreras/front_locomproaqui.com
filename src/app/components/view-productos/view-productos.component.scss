@@ -39,9 +39,11 @@
 }
 
 .paddinLader{
-  padding: 0 10%;
+  padding: 0 5%;
 }
-
+.borderBotton{
+  border-bottom: 1px solid #c1c1c1;
+}
 .scrollTodo{
   max-height: 200px; /* Establece la altura máxima según tus necesidades */
     overflow-y: auto; /* Habilita el desplazamiento vertical */

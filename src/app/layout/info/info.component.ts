@@ -46,7 +46,8 @@ export class InfoComponent implements OnInit {
   }
 
   handleOpenCheckIn( opt:string ){
-    this._router.navigate(['/registro']);
+    //this._router.navigate(['/registro']);
+    this._router.navigate(['/singUp', opt, ( this.numberInf || '3213692393' ) ])
     /*const dialogRef = this.dialog.open(RegistroComponent, {
       width: '100%',
       data: {

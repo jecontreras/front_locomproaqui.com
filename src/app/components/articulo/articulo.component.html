@@ -33,75 +33,124 @@
     <div class="content">
       <div class="row" style="padding-left: 10px;">
         <div class="col-12">
-          <br><br>
-          <div class="row g-3" *ngIf="listProductos[0]">
-            <div class="col-md-3 col-sm-4 col-lg-2 col-xs-6 col-6 anchandoPr" style="padding-bottom: 5px;"
-              *ngFor="let item of listProductos">
-              <mat-card class="example-card">
-                <figure mat-card-image data-toggle="modal" id="figura" data-target="#modalinfo" class="img-contenedor"
-                  (mouseout)="eventoDes({})">
-                  <img class="imgProductos pointer" [src]="item.foto" (click)="agregar(item)" loading="lazy">
-                </figure>
-                <mat-card-content>
-                  <mat-card-title>
-                    <p class="titulo1 color1">{{ item.pro_nombre | slice: 0: 20 }}</p>
-                  </mat-card-title>
-                  <mat-card-subtitle>
-                    <small class="pricesmall currency2" *ngIf="!dataUser.id">
-                      <h6>{{ _tools.monedaChange(3, 2, (item.pro_uni_ventaEdit || item.pro_uni_venta || 0)) }}</h6>
-                    </small>
-                    <small class="pricesmall currency2" *ngIf="( coinShop == true ) && dataUser.id">
-                      <h6>{{ _tools.monedaChange(3, 2, (item.pro_vendedorCompra || item.pro_uni_venta || 0)) }}</h6>
-                    </small>
-                    <small *ngIf="coinShop == false">
-                      <input currencyMask [(ngModel)]="item.pro_uni_venta" *ngIf="dataUser.id"
-                        (blur)="handleEdit(item)" class="form-control form-control-sm" [options]="opcionCurrencys"
-                        [disabled]="disabledBtn" />
-                    </small>
+          <div class="container" style="margin-top: 20px;">
+            <div class="row">
+              <div class="col-12" style="padding: 0 !important;">
+                <div class="d-flex justify-content-center">
+                  <div>
+                    <ul class="aa-product-catg">
+                      <!-- start single product item -->
+                      <li *ngFor="let item of listProductos" id="anchosLi" style="    height: 325px; padding: 2px; border-radius: 20px;" class="mat-elevation-z8">
+                        <figure class="img-contenedor" style="height: 315px;">
+                          <a class="aa-product-img pointer"><img class="anchosProductos" [src]="item.foto" style="height: 220px;" (click)="agregar(item)"
+                              alt="polo shirt img"></a>
+                              <!--<a class="aa-add-card-btn pointer" style="background: #02a0e3;" [ngStyle]="{'background-color':urlColor }" (click)="AgregarCart(item)"><span
+                                class="fa fa-shopping-cart"></span>{{ titleButton }}</a>-->
+                          <figcaption>
+                            <h4 class="aa-product-title"><a href="#">{{ item.pro_nombre | slice: 0: 20 }}</a></h4>
+                            <span class="aa-product-price">
+                              <small class="pricesmall currency2" *ngIf="!dataUser.id">
+                                <h6>{{ _tools.monedaChange(3, 2, (item.pro_uni_ventaEdit || item.pro_uni_venta || 0)) }}</h6>
+                              </small>
+                              <small class="pricesmall currency2" *ngIf="( coinShop == true ) && dataUser.id">
+                                <h6>{{ _tools.monedaChange(3, 2, (item.pro_vendedorCompra || item.pro_uni_venta || 0)) }}</h6>
+                              </small>
+                              <small *ngIf="coinShop == false">
+                                <input currencyMask [(ngModel)]="item.pro_uni_venta" *ngIf="dataUser.id" style="text-align: center !important;"
+                                  (blur)="handleEdit(item)" class="form-control form-control-sm" [options]="opcionCurrencys"
+                                  [disabled]="disabledBtn" />
+                              </small>
+                              <section style="text-align: center !important;">
+                                <button type="button" data-toggle="tooltip" data-placement="right" style="width: 100%;     display: grid;"
+                                  class="sc-logout btn btn-success btn-sm pull-right buttonAncho font-weight-bold"
+                                  [ngStyle]="{'background-color':urlColor }" (click)="AgregarCart(item)"
+                                  data-original-title=" Hacer pedido">{{ titleButton }} </button>
+                              </section>
+                            </span>
+                            <section *ngIf="rolname != 'vendedor'">
+                              <div class="mx-auto" style="width: 120px;">
+                                <img (click)="masInfo(item)" class="pointer" src="./assets/icons/masinformacion.png" style="width: 100%;">
+                              </div>
+                            </section>
+                          </figcaption>
+                        </figure>
+                        <!--<div class="aa-product-hvr-content">
+                          <a href="https://www.facebook.com/sharer/sharer.php?kid_directed_site=0&u=https://www.locomproaqui.com/productos/15?u=https://www.locomproaqui.com/productos/{{ item.id }}"
+                            target="_blank" data-toggle="tooltip" data-placement="top" title="Compartir"><span
+                              class="fa fa-exchange"></span></a>
+                          <a class="pointer" (click)="viewProducto( item )" title="Ver Producto"><span
+                              class="fa fa-search"></span></a>
+                        </div>-->
+                        <!-- product badge -->
+                      </li>
+                    </ul>
+                    <!--<div class="col-md-3 col-sm-4 col-lg-2 col-xs-6 col-6 anchandoPr" style="padding-bottom: 5px;"
+                        *ngFor="let item of listProductos">
+                        <mat-card class="example-card">
+                          <figure mat-card-image data-toggle="modal" id="figura" data-target="#modalinfo" class="img-contenedor"
+                            (mouseout)="eventoDes({})">
+                            <img class="imgProductos pointer" [src]="item.foto" (click)="agregar(item)" loading="lazy">
+                          </figure>
+                          <mat-card-content>
+                            <mat-card-title>
+                              <p class="titulo1 color1">{{ item.pro_nombre | slice: 0: 20 }}</p>
+                            </mat-card-title>
+                            <mat-card-subtitle>
+                              <small class="pricesmall currency2" *ngIf="!dataUser.id">
+                                <h6>{{ _tools.monedaChange(3, 2, (item.pro_uni_ventaEdit || item.pro_uni_venta || 0)) }}</h6>
+                              </small>
+                              <small class="pricesmall currency2" *ngIf="( coinShop == true ) && dataUser.id">
+                                <h6>{{ _tools.monedaChange(3, 2, (item.pro_vendedorCompra || item.pro_uni_venta || 0)) }}</h6>
+                              </small>
+                              <small *ngIf="coinShop == false">
+                                <input currencyMask [(ngModel)]="item.pro_uni_venta" *ngIf="dataUser.id"
+                                  (blur)="handleEdit(item)" class="form-control form-control-sm" [options]="opcionCurrencys"
+                                  [disabled]="disabledBtn" />
+                              </small>
 
-                  </mat-card-subtitle>
-                </mat-card-content>
-                <mat-card-actions>
-                  <div class="d-flex bd-highlight">
-                    <div class="flex-grow-1 bd-highlight">
-                      <div class="d-flex justify-content-center">
-                        <div>
-                          <div class="plusminus2 horiz" data-after="UND" style="width: 100px;">
-                            <button type="button" class="btn-number" data-type="minus" [ngStyle]="{'background-color':urlColor }"
-                              (click)="menosCantidad(item)" data-field="product_quantity_25"></button>
-                            <input (change)="manualCantidad(item)" data-clasificacion="" data-un="UND" type="number"
-                              name="product_quantity2" id="product_quantity_25" min="1" [(ngModel)]="item.cantidadAdquirir"
-                              class="input-number ">
-                            <span class="hide" *ngIf="!item.cantidadAdquirir">1</span>
-                            <button type="button" class="btn-number" data-type="plus" [ngStyle]="{'background-color':urlColor }"
-                              (click)="maxCantidad(item)" data-field="product_quantity_25"></button>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
+                            </mat-card-subtitle>
+                          </mat-card-content>
+                          <mat-card-actions>
+                            <div class="d-flex bd-highlight">
+                              <div class="flex-grow-1 bd-highlight">
+                                <div class="d-flex justify-content-center">
+                                  <div>
+                                    <div class="plusminus2 horiz" data-after="UND" style="width: 100px;">
+                                      <button type="button" class="btn-number" data-type="minus" [ngStyle]="{'background-color':urlColor }"
+                                        (click)="menosCantidad(item)" data-field="product_quantity_25"></button>
+                                      <input (change)="manualCantidad(item)" data-clasificacion="" data-un="UND" type="number"
+                                        name="product_quantity2" id="product_quantity_25" min="1" [(ngModel)]="item.cantidadAdquirir"
+                                        class="input-number ">
+                                      <span class="hide" *ngIf="!item.cantidadAdquirir">1</span>
+                                      <button type="button" class="btn-number" data-type="plus" [ngStyle]="{'background-color':urlColor }"
+                                        (click)="maxCantidad(item)" data-field="product_quantity_25"></button>
+                                    </div>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                            <div class="row">
+                              <div class="col-12">
+                                <button type="button" data-toggle="tooltip" data-placement="right" style="width: 100%;"
+                                  class="sc-logout btn btn-success btn-sm pull-right buttonAncho font-weight-bold"
+                                  [ngStyle]="{'background-color':urlColor }" (click)="AgregarCart(item)"
+                                  data-original-title=" Hacer pedido">{{ titleButton }} </button>
+                              </div>
+                              <div class="col-12" *ngIf="rolname != 'vendedor'">
+                                <div class="mx-auto" style="width: 120px;">
+                                  <img (click)="masInfo(item)" class="pointer" src="./assets/icons/masinformacion.png" style="width: 100%;">
+                                </div>
+                              </div>
+                              <div class="col-12 paddins1" *ngIf="rolname == 'vendedor'">
+                              </div>
+                            </div>
+                          </mat-card-actions>
+                        </mat-card>
+                      </div>-->
                   </div>
-                  <div class="row">
-                    <div class="col-12">
-                      <button type="button" data-toggle="tooltip" data-placement="right" style="width: 100%;"
-                        class="sc-logout btn btn-success btn-sm pull-right buttonAncho font-weight-bold"
-                        [ngStyle]="{'background-color':urlColor }" (click)="AgregarCart(item)"
-                        data-original-title=" Hacer pedido">{{ titleButton }} </button>
-                    </div>
-                    <div class="col-12" *ngIf="rolname != 'vendedor'">
-                      <div class="mx-auto" style="width: 120px;">
-                        <img (click)="masInfo(item)" class="pointer" src="./assets/icons/masinformacion.png" style="width: 100%;">
-                      </div>
-                    </div>
-                    <div class="col-12 paddins1" *ngIf="rolname == 'vendedor'">
-                      <!-- Contenido específico para vendedor -->
-                    </div>
-                  </div>
-                </mat-card-actions>
-              </mat-card>
+                </div>
+              </div>
             </div>
-
-            <!-- Resto del código -->
-
           </div>
           <div class="col-12">
             <div class="d-flex flex-row-reverse bd-highlight">

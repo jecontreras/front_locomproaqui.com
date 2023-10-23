@@ -22,7 +22,7 @@ export class MenuComponent implements OnInit {
 
   handleOpenView( url:string ){
     const dialogRef = this.dialog.open(OpenIframeComponent, {
-      width: '50%',
+      width: '100%',
       data: {
         url: url
       }

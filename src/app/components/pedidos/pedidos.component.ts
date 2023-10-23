@@ -290,12 +290,12 @@ export class PedidosComponent implements OnInit {
           this.imageObject[idx]= datos;
         }
       }
-      /*this.imageObject.unshift({
+      this.imageObject.unshift({
         id: 0,
         title: "TODOS",
-        image: "./assets/logo.png",
+        image: "./assets/imagenes/todos.png",
         subCategoria: []
-      });*/
+      });
       console.log( this.imageObject );
       for( let row of this.imageObject ){
         let accion = new CategoriaAction(row, 'post');
