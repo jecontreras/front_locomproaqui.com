@@ -268,7 +268,7 @@ export class ProductosViewComponent implements OnInit {
       this._store.dispatch( accion );
     }
     this.Router.navigate(['/front/productosView', obj.id, this.dataUser.usu_telefono ]);
-    location.reload();
+    setTimeout(()=>location.reload(), 200)
   }
 
   AgregarCart2( item:any ){

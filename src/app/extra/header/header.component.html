@@ -407,10 +407,10 @@
       </div>
     </div>
 
-    <div class="content">
-      <ng-content> </ng-content>
+    <div class="content" style="    height: -webkit-fill-available;">
+      <ng-content style="    height: -webkit-fill-available;"> </ng-content>
 
-      <app-footer *ngIf="(routName !== 'singUp' )"></app-footer>
+      <app-footer ></app-footer>
     </div>
   </mat-drawer-content>
 
