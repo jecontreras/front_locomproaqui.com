@@ -4,7 +4,7 @@
       [autoHeight]="true"
       [allowTouchMove]="false"
       [navigation]="( cantDs === 2 || cantDs === 3 ) ? false : true "
-      [autoplay]="{ delay: 5000, disableOnInteraction: false }" [pagination]="{ clickable: true }">
+      [pagination]="{ clickable: true }">
       <ng-container>
         <ng-template  class="swiper-slide" swiperSlide *ngFor="let item of listGaleria">
           <img [src]="item[lyImg]" alt="Imagen 2" class="d-block w-100">

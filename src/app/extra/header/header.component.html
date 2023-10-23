@@ -1,17 +1,21 @@
 <mat-drawer-container class="example-container" autosize [hasBackdrop]="hasBackdrop$">
   <mat-drawer class="example-sidenav" style="padding: 0;" position="end" #sidenav mode="over" (opened)="events.push('open!')" (closed)="events.push('close!')" class="sidenav anchos">
-    <div *ngIf="opcionoView == 'carro'">
+    <section *ngIf="opcionoView == 'carro'" style="    width: 97%;
+    margin: 0px -4px;">
       <mat-toolbar>
         <mat-toolbar-row>
-          <div class="d-flex justify-content-between">
-            <div>
-              <a class="pointer text-danger" (click)="sidenav.toggle()">
-                <i class="material-icons" aria-hidden="true">close</i>
-              </a>
+          <div class="d-flex bd-highlight mb-3">
+            <div class="me-auto p-2 bd-highlight">
+              <section style="margin: auto;     padding: 4px 0;">
+                <a class="pointer text-danger" (click)="sidenav.toggle()">
+                  <i class="material-icons" aria-hidden="true">close</i>
+                </a>
+              </section>
             </div>
-            <div></div>
-            <div>
-              <h5>Productos Seleccionados</h5>
+            <div class="p-2 bd-highlight">
+              <h2>
+                Productos Seleccionados
+              </h2>
             </div>
           </div>
         </mat-toolbar-row>
@@ -20,18 +24,23 @@
         <div class="row">
           <div class="col-12">
             <mat-list>
-              <mat-list-item *ngFor="let item of listCart;let idx=index">
-                <img class="imgFoto pointer" [src]="item.foto || './assets/img/producto.jpg'" mat-list-icon>
-                <h4 mat-line>{{ item.titulo }}</h4>
-                <p mat-line>{{ 'Cantidad: '+item.cantidad }} </p>
-                <p mat-line>Precio: {{ _tools.monedaChange( 3,2,item.costoTotal || 0 ) }} COP</p>
-                <p mat-line *ngIf="dataUser.id">Lo Vendiste: {{ _tools.monedaChange( 3,2,item.loVendio || 0 ) }} COP
-                </p>
-                <p mat-line><span (click)="booleanoOpen = false; deleteCart(idx, item);"
-                    class="p-1 pointer d-flex justify-content-end"><i class="material-icons">delete</i></span> </p>
+              <mat-list-item *ngFor="let item of listCart; let idx = index">
+                <div class="list-item-container">
+                  <img class="imgFoto pointer" [src]="item.foto || './assets/img/producto.jpg'" mat-list-icon>
+                  <div class="item-info">
+                    <h4 mat-line>{{ item.titulo }}</h4>
+                    <p mat-line>{{ 'Cantidad: ' + item.cantidad }}</p>
+                    <p mat-line>Precio: {{ _tools.monedaChange(3, 2, item.costoTotal || 0) }} COP</p>
+                    <p mat-line *ngIf="dataUser.id">Lo Vendiste: {{ _tools.monedaChange(3, 2, item.loVendio || 0) }} COP</p>
+                  </div>
+                  <span (click)="booleanoOpen = false; deleteCart(idx, item);" class="delete-button pointer">
+                    <i class="material-icons">delete</i>
+                  </span>
+                </div>
               </mat-list-item>
             </mat-list>
           </div>
+
         </div>
       </div>
       <div class="cart-bg-overlay"></div>
@@ -40,7 +49,7 @@
 
         <div class="d-flex p-2">
           <div class="cart-amount-summary" style="width: 100%;">
-            <h4>Resumen de tu venta &nbsp;</h4>
+            <h4 style="text-align: center;">Resumen de tu venta &nbsp;</h4>
             <ul class="summary-table">
               <li *ngIf="dataUser.id"><span>Valor a pagar de tu cliente: &nbsp;</span> <span>{{ _tools.monedaChange(
                   3,2,data.total || 0 ) }}</span> </li>
@@ -55,19 +64,21 @@
                 </div>
               </li>
             </ul>
-            <div class="col-12">
+            <div class="col-12 p-2" style="text-align: center;">
               <button type="button" class="btn btn-primary" (click)="articuloSubmit()">
                 <span *ngIf="dataUser.id">Realizar guía de despacho</span>
                 <span *ngIf="!dataUser.id">Hacer pedido</span>
-              </button><br>
+              </button>
+            </div>
+            <div class="col-12 p-2" style="text-align: center;">
               <button (click)="sidenav.toggle()" type="button" class="btn btn-success" routerLink="/pedidos">Agregar
                 más productos</button>
             </div>
           </div>
         </div>
       </div>
-    </div>
-    <div *ngIf="opcionoView == 'notificaciones'">
+    </section>
+    <section *ngIf="opcionoView == 'notificaciones'">
       <mat-toolbar>
         <mat-toolbar-row>
           <div class="row">
@@ -99,7 +110,7 @@
           </div>
         </div>
       </div>
-    </div>
+    </section>
   </mat-drawer>
   <mat-drawer #drawer class="example-sidenav" [opened]="isHandset$" mode="over" style="width: 300px;">
     <!--<nav class="mCustomScrollbar _mCS_1 mCS-autoHide mCS_no_scrollbar active" id="sidebar"
@@ -399,7 +410,7 @@
     <div class="content">
       <ng-content> </ng-content>
 
-      <app-footer *ngIf="( routName !== 'login' ) &&  (routName !== 'singUp' )"></app-footer>
+      <app-footer *ngIf="(routName !== 'singUp' )"></app-footer>
     </div>
   </mat-drawer-content>
 

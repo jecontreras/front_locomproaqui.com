@@ -16,7 +16,18 @@
 </section>-->
 <section id="aa-catg-head-banner">
   <div class="row">
-    <div class="col-12"><img [src]=" userCabeza.us_banner || './assets/img/banner.jpg'" alt="fashion img" class="anchosBanner"></div>
+    <!--<div class="col-12"><img [src]=" userCabeza.us_banner || './assets/img/banner.jpg'" alt="fashion img" class="anchosBanner"></div>-->
+    <div class="col-12">
+      <div class="row" style="margin: 5px;">
+        <div class="d-flex justify-content-center">
+          <div class="container">
+            <div class="col-12">
+              <app-slider [listGaleria]="listBanner" [view]="1" [lyImg]="'image'"></app-slider>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
     <!--<div class="col-3">
       <div class="mx-auto" style="width: 457px; margin-top: 32px;">
         <img [src]=" userCabeza.usu_imagen || './assets/img/banner.jpg'" alt="fashion img" class="" style="    width: 55%;">

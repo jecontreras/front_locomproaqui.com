@@ -15,10 +15,34 @@
   padding: 20px;
 }
 
+.list-item-container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 12px; /* Añade un relleno alrededor del elemento de la lista */
+  border: 1px solid #ccc; /* Opcional: agrega un borde alrededor de cada elemento */
+  border-radius: 10px; /* Opcional: agrega bordes redondeados */
+  margin-bottom: 10px; /* Espacio entre elementos de la lista */
+}
+
+.imgFoto {
+  max-width: 80px; /* Ancho máximo para la imagen */
+  border-radius: 50%; /* Hace que la imagen sea redonda */
+}
+
+.item-info {
+  flex: 1; /* Hace que ocupe el espacio disponible */
+  margin-left: 12px; /* Espacio entre la imagen y la información */
+}
+
+.delete-button {
+  cursor: pointer;
+}
+
 
 
 .anchos{
-  width: 280px !important;
+  width: 340px !important;
   top: 0px !important;
 }
 

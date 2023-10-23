@@ -49,6 +49,7 @@ export class ProductosComponent implements OnInit {
   @ViewChild('toolbar',{static: false} ) private nav: any;
   userId:any;
   breakpoint: number;
+  listBanner: any = [  ];
 
   constructor(
     private _productos: ProductoService,
@@ -77,7 +78,10 @@ export class ProductosComponent implements OnInit {
   async ngOnInit() {
     this.id = this.activate.snapshot.paramMap.get('id');
     console.log("******ID", this.id, this.userCabeza)
-    if( this.id ) this.dataUser = ( await this.getUser() ) || { id: 1 };
+    if( this.id ) {
+      this.dataUser = ( await this.getUser() ) || { id: 1 };
+      this.listBanner.push( { image: this.dataUser.us_banner, id: 1 } )
+    }
     else this.dataUser = { id: 1 }
     this.getProductos();
     this.getCategorias();

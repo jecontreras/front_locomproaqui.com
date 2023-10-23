@@ -280,7 +280,7 @@ export class PedidosComponent implements OnInit {
         let datos: any = {
           id: row.id,
           title: row.cat_nombre,
-          image: row.cat_imagen || './assets/categoria.jpeg',
+          image: row.cat_imagen || './assets/imagenes/todos.png',
           subCategoria: await this.getSubcategoria( row.id )
         };
         if (row.id == this.idCategoria) datos.check = true;
