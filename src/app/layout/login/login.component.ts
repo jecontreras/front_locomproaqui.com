@@ -77,7 +77,8 @@ export class LoginsComponent implements OnInit {
           location.reload();
         }, 3000);
       }else{
-        this._tools.presentToast("Error de sesión")
+        this._tools.error( { mensaje: res.message, footer: "Problemas de sesión" } );
+        this._tools.presentToast( res.message )
       }
     },(error)=>{ console.error(error); this.disableSubmit = true; this._tools.presentToast("Error de servidor")});
   }
@@ -106,7 +107,10 @@ export class LoginsComponent implements OnInit {
       this._tools.tooast( { title: "Tenemos problemas con el restablecimiento de la contraseña "+ errors, icon: "error", timer: 5000 } ); this.disabled = false; } );
   }*/
 
-  openRecuperacion( ){
+  async openRecuperacion( ){
+    let alertInput:any  = await this._tools.alertInput( { title: "Escriba tu correo electronico"} );
+    if( !alertInput.value )  return this._tools.tooast({ title:"Por Favor Escriba tu correo electronico?" ,icon: "error" });
+    this.data.usu_email = alertInput.value;
     if( this.disabled ) return false;
     this.disabled = true;
     this._user.olvidoPass( this.data ).subscribe(( res:any )=>{
