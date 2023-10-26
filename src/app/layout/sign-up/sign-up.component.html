@@ -15,23 +15,11 @@
             <p style="text-align: center;">Rellena el Siguiente formulario para crear una cuenta</p>
             <div class="row">
               <div class="col-12">
-                <div class="input-group mb-3">
-                    <span class="input-group-text" id="basic-addon1">
-                      <span class="lnr lnr-user"></span>
-                    </span>
-                    <input type="text" class="form-control" placeholder="Nombre de la tienda ejemplo ( Dayana Store )" aria-label="usu_usuario" aria-describedby="basic-addon1" [(ngModel)]="data.usu_usuario" (ngModelChange)="validadUsername()">
-                    <div *ngIf="!disabledusername">
-                      <span class="bg-danger text-white rounded">El Nombre de su tienda Ya Se Encuentra Registrado Por Favor Utilizar
-                          Otro</span>
-                    </div>
-                  </div>
-            </div>
-              <div class="col-12">
                   <div class="input-group mb-3">
                       <span class="input-group-text" id="basic-addon1">
                         <span class="lnr lnr-shirt"></span>
                       </span>
-                      <input type="text" class="form-control" placeholder="Nombre Personal ejemplo ( pablo, andres )" aria-label="Username" aria-describedby="basic-addon1" [(ngModel)]="data.usu_nombre">
+                      <input type="text" class="form-control" placeholder="Nombre" aria-label="Username" aria-describedby="basic-addon1" [(ngModel)]="data.usu_nombre">
                     </div>
               </div>
               <div class="col-12">
@@ -42,6 +30,18 @@
                       <input type="text" class="form-control" placeholder="Apellido" aria-label="Username" aria-describedby="basic-addon1" [(ngModel)]="data.usu_apellido">
                     </div>
               </div>
+              <div class="col-12">
+                <div class="input-group mb-3">
+                    <span class="input-group-text" id="basic-addon1">
+                      <span class="lnr lnr-user"></span>
+                    </span>
+                    <input type="text" class="form-control" placeholder="Como quieres llamar a tu tienda ( Dayana Store )" aria-label="usu_usuario" aria-describedby="basic-addon1" [(ngModel)]="data.usu_usuario" (ngModelChange)="validadUsername()">
+                    <div *ngIf="!disabledusername">
+                      <span class="bg-danger text-white rounded">El Nombre de su tienda Ya Se Encuentra Registrado Por Favor Utilizar
+                          Otro</span>
+                    </div>
+                  </div>
+            </div>
               <div class="col-12">
                   <div class="d-flex bd-highlight">
                       <div class="bd-highlight" style="width: 90px;">

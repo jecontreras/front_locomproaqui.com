@@ -125,13 +125,28 @@
                         <div class="row">
                           <div class="col-12">
                             <div class="d-flex flex-row bd-highlight mb-3" style="    margin-top: 15px; border-radius: 20px;">
-                              <div class="p-2 bd-highlight">
+                              <div class="p-2 bd-highlight" style="margin: auto;">
                                 <img [src]="urlFoto" alt="" class="img-profile" (error)="handleImageError($event)" loading="lazy">
                               </div>
                               <div class="p-2 bd-highlight" style="margin: auto; margin-left: -10px;">
-                                <h2>{{ data.pro_nombre }} </h2>
-                                <h5>Colores:{{ data.nameColores }} </h5>
-                                <h5>Tamaños Disponibles: {{ data.nemeTalla }} </h5>
+                                <h4 style="margin: 0 !important;">{{ data.pro_nombre }} </h4>
+                                <h5 style="margin: 0 !important;">Colores:{{ data.nameColores }} </h5>
+                                <h5 style="margin: 0 !important;">Tamaños Disponibles: {{ data.nemeTalla }} </h5>
+                              </div>
+                            </div>
+                          </div>
+                          <div class="col-12" style="border-radius: 20px;">
+                            <div class="d-flex justify-content-around">
+                              <div style="    padding: 0 5px;">
+                                <button (click)="shareUrl()" type="button" class="btn btn-success">
+                                  Compartir link
+                                </button>
+                              </div>
+                              <div></div>
+                              <div style="    padding: 0 5px;">
+                                <button (click)="openUrl( )" type="button" class="btn btn-primary" *ngIf="dataUser.id">
+                                  Piezas gráficas
+                                </button>
                               </div>
                             </div>
                           </div>
@@ -148,104 +163,6 @@
                         </div>
                       </div>
                     </div>
-                    <div class="col-12" style="border-radius: 20px;">
-                      <div class="d-flex justify-content-around">
-                        <div>
-                          <button (click)="shareUrl()" type="button" class="btn btn-success">
-                            Compartir link
-                          </button>
-                        </div>
-                        <div></div>
-                        <div>
-                          <button (click)="openUrl( )" type="button" class="btn btn-primary" *ngIf="dataUser.id">
-                            Piezas gráficas
-                          </button>
-                        </div>
-                      </div>
-                    </div>
-
-                      <!--<div class="col-12">
-                          <div class="d-flex justify-content-between">
-                              <div>
-                                  <h3 class="precios" *ngIf="data.precio_vendedor">Precio a distribuidor: {{ _tools.monedaChange( 3, 2, ( coinShop == true ? ( data.pro_vendedorCompra || data.precio_vendedor ) : data.precio_vendedor ) ) }}</h3>
-                                  <img (click)="masInfo( data )" class="pointer" src="./assets/icons/masinformacion.png" style="width: 216px;">
-                              </div>
-                              <div>
-                                  <h3 class="precios" *ngIf="dataUser.id">Precio Sugerido: {{ _tools.monedaChange( 3, 2, data.pro_uni_venta ) }}</h3>
-                                  <h3 class="precios" *ngIf="!dataUser.id">Precio: {{ _tools.monedaChange( 3, 2, data.pro_uni_venta ) }}</h3>
-                                  <span *ngIf="!data.precio_vendedor && dataUser.id" class="precios">Ganas el {{ porcentajeMostrar }} % : &nbsp; {{ gananciaEstimada }}</span>
-                              </div>
-                          </div>
-                      </div>
-                      <div class="col-12">
-                          <div class="d-flex justify-content-between">
-                              <div>
-                                  <h3>{{ data.pro_nombre }}</h3>
-                              </div>
-                          </div>
-                      </div>
-                      <div class="col-6 col-sm-4" *ngIf="data.listTallas">
-                          <label for="exampleFormControlSelect1">Colores disponibles:</label>
-                          <select class="form-control form-control-sm" [(ngModel)]="data.color"
-                              (change)="colorSeleccionado( );">
-                              <option value="null">Todos</option>
-                              <option [value]="item.talla" *ngFor="let item of data.listColor">{{
-                                  item.talla }}
-                              </option>
-                          </select>
-                      </div>
-                      <div class="col-6 col-sm-4" *ngIf="data.listTallas && disabledSelect">
-                          <label for="exampleFormControlSelect1">Tallas disponibles:</label>
-                          <select class="form-control form-control-sm" [(ngModel)]="data.tallas"
-                              (change)="seleccionTalla()" [disabled]="!data.color">
-                              <option [value]="item.tal_descripcion" *ngFor="let item of seleccionoColor.tallaSelect">
-                                  talla: {{
-                                  item.tal_descripcion }} UND: {{ item.cantidad }}</option>
-                          </select>
-                      </div>
-                      <div class="col-6 col-sm-4" *ngIf="seleccionnTalla">
-                          <label>Cantidades disponibles</label>
-                          <input type="number" [(ngModel)]="seleccionnTalla.cantidad" disabled
-                              class="form-control form-control-sm">
-                      </div>
-                      <div class="col-4">
-                          <label>Cantidad Adquirir</label>
-                          <input type="number" [(ngModel)]="data.cantidadAdquirir" class="form-control form-control-sm">
-                      </div>
-                      <div class="col-4" *ngIf="data.precio_vendedor && dataUser.id && coinShop == false">
-                          <label>Lo Vendiste</label>
-                          <input currencyMask [(ngModel)]="data.encuanto" class="form-control form-control-sm" [options]="opcionCurrencys" (blur)="validando()"/>
-                      </div>
-                      <div class="col-4" *ngIf="!data.precio_vendedor">
-                          <img style="width: 50%;" src="./assets/img/gratis.jpg" alt="">
-                      </div>
-                      <div class="col-12" *ngIf="data.checkMayor == 1">
-                          <mat-list>
-                              <div mat-subheader>Lista de precios al Mayor</div>
-                              <mat-list-item *ngFor="let item of data.listPrecios" class="pointer"
-                                  (click)="AgregarCart(item)" [ngClass]="{
-                                  'colorSeleccionado':item.selecciono == true
-                                }">
-                                  <div mat-line class="row">
-                                      <div class="col-6">
-                                          <span>Cantidad: {{ item.cantidad }}</span>
-                                          &nbsp;&nbsp;
-                                          <span>Precios: {{ ( item.precios || 0 ).toLocaleString(1) }} COP</span>
-                                      </div>
-                                  </div>
-                              </mat-list-item>
-                          </mat-list>
-                      </div>
-                      <div class="col-12 content container" style="height: 225px; overflow: scroll; overflow-x: hidden">
-                          <div class="row">
-                              <div class="col-12">
-                                  <h5>Descripcion: </h5>
-                              </div>
-                              <div class="col-12">
-                                  <p [innerHtml]="data.pro_descripcion"></p>
-                              </div>
-                          </div>
-                      </div>-->
                   </div>
                 </div>
             </div>
@@ -282,21 +199,21 @@
       </div>
     </div>
     <section *ngIf="breakpoint === 1">
-      <button type="button" class="btn btn-success" *ngIf="disabledView === 'createPrice'" (click)="handleAddStore()">
+      <button type="button" class="btn btn-success m-1" *ngIf="disabledView === 'createPrice'" (click)="handleAddStore()">
         Actualizar Precio
       </button>
 
-      <button cdkFocusInitial (click)="handleAddStore()" type="button" class="btn btn-primary" *ngIf="disabledView === 'store' && dataUser.id">
+      <button cdkFocusInitial (click)="handleAddStore()" type="button" class="btn btn-primary m-1" *ngIf="disabledView === 'store' && dataUser.id">
         Agregar a mi Tienda
       </button>
 
-      <button type="button" class="btn btn-danger" *ngIf="disabledView === 'createPrice'" (click)="handleDroppArticle()">
+      <button type="button" class="btn btn-danger m-1" *ngIf="disabledView === 'createPrice'" (click)="handleDroppArticle()">
         Quitar de mi lista
       </button>
 
-      <a target="_blank" [routerLink]="[ '/listproduct/categoria', data['pro_categoria'].id ] " class="btn btn-primary"> ver productos similares </a>
+      <a target="_blank" [routerLink]="[ '/listproduct/categoria', data['pro_categoria'].id ] " class="btn btn-primary m-1"> ver productos similares </a>
 
-      <button cdkFocusInitial (click)="AgregarCart(false)" type="button" class="btn btn-primary" *ngIf="(disabledView !== 'store') && (disabledView !== 'createPrice')">
+      <button cdkFocusInitial (click)="AgregarCart(false)" type="button" class="btn btn-primary m-1" *ngIf="(disabledView !== 'store') && (disabledView !== 'createPrice')">
         {{ titleButton }}
       </button>
     </section>
