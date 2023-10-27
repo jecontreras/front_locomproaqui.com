@@ -499,7 +499,7 @@ export class HeaderComponent implements OnInit {
       {
         icons: 'people_alt',
         nombre: 'Mis Referidos',
-        disable: this.rolUser == 'administrador' || this.rolUser == 'subAdministrador' || this.rolUser == 'lider',
+        disable: this.rolUser == 'administrador' || this.rolUser == 'subAdministrador' || this.rolUser == 'lider' || this.rolUser == 'vendedor',
         url: '/config/referidos',
         submenus:[]
       },

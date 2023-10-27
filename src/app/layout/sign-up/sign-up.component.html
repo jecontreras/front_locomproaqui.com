@@ -12,6 +12,9 @@
           padding: 10px 40px;
           border-radius: 5px; color: #02a0e3;">
             <h2 style="text-align: center;">Registrarme</h2>
+            <h3 style="text-align: center;" *ngIf="dataCabeza">
+              Te Invito {{ dataCabeza.usu_usuario }}
+            </h3>
             <p style="text-align: center;">Rellena el Siguiente formulario para crear una cuenta</p>
             <div class="row">
               <div class="col-12">

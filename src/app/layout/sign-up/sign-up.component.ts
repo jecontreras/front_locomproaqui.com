@@ -78,6 +78,7 @@ export class SignUpComponent implements OnInit {
   typeRol:string;
   number:string;
   showPassword = false;
+  dataCabeza:any = {};
 
   constructor(
     private _tools: ToolsService,
@@ -118,7 +119,10 @@ export class SignUpComponent implements OnInit {
       usu_telefono: this.number }
     }).subscribe((res: any) => {
       if( !res.data[0]) this.data.cabeza = 1;
-      else this.data.cabeza = res.data[0].id;
+      else {
+        this.data.cabeza = res.data[0].id;
+        this.dataCabeza = res.data[0];
+      }
     }, (error) => console.error(error));
   }
 
@@ -188,6 +192,7 @@ export class SignUpComponent implements OnInit {
     this.validateRol();
     console.log("***158", this.data )
     if (!this.disableSubmit) return false;
+    this._tools.ProcessTime({ title: "¡Registrandote a tu nueva oficina virtual!"});
     let valid: boolean = await this.validando( );
     if (!valid || this.error) { this.disableSubmit = true; return false };
     if( !this.disabledusername ) return this._tools.tooast( { title: "Error tenemos problemas en el formulario por favor revisar gracias", icon: "error"})
