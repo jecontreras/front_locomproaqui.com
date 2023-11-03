@@ -53,7 +53,7 @@ export class CobrosComponent implements OnInit {
     private _user: UsuariosService,
     private _store: Store<STORAGES>,
     private spinner: NgxSpinnerService
-  ) { 
+  ) {
 
     this._store.subscribe((store: any) => {
       store = store.name;
@@ -91,9 +91,9 @@ export class CobrosComponent implements OnInit {
 
   crear(obj:any){
     //console.log(this.btnDisableRetiro, obj)
-    if( !this.btnDisableRetiro && !obj ) { 
-      this._tools.basicIcons({header: `Hola ${ this.dataUser.usu_nombre } cordial saludo`, subheader: "Te informamos que los días habilitados para solicitar retiro son los días 12,13,14,15 y 27,28,29,30 de cada mes y la empresa te pagara dentro de los 3 días hábiles siguientes después de la quincena mas informacion +573148487506"});
-      return false; 
+    if( !this.btnDisableRetiro && !obj ) {
+      this._tools.basicIcons({header: `Hola ${ this.dataUser.usu_nombre } cordial saludo`, subheader: "Te informamos que tú solicitud de retiro se hará efectiva y se verá reflejada en tu cuenta de banco de 1 @ 3 días hábiles más información al +573213692393"});
+      return false;
     }
     const dialogRef = this.dialog.open(FormcobrosComponent,{
       data: {datos: obj || {}},
@@ -139,7 +139,7 @@ export class CobrosComponent implements OnInit {
         this.dataTable.dataRows =_.unionBy(this.dataTable.dataRows || [], response.data, 'id');
         this.loader = false;
         this.spinner.hide();
-          
+
         if (response.data.length === 0 ) {
           this.notEmptyPost =  false;
         }
@@ -153,7 +153,7 @@ export class CobrosComponent implements OnInit {
 
   buscar() {
     this.loader = false;
-    this.notscrolly = true 
+    this.notscrolly = true
     this.notEmptyPost = true;
     this.dataTable.dataRows = [];
     //console.log(this.datoBusqueda);

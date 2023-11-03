@@ -72,7 +72,7 @@ export class HeaderComponent implements OnInit {
     ventas: 0
   };
   urlTienda: string = `${ URLFRON }/front/index/`;
-  urlDistribuidor:string =`${ URLFRON }/articulo/`;
+  urlDistribuidor:string =`${ URLFRON }/pedidos/0`;
   activando:boolean = false;
 
   querysSale:any = {
@@ -83,6 +83,8 @@ export class HeaderComponent implements OnInit {
   };
   reacudo:number;
   routName:string = "";
+  validatorVist:boolean;
+
   constructor(
     public changeDetectorRef: ChangeDetectorRef,
     public media: MediaMatcher, private router: Router,
@@ -102,6 +104,7 @@ export class HeaderComponent implements OnInit {
       store = store.name;
       if(!store) return false;
       this.listCart = store.cart || [];
+      try { this.validatorVist = this.listCart[0].coinShop === true ? false : true; } catch (error) { }
       this.userId = store.usercabeza || {};
       this.dataUser = store.user || {};
       this.userPr = store.userpr || {};
@@ -149,7 +152,7 @@ export class HeaderComponent implements OnInit {
     this.loadCoin();
     this.routName = window.location.pathname;
     this.urlTienda += this.dataUser.usu_telefono;
-    this.urlDistribuidor +=this.dataUser.usu_telefono;
+    //this.urlDistribuidor +=this.dataUser.usu_telefono;
     this.breakpoint = (window.innerWidth <= 500) ? 1 : 6;
     /*if( this.breakpoint == 1 ) {
       this.isHandset$ = false;
@@ -452,7 +455,7 @@ export class HeaderComponent implements OnInit {
         icons: 'menu_book',
         nombre: 'Realizar Venta',
         disable: ( this.dataUser.id ) && ( this.rolUser != 'proveedor' ),
-        url: '/pedidos',
+        url: '/realizarventa',
         submenus:[]
       },
       {

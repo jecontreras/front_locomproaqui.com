@@ -28,10 +28,11 @@
                 <div class="list-item-container">
                   <img class="imgFoto pointer" [src]="item.foto || './assets/img/producto.jpg'" mat-list-icon>
                   <div class="item-info">
-                    <h4 mat-line>{{ item.titulo }}</h4>
+                    <h6 mat-line>{{ item.titulo | slice: 0: 10 }}</h6>
                     <p mat-line>{{ 'Cantidad: ' + item.cantidad }}</p>
                     <p mat-line>Precio: {{ _tools.monedaChange(3, 2, item.costoTotal || 0) }} COP</p>
-                    <p mat-line *ngIf="dataUser.id">Lo Vendiste: {{ _tools.monedaChange(3, 2, item.loVendio || 0) }} COP</p>
+                    <p mat-line *ngIf="dataUser.id && validatorVist">Lo Vendiste: {{ _tools.monedaChange(3, 2, item.loVendio || 0) }} COP</p>
+                    <p mat-line *ngIf="dataUser.id && ( validatorVist === false ) "></p>
                   </div>
                   <span (click)="booleanoOpen = false; deleteCart(idx, item);" class="delete-button pointer">
                     <i class="material-icons">delete</i>
@@ -49,18 +50,24 @@
 
         <div class="d-flex p-2">
           <div class="cart-amount-summary" style="width: 100%;">
-            <h4 style="text-align: center;">Resumen de tu venta &nbsp;</h4>
+            <h4 style="text-align: center;" *ngIf="validatorVist">Resumen de tu Venta &nbsp;</h4>
+            <h4 style="text-align: center;" *ngIf="validatorVist === false">Resumen de tu Compra &nbsp;</h4>
             <ul class="summary-table">
-              <li *ngIf="dataUser.id"><span>Valor a pagar de tu cliente: &nbsp;</span> <span>{{ _tools.monedaChange(
+              <li *ngIf="dataUser.id && ( validatorVist === true )"><span>Valor a pagar de tu cliente: &nbsp;</span> <span>{{ _tools.monedaChange(
                   3,2,data.total || 0 ) }}</span> </li>
+              <li *ngIf="dataUser.id && ( validatorVist === false )"><span>Valor a pagar: &nbsp;</span> <span>{{ _tools.monedaChange(
+                3,2,data.total || 0 ) }}</span> </li>
               <li *ngIf="!dataUser.id"><span>Valor a pagar: &nbsp;</span> <span>{{ _tools.monedaChange( 3,2,data.total
                   || 0 ) }}</span> </li>
-              <li *ngIf="dataUser.id"><span>Tu ganancia en esta venta es: &nbsp;</span> <span>{{ _tools.monedaChange(
+              <li *ngIf="dataUser.id && validatorVist"><span>Tu ganancia en esta venta es: &nbsp;</span> <span>{{ _tools.monedaChange(
                   3,2,data.totalGanancias || 0 ) }}</span> </li>
               <li *ngIf="namePorcentaje == 'dropshipping pro'">
-                <div class="alert alert-danger" role="alert">
+                <div class="alert alert-danger" role="alert" *ngIf="validatorVist">
                   <span>Nota: &nbsp;</span> <span>Ten en cuenta que el valor del flete sera descontado de tu
                     ganancia</span>
+                </div>
+                <div class="alert alert-danger" role="alert" *ngIf="validatorVist === false">
+                  <span>Nota: &nbsp;</span> <span>Ten en cuenta que el valor del flete sera agregado a tu factura</span>
                 </div>
               </li>
             </ul>

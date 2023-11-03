@@ -62,15 +62,13 @@ export class ArticuloComponent implements OnInit {
   listTallas:any = [];
   disabledFiltro:boolean = false;
   coinShop:boolean = false;
-  titleButton:string = "Hacer pedido";
+  titleButton:string = "Hacer Compra";
   opcionCurrencys: any = {};
   afterMenu:any
   @ViewChild('toolbar',{static: false} ) private nav: any;
-  listProductSlider:any = [];
-  listBanner: any = [  ];
-  listNovedades:any = [];
-  listPublicaciones:any = [];
   breakpoint: number;
+  titleRuta:string;
+  listCart:any = [];
 
   constructor(
     private _productos: ProductoService,
@@ -92,6 +90,7 @@ export class ArticuloComponent implements OnInit {
       this.userId = store.usercabeza;
       this.dataUser = store.user || {};
       this.dataConfig = store.configuracion || {};
+      this.listCart = store.cart || [];
       if( this.seartxt != store.buscar && store.buscar ) {
         this.seartxt = store.buscar;
       }
@@ -116,8 +115,17 @@ export class ArticuloComponent implements OnInit {
     this.opcionCurrencys = this._tools.currency;
     let urlPath = window.location;
     const pr = urlPath.pathname.split("/");
-    if( pr[1] && pr[2] && pr[3] ) this.getId( pr[3] )
-    console.log("****", urlPath );
+    //console.log("****", urlPath, pr );
+    this.titleRuta = pr[1];
+    if( this.titleRuta === 'pedidos' ){
+      this.coinShop = true;
+      this.titleButton = "Hacer Compra";
+      this.validarCart( this.titleButton );
+    }else{
+      this.coinShop = false;
+      this.titleButton = "Realizar Venta";
+      this.validarCart( this.titleButton );
+    }
 
 
     setInterval(()=> {
@@ -129,14 +137,13 @@ export class ArticuloComponent implements OnInit {
       } catch (error) {}
     }, 100 );
 
+
     if ( ( this.activate.snapshot.paramMap.get('id') ) && ( ( this.activate.snapshot.paramMap.get('categoria') ) != '0') ) { this.userId = ( this.activate.snapshot.paramMap.get('id') ); this.getUser(); }
     setInterval( ()=>{
       //console.log( this.seartxt, this.ultimoSeartxt );
       if( this.seartxt !== this.ultimoSeartxt ) this.buscar();
     }, 1000 );
     if( ( this.activate.snapshot.paramMap.get('categoria') ) === '0' ){
-      this.coinShop = true;
-      this.titleButton = "Hacer Compra";
       this.cargarProductos();
     }
 
@@ -153,6 +160,19 @@ export class ArticuloComponent implements OnInit {
       } catch (error) { }
     }, 1000 );
 
+  }
+
+  validarCart( opt:string ){
+      for( let row of this.listCart ){
+        if( opt === 'Hacer Compra' ){
+          if( row.coinShop === false ) this.destroyCart( row );
+        }else if( row.coinShop === true ) this.destroyCart( row );
+      }
+  }
+
+  destroyCart( row ){
+    let accion = new CartAction( row, 'delete');
+    this._store.dispatch( accion );
   }
 
   getId( id:string ){
@@ -223,27 +243,6 @@ export class ArticuloComponent implements OnInit {
     }
   }
 
-  getListInitProduct(){
-    this._productos.getListInit( { } ).subscribe( res => {
-      console.log( res.data )
-      this.listPublicaciones = res.data;
-    })
-  }
-
-  getListInitNews(){
-    this._productos.getListgetNews( { } ).subscribe( res => {
-      console.log( res.data )
-      this.listNovedades = res.data;
-    })
-  }
-
-  getListInitBanner(){
-    this._productos.getListgetBanner( { } ).subscribe( res => {
-      console.log( res.data )
-      this.listBanner = res.data;
-    })
-  }
-
   pageEvent(ev: any) {
     this.query.page = ev.pageIndex;
     this.query.limit = ev.pageSize;
@@ -254,14 +253,7 @@ export class ArticuloComponent implements OnInit {
   nextConsulta() {
     if (this.idCategoria) this.query.where.pro_categoria = this.idCategoria;
     this.getCategorias();
-    this.getListInitProduct();
-    this.getListInitNews();
-    this.getListInitBanner();
     setTimeout(()=> this.cargarProductos(), 1000 )
-  }
-
-  handleOpenCheckIn( ){
-    this._router.navigate(['/registro']);
   }
 
   getUser() {
@@ -302,7 +294,7 @@ export class ArticuloComponent implements OnInit {
         foto: "./assets/imagenes/todos.png",
         subCategoria: []
       });
-      console.log( this.imageObject );
+      //console.log( this.imageObject );
       for( let row of this.imageObject ){
         delete row.check;
         let accion = new CategoriaAction(row, 'post');
@@ -312,10 +304,12 @@ export class ArticuloComponent implements OnInit {
   }
 
   eventorOver( item:any ){
-    console.log( item )
+    //console.log( item )
     item.check = !item.check;
     for( let row of this.imageObject ) { if( row.id != item.id ) row.check = false; }
-    if( item.subCategoria.length === 0 ) this._router.navigate( [ "/pedidos", item['id'] ] );
+    if( item.subCategoria.length === 0 ) {
+      this._router.navigate( [ "/"+this.titleRuta, item['id'] ] );
+    }
   }
 
   SeleccionCategoria( obj:any ){
@@ -327,7 +321,7 @@ export class ArticuloComponent implements OnInit {
     if( obj.id ) this.query.where.pro_categoria = obj.id;
     this.listProductos = [];
     this.loader = true;
-    this._router.navigate( [ "/pedidos", obj['id'] ] );
+    this._router.navigate( [ "/"+this.titleRuta, obj['id'] ] );
   }
 
   handleSelectArticle( obj:any ){
@@ -356,12 +350,11 @@ export class ArticuloComponent implements OnInit {
     //this.query.where.pro_usu_creacion = 100000;
     if( this.dataUser.id ) this.query.where.idPrice = this.dataUser.id;
     this._productos.get(this.query).subscribe((res: any) => {
-      console.log("res", res);
+      //console.log("res", res);
       this.loader = false;
       this.counts = res.count;
       this.spinner.hide();
       this.listProductos = ( _.unionBy( this.listProductos || [], res.data, 'id' ) ) || [];
-      this.listProductSlider = this.listProductos;
       if (res.data.length === 0) {
         this.notEmptyPost = false;
       }
@@ -409,14 +402,14 @@ export class ArticuloComponent implements OnInit {
     }
   }
   agregar(obj) {
-    obj.coinShop = false;
+    obj.coinShop = this.coinShop;
     const dialogRef = this.dialog.open(ViewProductosComponent, {
       width: this.breakpoint == 6 ? '80%' : "100%",
       data: { datos: obj }
     });
 
     dialogRef.afterClosed().subscribe(result => {
-      console.log(`Dialog result: ${result}`);
+      //console.log(`Dialog result: ${result}`);
       //this._router.navigate(['/pedidos']);
     });
   }
@@ -435,7 +428,7 @@ export class ArticuloComponent implements OnInit {
     else {
       this.urlwhat = `https://wa.me/${cerialNumero}?text=Hola, estoy interesad@ en mas informacion codigo: ${obj.pro_nombre} talla: ${obj.tallasSelect} foto ==> ${obj.foto}`;
     }
-    console.log("****", this.urlwhat);
+    //console.log("****", this.urlwhat);
     window.open(this.urlwhat);
   }
 
@@ -459,7 +452,7 @@ export class ArticuloComponent implements OnInit {
   }
 
   AgregarCart(item: any) {
-    console.log(item);
+    //console.log(item);
     this.agregar( item );
     return false;
     if (!item.tallasSelect) return this._tools.tooast({ title: "Por Favor debes seleccionar una talla", icon: "warning" });
@@ -493,8 +486,8 @@ export class ArticuloComponent implements OnInit {
     this.listProductos = [];
     this.notscrolly = true;
     this.notEmptyPost = true;
-    console.log("****412", opt, index)
-    this._router.navigate( [ "/pedidos", obj['cat_padre']?.id ] );
+    //console.log("****412", opt, index)
+    this._router.navigate( [ "/"+this.titleRuta, obj['cat_padre']?.id ] );
     this.cargarProductos();
   }
 
@@ -522,57 +515,9 @@ export class ArticuloComponent implements OnInit {
     }
   }
 
-  openShare(obj: any) {
-    if (navigator['share']) {
-      navigator['share']({
-        title: obj.pro_nombre,
-        text: obj.foto + `link del producto $${obj.pro_uni_venta.toLocaleString(1)} COP ---> https://www.locomproaqui.com/productos/${obj.id} }`,
-        url: obj.foto,
-      })
-        .then(() => console.log('Successful share'))
-        .catch((error) => console.log('Error sharing', error));
-    } else {
-      console.log("no se pudo compartir porque no se soporta");
-      let url = `https://www.facebook.com/sharer/sharer.php?kid_directed_site=0&u=https://www.locomproaqui.com/productos/15?u=https://www.locomproaqui.com/productos/${obj.id}`;
-      window.open(url);
-    }
-  }
-
   codigo() {
     return (Date.now().toString(20).substr(2, 3) + Math.random().toString(20).substr(2, 3)).toUpperCase();
   }
-
-  buscarExpert(){
-    this.query = {
-      where: {
-        pro_activo: 0,
-        pro_mp_venta: 0,
-      },
-      filtro: this.filtro,
-      page: 0,
-      limit: 54
-    };
-    this.loader = true;
-    this.listProductos = [];
-    this.notscrolly = true;
-    this.cargarProductos();
-  }
-
-  buscarLimpiar(){
-    this.query = {
-      where: {
-        pro_activo: 0,
-        pro_mp_venta: 0
-      },
-      page: 0,
-      limit: 54
-    };
-    this.loader = true;
-    this.listProductos = [];
-    this.notscrolly = true;
-    this.cargarProductos();
-  }
-
   handleEdit( item:any ){
     if( !this.dataUser.id ) return false;
     this.disabledBtn = true;

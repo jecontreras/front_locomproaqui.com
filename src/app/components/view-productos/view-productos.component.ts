@@ -99,7 +99,7 @@ export class ViewProductosComponent implements OnInit {
       console.log(this.datas, this.porcentajeMostrar)
       this.gananciaEstimada = this._tools.monedaChange(3,2,( Number( this.data.pro_uni_venta * this.porcentajeMostrar ) ) / 100);
       if( this.data.coinShop == true ) {
-        this.titleButton = "Confirmar Compra";
+        this.titleButton = "Hacer Compra";
         this.coinShop = true;
       }
     }
@@ -256,7 +256,8 @@ export class ViewProductosComponent implements OnInit {
     let accion = new CartAction(data, 'post');
     this._store.dispatch(accion);
     this._tools.presentToast("Producto agregado al carro");
-    this.dialog.closeAll();
+    this._tools.confirm( { title: "Producto Agregado Al Carrito", icon:"success", showCancel:false } );
+    //this.dialog.closeAll();
   }
 
   async descargarFoto( item:any ){

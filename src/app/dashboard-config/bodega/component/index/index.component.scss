@@ -1,0 +1,18 @@
+.image-container {
+  width: 100%; /* Ancho fijo para la imagen */
+  height: 200px; /* Alto fijo para la imagen */
+  border: 1px solid #ccc; /* Borde alrededor de la imagen */
+  border-radius: 10px; /* Borde redondeado */
+  overflow: hidden; /* Ocultar cualquier contenido que se desborde */
+  position: relative;
+}
+
+.image-zoom {
+  width: 100%; /* Asegura que la imagen ocupe todo el espacio del contenedor */
+  height: 100%; /* Asegura que la imagen ocupe todo el espacio del contenedor */
+  transition: transform 0.2s; /* Efecto de zoom */
+}
+
+.image-container:hover .image-zoom {
+  transform: scale(1.1); /* Efecto de zoom al pasar el mouse sobre la imagen */
+}

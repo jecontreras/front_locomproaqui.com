@@ -1,5 +1,5 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
-import { MatDialog } from '@angular/material';
+import { Component, OnInit, ViewChild, Inject } from '@angular/core';
+import { MAT_DIALOG_DATA, MatDialog, MatDialogRef } from '@angular/material';
 import { ActivatedRoute, Router } from '@angular/router';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { ViewProductosComponent } from 'src/app/components/view-productos/view-productos.component';
@@ -41,6 +41,7 @@ export class ListArticleStoreComponent implements OnInit {
   dataUser:any = {};
   breakpoint: number;
   @ViewChild('toolbar',{static: false} ) private nav: any;
+  views:string;
 
   constructor(
     private activate: ActivatedRoute,
@@ -52,7 +53,7 @@ export class ListArticleStoreComponent implements OnInit {
     private _store: Store<CART>,
     private spinner: NgxSpinnerService,
     private _category: CategoriasService,
-    private _user: UsuariosService
+    private _user: UsuariosService,
   ) {
     this._store.subscribe((store: any) => {
       store = store.name;
@@ -62,7 +63,8 @@ export class ListArticleStoreComponent implements OnInit {
   }
 
   async ngOnInit() {
-    console.log("***", this.activate.snapshot)
+    this.views = 'none';
+    //console.log("***", this.activate.snapshot)
     this.querysArticle.where.user = this.dataUser.id;
     if( this.activate.snapshot.params.idStore ) this.dataStore = await this.getStore( this.activate.snapshot.params.idStore );
     this.getArticle();
@@ -187,8 +189,10 @@ export class ListArticleStoreComponent implements OnInit {
   }
 
   handleArticle( item:any ){
-    item.coinShop = false;
-    item.view = 'store';
+    if( this.views === 'none'){
+      item.coinShop = false;
+      item.view = 'store';
+    }else item.coinShop = false;
     const dialogRef = this.dialog.open(ViewProductosComponent, {
       width: this.breakpoint == 6 ? '80%' : "100%",
       data: { datos: item }

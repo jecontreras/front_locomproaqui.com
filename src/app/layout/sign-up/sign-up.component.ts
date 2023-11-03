@@ -21,7 +21,7 @@ export class SignUpComponent implements OnInit {
   data:any = {
     usu_indicativo: "57",
     ids: "XXXXXXXXXXXXXXXXXXXX",
-    usu_imagen: './assets/logo.png',
+    usu_imagen: './assets/avatar.png',
     optVendedor: true,
     optProveedor: false,
     rol: "vendedor"
@@ -173,7 +173,7 @@ export class SignUpComponent implements OnInit {
         if (validador == 'gmail.com' || validador == 'gmail.es' ) {
           this.error = ""; return true;
         }
-        else this.error = "Error el dominio tiene que ser gmail ";
+        else this.error = "Problemas el dominio tiene que ser gmail ";
       }
     } catch (error) { }
   }
@@ -195,7 +195,7 @@ export class SignUpComponent implements OnInit {
     this._tools.ProcessTime({ title: "¡Registrandote a tu nueva oficina virtual!"});
     let valid: boolean = await this.validando( );
     if (!valid || this.error) { this.disableSubmit = true; return false };
-    if( !this.disabledusername ) return this._tools.tooast( { title: "Error tenemos problemas en el formulario por favor revisar gracias", icon: "error"})
+    if( !this.disabledusername ) return this._tools.tooast( { title: "Problemas tenemos problemas en el formulario por favor revisar gracias", icon: "error"})
     this.data = _.omit(this.data, [ 'id', 'usu_nombre1', 'title', 'optVendedor', 'optProveedor' ])
   this.data = _.omitBy(this.data, _.isNull);
   if( this.data.rol == 'proveedor' ) {

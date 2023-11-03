@@ -61,6 +61,7 @@ import { MatVideoModule } from 'mat-video';
 import { VentasClienteComponent } from './components/ventas-cliente/ventas-cliente.component';
 import { FormPosiblesVentasComponent } from './form/form-posibles-ventas/form-posibles-ventas.component';
 import { FormProductComponent } from './form/form-product/form-product.component';
+import { FormListArticleComponent } from './form/form-list-article/form-list-article.component';
 
 @NgModule({
   entryComponents: [
@@ -122,7 +123,8 @@ import { FormProductComponent } from './form/form-product/form-product.component
     CursosComponent,
     VentasClienteComponent,
     FormPosiblesVentasComponent,
-    FormProductComponent
+    FormProductComponent,
+    FormListArticleComponent
   ],
   imports: [
     CommonModule,

@@ -75,6 +75,10 @@
                                         <p>{{ _tools.monedaChange( 3,2,( dataConfig.receive || 0 ) ) }} </p>
                                     </div>
                                     <div class="mx-auto">
+                                      <h4>Pendiente Pago de Transportadora</h4>
+                                      <p>{{ _tools.monedaChange( 3,2,( dataConfig.incomeTransportBuy || 0 ) ) }}</p>
+                                  </div>
+                                    <div class="mx-auto">
                                         <h4>Fecha</h4>
                                         <p>{{ dataConfig.date | date:'medium' }} </p>
                                     </div>

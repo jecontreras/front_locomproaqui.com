@@ -72,9 +72,9 @@ export class ToolsService {
   confirm(text: any) {
     return Swal.fire({
       title: text.title || 'Are you sure?',
-      text: text.detalle || "You won't be able to revert this!",
+      text: text.detalle || "",
       icon: text.icon || 'warning',
-      showCancelButton: true,
+      showCancelButton: text.showCancel || true,
       confirmButtonColor: text.confirColor || '#3085d6',
       cancelButtonColor: text.cancelColor || '#d33',
       confirmButtonText: text.confir || 'Aceptar!',

@@ -18,6 +18,7 @@ import { CartAction } from 'src/app/redux/app.actions';
 import { DANEGROUP } from 'src/app/JSON/dane-nogroup';
 import { FormcrearguiaComponent } from '../formcrearguia/formcrearguia.component';
 import { MediosPagosComponent } from 'src/app/extra/medios-pagos/medios-pagos.component';
+import { FormListArticleComponent } from '../form-list-article/form-list-article.component';
 
 const URL = environment.url;
 
@@ -151,7 +152,7 @@ export class FormventasComponent implements OnInit {
     this.disableSpinner = false;
     this.disabledButton = false;
     try {
-      console.log(  this.listCarrito[0].coinShop )
+      //console.log(  this.listCarrito[0].coinShop )
       if( this.listCarrito[0].coinShop == true ){ this.coinShop = this.listCarrito[0].coinShop; this.changeCity();}
     } catch (error) { }
     await this.getCiudades();
@@ -178,7 +179,7 @@ export class FormventasComponent implements OnInit {
       result = await this.PrecioContraEntrega();
       if( result )guardado.push( item.name );
     }
-    console.log( guardado );
+    //console.log( guardado );
   }
 
   async getCiudades(){
@@ -357,7 +358,7 @@ export class FormventasComponent implements OnInit {
   }
 
   async submit() {
-    console.log( this.data.ven_tipo == 'pago_anticipado', !this.data.ven_imagen_conversacion, this.data )
+    //console.log( this.data.ven_tipo == 'pago_anticipado', !this.data.ven_imagen_conversacion, this.data )
     if( this.data.ven_tipo == 'pago_anticipado' && !this.data.ven_imagen_conversacion ) {
       if( this.files.length >0 ) this.subirFile( 'ven_imagen_conversacion' );
       else {
@@ -370,7 +371,7 @@ export class FormventasComponent implements OnInit {
         input: "number",
         confirme: "Aceptar"
       });
-      console.log("*******", valor )
+      //console.log("*******", valor )
       this.data.fleteValor = Number( valor.value );
     }
     if( this.data.ven_tipo == 'pago_anticipado' && this.data.fleteValor <= 4000 && this.superSub == false ) this._tools.confirm( { title: "Importante", detalle: "Recuerda que Falta el valor del envio eso afectara en tu ganancia", icon:"warning" } );
@@ -610,7 +611,7 @@ export class FormventasComponent implements OnInit {
     } );
 
     dialogRef.afterClosed().subscribe(result => {
-      console.log(`Dialog result: ${result}`);
+      //console.log(`Dialog result: ${result}`);
       if( !result ) return false;
       this.data.ven_numero_guia = result.nRemesa;
       this.data.ven_imagen_guia = result.urlRotulos;
@@ -673,7 +674,7 @@ export class FormventasComponent implements OnInit {
   }
 
   async precioRutulo( ev:any ){
-    console.log( ev );
+    //console.log( ev );
     if( this.superSub == false && this.data.ven_numero_guia ) return this._tools.confirm( { title: "Lo sentimos tienes una guia generada ya", detalle: "1.Toca cancelar la guia si te quedo mal. 2.hablar con el servicio al cliente", icon: "error" } );
     if( this.disabledButton ) return false;
     this.disabledButton = true;
@@ -687,7 +688,7 @@ export class FormventasComponent implements OnInit {
     this.data.ciudadDestino = this.data.ciudadDestino.name;
     this.progreses = true;
     result = await this.PrecioContraEntrega();
-    console.log( result, this.data )
+    //console.log( result, this.data )
     this.progreses = false;
     this.disableSpinner = false;
     this.disabledButton = false;
@@ -736,7 +737,7 @@ export class FormventasComponent implements OnInit {
       this._ventas.getFleteValor( data ).subscribe(( res:any )=>{
         this.tablet.listRow = res.data || [];
         this.tablet.listRow = _.filter( this.tablet.listRow, ( item:any )=> item.fleteTotal > 0 );
-        console.log( "****", res, this.tablet)
+        //console.log( "****", res, this.tablet)
         try {
           this.selectTrans( res.data[2] );
         } catch (error) {}
@@ -760,13 +761,13 @@ export class FormventasComponent implements OnInit {
     if( this.data.transportadoraSelect === "CORDINADORA" || this.data.transportadoraSelect === "ENVIA" || this.data.transportadoraSelect === "INTERRAPIDISIMO" || this.data.transportadoraSelect === "TCC") {
       this.data.ven_tipo = "contraEntrega";
     }else this.data.ven_tipo = "envioNormal";
-    console.log( this.tablet.listRow)
+    //console.log( this.tablet.listRow)
     for(let row of this.tablet.listRow ) row.check = false;
     item.check = !item.check;
     this.data.fleteValor = item.fleteTotal;
     this.data.fleteManejo = item.fleteManejo;
     this.data.flteTotal = item.fleteTotal;
-    console.log("**", this.data)
+    //console.log("**", this.data)
     this.suma();
     //if( this.id ) this.submit();
     return true;
@@ -884,7 +885,7 @@ export class FormventasComponent implements OnInit {
 
   borrarCart( data:any ){
     if( this.data.id ) return false;
-    console.log( data )
+    //console.log( data )
     this.listCarrito = this.listCarrito.filter( ( row:any )=> row.id !== data.id );
     this.suma();
     let accion = new CartAction( data, 'delete' );
@@ -897,6 +898,18 @@ export class FormventasComponent implements OnInit {
     } );
 
     dialogRef.afterClosed().subscribe(result => {
+      //console.log(`Dialog result: ${result}`);
+    });
+  }
+
+  handleOpenArticle(){
+    const dialogRef = this.dialog.open(FormListArticleComponent,{
+      data: {
+        view: "formVenta"
+      }
+    });
+
+    dialogRef.afterClosed().subscribe( async ( result ) => {
       console.log(`Dialog result: ${result}`);
     });
   }

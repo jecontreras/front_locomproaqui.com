@@ -57,6 +57,13 @@ export class IndexComponent implements OnInit {
     this.getSalesComplete();
     this.getSalesProcess();
     this.getListBank();
+    this.getTransportBuyEarning();
+  }
+
+  getTransportBuyEarning(){
+    this._sale.getVentaCompleteEarningBuy( { where: { user: this.dataUser.id }, limit: 1000 } ).subscribe( res => {
+      this.dataConfig.incomeTransportBuy = res.total;
+    });
   }
 
   getListBank(){
@@ -134,7 +141,7 @@ export class IndexComponent implements OnInit {
       data: {
         datos: {
           list: this.listPendiente,
-          data: {} 
+          data: {}
         }
       }
     });

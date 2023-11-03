@@ -20,19 +20,6 @@
 
 </section>
 
-<!--<div *ngIf="view === 1">
-  <h4>data-swiper-autoplay</h4>
-  <swiper [loop]="true" [autoHeight]="true" [allowTouchMove]="false"
-    [autoplay]="{ delay: 1000, disableOnInteraction: false }" [pagination]="{ clickable: true }" [navigation]="( cantDs === 2 || cantDs === 3 ) ? false : true ">
-    <ng-template data-swiper-autoplay="6000" swiperSlide *ngFor="let item of listGaleria">
-      Slide 1
-    </ng-template>
-    <ng-template data-swiper-autoplay="60000" swiperSlide>
-      Slide 3
-    </ng-template>
-  </swiper>
-</div>-->
-
 <section
 *ngIf="view === 2"
 >
@@ -41,39 +28,46 @@
     [spaceBetween]="10"
     (swiper)="setControlledSwiper($event)"
     [watchSlidesProgress]="true"
-    style="    margin-left: 50px;"
+    style="    margin-left: 50px;     padding: 5px;"
     [navigation]="( cantDs === 2 || cantDs === 3 ) ? false : true "
+    [autoplay]="{ delay: 7000, disableOnInteraction: true }"
   >
+  <!-- [style.width.%]="90" [style.margin-right.px]="10" -->
   <ng-container style="margin-left: 50px;">
-    <ng-template swiperSlide *ngFor="let item of listGaleria; index as i" class="mat-elevation-z3" style="border: 1px solid #ededed !important;
+    <ng-template data-swiper-autoplay="7000" swiperSlide *ngFor="let item of listGaleria; index as i" class="mat-elevation-z3" style="border: 1px solid #ededed !important;
     border-radius: 20px !important;">
       <div role="group" class="andes-carousel-snapped__slide andes-carousel-snapped__slide--spacing-12 "
-        [style.width.%]="50" [style.margin-right.px]="10" [style.margin-left.px]="i == 0 ? 40 : 20"
         [attr.aria-label]="i + 1 + ' de ' + listGaleria.length" [attr.data-slider]="i">
-      <div class="andes-card poly-layout poly-layout--grid-card highlight-seed andes-card--flat andes-card--padding-0 andes-card--animated">
-          <div class="poly-column poly-column--grid-card poly-column__portada poly-column__portada--grid-card">
-              <img width="150" height="150" decoding="async" [src]="item[lyImg]" (click)="handleView( item )"
-                  class="poly-picture poly-picture--square pointer" alt="">
-          </div>
-          <div class="poly-column poly-column--grid-card">
-              <a class="poly-text poly-column__title poly-title poly-title--grid-card poly-lh-s poly-fs-s pointer"
-              (click)="handleView( item )"   tabindex="-1">{{ (item.pro_nombre.length > 10) ? (item.pro_nombre | slice:0:10) + '...' : item.pro_nombre }} </a>
-
-              <div class="poly-price poly-column__price">
-                  <div class="poly-price-current">
-                      <span class="andes-money-amount andes-money-amount--cents-superscript">
-                          Tu lo Vendes: {{ _tools.monedaChange( 3,2,( item.pro_uni_venta || 0 ) )  }}
-                      </span>
-                      <span class="andes-money-amount andes-money-amount--cents-superscript">
-                        Tu le Sales: {{ _tools.monedaChange( 3,2,( item.pro_vendedorCompra || 0 ) )  }}
-                    </span>
-                  </div>
+        <div class="row">
+          <div class="col-12" style="    padding: 15%;">
+            <div class="d-flex justify-content-center">
+              <div>
+                <img width="180" height="200" decoding="async" [src]="item[lyImg]" (click)="handleView( item )"
+                  class="pointer" alt="">
               </div>
-              <section class="poly-text poly-shipping poly-column__shipping poly-text-positive poly-fw-semibold poly-fs-s" style="text-align: center;">
-                  <a class="pointer text-primary" style="font-size: 15px;" target="_blank" [routerLink]="[ '/listproduct/categoria', item.pro_categoria.id ] " >Ver Más</a>
-              </section>
+            </div>
+              <div class="poly-column poly-column--grid-card">
+                  <a class="poly-text poly-column__title poly-title poly-title--grid-card poly-lh-s poly-fs-s pointer"
+                  (click)="handleView( item )"   tabindex="-1">{{ (item.pro_nombre.length > 10) ? (item.pro_nombre | slice:0:10) + '...' : item.pro_nombre }} </a>
+
+                  <div class="poly-price poly-column__price">
+                      <div class="poly-price-current">
+                        <label for="">
+                          <p class="andes-money-amount andes-money-amount--cents-superscript">
+                              Tu lo Vendes: {{ _tools.monedaChange( 3,2,( item.pro_uni_venta || 0 ) )  }}
+                          </p>
+                          <p class="andes-money-amount andes-money-amount--cents-superscript">
+                            Tu le Sales: {{ _tools.monedaChange( 3,2,( item.pro_vendedorCompra || 0 ) )  }}
+                          </p>
+                        </label>
+                      </div>
+                  </div>
+                  <section class="poly-text poly-shipping poly-column__shipping poly-text-positive poly-fw-semibold poly-fs-s" style="text-align: center;">
+                      <a class="pointer text-primary" style="font-size: 15px;" target="_blank" [routerLink]="[ '/listproduct/categoria', item.pro_categoria.id ] " >Ver Más</a>
+                  </section>
+              </div>
           </div>
-      </div>
+        </div>
       </div>
     </ng-template>
   </ng-container>

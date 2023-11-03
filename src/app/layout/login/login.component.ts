@@ -114,7 +114,7 @@ export class LoginsComponent implements OnInit {
     if( this.disabled ) return false;
     this.disabled = true;
     this._user.olvidoPass( this.data ).subscribe(( res:any )=>{
-      this._tools.tooast( { title: "Actaulizada la Contraseña por Favor revisar correo electronico" } );
+      this._tools.tooast( { title: "Actualizado la Contraseña por Favor revisar correo electrónico" } );
       this.disabled = false;
       this.ocultar = true;
       this.disableRestarure = true;

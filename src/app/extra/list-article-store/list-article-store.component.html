@@ -71,7 +71,7 @@
                         <a class="aa-add-card-btn pointer" style="background: #02a0e3;"><span
                           class="fa fa-shopping-cart"></span>Ver Articulo</a>
                     <figcaption>
-                      <h4 class="aa-product-title"><a href="#">{{ item.pro_nombre }}</a></h4>
+                      <h4 class="aa-product-title"><a href="#">{{ item.pro_nombre | slice: 0: 10 }}</a></h4>
                       <span class="aa-product-price">{{ _formato.monedaChange( 3, 2, ( item.pro_vendedorCompra || item.pro_uni_venta || 0 ) ) }}</span>
                     </figcaption>
                   </figure>
