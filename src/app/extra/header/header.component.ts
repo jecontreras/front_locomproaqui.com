@@ -641,6 +641,11 @@ export class HeaderComponent implements OnInit {
           },
           {
             icons: 'settings',
+            nombre: 'Activar Guia de Pago',
+            url: '/config/adminF/stateGuia',
+          },
+          {
+            icons: 'settings',
             nombre: 'Configuracion',
             url: '/config/configuracion',
           },

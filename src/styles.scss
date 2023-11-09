@@ -452,6 +452,11 @@ footer {
     font-size: 30px;
   }
 }
+@media only screen and (max-width: 500px) {
+  #anchosLi {
+    width: 50% !important;
+  }
+}
 @media only screen and (max-width: 600px) {
   .textInfo {
     font-size: 30px;
@@ -513,7 +518,7 @@ footer {
     font-size: 10px;
   }
   #anchosLi {
-    width: 50% !important;
+    width: 45% !important;
   }
 }
 /* Small devices (portrait tablets and large phones, 600px and up) */
@@ -585,7 +590,7 @@ footer {
     max-width: 628px;
   }
   #anchosLi {
-    width: 15pc !important;
+    width: 43% !important;
   }
 }
 

@@ -1,0 +1,61 @@
+<div class="content" style="    height: -webkit-fill-available;">
+  <div class="row">
+    <div class="col-12">
+      <div class="content">
+        <div class="row" style="padding: 7px;">
+          <div class="col-12">
+            <h2>Listas de Guias</h2>
+          </div>
+          <div class="col-12">
+            <div class="row">
+              <div class="col-12 col-sm-6">
+                <div class="row">
+                  <div class="col-12">
+                    <div class="d-flex bd-highlight">
+                      <div class="p-2 flex-grow-1 bd-highlight">
+                        <h2>Listas de Guias Pendiente Por Pagar</h2>
+                      </div>
+                      <div class="p-2 bd-highlight">
+                        <button type="button" class="btn btn-success" (click)="handleSelectCheck()">Agregar Estado</button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <ul>
+                  <li *ngFor="let envio of listGuias" style="display: flex">
+                    <input type="checkbox" [(ngModel)]="envio.check">
+                    <strong>Número:</strong> {{ envio.ven_numero_guia }}<br>
+                    <strong>Fecha:</strong> {{ envio.create }}<br>
+                    <strong>Transportadora:</strong> {{ envio.transportadoraSelect }}<br>
+                  </li>
+                </ul>
+              </div>
+              <div class="col-12 col-sm-6">
+                <div class="row">
+                  <div class="col-12">
+                    <div class="d-flex bd-highlight">
+                      <div class="p-2 flex-grow-1 bd-highlight">
+                        <h2>Listas de Para Actualizar Pago</h2>
+                      </div>
+                      <div class="p-2 bd-highlight">
+                        <button type="button" class="btn btn-success" (click)="handleupdate()">Actualizar</button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <ul>
+                  <li *ngFor="let envio of listSelect" style="display: flex">
+                    <input type="checkbox" [(ngModel)]="envio.check">
+                    <strong>Número:</strong> {{ envio.ven_numero_guia }}<br>
+                    <strong>Fecha:</strong> {{ envio.create }}<br>
+                    <strong>Transportadora:</strong> {{ envio.transportadoraSelect }}<br>
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

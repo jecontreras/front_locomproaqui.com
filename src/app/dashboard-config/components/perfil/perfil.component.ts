@@ -228,11 +228,11 @@ export class PerfilComponent implements OnInit {
     let form: any = new FormData();
     form.append('file', this.files[0]);
     this._tools.ProcessTime({});
-    this._archivos.createFile(form).subscribe((res: any) => {
+    this._archivos.createFile(form).subscribe(async (res: any) => {
       console.log(res);
       this.data[opt] = res.files; //URL+`/${res}`;
       this._tools.presentToast("Exitoso");
-      this.Actualizar();
+      await this.Actualizar();
     }, (error) => { console.error(error); this._tools.presentToast("Error de servidor") });
   }
 
@@ -240,11 +240,14 @@ export class PerfilComponent implements OnInit {
     let form: any = new FormData();
     form.append('file', this.files[0]);
     this._tools.ProcessTime({});
-    this._archivos.create(form).subscribe((res: any) => {
+    this._archivos.create(form).subscribe(async (res: any) => {
       console.log(res);
       this.data[opt] = res.files; //URL+`/${res}`;
       this._tools.presentToast("Exitoso");
-      this.Actualizar();
+      await this.Actualizar();
+      this.files = [];
+      this.imageChangedEvent = "";
+      this.viewOpt = "";
     }, (error) => { console.error(error); this._tools.presentToast("Error de servidor") });
 
   }
@@ -256,17 +259,20 @@ export class PerfilComponent implements OnInit {
   }
 
   Actualizar() {
-    if (!this.disabledusername || !this.disabledemail) return this._tools.tooast({ title: "Error tenemos problemas en el formulario por favor revisar gracias", icon: "error" })
+    return new Promise( resolve =>{
+      if (!this.disabledusername || !this.disabledemail) return this._tools.tooast({ title: "Error tenemos problemas en el formulario por favor revisar gracias", icon: "error" })
 
-    this.data = _.omit(this.data, ['usu_perfil', 'cabeza', 'nivel', 'empresa', 'createdAt', 'updatedAt', 'categoriaPerfil']); this.data = _.omitBy(this.data, _.isNull);
-    try { this.data.usu_ciudad = this.data.usu_ciudad.name; } catch (error) { error }
-    this._user.update(this.data).subscribe((res: any) => {
-      //console.log(res);
-      this._tools.presentToast("Actualizado");
-      let accion = new UserAction(res, 'put');
-      this._store.dispatch(accion);
-      this.handleCategorySelect();
-    }, (error) => { console.error(error); this._tools.presentToast("Error de Servidor") })
+      this.data = _.omit(this.data, ['usu_perfil', 'cabeza', 'nivel', 'empresa', 'createdAt', 'updatedAt', 'categoriaPerfil']); this.data = _.omitBy(this.data, _.isNull);
+      try { this.data.usu_ciudad = this.data.usu_ciudad.name; } catch (error) { error }
+      this._user.update(this.data).subscribe((res: any) => {
+        //console.log(res);
+        this._tools.presentToast("Actualizado");
+        let accion = new UserAction(res, 'put');
+        this._store.dispatch(accion);
+        this.handleCategorySelect();
+        resolve( true );
+      }, (error) => { console.error(error); this._tools.presentToast("Error de Servidor"); resolve( false ); })
+    })
   }
 
   abrrirTienda() {

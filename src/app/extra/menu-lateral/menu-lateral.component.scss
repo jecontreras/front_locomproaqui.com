@@ -22,7 +22,8 @@
 	transition: all .5s;
 }
 .altosIcons {
-	height: 19px;
+	height: 13px;
+  margin-left: 2px;
 }
 .fab {
     width: 20px !important;
@@ -79,9 +80,9 @@
     font-size: 14.5px;
 }
 .icono-feed {
-    margin-bottom: 5px;
+    margin-bottom: 0px;
 	background: #02a0e3;
-	border-radius: 20px;
+	border-radius: 100px;
 }
 
 /*.icon:first-child {
@@ -93,9 +94,28 @@
 }
 */
 
-.icon:hover {
-	padding-right: 3rem;
-	border-radius: 20px;
-	//border-radius: 1rem 0 0 1rem;
-	box-shadow: 0 0 .5rem rgba(0, 0, 0, 0.42);
+.whatsapp-button {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  background-color: #25d366; /* Ajusta el color de fondo de acuerdo a tus preferencias */
+  color: #fff; /* Ajusta el color del texto para que sea legible en el fondo */
+  padding: 10px;
+  border-radius: 50%;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+  cursor: pointer;
+  text-align: center;
+  font-size: 18px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-decoration: none;
+}
+
+.whatsapp-button i {
+  margin-bottom: 5px;
+}
+
+.whatsapp-button {
+  z-index: 999; /* O un número más alto si es necesario */
 }

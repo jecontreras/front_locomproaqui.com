@@ -359,7 +359,7 @@
 <mat-dialog-actions>
     <div class="row" style="width: 100%;">
         <div class="col-6 col-sm-3 col-xs-3" *ngIf="porcentajeMostrar === 40">
-            <label for="exampleFormControlInput1" class="text-primary">Precio Total Distribuidor: </label> &nbsp;
+            <label for="exampleFormControlInput1" class="text-primary">Valor Producto: </label> &nbsp;
             <span>$ {{ ( data.ven_totalDistribuidor || 0 ).toLocaleString(1) }} COP</span>
         </div>
         <div class="col-6 col-sm-3 col-xs-3" *ngIf="!coinShop">
@@ -379,7 +379,7 @@
             <span>$ {{  ( data.ven_ganancias  ).toLocaleString(1) }} COP</span>
         </div>
         <div *ngIf="coinShop === true " class="col-6 col-sm-3 col-xs-3">
-          <label for="exampleFormControlInput1" class="text-success">Tu Pagas: </label> &nbsp;
+          <label for="exampleFormControlInput1" class="text-success">Total a Pagar: </label> &nbsp;
           <span>$ {{  ( ( data.ven_totalDistribuidor || 0 )+( data.fleteValor || 0 )  ).toLocaleString(1) }} COP</span>
       </div>
     </div>

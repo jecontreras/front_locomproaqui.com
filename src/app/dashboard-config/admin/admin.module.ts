@@ -10,6 +10,7 @@ import { NgxCurrencyModule } from 'ngx-currency';
 import { MainConfigRoutingModule } from './main-routing.module';
 import { FormPaymentDetailComponent } from './form/form-payment-detail/form-payment-detail.component';
 import { AutocompleteLibModule } from 'angular-ng-autocomplete';
+import { StateGuideComponent } from './component/state-guide/state-guide.component';
 
 
 
@@ -20,7 +21,8 @@ import { AutocompleteLibModule } from 'angular-ng-autocomplete';
   declarations: [
     MainComponent,
     VendorPaymentsComponent,
-    FormPaymentDetailComponent
+    FormPaymentDetailComponent,
+    StateGuideComponent
   ],
   imports: [
     CommonModule,

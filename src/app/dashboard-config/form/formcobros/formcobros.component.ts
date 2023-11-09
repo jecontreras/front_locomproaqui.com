@@ -120,7 +120,7 @@ export class FormcobrosComponent implements OnInit {
       //console.log(res);
       res = res.data[0];
       this.disabledButton = false;
-      this._tools.basicIcons({header: `hola ${ this.dataUser.usu_nombre } cordial saludo`, subheader: `Te informamos que tu solicitud de retiro ha Sido recibida de manera satisfactoria y está en proceso de validación la empresa te pagara dentro de los 3 días hábiles siguientes después de la quincena!`});
+      this._tools.basicIcons({header: `hola ${ this.dataUser.usu_nombre } cordial saludo`, subheader: `Te informamos que tú solicitud de retiro se hará efectiva y se verá reflejada en tu cuenta de banco de 1 @ 3 días hábiles más información al +573213692393`});
       this.procesoWhat( res );
       setTimeout(()=> this.openTestimonios(), 3000);
       this.dialog.closeAll();

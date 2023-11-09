@@ -232,71 +232,6 @@
 
   <mat-drawer-content class="contenedor">
     <nav class="navbar navbar-expand-lg navbar-light headerColor" #toolbar *ngIf="( routName !== 'login' ) &&  (routName !== 'singUp' )">
-      <!--<div class="d-flex justify-content-between col-12">
-        <div>
-          <button mat-icon-button (click)="drawer.toggle()" translate="no">
-            <i class="material-icons icoss">menu</i>
-          </button>
-          <a [routerLink]="[ '/pedidos' ]">
-            <img src="./assets/logo.png" style="width: 177px; height: 55px;">
-          </a>
-        </div>
-        <div class="buscadorOcultar">
-          <input type="text" style="border-radius: 11px;" [(ngModel)]="seartxt" (change)="buscar()"
-            class="form-control form-control-sm" placeholder="Buscar Productos">
-        </div>
-        <div style="width: 25%;">
-          <div class="d-flex flex-row-reverse bd-highlight" style="margin-top: 15px;">
-            <div class="anchoReal12 anchos2" *ngIf="userId.id && !dataUser.id">
-              <a [routerLink]="[ '/registro', this.userId.id ]" class="p-1 pointer espacios" matBadgeColor="accent">
-                <i class="material-icons icoss">person_add</i>
-              </a>
-            </div>
-            <div class="anchoReal12 anchos2" *ngIf="!dataUser.id && !userId.id">
-              <a [routerLink]="[ '/login' ]" class="p-1 pointer espacios">
-                <i class="material-icons icoss">person</i>
-              </a>
-            </div>
-            <div class="anchoReal12 anchos2" *ngIf="dataUser.id">
-              <a [routerLink]="[ '/config/perfil' ]" class=" altoNull buscadorOcultar2p-1 pointer espacios">
-                <i class="material-icons icoss">person</i>
-              </a>
-            </div>
-            <div class="anchoReal12 anchos2">
-              <a (click)="this.opcionoView = 'carro'; sidenav.toggle();" class="p-1 pointer espacios"
-                [matBadge]="listCart.length" matBadgePosition="before" matBadgeColor="accent">
-                <i class="material-icons icoss">shopping_cart</i>
-              </a>
-            </div>
-            <div class="anchoReal12 anchos2" *ngIf="dataUser.id">
-              <a (click)="this.opcionoView = 'notificaciones'; sidenav.toggle();" class="p-1 pointer espacios"
-                [matBadge]="notificando" matBadgePosition="before" matBadgeColor="accent">
-                <i class="material-icons icoss">notifications_active</i>
-              </a>
-            </div>
-            <div *ngIf="dataUser.id && rolUser == 'proveedor'" style="margin-right: 4%;" class="buscadorOcultar">
-              <a class="text-white" routerLink="/config/misDespacho">
-                Despachos
-              </a>
-            </div>
-            <div *ngIf="dataUser.id" style="margin-right: 4%;" class="buscadorOcultar">
-              <a class="text-white" routerLink="/config/cobros">
-                $ {{ ( ( dataInfo?.porcobrado ) || 0 ).toLocaleString(1) }} COP
-              </a>
-            </div>
-            <div class="anchoReal12 anchos2" *ngIf="!dataUser.id">
-              <button mat-button cdkFocusInitial (click)="registrar()">
-                  Registrarse
-              </button>
-            </div>
-            <div class="anchoReal12 anchos2" *ngIf="!dataUser.id">
-              <button mat-button cdkFocusInitial (click)="login()">
-                  Iniciar Sesion
-              </button>
-            </div>
-          </div>
-        </div>
-      </div>-->
       <div class="row" style="width: 100%;">
         <div class="col-12">
           <div class="d-flex bd-highlight">
@@ -324,7 +259,7 @@
             </div>
             <div *ngIf="dataUser.id" class="ms-auto p-2 bd-highlight">
               <div class="d-flex bd-highlight">
-                <div class="p-2 bd-highlight">
+                <div class="p-2 bd-highlight" *ngIf="breakpoint == 6">
                   <span class="text-white" [routerLink]="[ '/config/cobros' ]" *ngIf="rolUser !== 'proveedor'">
                     {{ _tools.monedaChange( 3,2,( dataInfo?.porcobrado ) || 0 ) }}
                   </span>
@@ -344,27 +279,18 @@
                   </a>
                 </div>
               </div>
+              <section *ngIf="dataUser.id && breakpoint == 1">
+                <span class="text-white" [routerLink]="[ '/config/cobros' ]" *ngIf="rolUser !== 'proveedor'">
+                  {{ _tools.monedaChange( 3,2,( dataInfo?.porcobrado ) || 0 ) }}
+                </span>
+                <span class="text-white" [routerLink]="[ '/config/bank/index' ]" *ngIf="rolUser === 'proveedor'">
+                  {{ _tools.monedaChange( 3,2, ( reacudo ) || 0 ) }}
+                </span>
+              </section>
             </div>
           </div>
         </div>
       </div>
-      <!--<div class="d-flex justify-content-between col-12" style="width: 100%;" *ngIf="disabledSearch">
-        <div style="width: 100%;">
-          <input type="text" style="border-radius: 11px;" [(ngModel)]="seartxt" (change)="buscar()"
-            class="form-control form-control-sm" placeholder="Buscar Productos">
-        </div>
-      </div>-->
-      <!--<div class="d-flex flex-row-reverse bd-highlight col-12" style="width: 100%;"
-        *ngIf="disabledSearch && dataUser.id">
-        <div>
-          <span class="text-white" [routerLink]="[ '/config/cobros' ]" *ngIf="rolUser !== 'proveedor'">
-            {{ _tools.monedaChange( 3,2,( dataInfo?.porcobrado ) || 0 ) }}
-          </span>
-          <span class="text-white" [routerLink]="[ '/config/bank/index' ]" *ngIf="rolUser === 'proveedor'">
-            {{ _tools.monedaChange( 3,2, ( reacudo ) || 0 ) }}
-          </span>
-        </div>
-      </div>-->
       <app-menu-lateral></app-menu-lateral>
     </nav>
     <div class="container" *ngIf="( routName !== 'login' ) &&  (routName !== 'singUp' ) && dataUser.id ">

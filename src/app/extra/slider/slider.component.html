@@ -12,7 +12,7 @@
         <ng-template  data-swiper-autoplay="7000"  class="swiper-slide" swiperSlide *ngFor="let item of listGaleria">
           <img [src]="item[lyImg]" alt="Imagen 2" class="d-block w-100">
         </ng-template>
-        <ng-template data-swiper-autoplay="70000" swiperSlide>
+        <ng-template data-swiper-autoplay="70000" swiperSlide *ngIf="listGaleria[1]">
           <img *ngIf="listGaleria[1]" [src]="listGaleria[1][lyImg]" alt="Imagen 2" class="d-block w-100">
         </ng-template>
       </ng-container>

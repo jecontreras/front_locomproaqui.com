@@ -45,10 +45,16 @@
         <div class="col-12" style="padding: 0 !important;">
           <div class="d-flex justify-content-center">
             <div style="width: 100%;">
-              <div class="scrollmenu" style="border-radius: 3px; display: flex;" #toolbar [style.justify-content]="breakpoint === 1 ? 'flex-start': 'center'">
-                <a class="pointer" (click)="handleCategorySearch(item)" *ngFor="let item of listCategory" [ngClass]="{ 'cambiaColor': item.check }">
-                  {{ item.title }}
-                </a>
+              <div class="scrollmenu" style="border-radius: 3px; display: flex;" [style.justify-content]="breakpoint === 1 ? 'flex-start': 'center'">
+                <section class="iphone-menu" style="text-align: center;">
+                  <ul class="ulM">
+                      <li *ngFor="let item of listCategory" [ngClass]="{ 'cambiaColor': item.check }">
+                        <a class="pointer" (click)="handleCategorySearch(item)">
+                          {{ item.title }}
+                        </a>
+                      </li>
+                  </ul>
+                </section>
               </div>
             </div>
           </div>

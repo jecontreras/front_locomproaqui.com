@@ -3,6 +3,7 @@ import { Routes, RouterModule } from '@angular/router';
 import { MainComponent } from './component/main/main.component';
 import { AuthService } from 'src/app/services/auth.service';
 import { VendorPaymentsComponent } from './component/vendor-payments/vendor-payments.component';
+import { StateGuideComponent } from './component/state-guide/state-guide.component';
 
 const dashboardRoutes: Routes = [
  {
@@ -12,6 +13,7 @@ const dashboardRoutes: Routes = [
    children: [
      {path: '', redirectTo: 'vendorpayment', pathMatch: 'full'},
      {path: 'vendorpayment', component: VendorPaymentsComponent},
+     {path: 'stateGuia', component: StateGuideComponent},
      {path: '**', redirectTo: 'vendorpayment', pathMatch: 'full'}
    ]
   }

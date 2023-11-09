@@ -40,7 +40,9 @@ export class ProductosComponent implements OnInit {
   loader:boolean = true;
   notscrolly:boolean=false;
   notEmptyPost:boolean = false;
-  busqueda:any = {};
+  busqueda:any = {
+    orderBy: ""
+  };
 
   tiendaInfo:any = {};
   id:string;
@@ -48,7 +50,7 @@ export class ProductosComponent implements OnInit {
   userCabeza:any = {};
   @ViewChild('toolbar',{static: false} ) private nav: any;
   userId:any;
-  breakpoint: number;
+  breakpoint: number = 6;
   listBanner: any = [  ];
 
   constructor(
@@ -80,8 +82,9 @@ export class ProductosComponent implements OnInit {
     console.log("******ID", this.id, this.userCabeza)
     if( this.id ) {
       this.dataUser = ( await this.getUser() ) || { id: 1 };
-      this.listBanner.push( { image: this.dataUser.us_banner, id: 1 } )
-      this.listBanner.push( { image: this.dataUser.us_banner, id: 2 } )
+      this.listBanner.push( { image: "./assets/imagenes/banner5.png", id: 1 } )
+      this.listBanner.push( { image: "./assets/imagenes/banner4.png", id: 2 } )
+      //this.listBanner.push( { image: this.dataUser.us_banner, id: 2 } )
     }
     else this.dataUser = { id: 1 }
     this.getProductos();
@@ -96,7 +99,11 @@ export class ProductosComponent implements OnInit {
         color = this.userId.usu_color || "#02a0e3";
       }
       //console.log("***144",color, this.dataUser )
-      this.nav.nativeElement.style.backgroundColor = color;
+      try {
+        this.nav.nativeElement.style.backgroundColor = color;
+      } catch (error) {
+
+      }
     }, 1000 );
   }
 
@@ -130,7 +137,7 @@ export class ProductosComponent implements OnInit {
       this.listCategorias.unshift({
         id: 0,
         cat_nombre: "TODOS",
-        foto: "./assets/imagenes/todos.png",
+        cat_imagen: "./assets/imagenes/todos.png",
         subCategoria: []
       });
     });
@@ -139,9 +146,10 @@ export class ProductosComponent implements OnInit {
   SeleccionCategoria( obj:any ){
     //this.query = { where:{ pro_activo: 0 }, page: 0, limit: 10 };
     this.query.page = 0;
-    this.query.limit = 0;
+    this.query.limit = 30;
     this.query.where.pro_activo = 0;
     this.query.where.idPrice = this.query.where.idPrice;
+    delete this.query.sort;
     if( obj.id ) this.query.where.pro_categoria = obj.id;
     this.listProductos = [];
     this.loader = true;
@@ -237,7 +245,7 @@ export class ProductosComponent implements OnInit {
     this.listProductos = [];
     this.notscrolly = true;
     this.notEmptyPost = true;
-    this.query = { where:{ pro_activo: 0, user: this.dataUser.id } ,limit: 15, page: 0 };
+    this.query = { where:{ pro_activo: 0, user: this.dataUser.id } ,limit: 30, page: 0 };
     if (this.seartxt) {
       this.query.where.or = [
         {
@@ -259,25 +267,31 @@ export class ProductosComponent implements OnInit {
     }
     this.getProductos();
   }
-  buscarFiltro( opt:string ){
-    this.query = { where:{ pro_activo: 0 } ,limit: 15, page: 0 };
-    if(opt == 'ordenar'){
-      if(this.busqueda.ordenar == 1){
-        this.dataSeleccionda = "";
-        delete this.query.sort
-      }
-      if(this.busqueda.ordenar == 2){
-        this.dataSeleccionda = "Ordenar nombre";
-        this.query.sort = 'pro_nombre DESC';
-      }
-      if(this.busqueda.ordenar == 3){
-        this.dataSeleccionda = "Ordenar Precio";
-        this.query.sort = 'pro_uni_venta DESC';
-      }
-      if(this.busqueda.ordenar == 3){
-        this.dataSeleccionda = "Ordenar Fecha";
-        this.query.sort = 'createdAt DESC';
-      }
+  buscarFiltro( opt:number ){
+    delete this.query.sort;
+    this.query.page = 0;
+    this.query.limit = 30;
+    this.query.where.pro_activo = 0;
+    this.query.where.idPrice = this.query.where.idPrice;
+    if(opt == 1){
+      this.dataSeleccionda = "";
+      delete this.query.sort
+    }
+    if(opt == 2){
+      this.dataSeleccionda = "Ordenar nombre";
+      this.query.sort = 'pro_nombre DESC';
+    }
+    if(opt == 3){
+      this.dataSeleccionda = "Menor a Mayor";
+      this.query.sort = 'pro_uni_venta DESC';
+    }
+    if(opt == 4){
+      this.dataSeleccionda = "Mayor a Menor";
+      this.query.sort = 'pro_uni_venta ASC';
+    }
+    if(opt == 5){
+      this.dataSeleccionda = "Ordenar Fecha";
+      this.query.sort = 'createdAt DESC';
     }
     this.listProductos = [];
     this.loader = true;

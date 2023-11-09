@@ -2,31 +2,38 @@
 <div style="padding: 0 1px;">
   <div class="main-content">
     <div class="col-12">
-      <div class="scrollmenu" style="border-radius: 3px;" #toolbar>
-        <a class="pointer" *ngFor="let item of imageObject" (click)="eventorOver( item )" [ngClass]="{
-          'checkTrue':item['check'] == true
-        }">
-          <span *ngIf="item.subCategoria.length">
-            <button mat-button [matMenuTriggerFor]="belowMenu" class="menu-button">
-              <span *ngIf="item.title =='TODOS'" (click)="imageOnClick(0, item, 'si');"> {{ item.title }} </span>
-              <span *ngIf="item.title !=='TODOS'"> {{ item.title }} </span>
-            </button>
-            <mat-menu #belowMenu="matMenu" yPosition="below">
-              <button mat-menu-item
-                *ngFor="let key of item.subCategoria; let idx=index"
-                (click)="imageOnClick(idx, key, 'no');" [ngClass]="{ 'cambiaColor': key.check == true }"
-              >
-                {{ key.cat_nombre }}
-              </button>
-            </mat-menu>
-          </span>
-          <span *ngIf="item.subCategoria.length === 0">
-            <button mat-button class="menu-button">
-              <span *ngIf="item.title =='TODOS'" (click)="imageOnClick(0, item, 'si');"> {{ item.title }} </span>
-              <span *ngIf="item.title !=='TODOS'"> {{ item.title }} </span>
-            </button>
-          </span>
-        </a>
+      <div class="scrollmenu" style="border-radius: 3px;">
+        <section class="iphone-menu" style="text-align: center;">
+          <ul class="ulM">
+              <li *ngFor="let item of imageObject" [ngClass]="{
+                  'checkTrue':item['check'] == true
+                }"
+                ><a class="pointer" (click)="eventorOver( item )">
+                  <span *ngIf="item.subCategoria.length">
+                    <button mat-button [matMenuTriggerFor]="belowMenu" class="menu-button" style="    line-height: 0px !important;">
+                      <span *ngIf="item.title =='TODOS'" (click)="imageOnClick(0, item, 'si');"> {{ item.title }} </span>
+                      <span *ngIf="item.title !=='TODOS'"> {{ item.title }} </span>
+                    </button>
+                    <mat-menu #belowMenu="matMenu" yPosition="below">
+                      <button mat-menu-item
+                        *ngFor="let key of item.subCategoria; let idx=index"
+                        (click)="imageOnClick(idx, key, 'no');" [ngClass]="{ 'cambiaColor': key.check == true }"
+                      >
+                        {{ key.cat_nombre }}
+                      </button>
+                    </mat-menu>
+                  </span>
+                  <span *ngIf="item.subCategoria.length === 0">
+                    <button mat-button class="menu-button">
+                      <span *ngIf="item.title =='TODOS'" (click)="imageOnClick(0, item, 'si');"> {{ item.title }} </span>
+                      <span *ngIf="item.title !=='TODOS'"> {{ item.title }} </span>
+                    </button>
+                  </span>
+  
+                </a>
+              </li>
+          </ul>
+        </section>
       </div>
     </div>
 
@@ -42,7 +49,7 @@
                       <!-- start single product item -->
                       <li *ngFor="let item of listProductos" id="anchosLi" style="    height: 325px; padding: 2px; border-radius: 20px;" class="mat-elevation-z8">
                         <figure class="img-contenedor" style="height: 315px;">
-                          <a class="aa-product-img pointer"><img class="anchosProductos" [src]="item.foto" style="height: 220px;" (click)="agregar(item)"
+                          <a class="aa-product-img pointer"><img class="anchosProductos" [src]="item.foto" style="height: 220px; width: 100%;" (click)="agregar(item)"
                               alt="polo shirt img"></a>
                               <!--<a class="aa-add-card-btn pointer" style="background: #02a0e3;" [ngStyle]="{'background-color':urlColor }" (click)="AgregarCart(item)"><span
                                 class="fa fa-shopping-cart"></span>{{ titleButton }}</a>-->
