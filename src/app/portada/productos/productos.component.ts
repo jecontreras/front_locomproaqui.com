@@ -133,18 +133,27 @@ export class ProductosComponent implements OnInit {
   getCategorias(){
     this._categorias.get( { where:{ cat_activo: 0, cat_padre:null }, limit: 100 } ).subscribe((res:any)=>{
       this.listCategorias = res.data;
-      listCategory = this.listCategorias;
+      listCategory = _.map( this.listCategorias, (item)=> {
+        return {
+          ...item,
+          title: item.cat_nombre
+        }
+      });
       this.listCategorias.unshift({
         id: 0,
+        title: "TODOS",
         cat_nombre: "TODOS",
         cat_imagen: "./assets/imagenes/todos.png",
         subCategoria: []
       });
+      console.log("***149", this.listCategorias)
     });
   }
 
   SeleccionCategoria( obj:any ){
     //this.query = { where:{ pro_activo: 0 }, page: 0, limit: 10 };
+    for( let row of this.listCategorias ) row.check = false;
+    obj.check=true;
     this.query.page = 0;
     this.query.limit = 30;
     this.query.where.pro_activo = 0;

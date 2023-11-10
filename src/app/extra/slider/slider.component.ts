@@ -89,7 +89,7 @@ export class SliderComponent implements OnInit {
       //console.log("**83", tamaño)
       this.breakpoint = (window.innerWidth <= 500) ? 1 : 6;
       //console.log( this.breakpoint, window.innerWidth)
-      if( tamaño >= 100 ) this.cantDs = 2;
+      if( tamaño >= 100 ) this.cantDs = 3;
       if( tamaño >= 500 ) this.cantDs = 3;
       if( tamaño >= 770 ) this.cantDs = 4;
       if( tamaño >= 995 ) this.cantDs = 5;
