@@ -116,6 +116,7 @@ export class FormcobrosComponent implements OnInit {
     let validador:any = await this.validador();
     if( !validador ) return this.disabledButton = false;
     this.data.cat_activo = 0;
+    this.data.ven_usu_creacion = this.dataUser.id;
     this._cobros.create(this.data).subscribe((res:any)=>{
       //console.log(res);
       res = res.data[0];
@@ -184,7 +185,7 @@ export class FormcobrosComponent implements OnInit {
   openTestimonios(){
     const dialogRef = this.dialog.open(FormtestimoniosComponent,{
       width: '731px',
-      data: {datos: {}}
+      data: {datos: { email: this.dataUser.usu_email }}
     });
 
     dialogRef.afterClosed().subscribe(result => {

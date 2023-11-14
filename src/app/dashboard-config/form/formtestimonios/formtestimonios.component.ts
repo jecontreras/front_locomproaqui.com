@@ -27,7 +27,7 @@ export class FormtestimoniosComponent implements OnInit {
   };
   nameEmail:string;
   disabledBuscador:boolean = false;
-  
+
   constructor(
     private _tools: ToolsService,
     private _store: Store<STORAGES>,
@@ -37,7 +37,7 @@ export class FormtestimoniosComponent implements OnInit {
     @Inject(MAT_DIALOG_DATA) public datas: any,
     private _user: UsuariosService,
     private _notificaciones: NotificacionesService
-  ) { 
+  ) {
     this._store.subscribe((store: any) => {
       store = store.name;
       this.dataUser = store.user || {};
@@ -49,6 +49,7 @@ export class FormtestimoniosComponent implements OnInit {
 
   ngOnInit(): void {
     if(Object.keys(this.datas.datos).length > 0) {
+      this.nameEmail = this.datas.datos.email || '';
       if(this.datas.datos.vista == "ver"){
         this._tools.basicIcons({header: `hola ${ this.dataUser.usu_nombre } cordial saludo`, subheader: `Que testimonio brindarias o que mensaje para que otras personas se den la oportunidad de emprender al igual que tú`});
         this.data.usuario = this.dataUser.id;

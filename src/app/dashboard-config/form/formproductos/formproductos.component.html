@@ -73,12 +73,12 @@
           </div>-->
         </div>
         <div class="col-4" *ngIf="id && titulo == 'Crear'">
-            <div class="d-flex flex-row-reverse bd-highlight">
+            <!--<div class="d-flex flex-row-reverse bd-highlight">
                 <div class="p-2 bd-highlight">
                     <button type="button" class="btn btn-success" (click)="ordenActualizar()">Actualizar orden de
                         lista</button>
                 </div>
-            </div>
+            </div>-->
             <div class="row">
                 <div class="col-12 col-sm-6 col-md-6 col-lg-4" *ngFor="let item of listGaleria"
                     (click)="seleccionandoImg( item )">
@@ -136,11 +136,11 @@
                 </div>
                 <div class="form-group col-md-6 col-sm-4 col-lg-4 col-xs-4">
                     <label>Codigo</label>
-                    <input type="text" [(ngModel)]="data.pro_codigo" class="form-control form-control-sm">
+                    <input type="text" [(ngModel)]="data.pro_codigo" class="form-control form-control-sm" disabled>
                 </div>
                 <div class="form-group col-md-6 col-sm-8 col-lg-8 col-xs-8">
                     <label>Nombre</label>
-                    <input type="text" [(ngModel)]="data.pro_nombre" class="form-control form-control-sm">
+                    <input type="text" [(ngModel)]="data.pro_nombre" class="form-control form-control-sm" required>
                 </div>
                 <div class="form-group col-md-6 col-sm-8 col-lg-8 col-xs-8">
                     <label>URL DE MEDIOS DRIVE</label>
@@ -148,7 +148,7 @@
                 </div>
                 <div class="form-group col-md-6 col-sm-4 col-lg-4 col-xs-6">
                     <label for="exampleFormControlSelect1">Categoria:</label>
-                    <select class="form-control form-control-sm" [(ngModel)]="data.pro_categoria"
+                    <select class="form-control form-control-sm" [(ngModel)]="data.pro_categoria" required
                         (change)="getSubCategorias( data.pro_categoria )">
                         <option [value]="item.id" *ngFor="let item of listCategorias">{{ item.cat_nombre }}</option>
                     </select>
@@ -166,12 +166,12 @@
                 </div>-->
                 <div class="form-group col-md-6 col-sm-4 col-lg-4 col-xs-6">
                     <label>Precio a distribuidor</label>
-                    <input currencyMask class="form-control form-control-sm" [(ngModel)]="data.pro_vendedor"
+                    <input currencyMask class="form-control form-control-sm" [(ngModel)]="data.pro_vendedor" required
                         [options]="formatoMoneda" />
                 </div>
                 <div class="form-group col-md-6 col-sm-4 col-lg-4 col-xs-6">
                     <label>Precio sugerido de venta</label>
-                    <input currencyMask class="form-control form-control-sm" [(ngModel)]="data.pro_uni_venta"
+                    <input currencyMask class="form-control form-control-sm" [(ngModel)]="data.pro_uni_venta" required
                         [options]="formatoMoneda" />
                 </div>
                 <!--<div class="form-group col-md-6 col-sm-4 col-lg-4 col-xs-6">
@@ -253,7 +253,7 @@
                 </div>
                 <div class="form-group col-md-6 col-sm-4 col-lg-4 col-xs-6">
                     <label for="exampleFormControlSelect1">Tipo de medida:</label>
-                    <select class="form-control form-control-sm" [(ngModel)]="data.pro_sw_tallas"
+                    <select class="form-control form-control-sm" [(ngModel)]="data.pro_sw_tallas" required
                         (change)="blurTalla()">
                         <option [value]="item.id" *ngFor="let item of listTipoTallas">{{ item.tit_descripcion }}
                         </option>
@@ -280,7 +280,7 @@
                         <mat-label>Colores Disponibles</mat-label>
                         <mat-chip-list #chipList aria-label="Colores">
                             <mat-chip *ngFor="let item of listColor" [selectable]="selectable" [removable]="removable"
-                                (removed)="remove(item)">
+                                (removed)="remove(item)" required>
                                 {{item.talla}}
                                 <mat-icon matChipRemove *ngIf="removable">cancel</mat-icon>
                             </mat-chip>
