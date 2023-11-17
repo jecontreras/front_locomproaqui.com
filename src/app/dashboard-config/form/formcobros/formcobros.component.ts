@@ -121,9 +121,9 @@ export class FormcobrosComponent implements OnInit {
       //console.log(res);
       res = res.data[0];
       this.disabledButton = false;
-      this._tools.basicIcons({header: `hola ${ this.dataUser.usu_nombre } cordial saludo`, subheader: `Te informamos que tú solicitud de retiro se hará efectiva y se verá reflejada en tu cuenta de banco de 1 @ 3 días hábiles más información al +573213692393`});
-      this.procesoWhat( res );
-      setTimeout(()=> this.openTestimonios(), 3000);
+      this._tools.basicIcons({icon: "info", header: `hola ${ this.dataUser.usu_nombre } cordial saludo`, subheader: `Te informamos que tú solicitud de retiro se hará efectiva y se verá reflejada en tu cuenta de banco de 1 @ 3 días hábiles más información al +573213692393`});
+      //this.procesoWhat( res );
+      //setTimeout(()=> this.openTestimonios(), 3000);
       this.dialog.closeAll();
     }, (error)=>{ this._tools.presentToast(error.error.mensaje); console.error(error); this.disabledButton = false; });
   }
