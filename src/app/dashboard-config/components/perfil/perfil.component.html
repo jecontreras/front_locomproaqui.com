@@ -198,7 +198,6 @@
 
                                     <ng-template #itemTemplate let-item>
                                         <div class="item">
-                                            <!-- <img src="{{item.flag}}" height="25"> -->
                                             <span [innerHTML]="item.city"></span> &nbsp; | &nbsp;
                                             <small>Departamento: {{ item.state }}</small> &nbsp; | &nbsp;
                                             <small>--: {{ item.name }}</small>
@@ -208,8 +207,6 @@
                                     <ng-template #notFoundTemplate let-notFound>
                                       <div [innerHTML]="notFound"></div>
                                   </ng-template>
-                                    <!--<input type="text" [(ngModel)]="data.usu_ciudad"
-                                        class="form-control form-control-sm">-->
                                 </div>
                                 <div class="col-12 col-sm-6">
                                     <label>Dirección</label>

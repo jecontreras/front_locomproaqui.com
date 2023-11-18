@@ -586,6 +586,7 @@ export class FormproductosComponent implements OnInit {
 
   add(event: MatChipInputEvent) {
     const value = (event.value || '').trim();
+    const input = event.input;
     let  listas:any = [];
     let filtro = this.listColor.filter(( item:any ) => item.talla == value );
     if( filtro ) if( filtro.length > 0 ) return false;
@@ -605,6 +606,9 @@ export class FormproductosComponent implements OnInit {
     }
     console.log( event )
     event.value = "";
+    if (input) {
+      input.value = '';
+    }
     this.guardarColor( );
     // Clear the input value
     try {

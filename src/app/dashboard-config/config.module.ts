@@ -62,6 +62,10 @@ import { VentasClienteComponent } from './components/ventas-cliente/ventas-clien
 import { FormPosiblesVentasComponent } from './form/form-posibles-ventas/form-posibles-ventas.component';
 import { FormProductComponent } from './form/form-product/form-product.component';
 import { FormListArticleComponent } from './form/form-list-article/form-list-article.component';
+import { ListSizeComponent } from './components/list-size/list-size.component';
+import { FormListSizeComponent } from './form/form-list-size/form-list-size.component';
+import { ListPlatformComponent } from './components/list-platform/list-platform.component';
+import { FormPlatformComponent } from './form/form-platform/form-platform.component';
 
 @NgModule({
   entryComponents: [
@@ -124,7 +128,11 @@ import { FormListArticleComponent } from './form/form-list-article/form-list-art
     VentasClienteComponent,
     FormPosiblesVentasComponent,
     FormProductComponent,
-    FormListArticleComponent
+    FormListArticleComponent,
+    ListSizeComponent,
+    FormListSizeComponent,
+    ListPlatformComponent,
+    FormPlatformComponent
   ],
   imports: [
     CommonModule,

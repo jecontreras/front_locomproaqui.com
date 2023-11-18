@@ -134,6 +134,7 @@ export class FormcategoriasComponent implements OnInit {
 
   add(event: MatChipInputEvent) {
     const value = (event.value || '').trim();
+    const input = event.input;
     let  listas:any = [];
     let filtro = this.listCategoria.filter(( item:any ) => item.categoria == value );
     if( filtro ) if( filtro.length > 0 ) return false;
@@ -144,6 +145,9 @@ export class FormcategoriasComponent implements OnInit {
       this.listCategoria.push( data );
     }
     event.value = "";
+    if (input) {
+      input.value = '';
+    }
     // Clear the input value
     try {
       event['chipInput']!.clear();
@@ -157,8 +161,10 @@ export class FormcategoriasComponent implements OnInit {
 
     if ( index >= 0 ) {
       let data:any = this.listCategoria[ index ];
-      let result = await this.eliminarCategoria( data );
-      if( result ) this.listCategoria.splice(index, 1);
+      if( data.id ){
+        let result = await this.eliminarCategoria( data );
+        if( result ) this.listCategoria.splice(index, 1);
+      }else this.listCategoria.splice(index, 1);
     }
   }
 

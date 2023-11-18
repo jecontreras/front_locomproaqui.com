@@ -25,6 +25,8 @@ import { VerProveedorComponent } from './components/ver-proveedor/ver-proveedor.
 import { MisDespachoComponent } from './components/mis-despacho/mis-despacho.component';
 import { CursosComponent } from './components/cursos/cursos.component';
 import { VentasClienteComponent } from './components/ventas-cliente/ventas-cliente.component';
+import { ListSizeComponent } from './components/list-size/list-size.component';
+import { ListPlatformComponent } from './components/list-platform/list-platform.component';
 
 const dashboardRoutes: Routes = [
  {
@@ -54,6 +56,8 @@ const dashboardRoutes: Routes = [
      {path: 'verProductoProveedor/:id', component: VerProductoProveedorComponent},
      {path: 'misDespacho', component: MisDespachoComponent},
      {path: 'cursos', component: CursosComponent},
+     {path: 'listaTalla', component: ListSizeComponent},
+     {path: 'listaPlatform', component: ListPlatformComponent },
      {path: 'ventasPosibles', component: VentasClienteComponent },
      {
         path: 'store',

@@ -515,6 +515,13 @@ export class HeaderComponent implements OnInit {
       },
       {
         icons: 'people_alt',
+        nombre: 'Lista de Trasnportadoras',
+        disable: this.rolUser == 'administrador' || this.rolUser == 'proveedor',
+        url: '/config/listaPlatform',
+        submenus:[]
+      },
+      {
+        icons: 'people_alt',
         nombre: 'Explorar Bodegas',
         disable: this.rolUser == 'administrador' || this.rolUser == 'vendedor',
         url: '/config/controlInventario',
@@ -618,6 +625,11 @@ export class HeaderComponent implements OnInit {
             icons: 'settings',
             nombre: 'Categorias',
             url: '/config/categorias',
+          },
+          {
+            icons: 'settings',
+            nombre: 'Lista de Tallas',
+            url: '/config/listaTalla',
           },
           {
             icons: 'settings',

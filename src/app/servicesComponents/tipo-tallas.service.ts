@@ -21,8 +21,16 @@ export class TipoTallasService {
   create(query:any){
     return this._model.querys('tbltipotalla',query, 'post');
   }
+
+  createTallas(query:any){
+    return this._model.querys('tbltallas',query, 'post');
+  }
+
   update(query:any){
     return this._model.querys('tbltipotalla/'+query.id, query, 'put');
+  }
+  updateTalla(query:any){
+    return this._model.querys('tbltallas/'+query.id, query, 'put');
   }
   delete(query:any){
     return this._model.querys('tbltipotalla/'+query.id, query, 'delete');
