@@ -21,15 +21,6 @@ import { CompletarComponent } from './completar/completar.component';
 import { ChecktDialogComponent } from './checkt-dialog/checkt-dialog.component';
 import { DetallePedidoComponent } from './detalle-pedido/detalle-pedido.component';
 import { CatalogoComponent } from './catalogo/catalogo.component';
-import { LoginComponent } from '../components/login/login.component';
-import { ViewProductosComponent } from '../components/view-productos/view-productos.component';
-import { TerminosComponent } from '../layout/terminos/terminos.component';
-import { PedidosComponent } from '../components/pedidos/pedidos.component';
-import { LoginsComponent } from '../layout/login/login.component';
-import { RegistrosComponent } from '../layout/registro/registro.component';
-import { ContenidoComponent } from '../components/contenido/contenido.component';
-import { ProductoViewComponent } from '../components/producto-view/producto-view.component';
-import { TestimoniosComponent } from '../components/testimonios/testimonios.component';
 import { NgxDropzoneModule } from 'ngx-dropzone';
 import { ConfigModule } from '../dashboard-config/config.module';
 import { ExtraModule } from '../extra/extra.module';
@@ -45,7 +36,6 @@ import { NgxCurrencyModule } from 'ngx-currency';
     CommonModule,
     InfiniteScrollModule,
     NgxSpinnerModule,
-    MyOwnCustomMaterialModule,
     FormsModule,
     NgxImageZoomModule,
     NgImageSliderModule,

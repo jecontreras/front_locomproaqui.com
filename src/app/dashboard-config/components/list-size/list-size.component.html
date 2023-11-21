@@ -24,7 +24,7 @@
             <div id="datatables_filter" class="dataTables_filter row">
               <label class="form-group col">
                 <input [(ngModel)]="datoBusqueda" (change)="buscar()" type="search" class="form-control form-control-sm"
-                  placeholder="Buscar Retiros" aria-controls="datatables"></label>
+                  placeholder="Buscar" aria-controls="datatables"></label>
               <div>
                   <button (click)="buscar()" [disabled]="loader" mat-raised-button mat-min-fab
                       class="btn btn-primary btn-just-icon btn-round">
@@ -61,7 +61,7 @@
                       </button>
                     </td>
                     <td>{{row['tit_descripcion']}}</td>
-                    <td>{{ row['cat_activo'] == 1 ? 'Activo' : 'Eliminado' }}</td>
+                    <td>{{ row['tit_sw_activo'] == 1 ? 'Activo' : 'Eliminado' }}</td>
                     <td>
                       {{ row['createdAt'] | date:'medium' }}
                     </td>
@@ -70,10 +70,16 @@
                 </tbody>
               </table>
             </div>
+            <div class="col-12">
+              <div class="d-flex flex-row-reverse bd-highlight">
+                <mat-paginator [length]="counts" [pageSizeOptions]="[10, 25, 100]"
+                    (page)="pageEvent($event)">
+                </mat-paginator>
+              </div>
+            </div>
           </div>
         </div>
       </div>
     </div>
-    <br><br><br><br>
   </div>
 </div>

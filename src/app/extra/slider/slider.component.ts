@@ -60,6 +60,7 @@ SwiperCore.use([
 export class SliderComponent implements OnInit {
 
   @Input() listGaleria:any = [];
+  @Input() routerUrl:string;
   foto = "https://segundav1.s3.amazonaws.com/optional/1e06f7fd-f576-45f7-9c0d-5c518486b0d4.jpeg.webp"
   @Input() view:number;
   @Input() lyImg:string;
@@ -82,15 +83,16 @@ export class SliderComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    console.log( this.listGaleria )
+
+    //if( !this.routerUrl ) this.routerUrl = "/listproduct/categoria";
     //this.getListInitNews();
     setInterval(()=>{
       let tamaño:number = window.innerWidth;
       //console.log("**83", tamaño)
       this.breakpoint = (window.innerWidth <= 500) ? 1 : 6;
       //console.log( this.breakpoint, window.innerWidth)
-      if( tamaño >= 100 ) this.cantDs = 3;
-      if( tamaño >= 500 ) this.cantDs = 3;
+      if( tamaño >= 100 ) this.cantDs = 2;
+      if( tamaño >= 500 ) this.cantDs = 2;
       if( tamaño >= 770 ) this.cantDs = 4;
       if( tamaño >= 995 ) this.cantDs = 5;
     }, 100 );
@@ -186,7 +188,7 @@ export class SliderComponent implements OnInit {
 
   handleSelect( item ){
     console.log("***176", item)
-    this._router.navigate( [ "/listproduct/categoria", item['id'] ] );
+    this._router.navigate( [ this.routerUrl, item['id'] ] );
   }
 
   handleView(obj) {
@@ -202,6 +204,15 @@ export class SliderComponent implements OnInit {
       console.log(`Dialog result: ${result}`);
       //this._router.navigate(['/pedidos']);
     });
+  }
+
+  handleImageError(event: any) {
+    // Evento que se ejecuta cuando la imagen no se carga correctamente
+    // Puedes cambiar la URL de la imagen de segunda opción aquí
+    const segundaOpcionURL = './assets/imagenes/todos.png';
+
+    // Asigna la URL de la imagen de segunda opción al src de la imagen
+    event.target.src = segundaOpcionURL;
   }
 
 }

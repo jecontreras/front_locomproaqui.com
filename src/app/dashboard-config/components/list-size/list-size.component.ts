@@ -3,7 +3,7 @@ import { MatDialog } from '@angular/material';
 import { ToolsService } from 'src/app/services/tools.service';
 import { TipoTallasService } from 'src/app/servicesComponents/tipo-tallas.service';
 import { FormListSizeComponent } from '../../form/form-list-size/form-list-size.component';
-
+import * as _ from 'lodash';
 declare interface DataTable {
   headerRow: string[];
   footerRow: string[];
@@ -33,7 +33,7 @@ export class ListSizeComponent implements OnInit {
   Header:any = [ 'Acciones','Tipo de Talla','Estado','Creado' ];
   $:any;
   public datoBusqueda = '';
-
+  counts:number = 0;
   constructor(
     private _tipoTalla: TipoTallasService,
     public dialog: MatDialog,
@@ -61,6 +61,11 @@ export class ListSizeComponent implements OnInit {
     },(error)=>{console.error(error); this._tools.presentToast("Error de servidor") })
   }
 
+  pageEvent(ev: any) {
+    this.query.page = ev.pageIndex;
+    this.query.limit = ev.pageSize;
+    this.cargarTodos();
+  }
 
 
 
@@ -68,6 +73,7 @@ export class ListSizeComponent implements OnInit {
     this._tipoTalla.get(this.query)
     .subscribe(
       (response: any) => {
+        this.counts = response.count;
         console.log(response);
         this.dataTable = {
           headerRow: this.Header,
@@ -76,7 +82,8 @@ export class ListSizeComponent implements OnInit {
         };
         this.dataTable.headerRow = this.dataTable.headerRow;
         this.dataTable.footerRow = this.dataTable.footerRow;
-        this.dataTable.dataRows = response.data;
+        this.dataTable.dataRows.push(... response.data)
+        this.dataTable.dataRows = _.unionBy(this.dataTable.dataRows || [], this.dataTable.dataRows, 'id');
         this.paginas = Math.ceil(response.count/10);
         this.loader = false;
         setTimeout(() => {

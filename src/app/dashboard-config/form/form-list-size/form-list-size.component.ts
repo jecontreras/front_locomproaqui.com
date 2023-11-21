@@ -48,13 +48,13 @@ export class FormListSizeComponent implements OnInit {
     this._tipoTalla.getTalla( { where: { tal_tipo: this.id, tal_sw_activo: 0 }, limit: 1000 } ).subscribe((res:any)=>{
       this.listTipoTalla =_.map( res.data , ( row )=>{
         return {
+          //... row,
           id: row.id,
-          tal_descripcion: row.tal_descripcion,
-          ... row
+          tal_descripcion: Number( row.tal_descripcion ) || String( row.tal_descripcion ),
         };
       });
       this.listTipoTalla = _.orderBy( this.listTipoTalla, ['tal_descripcion'], ['asc'] );
-      console.log( this.listTipoTalla, res )
+      //console.log( this.listTipoTalla, res )
     }, error=> this._tools.presentToast("error servidor"));
   }
 

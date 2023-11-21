@@ -341,8 +341,8 @@
                                                 [(ngModel)]="tallas.check" class="example-margin">
                                                 {{ tallas.tal_descripcion }}
                                                 <input type="text" [(ngModel)]="tallas.cantidad" class="form-control"
-                                                    aria-describedby="Tallas disponibles........"
-                                                    placeholder="Tallas disponibles........"
+                                                    aria-describedby="Cantidad disponibles........"
+                                                    placeholder="Cantidad disponibles........"
                                                     (ngModelChange)="guardarColor( )">
                                             </mat-checkbox>
                                         </div>
@@ -406,7 +406,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="form-group col-12">
+                <!--<div class="form-group col-12">
                     <label for="exampleFormControlSelect1">Galeria:</label>
                     <div class="row">
                         <div class="col-12">
@@ -441,7 +441,7 @@
                             </mat-card>
                         </div>
                     </div>
-                </div>
+                </div>-->
                 <div class="form-group col-12">
                     <label>Descripción detallada</label>
                     <angular-editor id="editor1" [(ngModel)]="data.pro_descripcion" [config]="editorConfig"

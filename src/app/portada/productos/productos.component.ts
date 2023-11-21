@@ -6,12 +6,12 @@ import { Store } from '@ngrx/store';
 import { CART } from 'src/app/interfaces/sotarage';
 import { MatBottomSheet, MatBottomSheetRef, MatDialog } from '@angular/material';
 import { InfoProductoComponent } from '../info-producto/info-producto.component';
-import { ProductoHistorialAction, CartAction, BuscadorAction, UserCabezaAction } from 'src/app/redux/app.actions';
+import { ProductoHistorialAction, CartAction, BuscadorAction, UserCabezaAction, CategoriaAction } from 'src/app/redux/app.actions';
 import * as _ from 'lodash';
 import { ToolsService } from 'src/app/services/tools.service';
 import { FormatosService } from 'src/app/services/formatos.service';
 import { ChecktDialogComponent } from '../checkt-dialog/checkt-dialog.component';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { UsuariosService } from 'src/app/servicesComponents/usuarios.service';
 let listCategory = [];
 @Component({
@@ -52,6 +52,15 @@ export class ProductosComponent implements OnInit {
   userId:any;
   breakpoint: number = 6;
   listBanner: any = [  ];
+  public mobileQuery: any;
+  private _mobileQueryListener: () => void;
+  events: string[] = [];
+  opened:boolean;
+  showFiller = false;
+  dataSelectCategory:any = [];
+  urlCategory:string;
+  vanderaCategory:boolean = true;
+  listCategoriasCache = [];
 
   constructor(
     private _productos: ProductoService,
@@ -63,7 +72,8 @@ export class ProductosComponent implements OnInit {
     public _formato: FormatosService,
     private _bottomSheet: MatBottomSheet,
     private activate: ActivatedRoute,
-    private _user: UsuariosService
+    private _user: UsuariosService,
+    private _router: Router
   ) {
     this._store.subscribe((store: any) => {
       store = store.name;
@@ -74,23 +84,30 @@ export class ProductosComponent implements OnInit {
       if( store.usercabeza ) this.query.where.idPrice = store.usercabeza.id;
       this.userCabeza = store.usercabeza || {};
       this.userId = store.usercabeza || {};
+      this.listCategorias = store.categoria || [];
+      this.listCategoriasCache = store.categoria || [];
     });
   }
 
   async ngOnInit() {
     this.id = this.activate.snapshot.paramMap.get('id');
-    console.log("******ID", this.id, this.userCabeza)
     if( this.id ) {
       this.dataUser = ( await this.getUser() ) || { id: 1 };
+      this.urlCategory = 'front/index/'+this.dataUser.usu_telefono;
       this.listBanner.push( { image: "./assets/imagenes/banner5.png", id: 1 } )
       this.listBanner.push( { image: "./assets/imagenes/banner4.png", id: 2 } )
       //this.listBanner.push( { image: this.dataUser.us_banner, id: 2 } )
     }
     else this.dataUser = { id: 1 }
-    this.getProductos();
+    if( !this.activate.snapshot.paramMap.get('idCategory') ) this.getProductos();
     this.getCategorias();
     this.getProductosRecomendado();
     setInterval(()=> {
+      //console.log("******ID", this.activate.snapshot.paramMap )
+      if( ( Number( this.activate.snapshot.paramMap.get('idCategory') ) !== this.query.where.pro_categoria ) || ( this.query.where.pro_categoria === 0 && this.vanderaCategory === true ) ){
+        this.vanderaCategory = true;
+        this.handleProcessCategory( Number( this.activate.snapshot.paramMap.get('idCategory') ) );
+      }else this.vanderaCategory = false;
       //console.log( this.nav)
       this.breakpoint = (window.innerWidth <= 500) ? 1 : 6;
       let color:string = ( this.dataUser.usu_color || "#02a0e3" );
@@ -105,6 +122,15 @@ export class ProductosComponent implements OnInit {
 
       }
     }, 1000 );
+  }
+
+  handleProcessCategory( id:number ){
+    if( this.vanderaCategory === true && id ) {
+      this.SeleccionCategoria( { id: id }); this.vanderaCategory = false;
+      let filtro = this.listCategorias.find( item => item.id === id );
+      if( filtro ) this.dataSeleccionda = filtro.cat_nombre;
+    }
+    else this.vanderaCategory = false;
   }
 
   handleWhatsapp(){
@@ -131,14 +157,17 @@ export class ProductosComponent implements OnInit {
   }
 
   getCategorias(){
-    this._categorias.get( { where:{ cat_activo: 0, cat_padre:null }, limit: 100 } ).subscribe((res:any)=>{
-      this.listCategorias = res.data;
-      listCategory = _.map( this.listCategorias, (item)=> {
-        return {
+    this._categorias.get( { where:{ cat_activo: 0, cat_padre:null }, limit: 10000 } ).subscribe( async (res:any)=>{
+      //this.listCategorias = res.data;
+      for( let item of res.data ){
+        let resSubt = ( await this.getSubcategoria( item.id ) ) || [];
+        let dataEnd = {
           ...item,
-          title: item.cat_nombre
-        }
-      });
+          title: item.cat_nombre,
+          subCategoria: resSubt
+        };
+        this.listCategorias.push( dataEnd );
+      }
       this.listCategorias.unshift({
         id: 0,
         title: "TODOS",
@@ -146,11 +175,45 @@ export class ProductosComponent implements OnInit {
         cat_imagen: "./assets/imagenes/todos.png",
         subCategoria: []
       });
-      console.log("***149", this.listCategorias)
+      this.handleProcessCategoryCache( );
+      //console.log("***149", this.listCategorias)
     });
   }
 
+  handleProcessCategoryCache( ){
+    for( let row of this.listCategorias ){
+      let filtro = this.listCategoriasCache.find( item => item.id === row.id );
+      let accion;
+      if( filtro ) accion = new CategoriaAction( row, 'put' );
+      else accion = new CategoriaAction( row, 'post' );
+
+      this._store.dispatch( accion );
+    }
+  }
+
+  async getSubcategoria( id:any ){
+    return new Promise
+    ( resolve =>{
+      this._categorias.get( { where: { cat_padre: id, cat_activo: 0 }, limit: 1000 } ).subscribe(( res:any )=>{
+        //console.log("****164", res, id)
+        resolve( res.data );
+      }, ()=> resolve( false ) );
+    });
+}
+
+  eventorOver( item:any, drawer:any ){
+    //console.log( item )
+    item.check = !item.check;
+    for( let row of this.listCategorias ) { if( row.id != item.id ) row.check = false; }
+    if( !item.subCategoria ) item.subCategoria = [];
+    if( item.subCategoria.length === 0 ) {
+      this.SeleccionCategoria( item );
+      drawer.toggle();
+    }else this.dataSelectCategory = item.subCategoria;
+  }
+
   SeleccionCategoria( obj:any ){
+    //console.log("***184", obj)
     //this.query = { where:{ pro_activo: 0 }, page: 0, limit: 10 };
     for( let row of this.listCategorias ) row.check = false;
     obj.check=true;
@@ -162,8 +225,10 @@ export class ProductosComponent implements OnInit {
     if( obj.id ) this.query.where.pro_categoria = obj.id;
     this.listProductos = [];
     this.loader = true;
+    if( obj.id === 0 ) delete this.query.where.pro_categoria;
     this.getProductos();
     this.dataSeleccionda = obj.cat_nombre;
+    if( obj.cat_nombre ) this._router.navigate(['/front/index/'+this.userCabeza.usu_telefono]);
   }
 
   searchColor( color:string ){
@@ -182,7 +247,7 @@ export class ProductosComponent implements OnInit {
     this.spinner.show();
     this._productos.getStore(this.query).subscribe((res:any)=>{
       this.listProductos = _.unionBy(this.listProductos || [], res.data, 'id');
-      console.log("******",res)
+      //console.log("******",res)
       this.spinner.hide();
       this.loader = false;
       this.notEmptyPost =  true;
@@ -205,7 +270,7 @@ export class ProductosComponent implements OnInit {
     });
 
     dialogRef.afterClosed().subscribe(result => {
-      console.log(`Dialog result: ${result}`);
+      //console.log(`Dialog result: ${result}`);
     });
     let filtro = this.listProductosHistorial.filter( ( row:any ) => row.id == obj.id );
     if(filtro) return false;
@@ -225,7 +290,7 @@ export class ProductosComponent implements OnInit {
     });
 
     dialogRef.afterClosed().subscribe(result => {
-      console.log(`Dialog result: ${result}`);
+      //console.log(`Dialog result: ${result}`);
     });
     /*let data:any = {
       articulo: item.id,
@@ -325,7 +390,7 @@ export class ProductosComponent implements OnInit {
 export class BottomSheetOverviewExampleSheet {
   listCategorias:any = listCategory;
   constructor(private _bottomSheetRef: MatBottomSheetRef<BottomSheetOverviewExampleSheet>) {
-    console.log("****237", this.listCategorias)
+    //console.log("****237", this.listCategorias)
   }
   openLink(event: MouseEvent): void {
     this._bottomSheetRef.dismiss();

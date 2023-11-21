@@ -39,10 +39,10 @@
       <div role="group" class="andes-carousel-snapped__slide andes-carousel-snapped__slide--spacing-12 "
         [attr.aria-label]="i + 1 + ' de ' + listGaleria.length" [attr.data-slider]="i">
         <div class="row">
-          <div class="col-12" style="    padding: 15%;">
+          <div class="col-12" style="    padding: 10%;">
             <div class="d-flex justify-content-center">
               <div>
-                <img width="180" height="200" decoding="async" [src]="item[lyImg]" (click)="handleView( item )"
+                <img style="width: 100%;" height="200" decoding="async" [src]="item[lyImg]" (click)="handleView( item )"
                   class="pointer" alt="">
               </div>
             </div>
@@ -63,7 +63,7 @@
                       </div>
                   </div>
                   <section class="poly-text poly-shipping poly-column__shipping poly-text-positive poly-fw-semibold poly-fs-s" style="text-align: center;">
-                      <a class="pointer text-primary" style="font-size: 15px;" target="_blank" [routerLink]="[ '/listproduct/categoria', item.pro_categoria.id ] " >Ver Más</a>
+                      <a *ngIf="item.pro_categoria" class="pointer text-primary" style="font-size: 15px;" target="_blank" [routerLink]="[ '/listproduct/categoria', item.pro_categoria.id ] " >Ver Más</a>
                   </section>
               </div>
           </div>
@@ -91,7 +91,7 @@
       <ng-template swiperSlide *ngFor="let item of listGaleria; index as i">
         <section style="text-align: center; max-width: 50%; margin-left: 50px;" (click)="handleSelect( item )">
           <figure class="figure pointer">
-            <img [src]="item[lyImg]" alt="Imagen 2" class="square-image">
+            <img [src]="item[lyImg]" alt="Imagen 2" class="square-image" (error)="handleImageError($event)">
           </figure>
           <h6 style="font-size: 10px;">{{ item.title }}</h6>
         </section>

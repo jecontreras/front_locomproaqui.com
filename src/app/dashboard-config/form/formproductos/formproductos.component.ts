@@ -164,7 +164,7 @@ export class FormproductosComponent implements OnInit {
   }
 
   getTipoTallas() {
-    this._tipoTallas.get({ where: { tit_sw_activo: "1" }, limit: 100 }).subscribe((res: any) => {
+    this._tipoTallas.get({ where: { tit_sw_activo: 1 }, limit: 100 }).subscribe((res: any) => {
       this.listTipoTallas = res.data;
       if( this.data.id ) this.blurTalla(2);
     }, error => this._tools.presentToast("error servidor"));

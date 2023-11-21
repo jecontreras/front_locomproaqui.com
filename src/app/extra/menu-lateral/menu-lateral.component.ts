@@ -38,9 +38,9 @@ export class MenuLateralComponent implements OnInit {
       let color:string = ( this.dataUser.usu_color || "#02a0e3" );
       if( this.userId.id ) color = this.userId.usu_color || "#02a0e3";
       try {
-        this.color1.nativeElement.style.backgroundColor = color
+        /*this.color1.nativeElement.style.backgroundColor = color
         this.color2.nativeElement.style.backgroundColor = color
-        this.color3.nativeElement.style.backgroundColor = color
+        this.color3.nativeElement.style.backgroundColor = color*/
         //this.color4.nativeElement.style.backgroundColor = color
       } catch (error) {
 

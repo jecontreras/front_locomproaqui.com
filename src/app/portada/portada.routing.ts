@@ -26,6 +26,10 @@ const routes: Routes = [
             component: ProductosComponent
           },
           {
+            path: 'index/:id/:idCategory',
+            component: ProductosComponent
+          },
+          {
             path: 'inicio',
             component: ProductosComponent
           },
