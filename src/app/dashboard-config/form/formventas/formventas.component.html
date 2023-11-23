@@ -138,12 +138,12 @@
                                 <td>{{ item.unida }}</td>
                                 <td>{{ item.totalKilos }}</td>
                                 <!--<td>{{ item.kilosVol }}</td>-->
-                                <td>{{ item.valoracion }}</td>
+                                <td>{{ _tools.monedaChange( 3, 2, ( item.valoracion || 0 ) ) }}</td>
                                 <!--<td>{{ item.tray }}</td>-->
-                                <td>{{ item.fleteSin }}</td>
+                                <td>{{ _tools.monedaChange( 3, 2, ( item.fleteSin || 0 ) ) }}</td>
                                 <!--<td>{{ item.fleteManejoSin }}</td>-->
-                                <td>{{ item.fleteValor }}</td>
-                                <td>{{ item.fleteTotal }}</td>
+                                <td>{{ _tools.monedaChange( 3, 2, ( item.fleteValor || 0 ) ) }}</td>
+                                <td>{{ _tools.monedaChange( 3, 2, ( item.fleteTotal || 0 ) ) }}</td>
                                 <td>{{ item.tiempoEstimado }}</td>
                             </tr>
                         </tbody>
@@ -288,17 +288,19 @@
                     <mat-card-actions>
                         <div class="d-flex justify-content-center">
                             <div>
-                                <label for="exampleFormControlInput1">Codigo</label>
+                                <label for="exampleFormControlInput1">Codigo: </label>
                                 <input type="text" [(ngModel)]="item.codigoImg" class="form-control form-control-sm" [disabled]="data.id">
-                                <label for="exampleFormControlInput1">Cantidad</label>
+                                <label for="exampleFormControlInput1">Bodega: </label>
+                                <input type="text" [(ngModel)]="item.bodegaName" class="form-control form-control-sm" [disabled]="data.id">
+                                <label for="exampleFormControlInput1">Cantidad: </label>
                                 <input type="number" [(ngModel)]="item.cantidad" class="form-control form-control-sm" (change)="suma()" [disabled]="data.id">
-                                <label for="exampleFormControlInput1">Color</label>
+                                <label for="exampleFormControlInput1">Color: </label>
                                 <input type="text" [(ngModel)]="item.colorSelect" class="form-control form-control-sm" disabled>
-                                <label for="exampleFormControlInput1">Tallas</label>
+                                <label for="exampleFormControlInput1">Tallas: </label>
                                 <input type="text" [(ngModel)]="item.tallaSelect" class="form-control form-control-sm" disabled>
-                                <label for="exampleFormControlInput1">Vr.Unidad:</label>
+                                <label for="exampleFormControlInput1">Vr.Unidad: </label>
                                 <input disabled currencyMask [(ngModel)]="item.costo" class="form-control form-control-sm" [options]="opcionCurrencys"/>
-                                <label for="exampleFormControlInput1">Vr.Vendido:</label>
+                                <label for="exampleFormControlInput1">Vr.Vendido: </label>
                                 <input disabled currencyMask [(ngModel)]="item.loVendio" class="form-control form-control-sm" [options]="opcionCurrencys"/>
                                 <div class="d-flex justify-content-center">
                                   <div>

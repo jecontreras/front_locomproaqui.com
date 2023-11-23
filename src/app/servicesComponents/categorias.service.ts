@@ -10,8 +10,12 @@ export class CategoriasService {
     private _model: ServiciosService
   ) { }
 
-  get(query:any){
+  getAll(query:any){
     return this._model.querys('tblcategorias/querys',query, 'post');
+  }
+
+  get(query:any){
+    return this._model.querys('tblcategorias/categoryValidate',query, 'post');
   }
   create(query:any){
     return this._model.querys('tblcategorias',query, 'post');

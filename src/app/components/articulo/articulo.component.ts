@@ -404,7 +404,7 @@ export class ArticuloComponent implements OnInit {
   agregar(obj) {
     obj.coinShop = this.coinShop;
     const dialogRef = this.dialog.open(ViewProductosComponent, {
-      width: this.breakpoint == 6 ? '80%' : "100%",
+      width: this.breakpoint === 6 ? '80%' : "100%",
       data: { datos: obj }
     });
 

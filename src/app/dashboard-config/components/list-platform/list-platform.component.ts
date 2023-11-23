@@ -30,7 +30,7 @@ export class ListPlatformComponent implements OnInit {
   loader = true;
   query:any = {
     where:{
-      estado: 0
+      estado: [0, 2]
     },
     limit: 10
   };
@@ -57,7 +57,6 @@ export class ListPlatformComponent implements OnInit {
       this.dataUser = store.user || {};
       try {
         this.rolName =  this.dataUser.usu_perfil.prf_descripcion;
-        console.log("***72", this.rolName)
       } catch (error) {}
     });
   }
@@ -76,7 +75,6 @@ export class ListPlatformComponent implements OnInit {
   }
 
   handleSelectShop( ev:any ){
-    console.log("**EV", ev);
     if( ev.id  ){
       this.query.where.user = ev.id;
     }else{
@@ -119,7 +117,6 @@ export class ListPlatformComponent implements OnInit {
     this._platform.get(this.query)
     .subscribe(
       (response: any) => {
-        console.log(response);
         this.dataTable = {
           headerRow: this.Header,
           footerRow: this.Header,
@@ -171,7 +168,7 @@ export class ListPlatformComponent implements OnInit {
     this.datoBusqueda = this.datoBusqueda.trim();
     this.query = {
       where:{
-        estado: 0
+        estado: [0, 2]
       },
       limit: 10
     };

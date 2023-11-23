@@ -103,8 +103,10 @@ export class ProductosComponent implements OnInit {
     this.getCategorias();
     this.getProductosRecomendado();
     setInterval(()=> {
-      //console.log("******ID", this.activate.snapshot.paramMap )
-      if( ( Number( this.activate.snapshot.paramMap.get('idCategory') ) !== this.query.where.pro_categoria ) || ( this.query.where.pro_categoria === 0 && this.vanderaCategory === true ) ){
+
+      let valorParams = Number( this.activate.snapshot.paramMap.get('idCategory'));
+      if( valorParams === 0 ) valorParams = 800;
+      if( valorParams !== this.query.where.pro_categoria ){
         this.vanderaCategory = true;
         this.handleProcessCategory( Number( this.activate.snapshot.paramMap.get('idCategory') ) );
       }else this.vanderaCategory = false;
@@ -125,7 +127,8 @@ export class ProductosComponent implements OnInit {
   }
 
   handleProcessCategory( id:number ){
-    if( this.vanderaCategory === true && id ) {
+    if( id === 0 ) id = 800;
+    if( ( this.vanderaCategory === true && id ) ) {
       this.SeleccionCategoria( { id: id }); this.vanderaCategory = false;
       let filtro = this.listCategorias.find( item => item.id === id );
       if( filtro ) this.dataSeleccionda = filtro.cat_nombre;
@@ -225,7 +228,7 @@ export class ProductosComponent implements OnInit {
     if( obj.id ) this.query.where.pro_categoria = obj.id;
     this.listProductos = [];
     this.loader = true;
-    if( obj.id === 0 ) delete this.query.where.pro_categoria;
+    //if( obj.id === 0 || obj.id === 800 ) delete this.query.where.pro_categoria;
     this.getProductos();
     this.dataSeleccionda = obj.cat_nombre;
     if( obj.cat_nombre ) this._router.navigate(['/front/index/'+this.userCabeza.usu_telefono]);

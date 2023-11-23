@@ -42,6 +42,7 @@ export class TableProductComponent implements OnInit {
         pro_activo: 0
       },
       page: 0,
+      sort: 'createdAt DESC',
       limit: 10
     }
   };
@@ -236,6 +237,9 @@ export class TableProductComponent implements OnInit {
       delete this._dataConfig.query.where.or;
     }
     if( this.rolName != 'administrador') this._dataConfig.query.where.pro_usu_creacion = this.dataUser.id;
+    this._dataConfig.query.limit = 10;
+    this._dataConfig.query.page = 0;
+    this._dataConfig.query.sort = "createdAt DESC";
     this.cargarTodos();
   }
   async updateState( item, opt ){

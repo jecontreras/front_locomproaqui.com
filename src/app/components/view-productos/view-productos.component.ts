@@ -105,8 +105,13 @@ export class ViewProductosComponent implements OnInit {
     }
     this.procesoNext();
     //console.log( this.data.pro_categoria.cat_nombre )
-    if( ( this.data.pro_categoria.cat_nombre == "CALZADO" ) || ( this.data.pro_categoria.cat_nombre == "ROPA" )  ) this.disabledSelect = true;
-    else this.disabledSelect = false;
+    try {
+      if( ( this.data.pro_categoria.cat_nombre == "CALZADO" ) || ( this.data.pro_categoria.cat_nombre == "ROPA" )  ) this.disabledSelect = true;
+      else this.disabledSelect = false;
+    } catch (error) {
+      console.log("*CONTROLE EL ERROR", error)
+      this.disabledSelect = false;
+    }
 
     setTimeout(()=>{
       try {
@@ -251,7 +256,9 @@ export class ViewProductosComponent implements OnInit {
       costoTotal: precio,
       id: this.codigo(),
       precioReal: this.data.precioProveedor,
-      coinShop: this.coinShop
+      coinShop: this.coinShop,
+      bodegaName: this.data.pro_usu_creacion.usu_usuario,
+      idBodega: this.data.pro_usu_creacion.id
     };
     let accion = new CartAction(data, 'post');
     this._store.dispatch(accion);

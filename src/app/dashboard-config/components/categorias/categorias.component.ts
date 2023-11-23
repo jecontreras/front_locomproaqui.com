@@ -20,7 +20,7 @@ declare const $: any;
   styleUrls: ['./categorias.component.scss']
 })
 export class CategoriasComponent implements OnInit {
-  
+
   dataTable: DataTable;
   pagina = 10;
   paginas = 0;
@@ -65,7 +65,7 @@ export class CategoriasComponent implements OnInit {
 
 
   cargarTodos() {
-    this._categorias.get(this.query)
+    this._categorias.getAll(this.query)
     .subscribe(
       (response: any) => {
         console.log(response);
@@ -143,7 +143,7 @@ export class CategoriasComponent implements OnInit {
       where:{
         cat_padre: null
       },
-      limit: 100      
+      limit: 100
     };
     if (this.datoBusqueda != '') {
       this.query.where.or = [
@@ -158,7 +158,7 @@ export class CategoriasComponent implements OnInit {
           }
         },
       ];
-    } 
+    }
     this.cargarTodos();
   }
 

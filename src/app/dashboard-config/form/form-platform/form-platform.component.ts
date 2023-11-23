@@ -85,7 +85,7 @@ export class FormPlatformComponent implements OnInit {
   }
 
   update(){
-    let data = _.omit( this.data, ['user','nameState', 'createdAt', 'updatedAt']);
+    let data = _.omit( this.data, ['user','nameState', 'createdAt', 'updatedAt', 'namePlatform']);
     this._platform.update( data ).subscribe(( res:any )=>{
       this._tools.presentToast("Plataforma Actualizado");
       this.dialog.closeAll();

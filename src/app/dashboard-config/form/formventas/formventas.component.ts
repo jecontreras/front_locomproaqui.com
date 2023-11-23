@@ -78,7 +78,7 @@ export class FormventasComponent implements OnInit {
     public dialog: MatDialog,
     private _ventas: VentasService,
     private _notificacion: NotificacionesService,
-    private _tools: ToolsService,
+    public _tools: ToolsService,
     private _productos: ProductoService,
     public dialogRef: MatDialogRef<FormventasComponent>,
     @Inject(MAT_DIALOG_DATA) public datas: any,
@@ -198,6 +198,7 @@ export class FormventasComponent implements OnInit {
         this.listCarrito = _.map(res.data, (item: any) => {
           return {
             foto: item.fotoproducto || item.producto.foto,
+            bodegaName: item.producto.pro_usu_creacion,
             cantidad: item.cantidad,
             tallaSelect: item.tallaSelect,
             costo: item.precio,

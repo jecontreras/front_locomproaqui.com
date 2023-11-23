@@ -149,14 +149,14 @@ export class FormproductosComponent implements OnInit {
   }
 
   getCategorias() {
-    this._categoria.get({ where: { cat_activo: 0, cat_padre: null }, limit: 100 }).subscribe((res: any) => {
+    this._categoria.getAll({ where: { cat_activo: 0, cat_padre: null }, limit: 100 }).subscribe((res: any) => {
       this.listCategorias = res.data;
       this.disableSpinner = false;
     }, error => this._tools.presentToast("error servidor"));
   }
 
   getSubCategorias( id ) {
-    this._categoria.get({ where: { cat_activo: 0, cat_padre: id }, limit: 100 }).subscribe((res: any) => {
+    this._categoria.getAll({ where: { cat_activo: 0, cat_padre: id }, limit: 100 }).subscribe((res: any) => {
       console.log( res );
       this.listSubCategorias = res.data;
       this.disableSpinner = false;

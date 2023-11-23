@@ -712,6 +712,7 @@ li {
   .ulM{
   padding: 2px;
   margin: auto;
+  margin-left: 19%;
   }
 
   .iphone-menu a:hover {
@@ -729,12 +730,12 @@ li {
 
   .iphone-menu li {
       display: inline-block; /* Cambia a elementos de lista en línea */
-      margin: 0 10px;
+      //margin: 0 10px;
   }
 
   .iphone-menu a {
       font-size: 14px; /* Reduce el tamaño de fuente en dispositivos móviles */
-      padding: 8px 16px; /* Reduce el espaciado interior del botón */
+      //padding: 8px 16px; /* Reduce el espaciado interior del botón */
       display: block; /* Hace que los botones ocupen el ancho completo */
       margin: 10px auto; /* Centra verticalmente los botones */
   }

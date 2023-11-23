@@ -203,7 +203,7 @@
                   <ul>
                     <li *ngFor="let item of listCategorias" style="    padding: 10px 15px;" (click)="SeleccionCategoria(item)" [ngClass]="{ 'cambiaColor': item.check }">
                       <input type="checkbox" [(ngModel)]="item.check">
-                      <strong style="    margin-left: 10px;">{{ item.cat_nombre }} </strong>
+                      <strong style="    margin-left: 10px;">{{ item.cat_nombre || item.title }} </strong>
                     </li>
                   </ul>
                 </div>

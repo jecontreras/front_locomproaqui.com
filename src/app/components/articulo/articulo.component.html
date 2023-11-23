@@ -2,9 +2,11 @@
 <div style="padding: 0 1px;">
   <div class="main-content">
     <div class="col-12">
-      <div class="scrollmenu" style="border-radius: 3px;">
+      <div class="scrollmenu contenedor" style="border-radius: 3px;">
         <section class="iphone-menu" style="text-align: center;">
-          <ul class="ulM">
+          <ul class="ulM"
+            [style.margin-left.%]="breakpoint === 6 ? 19 : 1"
+          >
               <li *ngFor="let item of imageObject" [ngClass]="{
                   'checkTrue':item['check'] == true
                 }"
@@ -29,7 +31,7 @@
                       <span *ngIf="item.title !=='TODOS'"> {{ item.title }} </span>
                     </button>
                   </span>
-  
+
                 </a>
               </li>
           </ul>

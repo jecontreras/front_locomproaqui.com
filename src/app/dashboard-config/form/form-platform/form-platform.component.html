@@ -9,9 +9,13 @@
                 <option type="number" value="2">Aprobado</option>
             </select>
         </div>
+        <div class="form-group col-12 col-sm-6" *ngIf="data.user && superSub ">
+          <label>Usuario / Email</label>
+          <p>{{ data.user.usu_usuario }} - {{ data.user.usu_email }} </p>
+      </div>
         <div class="form-group col-12 col-sm-6">
             <label>Plataforma</label>
-            <input type="text"  [(ngModel)]="data.namePlatform" class="form-control form-control-sm" >
+            <input type="text"  [(ngModel)]="data.namePlatform" class="form-control form-control-sm" [disabled]="!superSub">
         </div>
         <div class="form-group col-12 col-sm-6">
             <label>Nombre de la Tienda</label>

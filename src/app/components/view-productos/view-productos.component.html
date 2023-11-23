@@ -189,7 +189,7 @@
           Quitar de mi Tienda
         </button>
       </div>
-      <div>
+      <div *ngIf="data['pro_categoria']">
         <a target="_blank" [routerLink]="[ '/listproduct/categoria', data['pro_categoria'].id ] " style="padding: 2% 50px;" class="btn btn-primary"> ver productos similares </a>
       </div>
       <div *ngIf="(disabledView !== 'store') && (disabledView !== 'createPrice')">
@@ -211,7 +211,7 @@
         Quitar de mi Tienda
       </button>
 
-      <a target="_blank" [routerLink]="[ '/listproduct/categoria', data['pro_categoria'].id ] " class="btn btn-primary m-1"> ver productos similares </a>
+      <a *ngIf="data['pro_categoria']" target="_blank" [routerLink]="[ '/listproduct/categoria', data['pro_categoria'].id ] " class="btn btn-primary m-1"> ver productos similares </a>
 
       <button cdkFocusInitial (click)="AgregarCart(false)" type="button" class="btn btn-primary m-1" *ngIf="(disabledView !== 'store') && (disabledView !== 'createPrice')">
         {{ titleButton }}
