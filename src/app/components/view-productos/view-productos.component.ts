@@ -56,7 +56,7 @@ export class ViewProductosComponent implements OnInit {
   disabledView:string = "normal";
   breakpoint: number;
   trHeight:number = 430;
-
+  listCart = [];
   constructor(
     public dialogRef: MatDialogRef<ViewProductosComponent>,
     @Inject(MAT_DIALOG_DATA) public datas: any,
@@ -75,6 +75,7 @@ export class ViewProductosComponent implements OnInit {
       if (!store) return false;
       this.userId = store.usercabeza;
       this.dataUser = store.user || {};
+      this.listCart = store.cart || [];
       try {
         if (this.dataUser.categoriaPerfil) this.porcentajeUser = this.dataUser.categoriaPerfil.precioPorcentaje;
       } catch (error) {
@@ -260,11 +261,21 @@ export class ViewProductosComponent implements OnInit {
       bodegaName: this.data.pro_usu_creacion.usu_usuario,
       idBodega: this.data.pro_usu_creacion.id
     };
+    if( this.listCart.length >= 1 ) {
+      let validate = this.validateArticleStore( data );
+      if( !validate ) return this._tools.confirm( { title: "Lo sentimos, no podemos agregar este artículo porque son bodegas diferentes", detalle:"Tienes que agregar artículos de la misma bodega para generar las guías", icon:"error", showCancel:false } );
+    }
     let accion = new CartAction(data, 'post');
     this._store.dispatch(accion);
     this._tools.presentToast("Producto agregado al carro");
     this._tools.confirm( { title: "Producto Agregado Al Carrito", icon:"success", showCancel:false } );
     //this.dialog.closeAll();
+  }
+
+  validateArticleStore( item ){
+    let filtro = this.listCart.find( row => row.idBodega === item.idBodega );
+    if( filtro ) return true;
+    return false;
   }
 
   async descargarFoto( item:any ){

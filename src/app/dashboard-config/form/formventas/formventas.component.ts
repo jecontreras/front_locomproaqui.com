@@ -198,7 +198,8 @@ export class FormventasComponent implements OnInit {
         this.listCarrito = _.map(res.data, (item: any) => {
           return {
             foto: item.fotoproducto || item.producto.foto,
-            bodegaName: item.producto.pro_usu_creacion,
+            bodegaName: item.producto.pro_usu_creacion.usu_usuario,
+            idBodega: item.producto.pro_usu_creacion.id,
             cantidad: item.cantidad,
             tallaSelect: item.tallaSelect,
             costo: item.precio,
@@ -734,6 +735,7 @@ export class FormventasComponent implements OnInit {
         "txtDice": this.textData,
         "txtNotas": "ok",
       };
+      if( this.listCarrito[0] ) data.userStore= this.listCarrito[0].idBodega,
 
       this._ventas.getFleteValor( data ).subscribe(( res:any )=>{
         this.tablet.listRow = res.data || [];

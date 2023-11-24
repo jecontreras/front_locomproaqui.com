@@ -716,6 +716,13 @@ export class HeaderComponent implements OnInit {
       },
       {
         icons: 'exit_to_app',
+        nombre: 'Recargar Saldo',
+        disable: ( this.dataUser.id ) || ( this.rolUser == 'administrador' || this.rolUser == 'vendedor' ),
+        url: 'shareTienda()',
+        submenus:[]
+      },
+      {
+        icons: 'exit_to_app',
         nombre: 'Salir',
         disable: this.dataUser.id,
         url: 'salir()',

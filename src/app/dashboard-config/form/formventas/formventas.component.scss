@@ -54,3 +54,21 @@ img{
     color: white;
     padding: 5px;
   }
+
+  .example-card {
+    width: 200px; /* Tamaño fijo del card */
+    height: 650px; /* Ajusta la altura según tus necesidades */
+    display: flex;
+    flex-direction: column;
+  }
+
+  .card-image-container {
+    flex: 1; /* La imagen ocupa todo el espacio vertical disponible */
+    overflow: hidden; /* Para que la imagen no se salga del card */
+  }
+
+  .card-image-container img {
+    width: 100%;
+    height: 245px;
+    object-fit: cover; /* Evita que la imagen se distorsione */
+  }
