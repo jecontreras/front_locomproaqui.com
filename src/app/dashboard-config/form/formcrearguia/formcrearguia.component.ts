@@ -64,7 +64,6 @@ export class FormcrearguiaComponent implements OnInit {
       this.data.pesoVolumen = Math.round( this.data.pesoVolumen );
       console.log( this.data )
       this.dataUser = this.data.usu_clave_int;
-      console.log( this.dataUser )
       this.rellenoData();
     }
   }
@@ -164,6 +163,7 @@ export class FormcrearguiaComponent implements OnInit {
       flteTotal: this.data.fleteValor,
       pesoReal: this.data.pesoReal
     };
+    if( this.data.articulo[0] ) this.data2.idBodega = this.data.articulo[0].idBodega;
   }
 
   submit(){

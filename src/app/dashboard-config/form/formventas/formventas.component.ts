@@ -135,10 +135,12 @@ export class FormventasComponent implements OnInit {
       if( this.data.ven_imagen_guia ) this.viewRotulo( this.data.ven_imagen_guia );
       await this.getArticulos();
       this.data.ciudadDestino = this.data.ciudadDestino;
+      console.log("**INICIA")
       let filtro:any = await this.PrecioContraEntrega();
+      console.log("**ESPERO")
       filtro = _.find( this.tablet.listRow, ( row:any ) => row.slug === this.clone.transportadoraSelect );
       //console.log("MEN", filtro, this.clone, this.data)
-      if( filtro ) if( filtro.slug ) await this.selectTrans( filtro, true );;
+      if( filtro ) if( filtro.slug ) this.selectTrans( filtro, true );
     } else {
       this.id = "";
       this.data.usu_clave_int = this.dataUser.id;
@@ -745,15 +747,6 @@ export class FormventasComponent implements OnInit {
           this.selectTrans( res.data[2] );
         } catch (error) {}
         resolve( true );
-
-
-        //if( this.data.fleteValor == 0 ) { this.data.ven_tipo = "pago_anticipado"; this._tools.confirm( { title: "Novedad", detalle: "Lo sentimos no tenemos Cubrimiento para esa zona (CONTRA ENTREGA)", icon: "warning" } ); return resolve( false ) }
-        /*else {
-          this.data.ven_tipo = "contraentrega";
-          if( this.porcentajeMostrar == 40 ) this._tools.confirm( { title: "Completado", detalle: "El valor del envio para la ciudad "+ this.data.ciudadDestino.name + " es de " + this._tools.monedaChange( 3, 2, this.data.fleteValor ), icon: "succes" } );
-          this.suma();
-          resolve( true );
-        }*/
       },()=>resolve( false ));
     });
   }
@@ -764,127 +757,13 @@ export class FormventasComponent implements OnInit {
     if( this.data.transportadoraSelect === "CORDINADORA" || this.data.transportadoraSelect === "ENVIA" || this.data.transportadoraSelect === "INTERRAPIDISIMO" || this.data.transportadoraSelect === "TCC") {
       this.data.ven_tipo = "contraEntrega";
     }else this.data.ven_tipo = "envioNormal";
-    //console.log( this.tablet.listRow)
     for(let row of this.tablet.listRow ) row.check = false;
     item.check = !item.check;
     this.data.fleteValor = item.fleteTotal;
     this.data.fleteManejo = item.fleteManejo;
     this.data.flteTotal = item.fleteTotal;
-    //console.log("**", this.data)
     this.suma();
-    //if( this.id ) this.submit();
-    return true;
   }
-
-  /*async PrecioContraEntrega(){
-    return new Promise( resolve =>{
-      if( !this.data.ciudadDestino ) { resolve( false ); return false;}
-      if( !this.data.ciudadDestino.code ) { resolve( false ); return false;}
-
-      this.data.pesoVolumen = ( ( parseFloat( this.data.alto ) * parseFloat( this.data.largo ) * parseFloat( this.data.ancho ) ) / 5000 ) || 1;
-      this.data.pesoVolumen = Math.round( this.data.pesoVolumen );
-      for( let row of this.listCarrito ){
-        this.textData+= `${ row.cantidad } ${ row['codigoImg'] } ${ row.tallaSelect },
-        `
-      }
-      let data:any ={
-        "selectEnvio": "contraEntrega",
-        "idCiudadDestino": this.data.ciudadDestino.code,
-        "idCiudadOrigen": "54001000",
-        "valorMercancia": Number( this.data.ven_total ),
-        "fechaRemesa": moment( this.data.fecha ).format( "YYYY-MM-DD" ),
-        "idUniSNegogocio": 1,
-        "numeroUnidad": 1,
-        "pesoReal": 1,
-        "pesoVolumen": this.data.pesoVolumen,
-        "alto": 8,
-        "largo": 28,
-        "ancho": 21,
-        "tipoEmpaque": "",
-        "drpCiudadOrigen": "CUCUTA-NORTE DE SANTANDER",
-        "txtIdentificacionDe": this.dataUser.usu_documento || 1090519754,
-        "txtTelefonoDe": this.dataUser.usu_telefono,
-        "txtDireccionDe": this.dataUser.usu_direccion,
-        "txtCod_Postal_Rem": 540001,
-        "txtEMailRemitente": this.dataUser.usu_email,
-        "txtPara": this.data.ven_nombre_cliente,
-        "txtIdentificacionPara": this.data.cob_num_cedula_cliente,
-        "drpCiudadDestino": this.data.ciudadDestino.name,
-        "txtTelefonoPara": this.data.ven_telefono_cliente,
-        "txtDireccionPara": this.data.ven_direccion_cliente,
-        "txtDice": this.textData,
-        "txtNotas": "ok",
-      };
-
-      this._ventas.getFleteValor( data ).subscribe(( res:any )=>{
-        console.log( "****", res )
-        this.data.fleteValor = res.data.fleteTotal;
-        if( this.data.fleteValor == 0 ) { this.data.ven_tipo = "pago_anticipado"; this._tools.confirm( { title: "Novedad", detalle: "Lo sentimos no tenemos Cubrimiento para esa zona (CONTRA ENTREGA)", icon: "warning" } ); return resolve( false ) }
-        else {
-          this.data.ven_tipo = "contraentrega";
-          if( this.porcentajeMostrar == 40 ) this._tools.confirm( { title: "Completado", detalle: "El valor del envio para la ciudad "+ this.data.ciudadDestino.name + " es de " + this._tools.monedaChange( 3, 2, this.data.fleteValor ), icon: "succes" } );
-          this.suma();
-          resolve( true );
-        }
-      },()=>resolve( false ));
-    });
-  }*/
-
-  /*async PrecioNormal(){
-    return new Promise( resolve =>{
-      if( !this.data.ciudadDestino ) { resolve( false ); return false;}
-      if( !this.data.ciudadDestino.code ) { resolve( false ); return false;}
-
-      this.data.pesoVolumen = ( ( parseFloat( this.data.alto ) * parseFloat( this.data.largo ) * parseFloat( this.data.ancho ) ) / 5000 ) || 1;
-      this.data.pesoVolumen = Math.round( this.data.pesoVolumen );
-      for( let row of this.listCarrito ){
-        this.textData+= `${ row.cantidad } ${ row['codigoImg'] } ${ row.tallaSelect },
-        `
-      }
-      let data:any ={
-        "selectEnvio": "envioNormal",
-        "idCiudadDestino": this.data.ciudadDestino.code,
-        "idCiudadOrigen": "54001000",
-        "valorMercancia": Number( this.data.ven_total ),
-        "fechaRemesa": moment( this.data.fecha ).format( "YYYY-MM-DD" ),
-        "idUniSNegogocio": 1,
-        "numeroUnidad": 1,
-        "pesoReal": 1,
-        "pesoVolumen": this.data.pesoVolumen,
-        "alto": 8,
-        "largo": 28,
-        "ancho": 21,
-        "tipoEmpaque": "",
-        "drpCiudadOrigen": "CUCUTA-NORTE DE SANTANDER",
-        "txtIdentificacionDe": this.dataUser.usu_documento || 1090519754,
-        "txtTelefonoDe": this.dataUser.usu_telefono,
-        "txtDireccionDe": this.dataUser.usu_direccion,
-        "txtCod_Postal_Rem": 540001,
-        "txtEMailRemitente": this.dataUser.usu_email,
-        "txtPara": this.data.ven_nombre_cliente,
-        "txtIdentificacionPara": this.data.cob_num_cedula_cliente,
-        "drpCiudadDestino": this.data.ciudadDestino.name,
-        "txtTelefonoPara": this.data.ven_telefono_cliente,
-        "txtDireccionPara": this.data.ven_direccion_cliente,
-        "txtDice": this.textData,
-        "txtNotas": "ok",
-      };
-
-      this._ventas.getFleteValor( data ).subscribe(( res:any )=>{
-        this.data.fleteValor = res.data.fleteTotal;
-        console.log( "****", res, this.data.fleteValor )
-        if( this.data.fleteValor == 0 ) { this.data.ven_tipo = "pago_anticipado"; this.openMedios(); return resolve( false ) }
-        else{
-          this.data.ven_tipo = "pago_anticipado";
-          //console.log("Hola2222");
-          if( this.porcentajeMostrar == 40 ) this._tools.confirm( { title: "Completado", detalle: "El valor del envio para la ciudad "+ this.data.ciudadDestino.name + " es de " + this._tools.monedaChange( 3, 2, this.data.fleteValor ), icon: "succes" } );
-          this.suma();
-          this.openMedios();
-          resolve( true );
-        }
-      },()=>resolve( false ));
-    });
-  }*/
 
   borrarCart( data:any ){
     if( this.data.id ) return false;
