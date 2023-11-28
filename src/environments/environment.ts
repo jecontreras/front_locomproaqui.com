@@ -12,6 +12,9 @@ export const environment = {
   //urlEnvios: "http://localhost:1338",
   urlEnvios: "https://apienviosrapidos-ce1b900c1c5b.herokuapp.com",
   urlFront: "http://localhost:4200",
+  keyEpayco: "fd1fee1f6f008ddf010440f8c092a2cb",
+  estadoPruebaPagos: true
+
 };
 
 /*

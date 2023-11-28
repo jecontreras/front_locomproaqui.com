@@ -1,0 +1,44 @@
+<h2 mat-dialog-title>{{ titulo }} Categoria</h2>
+<mat-dialog-content class="mat-typography">
+    <div class="form row">
+        <div class="form-group col-12" *ngIf="data.foto">
+            <img [src]="data.foto" style="width: 30%; height: 250px;" alt="">
+        </div>
+        <div class="form-group col-12">
+            <div class="row">
+                <label class="col">Subir Imagen</label>
+                <button class="btn btn-primary btn-just-icon btn-round" (click)="subirFile()" *ngIf="files.length > 0">
+                    Subir Imagen
+                </button>
+            </div>
+
+            <ngx-dropzone (change)="onSelect($event)" accept="image/jpeg,image/jpg,image/png,image/gif">
+                <ngx-dropzone-label>Abrir archivos</ngx-dropzone-label>
+                <ngx-dropzone-image-preview ngProjectAs="ngx-dropzone-preview" *ngFor="let f of files" [file]="f"
+                    [removable]="true" (removed)="onRemove(f)" multiple="false" >
+                    <ngx-dropzone-label>{{ f.name }} ({{ f.type }})</ngx-dropzone-label>
+                </ngx-dropzone-image-preview>
+            </ngx-dropzone>
+        </div>
+        <div class="form-group col-6">
+            <label>Titulo</label>
+            <input type="text" [(ngModel)]="data.titulo" class="form-control form-control-sm">
+        </div>
+        <div class="form-group col-6">
+            <label>Precio</label>
+            <input currencyMask class="form-control form-control-sm" [(ngModel)]="data.precio"
+                            [options]="formatoMoneda" />
+        </div>
+        <div class="form-group col-12">
+            <label>Descripcion</label>
+            <textarea class="form-control" [(ngModel)]="data.descripcion" rows="3"></textarea>
+        </div>
+    </div>
+</mat-dialog-content>
+<mat-dialog-actions align="end">
+  <button mat-button mat-dialog-close>Cerrar</button>
+  <button mat-button cdkFocusInitial (click)="submit()">
+      <span *ngIf="!id">Guardar Cambios</span>
+      <span *ngIf="id">Actulizar Cambios</span>
+  </button>
+</mat-dialog-actions>

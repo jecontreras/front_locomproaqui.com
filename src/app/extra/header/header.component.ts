@@ -419,6 +419,7 @@ export class HeaderComponent implements OnInit {
     if( obj.url == 'salir()' ) this.salir();
     if( obj.url == 'shareTienda()' ) this.shareTienda();
     if( obj.url == 'ayuda()' ) window.open("https://www.youtube.com/channel/UCVrLNcx0H2COUCBfSWcYI8g/featured");
+    if( obj.url == 'handleRechargeNalance()' ) this.handleRechargeNalance();
   }
 
   btnCarrito(){
@@ -658,6 +659,11 @@ export class HeaderComponent implements OnInit {
           },
           {
             icons: 'settings',
+            nombre: 'Paquetes disponibles',
+            url: '/config/adminF/recharge',
+          },
+          {
+            icons: 'settings',
             nombre: 'Configuracion',
             url: '/config/configuracion',
           },
@@ -718,7 +724,7 @@ export class HeaderComponent implements OnInit {
         icons: 'exit_to_app',
         nombre: 'Recargar Saldo',
         disable: ( this.dataUser.id ) || ( this.rolUser == 'administrador' || this.rolUser == 'vendedor' ),
-        url: 'shareTienda()',
+        url: 'handleRechargeNalance()',
         submenus:[]
       },
       {
@@ -832,6 +838,11 @@ export class HeaderComponent implements OnInit {
     dialogRef.afterClosed().subscribe(result => {
       console.log(`Dialog result: ${result}`);
     });*/
+  }
+
+  handleRechargeNalance(){
+    console.log("***838")
+    this.router.navigate(["/config/recharge"]);
   }
 
   getAlert(){

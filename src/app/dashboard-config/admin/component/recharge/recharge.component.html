@@ -9,7 +9,7 @@
               <div class="card-icon">
                 <i class="material-icons">assignment</i>
               </div>
-              <h4 class="card-title">Categorias</h4>
+              <h4 class="card-title">lista de paquetes</h4>
             </div>
             <div class="card-body">
               <div class="toolbar">
@@ -24,7 +24,7 @@
               <div id="datatables_filter" class="dataTables_filter row">
                 <label class="form-group col">
                   <input [(ngModel)]="datoBusqueda" (change)="buscar()" type="search" class="form-control form-control-sm"
-                    placeholder="Buscar Retiros" aria-controls="datatables"></label>
+                    placeholder="Buscar" aria-controls="datatables"></label>
                 <div>
                     <button (click)="buscar()" [disabled]="loader" mat-raised-button mat-min-fab
                         class="btn btn-primary btn-just-icon btn-round">
@@ -61,13 +61,12 @@
                         </button>
                       </td>
                       <td>
-                        <img [src]="row['cat_imagen']" class="foto">
+                        <img [src]="row['foto']" class="foto">
                       </td>
-                      <td>{{row['cat_nombre']}}</td>
-                      <td>{{row['cat_descripcion']}}</td>
-                      <td>{{row['cat_padre']?.cat_nombre}}</td>
-                      <td>{{ row['cat_activo'] == 0 ? 'Activo' : 'Eliminado' }}</td>
-
+                      <td>{{row['titulo']}}</td>
+                      <td>{{row['descripcion']}}</td>
+                      <td>{{ row['estado'] == 0 ? 'Activo' : 'Eliminado' }}</td>
+                      <td>{{ row.createdAt | date:'medium' }}</td>
                     </tr>
                   </tbody>
                 </table>

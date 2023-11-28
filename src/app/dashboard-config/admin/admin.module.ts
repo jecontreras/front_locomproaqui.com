@@ -11,6 +11,9 @@ import { MainConfigRoutingModule } from './main-routing.module';
 import { FormPaymentDetailComponent } from './form/form-payment-detail/form-payment-detail.component';
 import { AutocompleteLibModule } from 'angular-ng-autocomplete';
 import { StateGuideComponent } from './component/state-guide/state-guide.component';
+import { RechargeComponent } from './component/recharge/recharge.component';
+import { FormRechargeComponent } from './form/form-recharge/form-recharge.component';
+import { NgxDropzoneModule } from 'ngx-dropzone';
 
 
 
@@ -22,7 +25,9 @@ import { StateGuideComponent } from './component/state-guide/state-guide.compone
     MainComponent,
     VendorPaymentsComponent,
     FormPaymentDetailComponent,
-    StateGuideComponent
+    StateGuideComponent,
+    RechargeComponent,
+    FormRechargeComponent
   ],
   imports: [
     CommonModule,
@@ -33,6 +38,7 @@ import { StateGuideComponent } from './component/state-guide/state-guide.compone
     MyOwnCustomMaterialModule,
     InfiniteScrollModule,
     NgxCurrencyModule,
+    NgxDropzoneModule
   ]
 })
 export class AdminModule { }

@@ -66,6 +66,7 @@ import { ListSizeComponent } from './components/list-size/list-size.component';
 import { FormListSizeComponent } from './form/form-list-size/form-list-size.component';
 import { ListPlatformComponent } from './components/list-platform/list-platform.component';
 import { FormPlatformComponent } from './form/form-platform/form-platform.component';
+import { RechargeComponent } from './components/recharge/recharge.component';
 
 @NgModule({
   entryComponents: [
@@ -132,7 +133,8 @@ import { FormPlatformComponent } from './form/form-platform/form-platform.compon
     ListSizeComponent,
     FormListSizeComponent,
     ListPlatformComponent,
-    FormPlatformComponent
+    FormPlatformComponent,
+    RechargeComponent
   ],
   imports: [
     CommonModule,

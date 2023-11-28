@@ -27,6 +27,7 @@ import { CursosComponent } from './components/cursos/cursos.component';
 import { VentasClienteComponent } from './components/ventas-cliente/ventas-cliente.component';
 import { ListSizeComponent } from './components/list-size/list-size.component';
 import { ListPlatformComponent } from './components/list-platform/list-platform.component';
+import { RechargeComponent } from './components/recharge/recharge.component';
 
 const dashboardRoutes: Routes = [
  {
@@ -59,6 +60,7 @@ const dashboardRoutes: Routes = [
      {path: 'listaTalla', component: ListSizeComponent},
      {path: 'listaPlatform', component: ListPlatformComponent },
      {path: 'ventasPosibles', component: VentasClienteComponent },
+     {path: 'recharge', component: RechargeComponent },
      {
         path: 'store',
         children: [{
