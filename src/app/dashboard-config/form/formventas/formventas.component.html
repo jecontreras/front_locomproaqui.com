@@ -8,13 +8,6 @@
         </div>
     </div>
     <div class="form row" *ngIf="!disableSpinner">
-        <!-- <div class="form-group col-md-6 col-sm-4 col-lg-4 col-xs-6">
-            <label for="exampleFormControlSelect1">Tipo de Venta</label>
-            <select class="form-control form-control-sm" [(ngModel)]="data.ven_tipo">
-                <option value="carrito">Carrito</option>
-                <option value="whatsapp">Whatsapp</option>
-            </select>
-        </div> -->
         <div class="form-group col-md-6 col-sm-4 col-lg-4 col-xs-6" *ngIf="data.id">
             <label for="exampleFormControlSelect1">Estado de la Venta</label>
             <select class="form-control form-control-sm" [(ngModel)]="data.ven_estado" (change)="submit()">
@@ -68,20 +61,14 @@
             <label for="exampleFormControlInput1">Numero de llamada cliente o whatsapp</label>
             <input type="text" [(ngModel)]="data.ven_telefono_cliente" class="form-control form-control-sm" required [disabled]="coinShop">
         </div>
-        <!--<div class="form-group col-md-6 col-sm-4 col-lg-4 col-xs-6">
-            <label for="exampleFormControlInput1">Ciudad del Cliente</label>
-            <input type="text" [(ngModel)]="data.ven_ciudad" class="form-control form-control-sm">
-        </div>-->
         <div class="form-group col-xs-5 col-sm-5 col-12">
             <label>Ciudad Destino *</label>
-            <!-- <input type="text" class="form-control form-control-sm" [(ngModel)]="data.ciudadDestino"> -->
             <ng-autocomplete [(ngModel)]="data.ciudadDestino" [data]="listCiudades" [searchKeyword]="keyword" placeHolder="Buscar Ciudad" autocomplete="off"
                 historyIdentifier="listCiudades" [itemTemplate]="itemTemplate" [notFoundTemplate]="notFoundTemplate" (selected)='precioRutulo($event)' (inputChanged)='onChangeSearch($event)'>
             </ng-autocomplete>
 
             <ng-template #itemTemplate let-item>
                 <div class="item">
-                    <!-- <img src="{{item.flag}}" height="25"> -->
                     <span [innerHTML]="item.city"></span> &nbsp; | &nbsp;
                     <small>Departamento: {{ item.state }}</small> &nbsp; | &nbsp;
                     <small>--: {{ item.name }}</small>
@@ -91,9 +78,6 @@
             <ng-template #notFoundTemplate let-notFound>
                 <div [innerHTML]="notFound"></div>
             </ng-template>
-            <!--<div>
-                <button type="button" class="btn btn-warning" (click)="precioRutulo( false )"> Consultar Valor del Flete </button>
-            </div>-->
         </div>
         <div class="form-group col-md-6 col-sm-4 col-lg-4 col-xs-6">
             <label for="exampleFormControlInput1">Barrio del Cliente</label>
@@ -137,11 +121,8 @@
                                 <td>{{ item.origenDestino }}</td>
                                 <td>{{ item.unida }}</td>
                                 <td>{{ item.totalKilos }}</td>
-                                <!--<td>{{ item.kilosVol }}</td>-->
                                 <td>{{ _tools.monedaChange( 3, 2, ( item.valoracion || 0 ) ) }}</td>
-                                <!--<td>{{ item.tray }}</td>-->
                                 <td>{{ _tools.monedaChange( 3, 2, ( item.fleteSin || 0 ) ) }}</td>
-                                <!--<td>{{ item.fleteManejoSin }}</td>-->
                                 <td>{{ _tools.monedaChange( 3, 2, ( item.fleteValor || 0 ) ) }}</td>
                                 <td>{{ _tools.monedaChange( 3, 2, ( item.fleteTotal || 0 ) ) }}</td>
                                 <td>{{ item.tiempoEstimado }}</td>
@@ -161,14 +142,6 @@
                         <div class="spinner-grow text-dark" role="status"><span class="sr-only">Loading...</span></div>
                     </div>
                 </div>
-
-                <!-- <div class="col-12" *ngIf="!progreses && tablet.listRow.length == 0">
-                    <div class="d-flex justify-content-center row">
-                        <div role="alert" class="alert alert-primary">
-                            No Hay Datos Para Mostrar
-                        </div>
-                    </div>
-                </div> -->
                 <div class="col-12" *ngIf="errorCotisa">
                     <div class="d-flex justify-content-center row">
                         <h5 class="text-danger">{{ errorCotisa }}</h5>
@@ -254,13 +227,6 @@
                 </div>
             </div>
             <div class="form-group col-12">
-                <!--<div class="row">
-                    <div class="col"></div>
-                    <button class="btn btn-primary btn-just-icon btn-round" (click)="subirFile( 'ven_imagen_conversacion' )"
-                        *ngIf="files.length > 0">
-                        Subir Foto de Evidencia
-                    </button>
-                </div>-->
                 <ngx-dropzone (change)="onSelect($event)" accept="image/jpeg,image/jpg,image/png,image/gif"  multiple="false">
                     <ngx-dropzone-label>Subir foto de Evidencia</ngx-dropzone-label>
                     <ngx-dropzone-image-preview ngProjectAs="ngx-dropzone-preview" *ngFor="let f of files" [file]="f"
@@ -319,44 +285,13 @@
             </mat-card>
           </div>
         </div>
-        <!-- <div class="form-group col-md-6 col-sm-4 col-lg-4 col-xs-6"
-            *ngIf="( data.ven_tipo == 'whatsapp' || data.ven_tipo == 'WHATSAPP' )">
-            <label for="exampleFormControlInput1">Vr.Unidad:</label>
-            <input currencyMask [(ngModel)]="data.ven_precio" class="form-control form-control-sm" [options]="opcionCurrencys" (ngModelChange)="suma()"/>
-        </div> -->
-        <!-- <div class="form-group col-md-6 col-sm-4 col-lg-4 col-xs-6"
-            *ngIf="( data.ven_tipo == 'carrito' || data.ven_tipo == 'CARRITO' )">
-            <label for="exampleFormControlInput1">Vr.Unidad: </label>
-            <span>$ {{ ( data.ven_precio || 0 ).toLocaleString(1) }} COP</span>
-        </div> -->
         <div class="form-group col-12" *ngIf="data.id && superSub && data.ven_imagen_guia && data.transportadoraSelect == 'ENVIA'">
             <button type="button" class="btn btn-warning" (click)="imprimirGuia()">Imprimir Guia </button>
             <iframe style="width: 100%; height: -webkit-fill-available;" [src]="url" frameborder="0" width="1499"
                 height="561" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
                 allowfullscreen>
             </iframe>
-            <!--<div class="mx-auto" style="width: 200px;">
-                <a [href]="data.ven_imagen_guia" target="_blank">
-                    <img [src]="data.ven_imagen_guia" class="imgFoto">
-                </a>
-            </div>-->
         </div>
-        <!--<div class="form-group col-md-6 col-sm-4 col-lg-4 col-xs-6" *ngIf="data.id && superSub && data.ven_estado == 3">
-            <div class="row">
-                <div class="col"></div>
-                <button class="btn btn-primary btn-just-icon btn-round" (click)="subirFileGuias()"
-                    *ngIf="filesGuias.length > 0">
-                    Subir Foto Guia
-                </button>
-            </div>
-            <ngx-dropzone (change)="onSelectGuias($event)">
-                <ngx-dropzone-label>Subir foto de la guía</ngx-dropzone-label>
-                <ngx-dropzone-image-preview ngProjectAs="ngx-dropzone-preview" *ngFor="let f of filesGuias" [file]="f"
-                    [removable]="true" (removed)="onRemoveGuias(f)" multiple="false">
-                    <ngx-dropzone-label>{{ f.name }} ({{ f.type }})</ngx-dropzone-label>
-                </ngx-dropzone-image-preview>
-            </ngx-dropzone>
-        </div>-->
         <div class="form-group col-12">
             <label for="exampleFormControlInput1">Observación</label>
             <textarea class="form-control" [(ngModel)]="data.ven_observacion" id="exampleFormControlTextarea1"
@@ -398,7 +333,4 @@
         <span *ngIf="!id">Subir tu orden</span>
         <span *ngIf="id">Actulizar Cambios</span>
     </button>
-    <!-- <button mat-button (click)="OrdenValidadWhatsapp( data )" *ngIf="data.id && superSub && data.ven_estado == 3">
-        <span>Enviar Guia Whatsapp</span>
-    </button> -->
 </mat-dialog-actions>

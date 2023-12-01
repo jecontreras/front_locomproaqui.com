@@ -43,10 +43,11 @@ export class TableProductComponent implements OnInit {
       },
       page: 0,
       sort: 'createdAt DESC',
-      limit: 10
+      limit: 30
     }
   };
 
+  disabledBtn:boolean = false;
   $:any;
   public datoBusqueda = '';
   notscrolly:boolean=true;
@@ -71,9 +72,9 @@ export class TableProductComponent implements OnInit {
       store = store.name;
       if( !store ) return false;
       this.dataUser = store.user || {};
+      try { this.disabledBtn = this.dataUser.estado === 0 ? true : false; } catch (error) { }
       try {
         this.rolName =  this.dataUser.usu_perfil.prf_descripcion;
-        console.log("***72", this.rolName)
       } catch (error) {}
     });
   }
@@ -82,20 +83,11 @@ export class TableProductComponent implements OnInit {
     //this._dataConfig.query.where.pro_usu_creacion = this.dataUser.id;
     this.cargarTodos();
     this.listSeller = await this.getSeller();
-    console.log( this._dataConfig )
   }
 
   async handleCreate(){
+    if( this.disabledBtn === false ) return this._tools.error( { mensaje: "¡Lo sentimos no puedes crear artículos por favor completar perfil!", footer: `<a target="_blank" href="${ window.location.origin }/config/perfil" >Completar Cuenta</a>` })
     return this.crearAnt(false);
-    /*
-    let validate = await this._tools.confirm( {
-        title: "Versiones nuevas",
-        detalle: "",
-        confir: "Version nueva",
-        cancel: "Version anterior"
-      } );
-    if( validate.value ) this.crear(false);
-    else this.crearAnt(false);*/
   }
 
   crear(obj:any){
@@ -180,7 +172,6 @@ export class TableProductComponent implements OnInit {
     this._productos.get( this._dataConfig.query )
     .subscribe(
       (response: any) => {
-        console.log(response);
         this.counts = response.count;
         this._dataConfig.tablet.dataTable.headerRow = this._dataConfig.headerRow;
         this._dataConfig.tablet.dataTable.footerRow = this._dataConfig.tablet.dataTable.footerRow;
@@ -209,7 +200,7 @@ export class TableProductComponent implements OnInit {
             if( item.cantidad && item.check ) row['cantidadTallas']+= Number( item.cantidad || 0 );
           }
         }
-      } catch (error) { console.error("ERROR", error )}
+      } catch (error) { console.error("ERROR Controlado", error )}
     }
   }
 

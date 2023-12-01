@@ -2,6 +2,13 @@
 <mat-dialog-content class="mat-typography">
     <div class="form row">
         <div class="form-group col-md-6 col-sm-4 col-lg-4 col-xs-6">
+            <label for="exampleFormControlSelect1">Tipo de Documento</label>
+            <select class="form-control form-control-sm" [(ngModel)]="data.estado">
+                <option value="0">Activo</option>
+                <option value="1">Inactivos</option>
+            </select>
+        </div>
+        <div class="form-group col-md-6 col-sm-4 col-lg-4 col-xs-6">
             <label for="exampleFormControlInput1">Username / avatar</label>
             <input type="text" [(ngModel)]="data.usu_usuario" class="form-control form-control-sm">
         </div>
@@ -59,6 +66,98 @@
                 <option *ngFor="let item of listNivel" [value]="item.id">{{ item.categoria }}</option>
             </select>
         </div>
+        <div class="form-group col-12">
+            <h2>Informacion de la bodega extras</h2>
+        </div>
+        <div class="form-group col-12">
+            <div class="row">
+                <div class="col-12 col-sm-6">
+                    <label for="exampleFormControlInput1">Nombre de tu bodega</label>
+                    <input type="text" [(ngModel)]="data.usu_usuario"
+                        class="form-control form-control-sm">
+                </div>
+                <div class="col-12 col-sm-6">
+                    <label for="exampleFormControlInput1">Numero contacto de soporte</label>
+                    <input type="number" [(ngModel)]="data.usu_telefono"
+                        class="form-control form-control-sm">
+                </div>
+                <div class="col-12 col-sm-6">
+                    <label for="exampleFormControlInput1">Correo electrónico soporte</label>
+                    <input type="email" [(ngModel)]="data.usu_email"
+                        class="form-control form-control-sm">
+                </div>
+                <div>
+                    Ciudad: {{ data.usu_ciudad }}
+                </div>
+                <div class="col-12 col-sm-6">
+                    <label for="exampleFormControlInput1">Dirección de bodega para mensajeria</label>
+                    <input type="text" [(ngModel)]="data.usu_direccion"
+                        class="form-control form-control-sm">
+                </div>
+                <div class="col-12 col-sm-6">
+                    <label for="exampleFormControlInput1">Tipo de Proveedor?</label>
+                    <select class="form-control form-control-sm" [(ngModel)]="data.tipeUser" required>
+                        <option value="1">
+                          Fabricante
+                        </option>
+                        <option value="2">
+                          Importador
+                        </option>
+                    </select>
+                </div>
+                <div class="col-12 col-sm-3">
+                    <label for="exampleFormControlInput1">Tiempo de Experiencia como Proveedor Dropshipping?</label>
+                    <select class="form-control form-control-sm" [(ngModel)]="data.tiempoVendiendo" required>
+                        <option value="0">
+                          0 a 6 Meses
+                        </option>
+                        <option value="1">
+                          6 Meses a 1 Año
+                        </option>
+                        <option value="1">
+                          Más de un Año
+                        </option>
+                    </select>
+                </div>
+                <div class="col-12 col-sm-3">
+                    <label for="exampleFormControlSelect1">¿Estás vinculado alguna plataforma de dropshipping?</label>
+                    <select class="form-control" [(ngModel)]="data.pagasPublicidad">
+                        <option value="si">SI</option>
+                        <option value="no">NO</option>
+                    </select>
+                </div>
+                <div class="col-12">
+                    <h3>Lista de Categorias</h3>
+                </div>
+                <div class="col-12 col-sm-6">
+                    <ul class="list-group">
+                        <li class="list-group-item" *ngFor="let item of listCategoryUser">
+                            {{ item['categoria']?.cat_nombre }}
+                        </li>
+                    </ul>
+                </div>
+                <div class="col-12">
+                  <span>
+                    <h3>Ver Foto del Rut</h3>
+                    <button (click)="openFile(data.pdfRut)" *ngIf="data.pdfRut" class="btn btn-primary btn-just-icon btn-round">
+                        <i class="material-icons">remove_red_eye</i>
+                    </button>
+                  </span>
+                  <span>
+                    <h3>Ver Foto dela Cedula</h3>
+                    <button (click)="openFile(data.pdfCc)" *ngIf="data.pdfCc" class="btn btn-primary btn-just-icon btn-round">
+                        <i class="material-icons">remove_red_eye</i>
+                    </button>
+                  </span>
+                  <span>
+                    <h3>Ver Foto del comercio</h3>
+                    <button (click)="openFile(data.pdfCComercio)" *ngIf="data.pdfCComercio" class="btn btn-primary btn-just-icon btn-round">
+                        <i class="material-icons">remove_red_eye</i>
+                    </button>
+                  </span>
+                </div>
+            </div>
+        </div>
         <div class="form-group col-12" *ngIf="id">
             <div class="p-3 mb-2 bg-info text-white">
                 Cambiar Password
@@ -76,21 +175,6 @@
                 </button>
             </div>
         </div>
-        <!-- <div class="form-group col-12">
-            <ngx-dropzone (change)="onSelect($event)">
-                <ngx-dropzone-label>Abrir archivos</ngx-dropzone-label>
-                <ngx-dropzone-image-preview ngProjectAs="ngx-dropzone-preview" *ngFor="let f of files"
-                    [file]="f" [removable]="true" (removed)="onRemove(f)" multiple="false">
-                    <ngx-dropzone-label>{{ f.name }} ({{ f.type }})</ngx-dropzone-label>
-                </ngx-dropzone-image-preview>
-            </ngx-dropzone>
-        </div> -->
-        <!-- <div class="form-group col-12">
-            <input class="form-check-input" type="radio" name="exampleRadios" [(ngModel)]="data.prv_activo">
-            <label class="form-check-label" for="exampleRadios2">
-                Activo
-            </label>
-        </div> -->
     </div>
 </mat-dialog-content>
 <mat-dialog-actions align="end">

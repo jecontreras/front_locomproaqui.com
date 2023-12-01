@@ -157,7 +157,6 @@ export class FormproductosComponent implements OnInit {
 
   getSubCategorias( id ) {
     this._categoria.getAll({ where: { cat_activo: 0, cat_padre: id }, limit: 100 }).subscribe((res: any) => {
-      console.log( res );
       this.listSubCategorias = res.data;
       this.disableSpinner = false;
     }, error => this._tools.presentToast("error servidor"));
@@ -171,7 +170,6 @@ export class FormproductosComponent implements OnInit {
   }
 
   async onSelect( event: any, item:any ) {
-    console.log(event, this.files);
     this.files = [ event.addedFiles[0] ];
     setTimeout( async ()=>{
       await this.subirFile( item, 'fotoColor' );
@@ -211,24 +209,23 @@ export class FormproductosComponent implements OnInit {
 
   fileChangeEvent(event: any): void {
     this.imageChangedEvent = event;
-    console.log(this.imageChangedEvent)
   }
   imageCropped(event: any) {
     this.croppedImage = event.base64;
-    console.log(event);
+    //console.log(event);
     //this.subirFile('usu_imagen');
   }
   imageLoaded(image: HTMLImageElement) {
     // show cropper
-    console.log(image)
+    //console.log(image)
   }
   cropperReady(event: any) {
     // cropper ready
-    console.log(event)
+    //console.log(event)
   }
   loadImageFailed(event: any) {
     // show message
-    console.log(event)
+    //console.log(event)
   }
 
 
@@ -269,7 +266,6 @@ export class FormproductosComponent implements OnInit {
           this.submit();
         }
         this._tools.presentToast("Exitoso");
-        console.log(item);
         resolve( true );
       }, (error) => { console.error(error); this._tools.presentToast("Error de servidor"); resolve( false ); });
     } );
@@ -288,7 +284,6 @@ export class FormproductosComponent implements OnInit {
   EliminarFoto( item:any, key:any = {} ){
     this.data.listaGaleria = this.listFotos.filter( ( row:any )=> row.id != item.id );
     this.listFotos = this.listFotos.filter( ( row:any )=> row.id != item.id );
-    console.log( item, this.data  );
     if( key.galeriaList ) if( key.galeriaList.length ) key.galeriaList = key.galeriaList.filter( ( row:any )=> row.id != item.id );
     this.updates();
   }
@@ -336,6 +331,45 @@ export class FormproductosComponent implements OnInit {
     }
   }
 
+  handleActivate(){
+    let validate = this.validateProduct();
+    if( !validate ) return false;
+    let data = {
+      id: this.id,
+      pro_activo: 0
+    };
+    this._productos.updateState( data ).subscribe(res =>{
+      this._tools.confirm({ title: "¡Producto Activado ya tus Vendedores pueden ver el producto!" } );
+      this.dialog.closeAll();
+    })
+  }
+
+  validateProduct(){
+    if( !this.data.pro_nombre ) return this._tools.error( { mensaje: "Problemas Nombre del Producto", footer: 'Falta agregar Detalle del campo' } );
+    if( !this.data.pro_categoria ) return this._tools.error( { mensaje: "Problemas Categoria del Producto", footer: 'Falta agregar Detalle del campo' } );
+    if( !this.data.pro_sub_categoria ) return this._tools.error( { mensaje: "Problemas Subcategoria del Producto", footer: 'Falta agregar Detalle del campo' } );
+    if( !this.data.pro_vendedor ) return this._tools.error( { mensaje: "Problemas Precio de Vendedor del Producto", footer: 'Falta agregar Detalle del campo' } );
+    if( !this.data.pro_uni_venta ) return this._tools.error( { mensaje: "Problemas Precio de Cliente final del Producto", footer: 'Falta agregar Detalle del campo' } );
+    if( !this.data.pro_sw_tallas ) return this._tools.error( { mensaje: "Problemas Talla del Producto", footer: 'Falta agregar Detalle del campo' } );
+    if( this.listColor.length === 0 ) return this._tools.error( { mensaje: "Problemas Colores del Producto", footer: 'Falta agregar Detalle del campo' } );
+    if( this.listColor.length ){
+      let error = 0;
+      for( let row of this.listColor ){
+        if( !row.talla ) error++;
+        if( !row.id ) error++;
+        if( !row.foto ) error++;
+        for( let item of row.tallaSelect ) if( item.check ) if( !item.cantidad ) error++;
+        let filtro = row.tallaSelect.find( off => off.check === true );
+        if( !filtro ) error++;
+      }
+      if( error > 0 ) return this._tools.error( { mensaje: "Problemas En los detalles de colores Llenar completo", footer: 'Falta agregar Detalle del campo' } );
+    }
+    if( !this.data.pro_descripcion ) return this._tools.error( { mensaje: "Problemas Descripcion del Producto", footer: 'Falta agregar Detalle del campo' } );
+    if( !this.data.foto ) return this._tools.error( { mensaje: "Problemas Foto del Producto", footer: 'Falta agregar Detalle del campo' } );
+
+    return true;
+  }
+
   guardarPrecios(item: any, opt:string) {
     item.check = true;
     if( opt == 'vendedor'){
@@ -378,7 +412,6 @@ export class FormproductosComponent implements OnInit {
     this.data = _.omit(this.data, [ 'pro_usu_creacion', 'todoArmare' ])
     this.data = _.omitBy(this.data, _.isNull);
     if( this.rolUser == 'administrador' ) this.data.pro_activo = 0;
-    console.log("error", this.data, this._productos )
     this._productos.update(this.data).subscribe((res: any) => {
       this._tools.presentToast("Actualizado");
       this.updateCache();
@@ -386,7 +419,6 @@ export class FormproductosComponent implements OnInit {
       this.data = res;
       if( this.data.pro_sw_tallas ) this.data.pro_sw_tallas = this.data.pro_sw_tallas.id;
       if ( this.data.pro_sub_categoria ) this.data.pro_sub_categoria = this.data.pro_sub_categoria.id;
-      console.log( this.data )
       this.procesoEdision();
     }, (error) => { console.error(error); this._tools.presentToast("Error de servidor") });
   }
@@ -397,7 +429,6 @@ export class FormproductosComponent implements OnInit {
   }
 
   updateCache(){
-    console.log("***UPDATE CACHE1")
     this._productos.updateCache({}).subscribe( res => {} );
   }
 
@@ -493,7 +524,6 @@ export class FormproductosComponent implements OnInit {
   }
 
   blurTalla(opt:number = 1) {
-    console.log("****",this.data)
     let filtro = this.listTipoTallas.find(t => t.id == this.data.pro_sw_tallas);
     if (!filtro)
       return !1;
@@ -592,7 +622,6 @@ export class FormproductosComponent implements OnInit {
     if( filtro ) if( filtro.length > 0 ) return false;
     // Add our fruit
     for( let row of this.data.listaTallas ) listas.push( { tal_descripcion: row.tal_descripcion, id: row.id, tal_sw_activo: row.tal_sw_activo } );
-    console.log( listas );
     if (value) {
       let data:any = {
         talla: value,
@@ -604,7 +633,6 @@ export class FormproductosComponent implements OnInit {
       data.tallaSelect.push( ... _.clone( listas ) );
       this.listColor.push( data );
     }
-    console.log( event )
     event.value = "";
     if (input) {
       input.value = '';

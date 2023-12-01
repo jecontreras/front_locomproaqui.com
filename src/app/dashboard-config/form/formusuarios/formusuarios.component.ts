@@ -5,6 +5,8 @@ import { ToolsService } from 'src/app/services/tools.service';
 import { MatDialogRef, MAT_DIALOG_DATA, MatDialog } from '@angular/material';
 import * as _ from 'lodash';
 import { FormempresaComponent } from '../formempresa/formempresa.component';
+import { CategoriasService } from 'src/app/servicesComponents/categorias.service';
+import { OpenIframeComponent } from 'src/app/extra/open-iframe/open-iframe.component';
 
 @Component({
   selector: 'app-formusuarios',
@@ -23,17 +25,19 @@ export class FormusuariosComponent implements OnInit {
   opcionCurrencys:any = {};
   listNivel:any = [];
   rolName:string = "";
+  listCategoryUser:any = [];
 
   constructor(
     public dialog: MatDialog,
     private _usuarios: UsuariosService,
     private _perfil: PerfilService,
     private _tools: ToolsService,
+    private _categorias: CategoriasService,
     public dialogRef: MatDialogRef<FormusuariosComponent>,
     @Inject(MAT_DIALOG_DATA) public datas: any
   ) { }
 
-  ngOnInit() {
+  async ngOnInit() {
     this.opcionCurrencys = this._tools.currency;
     if(Object.keys(this.datas.datos).length > 0) {
       this.data = _.clone(this.datas.datos);
@@ -49,6 +53,7 @@ export class FormusuariosComponent implements OnInit {
     }else{this.id = ""}
     this.getPerfil();
     this.getNivel();
+    this.listCategoryUser = await this.getUserCategory();
   }
   
   onSelect(event:any) {
@@ -67,13 +72,26 @@ export class FormusuariosComponent implements OnInit {
     });
   }
 
+  openFile( urlText ){
+    const dialogRef = this.dialog.open(OpenIframeComponent,{
+      data: {
+        url: urlText
+      },
+      // height:  '550px',
+      width: '100%',
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      console.log(`Dialog result: ${result}`);
+    });
+  }
+
   getPerfil(){
     this._perfil.get({ where: {} }).subscribe((res:any)=> this.listPerfil = res.data );
   }
 
   submit(){
-    if(this.data.cat_activo) this.data.cat_activo = 0;
-    else this.data.cat_activo = 1;
+    this.data.estado = Number( this.data.estado );
     if(this.id) this.updates();
     else this.guardar();
   }
@@ -112,6 +130,14 @@ export class FormusuariosComponent implements OnInit {
       if( result ) if( result.id ) { this.data.empresa = result.id; this.updates(); }
       
     });
+  }
+
+  async getUserCategory(){
+    return new Promise( resolve =>{
+      this._categorias.getUser( { where:{ cat_usu: this.data.id, cat_activo:0 }, limit: 10000 } ).subscribe( res => {
+        resolve( res.data || [] );
+      });
+    })
   }
 
 }

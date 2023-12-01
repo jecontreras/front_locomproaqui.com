@@ -96,6 +96,13 @@
                 </tbody>
               </table>
             </div>
+            <div class="col-12">
+              <div class="d-flex flex-row-reverse bd-highlight">
+                <mat-paginator [length]="count" [pageSizeOptions]="[10, 25, 100]"
+                    (page)="pageEvent($event)">
+                </mat-paginator>
+              </div>
+            </div>
           </div>
         </div>
       </div>

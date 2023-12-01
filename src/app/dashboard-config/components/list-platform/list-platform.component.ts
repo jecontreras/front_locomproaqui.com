@@ -43,6 +43,7 @@ export class ListPlatformComponent implements OnInit {
   txtCiudad:any = {};
   dataUser:any = {};
   rolName:string;
+  count:number = 0;
 
   constructor(
     private _platform: PlatformService,
@@ -109,7 +110,11 @@ export class ListPlatformComponent implements OnInit {
     },(error)=>{console.error(error); this._tools.presentToast("Error de servidor") })
   }
 
-
+  pageEvent(ev: any) {
+    this.query.page = ev.pageIndex;
+    this.query.limit = ev.pageSize;
+    this.cargarTodos();
+  }
 
 
   cargarTodos() {
@@ -117,6 +122,7 @@ export class ListPlatformComponent implements OnInit {
     this._platform.get(this.query)
     .subscribe(
       (response: any) => {
+        this.count = response.count || 0;
         this.dataTable = {
           headerRow: this.Header,
           footerRow: this.Header,

@@ -19,6 +19,8 @@ import { DANEGROUP } from 'src/app/JSON/dane-nogroup';
 import { FormcrearguiaComponent } from '../formcrearguia/formcrearguia.component';
 import { MediosPagosComponent } from 'src/app/extra/medios-pagos/medios-pagos.component';
 import { FormListArticleComponent } from '../form-list-article/form-list-article.component';
+import { RechargeService } from 'src/app/servicesComponents/recharge.service';
+import { HistorySettlementFletesService } from 'src/app/servicesComponents/history-settlement-fletes.service';
 
 const URL = environment.url;
 
@@ -85,7 +87,9 @@ export class FormventasComponent implements OnInit {
     private _archivos: ArchivosService,
     private _store: Store<STORAGES>,
     private _tallas: TipoTallasService,
-    private _ventasProducto: VentasProductosService
+    private _ventasProducto: VentasProductosService,
+    private _recharge: RechargeService,
+    private _historySettlementFletes: HistorySettlementFletesService
   ) {
     this.opcionCurrencys = this._tools.currency;
     this._store.subscribe((store: any) => {
@@ -135,9 +139,8 @@ export class FormventasComponent implements OnInit {
       if( this.data.ven_imagen_guia ) this.viewRotulo( this.data.ven_imagen_guia );
       await this.getArticulos();
       this.data.ciudadDestino = this.data.ciudadDestino;
-      console.log("**INICIA")
-      let filtro:any = await this.PrecioContraEntrega();
-      console.log("**ESPERO")
+      let filtro:any = this.getHistorySettlementFletes();
+      //let filtro:any = await this.PrecioContraEntrega();
       filtro = _.find( this.tablet.listRow, ( row:any ) => row.slug === this.clone.transportadoraSelect );
       //console.log("MEN", filtro, this.clone, this.data)
       if( filtro ) if( filtro.slug ) this.selectTrans( filtro, true );
@@ -160,6 +163,17 @@ export class FormventasComponent implements OnInit {
     await this.getCiudades();
     this.listCiudades = this.listCiudades.filter( ( row:any )=> row.code > 0 );
     //this.listValidar();
+  }
+
+  getHistorySettlementFletes(){
+    return new Promise( resolve =>{
+      this._historySettlementFletes.get({ venta: this.id, user: this.dataUser.id, estado: 0 }).subscribe(res=>{
+        res = res.data[0];
+        if( !res ) return resolve( false);
+        this.tablet.listRow = [JSON.parse( res.dataTxt )]
+        resolve( true )
+      } ,()=> resolve( false ) );
+    })
   }
 
   changeCity(){
@@ -233,24 +247,6 @@ export class FormventasComponent implements OnInit {
     //console.log(event);
     this.files.splice(this.files.indexOf(event), 1);
   }
-
-  // async subirFile(opt: boolean) {
-  //   this.disabled = true;
-  //   this.disableBtnFile = true;
-  //   this.disabledButton = true;
-  //   let form: any = new FormData();
-  //   form.append('file', this.files[0]);
-  //   this._tools.ProcessTime({});
-  //   this.urlImagen = await this._archivos.getBase64(this.files[0]);
-  //   this.disabled = false;
-  //   this.disableBtnFile = false;
-  //   this.disabledButton = false;
-  //   if (this.id) this.submit();
-  //   else {
-  //     if (opt) if ( ( this.data.ven_tipo == 'whatsapp' || this.data.ven_tipo == 'WHATSAPP' ) && this.urlImagen) this.submit();
-  //   }
-
-  // }
 
   subirFile( opt: string ) {
     this.disabled = true;
@@ -751,7 +747,19 @@ export class FormventasComponent implements OnInit {
     });
   }
 
-  selectTrans( item, opt = false ){
+  validateCoin(){
+   return new Promise( resolve =>{
+    this._recharge.getValidateRecharge({
+      user: this.dataUser.id
+     }).subscribe( res=>{
+      resolve( res.data );
+     },()=> resolve( 0 ) );
+   })
+  }
+
+  async selectTrans( item, opt = false ){
+    if( !item ) return false;
+    if( this.data.ven_estado === 0 ) if( item.fleteTotal >= await this.validateCoin() ) return this._tools.error( { mensaje: "¡Necesitas recargar tu cuenta para poder crear guias... 1.entra a recargar Saldo y compra tu paquete!", footer: `<a target="_blank" href="${ window.location.origin }/config/recharge ">Recargar Paquete</a>`} );
     if( this.data.ven_numero_guia && !opt) return false;
     this.data.transportadoraSelect = item.slug;
     if( this.data.transportadoraSelect === "CORDINADORA" || this.data.transportadoraSelect === "ENVIA" || this.data.transportadoraSelect === "INTERRAPIDISIMO" || this.data.transportadoraSelect === "TCC") {
@@ -762,6 +770,7 @@ export class FormventasComponent implements OnInit {
     this.data.fleteValor = item.fleteTotal;
     this.data.fleteManejo = item.fleteManejo;
     this.data.flteTotal = item.fleteTotal;
+    this.data.historySettlementFletes = JSON.stringify( item );
     this.suma();
   }
 

@@ -19,7 +19,8 @@ export class StoreComponent implements OnInit {
   listStore:any = [];
   querysStore:any = {
     where:{
-      rol:"proveedor"
+      rol:"proveedor",
+      estado: 0
     },
     page:0,
     limit: 10
@@ -142,6 +143,15 @@ export class StoreComponent implements OnInit {
 
   handleStore( item:any ){
     this._router.navigate(['/config/store/product', item.usu_usuario ] );
+  }
+
+  handleImageError(event: any) {
+    // Evento que se ejecuta cuando la imagen no se carga correctamente
+    // Puedes cambiar la URL de la imagen de segunda opción aquí
+    const segundaOpcionURL = './assets/imagenes/todos.png';
+
+    // Asigna la URL de la imagen de segunda opción al src de la imagen
+    event.target.src = segundaOpcionURL;
   }
 
 

@@ -29,7 +29,8 @@ export class ProvedoresComponent implements OnInit {
   loader = true;
   query:any = {
     where:{
-      rolName: "proveedor"
+      rolName: "proveedor",
+      estado: 1
     },
     page: 0
   };
@@ -39,6 +40,7 @@ export class ProvedoresComponent implements OnInit {
 
   notscrolly:boolean=true;
   notEmptyPost:boolean = true;
+  count:number = 0;
 
   constructor(
     public dialog: MatDialog,
@@ -79,12 +81,18 @@ export class ProvedoresComponent implements OnInit {
        this.cargarTodos();
      }
    }
+  pageEvent(ev: any) {
+    this.query.page = ev.pageIndex;
+    this.query.limit = ev.pageSize;
+    this.cargarTodos();
+  }
 
   cargarTodos() {
     this.spinner.show();
     this._usuarios.get(this.query)
     .subscribe(
       (response: any) => {
+        this.count = response.count || 0;
         this.dataTable.headerRow = this.dataTable.headerRow;
         this.dataTable.footerRow = this.dataTable.footerRow;
         this.dataTable.dataRows.push(... response.data);
@@ -109,31 +117,35 @@ export class ProvedoresComponent implements OnInit {
     this.datoBusqueda = this.datoBusqueda.trim();
     this.dataTable.dataRows = [];
     if (this.datoBusqueda === '') {
-      this.query = {where:{},page: 0};
+      this.query = { where:{ estado: 1,rolName: "proveedor", },page: 0 };
     } else {
       this.query.page = 0;
-      this.query.where.or = [
-        {
-          usu_nombre: {
-            contains: this.datoBusqueda|| ''
-          }
-        },
-        {
-          usu_email: {
-            contains: this.datoBusqueda|| ''
-          }
-        },
-        {
-          usu_apellido: {
-            contains: this.datoBusqueda|| ''
-          }
-        },
-        {
-          usu_telefono: {
-            contains: this.datoBusqueda|| ''
-          }
-        },
-      ];
+      if( this.datoBusqueda === '0' || this.datoBusqueda === '1'){
+        this.query.where.estado = Number( this.datoBusqueda );
+      }else{
+        this.query.where.or = [
+          {
+            usu_nombre: {
+              contains: this.datoBusqueda|| ''
+            }
+          },
+          {
+            usu_email: {
+              contains: this.datoBusqueda|| ''
+            }
+          },
+          {
+            usu_apellido: {
+              contains: this.datoBusqueda|| ''
+            }
+          },
+          {
+            usu_telefono: {
+              contains: this.datoBusqueda|| ''
+            }
+          },
+        ];
+      }
     }
     this.query.where.rolName = "proveedor";
     this.cargarTodos();

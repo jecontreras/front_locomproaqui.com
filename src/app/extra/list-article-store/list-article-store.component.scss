@@ -29,6 +29,7 @@
     overflow: auto;
     white-space: nowrap;
     margin: auto;
+    margin-left: -3%;
   }
 
   div.scrollmenu a {
@@ -82,12 +83,12 @@
   
   .iphone-menu li {
       display: inline-block; /* Cambia a elementos de lista en línea */
-      margin: 0 10px;
+      margin: -17px -6px;
   }
   
   .iphone-menu a {
       font-size: 14px; /* Reduce el tamaño de fuente en dispositivos móviles */
-      padding: 8px 16px; /* Reduce el espaciado interior del botón */
+      padding: 0; /* Reduce el espaciado interior del botón */
       display: block; /* Hace que los botones ocupen el ancho completo */
       margin: 10px auto; /* Centra verticalmente los botones */
   }

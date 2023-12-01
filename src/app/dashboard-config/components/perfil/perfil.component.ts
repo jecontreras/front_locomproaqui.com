@@ -134,11 +134,11 @@ export class PerfilComponent implements OnInit {
   }
 
   getCategorias() {
-    this._categorias.get({ where: { cat_activo: 0, cat_padre: null }, limit: 1000 }).subscribe(async (res: any) => {
+    this._categorias.getAll({ where: { cat_activo: 0, cat_padre: null }, limit: 1000 }).subscribe(async (res: any) => {
       this.listCategorias = res.data;
       let userC:any = await this.getUserCategory();
-      for( let row of userC ){
-        let filtro = this.listCategorias.filter( item => item.id == row.cat_categoria );
+      for( let row of this.listCategorias ){
+        let filtro = userC.find( item => item.cat_categoria === row.id );
         if( filtro ) row.check = true;
       }
     }, () => this._tools.tooast("Error de servidor"));
@@ -146,7 +146,7 @@ export class PerfilComponent implements OnInit {
 
   getUserCategory(){
     return new Promise( resolve =>{
-      this._categorias.getUser( { where:{ cat_usu: this.data.id }, limit: 10000 } ).subscribe( res => {
+      this._categorias.getUser( { where:{ cat_usu: this.data.id, cat_activo:0 }, limit: 10000 } ).subscribe( res => {
         resolve( res.data || [] );
       });
     })

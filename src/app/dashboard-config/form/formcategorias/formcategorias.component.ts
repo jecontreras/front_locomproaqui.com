@@ -63,7 +63,7 @@ export class FormcategoriasComponent implements OnInit {
   }
 
   getCategorias(){
-    this._categoria.get( { where: { cat_activo: 0, cat_padre: this.data.id }, limit: 1000 } ).subscribe((res:any)=>{
+    this._categoria.getAll( { where: { cat_activo: 0, cat_padre: this.data.id }, limit: 1000 } ).subscribe((res:any)=>{
       this.listCategoria =_.map( res.data , ( row )=>{
         return {
           id: row.id,

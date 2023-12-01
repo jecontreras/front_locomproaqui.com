@@ -21,18 +21,20 @@
               </div>
               <div class="row">
                 <div class="col-12">
-                    <div class="card-group">
-                        <div class="card" *ngFor="let item of listRecharge" style="    padding: 15px;">
-                          <img [src]="item.foto" class="card-img-top" alt="...">
-                          <div class="card-body">
-                            <h5 class="card-title">{{ item.titulo }} </h5>
-                            <p class="card-text">{{ item.descripcion }} </p>
-                            <p class="card-text">
-                              <button type="button" class="btn btn-primary" (click)="handleActivatePackage( item )">Activar Paquete</button>
-                            </p>
-                          </div>
+                  <div class="row row-cols-2 row-cols-md-5 g-2">
+                    <div class="col" *ngFor="let item of listRecharge" style="    padding: 15px;">
+                      <div class="card h-100" >
+                        <img [src]="item.foto" class="card-img-top" alt="...">
+                        <div class="card-body">
+                          <h5 class="card-title">{{ item.titulo }} {{ _tools.monedaChange( 3,2, ( item.precio || 0 ) ) }} </h5>
+                          <p class="card-text">{{ item.descripcion }} </p>
+                          <p class="card-text">
+                            <button type="button" class="btn btn-success" (click)="handleActivatePackage( item )">Activar Paquete</button>
+                          </p>
                         </div>
+                      </div>
                     </div>
+                  </div>
                 </div>
               </div>
             </div>

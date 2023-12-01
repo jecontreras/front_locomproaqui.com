@@ -45,7 +45,8 @@ export class CobrosComponent implements OnInit {
   notEmptyPost:boolean = true;
   btnDisableRetiro:boolean = true;
   activando:boolean = false;
-
+  count:number = 0;
+  
   constructor(
     private _cobros: CobrosService,
     public dialog: MatDialog,
@@ -126,6 +127,12 @@ export class CobrosComponent implements OnInit {
        this.cargarTodos();
      }
    }
+   pageEvent(ev: any) {
+    this.query.page = ev.pageIndex;
+    this.query.limit = ev.pageSize;
+    this.cargarTodos();
+  }
+
 
   cargarTodos() {
     this.spinner.show();
@@ -133,6 +140,7 @@ export class CobrosComponent implements OnInit {
     .subscribe(
       (response: any) => {
         console.log(response);
+        this.count = response.count || 0;
         this.dataTable.headerRow = this.dataTable.headerRow;
         this.dataTable.footerRow = this.dataTable.footerRow;
         this.dataTable.dataRows.push(... response.data);

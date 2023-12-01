@@ -22,4 +22,19 @@ export class RechargeService {
   delete(query:any){
     return this._model.querys('recharge/'+query.id, query, 'delete');
   }
+  getUser(query:any){
+    return this._model.querys('rechargeUser/querys',query, 'post');
+  }
+  createUser(query:any){
+    return this._model.querys('rechargeUser',query, 'post');
+  }
+  updateUser(query:any){
+    return this._model.querys('rechargeUser/'+query.id, query, 'put');
+  }
+  deleteUser(query:any){
+    return this._model.querys('rechargeUser/'+query.id, query, 'delete');
+  }
+  getValidateRecharge( query ){
+    return this._model.querys('rechargeUser/validateRecharge',query, 'post');
+  }
 }

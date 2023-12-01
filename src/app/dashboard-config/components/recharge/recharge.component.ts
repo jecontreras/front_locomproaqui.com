@@ -23,7 +23,7 @@ export class RechargeComponent implements OnInit {
   
   constructor(
     private _recharge: RechargeService,
-    private _tools: ToolsService,
+    public _tools: ToolsService,
     private _store: Store<STORAGES>,
   ) { 
     this._store.subscribe( ( store: any ) => {
@@ -48,15 +48,27 @@ export class RechargeComponent implements OnInit {
   handleActivatePackage( item:any ){
     if( this.disabedPn ) return false;
     this.disabedPn = true;
+    let data = {
+      recarga: item.id,
+      user: this.dataUser.id,
+      valor: item.precio,
+      codigo: this._tools.codigo()
+    };
+    this._recharge.createUser( data ).subscribe( res =>{
+      this.nextEpayco( item, res );
+    },()=> this.disabedPn = false );
+  }
+
+  nextEpayco( item:any, data ){ 
     let obj:any = {
         url: "https://recaudos.pagosinteligentes.com/CollectForm.aspx?Token=be3c7e95-5c30-47e3-9209-9e88a2e6f57d",
         otrourl: "https://publihazclick.s3.amazonaws.com/paquetes/19fd8728-c89b-44c7-951b-79dcbbace3ff.jpg",
         wester: "https://www.google.com.co/",
         imgwester: "https://www.viviendocali.com/wp-content/uploads/2017/10/Western-Union-en-bucaramanga.jpg",
         name: item.titulo,
-        invoice: this._tools.codigo(),
+        invoice: data.codigo,
         currency: 'cop',
-        amount: item.valor,
+        amount: item.precio,
         tax_base: '0',
         tax: '0',
         country: 'co',

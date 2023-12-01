@@ -34,6 +34,7 @@ export class CategoriasComponent implements OnInit {
   Header:any = [ 'Acciones','Imagen','Categorias','Descripcion','Categoria Padre','Estado' ];
   $:any;
   public datoBusqueda = '';
+  count:number = 0;
 
   constructor(
     private _categorias: CategoriasService,
@@ -61,7 +62,11 @@ export class CategoriasComponent implements OnInit {
     },(error)=>{console.error(error); this._tools.presentToast("Error de servidor") })
   }
 
-
+  pageEvent(ev: any) {
+    this.query.page = ev.pageIndex;
+    this.query.limit = ev.pageSize;
+    this.cargarTodos();
+  }
 
 
   cargarTodos() {
@@ -69,6 +74,7 @@ export class CategoriasComponent implements OnInit {
     .subscribe(
       (response: any) => {
         console.log(response);
+        this.count = response.count || 0;
         this.dataTable = {
           headerRow: this.Header,
           footerRow: this.Header,

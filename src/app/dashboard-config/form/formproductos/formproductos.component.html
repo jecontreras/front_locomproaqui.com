@@ -5,7 +5,7 @@
     </div>
     <div class="row" *ngIf="!disableSpinner">
         <div class="col" *ngIf="!id">
-            <ngx-dropzone (change)="onSelects($event, 'foto')">
+            <ngx-dropzone (change)="onSelects($event, 'foto')"  accept="image/jpeg,image/jpg,image/png,image/gif">
                 <ngx-dropzone-label>Subir Fotos</ngx-dropzone-label>
                 <ngx-dropzone-image-preview ngProjectAs="ngx-dropzone-preview" *ngFor="let f of files" [file]="f"
                     [removable]="true" (removed)="onRemoves(f)" multiple="false" accept="image/jpeg,image/jpg,image/png"
@@ -159,11 +159,6 @@
                         <option [value]="item.id" *ngFor="let item of listSubCategorias">{{ item.cat_nombre }}</option>
                     </select>
                 </div>
-                <!--<div class="form-group col-md-6 col-sm-4 col-lg-4 col-xs-6">
-                    <br>
-                    <input type="checkbox" [(ngModel)]="data.checkMayor" value="second_checkbox"> <label
-                        for="cbox2">Precios al Mayor</label>
-                </div>-->
                 <div class="form-group col-md-6 col-sm-4 col-lg-4 col-xs-6">
                     <label>Precio a distribuidor</label>
                     <input currencyMask class="form-control form-control-sm" [(ngModel)]="data.pro_vendedor" required
@@ -174,12 +169,7 @@
                     <input currencyMask class="form-control form-control-sm" [(ngModel)]="data.pro_uni_venta" required
                         [options]="formatoMoneda" />
                 </div>
-                <!--<div class="form-group col-md-6 col-sm-4 col-lg-4 col-xs-6">
-                  <label>Precio Vendedor Compra</label>
-                  <input currencyMask class="form-control form-control-sm" [(ngModel)]="data.pro_vendedorCompra"
-                      [options]="formatoMoneda" />
-              </div>-->
-                <div class="form-group col-md-6 col-sm-6 col-lg-6 col-xs-6" *ngIf="data.checkMayor">
+                <!--<div class="form-group col-md-6 col-sm-6 col-lg-6 col-xs-6" *ngIf="data.checkMayor">
                     <header class="main-box-header clearfix col-12 row">
                         <h2 class="col">Precios por cantidad Vendedor</h2>
                         <div>
@@ -250,7 +240,7 @@
                             </div>
                         </li>
                     </ul>
-                </div>
+                </div>-->
                 <div class="form-group col-md-6 col-sm-4 col-lg-4 col-xs-6">
                     <label for="exampleFormControlSelect1">Tipo de medida:</label>
                     <select class="form-control form-control-sm" [(ngModel)]="data.pro_sw_tallas" required
@@ -324,7 +314,7 @@
                                         <button type="button" (click)="item.checkFoto = false"
                                             class="btn btn-success">Ocultar</button>
                                     </div>
-                                    <ngx-dropzone (change)="onSelect( $event, item )">
+                                    <ngx-dropzone (change)="onSelect( $event, item )" accept="image/jpeg,image/jpg,image/png,image/gif">
                                         <ngx-dropzone-label>Abrir archivos</ngx-dropzone-label>
                                         <ngx-dropzone-image-preview ngProjectAs="ngx-dropzone-preview"
                                             *ngFor="let f of files" [file]="f" [removable]="true"
@@ -348,7 +338,7 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div class="form-group col-12" *ngIf="!item.checkFotoGaleri">
+                                <!--<div class="form-group col-12" *ngIf="!item.checkFotoGaleri">
                                     <div class="d-flex justify-content-center">
                                         <div>
                                             <button type="button" (click)="item.checkFotoGaleri = true"
@@ -401,47 +391,11 @@
                                             <span>Eliminar</span>
                                         </button>
                                     </div>
-                                </div>
+                                </div>-->
                             </div>
                         </div>
                     </div>
                 </div>
-                <!--<div class="form-group col-12">
-                    <label for="exampleFormControlSelect1">Galeria:</label>
-                    <div class="row">
-                        <div class="col-12">
-                            <ngx-dropzone (change)="onSelects($event, 'galeria')">
-                                <ngx-dropzone-label>Subir Fotos de galeria</ngx-dropzone-label>
-                                <ngx-dropzone-image-preview ngProjectAs="ngx-dropzone-preview" *ngFor="let f of files2"
-                                    [file]="f" [removable]="true" (removed)="onRemoves(f, 'galeria')" multiple="true">
-                                    <ngx-dropzone-label>{{ f.name }} ({{ f.type }})</ngx-dropzone-label>
-                                </ngx-dropzone-image-preview>
-                            </ngx-dropzone>
-                            <div class="row">
-                                <label class="col">Subir Imagen</label>
-                                <button class="btn btn-primary btn-just-icon btn-round"
-                                    (click)="subirFile(false, 'galeria')" *ngIf="files2.length > 0">
-                                    Subir Imagen
-                                </button>
-                            </div>
-                        </div>
-                        <div class="col-2" *ngFor="let item of listFotos">
-                            <mat-card class="example-card">
-                                <img mat-card-image [src]="item.foto" alt="Photo of a Shiba Inu">
-                                <mat-card-actions>
-                                    <div class="d-flex justify-content-center">
-                                        <div>
-                                            <button type="button" class="btn btn-success"
-                                                (click)="EliminarFoto( item )">
-                                                Eliminar
-                                            </button>
-                                        </div>
-                                    </div>
-                                </mat-card-actions>
-                            </mat-card>
-                        </div>
-                    </div>
-                </div>-->
                 <div class="form-group col-12">
                     <label>Descripción detallada</label>
                     <angular-editor id="editor1" [(ngModel)]="data.pro_descripcion" [config]="editorConfig"
@@ -459,9 +413,12 @@
     </div>
 </mat-dialog-content>
 <mat-dialog-actions align="end">
-    <button mat-button mat-dialog-close>Cerrar</button>
-    <button mat-button cdkFocusInitial (click)="submit()" *ngIf="( this.id ) ">
+    <button mat-button mat-dialog-close color="warn">Cerrar</button>
+    <button mat-button cdkFocusInitial color="primary" (click)="submit()" *ngIf="( this.id ) ">
         <span *ngIf="!id">Guardar Cambios</span>
         <span *ngIf="id">Actulizar Cambios</span>
+    </button>
+    <button (click)="handleActivate()" mat-raised-button color="accent" *ngIf="id && data.pro_activo !== 0 ">
+        Activar Producto
     </button>
 </mat-dialog-actions>

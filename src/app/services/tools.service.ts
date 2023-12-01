@@ -57,7 +57,7 @@ export class ToolsService {
       icon: 'error',
       title: 'Oops...',
       text: text.mensaje,
-      footer: text.footer || '<a href>Why do I have this issue?</a>'
+      footer: text.footer || ''
     });
   }
   tooast(text: any) {
@@ -71,7 +71,7 @@ export class ToolsService {
   }
   confirm(text: any) {
     return Swal.fire({
-      title: text.title || 'Are you sure?',
+      title: text.title || '',
       text: text.detalle || "",
       icon: text.icon || 'warning',
       showCancelButton: text.showCancel || true,
