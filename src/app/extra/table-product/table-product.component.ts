@@ -86,7 +86,10 @@ export class TableProductComponent implements OnInit {
   }
 
   async handleCreate(){
-    if( this.disabledBtn === false ) return this._tools.error( { mensaje: "¡Lo sentimos no puedes crear artículos por favor completar perfil!", footer: `<a target="_blank" href="${ window.location.origin }/config/perfil" >Completar Cuenta</a>` })
+    if( this.disabledBtn === false ) {
+      if( this.dataUser.pdfRut && this.dataUser.pdfCc && this.dataUser.pdfCComercio && this.dataUser.usu_ciudad && this.dataUser.usu_direccion && this.dataUser.tipeUser ) return this._tools.error( { mensaje: "¡Lo sentimos Tu cuenta Todavía no ha sido activado por favor esperes unos minutos mientras validamos tu información!", footer: `<a target="_blank" href="${ window.location.origin }/config/perfil" >Completar Cuenta</a>` })
+      return this._tools.error( { mensaje: "¡Lo sentimos no puedes crear artículos por favor completar perfil!", footer: `<a target="_blank" href="${ window.location.origin }/config/perfil" >Completar Cuenta</a>` })
+    }
     return this.crearAnt(false);
   }
 

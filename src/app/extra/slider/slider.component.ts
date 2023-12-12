@@ -187,7 +187,7 @@ export class SliderComponent implements OnInit {
   }
 
   handleSelect( item ){
-    console.log("***176", item)
+    console.log("***176", item, this.routerUrl)
     this._router.navigate( [ this.routerUrl, item['id'] ] );
   }
 

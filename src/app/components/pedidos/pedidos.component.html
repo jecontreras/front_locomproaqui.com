@@ -12,7 +12,7 @@
     <div class="d-flex justify-content-center">
       <div class="container">
         <div class="col-12" style="width: 90%; margin: auto;">
-          <app-slider [listGaleria]="imageObject" [view]="3" [lyImg]="'image'"></app-slider>
+          <app-slider [listGaleria]="imageObject" [view]="3" [routerUrl]="urlCategory" [lyImg]="'image'"></app-slider>
         </div>
       </div>
     </div>
@@ -35,7 +35,7 @@
         <div class="container">
           <div class="row">
             <div class="col-12">
-              <h5 style="margin-left: 25px;">NOVEDADES</h5>
+              <h5 style="margin-left: 25px;">NOVEDADES</h5>   
             </div>
             <div class="col-12 col-sm-6 col-md-6 col-lg-4" *ngFor="let item of listNovedades">
 

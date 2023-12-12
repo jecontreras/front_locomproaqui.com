@@ -70,6 +70,7 @@ export class PedidosComponent implements OnInit {
   listPublicaciones:any = [];
   listGaleria:any = [];
   breakpoint: number;
+  urlCategory:string;
 
   constructor(
     private _productos: ProductoService,
@@ -113,7 +114,7 @@ export class PedidosComponent implements OnInit {
     const pr = urlPath.pathname.split("/");
     if( pr[1] && pr[2] && pr[3] ) this.getId( pr[3] )
     console.log("****", urlPath );
-
+    this.urlCategory = 'listproduct/categoria';
 
     setInterval(()=> {
       try {

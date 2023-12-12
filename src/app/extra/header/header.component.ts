@@ -173,10 +173,31 @@ export class HeaderComponent implements OnInit {
         if( this.dataUser.id ) this.urlLogo = this.dataUser.usu_imagen || './assets/logo.png';
         //console.log("***144",color, this.dataUser )
         this.nav.nativeElement.style.backgroundColor = color;
-      } catch (error) {
-
-      }
+      } catch (error) {}
     }, 1000 );
+
+    try {
+      if( this.dataUser.estado === 0 && this.dataUser.usu_perfil.prf_descripcion === 'proveedor' ){
+        this.listAlert.unshift(
+          {
+            id: this._tools.codigo(),
+            titulo: "Importante",
+            descripcion: "¡Felicidad Tu Cuenta esta activada!",
+            tipoDe: 2
+          }
+        );
+      }
+      if( this.dataUser.estado === 1 && this.dataUser.usu_perfil.prf_descripcion === 'proveedor' ){
+        this.listAlert.unshift(
+          {
+            id: this._tools.codigo(),
+            titulo: "Importante",
+            descripcion: "¡Tu cuenta está inactiva! Por Favor llenar toda la información para poder activar tu cuenta Ingresá al perfil y completa tus datos!",
+            tipoDe: 2
+          }
+        );
+      }
+    } catch (error) { }
 
     this.onResize(null);
     if(Object.keys(this.dataUser).length > 0 ) {
@@ -848,7 +869,7 @@ export class HeaderComponent implements OnInit {
   getAlert(){
     this._notificaciones.get( { where: { user: this.dataUser.id, tipoDe: [ 1, 2 ], view: false }}).subscribe( async ( res:any ) =>{
       res = res.data;
-      this.listAlert = res;
+      this.listAlert.push( ...res )
       const result:any = await this.getMas();
       this.listAlert.push( ...result )
       if( this.namePorcentaje == "dropshipping básico"){
