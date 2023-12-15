@@ -387,11 +387,11 @@
                                       <label for="exampleFormControlInput1">Seleccionar la o las categorías del tipo
                                           de producto que quiere promocionar</label>
                                       <div class="row">
-                                          <div class="col-12 col-sm-4 col-md-3 col-xs-2 col-lg-4"
+                                          <div class="col-12 col-sm-6 col-md-4 col-xs-2 col-lg-4"
                                               *ngFor="let item of listCategorias">
                                               <mat-checkbox
                                                   [(ngModel)]="item.check" class="example-margin">
-                                                  {{ item.cat_nombre }}
+                                                  {{ item.cat_nombre | slice: 0: 10 }}
                                               </mat-checkbox>
                                           </div>
                                       </div>
@@ -432,10 +432,6 @@
                                         <button class="p-2 btn btn-success btn-just-icon btn-round" (click)="Actualizar()">
                                             Actualizar Datos
                                         </button>
-                                    </div>
-                                    <div class="col-12">
-                                      <br><br>
-                                        <button type="button" class="btn btn-primary" (click)="iniciarClick()">SUBIR 5 IMÁGENES DE TUS MEJORES PRODUCTOS</button>
                                     </div>
                                 </div>
                             </div>

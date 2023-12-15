@@ -188,14 +188,25 @@ export class HeaderComponent implements OnInit {
         );
       }
       if( this.dataUser.estado === 1 && this.dataUser.usu_perfil.prf_descripcion === 'proveedor' ){
-        this.listAlert.unshift(
-          {
-            id: this._tools.codigo(),
-            titulo: "Importante",
-            descripcion: "¡Tu cuenta está inactiva! Por Favor llenar toda la información para poder activar tu cuenta Ingresá al perfil y completa tus datos!",
-            tipoDe: 2
-          }
-        );
+        if( this.dataUser.pdfCComercio && this.dataUser.pdfCc && this.dataUser.pdfRut && this.dataUser.usu_ciudad && this.dataUser.usu_email && this.dataUser.usu_telefono ){
+          this.listAlert.unshift(
+            {
+              id: this._tools.codigo(),
+              titulo: "Importante",
+              descripcion: "¡Tu cuenta está inactiva! Espere las próximas horas que nuestro grupo de logística activen tu usuario!",
+              tipoDe: 2
+            }
+          );
+        }else{
+          this.listAlert.unshift(
+            {
+              id: this._tools.codigo(),
+              titulo: "Importante",
+              descripcion: "¡Tu cuenta está inactiva! Por Favor llenar toda la información para poder activar tu cuenta Ingresá al perfil y completa tus datos!",
+              tipoDe: 2
+            }
+          );
+        }
       }
     } catch (error) { }
 
@@ -537,7 +548,7 @@ export class HeaderComponent implements OnInit {
       },
       {
         icons: 'people_alt',
-        nombre: 'Lista de Trasnportadoras',
+        nombre: 'Lista de Transportadoras',
         disable: this.rolUser == 'administrador' || this.rolUser == 'proveedor',
         url: '/config/listaPlatform',
         submenus:[]
