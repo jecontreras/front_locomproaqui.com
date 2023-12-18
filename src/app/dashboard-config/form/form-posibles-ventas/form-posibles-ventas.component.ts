@@ -199,7 +199,7 @@ export class FormPosiblesVentasComponent implements OnInit {
     this.data.fleteValor = item.fleteTotal;
     this.data.fleteManejo = item.fleteManejo;
     this.data.flteTotal = item.fleteTotal;
-    console.log("**", this.data)
+    this.data.historySettlementFletes = JSON.stringify( item );
     this.suma();
     //if( this.id ) this.submit();
     return true;
@@ -319,7 +319,8 @@ export class FormPosiblesVentasComponent implements OnInit {
       "ven_estado": 0,
       "create": this.data.ven_fecha_venta,
       "ven_empresa": this.data.ven_empresa,
-      "listaArticulo": this.listCarrito
+      "listaArticulo": this.listCarrito,
+      "historySettlementFletes": this.data.historySettlementFletes
     }
     console.log("****306", data )
     this._ventas.create( data ).subscribe( async (res: any) => {

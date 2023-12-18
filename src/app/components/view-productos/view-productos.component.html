@@ -3,7 +3,7 @@
     <div class="col-12" style="border-radius: 20px;">
       <div class="d-flex bd-highlight p-2" style="padding-top: 0px;">
         <div class="p-2 flex-grow-1 bd-highlight">
-          <h3 style="text-align: center;" class="fw-bold">{{ data.pro_nombre | slice: 0:12 }} ... </h3>
+          <h4 style="text-align: center;" class="fw-bold">{{ data.pro_nombre | slice: 0:12 }} ... </h4>
         </div>
         <div class="p-2 bd-highlight">
           <button type="button" class="btn btn-danger" mat-dialog-close>
@@ -14,18 +14,18 @@
     </div>
     <div class="col-6">
       <section style="text-align: center; border-radius: 20px; padding-top: 5px;" class="p-2">
-        <h4 class="" *ngIf="data.precio_vendedor">
+        <h5 class="" *ngIf="data.precio_vendedor">
           Precio a distribuidor:
-        </h4>
-        <h4>{{ _tools.monedaChange( 3, 2, ( coinShop == true ? ( data.pro_vendedorCompra || data.precio_vendedor ) : data.precio_vendedor ) ) }}</h4>
+        </h5>
+        <h5>{{ _tools.monedaChange( 3, 2, ( coinShop == true ? ( data.pro_vendedorCompra || data.precio_vendedor ) : data.precio_vendedor ) ) }}</h5>
       </section>
     </div>
     <div class="col-6">
       <section style="text-align: center; border-radius: 20px; padding-top: 5px;" class="p-2">
-        <h4 class="" *ngIf="dataUser.id">Precio Sugerido:</h4>
-          <h4 class="" *ngIf="dataUser.id">{{ _tools.monedaChange( 3, 2, data.pro_uni_venta ) }}</h4>
-          <h4 class="" *ngIf="!dataUser.id">Precio:</h4>
-          <h4 class="" *ngIf="!dataUser.id">{{ _tools.monedaChange( 3, 2, data.pro_uni_venta ) }}</h4>
+        <h5 class="" *ngIf="dataUser.id">Precio Sugerido:</h5>
+          <h5 class="" *ngIf="dataUser.id">{{ _tools.monedaChange( 3, 2, data.pro_uni_venta ) }}</h5>
+          <h5 class="" *ngIf="!dataUser.id">Precio:</h5>
+          <h5 class="" *ngIf="!dataUser.id">{{ _tools.monedaChange( 3, 2, data.pro_uni_venta ) }}</h5>
           <span *ngIf="!data.precio_vendedor && dataUser.id" class="precios">Ganas el {{ porcentajeMostrar }} % : &nbsp; {{ gananciaEstimada }}</span>
       </section>
     </div>
@@ -71,7 +71,7 @@
                       <div class="container borderBotton">
                         <div class="row">
                           <div class="col-6 p-1" style="text-align: center;">
-                            <section class="  p-2" style="text-align: center; border-radius: 20px; ">
+                            <section class="  p-1" style="text-align: center; border-radius: 20px; ">
                               <div class="row">
                                 <div class="col-12" style="text-align: center;">
                                   <section class="paddinLader">
@@ -95,7 +95,7 @@
                             </section>
                           </div>
                           <div class="col-6 p-1" style="text-align: center;">
-                            <section class="  p-2" style="text-align: center; border-radius: 20px; ">
+                            <section class="  p-1" style="text-align: center; border-radius: 20px; ">
                               <div class="row">
                                 <div class="col-12">
                                   <section class="paddinLader">
@@ -125,10 +125,10 @@
                         <div class="row">
                           <div class="col-12">
                             <div class="d-flex flex-row bd-highlight mb-3" style="    margin-top: 15px; border-radius: 20px;">
-                              <div class="p-2 bd-highlight" style="margin: auto;">
+                              <div class="p-1 bd-highlight" style="margin: auto;">
                                 <img [src]="urlFoto" alt="" class="img-profile" (error)="handleImageError($event)" loading="lazy">
                               </div>
-                              <div class="p-2 bd-highlight" style="margin: auto; margin-left: -10px;">
+                              <div class="p-1 bd-highlight" style="margin: auto; margin-left: -10px;">
                                 <h4 style="margin: 0 !important;">{{ data.pro_nombre }} </h4>
                                 <h5 style="margin: 0 !important;">Colores:{{ data.nameColores }} </h5>
                                 <h5 style="margin: 0 !important;">Tamaños Disponibles: {{ data.nemeTalla }} </h5>

@@ -613,7 +613,7 @@ export class HeaderComponent implements OnInit {
       },*/
       {
         icons: 'storefront',
-        nombre: 'Mis Despacho',
+        nombre: 'Mis Ordenes',
         disable: this.rolUser == 'proveedor',
         url: '/config/misDespacho',
         submenus:[]
