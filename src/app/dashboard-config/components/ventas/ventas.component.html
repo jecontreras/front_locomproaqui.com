@@ -194,13 +194,13 @@
                         <p>{{ row['usu_clave_int']?.usu_ciudad }}</p>
                       </td>
                       <td>{{ row['ven_nombre_cliente'] }}</td>
-                      <td>
+                      <!--<td>
                         <span>
                           {{ row['ven_telefono_cliente'] }} <img src="./assets/img/what.jpg" class="pointer" style="width: 35px;" (click)="openUrl( row['ven_telefono_cliente'], row['ven_nombre_cliente'], row )">
                         </span>
-                      </td>
-                      <td>{{ _tools.monedaChange( 3,2, row['ven_ganancias'] || 0 ) }}</td>
-                      <td>{{ _tools.monedaChange( 3,2, row['fleteValor'] || 0 ) }}</td>
+                      </td>-->
+                      <!--<td>{{ _tools.monedaChange( 3,2, row['ven_ganancias'] || 0 ) }}</td>-->
+                      <!--<td>{{ _tools.monedaChange( 3,2, row['fleteValor'] || 0 ) }}</td>-->
                       <td>{{ row['createdAt'] | date:'medium' }}</td>
                       <!-- <td>{{ row['pro_clave_int']?.pro_nombre }}</td> -->
                       <!-- <td>{{ row['ven_cantidad'] }}</td> -->

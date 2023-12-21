@@ -99,14 +99,16 @@ export class FormproductosComponent implements OnInit {
     this.disableSpinner = true;
     this.inicial();
   }
-  inicial(){
-
+  async inicial(){
+    this.getCategorias();
+    await this.getTipoTallas();
     if (Object.keys(this.datas.datos).length > 0) {
       this.data = _.clone(this.datas.datos);
       this.id = this.data.id;
       if( !this.id ) {
         this.titulo = "Crear";
-        this.id = ""; this.data.pro_codigo = this.codigo(); this.data.pro_sw_tallas = 1; this.disableSpinner = false; this.listFotos = [];
+        this.id = ""; this.data.pro_codigo = this.codigo(); this.data.pro_sw_tallas = 5; this.disableSpinner = false; this.listFotos = [];
+        this.nextAdd( '001' );
       }
       else {
         this.titulo = "Actualizar";
@@ -116,9 +118,10 @@ export class FormproductosComponent implements OnInit {
         this.procesoEdision();
         if( this.data.pro_categoria ) this.getSubCategorias( this.data.pro_categoria );
       }
-    } else { this.id = ""; this.data.pro_codigo = this.codigo(); this.data.pro_sw_tallas = 1; this.disableSpinner = false; this.listFotos = []; }
-    this.getCategorias();
-    this.getTipoTallas();
+    } else { 
+      this.id = ""; this.data.pro_codigo = this.codigo(); this.data.pro_sw_tallas = 5; this.disableSpinner = false; this.listFotos = []; 
+      this.nextAdd( '001' );
+    }
     this.data.activarBTN = false;
   }
 
@@ -163,10 +166,13 @@ export class FormproductosComponent implements OnInit {
   }
 
   getTipoTallas() {
-    this._tipoTallas.get({ where: { tit_sw_activo: 1 }, limit: 100 }).subscribe((res: any) => {
-      this.listTipoTallas = res.data;
-      if( this.data.id ) this.blurTalla(2);
-    }, error => this._tools.presentToast("error servidor"));
+    return new Promise( resolve =>{
+      this._tipoTallas.get({ where: { tit_sw_activo: 1 }, limit: 100 }).subscribe((res: any) => {
+        this.listTipoTallas = res.data;
+        if( this.data.id ) this.blurTalla(2);
+        resolve( true );
+      }, error => { this._tools.presentToast("error servidor"); resolve( false ); });
+    })
   }
 
   async onSelect( event: any, item:any ) {
@@ -362,7 +368,7 @@ export class FormproductosComponent implements OnInit {
         let filtro = row.tallaSelect.find( off => off.check === true );
         if( !filtro ) error++;
       }
-      if( error > 0 ) return this._tools.error( { mensaje: "Problemas En los detalles de colores Llenar completo", footer: 'Falta agregar Detalle del campo' } );
+      if( error > 0 ) return this._tools.error( { mensaje: "Problemas En los detalles de colores Llenar completo las cantidad de cada item ", footer: 'Falta agregar Detalle del campo' } );
     }
     if( !this.data.pro_descripcion ) return this._tools.error( { mensaje: "Problemas Descripcion del Producto", footer: 'Falta agregar Detalle del campo' } );
     if( !this.data.foto ) return this._tools.error( { mensaje: "Problemas Foto del Producto", footer: 'Falta agregar Detalle del campo' } );
@@ -490,9 +496,9 @@ export class FormproductosComponent implements OnInit {
         this.data = {
           "pro_nombre": this.codigo(),
           "foto": res.files,
-          "pro_descripcion": `disponibles desde la talla 36 a la talla 43 echos en material sintético de muy buena calidad`,
+          "pro_descripcion": ``,
           "pro_codigo": "3DBG1F",
-          "pro_sw_tallas": 1,
+          "pro_sw_tallas": 5,
           "pro_categoria": this.data.pro_categoria,
           "cat_activo": 1,
           "checkMayor": 0,
@@ -501,7 +507,8 @@ export class FormproductosComponent implements OnInit {
           "pro_vendedorCompra": this.data.pro_vendedorCompra || 0,
           "precioFabrica": this.data.precioFabrica || 0
         };
-        this.blurTalla(0);
+        this.blurTalla(5);
+        this.nextAdd( '001' );
         let result: any = await this.guardar();
         if (!result) resolve(false);
         this.data.id = result.id;
@@ -614,12 +621,22 @@ export class FormproductosComponent implements OnInit {
     })
   }
 
-  add(event: MatChipInputEvent) {
+  async add(event: MatChipInputEvent) {
     const value = (event.value || '').trim();
     const input = event.input;
-    let  listas:any = [];
+    await this.nextAdd( value );
+    event.value = "";
+    if (input) {
+      input.value = '';
+    }
+    this.guardarColor( );
+  }
+
+  nextAdd( value:string ){
+    return new Promise( resolve =>{
+      let  listas:any = [];
     let filtro = this.listColor.filter(( item:any ) => item.talla == value );
-    if( filtro ) if( filtro.length > 0 ) return false;
+    if( filtro ) if( filtro.length > 0 ) return resolve( false );
     // Add our fruit
     for( let row of this.data.listaTallas ) listas.push( { tal_descripcion: row.tal_descripcion, id: row.id, tal_sw_activo: row.tal_sw_activo } );
     if (value) {
@@ -633,17 +650,8 @@ export class FormproductosComponent implements OnInit {
       data.tallaSelect.push( ... _.clone( listas ) );
       this.listColor.push( data );
     }
-    event.value = "";
-    if (input) {
-      input.value = '';
-    }
-    this.guardarColor( );
-    // Clear the input value
-    try {
-      event['chipInput']!.clear();
-    } catch (error) {
-
-    }
+    resolve( true );
+    })
   }
 
   remove(item: Fruit): void {

@@ -759,7 +759,7 @@ export class FormventasComponent implements OnInit {
 
   async selectTrans( item, opt = false ){
     if( !item ) return false;
-    if( this.data.ven_estado === 0 ) if( item.fleteTotal >= await this.validateCoin() ) return this._tools.error( { mensaje: "¡Necesitas recargar tu cuenta para poder crear guias... 1.entra a recargar Saldo y compra tu paquete!", footer: `<a target="_blank" href="${ window.location.origin }/config/recharge ">Recargar Paquete</a>`} );
+    if( this.rolName === 'vendedor') if( this.data.ven_estado === 0 ) if( item.fleteTotal >= await this.validateCoin() ) return this._tools.error( { mensaje: "¡Necesitas recargar tu cuenta para poder crear guias... 1.entra a recargar Saldo y compra tu paquete!", footer: `<a target="_blank" href="${ window.location.origin }/config/recharge ">Recargar Paquete</a>`} );
     if( this.data.ven_numero_guia && !opt) return false;
     this.data.transportadoraSelect = item.slug;
     if( this.data.transportadoraSelect === "CORDINADORA" || this.data.transportadoraSelect === "ENVIA" || this.data.transportadoraSelect === "INTERRAPIDISIMO" || this.data.transportadoraSelect === "TCC") {

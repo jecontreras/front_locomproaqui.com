@@ -13,11 +13,11 @@
             <select class="form-control form-control-sm" [(ngModel)]="data.ven_estado" (change)="submit()">
                 <option type="number" value="0">Pendiente</option>
                 <option type="number" value="3">Despachado</option>
-                <option type="number" value="1">Venta exitosa</option>
-                <option type="number" value="2">Devolucion</option>
+                <option type="number" value="1" *ngIf="rolName==='administrador'">Venta exitosa</option>
+                <option type="number" value="2" *ngIf="rolName==='administrador'">Devolucion</option>
             </select>
         </div>
-        <div class="row col-12" *ngIf="id">
+        <div class="row col-12" *ngIf="id && ( rolName ==='administrador' || rolName ==='vendedor') ">
             <div class="form-group col-12 bg-primary text-white rounded">
                 <h2>Información del Vendedor</h2>
             </div>

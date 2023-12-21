@@ -9,6 +9,8 @@ import * as _ from 'lodash';
 import { UsuariosService } from 'src/app/servicesComponents/usuarios.service';
 import { FormventasComponent } from '../../form/formventas/formventas.component';
 import { VentasService } from 'src/app/servicesComponents/ventas.service';
+import * as moment from 'moment';
+import { FormcrearguiaComponent } from '../../form/formcrearguia/formcrearguia.component';
 
 @Component({
   selector: 'app-mis-despacho',
@@ -58,7 +60,12 @@ export class MisDespachoComponent implements OnInit {
     },
     limit: 10,
     skip: 0
-  }
+  };
+  filtro:any = {
+    dateStart: moment().format('YYYY-MM-DD'),
+    dateEnd: moment().format('YYYY-MM-DD')
+  };
+  dataCache=[];
 
   constructor(
     public dialog: MatDialog,
@@ -192,6 +199,7 @@ export class MisDespachoComponent implements OnInit {
       this.dataTable4.footerRow = this.dataTable4.footerRow;
       this.dataTable4.dataRows.push(... res.data);
       this.dataTable4.dataRows =_.unionBy(this.dataTable4.dataRows || [], res.data, 'id');
+      this.dataCache = this.dataTable4.dataRows;
       this.loader = false;
         this.spinner.hide();
 
@@ -291,6 +299,22 @@ export class MisDespachoComponent implements OnInit {
     this.cargarTodos2();
     this.cargarTodos3();
   }
+
+  filterDate(){
+    /*this.querysSale.where.createdAt = {
+      ">=": moment( this.filtro.dateStart ).format("YYYY-MM-DD"),
+      "<=": moment( this.filtro.dateEnd ).format("YYYY-MM-DD"),
+    };
+    this.querysSale.limit = 10;
+    this.querysSale.page = 0;
+    this.dataTable4.dataRows = [];
+    this.cargarTodos4();*/
+    this.dataTable4.dataRows = this.dataCache.filter( item => 
+      item.createdAt >=moment( this.filtro.dateStart ).format("YYYY-MM-DD") &&
+      item.createdAt <=moment( this.filtro.dateEnd ).format("YYYY-MM-DD")
+    );
+  }
+
   async handleOpenShop( obj:any ){
     const dialogRef = this.dialog.open(FormventasComponent,{
       data: { datos: await this.getVentaId( obj.ventas.id ) || {} }
@@ -310,6 +334,57 @@ export class MisDespachoComponent implements OnInit {
             this.dataTable4['dataRows'][idx]['ventas']['ven_numero_guia'] = filtro['ventas']['ven_numero_guia'];
           }
       }
+    });
+  }
+
+  handleCreateGuide(row){
+    let data = row.ventas;
+    //data.articulo = this.listCarrito;
+    const dialogRef = this.dialog.open( FormcrearguiaComponent,{
+      data: { datos: data.ventas || {} }
+    } );
+
+    dialogRef.afterClosed().subscribe(result => {
+      //console.log(`Dialog result: ${result}`);
+      if( !result ) return false;
+      data.ven_numero_guia = result.nRemesa;
+      data.ven_imagen_guia = result.urlRotulos;
+      if( data.transportadoraSelect === "CORDINADORA") this.imprimirGuia( data );
+      if( data.transportadoraSelect === "ENVIA") this.viewRotulo( data.ven_imagen_guia );
+      if( data.transportadoraSelect === "TCC") this.imprimirGuia( data );
+      data.ven_estado = 3;
+      this.handleUpdateGuide( data );
+    });
+  }
+
+  imprimirGuia( data ){
+    if( data.transportadoraSelect == "ENVIA" || data.transportadoraSelect == "TCC") {
+      if( data.ven_imagen_guia ) window.open( data.ven_imagen_guia );
+      else{
+        this._venta.getFletes( {  where: {  nRemesa: data.ven_numero_guia } } ).subscribe( ( res:any ) =>{
+          res = res.data[0];
+          if( !res ) return this._tools.tooast("Error al imprimir la guia por favor comunicarse con el servicio al cliente")
+          window.open( res.urlRotulos );
+        });
+      }
+    }
+    if( data.transportadoraSelect == "CORDINADORA" || data.transportadoraSelect == "INTERRAPIDISIMO"){
+      this._venta.imprimirFlete( {
+        codigo_remision: data.ven_numero_guia,
+        transportadoraSelect: data.transportadoraSelect
+      }).subscribe(( res:any ) =>{
+        this._tools.downloadPdf( res.data, data.ven_numero_guia );
+      })
+    }
+  }
+
+  viewRotulo( urlRotulos ){
+    this._tools.seguridadIfrane( urlRotulos );
+  }
+
+  handleUpdateGuide( data ){
+    this._venta.update( data ).subscribe((res: any) => {
+
     });
   }
 
