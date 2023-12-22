@@ -11,6 +11,7 @@ import { FormventasComponent } from '../../form/formventas/formventas.component'
 import { VentasService } from 'src/app/servicesComponents/ventas.service';
 import * as moment from 'moment';
 import { FormcrearguiaComponent } from '../../form/formcrearguia/formcrearguia.component';
+import { VentasProductosService } from 'src/app/servicesComponents/ventas-productos.service';
 
 @Component({
   selector: 'app-mis-despacho',
@@ -66,6 +67,8 @@ export class MisDespachoComponent implements OnInit {
     dateEnd: moment().format('YYYY-MM-DD')
   };
   dataCache=[];
+  listCarrito = [];
+  btnDisabled:boolean = false;
 
   constructor(
     public dialog: MatDialog,
@@ -75,6 +78,7 @@ export class MisDespachoComponent implements OnInit {
     private _store: Store<STORAGES>,
     private _usuarios: UsuariosService,
     private _venta: VentasService,
+    private _ventasProducto: VentasProductosService
   ) {
     this._store.subscribe( ( store: any ) => {
       store = store.name;
@@ -337,23 +341,61 @@ export class MisDespachoComponent implements OnInit {
     });
   }
 
-  handleCreateGuide(row){
-    let data = row.ventas;
-    //data.articulo = this.listCarrito;
-    const dialogRef = this.dialog.open( FormcrearguiaComponent,{
-      data: { datos: data.ventas || {} }
-    } );
+  async handleCreateGuide(row){
+    return new Promise( async ( resolve ) =>{
+      let data = row.ventas;
+      await this.getArticulos( data.id );
+      data.articulo = this.listCarrito;
+      const dialogRef = this.dialog.open( FormcrearguiaComponent,{
+        data: { datos: data || {} }
+      } );
 
-    dialogRef.afterClosed().subscribe(result => {
-      //console.log(`Dialog result: ${result}`);
-      if( !result ) return false;
-      data.ven_numero_guia = result.nRemesa;
-      data.ven_imagen_guia = result.urlRotulos;
-      if( data.transportadoraSelect === "CORDINADORA") this.imprimirGuia( data );
-      if( data.transportadoraSelect === "ENVIA") this.viewRotulo( data.ven_imagen_guia );
-      if( data.transportadoraSelect === "TCC") this.imprimirGuia( data );
-      data.ven_estado = 3;
-      this.handleUpdateGuide( data );
+      dialogRef.afterClosed().subscribe(result => {
+        //console.log(`Dialog result: ${result}`);
+        if( !result ) return resolve( false );
+        data.ven_numero_guia = result.nRemesa;
+        data.ven_imagen_guia = result.urlRotulos;
+        if( data.transportadoraSelect === "CORDINADORA") this.imprimirGuia( data );
+        if( data.transportadoraSelect === "ENVIA") this.viewRotulo( data.ven_imagen_guia );
+        if( data.transportadoraSelect === "TCC") this.imprimirGuia( data );
+        data.ven_estado = 3;
+        this.handleUpdateGuide( data );
+        resolve( true );
+      });
+    })
+  }
+
+  async handleCreateGuideMultiple(){
+    if( this.btnDisabled === true ) return false;
+    this.btnDisabled = true;
+    for( let row of this.dataTable4.dataRows ) if( row['check'] === true ) await this.handleCreateGuide( row );
+    this.buscar();
+    this.btnDisabled = false;
+  }
+
+  getArticulos( id ) {
+    return new Promise( resolve =>{
+      this.listCarrito = [];
+      this._ventasProducto.get({ where: { ventas: id }, limit: 10000 }).subscribe((res: any) => {
+        this.listCarrito = _.map(res.data, (item: any) => {
+          return {
+            foto: item.fotoproducto || item.producto.foto,
+            bodegaName: item.producto.pro_usu_creacion.usu_usuario,
+            idBodega: item.producto.pro_usu_creacion.id,
+            cantidad: item.cantidad,
+            tallaSelect: item.tallaSelect,
+            costo: item.precio,
+            loVendio: item.loVendio,
+            id: item.id,
+            costoTotal: item.costoTotal,
+            colorSelect: item.colorSelect,
+            codigoImg: item.codigoImg || "no seleccionado",
+            demas: item
+          };
+        });
+        //this.suma();
+        resolve( true );
+      }, (error) => { console.error(error); this._tools.presentToast("Error de servidor"); this.listCarrito = [];  resolve( false ); });
     });
   }
 
