@@ -20,6 +20,7 @@ import { OpenIframeComponent } from './open-iframe/open-iframe.component';
 import { ListArticleStoreComponent } from './list-article-store/list-article-store.component';
 import { SliderComponent } from './slider/slider.component';
 import { SwiperModule } from 'swiper/angular';
+import { ListDispatchComponent } from './list-dispatch/list-dispatch.component';
 
 @NgModule({
   entryComponents:[
@@ -39,7 +40,8 @@ import { SwiperModule } from 'swiper/angular';
     TableProductComponent,
     OpenIframeComponent,
     ListArticleStoreComponent,
-    SliderComponent
+    SliderComponent,
+    ListDispatchComponent
   ],
   imports: [
     MyOwnCustomMaterialModule,
@@ -61,7 +63,8 @@ import { SwiperModule } from 'swiper/angular';
     ImprimirTarjetaComponent,
     TableProductComponent,
     ListArticleStoreComponent,
-    SliderComponent
+    SliderComponent,
+    ListDispatchComponent
   ]
 })
 export class ExtraModule { }

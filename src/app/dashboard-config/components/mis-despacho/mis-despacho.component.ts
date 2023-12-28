@@ -6,12 +6,6 @@ import { DataTable, STORAGES } from 'src/app/interfaces/sotarage';
 import { ToolsService } from 'src/app/services/tools.service';
 import { ProductoService } from 'src/app/servicesComponents/producto.service';
 import * as _ from 'lodash';
-import { UsuariosService } from 'src/app/servicesComponents/usuarios.service';
-import { FormventasComponent } from '../../form/formventas/formventas.component';
-import { VentasService } from 'src/app/servicesComponents/ventas.service';
-import * as moment from 'moment';
-import { FormcrearguiaComponent } from '../../form/formcrearguia/formcrearguia.component';
-import { VentasProductosService } from 'src/app/servicesComponents/ventas-productos.service';
 
 @Component({
   selector: 'app-mis-despacho',
@@ -36,14 +30,14 @@ export class MisDespachoComponent implements OnInit {
     page: 0,
     limit: 10
   };
-  Header:any = [ 'Acciónes','Foto','Producto','Numero Guia', 'Estado Venta', 'Cantidad', 'Dinero','Plataforma',"Dinero Proveedor", 'Talla', 'Color', 'Creado'];
+  Header:any = [ 'Seleccionar','Transportadora','Productos', 'Fecha de orden', 'Estado de la orden', 'Numero del vendedor','Nombre cliente final',"Valor bodega", 'Venta final'];
   $:any;
-  public datoBusqueda = '';
+  
   notscrolly:boolean=true;
   notEmptyPost:boolean = true;
   dataUser:any = {};
   rolName:string;
-  opcionCurrencys:any;
+  
   reacudo:number;
   Pdreacudo:number;
   Pcreacudo:number;
@@ -62,13 +56,6 @@ export class MisDespachoComponent implements OnInit {
     limit: 10,
     skip: 0
   };
-  filtro:any = {
-    dateStart: moment().format('YYYY-MM-DD'),
-    dateEnd: moment().format('YYYY-MM-DD')
-  };
-  dataCache=[];
-  listCarrito = [];
-  btnDisabled:boolean = false;
 
   constructor(
     public dialog: MatDialog,
@@ -76,9 +63,7 @@ export class MisDespachoComponent implements OnInit {
     private _productos: ProductoService,
     private spinner: NgxSpinnerService,
     private _store: Store<STORAGES>,
-    private _usuarios: UsuariosService,
-    private _venta: VentasService,
-    private _ventasProducto: VentasProductosService
+    
   ) {
     this._store.subscribe( ( store: any ) => {
       store = store.name;
@@ -93,7 +78,6 @@ export class MisDespachoComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.opcionCurrencys = this._tools.currency;
     this.dataTable = {
       headerRow: this.Header,
       footerRow: this.Header,
@@ -128,52 +112,6 @@ export class MisDespachoComponent implements OnInit {
     //this.getDineros();
   }
 
-
-
-  /*getDineros(){
-    this._usuarios.getRecaudo( { where: { usuario: this.dataUser.id } } )
-    .subscribe( (res: any ) => {
-      try {
-        this.reacudo = res.data[0].valor;
-      } catch (error) {
-        this.reacudo = 0;
-      }
-    });
-  }*/
-
-  onScroll(){
-    if (this.notscrolly && this.notEmptyPost) {
-       this.notscrolly = false;
-       this.query.page++;
-       this.cargarTodos();
-     }
-   }
-
-   pageEvent(ev: any) {
-    this.query.page = ev.pageIndex;
-    this.query.limit = ev.pageSize;
-    this.cargarTodos();
-  }
-  pageEvent2(ev: any) {
-    this.querysSale.page = ev.pageIndex;
-    this.querysSale.limit = ev.pageSize;
-    this.cargarTodos2();
-  }
-  pageEvent3(ev: any) {
-    this.querysComplete.page = ev.pageIndex;
-    this.querysComplete.limit = ev.pageSize;
-    this.cargarTodos2();
-  }
-  pageEvent4(ev: any) {
-    this.querysComplete.page = ev.pageIndex;
-    this.querysComplete.limit = ev.pageSize;
-    this.cargarTodos4();
-  }
-  pageEvent5(ev: any) {
-    this.querysComplete.page = ev.pageIndex;
-    this.querysComplete.limit = ev.pageSize;
-    this.cargarTodos5();
-  }
   cargarTodos5() {
     this.spinner.show();
     this._productos.getVentaDevolution( this.querysSale ).subscribe(res=>{
@@ -203,7 +141,6 @@ export class MisDespachoComponent implements OnInit {
       this.dataTable4.footerRow = this.dataTable4.footerRow;
       this.dataTable4.dataRows.push(... res.data);
       this.dataTable4.dataRows =_.unionBy(this.dataTable4.dataRows || [], res.data, 'id');
-      this.dataCache = this.dataTable4.dataRows;
       this.loader = false;
         this.spinner.hide();
 
@@ -272,180 +209,4 @@ export class MisDespachoComponent implements OnInit {
         this.notscrolly = true;
     });
   }
-
-  buscar() {
-    this.loader = false;
-    this.notscrolly = true
-    this.notEmptyPost = true;
-    this.dataTable.dataRows = [];
-    //console.log(this.datoBusqueda);
-    this.datoBusqueda = this.datoBusqueda.trim();
-    this.query = {
-      where:{},
-      limit: 10
-    };
-    if (this.datoBusqueda != '') {
-      this.query.where.or = [
-        {
-          colorSelect: {
-            contains: this.datoBusqueda|| ''
-          }
-        },
-        {
-          titulo: {
-            contains: this.datoBusqueda|| ''
-          }
-        }
-      ];
-    }
-    if( this.rolName != 'administrador') this.query.where.creacion = this.dataUser.id;
-    this.cargarTodos();
-    this.cargarTodos2();
-    this.cargarTodos3();
-  }
-
-  filterDate(){
-    /*this.querysSale.where.createdAt = {
-      ">=": moment( this.filtro.dateStart ).format("YYYY-MM-DD"),
-      "<=": moment( this.filtro.dateEnd ).format("YYYY-MM-DD"),
-    };
-    this.querysSale.limit = 10;
-    this.querysSale.page = 0;
-    this.dataTable4.dataRows = [];
-    this.cargarTodos4();*/
-    this.dataTable4.dataRows = this.dataCache.filter( item => 
-      item.createdAt >=moment( this.filtro.dateStart ).format("YYYY-MM-DD") &&
-      item.createdAt <=moment( this.filtro.dateEnd ).format("YYYY-MM-DD")
-    );
-  }
-
-  async handleOpenShop( obj:any ){
-    const dialogRef = this.dialog.open(FormventasComponent,{
-      data: { datos: await this.getVentaId( obj.ventas.id ) || {} }
-    });
-
-    dialogRef.afterClosed().subscribe( async ( result ) => {
-      //console.log(`Dialog result: ${result}`);
-      if(result == 'creo') this.cargarTodos();
-      if( obj.id ) {
-        let filtro:any = await this.getDetallado( obj.id );
-          if( !filtro ) return false;
-          let idx = _.findIndex( this.dataTable4.dataRows, [ 'id', obj.id ] );
-          //console.log("**",idx)
-          if( idx >= 0 ) {
-            console.log("**",this.dataTable4['dataRows'][idx], filtro)
-            this.dataTable4['dataRows'][idx]['ventas']['ven_estado'] = filtro['ventas']['ven_estado'];
-            this.dataTable4['dataRows'][idx]['ventas']['ven_numero_guia'] = filtro['ventas']['ven_numero_guia'];
-          }
-      }
-    });
-  }
-
-  async handleCreateGuide(row){
-    return new Promise( async ( resolve ) =>{
-      let data = row.ventas;
-      await this.getArticulos( data.id );
-      data.articulo = this.listCarrito;
-      const dialogRef = this.dialog.open( FormcrearguiaComponent,{
-        data: { datos: data || {} }
-      } );
-
-      dialogRef.afterClosed().subscribe(result => {
-        //console.log(`Dialog result: ${result}`);
-        if( !result ) return resolve( false );
-        data.ven_numero_guia = result.nRemesa;
-        data.ven_imagen_guia = result.urlRotulos;
-        if( data.transportadoraSelect === "CORDINADORA") this.imprimirGuia( data );
-        if( data.transportadoraSelect === "ENVIA") this.viewRotulo( data.ven_imagen_guia );
-        if( data.transportadoraSelect === "TCC") this.imprimirGuia( data );
-        data.ven_estado = 3;
-        this.handleUpdateGuide( data );
-        resolve( true );
-      });
-    })
-  }
-
-  async handleCreateGuideMultiple(){
-    if( this.btnDisabled === true ) return false;
-    this.btnDisabled = true;
-    for( let row of this.dataTable4.dataRows ) if( row['check'] === true ) await this.handleCreateGuide( row );
-    this.buscar();
-    this.btnDisabled = false;
-  }
-
-  getArticulos( id ) {
-    return new Promise( resolve =>{
-      this.listCarrito = [];
-      this._ventasProducto.get({ where: { ventas: id }, limit: 10000 }).subscribe((res: any) => {
-        this.listCarrito = _.map(res.data, (item: any) => {
-          return {
-            foto: item.fotoproducto || item.producto.foto,
-            bodegaName: item.producto.pro_usu_creacion.usu_usuario,
-            idBodega: item.producto.pro_usu_creacion.id,
-            cantidad: item.cantidad,
-            tallaSelect: item.tallaSelect,
-            costo: item.precio,
-            loVendio: item.loVendio,
-            id: item.id,
-            costoTotal: item.costoTotal,
-            colorSelect: item.colorSelect,
-            codigoImg: item.codigoImg || "no seleccionado",
-            demas: item
-          };
-        });
-        //this.suma();
-        resolve( true );
-      }, (error) => { console.error(error); this._tools.presentToast("Error de servidor"); this.listCarrito = [];  resolve( false ); });
-    });
-  }
-
-  imprimirGuia( data ){
-    if( data.transportadoraSelect == "ENVIA" || data.transportadoraSelect == "TCC") {
-      if( data.ven_imagen_guia ) window.open( data.ven_imagen_guia );
-      else{
-        this._venta.getFletes( {  where: {  nRemesa: data.ven_numero_guia } } ).subscribe( ( res:any ) =>{
-          res = res.data[0];
-          if( !res ) return this._tools.tooast("Error al imprimir la guia por favor comunicarse con el servicio al cliente")
-          window.open( res.urlRotulos );
-        });
-      }
-    }
-    if( data.transportadoraSelect == "CORDINADORA" || data.transportadoraSelect == "INTERRAPIDISIMO"){
-      this._venta.imprimirFlete( {
-        codigo_remision: data.ven_numero_guia,
-        transportadoraSelect: data.transportadoraSelect
-      }).subscribe(( res:any ) =>{
-        this._tools.downloadPdf( res.data, data.ven_numero_guia );
-      })
-    }
-  }
-
-  viewRotulo( urlRotulos ){
-    this._tools.seguridadIfrane( urlRotulos );
-  }
-
-  handleUpdateGuide( data ){
-    this._venta.update( data ).subscribe((res: any) => {
-
-    });
-  }
-
-  async getVentaId( id:any ){
-    return new Promise( resolve => {
-      this._venta.get( { where: { id: id } } ).subscribe(( res:any )=>{
-        res = res.data[0];
-        resolve( res || false )
-      },()=> resolve( false ) );
-    })
-  }
-
-  async getDetallado( id:any ){
-    return new Promise( resolve => {
-      this._productos.getVenta( { where: { id: id } } ).subscribe(( res:any )=>{
-        res = res.data[0];
-        resolve( res || false )
-      },()=> resolve( false ) );
-    })
-  }
-
 }

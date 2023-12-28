@@ -49,6 +49,9 @@ export class VentasService {
   getFletes(query:any){
     return this._model.querysFlete('fletes/querys',query, 'post');
   }
+  getFletesInter(query:any){
+    return this._model.querysFlete('fletes/interrpRotulo',query, 'post');
+  }
   getCiudades(query:any){
     return this._model.querysFlete('ciudades/querys',query, 'post');
   }

@@ -188,6 +188,29 @@ export class ToolsService {
     return (Date.now().toString(20).substr(2, 3) + Math.random().toString(20).substr(2, 3)).toUpperCase();
   }
 
+  limpiarString( inputString:string ) {
+    // Eliminar espacios en blanco y caracteres especiales
+    const stringLimpio = inputString.replace(/[^\w\s]/gi, '').replace(/\s+/g, '');
+  
+    return stringLimpio;
+  }
+
+  buscarConPalabraClave(array, palabraClave) {
+    // Convertir la palabra clave a minúsculas para hacer la búsqueda insensible a mayúsculas
+    const palabraClaveLowerCase = palabraClave.toLowerCase();
+  
+    // Filtrar el array para incluir solo los elementos que contienen la palabra clave
+    const resultados = array.filter(elemento => {
+      // Convertir cada elemento a minúsculas para hacer la comparación insensible a mayúsculas
+      const elementoLowerCase = elemento.ventas.slug.toLowerCase();
+  
+      // Verificar si el elemento contiene la palabra clave
+      return elementoLowerCase.includes(palabraClaveLowerCase);
+    });
+  
+    return resultados;
+  }
+
   calcularDistancia(params: any) {
 
     let latitud1: any = params.latitud1;
