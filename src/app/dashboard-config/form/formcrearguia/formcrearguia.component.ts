@@ -53,9 +53,9 @@ export class FormcrearguiaComponent implements OnInit {
        numeroUnidad:  1,
        //pesoReal: valor,
        pesoVolumen: "",
-       alto: 9,
-       largo: 28,
-       ancho: 21,
+       alto: this.data.articulo[0].alto || 9,
+       largo: this.data.articulo[0].largo || 28,
+       ancho: this.data.articulo[0].ancho || 21,
        valorAsegurado: 50000 * ( valor ),
        selectEnvio: this.data.ven_tipo || 'contraEntrega'
       };
@@ -164,6 +164,7 @@ export class FormcrearguiaComponent implements OnInit {
       pesoReal: this.data.pesoReal
     };
     if( this.data.articulo[0] ) this.data2.idBodega = this.data.articulo[0].idBodega;
+    this.submit();
   }
 
   submit(){

@@ -1,6 +1,6 @@
 <h2 mat-dialog-title class="form-group bg-primary text-white rounded">Crear Guia</h2>
 <mat-dialog-content class="mat-typography">
-    <div class="form row">
+    <div class="form row" *ngIf="!btndisabled">
         <div class="form-group col-md-6 col-sm-4 col-lg-4 col-xs-6">
             <label>Empresa de Envio *</label>
             <input type="text" [(ngModel)]="data.transportadoraSelect" class="form-control form-control-sm" disabled>
@@ -55,6 +55,13 @@
         <div class="form-group col-12">
             <label for="exampleFormControlInput1">Descripcion</label>
             <textarea class="form-control" [(ngModel)]="textData" rows="6"></textarea>
+        </div>
+    </div>
+    <div class="row" *ngIf="btndisabled">
+        <div class="col-12">
+            <div class="d-flex justify-content-center">
+                <mat-spinner></mat-spinner>
+            </div>
         </div>
     </div>
 </mat-dialog-content>

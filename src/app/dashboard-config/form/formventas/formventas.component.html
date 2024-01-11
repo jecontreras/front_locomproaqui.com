@@ -300,7 +300,7 @@
     </div>
 </mat-dialog-content>
 <mat-dialog-actions>
-    <div class="row" style="width: 100%;">
+    <div class="row" style="width: 100%;" *ngIf="rolName !== 'proveedor'">
         <div class="col-6 col-sm-3 col-xs-3" *ngIf="porcentajeMostrar === 40">
             <label for="exampleFormControlInput1" class="text-primary">Valor Producto: </label> &nbsp;
             <span>$ {{ ( data.ven_totalDistribuidor || 0 ).toLocaleString(1) }} COP</span>
@@ -325,6 +325,12 @@
           <label for="exampleFormControlInput1" class="text-success">Total a Pagar: </label> &nbsp;
           <span>$ {{  ( ( data.ven_totalDistribuidor || 0 )+( data.fleteValor || 0 )  ).toLocaleString(1) }} COP</span>
       </div>
+    </div>
+    <div class="row" style="width: 100%;" *ngIf="rolName === 'proveedor'">
+        <div class="col-6 col-sm-3 col-xs-3">
+            <label for="exampleFormControlInput1" class="text-primary">Valor Producto: </label> &nbsp;
+            <span>$ {{ ( data.ven_totalDistribuidor || 0 ).toLocaleString(1) }} COP</span>
+        </div>
     </div>
 </mat-dialog-actions>
 <mat-dialog-actions align="end">
