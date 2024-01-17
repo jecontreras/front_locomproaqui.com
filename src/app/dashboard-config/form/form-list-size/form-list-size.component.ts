@@ -107,7 +107,7 @@ export class FormListSizeComponent implements OnInit {
     return new Promise( resolve =>{
       this._tipoTalla.createTallas( item ).subscribe((res:any)=>{
         //console.log(res);
-        this.data.id = res.id;
+        //this.data.id = res.id;
         this._tools.presentToast("Exitoso");
         resolve( res );
       }, (error)=>{ this._tools.presentToast("Error"); resolve( false ); });
@@ -138,6 +138,7 @@ export class FormListSizeComponent implements OnInit {
     } catch (error) {
 
     }
+    //if( this.id )  this.submitHijos();
   }
 
   async remove(item: Fruit) {
