@@ -365,7 +365,9 @@ export class ProductosViewComponent implements OnInit {
     this.suma();
     //this.AgregarCart();
     this.data.cantidadAd = opt == true ? cantidad : this.pedido.cantidad || cantidad;
-    this.data.talla = this.pedido.talla;
+    try {
+      this.data.talla = this.pedido.talla || this.data.listTallas[0].tal_descripcion;
+    } catch (error) { }
     this.data.opt = opt;
     this.data.foto = this.viewsImagen;
     const dialogRef = this.dialog.open(ChecktDialogComponent,{

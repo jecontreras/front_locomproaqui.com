@@ -605,20 +605,21 @@ export class FormventasComponent implements OnInit {
   }
 
   generarGuia(){
+    console.log("***", this.data)
     this.data.articulo = this.listCarrito;
     const dialogRef = this.dialog.open( FormcrearguiaComponent,{
       data: { datos: this.data || {} }
     } );
 
     dialogRef.afterClosed().subscribe(result => {
-      //console.log(`Dialog result: ${result}`);
+      console.log(`Dialog result: ${result}`);
       if( !result ) return false;
       this.data.ven_numero_guia = result.nRemesa;
       this.data.ven_imagen_guia = result.urlRotulos;
       if( this.data.transportadoraSelect === "CORDINADORA") this.imprimirGuia();
-      if( this.data.transportadoraSelect === "ENVIA") this.viewRotulo( this.data.ven_imagen_guia );
+      if( this.data.transportadoraSelect === "ENVIA") this.viewRotulo( result.urlRotulos );
       if( this.data.transportadoraSelect === "TCC") this.imprimirGuia();
-      this.data.ven_estado = 3;
+      this.data.ven_estado = 6;
       this.updates();
     });
   }
@@ -642,6 +643,7 @@ export class FormventasComponent implements OnInit {
 
   viewRotulo( urlRotulos ){
     this.url = this._tools.seguridadIfrane( urlRotulos );
+    window.open( urlRotulos );
   }
 
   imprimirGuia(){

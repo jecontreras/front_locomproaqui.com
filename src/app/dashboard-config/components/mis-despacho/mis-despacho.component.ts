@@ -19,6 +19,7 @@ export class MisDespachoComponent implements OnInit {
   dataTable3: DataTable;
   dataTable4: DataTable;
   dataTable5: DataTable;
+  dataTable6: DataTable;
 
   pagina = 10;
   paginas = 0;
@@ -103,13 +104,37 @@ export class MisDespachoComponent implements OnInit {
       footerRow: this.Header,
       dataRows: []
     };
+    this.dataTable6 = {
+      headerRow: this.Header,
+      footerRow: this.Header,
+      dataRows: []
+    };
     if( this.rolName != 'administrador') this.query.where.creacion = this.dataUser.id;
     this.cargarTodos();
     this.cargarTodos2();
     this.cargarTodos3();
     this.cargarTodos4();
     this.cargarTodos5();
+    this.cargarTodos6();
     //this.getDineros();
+  }
+
+  cargarTodos6() {
+    this.spinner.show();
+    this._productos.getTransactionsPreparacion( this.querysSale ).subscribe(res=>{
+      console.log("****55", res)
+      this.dataTable6.headerRow = this.dataTable6.headerRow;
+      this.dataTable6.footerRow = this.dataTable6.footerRow;
+      this.dataTable6.dataRows.push(... res.data);
+      this.dataTable6.dataRows =_.unionBy(this.dataTable6.dataRows || [], res.data, 'id');
+      this.loader = false;
+        this.spinner.hide();
+
+        if (res.data.length === 0 ) {
+          this.notEmptyPost =  false;
+        }
+        this.notscrolly = true;
+    });
   }
 
   cargarTodos5() {
@@ -131,6 +156,7 @@ export class MisDespachoComponent implements OnInit {
         this.notscrolly = true;
     });
   }
+
   cargarTodos4() {
     this.spinner.show();
     this._productos.getVentaCompletePendients( this.querysSale ).subscribe(res=>{
