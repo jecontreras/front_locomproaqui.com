@@ -173,10 +173,10 @@ export class CatalogoComponent implements OnInit {
       } catch (error) { }
       this.urlFoto = this.data.foto;
       for( let row of this.data.listColor ){
-        row.tal_descripcion = Number( row.tal_descripcion );
+        //row.tal_descripcion = Number( row.tal_descripcion );
         if( row.galeriaList)for( let key of row.galeriaList ) this.listGaleria.push( { ... key, name: row.talla } );
       }
-      this.data.listColor = _.orderBy( this.data.listColor, ['tal_descripcion'], ['desc']);
+      //this.data.listColor = _.orderBy( this.data.listColor, ['tal_descripcion'], ['desc']);
       if( this.data.galeria ) for( let key of this.data.galeria ) this.listGaleria.push( { ...key, foto:key.pri_imagen  } );
       if( this.data.listaGaleria ) for( let key of this.data.listaGaleria ) this.listGaleria.push( { ...key, foto:key.foto  } );
       for( let row of this.listGaleria ) this.imageObject.push( {

@@ -536,7 +536,7 @@ export class FormproductosComponent implements OnInit {
       return !1;
     this.tallaSelect = filtro.lista || [];
     for (let row of this.tallaSelect) row.check = !0;
-    this.tallaSelect = _.orderBy(this.tallaSelect, ["tal_descripcion"], ["asc"]);
+    //this.tallaSelect = _.orderBy(this.tallaSelect, ["tal_descripcion"], ["asc"]);
     if( opt == 2) {
       for(let row of this.tallaSelect){
         try {

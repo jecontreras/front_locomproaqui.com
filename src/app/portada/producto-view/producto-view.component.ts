@@ -165,8 +165,8 @@ export class ProductosViewComponent implements OnInit {
       console.log("***165", this.data.listComentarios)
       try {
         this.data.listTallas = this.data.listColor[0].tallaSelect.filter( item => item.cantidad );
-        for( let row of this.data.listTallas ) row.tal_descripcion = ( Number( row.tal_descripcion ) || row.tal_descripcion );
-        this.data.listTallas = _.orderBy( this.data.listTallas , ['tal_descripcion'], ['DEC'] );
+        //for( let row of this.data.listTallas ) row.tal_descripcion = ( Number( row.tal_descripcion ) || row.tal_descripcion );
+        //this.data.listTallas = _.orderBy( this.data.listTallas , ['tal_descripcion'], ['DEC'] );
         console.log( "129", this.data )
       } catch (error) {}
       this.viewsImagen = this.data.foto;

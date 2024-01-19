@@ -48,12 +48,12 @@ export class FormListSizeComponent implements OnInit {
     this._tipoTalla.getTalla( { where: { tal_tipo: this.id, tal_sw_activo: 0 }, limit: 1000 } ).subscribe((res:any)=>{
       this.listTipoTalla =_.map( res.data , ( row )=>{
         return {
-          //... row,
+          ... row,
           id: row.id,
-          tal_descripcion: Number( row.tal_descripcion ) || String( row.tal_descripcion ),
+          tal_descripcion: Number( row.tal_descripcion ) || String( row.tal_descripcion )
         };
       });
-      this.listTipoTalla = _.orderBy( this.listTipoTalla, ['tal_descripcion'], ['asc'] );
+      //this.listTipoTalla = _.orderBy( this.listTipoTalla, ['tal_descripcion'], ['asc'] );
       //console.log( this.listTipoTalla, res )
     }, error=> this._tools.presentToast("error servidor"));
   }
@@ -159,6 +159,19 @@ export class FormListSizeComponent implements OnInit {
         id: item.id,
         tal_sw_activo: 1
       }
+      this._tipoTalla.updateTalla( data ).subscribe(( res:any )=>{
+        this._tools.tooast( { title: "Eliminado" });
+        resolve( true );
+      },()=> { this._tools.tooast( { title: "Error de servidor", icon:"error" } ); resolve( false ); } );
+    });
+  }
+
+  async handleOrdenate( item ){
+    return new Promise(resolve =>{
+      let data = {
+        id: item.id,
+        ordenar: item.ordenar
+      };
       this._tipoTalla.updateTalla( data ).subscribe(( res:any )=>{
         this._tools.tooast( { title: "Eliminado" });
         resolve( true );
