@@ -123,7 +123,7 @@ export class ListDispatchComponent implements OnInit {
         if( data.transportadoraSelect === "CORDINADORA") this.imprimirGuia( data );
         if( data.transportadoraSelect === "ENVIA") this.viewRotulo( data.ven_imagen_guia );
         if( data.transportadoraSelect === "TCC") this.imprimirGuia( data );
-        data.ven_estado = 3;
+        data.ven_estado = 6;
         this.handleUpdateGuide( data );
         resolve( true );
       });

@@ -559,11 +559,11 @@ export class HeaderComponent implements OnInit {
         disable: this.rolUser == 'administrador' || this.rolUser == 'vendedor',
         url: '/config/controlInventario',
         submenus:[
-          {
+          /*{
             icons: 'settings',
             nombre: 'Proveedores Verficados',
             url: '/config/store/index',
-          },
+          },*/
           {
             icons: 'settings',
             nombre: 'Bodegas',

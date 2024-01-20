@@ -88,7 +88,8 @@
                                     'colorDespachado':row['ventas']['ven_estado'] == 3,
                                     'colorEntrante':row['ventas']['ven_estado'] == 0,
                                     'colorDevolucion':row['ventas']['ven_estado'] == 2,
-                                    'colorEliminado':row['ventas']['ven_estado'] == 5
+                                    'colorEliminado':row['ventas']['ven_estado'] == 5,
+                                    'colorProceso':row['ventas']['ven_estado'] == 6
                                   }">
                         <td>
                             <section class="example-section">
@@ -153,6 +154,7 @@
                             <span *ngIf="row['ventas']['ven_estado'] == 1" class="text-success">Exitosa</span>
                             <span *ngIf="row['ventas']['ven_estado'] == 2" class="text-danger">Rechazada</span>
                             <span *ngIf="row['ventas']['ven_estado'] == 3" class="text-primary">Despachado</span>
+                            <span *ngIf="row['ventas']['ven_estado'] == 6" class="text-warning">Preparación</span>
                           </section>
                         </td>
                         <td>

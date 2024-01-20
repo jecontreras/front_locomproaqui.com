@@ -49,8 +49,9 @@ export class FormPlatformComponent implements OnInit {
     }else{
       this.data.email = this.dataUser.usu_email;
       this.data.nombreEmpresa = this.dataUser.usu_usuario;
-      this.data.nombrePersona = this.dataUser.usu_usuario;
+      this.data.nombrePersona = this.dataUser.usu_nombre;
       this.data.telefono = this.dataUser.usu_telefono;
+      this.data.direccion = this.dataUser.usu_direccion;
     }
     this.getCiudades();
   }

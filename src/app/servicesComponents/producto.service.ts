@@ -67,6 +67,9 @@ export class ProductoService {
   getVentaDevolution(query:any){
     return this._model.querys('tblventas/getTransactionsDevolution',query, 'post');
   }
+  getTransactionsPreparacion(query:any){
+    return this._model.querys('tblventas/getTransactionsPreparacion',query, 'post');
+  }
   createTestimonio(query:any){
     return this._model.querys('tbltestimonio',query, 'post');
   }

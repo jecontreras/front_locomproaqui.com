@@ -25,6 +25,17 @@
                 </mat-chip-list>
             </mat-form-field>
         </div>
+        <div class="form-group col-12"> 
+            <h4>Lista de Tallas Hijas</h4>
+            <ul class="list-group list-group-flush">
+                <li class="list-group-item" *ngFor="let item of listTipoTalla">
+                    <h4>Item: {{ item.tal_descripcion }}</h4>
+                    <span>
+                        <input type="number" placeholder="Ordenar Item" (change)="handleOrdenate( item )" [(ngModel)]="item.ordenar" class="form-control form-control-sm">
+                    </span>
+                </li>
+              </ul>
+        </div>
         <div class="form-group col-12">
             <label for="exampleFormControlInput1">Ordenador</label>
             <input type="text" [(ngModel)]="data.ordenador" class="form-control form-control-sm">
