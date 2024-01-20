@@ -1,0 +1,189 @@
+<p>&nbsp;<a [routerLink]="['/config/verCatalagoProveedor']"
+        style="box-sizing: border-box; color: #0040ff; cursor: pointer; font-family: Montserrat, sans-serif; font-size: 1.2vw; letter-spacing: 0.04vw; text-decoration-line: none;">Volver
+        al listado</a><span
+        style="background-color: #eef3f4; color: #484848; font-family: Montserrat, sans-serif; font-size: 1.2vw; letter-spacing: 0.04vw;">&nbsp;|&nbsp;</span><a
+        [routerLink]="['/config/verProveedor/', idProveedor ]"
+        style="box-sizing: border-box; color: #0040ff; cursor: pointer; font-family: Montserrat, sans-serif; font-size: 1.2vw; letter-spacing: 0.04vw;">
+        {{ titulo }}</a><span
+        style="background-color: #eef3f4; color: #484848; font-family: Montserrat, sans-serif; font-size: 1.2vw; letter-spacing: 0.04vw;">&nbsp;&gt;&nbsp;</span><a
+        style="box-sizing: border-box; color: #0040ff; cursor: pointer; font-family: Montserrat, sans-serif; font-size: 1.2vw; letter-spacing: 0.04vw;">{{
+        data.pro_nombre }}</a></p>
+<div class="row"
+    style="--bs-gutter-x: 1.5rem; --bs-gutter-y: 0; background-color: #eef3f4; box-sizing: border-box; color: #212529; display: flex; flex-wrap: wrap; font-family: Montserrat, sans-serif; font-size: 16px; margin-left: 0.5vw; margin-right: -15px; margin-top: calc(var(--bs-gutter-y) * -1);">
+    <div class="col-7">
+        <lib-ngx-image-zoom [thumbImage]=urlFoto [fullImage]=urlFoto [magnification]="1" [enableScrollZoom]="true"
+            [enableLens]="true" [lensWidth]="200" [lensHeight]="200">
+        </lib-ngx-image-zoom>
+        <div class="col-12">
+            <ng-image-slider [images]="imageObject" [infinite]="sliderInfinite" [imagePopup]="sliderImagePopup"
+                style="width: 100%;" [showArrow]="sliderArrowShow"
+                [imageSize]="{width: sliderImageWidth, height: sliderImageHeight}" [autoSlide]="sliderAutoSlide ? 1 : 0"
+                [slideImage]="sliderSlideImage" [animationSpeed]="sliderAnimationSpeed"
+                (imageClick)="imageOnClick($event)" (arrowClick)="arrowOnClick($event)"
+                (lightboxArrowClick)="lightboxArrowClick($event)" #nav (mouseover)="eventoFoto($event)">
+            </ng-image-slider>
+        </div>
+    </div>
+    <div class="col-4 descripcion1">
+        <h3
+            style="box-sizing: border-box; color: #484848; font-family:Josefin San, sans-serif !important; font-size: 2.5vw; font-weight: 500; line-height: 1.2; margin-bottom: 0.5rem; margin-top: 0px;">
+            {{ data.pro_nombre }}</h3>
+        <h5 class="greenFont"
+            style="box-sizing: border-box; color: #22b573; font-family:Josefin San, sans-serif !important; font-size: 2vw; font-weight: 500; line-height: 1.2; margin-bottom: 0.5rem; margin-top: 0px;">
+            <span style="box-sizing: border-box; font-family: Montserrat, sans-serif !important; font-size: 1.8vw;">
+            </span>Precio Vendedor: {{ _tools.monedaChange( 3, 2, data.pro_vendedor ) }}
+        </h5>
+        <!--<h5 class="greenFont"  style="box-sizing: border-box; color: #22b573; font-family:Josefin San, sans-serif !important; font-size: 2vw; font-weight: 500; line-height: 1.2; margin-bottom: 0.5rem; margin-top: 0px;">
+            <span style="box-sizing: border-box; font-family: Montserrat, sans-serif !important; font-size: 1.8vw;">
+            </span>Precio Sugerido: {{ _tools.monedaChange( 3, 2, data.pro_uni_venta ) }}
+        </h5>-->
+        <!--<h6
+            style="box-sizing: border-box; font-size: 1.4vw; font-weight: 500; line-height: 1.2; margin-bottom: 0.5rem; margin-top: 0px;">
+            <span class="triidy-color" style="box-sizing: border-box; color: #484848;">la
+                mixteria</span></h6>-->
+        <hr
+            style="background-color: currentcolor; border-bottom: 0px; border-image: initial; border-left: 0px; border-right: 0px; border-top-color: rgba(0, 0, 0, 0.1); border-top-style: solid; box-sizing: content-box; color: inherit; height: 1px; margin: 1rem 0px; opacity: 0.25; overflow: visible;" />
+        <div class="row"
+            style="--bs-gutter-x: 1.5rem; --bs-gutter-y: 0; box-sizing: border-box; display: flex; flex-wrap: wrap; margin-left: 0.5vw; margin-right: -15px; margin-top: calc(var(--bs-gutter-y) * -1);">
+            <div class="col-2"
+                style="align-items: center; box-sizing: border-box; display: flex; flex: 0 0 16.6667%; margin-top: var(--bs-gutter-y); max-width: 16.6667%; padding-left: 15px; padding-right: 15px; position: relative; width: 87.6562px;">
+                <!--<img alt="" src="https://triidyftp.s3.us-east-2.amazonaws.com/Triidy_web/storeIcon.png"
+                    style="border-style: none; box-sizing: border-box; height: auto; max-width: none; object-fit: cover; vertical-align: middle; width: 3.2vw;" />-->
+                    <i class="material-icons icoss">storefront</i>
+            </div>
+            <div class="col-10"
+                style="box-sizing: border-box; flex: 0 0 83.3333%; margin-top: var(--bs-gutter-y); max-width: 83.3333%; padding-left: 15px; padding-right: 15px; position: relative; width: 438.281px;">
+                <p
+                    style="box-sizing: border-box; color: #484848; font-size: 1.2vw; margin-bottom: 0px; margin-top: 0px;">
+                    120 Tiendas venden este producto</p>
+            </div>
+        </div>
+        <div class="row"
+            style="--bs-gutter-x: 1.5rem; --bs-gutter-y: 0; box-sizing: border-box; display: flex; flex-wrap: wrap; margin-left: 0.5vw; margin-right: -15px; margin-top: calc(var(--bs-gutter-y) * -1);"
+        >
+            <div class="col-2"
+                style="align-items: center; box-sizing: border-box; display: flex; flex: 0 0 16.6667%; margin-top: var(--bs-gutter-y); max-width: 16.6667%; padding-left: 15px; padding-right: 15px; position: relative; width: 87.6562px;">
+                <!--<img alt="" src="https://triidyftp.s3.us-east-2.amazonaws.com/Triidy_web/loyaltyIcon.png"
+                    style="border-style: none; box-sizing: border-box; height: auto; max-width: none; object-fit: cover; vertical-align: middle; width: 3.2vw;" />-->
+                <i class="material-icons icoss">sell</i>
+            </div>
+            <div class="col-10"
+                style="box-sizing: border-box; flex: 0 0 83.3333%; margin-top: var(--bs-gutter-y); max-width: 83.3333%; padding-left: 15px; padding-right: 15px; position: relative; width: 438.281px;">
+                <p
+                    style="box-sizing: border-box; color: #484848; font-size: 1.2vw; margin-bottom: 0px; margin-top: 0px;">
+                    <span style="box-sizing: border-box; font-weight: bolder;">Popularidad del
+                        producto</span><br style="box-sizing: border-box;" />462 ventas en total
+                </p>
+            </div>
+        </div><br style="box-sizing: border-box;" />
+        <h6 class="ng-star-inserted"
+            style="box-sizing: border-box; font-size: 1.4vw; font-weight: 500; line-height: 1.2; margin-bottom: 0.5rem; margin-top: 0px;">
+            Precio de venta sugerido</h6>
+        <h5 class="greenFont ng-star-inserted"
+            style="box-sizing: border-box; color: #22b573; font-family:Josefin San, sans-serif !important; font-size: 2vw; font-weight: 500; line-height: 1.2; margin-bottom: 0.5rem; margin-top: 0px;">
+            <span
+                style="box-sizing: border-box; font-family: Montserrat, sans-serif !important; font-size: 1.8vw;"></span>{{
+            _tools.monedaChange( 3, 2, data.pro_uni_venta ) }}
+        </h5>
+        <div class="row r-gan ng-star-inserted"
+            style="--bs-gutter-x: 1.5rem; --bs-gutter-y: 0; box-sizing: border-box; display: flex; flex-wrap: wrap; margin: 1vw -15px 1vw 0.5vw;">
+            <div class="col-5"
+                style="box-sizing: border-box; flex: 0 0 41.6667%; margin-top: var(--bs-gutter-y); max-width: 41.6667%; padding-left: 15px; padding-right: 15px; position: relative; width: 219.141px;">
+                <h6
+                    style="box-sizing: border-box; font-size: 1.4vw; font-weight: 500; line-height: 1.2; margin-bottom: 0.5rem; margin-top: 0px;">
+                    Ganancia:</h6>
+            </div>
+            <div class="col-6"
+                style="box-sizing: border-box; flex: 0 0 50%; margin-top: var(--bs-gutter-y); max-width: 50%; padding-left: 15px; padding-right: 15px; position: relative; width: 262.969px;">
+                {{ _tools.monedaChange( 3, 2, ( data.ganancia ) ) }}
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-12 col-sm-4" *ngIf="data.listTallas">
+                <label for="exampleFormControlSelect1">Color disponibles:</label>
+                <select class="form-control form-control-sm" [(ngModel)]="data.color" (change)="colorSeleccionado( );">
+                    <option value="null">Todos</option>
+                    <option [value]="item.talla" *ngFor="let item of data.listColor">{{
+                        item.talla }}
+                    </option>
+                </select>
+            </div>
+            <div class="col-12 col-sm-4" *ngIf="data.listTallas">
+                <label for="exampleFormControlSelect1">Tallas disponibles:</label>
+                <select class="form-control form-control-sm" [(ngModel)]="data.tallas" (change)="seleccionTalla()"
+                    [disabled]="!data.color">
+                    <option [value]="item.tal_descripcion" *ngFor="let item of seleccionoColor.tallaSelect">
+                        talla: {{
+                        item.tal_descripcion }} UND: {{ item.cantidad }}</option>
+                </select>
+            </div>
+            <div class="col-12 col-sm-4" *ngIf="seleccionnTalla">
+                <label>Cantidad Disponibles</label>
+                <input type="number" [(ngModel)]="seleccionnTalla.cantidad" disabled class="form-control form-control-sm">
+            </div>
+            <div class="col-12 col-sm-4">
+                <label>Cantidad Adquirir</label>
+                <input type="number" [(ngModel)]="data.cantidadAdquirir" class="form-control form-control-sm">
+            </div>
+        </div>
+        <div class="r-agrega ng-star-inserted" style="box-sizing: border-box; text-align: center;"><br>
+            <button type="button" class="btn btn-primary" (click)="AgregarCart( false )">Agregar Producto</button>
+        </div>
+    </div>
+</div>
+<div class="row"
+    style="--bs-gutter-x: 1.5rem; --bs-gutter-y: 0; background-color: #eef3f4; box-sizing: border-box; color: #212529; display: flex; flex-wrap: wrap; font-family: Montserrat, sans-serif; font-size: 16px; margin-left: 0.5vw; margin-right: -15px; margin-top: calc(var(--bs-gutter-y) * -1);">
+    <div class="col-7 descripcion2"
+        style="background: rgb(255, 255, 255); box-sizing: border-box; flex: 0 0 58.3333%; margin: 0.5vw; max-width: 58.3333%; padding: 2vw; position: relative; width: 1045.33px;">
+        <h3
+            style="box-sizing: border-box; color: #484848; font-family:Josefin San, sans-serif !important; font-size: 2.5vw; font-weight: 500; line-height: 1.2; margin-bottom: 0.5rem; margin-top: 0px;">
+            <span class="triidy-color"
+                style="box-sizing: border-box; font-family: Montserrat, sans-serif !important;">Descripción</span>
+        </h3>
+        <p style="box-sizing: border-box; color: #484848; font-size: 1.2vw; margin-bottom: 1rem; margin-top: 0px;"
+            [innerHtml]="data.pro_descripcion"></p>
+    </div>
+    <div class="col-4 descripcion3 ng-star-inserted"
+        style="background: rgb(255, 255, 255); box-sizing: border-box; flex: 0 0 33.3333%; margin: 0.5vw; max-width: 33.3333%; padding: 2vw; position: relative; text-align: center; width: 597.328px;">
+        <img alt="Triidy" class="calif ng-star-inserted"
+            src="https://triidyftp.s3.us-east-2.amazonaws.com/Triidy_web/MarketCalif_new1.png"
+            style="border-style: none; box-sizing: border-box; height: auto; max-width: 100%; object-fit: cover; vertical-align: middle; width: 468.484px;" />
+        <div class="grid-container"
+            style="box-sizing: border-box; display: grid; grid-template-columns: auto auto auto; padding: 10px;">
+            <div class="grid-item"
+                style="background-color: rgba(0, 0, 0, 0); box-sizing: border-box; font-size: 30px; padding: 0.5vw;">
+                <span class="vent-store" style="box-sizing: border-box; color: #757677; font-size: 2vw;">{{ numeroAleatori }}</span><br
+                    style="box-sizing: border-box;" />
+                <p class="text-store"
+                    style="box-sizing: border-box; color: #4d4d4d; font-size: 0.7vw; margin-bottom: 1rem; margin-top: 0px;">
+                    venta(s) en el<br style="box-sizing: border-box;" />ultimo mes</p>
+            </div>
+        </div>
+        <hr
+            style="background-color: currentcolor; border-bottom: 0px; border-image: initial; border-left: 0px; border-right: 0px; border-top-color: rgba(0, 0, 0, 0.1); border-top-style: solid; box-sizing: content-box; color: inherit; height: 1px; margin: 1rem 0px; opacity: 0.25; overflow: visible;" />
+        <h3 class="greenFont"
+            style="box-sizing: border-box; color: #22b573; font-family:Josefin San, sans-serif !important; font-size: 2.5vw; font-weight: 500; line-height: 1.2; margin-bottom: 0.5rem; margin-top: 0px;">
+            Garantía</h3>
+        <p style="box-sizing: border-box; color: #484848; font-size: 1.1vw; margin-bottom: 1rem; margin-top: 0px;">
+            {{ titulo }} tiene una garantia por defectos de fabrica por 15 dia(s)</p>
+        <hr
+            style="background-color: currentcolor; border-bottom: 0px; border-image: initial; border-left: 0px; border-right: 0px; border-top-color: rgba(0, 0, 0, 0.1); border-top-style: solid; box-sizing: content-box; color: inherit; height: 1px; margin: 1rem 0px; opacity: 0.25; overflow: visible;" />
+        <h3
+            style="box-sizing: border-box; color: #484848; font-family:Josefin San, sans-serif !important; font-size: 2.5vw; font-weight: 500; line-height: 1.2; margin-bottom: 0.5rem; margin-top: 0px;">
+            <span class="fas fa-shield-alt"
+                style="-webkit-font-smoothing: antialiased; box-sizing: border-box; display: inline-block; font-family:Font Awesome 5 Fre; font-variant-east-asian: normal; font-variant-numeric: normal; font-weight: 900; line-height: 1; text-rendering: auto;"></span><span
+                class="triidy-color"
+                style="box-sizing: border-box; font-family: Montserrat, sans-serif !important;">Compra protegida</span>
+        </h3>
+        <p style="box-sizing: border-box; color: #484848; font-size: 1.1vw; margin-bottom: 1rem; margin-top: 0px;">
+            Seguridad total al adquirir el producto, protegido por la billetera digital de Lokomproaqui</p>
+        <hr
+            style="background-color: currentcolor; border-bottom: 0px; border-image: initial; border-left: 0px; border-right: 0px; border-top-color: rgba(0, 0, 0, 0.1); border-top-style: solid; box-sizing: content-box; color: inherit; height: 1px; margin: 1rem 0px; opacity: 0.25; overflow: visible;" />
+        <!--<h3
+            style="box-sizing: border-box; color: #484848; font-family:Josefin San, sans-serif !important; font-size: 2.5vw; font-weight: 500; line-height: 1.2; margin-bottom: 0.5rem; margin-top: 0px;">
+            <span class="triidy-color"
+                style="box-sizing: border-box; font-family: Montserrat, sans-serif !important;">Productos
+                similares</span>
+        </h3>-->
+    </div>
+</div>

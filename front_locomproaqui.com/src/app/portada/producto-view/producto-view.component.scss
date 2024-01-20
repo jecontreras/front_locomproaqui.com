@@ -1,0 +1,274 @@
+.anchos{
+  margin: 5px;
+}
+
+.selecciono {
+  background: #dff907;
+}
+
+.ancho {
+  width: 100%;
+}
+.fondoFoto{
+  height: 2pc;
+  width: 100%;
+}
+.precio {
+font-size: 25px;
+background: #76ffb3;
+color: white;
+padding: 6px;
+border-radius: 10px;
+}
+
+
+/*** ESTILOS BOTÓN SLIDE LEFT ***/
+
+.ov-btn-slide-close {
+background: #008116; /* color de fondo */
+color: #f2f4f3 !important; /* color de fuente */
+border: 2px solid #008116; /* tamaño y color de borde */
+padding: 16px 20px;
+border-radius: 3px; /* redondear bordes */
+position: relative;
+z-index: 1;
+overflow: hidden;
+display: inline-block;
+}
+.ov-btn-slide-close:before, .ov-btn-slide-close:after {
+content: "";
+z-index: -1;
+position: absolute;
+width: 50%;
+height: 100%;
+top: 0;
+left: -50%;
+background-color: #f9f9f9; /* color de fondo hover */
+-webkit-transition: all 0.3s ease-in-out;
+-o-transition: all 0.3s ease-in-out;
+transition: all 0.3s ease-in-out;
+}
+.ov-btn-slide-close:after {
+left: 100%;
+}
+.ov-btn-slide-close:hover {
+color: #0d0d0d !important; /* color de fuente hover */
+
+}
+.ov-btn-slide-close:hover:before {
+left: 0;
+}
+.ov-btn-slide-close:hover:after {
+left: 50%;
+}
+
+
+/* Add your styles for product view here */
+#product-image:hover {
+  transform: scale(1.2); /* Zoom effect on hover */
+}
+
+.thumbnail-image {
+  width: 100%;
+  height: auto;
+  cursor: pointer;
+}
+
+.image-list {
+  margin-top: 10px;
+}
+
+.product-title {
+  font-size: 24px;
+  font-weight: bold;
+  color: #333; /* Adjust color as needed */
+}
+
+.precio {
+  font-size: 20px;
+  font-weight: bold;
+  color: #4CAF50; /* Green color for price */
+}
+
+.special-offer {
+  font-size: 130%;
+  background: #fbff00;
+  color: #212529;
+  border-radius: 11px;
+}
+
+.special-offer:hover {
+  background: #e5e500;
+}
+
+.product-description {
+  margin-top: 20px;
+  font-size: 16px;
+}
+
+.shipping-icon {
+  width: 45px;
+}
+
+/* Estilos para el título del producto */
+#product-title {
+  font-size: 32px; /* Ajusta el tamaño del texto según lo necesario */
+  font-weight: bold;
+  color: #333; /* Color del texto (ajusta según sea necesario) */
+}
+
+/* Estilos para el precio del producto */
+#product-price {
+  font-size: 24px; /* Ajusta el tamaño del texto según lo necesario */
+  font-weight: bold;
+  color: #4CAF50; /* Color del texto (ajusta según sea necesario) */
+  animation: pulse 1.5s infinite alternate; /* Animación pulsante */
+}
+
+/* Animación pulsante */
+@keyframes pulse {
+  from {
+    transform: scale(1.0);
+  }
+  to {
+    transform: scale(1.2);
+  }
+}
+
+
+.image-container {
+  position: relative;
+  display: inline-block;
+  margin: 10px;
+  max-width: 100%;
+  text-align: center;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s ease-in-out;
+}
+
+.image-container img {
+  max-width: 100%;
+  height: auto;
+  border-radius: 5px;
+}
+
+.image-caption {
+  position: absolute;
+  bottom: 10px;
+  left: 50%;
+  transform: translateX(-50%);
+  background-color: rgba(0, 0, 0, 0.7);
+  color: #fff;
+  padding: 5px 10px;
+  border-radius: 5px;
+  display: none;
+}
+
+.image-container:hover {
+  transform: scale(1.05);
+}
+
+.image-container:hover .image-caption {
+  display: block;
+}
+
+
+.testimonial-section {
+  background-color: black;
+  color: white;
+  padding: 20px;
+}
+
+.testimonial-section h2 {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.testimonial-list {
+  list-style: none;
+  padding: 0;
+}
+
+.testimonial-item {
+  display: flex;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.testimonial-image img {
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+}
+
+.testimonial-content {
+  margin-left: 20px;
+}
+
+.testimonial-author {
+  font-weight: bold;
+}
+
+.testimonial-date {
+  font-size: 12px;
+  margin-bottom: 5px;
+}
+
+.testimonial-rating {
+  color: #ffd700; /* Color dorado para las estrellas (amarillo) */
+}
+
+.testimonial-description {
+  font-size: 14px;
+}
+
+
+.related-products-title {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.aa-product-item {
+  display: inline-block;
+  margin: 0 10px;
+  text-align: center;
+  background-color: #ffffff;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  border-radius: 10px;
+}
+
+.product-image-container img {
+  max-width: 100%;
+  height: auto;
+}
+
+.product-description {
+  color: #000000;
+}
+
+.product-title {
+  font-size: 1.2em;
+  margin-bottom: 10px;
+}
+
+.product-price {
+  font-size: 1.1em;
+}
+
+.product-image-container {
+  position: relative;
+  overflow: hidden;
+}
+
+.image-zoom {
+  transition: transform 0.3s ease;
+}
+
+.image-zoom img {
+  width: 100%;
+  height: auto;
+}
+
+.product-image-container:hover .image-zoom {
+  transform: scale(1.2);
+}

@@ -1,0 +1,40 @@
+.img-contenedor img {
+  -webkit-transition:all .9s ease; /* Safari y Chrome */
+  -moz-transition:all .9s ease; /* Firefox */
+  -o-transition:all .9s ease; /* IE 9 */
+  -ms-transition:all .9s ease; /* Opera */
+  width:100%;
+  }
+  .img-contenedor:hover img {
+  -webkit-transform:scale(1.25);
+  -moz-transform:scale(1.25);
+  -ms-transform:scale(1.25);
+  -o-transform:scale(1.25);
+  transform:scale(1.25);
+  }
+  .img-contenedor {/*Ancho y altura son modificables al requerimiento de cada uno*/
+  // width:300px;
+  // height:180px;
+  overflow:hidden;
+  }
+
+
+  .image-container {
+    width: 100%; /* Ancho fijo para la imagen */
+    height: 200px; /* Alto fijo para la imagen */
+    border: 1px solid #ccc; /* Borde alrededor de la imagen */
+    border-radius: 10px; /* Borde redondeado */
+    overflow: hidden; /* Ocultar cualquier contenido que se desborde */
+    position: relative;
+  }
+  
+  .image-zoom {
+    width: 100%; /* Asegura que la imagen ocupe todo el espacio del contenedor */
+    height: 100%; /* Asegura que la imagen ocupe todo el espacio del contenedor */
+    transition: transform 0.2s; /* Efecto de zoom */
+  }
+  
+  .image-container:hover .image-zoom {
+    transform: scale(1.1); /* Efecto de zoom al pasar el mouse sobre la imagen */
+  }
+  

@@ -1,0 +1,9 @@
+{
+    "version": 3,
+    "mappings": "AAAA;;EAEE;AACF,AAAA,kBAAkB,CAAC;EACf,UAAU,EAAE,MAAM;CACnB;;AAED;;IAEE;AACF,AAAA,iBAAiB,CAAC;EAChB,OAAO,EAAE,IAAI;CACd",
+    "sources": [
+        "ventastable.component.scss"
+    ],
+    "names": [],
+    "file": "ventastable.component.css"
+}

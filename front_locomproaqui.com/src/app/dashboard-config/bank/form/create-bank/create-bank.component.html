@@ -1,0 +1,55 @@
+<h2 mat-dialog-title>{{ titulo }} Bancos</h2>
+<mat-dialog-content class="mat-typography">
+    <div class="form row">
+        <div class="form-group col-md-12" *ngIf="data.cat_imagen">
+            <div class="mx-auto" style="width: 200px;">
+                <img [src]="data.cat_imagen" class="fotoCategoria">
+            </div>
+        </div>
+        <div class="container">
+            <div class="row">
+                <div class="form-group col-6 col-sm-4">
+                    <label for="exampleFormControlInput1">Bancos</label>
+                    <input type="text" [(ngModel)]="data.bank" class="form-control form-control-sm">
+                </div>
+                <div class="form-group col-6 col-sm-4">
+                    <label for="exampleFormControlInput1">Numero Banco</label>
+                    <input type="number" [(ngModel)]="data.numeroCuenta" class="form-control form-control-sm">
+                </div>
+                <div class="form-group col-6 col-sm-4">
+                    <label for="exampleFormControlInput1">Tipo de Cuenta</label>
+                        <select class="form-control" id="exampleFormControlSelect1" [(ngModel)]="data.accounType">
+                            <option value="0">Ahorros</option>
+                            <option value="1">Corriente</option>
+                        </select>
+                </div>
+                <div class="form-group col-6 col-sm-4">
+                    <label for="exampleFormControlInput1">Nombre Titular</label>
+                    <input type="text" [(ngModel)]="data.nameHeadline" class="form-control form-control-sm">
+                </div>
+                <div class="form-group col-6 col-sm-4">
+                    <label for="exampleFormControlInput1">Numero de Cedula</label>
+                    <input type="number" [(ngModel)]="data.numberCC" class="form-control form-control-sm">
+                </div>
+                <div class="form-group col-6 col-sm-4">
+                    <label for="exampleFormControlInput1">Numero de Celular</label>
+                    <input type="number" [(ngModel)]="data.numberPhone" class="form-control form-control-sm">
+                </div>
+                <div class="form-group col-6 col-sm-4">
+                    <label for="exampleFormControlInput1">Estado del Banco</label>
+                    <select class="form-control form-control-sm" [(ngModel)]="data.state">
+                        <option type="number" value="0">Activo</option>
+                        <option type="number" value="1">Eliminado</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+    </div>
+</mat-dialog-content>
+<mat-dialog-actions align="end">
+    <button mat-button mat-dialog-close color="warn">Cerrar</button>
+    <button mat-button cdkFocusInitial (click)="submit()" color="primary">
+        <span *ngIf="!id">Guardar Cambios</span>
+        <span *ngIf="id">Actulizar Cambios</span>
+    </button>
+</mat-dialog-actions>

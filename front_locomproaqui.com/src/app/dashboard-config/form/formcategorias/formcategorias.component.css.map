@@ -1,0 +1,9 @@
+{
+    "version": 3,
+    "mappings": "AAAA,AAAA,cAAc,CAAA;EACV,MAAM,EAAE,KAAK;CAChB;;AAED,AAAA,kBAAkB,CAAC;EACf,KAAK,EAAE,IAAI;CACZ",
+    "sources": [
+        "formcategorias.component.scss"
+    ],
+    "names": [],
+    "file": "formcategorias.component.css"
+}

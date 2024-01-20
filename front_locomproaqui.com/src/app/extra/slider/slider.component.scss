@@ -1,0 +1,52 @@
+.swiper-container {
+  width: 100% !important;
+  margin: 10px !important;
+}
+
+.swiper-slide {
+  color: #000 !important;
+  text-align: center !important;
+  line-height: 300px !important;
+}
+.text-modal{
+  word-break : break-word;
+  width: 100%;
+}
+
+.square-image {
+  width: 100%;
+  object-fit: cover; /* Maintain the aspect ratio while covering the area */
+}
+
+/* Estilos para los botones de navegación */
+.swiper-button-next, .swiper-button-prev {
+  width: 40px;
+  height: 40px;
+  background-color: #ffffff;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  transition: background-color 0.3s ease;
+}
+
+.swiper-button-next:hover, .swiper-button-prev:hover {
+  background-color: #e0e0e0;
+}
+
+.swiper-button-next::before, .swiper-button-prev::before {
+  content: '';
+  width: 10px;
+  height: 10px;
+  border-left: 2px solid #333333;
+  border-top: 2px solid #333333;
+  transform: rotate(45deg);
+}
+
+.swiper-button-prev::before {
+  transform: rotate(-135deg);
+}

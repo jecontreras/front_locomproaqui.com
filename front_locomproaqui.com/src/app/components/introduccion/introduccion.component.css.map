@@ -1,0 +1,9 @@
+{
+    "version": 3,
+    "mappings": "AAAA,AAAA,SAAS,CAAA;EACL,gBAAgB,EAAE,6BAA6B;EAC/C,iBAAiB,EAAE,SAAS;EAC5B,qBAAqB,EAAE,KAAK;EAC5B,eAAe,EAAE,SAAS;EAC1B,MAAM,EAAE,sBAAsB;CACjC;;AAED,AAAA,IAAI,CAAA;EACA,MAAM,EAAE,sBAAsB;CACjC",
+    "sources": [
+        "introduccion.component.scss"
+    ],
+    "names": [],
+    "file": "introduccion.component.css"
+}

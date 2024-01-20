@@ -1,0 +1,276 @@
+<mat-drawer-container class="example-container" autosize [hasBackdrop]="hasBackdrop$">
+  <mat-drawer class="example-sidenav" style="padding: 0;" position="end" #sidenav mode="over" (opened)="events.push('open!')" (closed)="events.push('close!')" class="sidenav anchos">
+    <section *ngIf="opcionoView == 'carro'" style="    width: 97%;
+    margin: 0px -4px;">
+      <mat-toolbar>
+        <mat-toolbar-row>
+          <div class="d-flex bd-highlight mb-3">
+            <div class="me-auto p-2 bd-highlight">
+              <section style="margin: auto;     padding: 4px 0;">
+                <a class="pointer text-danger" (click)="sidenav.toggle()">
+                  <i class="material-icons" aria-hidden="true">close</i>
+                </a>
+              </section>
+            </div>
+            <div class="p-2 bd-highlight">
+              <h2>
+                Productos Seleccionados
+              </h2>
+            </div>
+          </div>
+        </mat-toolbar-row>
+      </mat-toolbar>
+      <div class="content">
+        <div class="row">
+          <div class="col-12">
+            <mat-list>
+              <mat-list-item *ngFor="let item of listCart; let idx = index">
+                <div class="list-item-container">
+                  <img class="imgFoto pointer" [src]="item.foto || './assets/img/producto.jpg'" mat-list-icon>
+                  <div class="item-info">
+                    <h6 mat-line>{{ item.titulo | slice: 0: 10 }}</h6>
+                    <p mat-line>{{ 'Cantidad: ' + item.cantidad }}</p>
+                    <p mat-line>Precio: {{ _tools.monedaChange(3, 2, item.costoTotal || 0) }} COP</p>
+                    <p mat-line *ngIf="dataUser.id && validatorVist">Lo Vendiste: {{ _tools.monedaChange(3, 2, item.loVendio || 0) }} COP</p>
+                    <p mat-line *ngIf="dataUser.id && ( validatorVist === false ) "></p>
+                  </div>
+                  <span (click)="booleanoOpen = false; deleteCart(idx, item);" class="delete-button pointer">
+                    <i class="material-icons">delete</i>
+                  </span>
+                </div>
+              </mat-list-item>
+            </mat-list>
+          </div>
+
+        </div>
+      </div>
+      <div class="cart-bg-overlay"></div>
+
+      <div class="right-side-cart-area">
+
+        <div class="d-flex p-2">
+          <div class="cart-amount-summary" style="width: 100%;">
+            <h4 style="text-align: center;" *ngIf="validatorVist">Resumen de tu Venta &nbsp;</h4>
+            <h4 style="text-align: center;" *ngIf="validatorVist === false">Resumen de tu Compra &nbsp;</h4>
+            <ul class="summary-table">
+              <li *ngIf="dataUser.id && ( validatorVist === true )"><span>Valor a pagar de tu cliente: &nbsp;</span> <span>{{ _tools.monedaChange(
+                  3,2,data.total || 0 ) }}</span> </li>
+              <li *ngIf="dataUser.id && ( validatorVist === false )"><span>Valor a pagar: &nbsp;</span> <span>{{ _tools.monedaChange(
+                3,2,data.total || 0 ) }}</span> </li>
+              <li *ngIf="!dataUser.id"><span>Valor a pagar: &nbsp;</span> <span>{{ _tools.monedaChange( 3,2,data.total
+                  || 0 ) }}</span> </li>
+              <li *ngIf="dataUser.id && validatorVist"><span>Tu ganancia en esta venta es: &nbsp;</span> <span>{{ _tools.monedaChange(
+                  3,2,data.totalGanancias || 0 ) }}</span> </li>
+              <li *ngIf="namePorcentaje == 'dropshipping pro'">
+                <div class="alert alert-danger" role="alert" *ngIf="validatorVist">
+                  <span>Nota: &nbsp;</span> <span>Ten en cuenta que el valor del flete sera descontado de tu
+                    ganancia</span>
+                </div>
+                <div class="alert alert-danger" role="alert" *ngIf="validatorVist === false">
+                  <span>Nota: &nbsp;</span> <span>Ten en cuenta que el valor del flete sera agregado a tu factura</span>
+                </div>
+              </li>
+            </ul>
+            <div class="col-12 p-2" style="text-align: center;">
+              <button type="button" class="btn btn-primary" (click)="articuloSubmit()">
+                <span *ngIf="dataUser.id">Realizar guía de despacho</span>
+                <span *ngIf="!dataUser.id">Hacer pedido</span>
+              </button>
+            </div>
+            <div class="col-12 p-2" style="text-align: center;">
+              <button (click)="sidenav.toggle()" type="button" class="btn btn-success" routerLink="/pedidos">Agregar
+                más productos</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+    <section *ngIf="opcionoView == 'notificaciones'">
+      <mat-toolbar>
+        <mat-toolbar-row>
+          <div class="row">
+            <div class="">
+              <a class="pointer" (click)="sidenav.toggle()">
+                <i class="material-icons" aria-hidden="true">close</i>
+              </a>
+            </div>
+            <div class="col">
+              Notificaciones
+            </div>
+          </div>
+        </mat-toolbar-row>
+      </mat-toolbar>
+      <div class="content row">
+        <div class="col-12">
+          <mat-list>
+            <mat-list-item *ngFor="let item of listNotificaciones;let idx=index" (click)="clickNotificando( item )"
+              class="pointer">
+              <img class="imgFoto pointer" [src]="item.foto || './assets/icons/notificacion.png'" mat-list-icon>
+              <h4 mat-line>{{ item.titulo }}</h4>
+              <p mat-line>{{ item.descripcion }} </p>
+            </mat-list-item>
+          </mat-list>
+        </div>
+        <div class="col-12" *ngIf="listNotificaciones.length === 0">
+          <div class="mx-auto" style="width: 200px;">
+            No Hay Notificaciones
+          </div>
+        </div>
+      </div>
+    </section>
+  </mat-drawer>
+  <mat-drawer #drawer class="example-sidenav" [opened]="isHandset$" mode="over" style="width: 300px;">
+    <nav class="mCustomScrollbar _mCS_1 mCS-autoHide mCS_no_scrollbar active" id="sidebar"
+        style="background: #02a0e3; box-shadow: rgba(0, 0, 0, 0.2) 3px 3px 3px; box-sizing: border-box; color: white; height: 100vh; left: 0px; overflow: visible; position: fixed; top: 0px; touch-action: auto; transition: all 0.3s ease 0s; width: 300px; z-index: 999;">
+        <div class="mCustomScrollBox mCS-minimal mCSB_vertical mCSB_outside" id="mCSB_1"
+          style="box-sizing: border-box; direction: ltr; height: -webkit-fill-available; max-width: 100%; outline: 0px; overflow: hidden; position: relative;"
+          tabindex="0">
+          <div class="mCSB_container mCS_y_hidden mCS_no_scrollbar_y" dir="ltr" id="mCSB_1_container"
+            style="box-sizing: border-box; height: auto; left: 0px; margin-right: 0px; overflow: hidden; position: relative; top: 0px; width: auto;">
+            <div class="sidebar-header" style="background: rgb(2 160 227); box-sizing: border-box;     padding-top: 10px;     margin-bottom: -30px;">
+              <h3
+                style="box-sizing: border-box; color: inherit; font-family: inherit; font-size: 1.75rem; font-weight: 500; line-height: 1.2; margin-bottom: 0.5rem; margin-top: 0px;">
+                <a [routerLink]="[ '/articulo' ]">
+                  <img src="./assets/logo.svg" style="width: 58%;     margin-left: 40px; border-radius: 10px;">
+                </a>
+                <a class="pointer text-white" style="position: initial;" (click)="drawer.toggle()">
+                  <i class="material-icons" aria-hidden="true" style="position: absolute;
+                  left: 260px;">close</i>
+                </a>
+              </h3>
+              <br>
+            </div>
+            <ul class="list-unstyled components contenedor" style="border-bottom: 1px solid rgb(71, 116, 139); box-sizing: border-box; list-style: none; margin-bottom: 1rem; margin-top: 0px; padding: 20px; max-height: 80vh; overflow-y: auto;">
+
+              <li class="active" style="box-sizing: border-box;" *ngFor="let item of menus" [ngClass]="{'check': item.check }">
+                  <a aria-expanded="false" data-toggle="collapse" (click)="navegar(item)" class="pointer titulo3" routerLinkActive="active" translate="false" style="box-sizing: border-box; color: white; display: block; font-size: 1.1em; padding: 10px; position: relative; text-decoration-line: none; transition: all 0.3s ease 0s;">
+                      <i class="material-icons text-dark">{{ item.icons }}</i> {{ item.nombre }}
+                      <span [matBadge]="eventos.cobros" matBadgeColor="warn" *ngIf="eventos.cobros && item.nombre == 'Mis Cobros'" matBadgeOverlap="false"></span>
+                      <span [matBadge]="eventos.ventas" matBadgeColor="warn" *ngIf="eventos.ventas && item.nombre == 'Historial de Ventas'" matBadgeOverlap="false"></span>
+                      <span [matBadge]="eventos.possibleBuy" matBadgeColor="warn" *ngIf="eventos.possibleBuy && item.nombre == 'Autorizar Despacho'" matBadgeOverlap="false"></span>
+                  </a>
+                  <ul class="list-unstyled components" style="border-bottom: 1px solid rgb(71, 116, 139); box-sizing: border-box; list-style: none; margin-bottom: 1rem; margin-top: 0px; padding: 20px 0px; margin-left: 20px;" *ngIf="item.submenus.length > 0 && item.check">
+                      <li style="box-sizing: border-box;" *ngFor="let sub of item.submenus" (click)="navegar(sub, item)">
+                          <a class="pointer titulo3" routerLinkActive="active" translate="false" style="background-color: transparent; box-sizing: border-box; display: block; font-size: 1.1em; padding: 10px; text-decoration-line: none; transition: all 0.3s ease 0s;">
+                              <i class="material-icons textInf">{{ sub.icons }}</i> {{ sub.nombre }}
+                          </a>
+                      </li>
+                  </ul>
+              </li>
+              <li style="box-sizing: border-box;" *ngFor="let item of menus2">
+                  <a class="download pointer" (click)="EventMenus(item)" style="background: black; border-radius: 5px; box-sizing: border-box; color: #ffffff; display: block; font-size: 1.1em; margin-bottom: 5px; padding: 10px; text-align: center; text-decoration-line: none; transition: all 0.3s ease 0s;">
+                      {{ item.nombre }}
+                  </a>
+              </li>
+          </ul>
+          </div>
+        </div>
+    </nav>
+  </mat-drawer>
+
+  <mat-drawer-content class="contenedor">
+    <nav class="navbar navbar-expand-lg navbar-light headerColor" #toolbar *ngIf="( routName !== 'login' ) &&  (routName !== 'singUp' )">
+      <div class="row" style="width: 100%;">
+        <div class="col-12">
+          <div class="d-flex bd-highlight">
+            <div class="p-2 bd-highlight">
+              <button mat-icon-button (click)="drawer.toggle()" translate="no">
+                <i class="material-icons icoss">menu</i>
+              </button>
+
+            </div>
+            <div class="p-2 bd-highlight">
+              <a [routerLink]="[ '/articulo' ]">
+                <img src="./assets/logo.svg" style="width: 177px; height: 55px;">
+              </a>
+            </div>
+            <div *ngIf="!dataUser.id" class="ms-auto p-2 bd-highlight">
+              <div class="d-flex bd-highlight">
+                <div class="p-2 bd-highlight">
+                  <button type="button" class="btn btn-dark" (click)="login()" style="font-size: 10px; margin-bottom: 5px;">Iniciar Sesion</button>
+                  <button type="button" *ngIf="breakpoint == 1" class="btn btn-dark" style="font-size: 10px; " (click)="registrar()">Registrarse</button>
+                </div>
+                <div class="p-2 bd-highlight" *ngIf="breakpoint == 6">
+                  <button type="button" class="btn btn-dark" (click)="registrar()" style="font-size: 10px;">Registrarse</button>
+                </div>
+              </div>
+            </div>
+            <div *ngIf="dataUser.id" class="ms-auto p-2 bd-highlight">
+              <div class="d-flex bd-highlight">
+                <div class="p-2 bd-highlight" *ngIf="breakpoint == 6">
+                  <span class="text-white" [routerLink]="[ '/config/cobros' ]" *ngIf="rolUser !== 'proveedor'">
+                    {{ _tools.monedaChange( 3,2,( dataInfo?.porcobrado ) || 0 ) }}
+                  </span>
+                  <span class="text-white" [routerLink]="[ '/config/bank/index' ]" *ngIf="rolUser === 'proveedor'">
+                    {{ _tools.monedaChange( 3,2, ( reacudo ) || 0 ) }}
+                  </span>
+                </div>
+                <div class="p-2 bd-highlight" *ngIf="rolUser !== 'proveedor'">
+                  <a (click)="this.opcionoView = 'carro'; sidenav.toggle();" class="p-1 pointer espacios"
+                    [matBadge]="listCart.length" matBadgePosition="before" matBadgeColor="accent">
+                    <i class="material-icons icoss">shopping_cart</i>
+                  </a>
+                </div>
+                <div class="p-2 bd-highlight">
+                  <a [routerLink]="[ '/config/perfil' ]" class=" altoNull buscadorOcultar2p-1 pointer espacios">
+                    <i class="material-icons icoss">person</i>
+                  </a>
+                </div>
+              </div>
+              <section *ngIf="dataUser.id && breakpoint == 1">
+                <span class="text-white" [routerLink]="[ '/config/cobros' ]" *ngIf="rolUser !== 'proveedor'">
+                  {{ _tools.monedaChange( 3,2,( dataInfo?.porcobrado ) || 0 ) }}
+                </span>
+                <span class="text-white" [routerLink]="[ '/config/bank/index' ]" *ngIf="rolUser === 'proveedor'">
+                  {{ _tools.monedaChange( 3,2, ( reacudo ) || 0 ) }}
+                </span>
+              </section>
+            </div>
+          </div>
+        </div>
+      </div>
+      <app-menu-lateral></app-menu-lateral>
+    </nav>
+    <div class="container" *ngIf="( routName !== 'login' ) &&  (routName !== 'singUp' ) && dataUser.id ">
+      <div class="row justify-content-center" style="width: 110%;">
+        <div class="col-12 col-md-6">
+          <!-- Botones -->
+          <div class="d-flex justify-content-between mb-3">
+            <button type="button" class="btn btn-primary" (click)="openTienda('distribuidor')">Ver como Distribuidor</button>
+            <button type="button" class="btn btn-success" (click)="openTienda('visitante')">Ver como Visitante</button>
+          </div>
+          <!-- Bienvenida -->
+          <h2 class="text-center text-dark altos titulo1" *ngIf="dataUser.id">
+            BIENVENIDO A TU OFICINA VIRTUAL " {{ dataUser.usu_usuario }} "
+          </h2>
+          <h2 class="text-center text-dark altos titulo1" *ngIf="!dataUser.id">
+            BIENVENIDO A {{ userId.usu_usuario || 'LOKOMPROAQUI'}}
+          </h2>
+        </div>
+      </div>
+
+      <!-- Alertas -->
+      <div class="row">
+        <div class="col-12">
+          <div *ngFor="let item of listAlert" class="alert alert-warning alert-dismissible fade show">
+            <div class="d-flex align-items-center">
+              <img class="foto" *ngIf="item.foto" [src]="item.foto">
+              <strong>{{ item.titulo }}!</strong> {{ item.descripcion }}
+              <button *ngIf="item.tipoDe == 1" (click)="crear(item)" class="btn btn-primary btn-sm ml-2">Crear Comentario</button>
+              <button type="button" class="close" data-dismiss="alert" (click)="closeAlert(item)" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="content" style="    height: -webkit-fill-available;">
+      <ng-content style="    height: -webkit-fill-available;"> </ng-content>
+
+      <!--<app-footer *ngIf="( routName !== 'login' ) &&  (routName !== 'singUp' )"></app-footer>-->
+    </div>
+  </mat-drawer-content>
+
+</mat-drawer-container>

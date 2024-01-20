@@ -1,0 +1,174 @@
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
+        integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+
+
+
+    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet"
+        type="text/css">
+</head>
+
+<body>
+
+
+
+    <style>
+        .whatsapp-green-bar {
+            background-color: #35a230;
+            color: #fff;
+            font-size: 22px;
+            text-align: center;
+            padding: 20px 10px;
+        }
+
+        .whatsapp-green-bar>i {
+            font-size: 28px;
+        }
+
+        .whatsapp-green-bar a:visited,
+        .whatsapp-green-bar a:link {
+            text-decoration: none;
+        }
+
+        .whatsapp-green-bar a:hover {
+            text-decoration: underline;
+        }
+
+        @media (min-width:250px) {
+            .whatsapp-green-bar {
+                font-size: 16px;
+            }
+
+            .whatsapp-green-bar>i {
+                font-size: 18px;
+            }
+        }
+
+        @media (min-width:530px) {
+            .whatsapp-green-bar {
+                font-size: 22px;
+            }
+
+            .whatsapp-green-bar>i {
+                font-size: 28px;
+            }
+        }
+
+        @media (min-width:768px) {
+            ul.second-nav {
+                margin-top: 0 !important;
+            }
+        }
+
+        @media (min-width:1200px) {
+            ul.second-nav {
+                margin-top: 54px !important;
+            }
+        }
+    </style>
+
+    <div class="whatsapp-green-bar">
+        <i class="fa fa-whatsapp" aria-hidden="true"></i> Contáctenos por WhatsApp: +57 3148487506 (sólo mensajes)
+    </div>
+
+    <div class="container">
+        <div class="row">
+            <div class="col-xs-12 text-center f-bold" style="padding-bottom:20px;">
+                <div style="border:1px solid #ddd;padding:20px;">
+                    <span style="font-size:1.65em;color:#000;">Video muestra la estrategia EXACTA que utilicé para ganar
+                        mis primeras Ventas.</span><br />
+                    <a href="https://www.youtube.com/watch?v=stBQMhA3Rxo" target="_blank" class="btn btn-success"
+                        style="margin-top:10px;">CLIC AQUÍ PARA VER LA PRESENTACIÓN</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+
+
+
+
+
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-12 mrg-t-2">
+                <div class="head-testimonials">
+
+                    <h3 class="f-bold">Testimonios</h3>
+                    <p>Hay miles de personas que confían en los productos de locomproaqui por la rentabilidad, la
+                        honestidad y la transparencia de nuestro sistema de negocio. Algunos de ellos quieren compartir
+                        su testimonio contigo. Veamos que dicen:</p>
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+    <div class="container">
+        <div class="wrapper-testimonial">
+
+            <div class="row">
+                <div class="col-sm-6 col-testimony" *ngFor="let item of listRow">
+                    <div class="testimony">
+                        <div class="photo">
+
+                            <img [src]="item.usuario.usu_imagen || './assets/noimagen.jpg'" />
+
+                        </div>
+
+                        <div class="details">
+                            <p>
+                                <span class="name">{{ item.usuario.usu_nombre  }}</span>
+                            </p>
+
+                            <p>
+                                <span class="label">WhatsApp</span> <span
+                                    class="value">+{{ item.usuario.usu_indicativo }}
+                                    {{ item.usuario.usu_telefono }}</span>
+                            </p>
+
+
+                            <p>
+                                <span class="label">Ciudad</span> <span
+                                    class="value">{{ item.usuario.usu_ciudad }}</span>
+                            </p>
+
+                            <p>
+                                <span class="label">Link</span> <span class="value"><a
+                                        [href]="urlRegistro+item.usuario.id">{{ urlRegistro+item.usuario.id }}</a></span>
+                            </p>
+                        </div>
+
+                        <div class="message">
+                            <p *ngIf="item.descripcion" [innerHtml]="item.descripcion"></p>
+                            <p *ngIf="!item.descripcion">
+                                La verad esta página es muy buena, entré con algunas dudas pero al pasar poco tiempo
+                                quedé muy sastifecho con los resultados, y eso que no tengo mucha experiencia en
+                                marquetin digital ni nada por el estilo. Es una manera sencilla de conseguir dinero y
+                                que lo podes hacer desde la comodidad de tu casa sin arriesgarte a ser estafado o caer
+                                en engaños.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-12">
+                    <ngx-spinner bdOpacity=0.9 bdColor="" size="default" color="#581f87" type="ball-pulse-sync"
+                        [fullScreen]="false">
+                    </ngx-spinner>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>

@@ -1,0 +1,59 @@
+<h2 mat-dialog-title>
+    MEDIOS DE PAGOS DISPONIBLES
+</h2>
+
+<mat-dialog-content class="mat-typography">
+    <div class="row">
+        <div class="col-4">
+            <mat-card class="example-card">
+                <img mat-card-image src="./assets/img/nequi.jpg" alt="Photo of a Shiba Inu">
+                <mat-card-content>
+                    <div class="d-flex justify-content-center">
+                        <h2 class="text-success">Numero: 3205141638</h2>
+                    </div>
+                </mat-card-content>
+                <mat-card-actions>
+                    <div class="d-flex justify-content-center">
+                        <button mat-stroked-button color="primary" (click)="copiarNumer('3205141638', 'nequi')">Copiar numero</button>
+                    </div>
+                </mat-card-actions>
+              </mat-card>
+        </div>
+        <div class="col-4">
+            <mat-card class="example-card">
+                <img mat-card-image src="./assets/img/daviplata.jpg" alt="Photo of a Shiba Inu">
+                <mat-card-content>
+                    <div class="d-flex justify-content-center">
+                        <h2 class="text-success">Numero: 3205141638</h2>
+                    </div>
+                </mat-card-content>
+                <mat-card-actions>
+                    <div class="d-flex justify-content-center">
+                        <button mat-stroked-button color="primary" (click)="copiarNumer('3205141638', 'daviplata')">Copiar numero</button>
+                    </div>
+                </mat-card-actions>
+              </mat-card>
+        </div>
+        <div class="col-4">
+            <mat-card class="example-card">
+                <img mat-card-image src="./assets/img/bancolombia.png" alt="Photo of a Shiba Inu">
+                <mat-card-content>
+                    <div class="d-flex justify-content-center">
+                        <div>
+                            <h2 class="text-success">Numero de cuenta: 88000049227</h2>
+                        </div>
+                    </div>
+                </mat-card-content>
+                <mat-card-actions>
+                    <div class="d-flex justify-content-center">
+                        <button mat-stroked-button color="primary" (click)="copiarNumer('88000049227', 'bancolombia')">Copiar numero</button>
+                    </div>
+                </mat-card-actions>
+              </mat-card>
+        </div>
+    </div>
+</mat-dialog-content>
+
+<mat-dialog-actions align="end">
+    <button mat-button mat-dialog-close>Cerrar</button>
+</mat-dialog-actions>

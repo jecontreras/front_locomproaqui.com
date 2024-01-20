@@ -1,0 +1,65 @@
+<!--<div class="col-12" class="colorFondo2" style="width: 100%;">
+    <div class="d-flex justify-content-center" style="width: 100%;">
+      <div class="paddingG">
+        <div class="row" style="margin: 4%;">
+          <div class="col-4 col-sm-3 paddingG">
+            <h1 class="textInfo font-weight-bold text-primary">+{{ _tools.monedaChange2( 3,2, ( contect.contadorC || 0 ) ) }}</h1>
+            <p class="font-weight-bold colorExtra1" [innerHTML]="contect.titleC"></p>
+          </div>
+          <div class="col-4 col-sm-3 paddingG">
+            <h1 class="textInfo font-weight-bold colorExtra1">+{{ _tools.monedaChange2( 3,2, ( contect.contadorD || 0 ) ) }}</h1>
+            <p class="font-weight-bold colorExtra1" [innerHTML]="contect.titleD"></p>
+          </div>
+          <div class="col-4 col-sm-3 paddingG">
+            <h1 class="textInfo font-weight-bold colorExtra1">+{{ _tools.monedaChange2( 3,2, ( contect.contadorE || 0 ) ) }}</h1>
+            <p class="font-weight-bold colorExtra1" [innerHTML]="contect.titleE"></p>
+          </div>
+          <div class="col-4 col-sm-3 paddingG">
+            <h1 class="textInfo font-weight-bold colorExtra1">+{{ _tools.monedaChange2(3,2, ( contect.contadorM || 0 ) ) }}</h1>
+            <p class="font-weight-bold colorExtra1" [innerHTML]="contect.titleM"> </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>-->
+  <section class="feature-section">
+    <div class="feature-box">
+        <div class="icon">
+          <i class="fa fa-desktop"></i> 
+          <h1 class="textInfo font-weight-bold colorExtra1">+{{ _tools.monedaChange2( 3,2, ( contect.contadorC || 0 ) ) }}</h1>
+        </div>
+        <div class="text">
+            <p [innerHTML]="contect.titleC"></p>
+        </div>
+    </div>
+
+    <div class="feature-box">
+      <div class="icon">
+        <i class="fa fa-cogs"></i>
+        <h1 class="textInfo font-weight-bold colorExtra1">+{{ _tools.monedaChange2( 3,2, ( contect.contadorD || 0 ) ) }}</h1>
+      </div>
+      <div class="text">
+          <p [innerHTML]="contect.titleD"></p>
+      </div>
+    </div>
+
+    <div class="feature-box">
+      <div class="icon">
+        <i class="fa fa-level-up"></i>
+        <h1 class="textInfo font-weight-bold colorExtra1">+{{ _tools.monedaChange2( 3,2, ( contect.contadorE || 0 ) ) }}</h1>
+      </div>
+      <div class="text">
+          <p [innerHTML]="contect.titleE"></p>
+      </div>
+    </div>
+
+    <div class="feature-box">
+      <div class="icon">
+        <i class="fa fa-comments"></i>
+        <h1 class="textInfo font-weight-bold colorExtra1">+{{ _tools.monedaChange2( 3,2, ( contect.contadorM || 0 ) ) }}</h1>
+      </div>
+      <div class="text">
+          <p [innerHTML]="contect.titleM"></p>
+      </div>
+    </div>
+</section>

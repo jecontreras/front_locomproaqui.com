@@ -1,0 +1,9 @@
+{
+    "version": 3,
+    "mappings": "AAAA,AAAA,kBAAkB,CAAA;EACd,UAAU,EAAE,MAAM;CACrB;;AAED,AAAA,cAAc,CAAA;EACV,OAAO,EAAE,IAAI;CAChB;;AAED,AAAA,cAAc,CAAA;EACV,QAAQ,EAAE,QAAQ;EAClB,GAAG,EAAE,GAAG;CACX;;AAED,AAAA,QAAQ,CAAA;EACJ,UAAU,EAAE,OAAO;EACnB,OAAO,EAAE,GAAG;EACZ,aAAa,EAAE,IAAI;EACnB,KAAK,EAAE,OAAO;CACjB",
+    "sources": [
+        "view-productos.component.scss"
+    ],
+    "names": [],
+    "file": "view-productos.component.css"
+}

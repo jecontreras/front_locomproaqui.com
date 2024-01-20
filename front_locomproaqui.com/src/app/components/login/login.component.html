@@ -1,0 +1,93 @@
+<!--<h2 mat-dialog-title>
+    <span *ngIf="disableRestarure"> Iniciar Sesión en lokomproaqui.com </span>
+    <span *ngIf="!disableRestarure"> Recuperacion Contraseña en locomproaqui.com </span>
+</h2>-->
+
+<mat-dialog-content class="mat-typography">
+    <!--<div class="form row">
+        <div class="form-group col-12">
+            <label for="exampleFormControlInput1">Correo electrónico</label>
+            <input type="text" [(ngModel)]="data.usu_email" class="form-control form-control-sm" placeholder="Correo electrónico">
+        </div>
+        <div class="form-group col-12" *ngIf="disableRestarure">
+            <label for="exampleFormControlInput1">Contraseña</label>
+            <input type="password" [(ngModel)]="data.usu_clave" (change)="submit()" class="form-control form-control-sm" placeholder="Contraseña">
+        </div>
+        <div class="form-group col-12">
+            <p class="text-primary pointer" *ngIf="disableRestarure" (click)="disableRestarure = false;">¿Olvidaste tu constraseña?</p>
+            <p class="text-primary pointer" *ngIf="!disableRestarure" (click)="disableRestarure = true;">¿Iniciar sección?</p>
+        </div>
+    </div>-->
+    <div class="limiter">
+        <div class="container-login100" style="background-image: url('images/bg-01.jpg');">
+            <div class="wrap-login100">
+                <div class="login100-form validate-form flex-sb flex-w">
+					<span class="login100-form-title p-b-53">
+						<span *ngIf="disableRestarure"> Iniciar Sesión en lokomproaqui </span>
+                        <span *ngIf="!disableRestarure"> Recuperación Contraseña en locomproaqui </span>
+					</span>
+                    <div class="p-t-31 p-b-9">
+                        <span class="txt1">
+                            Correo electrónico / numero de Celular
+                        </span>
+                    </div>
+                    <div class="wrap-input100 validate-input" data-validate="Username is required">
+                      <div class="d-flex bd-highlight">
+                        <div class="p-2 bd-highlight" style="margin-top: 10px;">
+                          <select class="form-control" [(ngModel)]="data.indicative" style="width:75px;">
+                            <option>+57</option>
+                            <option>+58</option>
+                            <option>+59</option>
+                          </select>
+                        </div>
+                        <div class="p-2 flex-grow-1 bd-highlight">
+                          <input class="input100" type="text" name="username" [(ngModel)]="data.usu_email" (blur)="handleValidate()">
+                          <span class="focus-input100"></span>
+                        </div>
+                      </div>
+                    </div>
+
+                    <div class="p-t-13 p-b-9 " *ngIf="disableRestarure">
+                        <span class="txt1">
+                            Contraseña
+                        </span>
+                    </div>
+                    <div class="wrap-input100 validate-input" data-validate="Password is required">
+                        <input class="input100" type="password" name="pass" [(ngModel)]="data.usu_clave">
+                        <span class="focus-input100"></span>
+                    </div>
+
+                    <div class="container-login100-form-btn m-t-17">
+                        <button class="login100-form-btn" (click)="submit()" *ngIf="disableRestarure">
+                            Iniciar Seccion
+                        </button>
+                        <button class="login100-form-btn" *ngIf="!disableRestarure" (click)="openRecuperacion(  )">
+                            Recuperar Cuenta
+                        </button>
+                    </div>
+
+                    <div class="w-full text-center p-t-55">
+                        <!--<span class="txt2">
+                            Not a member?
+                        </span>-->
+
+                        <a href="#" class="txt2 bo1" *ngIf="disableRestarure" (click)="disableRestarure = false;">
+                            ¿Olvidaste tu constraseña?
+                        </a>
+                        <a class="txt2 bo1 pointer" *ngIf="!disableRestarure" (click)="disableRestarure = true;">
+                            Volver
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</mat-dialog-content>
+
+<mat-dialog-actions align="end">
+    <button mat-button mat-dialog-close>Cerrar</button>
+    <!--<button mat-button cdkFocusInitial (click)="submit()" *ngIf="disableRestarure">
+        <span>Iniciar Seccion</span>
+    </button>-->
+
+</mat-dialog-actions>

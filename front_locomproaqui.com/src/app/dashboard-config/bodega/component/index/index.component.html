@@ -1,0 +1,78 @@
+<div class="container">
+  <div class="row">
+    <div class="col-12">
+      <nav class="navbar navbar-dark bg-primary p-2">
+        <a class="navbar-brand text-white">Bodegas Certificadas</a>
+        <div class="form-inline">
+          <button class="btn btn-outline-warning my-2 my-sm-0" routerLink="/config/store/stores" type="submit">Ver Mas</button>
+        </div>
+      </nav>
+    </div>
+    <div class="col-12">
+      <div class="row">
+        <div class="col-md-4 col-sm-6 col-lg-3 col-xs-6 col-6 col-xl-2 p-2" *ngFor="let row of listBodegas" (click)="handleStore( row )">
+          <mat-card class="example-card" style="background-color: #f0f0f0; border-radius: 10px; width: 100%;
+          height: 325px;">
+            <mat-card-header>
+              <mat-card-title>
+                <h6>{{ row.usu_nombre | slice:0:10 }}{{row.usu_nombre.length > 10 ? '...' : '' }}</h6>
+              </mat-card-title>
+              <mat-card-subtitle>{{ row.usu_telefono }}</mat-card-subtitle>
+            </mat-card-header>
+            <div class="d-flex justify-content-center">
+              <div class="image-container">
+                <img class="image-zoom" [src]="row.usu_imagen" alt="Photo of Perfil">
+              </div>
+            </div>
+            <mat-card-actions>
+              <button type="button" data-toggle="tooltip" data-placement="right" style="width: 100%;"
+                class="sc-logout btn btn-success btn-sm pull-right buttonAncho"
+                [ngStyle]="{'background-color': urlColor }"
+                data-original-title="Ver Bodega">Ver Bodega
+              </button>
+            </mat-card-actions>
+          </mat-card>
+        </div>
+
+
+      </div>
+    </div>
+    <div class="col-12">
+      <nav class="navbar navbar-dark bg-primary p-2">
+        <a class="navbar-brand text-white">Productos Certificados</a>
+        <div class="form-inline">
+          <button class="btn btn-outline-warning my-2 my-sm-0" routerLink="/config/store/product" type="submit">Ver Mas</button>
+        </div>
+      </nav>
+    </div>
+    <div class="col-12">
+      <div class="row">
+        <div class="col-md-4 col-sm-6 col-lg-3 col-xs-6 col-6 col-xl-2 p-2" *ngFor="let row of listArticle" (click)="handleArticle( row )">
+          <mat-card class="example-card" style="background-color: #f0f0f0; border-radius: 10px; width: 100%;
+          height: 300px;">
+            <mat-card-header>
+              <mat-card-subtitle>{{ row.pro_nombre | slice:0:10 }} {{row.pro_nombre.length > 10 ? '...' : '' }} </mat-card-subtitle>
+            </mat-card-header>
+            <div class="d-flex justify-content-center">
+              <div class="image-container">
+                <img class="image-zoom" [src]="row.foto" alt="Photo of Perfil">
+              </div>
+            </div>
+            <mat-card-actions>
+              <button type="button" data-toggle="tooltip" data-placement="right" style="width: 100%;"
+                class="sc-logout btn btn-success btn-sm pull-right buttonAncho"
+                [ngStyle]="{'background-color':urlColor }"
+                data-original-title="Ver Articulo">Ver Articulo
+              </button>
+            </mat-card-actions>
+          </mat-card>
+        </div>
+      </div>
+    </div>
+    <div class="col-12">
+      <ngx-spinner bdOpacity=0.9 bdColor="" size="default" color="#581f87" type="ball-pulse-sync"
+        [fullScreen]="false">
+      </ngx-spinner>
+    </div>
+  </div>
+</div>

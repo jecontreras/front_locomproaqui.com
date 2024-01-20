@@ -1,0 +1,50 @@
+.colorSeleccionado{
+    background: yellow;
+}
+
+.contentCenter{
+    padding: 0 5%;
+}
+
+.sliderpasador{
+    position: relative;
+    top: 45%;
+}
+
+.precios{
+    background: #dedede;
+    padding: 5px;
+    border-radius: 10px;
+    color: #00a000;
+}
+
+.custom-dialog-actions {
+  display: flex;
+  justify-content: space-between;
+}
+
+.custom-dialog-actions .col-6 {
+  display: flex;
+  flex-direction: column;
+}
+
+
+.img-profile {
+  width: 100px;
+  max-height: 110px;
+  min-height: 100px;
+}
+.text-align{
+  text-align: center !important;
+}
+
+.paddinLader{
+  padding: 0 5%;
+}
+.borderBotton{
+  border-bottom: 1px solid #c1c1c1;
+}
+.scrollTodo{
+  max-height: 200px; /* Establece la altura máxima según tus necesidades */
+    overflow-y: auto; /* Habilita el desplazamiento vertical */
+}

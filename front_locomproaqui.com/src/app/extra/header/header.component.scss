@@ -1,0 +1,360 @@
+.example-container {
+  //width: 500px;
+  height: -webkit-fill-available;
+  border: 1px solid rgba(0, 0, 0, 0.5);
+}
+
+.example-sidenav-content {
+  display: flex;
+  height: 100%;
+  align-items: center;
+  justify-content: center;
+}
+
+.example-sidenav {
+  padding: 20px;
+}
+
+.list-item-container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 12px; /* Añade un relleno alrededor del elemento de la lista */
+  border: 1px solid #ccc; /* Opcional: agrega un borde alrededor de cada elemento */
+  border-radius: 10px; /* Opcional: agrega bordes redondeados */
+  margin-bottom: 10px; /* Espacio entre elementos de la lista */
+}
+
+.imgFoto {
+  max-width: 80px; /* Ancho máximo para la imagen */
+  border-radius: 50%; /* Hace que la imagen sea redonda */
+}
+
+.item-info {
+  flex: 1; /* Hace que ocupe el espacio disponible */
+  margin-left: 12px; /* Espacio entre la imagen y la información */
+}
+
+.delete-button {
+  cursor: pointer;
+}
+
+
+
+.anchos{
+  width: 340px !important;
+  top: 0px !important;
+}
+
+.espacios{
+  margin: 0 5% 0 5% !important;
+}
+
+.altos {
+  padding-top: 0.5%;
+}
+
+.foto {
+  height: 43px;
+  border-radius: 19px;
+  margin-right: 13px;
+}
+.imgFoto{
+  width: 70px !important;
+  height: 70px !important;
+}
+
+.anchoReal{
+  width: 3%;
+}
+
+
+.iconsPng{
+  width: 33% !important;
+}
+.colorMenu{
+  color: black !important;
+}
+.toolbar{
+  height: 74px !important;
+  width: 101.1% !important;
+}
+.icoss {
+  color: #fff!important
+}
+.nav-pills>li.active>a, .nav-pills>li.active>a:focus, .nav-pills>li.active>a:hover {
+  color: #fff;
+  background-color: #fff !important;
+}
+
+.nav>li>a {
+  position: relative;
+  display: block;
+  padding: 0px !important;
+}
+
+mat-sidenav {
+  top: 83px !important;
+  padding: 1% !important;
+  bottom: 0px;
+  transform: none;
+  visibility: visible;
+}
+
+.example-viewport {
+  max-height: 800px;
+  width: 100%;
+  min-height: 800px;
+}
+
+.example-item {
+  height: 50px;
+}
+.scrols::-webkit-scrollbar {
+  width: 8px;     /* Tamaño del scroll en vertical */
+  height: 8px;    /* Tamaño del scroll en horizontal */
+  display: none;  /* Ocultar scroll */
+}
+
+
+.example-container {
+  display: flex;
+  flex-direction: column;
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+}
+.mat-toolbar {
+  margin-bottom: 0px !important;
+}
+.mat-card-image {
+  width: auto;
+}
+.fondo {
+  background: #3f51b5;
+}
+#btn-actualizar {
+  margin-left: 15px;
+}
+.example-is-mobile .example-toolbar {
+  position: fixed;
+  z-index: 2;
+}
+
+h1.example-app-name {
+  margin-left: 8px;
+}
+
+.example-sidenav-container {
+  flex: 1;
+}
+
+.example-is-mobile .example-sidenav-container {
+  flex: 1 0 auto;
+}
+.nav-list{
+  padding: 1em;
+}
+.menu2 {
+  text-align: end;
+  float: right;
+}
+.example-icon {
+  padding: 5px 1em;
+}
+
+.example-spacer {
+  flex: 1 1 auto;
+}
+.p {
+  padding: 10px;
+}
+.padding2{
+  padding: 6% 0;
+}
+
+.padding2:hover{
+  background: #e2e2e2;
+}
+
+.margin {
+  margin: revert;
+}
+.perfil {
+  border-radius: 35px;
+  width: 90px;
+  height: 90px;
+}
+.border {
+  border: 1px solid black;
+  background: #d8d3d3;
+}
+.marginLeft {
+  margin-left: 20px;
+}
+.divisor {
+  margin-right: 15px;
+}
+
+/* Extra small devices (phones, 600px and down) */
+@media only screen and (max-width: 320px) {
+  .mat-toolbar, .mat-toolbar h1, .mat-toolbar h2, .mat-toolbar h3, .mat-toolbar h4, .mat-toolbar h5, .mat-toolbar h6 {
+    font: 300 18px/22px Roboto,"Helvetica Neue",sans-serif;
+    margin-top: 10px;
+  }
+  .divisor {
+    margin-top: 10px;
+  }
+}
+/* Extra small devices (phones, 600px and down) */
+@media only screen and (max-width: 600px) {
+  .ancho {
+    width: 85%;
+  }
+  .textInf {
+    font-size: 11px;
+  }
+}
+
+/* Small devices (portrait tablets and large phones, 600px and up) */
+@media only screen and (min-width: 600px) {
+  .ancho {
+    width: 65%;
+  }
+  .textInf {
+    font-size: 11px;
+  }
+}
+
+/* Medium devices (landscape tablets, 768px and up) */
+@media only screen and (min-width: 768px) {
+  .ancho {
+    width: 45%;
+  }
+  .textInf {
+    font-size: 12px;
+  }
+}
+
+/* Large devices (laptops/desktops, 992px and up) */
+@media only screen and (min-width: 992px) {
+  .ancho {
+    width: 60%;
+  }
+  .textInf {
+    font-size: 13px;
+  }
+}
+
+/* Extra large devices (large laptops and desktops, 1200px and up) */
+@media only screen and (min-width: 1200px) {
+  .ancho {
+    width: 60%;
+  }
+  .textInf {
+    font-size: 13px;
+  }
+}
+
+  .mat-drawer-content {
+    /* position: relative; */
+    /* z-index: 1; */
+    display: block !important;
+    height: 100% !important;
+    width: 100% !important;
+    /* overflow: auto; */
+}
+
+.anchosIcons{
+  padding: 0 2%;
+}
+
+.wrapper {
+  display: block;
+}
+
+#sidebar {
+  background: rgb(115, 134, 213);
+  box-shadow: rgba(0, 0, 0, 0.2) 3px 3px 3px;
+  box-sizing: border-box;
+  color: white;
+  height: 100vh;
+  left: 0px;
+  overflow: visible;
+  position: fixed;
+  top: 0px;
+  touch-action: auto;
+  transition: all 0.3s ease 0s;
+  width: 250px;
+  z-index: 999;
+}
+
+#mCSB_1{
+  box-sizing: border-box;
+  direction: ltr;
+  height: 937px;
+  max-height: none;
+  max-width: 100%;
+  outline: 0px;
+  overflow: hidden;
+  position: relative;
+}
+
+#mCSB_1_container{
+  box-sizing: border-box;
+  height: auto;
+  left: 0px;
+  margin-right: 0px;
+  overflow: hidden;
+  position: relative;
+  top: 0px;
+  width: auto;
+}
+
+.overlay {
+  display: none;
+  position: fixed;
+  /* full screen */
+  width: 100vw;
+  height: 100vh;
+  /* transparent black */
+  background: rgba(0, 0, 0, 0.7);
+  /* middle layer, i.e. appears below the sidebar */
+  z-index: 998;
+  opacity: 0;
+  /* animate the transition */
+  transition: all 0.5s ease-in-out;
+}
+/* display .overlay when it has the .active class */
+.overlay.active {
+  display: block;
+  opacity: 1;
+}
+
+#dismiss {
+  width: 35px;
+  height: 35px;
+  position: absolute;
+  /* top right corner of the sidebar */
+  top: 10px;
+  right: 10px;
+}
+
+#lista{
+  background: rgb(109, 127, 204);
+  box-sizing: border-box;
+  color: white;
+  display: block;
+  font-size: 1.1em;
+  padding: 10px;
+  position: relative;
+  text-decoration-line: none;
+  transition: all 0.3s ease 0s;
+
+}
+
+.check{
+  background: #afafaf;
+}

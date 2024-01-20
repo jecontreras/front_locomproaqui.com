@@ -1,0 +1,301 @@
+<div class="container">
+    <div class="row" *ngIf="vista1 =='inicial'">
+        <div class="col-12 col-md-6">
+            <div class="row" *ngIf="vista == 'inicial'">
+                <div class="col-12">
+                    <img
+                        alt="DRU SHOES"
+                        class="logo__image logo__image--small"
+                        src="https://cdn.shopify.com/s/files/1/0595/0108/4867/files/LOGO_DRU_SHOES.png?25"
+                        style="border: 0px; display: inline-block; max-height: 2.85714em; max-width: 100%;"
+                    />
+                </div>
+                <div class="col-12">
+                    <h3>Información de contacto</h3>
+                </div>
+                <div class="col-12">
+                    <input type="email" class="form-control" [(ngModel)]="data.correo" placeholder="Correo electrónico">
+                </div>
+                <div class="col-12">
+                    <h3>Datos de envío</h3>
+                </div>
+                <div class="form-group col-12">
+                    <label >Nombre apellidos</label>
+                    <input type="text" class="form-control" [(ngModel)]="data.nombre" placeholder="ej: jose || andres">
+                </div>
+                <div class="form-group col-12">
+                    <label >Dirección</label>
+                    <input type="text" class="form-control" [(ngModel)]="data.direccion" placeholder="ej: Cll 1 # 14-2">
+                </div>
+                <div class="form-group col-12">
+                    <label >Apartamento Local etc ( opcional )</label>
+                    <input type="text" class="form-control" [(ngModel)]="data.apartamento" placeholder="ej: Torre de picardia">
+                </div>
+                <div class="form-group col-4">
+                    <label >Ciudad</label>
+                    <input type="text" class="form-control" [(ngModel)]="data.ciudad" placeholder="ej: Bogota || Medellin">
+                </div>
+                <div class="form-group col-4">
+                    <label >Provincia</label>
+                    <select class="form-control" [(ngModel)]="data.departamento">
+                        <option *ngFor="let item of listCiudad" [value]="item.departamento">{{ item.departamento }}</option>
+                    </select>
+                </div>
+                <div class="form-group col-4">
+                    <label >Barrio</label>
+                    <input type="text" class="form-control" [(ngModel)]="data.barrio" placeholder="ej: las vegas || prados">
+                </div>
+                <div class="form-group col-12">
+                    <label >Telefono</label>
+                    <input type="text" class="form-control" [(ngModel)]="data.telefono" placeholder="ej: 3105848774">
+                </div>
+                <div class="col-12">
+                    <div class="d-flex flex-row bd-highlight mb-3">
+                        <div class="p-2 bd-highlight">
+                            <button type="button" class="btn btn-success" (click)="validadornext()">Continuar con envios</button>
+                        </div>
+                        <div class="p-2 bd-highlight">
+                            <button type="button" class="btn btn-light">Volver al carrito</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row" *ngIf="vista == 'segunda'">
+                <ul class="list-group list-group-flush" style="width: 100%;">
+                    <li class="list-group-item">
+                        <table class="table table-borderless">
+                            <thead>
+                              <tr>
+                                <th scope="col" style="width: 5%;"></th>
+                                <th scope="col" style="width: 90%;"></th>
+                                <th scope="col" style="width: 5%;"></th>
+                              </tr>
+                            </thead>
+                            <tbody>
+                              <tr>
+                                <td>Contacto</td>
+                                <td>{{ data.correo }}</td>
+                                <td>
+                                    <button type="button" class="btn btn-link" (click)="vista='inicial'">Cambiar</button>
+                                </td>
+                              </tr>
+                            </tbody>
+                          </table>
+                    </li>
+                    <li class="list-group-item">
+                        <table class="table table-borderless">
+                            <thead>
+                              <tr>
+                                <th scope="col" style="width: 10%;"></th>
+                                <th scope="col" style="width: 80%;"></th>
+                                <th scope="col" style="width: 10%;"></th>
+                              </tr>
+                            </thead>
+                            <tbody>
+                              <tr>
+                                <td>Enviar a</td>
+                                <td>{{ data.direccion }} - {{ data.barrio }} - {{ data.ciudad }}</td>
+                                <td>
+                                    <button type="button" class="btn btn-link" (click)="vista='inicial'">Cambiar</button>
+                                </td>
+                              </tr>
+                            </tbody>
+                          </table>
+                    </li>
+                </ul>
+                <div class="col-12">
+                    <h3>Envíos</h3>
+                </div>
+                <ul class="list-group list-group-flush" style="width: 100%;">
+                    <li class="list-group-item">
+                        <table class="table table-borderless">
+                            <thead>
+                              <tr>
+                                <th scope="col" style="width: 10%;"></th>
+                                <th scope="col" style="width: 80%;"></th>
+                                <th scope="col" style="width: 10%;"></th>
+                              </tr>
+                            </thead>
+                            <tbody>
+                              <tr>
+                                <td>
+                                    <mat-checkbox [(ngModel)]="valor" disabled></mat-checkbox>
+                                </td>
+                                <td>Envío de 4 a 8 días hábiles</td>
+                                <td>
+                                    $0
+                                </td>
+                              </tr>
+                            </tbody>
+                          </table>
+                    </li>
+                </ul>
+                <div class="col-12">
+                    <div class="d-flex flex-row bd-highlight mb-3">
+                        <div class="p-2 bd-highlight">
+                            <button type="button" class="btn btn-success" (click)="finalizando()">Finalizar el Pedido</button>
+                        </div>
+                        <div class="p-2 bd-highlight">
+                            <button type="button" class="btn btn-light" (click)="vista='inicial'">Volver a envios</button>
+                        </div>
+                      </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-12 col-md-6">
+            <p>&nbsp;</p>
+            <div class="order-summary__section order-summary__section--product-list"
+                style='-webkit-box-flex: 0; background-color: white; color: #535353; display: flex; flex: 0 1 auto; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", sans-serif; font-size: 14px; min-height: 7em; overflow: hidden; padding: 0px; position: relative;'>
+                <div class="order-summary__section__content" style="min-width: 100%; overflow: hidden;">
+                    <table class="product-table"
+                        style="border-collapse: collapse; border-spacing: 0px; font-size: 1em; margin-bottom: 1.5em; margin-top: 0.75em; position: relative; width: 418px; z-index: 1;">
+                        <caption class="visually-hidden"
+                            style="border: 0px; clip: rect(0px, 0px, 0px, 0px); height: 2px; margin: -2px; overflow: hidden; padding: 0px; position: absolute; white-space: nowrap; width: 2px;">
+                            Carrito
+                        </caption>
+                        <thead class="product-table__header">
+                            <tr>
+                                <th scope="col"
+                                    style="color: #333333; font-weight: 500; padding: 0px; text-align: left; white-space: nowrap;">
+                                    <span class="visually-hidden"
+                                        style="border: 0px; clip: rect(0px, 0px, 0px, 0px); height: 2px; margin: -2px; overflow: hidden; padding: 0px; position: absolute; width: 2px;">Imagen
+                                        del producto</span>
+                                </th>
+                                <th scope="col"
+                                    style="color: #333333; font-weight: 500; padding: 0px 0px 0px 1em; white-space: nowrap;">
+                                    <span class="visually-hidden"
+                                        style="border: 0px; clip: rect(0px, 0px, 0px, 0px); height: 2px; margin: -2px; overflow: hidden; padding: 0px; position: absolute; width: 2px;">Descripción</span>
+                                </th>
+                                <th scope="col"
+                                    style="color: #333333; font-weight: 500; padding: 0px 0px 0px 1em; white-space: nowrap;">
+                                    <span class="visually-hidden"
+                                        style="border: 0px; clip: rect(0px, 0px, 0px, 0px); height: 2px; margin: -2px; overflow: hidden; padding: 0px; position: absolute; width: 2px;">Cantidad</span>
+                                </th>
+                                <th scope="col"
+                                    style="color: #333333; font-weight: 500; padding: 0px 0px 0px 1em; text-align: right; white-space: nowrap;">
+                                    <span class="visually-hidden"
+                                        style="border: 0px; clip: rect(0px, 0px, 0px, 0px); height: 2px; margin: -2px; overflow: hidden; padding: 0px; position: absolute; width: 2px;">Precio</span>
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody data-order-summary-section="line-items">
+                            <tr class="product" 
+                                *ngFor="let item of listCarrito"
+                                data-customer-ready-visible="" data-product-id="7461513068763"
+                                data-product-type="TENIS" data-variant-id="42114239758555">
+                                <td class="product__image" style="border-color: rgb(250, 217, 217); padding: 0px;">
+                                    <div class="product-thumbnail"
+                                        style="background-attachment: initial; background-clip: initial; background-image: initial; background-origin: initial; background-position: initial; background-repeat: initial; background-size: initial; border-radius: 8px; height: 4.6em; position: relative; width: 4.6em;">
+                                        <div class="product-thumbnail__wrapper"
+                                            style="border-radius: 8px; height: 64.3906px; overflow: hidden; position: relative; width: 64.3906px; z-index: 1;">
+                                            <img alt="TENIS HOMBRE 4DID4S NEGRO X NARANJA 2.0 - 37" class="product-thumbnail__image"
+                                                [src]="item.foto"
+                                                style="border: 0px; inset: 0px; margin: auto; max-height: 100%; max-width: 100%; position: absolute;" />
+                                        </div>
+                                        <span aria-hidden="true" class="product-thumbnail__quantity"
+                                            style="background-color: rgba(114, 114, 114, 0.9); border-radius: 1.75em; box-sizing: border-box; color: white; font-size: 0.857143em; height: 1.75em; line-height: 1.75em; min-width: 1.75em; padding: 0px 0.583333em; position: absolute; right: -0.75em; text-align: center; top: -0.75em; white-space: nowrap; z-index: 3;">1</span>
+                                    </div>
+                                </td>
+                                <th class="product__description" scope="row"
+                                    style="font-weight: normal; padding: 0px 0px 0px 1em; text-align: left; width: 239.094px;">
+                                    <span class="product__description__name order-summary__emphasis"
+                                        style="color: #323232; display: block; min-width: 100%; width: 1em;">{{ item.titulo }}</span><span
+                                        class="product__description__variant order-summary__small-text"
+                                        style="color: #717171; display: block; font-size: 0.857143em;"></span>
+                                </th>
+                                <td class="product__quantity" style="border-color: rgb(250, 217, 217); padding: 0px 0px 0px 1em;">
+                                    <span class="visually-hidden"
+                                        style="border: 0px; clip: rect(0px, 0px, 0px, 0px); height: 2px; margin: -2px; overflow: hidden; padding: 0px; position: absolute; white-space: nowrap; width: 2px;">1</span>
+                                </td>
+                                <td class="product__price"
+                                    style="border-color: rgb(250, 217, 217); padding: 0px 0px 0px 1em; text-align: right; white-space: nowrap;">
+                                    <span class="order-summary__emphasis skeleton-while-loading"
+                                        style="color: #323232;">
+                                        {{ _tools.monedaChange( 3, 2, item.costoTotal || 0 ) }}
+                                    </span>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <div class="order-summary__section order-summary__section--total-lines" data-order-summary-section="payment-lines"
+                style='-webkit-box-flex: 0; background-color: white; border: 0px; color: #535353; flex: 0 0 auto; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", sans-serif; font-size: 14px; padding-bottom: 1.5em; padding-top: 1.5em;'>
+                <table class="total-line-table"
+                    style="border-collapse: collapse; border-spacing: 0px; font-size: 1em; width: 418px;">
+                    <caption class="visually-hidden"
+                        style="border: 0px; clip: rect(0px, 0px, 0px, 0px); height: 2px; margin: -2px; overflow: hidden; padding: 0px; position: absolute; white-space: nowrap; width: 2px;">
+                        Resumen de costos
+                    </caption>
+                    <thead>
+                        <tr>
+                            <th scope="col" style="font-weight: normal; padding: 0px; text-align: left;">
+                                <span class="visually-hidden"
+                                    style="border: 0px; clip: rect(0px, 0px, 0px, 0px); height: 2px; margin: -2px; overflow: hidden; padding: 0px; position: absolute; white-space: nowrap; width: 2px;">Descripción</span>
+                            </th>
+                            <th scope="col" style="font-weight: normal; padding: 0px 0px 0px 1em; text-align: right;">
+                                <span class="visually-hidden"
+                                    style="border: 0px; clip: rect(0px, 0px, 0px, 0px); height: 2px; margin: -2px; overflow: hidden; padding: 0px; position: absolute; white-space: nowrap; width: 2px;">Precio</span>
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody class="total-line-table__tbody">
+                        <tr class="total-line total-line--subtotal">
+                            <th class="total-line__name" scope="row" style="font-weight: normal; padding: 0px; text-align: left;">
+                                Subtotal
+                            </th>
+                            <td class="total-line__price"
+                                style="padding: 0px 0px 0px 1.5em; text-align: right; white-space: nowrap;">
+                                <span class="order-summary__emphasis skeleton-while-loading"
+                                    data-checkout-subtotal-price-target="7500000" style="color: #323232;">{{ _tools.monedaChange( 3, 2, totalSuma || 0 )}}</span>
+                            </td>
+                        </tr>
+                        <tr class="total-line total-line--shipping">
+                            <th class="total-line__name" scope="row"
+                                style="font-weight: normal; padding: 0.75em 0px 0px; text-align: left;">
+                                Envíos
+                            </th>
+                            <td class="total-line__price"
+                                style="padding: 0.75em 0px 0px 1.5em; text-align: right; white-space: nowrap;">
+                                <span class="skeleton-while-loading order-summary__small-text"
+                                    data-checkout-total-shipping-target="0" style="color: #717171; font-size: 0.857143em;">Envio Gratis</span>
+                            </td>
+                        </tr>
+                    </tbody>
+                    <tfoot class="total-line-table__footer">
+                        <tr class="total-line">
+                            <th class="total-line__name payment-due-label" scope="row"
+                                style="font-weight: normal; padding: 3em 0px 0px; position: relative; text-align: left;">
+                                <span class="payment-due-label__total" style="color: #323232; font-size: 1.14286em;">Total</span>
+                            </th>
+                            <td class="total-line__price payment-due" data-presentment-currency="COP"
+                                style="padding: 3em 0px 0px 1.5em; position: relative; text-align: right; white-space: nowrap;">
+                                <span class="payment-due__currency remove-while-loading"
+                                    style="color: #717171; font-size: 0.857143em; margin-right: 0.5em; vertical-align: 0.2em;">COP</span>&nbsp;<span
+                                    class="payment-due__price skeleton-while-loading--lg" data-checkout-payment-due-target="7500000"
+                                    style="color: #323232; font-size: 1.71429em; letter-spacing: -0.04em; line-height: 1em;"> {{ _tools.monedaChange( 3, 2, totalSuma || 0 ) }} </span>
+                            </td>
+                        </tr>
+                    </tfoot>
+                </table>
+            </div>
+        </div>
+    </div>
+    <div class="row" *ngIf="vista1 =='segunda'">
+        <div class="col-12">
+            <div class="d-flex flex-column bd-highlight mb-3">
+                <div class="p-2 bd-highlight">
+                    <h2 style="color: #8f8f8f;">
+                        Tu pedido esta en proceso en estos momentos lo recibirás entre 4 o 8 dias si se precenta algun inconveniente se notificara por via whatsap. 
+                        ¡Recuerda el valor del envio es gratis!
+                    </h2>
+                </div>
+                <div class="p-2 bd-highlight">
+                    <div class="d-flex justify-content-between">
+                        <button type="button" class="btn btn-primary" [routerLink]="['/tienda/productos']" routerLinkActive="router-link-active" >Volver ala tienda</button>
+                    </div>
+                </div>
+              </div>
+        </div>
+    </div>
+</div>

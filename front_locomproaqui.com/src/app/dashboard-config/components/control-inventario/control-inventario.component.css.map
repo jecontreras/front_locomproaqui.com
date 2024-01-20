@@ -1,0 +1,9 @@
+{
+    "version": 3,
+    "mappings": "AAAA,AAAA,WAAW,CAAA;EACP,UAAU,EAAE,OAAO;CACtB",
+    "sources": [
+        "control-inventario.component.scss"
+    ],
+    "names": [],
+    "file": "control-inventario.component.css"
+}

@@ -1,0 +1,137 @@
+<div class="content">
+  <div class="row">
+    <div class="col-12">
+      <div class="content">
+        <div class="row" style="padding: 7px;">
+          <!--<div class="form-group col-xs-5 col-sm-5 col-12">
+              <ng-autocomplete [(ngModel)]="filter.user" [data]="listSeller" [searchKeyword]="keyword" placeHolder="Buscar Bodegero" autocomplete="off"
+                  historyIdentifier="listSeller" [itemTemplate]="itemTemplate" [notFoundTemplate]="notFoundTemplate" (selected)='handleSelectShop($event)' (inputChanged)='onChangeSearch($event)'>
+              </ng-autocomplete>
+
+              <ng-template #itemTemplate let-item>
+                  <div class="item">
+                      <span [innerHTML]="item.usu_usuario"></span> &nbsp; | &nbsp;
+                      <small>Nombe: {{ item.usu_nombre }}</small> &nbsp; | &nbsp;
+                      <small>--: {{ item.usu_email }}</small>
+                  </div>
+              </ng-template>
+
+              <ng-template #notFoundTemplate let-notFound>
+                  <div [innerHTML]="notFound"></div>
+              </ng-template>
+          </div>-->
+          <div class="form-group col-xs-5 col-sm-5 col-12">
+          <label for="exampleFormControlInput1">Estado de Retiro</label>
+          <select class="form-control" id="exampleFormControlSelect1" [(ngModel)]="filter.state" (change)="handleFilter()">
+              <option value="0">Procesando</option>
+              <option value="1">Exitoso</option>
+          </select>
+          </div>
+          <div class="form-group col-xs-5 col-sm-5 col-12">
+            <mat-form-field appearance="fill">
+              <mat-label>Buscar por Fechas</mat-label>
+              <input [(ngModel)]="filter.date" matInput [matDatepicker]="dp3" disabled>
+              <mat-datepicker-toggle matSuffix [for]="dp3"></mat-datepicker-toggle>
+              <mat-datepicker #dp3 disabled="false"></mat-datepicker>
+            </mat-form-field>
+          </div>
+          <div class="form-group col-xs-5 col-sm-5 col-12">
+            <button mat-raised-button color="primary" (click)="handleFilter()">Buscar</button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-12">
+      <table mat-table
+       [dataSource]="dataSource" multiTemplateDataRows
+       class="mat-elevation-z8">
+        <ng-container matColumnDef="{{column}}" *ngFor="let column of columnsToDisplay">
+          <th mat-header-cell *matHeaderCellDef> {{column}} </th>
+          <td mat-cell *matCellDef="let element"
+              [ngClass]="
+              {
+                'medium': element.idState == 0,
+                'full': element.idState == 1
+              }
+            "
+          >
+              <span
+                *ngIf="( column !== 'Usuario' ) && ( column !== 'Email' ) &&
+                ( column !== 'Banco' ) && ( column !== 'Monto' ) && ( column !== 'FechaPago' ) &&
+                ( column !== 'Estado' )">
+                {{element[column]}}
+              </span>
+              <span *ngIf="column === 'Usuario'">{{ element['user']?.usu_usuario }} </span>
+              <span *ngIf="column === 'Email'">{{ element['user']?.usu_email }} </span>
+              <span *ngIf="column === 'Banco'">{{ element['bank']?.bank }} </span>
+              <span *ngIf="column === 'Monto'">{{ _tools.monedaChange(3,2, ( element.amount || 0) ) }} </span>
+              <span *ngIf="column === 'FechaPago'">{{ element['fechaPago'] | date:'medium' }} </span>
+              <span *ngIf="column === 'Estado'">{{ element['state'] }} </span>
+          </td>
+        </ng-container>
+
+        <!-- Expanded Content Column - The detail row is made up of this one column that spans across all columns -->
+        <ng-container matColumnDef="expandedDetail">
+          <td mat-cell *matCellDef="let element" [attr.colspan]="columnsToDisplay.length">
+            <div class="example-element-detail"
+                [@detailExpand]="element == expandedElement ? 'expanded' : 'collapsed'">
+                <div class="content infoCenter">
+                  <div class="row">
+                    <div class="col-sm-3 col-6">
+                      <button mat-raised-button color="primary" (click)="handlePago( element )">Pagar al Proveedor</button>
+                    </div>
+                    <div class="col-sm-3 col-6" *ngIf="element.bank">
+                      <label for="">Banco:&nbsp;</label>
+                      <span>{{ element['bank']?.bank }} </span>
+                    </div>
+                    <div class="col-sm-3 col-6" *ngIf="element.bank">
+                      <label for="">Tipo de Cuenta:&nbsp;</label>
+                      <span>{{ element['bank']?.accounType === 0 ? 'Ahorros' : 'Corriente' }} </span>
+                    </div>
+                    <div class="col-sm-3 col-6" *ngIf="element.bank">
+                      <label for="">Numero de Cuenta:&nbsp;</label>
+                      <span>{{ element['bank']?.numeroCuenta }} </span>
+                    </div>
+                    <div class="col-sm-3 col-6" *ngIf="element.bank">
+                      <label for="">Numero de Cedula:&nbsp;</label>
+                      <span>{{ element['bank']?.numberCC }} </span>
+                    </div>
+                    <div class="col-sm-3 col-6" *ngIf="element.bank">
+                      <label for="">Numero de Celular:&nbsp;</label>
+                      <span>{{ element['bank']?.numberPhone }} </span>
+                    </div>
+                    <div class="col-sm-3 col-6" *ngIf="element.bank">
+                      <label for="">Nombre Titular de la Cuenta:&nbsp;</label>
+                      <span>{{ element['bank']?.nameHeadline }} </span>
+                    </div>
+                    <div class="col-sm-3 col-6" *ngIf="element.amount">
+                      <label for="">Dinero a solicitar:&nbsp;</label>
+                      <span>
+                        {{ _tools.monedaChange(3,2, ( element.amount || 0) ) }}
+                      </span>
+                    </div>
+                    <div class="col-sm-3 col-6" *ngIf="element.state">
+                      <label for="">Estado del Retiro:&nbsp;</label>
+                      <span>{{ element['state'] }} </span>
+                    </div>
+                    <div class="col-sm-3 col-6" *ngIf="element.photo">
+                      <button mat-raised-button color="warn" (click)="handleEvidence( element )">Ver Foto de Evidencia</button>
+                    </div>
+                  </div>
+                </div>
+            </div>
+          </td>
+        </ng-container>
+
+        <tr mat-header-row *matHeaderRowDef="columnsToDisplay"></tr>
+        <tr mat-row *matRowDef="let element; columns: columnsToDisplay;"
+            class="example-element-row"
+            [class.example-expanded-row]="expandedElement === element"
+            (click)="expandedElement = expandedElement === element ? null : element">
+        </tr>
+        <tr mat-row *matRowDef="let row; columns: ['expandedDetail']" class="example-detail-row"></tr>
+      </table>
+      <mat-paginator (page)="onScroll($event)" [length]="resultsLength" [pageSize]="30"></mat-paginator>
+    </div>
+  </div>
+</div>

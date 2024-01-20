@@ -1,0 +1,50 @@
+.ancholist{
+  width: 580px;
+}
+
+
+.img-contenedor img {
+  -webkit-transition:all .9s ease; /* Safari y Chrome */
+  -moz-transition:all .9s ease; /* Firefox */
+  -o-transition:all .9s ease; /* IE 9 */
+  -ms-transition:all .9s ease; /* Opera */
+  width:100%;
+  }
+  .img-contenedor:hover img {
+  -webkit-transform:scale(1.25);
+  -moz-transform:scale(1.25);
+  -ms-transform:scale(1.25);
+  -o-transform:scale(1.25);
+  transform:scale(1.25);
+  }
+  .img-contenedor {/*Ancho y altura son modificables al requerimiento de cada uno*/
+  // width:300px;
+  // height:180px;
+  overflow:hidden;
+  }
+
+
+  div.scrollmenu {
+    background-color: #02a0e3;
+    overflow: auto;
+    white-space: nowrap;
+    margin: auto;
+  }
+
+  div.scrollmenu a {
+    display: inline-block;
+    color: white;
+    text-align: center;
+    padding: 14px;
+    text-decoration: none;
+  }
+
+  div.scrollmenu a:hover {
+    background-color: #777;
+  }
+
+  .cambiaColor{
+    color: red;
+    border-bottom: 1px solid #f35757;
+  }
+

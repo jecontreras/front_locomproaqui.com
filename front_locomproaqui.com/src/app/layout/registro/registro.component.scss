@@ -1,0 +1,84 @@
+
+input {
+  border: none;
+  font-size: 16px;
+  height: auto;
+  margin: 0;
+  outline: 0;
+  padding: 15px;
+  background-color: #f9fdff;
+  color: #000000;
+  box-shadow: 0 1px 0 rgba(0, 0, 0, 0.03) inset;
+  border-radius: 5px;
+}
+
+.video-container {
+  position: relative;
+  padding-bottom: 56.25%; /* Proporción 16:9 (9 / 16 * 100) */
+  padding-top: 30px;
+  height: 0;
+  overflow: hidden;
+}
+
+.video-container iframe {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+}
+
+
+input[type="text"] {
+  cursor: pointer;
+}
+
+
+input[type="text"] {
+  transition: border 0.3s ease-in-out;
+}
+
+input[type="text"]:focus {
+  border: 1px solid blue;
+}
+
+input[type="text"] {
+  box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.3);
+}
+
+
+.imgFondo{
+    background-image: url('/assets/img/introduccion.jpg');
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    background-size: 100% 100%;
+    height: -webkit-fill-available;
+}
+
+.efectButton{
+    border: 1px solid black;
+    padding: 10px;
+    border-radius: 10px;
+    background: darkgreen;
+}
+
+.efectos{
+    width: 559px;
+    height: 290px;
+    border: 1px solid black;
+    padding: 11px;
+    border-radius: 10px;
+    background: #dbf4ff;
+}
+
+.aligniar{
+    text-align: center;
+}
+
+.sixes{
+    font-size: 9px;
+}
+
+.form-control {
+    background-color: #e1f2fa !important;
+}

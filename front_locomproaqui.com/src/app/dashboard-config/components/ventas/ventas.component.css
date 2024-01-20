@@ -1,0 +1,43 @@
+.colorFondo {
+  background: #57ff75 !important;
+}
+
+.espaciosL {
+  margin-right: 5px;
+}
+
+.colorCompletado {
+  background: #95ffac !important;
+}
+
+.colorDespachado {
+  background: #f6ffa8 !important;
+}
+
+.colorEntrante {
+  background: #83bafa !important;
+}
+
+.colorDevolucion {
+  background: #ff7598 !important;
+}
+
+.colorPagado {
+  background: #979797 !important;
+}
+
+.colorEliminado {
+  background: #fb1951 !important;
+}
+
+.imgs {
+  height: 9%;
+  width: 60px;
+}
+
+.fondos {
+  background: #dfdfdf;
+  padding: 5px;
+  border-radius: 5px;
+}
+/*# sourceMappingURL=ventas.component.css.map */

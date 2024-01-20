@@ -1,0 +1,9 @@
+{
+    "version": 3,
+    "mappings": "AAAA,AAAA,KAAK,CAAC;EACF,MAAM,EAAE,IAAI;CACf",
+    "sources": [
+        "mis-despacho.component.scss"
+    ],
+    "names": [],
+    "file": "mis-despacho.component.css"
+}

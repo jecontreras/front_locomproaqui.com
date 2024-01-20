@@ -1,0 +1,182 @@
+<h2 mat-dialog-title> Ventas</h2>
+<mat-dialog-content class="mat-typography">
+  <div class="row">
+    <div class="col-md-12">
+      <div class="card" style="overflow-x: scroll;">
+        <br>
+        <br>
+        <div class="card-header card-header-primary card-header-icon">
+          <div class="card-icon">
+            <i class="material-icons">assignment</i>
+          </div>
+          <h4 class="card-title">Ventas</h4>
+        </div>
+        <div class="card-body">
+          <div class="toolbar">
+            <!--        Here you can write extra buttons/actions for the toolbar              -->
+          </div>
+          <div *ngIf="loader" class="loader">
+            <!-- <svg class="circular" viewBox="25 25 50 50">
+                <circle class="path" cx="50" cy="50" r="20" fill="none" stroke-width="2" stroke-miterlimit="10" />
+              </svg>
+              Loading.. -->
+            <ngx-spinner bdOpacity=0.9 bdColor="" size="default" color="#581f87" type="ball-pulse-sync"
+              [fullScreen]="false">
+            </ngx-spinner>
+          </div>
+          <div id="datatables_filter" class="dataTables_filter row">
+            <div class="col-12 row">
+              <label class="form-group col espaciosL">
+                <input [(ngModel)]="datoBusqueda" type="search" class="form-control form-control-sm" (change)="buscar()"
+                  placeholder="Buscar Ventas" aria-controls="datatables"></label>
+              <div>
+                <button (click)="buscar()" [disabled]="loader" mat-raised-button mat-min-fab
+                  class="btn btn-primary btn-just-icon btn-round espaciosL">
+                  <i class="material-icons">search</i>
+                </button>
+                <!-- <button (click)="verTable()" [disabled]="loader" mat-raised-button mat-min-fab
+                  class="btn btn-primary btn-just-icon btn-round espaciosL">
+                  <i class="material-icons">outdoor_grill</i>
+                </button> -->
+                <!--<button (click)="crear(false)" class="btn btn-primary btn-just-icon btn-round espaciosL" mat-raised-button
+                  mat-min-fab>
+                  SUBE TU VENTA <i class="material-icons">add_circle_outline</i>
+                </button>-->
+              </div>
+            </div>
+            <div class="col-12 row">
+              <div class="col-md-6 col-sm-4 col-lg-4 col-xs-6">
+                <label>Estado de la venta</label>
+                <select class="form-control form-control-sm" [(ngModel)]="filtro.ven_estado" placeholder="Estado de la Venta" [disabled]="loader" (ngModelChange)="buscarEstado()">
+                  <option type="number" value="5">Todos</option>
+                  <option type="number" value="0">Pendiente</option>
+                  <option type="number" value="1">Venta exitosa</option>
+                  <option type="number" value="2">Rechazada</option>
+                  <option type="number" value="3">Despachado</option>
+                  <option type="number" value="6">Pagado y completado</option>
+                </select>
+              </div>
+              <div class="col-md-5 col-sm-3 col-lg-3 col-xs-5">
+                <label>Fecha Inicial</label>
+                <div class="input-group">
+                  <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
+                  <input type="date" class="form-control" [(ngModel)]="filtro.fechaFinal" (keyup)="validandoFecha()" (change)="validandoFecha()">
+                </div>
+              </div>
+              <div class="col-md-5 col-sm-3 col-lg-3 col-xs-5">
+                <label>Fecha Final</label>
+                <div class="input-group">
+                  <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
+                  <input type="date" class="form-control" [(ngModel)]="filtro.fechaInicio" (keyup)="validandoFecha()" (change)="validandoFecha()">
+                </div>
+              </div>
+              <div class="col-2">
+                <button (click)="borrarFiltro()" [disabled]="loader" mat-raised-button mat-min-fab
+                  class="btn btn-danger btn-just-icon btn-round">
+                  borrar Filtros
+                </button>
+              </div>
+            </div>
+
+          </div>
+          <!--<div class="col-12" *ngIf="activando">
+            <div class="col-md-3 col-sm-4 col-lg-3 col-xs-3">
+              <span>Total Utilidad de venta</span>
+              <p>$ {{ ( dataInfo.pagado || 0 ).toLocaleString(1) }} COP</p>
+            </div>
+          </div>-->
+          <div class="search-results col-12 row">
+            <div class="col-12 material-datatables" *ngIf="!loader">
+              <table id="datatables" class="table table-striped table-no-bordered table-hover" cellspacing="0"
+                width="100%" style="width:100%">
+                <thead>
+                  <tr>
+                    <th *ngFor="let row of dataTable.headerRow">{{ row }}</th>
+                  </tr>
+                </thead>
+                <tfoot>
+                  <tr>
+                    <th *ngFor="let row of dataTable.headerRow">{{ row }}</th>
+                  </tr>
+                </tfoot>
+                <tbody>
+                  <tr *ngFor="let row of dataTable.dataRows; let idx=index" [ngClass]="{
+                    'colorFondo':row['ven_subVendedor'] == 1,
+                    'colorCompletado':row['ven_estado'] == 1,
+                    'colorDespachado':row['ven_estado'] == 3,
+                    'colorEntrante':row['ven_estado'] == 0,
+                    'colorDevolucion':row['ven_estado'] == 2,
+                    'colorPagado':row['ven_retiro'] >= 1
+                  }">
+
+                    <td>
+                      <button (click)="crear(row)" class="btn btn-primary btn-just-icon btn-round">
+                        <i class="material-icons">remove_red_eye</i>
+                      </button><br>
+                      <button *ngIf="row['ven_numero_guia']" (click)="verDetalles( row['ven_numero_guia'] )" class="btn btn-info btn-just-icon btn-round">
+                        Estado Guia
+                      </button><br>
+                      <button (click)="openEvidencia( row['ven_imagen_tiket'] )" *ngIf="row['ven_imagen_tiket']" class="btn btn-dark btn-just-icon btn-round">
+                        Evidencia Entrega
+                      </button><br>
+                      <button (click)="btndelete(row, idx)" class="btn btn-danger btn-just-icon btn-round">
+                        <i class="material-icons">delete_forever</i>
+                      </button>
+                    </td>
+                    <td>{{ row['ven_numero_guia'] }}</td>
+                    <td>
+                      <p>{{ row['ven_usu_creacion'] }}</p>
+                      <p>{{ row['usu_clave_int']?.usu_nombre }}</p>
+                      <p>+{{ row['usu_clave_int']?.usu_indicativo }} {{ row['usu_clave_int']?.usu_telefono }}</p>
+                      <p>{{ row['usu_clave_int']?.usu_ciudad }}</p>
+                    </td>
+                    <td>{{ row['ven_nombre_cliente'] }}</td>
+                    <td>
+                      <span>
+                        {{ row['ven_telefono_cliente'] }} <img src="./assets/img/what.jpg" class="pointer" style="width: 35px;" (click)="openUrl( row['ven_telefono_cliente'], row['ven_nombre_cliente'], row )">
+                      </span>
+                    </td>
+                    <td>{{ _tools.monedaChange( 3,2, row['ven_ganancias'] || 0 ) }}</td>
+                    <td>{{ _tools.monedaChange( 3,2, row['fleteValor'] || 0 ) }}</td>
+                    <td>{{ row['createdAt'] | date:'medium' }}</td>
+                    <!-- <td>{{ row['pro_clave_int']?.pro_nombre }}</td> -->
+                    <!-- <td>{{ row['ven_cantidad'] }}</td> -->
+                    <!-- <td>
+                      $ {{ ( row['ven_precio'] || 0 ).toLocaleString(1) }}
+                    </td> -->
+                    <!-- <td>
+                      <img *ngIf="row.ven_tipo === 'whatsapp'" [src]="row['ven_imagen_producto']" class="foto pointer" (click)="openFoto( row['ven_imagen_producto'] )" >
+                      <img *ngIf="row.ven_tipo === 'carrito'" [src]="row['pro_clave_int']?.foto" class="foto">
+                    </td> -->
+                    <td *ngIf="row['ven_estado'] == 0">Pendiente</td>
+                    <td *ngIf="row['ven_estado'] == 1">Exitosa</td>
+                    <td *ngIf="row['ven_estado'] == 2">Rechazada</td>
+                    <td *ngIf="row['ven_estado'] == 3">Despachado</td>
+                    <td>
+                      <img src="./assets/icons/pago.png" alt="" *ngIf="row['ven_retirado'] == 1" style="width: 25%;">
+                      <span *ngIf="row['ven_imagen_tiket'] && row['ven_retirado'] == 0">lista para cobrar</span>
+                    </td>
+                    <td>{{ row['ven_motivo_rechazo'] }}</td>
+                    <!-- <td>{{ row['ven_tallas'] }}</td> -->
+                  </tr>
+                </tbody>
+              </table>
+              <div class="col-md-12 p-5">
+                <ngx-spinner bdOpacity=0.9 bdColor="" size="default" color="#581f87" type="ball-pulse-sync"
+                  [fullScreen]="false">
+                </ngx-spinner>
+              </div>
+              <div class="col-md-12 p-5">
+                <mat-paginator [disabled]="loader" [length]="count" [pageSize]="10" [pageSizeOptions]="[5, 10, 25, 100]" (page)="pageEvent($event)">
+                </mat-paginator>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</mat-dialog-content>
+<mat-dialog-actions align="end">
+    <button mat-button mat-dialog-close>Cerrar</button>
+</mat-dialog-actions>

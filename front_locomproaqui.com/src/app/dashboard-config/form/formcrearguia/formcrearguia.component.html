@@ -1,0 +1,74 @@
+<h2 mat-dialog-title class="form-group bg-primary text-white rounded">Crear Guia</h2>
+<mat-dialog-content class="mat-typography">
+    <div class="form row" *ngIf="!btndisabled">
+        <div class="form-group col-md-6 col-sm-4 col-lg-4 col-xs-6">
+            <label>Empresa de Envio *</label>
+            <input type="text" [(ngModel)]="data.transportadoraSelect" class="form-control form-control-sm" disabled>
+        </div>
+        <div class="form-group col-4">
+            <label>Tipo de envio *</label>
+            <select class="form-control form-control-sm" [(ngModel)]="data.selectEnvio" disabled>
+                <option value="contraEntrega">Contra entrega</option>
+                <option value="envioNormal">Envio Normal</option>
+            </select>
+        </div>
+        <div class="form-group col-4">
+            <label for="exampleFormControlInput1">Valor Mercancia</label>
+            <input currencyMask [(ngModel)]="data.valorMercancia" class="form-control form-control-sm" [options]="opcionCurrencys" disabled/>
+        </div>
+        <div class="form-group col-4">
+            <label for="exampleFormControlInput1">Valor a segurar</label>
+            <input currencyMask [(ngModel)]="data.valorAsegurado" class="form-control form-control-sm" [options]="opcionCurrencys"/>
+        </div>
+        <div class="form-group col-4">
+            <label for="exampleFormControlInput1">Fecha</label>
+            <input type="date" [(ngModel)]="data.fecha" class="form-control form-control-sm">
+        </div>
+        <!--<div class="form-group col-4">
+            <label for="exampleFormControlInput1">Numero Unidad</label>
+            <input type="number" [(ngModel)]="data.numeroUnidad" class="form-control form-control-sm">
+        </div>-->
+        <div class="form-group col-4">
+            <label for="exampleFormControlInput1">Peso Real</label>
+            <input type="number" [(ngModel)]="data.pesoReal" class="form-control form-control-sm">
+        </div>
+        <div class="form-group col-4">
+            <label for="exampleFormControlInput1">Peso Volumen</label>
+            <input type="number" [(ngModel)]="data.pesoVolumen" class="form-control form-control-sm">
+        </div>
+        <div class="form-group col-4">
+            <label for="exampleFormControlInput1">Alto</label>
+            <input type="number" [(ngModel)]="data.alto" class="form-control form-control-sm">
+        </div>
+        <div class="form-group col-4">
+            <label for="exampleFormControlInput1">Largo</label>
+            <input type="number" [(ngModel)]="data.largo" class="form-control form-control-sm">
+        </div>
+        <div class="form-group col-4">
+            <label for="exampleFormControlInput1">Ancho</label>
+            <input type="number" [(ngModel)]="data.ancho" class="form-control form-control-sm">
+        </div>
+        <div class="form-group col-4">
+            <label for="exampleFormControlInput1">Valor del Envió</label>
+            <input currencyMask [(ngModel)]="data.fleteValor" class="form-control form-control-sm" [options]="opcionCurrencys" disabled/>
+        </div>
+        <div class="form-group col-12">
+            <label for="exampleFormControlInput1">Descripcion</label>
+            <textarea class="form-control" [(ngModel)]="textData" rows="6"></textarea>
+        </div>
+    </div>
+    <div class="row" *ngIf="btndisabled">
+        <div class="col-12">
+            <div class="d-flex justify-content-center">
+                <mat-spinner></mat-spinner>
+            </div>
+        </div>
+    </div>
+</mat-dialog-content>
+
+<mat-dialog-actions align="end">
+    <button mat-button mat-dialog-close [disabled]="btndisabled">Cerrar</button>
+    <button mat-button cdkFocusInitial (click)="submit()" [disabled]="btndisabled">
+        Generar Guia
+    </button>
+</mat-dialog-actions>

@@ -1,0 +1,106 @@
+<br><br>
+<div class="ruta" style="box-sizing: border-box; padding-left: 22vw;">
+    <p
+        style="box-sizing: border-box; color: #484848; font-family: Montserrat, sans-serif !important; font-size: 1.2vw; letter-spacing: 0.04vw; margin-bottom: 1rem; margin-top: 0px;">
+        <br><br>
+        <a routerLink="/config/verCatalagoProveedor"
+            style="box-sizing: border-box; color: #0040ff; cursor: pointer; text-decoration-line: none;">Volver al
+            listado</a>&nbsp;|&nbsp;
+        <a style="box-sizing: border-box; color: #0040ff; cursor: pointer;">{{ titulo }}</a>
+    </p>
+</div>
+<div class="container">
+    <div class="row"
+        style="--bs-gutter-x: 1.5rem; --bs-gutter-y: 0; box-sizing: border-box; display: flex; flex-wrap: wrap; margin-left: 0px; margin-right: 0px; margin-top: calc(var(--bs-gutter-y) * -1);">
+        <div class="col-sm-3 col-12 inf-tienda">
+            <img alt="Lokomproaqui" class="imgen" [src]="data.usu_imagen"
+                style="border-radius: 10vw; border-style: none; box-shadow: rgb(136, 136, 136) 0.1vw 0px 1vw 0.3vw; box-sizing: border-box; margin-bottom: 1vw; vertical-align: middle; width: 15vw;" />
+            <h5
+                style="box-sizing: border-box; color: #484848; font-family: Josefin Sans, sans-serif !important; font-size: 1.4vw; font-weight: 500; line-height: 1.2; margin-bottom: 0.5rem; margin-top: 0px;">
+                {{ data.usu_usuario || 'Empresa Null' }}
+            </h5>
+            <h6 class="prods"
+                style="box-sizing: border-box; color: #f58b1f; font-size: 1.2vw; font-weight: 500; line-height: 1.2; margin-bottom: 0.5rem; margin-top: 0px;">
+                {{ data.countProducto }} Producto(s)</h6>
+            <p
+                style="box-sizing: border-box; color: #484848; font-family: Montserrat, sans-serif !important; font-size: 1.1vw; margin-bottom: 1rem; margin-top: 0px;">
+                Productos importados</p>
+            <p
+                style="box-sizing: border-box; color: #484848; font-family: Montserrat, sans-serif !important; font-size: 1.1vw; margin-bottom: 1rem; margin-top: 0px;">
+                Ciudad {{ data.usu_ciudad }}</p>
+        </div>
+        <div class="col-sm-9 col-12 prods-tienda">
+            <div class="wrap"
+                style="box-sizing: border-box; margin-left: auto; margin-right: auto; padding-left: 15px; padding-right: 15px; ">
+                <div class="store-wrapper" style="box-sizing: border-box; display: flex; flex-wrap: wrap;"
+                    infiniteScroll [infiniteScrollDistance]="50" [infiniteScrollThrottle]="60" (scrolled)="onScroll()">
+                    <div class="col" id="filtro"
+                        style="box-sizing: border-box; flex: 1 0 0px; max-width: 100%; padding-left: 15px; padding-right: 15px; position: relative;">
+                        <div class="input-group mb-3"
+                            style="align-items: stretch; box-sizing: border-box; display: flex; flex-wrap: wrap; margin-bottom: 1rem !important; padding-left: 1vw; position: relative;">
+                            <p
+                                style="border-bottom-right-radius: 0px; border-top-right-radius: 0px; box-sizing: border-box; color: #484848; font-family: Montserrat, sans-serif !important; font-size: 1.3vw; margin-bottom: 1rem; margin-top: 0.6vw; padding-right: 0.2vw;">
+                                Filtrar por categoria: &nbsp;</p>
+                            <select class="custom-select" [(ngModel)]="seart.txt" (ngModelChange)="buscar()"
+                                style="appearance: none; background: url(data:image/svg+xml,%3csvg) xmlns='http://www.w3.org/2000/svg' width='4' height='5' viewBox='0 0 4 5' path fill='%23343a40' d='M2 0L0 2h4zm0 5L0 3h4z'/%3e%3c/svg%3e) right 0.75rem center / 8px 10px no-repeat rgb(255, 255, 255); border-bottom-right-radius: 2vw; border-color: initial; border-style: initial; border-top-right-radius: 2vw; border-width: 1vw; box-shadow: rgb(136, 136, 136) 0.1vw 0px 1vw 0.1vw; color: #495057; display: flex; flex-direction: column; flex: 1 1 auto; font-family: inherit; font-size: 1.3vw; height: calc(1.5em + 0.75rem + 2px); line-height: 1.5; margin: 0px 0px 0px -1px; min-width: 0px; overflow-wrap: normal; padding: 0.375rem 1.75rem 0.375rem 0.75rem; position: relative; transition: none 0s ease 0s; vertical-align: middle; width: 453.203px;">
+                                <option class="category_items" selected="" *ngFor="let item of listCategorias"
+                                    style="background: rgb(245, 245, 245); box-sizing: border-box; font-size: 1.3vw; margin-bottom: 20px; padding: 15px 0px; text-align: center; text-transform: capitalize; width: 90%;"
+                                    value="item.id">{{ item.cat_nombre }}
+                                </option>
+                            </select>
+                        </div>
+                        <div class="input-group mb-3"
+                            style="align-items: stretch; box-sizing: border-box; display: flex; flex-wrap: wrap; margin-bottom: 1rem !important; padding-left: 1vw; position: relative;">
+                            <p
+                                style="border-bottom-right-radius: 0px; border-top-right-radius: 0px; box-sizing: border-box; color: #484848; font-family: Montserrat, sans-serif !important; font-size: 1.3vw; margin-bottom: 1rem; margin-top: 0.6vw; padding-right: 0.2vw;">
+                                Filtrar por Codigo: &nbsp;</p>
+                                <input 
+                                style="appearance: none; background: url(data:image/svg+xml,%3csvg) xmlns='http://www.w3.org/2000/svg' width='4' height='5' viewBox='0 0 4 5' path fill='%23343a40' d='M2 0L0 2h4zm0 5L0 3h4z'/%3e%3c/svg%3e) right 0.75rem center / 8px 10px no-repeat rgb(255, 255, 255); border-bottom-right-radius: 2vw; border-color: initial; border-style: initial; border-top-right-radius: 2vw; border-width: 1vw; box-shadow: rgb(136, 136, 136) 0.1vw 0px 1vw 0.1vw; color: #495057; display: flex; flex-direction: column; flex: 1 1 auto; font-family: inherit; font-size: 1.3vw; height: calc(1.5em + 0.75rem + 2px); line-height: 1.5; margin: 0px 0px 0px -1px; min-width: 0px; overflow-wrap: normal; padding: 0.375rem 1.75rem 0.375rem 0.75rem; position: relative; transition: none 0s ease 0s; vertical-align: middle; width: 453.203px;"
+                                    type="text" [(ngModel)]="seart.txt" class="form-control form-control-sm" (ngModelChange)="buscar()">
+                        </div>
+                    </div>
+                    <section class="products-list row">
+                        <mat-card class="example-card col-md-4 col-sm-4 col-lg-4 col-xs-6 col-6 anchandoPr "
+                            *ngFor="let item of listRow" [routerLink]="['/config/verProductoProveedor', item.id ]">
+                            <div class="ui-ribbon-wrapper hide" *ngIf="item.descuento">
+                                <div class="ui-ribbon">
+                                    {{ item.descuento }}% Off
+                                </div>
+                            </div>
+                            <figure data-toggle="modal" id="figura" data-target="#modalinfo" class="img-contenedor">
+                                <img class="img-responsive btn-block imgProductos pointer " [src]="item.foto">
+                            </figure>
+                            <mat-card-content>
+                                <div class="row">
+                                    <div class="col-12">
+                                        <div class="d-flex justify-content-between">
+                                            <div>
+                                                <h6 class="titulo1 color1">{{ item.pro_nombre | slice: 0: 20
+                                                    }}</h6>
+                                            </div>
+                                            <div>
+                                                <h6 class="titulo1 color1">
+                                                    <small style="display: inline-block;  font-size: 90% !important;"
+                                                        class="pricesmall currency2" id="pricesmall_25">$ {{
+                                                        (
+                                                        item.precio_vendedor || item.pro_uni_venta || 0
+                                                        ).toLocaleString(1) }}
+                                                    </small><br>
+                                                </h6>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </mat-card-content>
+                        </mat-card>
+                        <div class="col-12">
+                            <ngx-spinner bdOpacity=0.9 bdColor="" size="default" color="#581f87" type="ball-pulse-sync"
+                                [fullScreen]="false">
+                            </ngx-spinner>
+                        </div>
+                    </section>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

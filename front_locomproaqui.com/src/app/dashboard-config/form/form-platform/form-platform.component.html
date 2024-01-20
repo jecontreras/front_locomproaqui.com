@@ -1,0 +1,71 @@
+<h2 mat-dialog-title>DATOS NECESARIOS PARA ACTIVAR LA PLATAFORMAS</h2>
+<mat-dialog-content class="mat-typography">
+    <div class="form row">
+        <div class="form-group col-12 col-sm-6" *ngIf="superSub">
+            <label for="exampleFormControlInput1">Estado</label>
+            <select class="form-control form-control-sm" [(ngModel)]="data.estado">
+                <option type="number" value="0">Activo</option>
+                <option type="number" value="1">Eliminado</option>
+                <option type="number" value="2">Aprobado</option>
+            </select>
+        </div>
+        <div class="form-group col-12 col-sm-6" *ngIf="data.user && superSub ">
+          <label>Usuario / Email</label>
+          <p>{{ data.user.usu_usuario }} - {{ data.user.usu_email }} </p>
+      </div>
+        <div class="form-group col-12 col-sm-6">
+            <label>Plataforma</label>
+            <input type="text"  [(ngModel)]="data.namePlatform" class="form-control form-control-sm" [disabled]="!superSub">
+        </div>
+        <div class="form-group col-12 col-sm-6">
+            <label>Nombre de la Tienda</label>
+            <input type="text" [(ngModel)]="data.nombreEmpresa" class="form-control form-control-sm">
+        </div>
+        <div class="form-group col-12 col-sm-6" >
+            <label>Id Codigo convenio</label>
+            <input type="number" [(ngModel)]="data.IdSucursalCliente" class="form-control form-control-sm">
+        </div>
+        <div class="form-group col-12 col-sm-6">
+          <label>Nombre de Persona Responsable</label>
+          <input type="text" [(ngModel)]="data.nombrePersona" class="form-control form-control-sm">
+        </div>
+        <div class="form-group col-12 col-sm-6">
+          <label>Telefono / Celular</label>
+          <input type="text" [(ngModel)]="data.telefono" class="form-control form-control-sm">
+        </div>
+        <div class="form-group col-12 col-sm-6">
+          <label>Ciudad</label>
+          <ng-autocomplete [(ngModel)]="data.ciudad" [data]="listCiudades" [searchKeyword]="keyword" placeHolder="Buscar Ciudad" autocomplete="off"
+              historyIdentifier="listCiudades" [itemTemplate]="itemTemplate" [notFoundTemplate]="notFoundTemplate"  (inputChanged)='onChangeSearch($event)'>
+          </ng-autocomplete>
+
+          <ng-template #itemTemplate let-item>
+              <div class="item">
+                  <span [innerHTML]="item.city"></span> &nbsp; | &nbsp;
+                  <small>Departamento: {{ item.state }}</small> &nbsp; | &nbsp;
+                  <small>--: {{ item.name }}</small>
+              </div>
+          </ng-template>
+
+          <ng-template #notFoundTemplate let-notFound>
+            <div [innerHTML]="notFound"></div>
+        </ng-template>
+        </div>
+        <div class="form-group col-12">
+          <label>Email</label>
+          <input type="text" [(ngModel)]="data.email" class="form-control form-control-sm">
+        </div>
+        <!--<div class="form-group col-12">
+          <label>Horario de Recogida</label>
+          <input type="datetime-local" [(ngModel)]="data.horarioRecogida" class="form-control form-control-sm">
+        </div>-->
+    </div>
+</mat-dialog-content>
+
+<mat-dialog-actions align="end">
+    <button mat-button mat-dialog-close>Cerrar</button>
+    <button mat-button cdkFocusInitial (click)="submit()" [disabled]="disabledButton">
+        <span *ngIf="!id">Guardar Cambios</span>
+        <span *ngIf="id">Actulizar Cambios</span>
+    </button>
+  </mat-dialog-actions>

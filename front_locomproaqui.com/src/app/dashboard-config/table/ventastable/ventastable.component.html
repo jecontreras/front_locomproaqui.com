@@ -1,0 +1,8 @@
+<h2 mat-dialog-title>{{ titulo }} Ventas</h2>
+<mat-dialog-content class="mat-typography">
+  <ngx-spinner bdOpacity=0.9 bdColor="" size="default" color="#581f87" type="ball-pulse-sync"
+    [fullScreen]="false">
+  </ngx-spinner>
+  <ng2-smart-table style="padding: 70px;" [settings]="settings" [source]="data"></ng2-smart-table>
+  
+</mat-dialog-content>

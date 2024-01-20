@@ -1,0 +1,257 @@
+<div class="content">
+    <div class="row">
+      <div class="col-12">
+        <div class="d-flex justify-content-center">
+          <h2 class="text-dart font-weight-bold">Te Invitó {{ dataUser.usu_nombre || 'Admin' }}</h2>
+        </div>
+      </div>
+
+      <div class="col-12">
+        <div class="row">
+          <div class="col-12" style="text-align: center; background: #0db1f8; padding: 10% 0; color: white;">
+            <h1>Tu tienda aliada para vender en internet</h1>
+            <p class="text-white">
+              Vende, recibe tus pagos y gestiona envíos desde un solo lugar.
+            </p>
+            <div class="d-flex justify-content-center">
+              <div style="max-width: 500px; display: flex; align-items: center;">
+                <input type="text" [(ngModel)]="data.usu_email" class="form-control">
+                <button type="button" class="btn btn-danger ml-2" (click)="openEmail()">Crear negocio</button>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="row" style="color: white; padding: 15px;">
+          <div class="col-12 col-sm-6" style="background: #02a0e3; padding: 10% 2%;">
+            <div style="text-align: center;">
+              <img src="./assets/logo.png" alt="" style="width: 100%;">
+            </div>
+          </div>
+          <div class="col-12 col-sm-6" style="background: #00aaff; padding: 5%;">
+            <div style="margin: 15px; text-align: center;">
+              <h5 class="text-dart" style="margin: 10% 20px; text-align: center;">
+                ¡Haz tu registro y automáticamente tendrás una tienda con más de 20 proveedores de distintas categorías donde podrás traer a tus clientes y
+                recibir tus pedidos vía WhatsApp tu montas cada pedido en tu plataforma y nosotros nos encargamos de hacer llegar los pedidos a tu cliente final y
+                tú te ganarás una excelente comisión por cada venta
+              </h5>
+            </div>
+          </div>
+        </div>
+      </div>
+
+        <div class="col-12" style="background: #00aaff; color: white;  padding: 4% 1%;">
+          <div class="row" style="    padding: 10px;">
+            <div class="col-12">
+              <div class="d-flex justify-content-center">
+                <div style="text-align: center;">
+                  <h1 class="font-weight-bold">Impulsa tu negocio a un clic</h1>
+                  <p class="text-white font-weight-bold">Una tienda lista para vender y entregar</p>
+                </div>
+              </div>
+            </div>
+            <div class="col-12 col-sm-6" style="    margin: auto;">
+              <div class="d-flex justify-content-center">
+                <div style="    padding: 20px;">
+                  <h1 style="text-align: center;" class="font-weight-bold">CREA TU NEGOCIO GRATIS Y SIN PAGAR MESUALIDADES.</h1>
+                  <div class="row">
+                    <!--<div class="col-6">
+                      <p style="font-size: 13px;" class="text-white"> <label for=""> <i class="material-icons" aria-hidden="true">check_circle</i> Haz dropshipping y conéctate con todo tipo de proveedores.</label> </p>
+                    </div>-->
+                    <div class="col-6">
+                      <p style="font-size: 13px;" class="text-white"> <label for=""> <i class="material-icons" aria-hidden="true">check_circle</i> Personaliza tu tienda a un clic.</label> </p>
+                    </div>
+                    <div class="col-6">
+                      <p style="font-size: 13px;" class="text-white"> <label for=""> <i class="material-icons" aria-hidden="true">check_circle</i> Tu tienda online  24/7.</label> </p>
+                    </div>
+                    <div class="col-6">
+                      <p style="font-size: 13px;" class="text-white"> <label for=""> <i class="material-icons" aria-hidden="true">check_circle</i> Administra y gestiona a tus clientes.</label> </p>
+                    </div>
+                    <div class="col-6">
+                      <p style="font-size: 13px;" class="text-white"> <label for=""> <i class="material-icons" aria-hidden="true">check_circle</i> Sube tus productos de forma ilimitada.</label> </p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col-12 col-sm-6">
+              <div class="d-flex justify-content-center">
+                <div style="    padding: 20px;">
+                  <img src="./assets/imagenes/fondov1.png" alt="" style="    width: 400px;">
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-12">
+          <br>
+        </div>
+        <div class="col-12" style="background: #00aaff; color: white;  padding: 0% 5%;">
+          <div class="row" style="    padding: 30px;">
+            <div class="col-12 col-sm-6">
+              <img src="./assets/imagenes/LOGISTICA.png" alt="" style="width: 100%;">
+            </div>
+            <div class="col-12 col-sm-6" style="    margin: auto;">
+              <div class="d-flex justify-content-center">
+                <div style="    padding: 20px;">
+                  <h1 style="text-align: center;" class="font-weight-bold">Envios y logisticas incluidos</h1>
+                  <div class="row">
+                    <div class="col-6">
+                      <p style="font-size: 13px;" class="text-white"> <label for=""> <i class="material-icons" aria-hidden="true">check_circle</i> Envia contra entrega.</label> </p>
+                    </div>
+                    <div class="col-6">
+                      <p style="font-size: 13px;" class="text-white"> <label for=""> <i class="material-icons" aria-hidden="true">check_circle</i> Elige tu transportadora favorita.</label> </p>
+                    </div>
+                    <div class="col-6">
+                      <p style="font-size: 13px;" class="text-white"> <label for=""> <i class="material-icons" aria-hidden="true">check_circle</i> Rastrea tus envíos en tiempo real .</label> </p>
+                    </div>
+                    <div class="col-6">
+                      <p style="font-size: 13px;" class="text-white"> <label for=""> <i class="material-icons" aria-hidden="true">check_circle</i> Envía a toda Colombia .</label> </p>
+                    </div>
+                    <div class="col-12">
+                      <button style="height: 56px;" type="button" class="btn btn-danger" (click)="openEmail()">Empieza ya</button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-12" style="padding: 4% 10%;">
+          <div class="row">
+            <div class="col-12 col-sm-6" style="    margin: auto;">
+              <div class="d-flex justify-content-center">
+                <div style="    padding: 20px;">
+                  <h1 style="text-align: center;" class="font-weight-bold">¿POR QUÉ  LOKOMPROAQUI?</h1>
+                  <div class="row">
+                    <div class="col-12">
+                      <p style="font-size: 13px;" class="text-dark"> <label for=""> <i class="material-icons" aria-hidden="true">check_circle</i> Tenemos las mejores tarifas del mercado.</label> </p>
+                    </div>
+                    <div class="col-12">
+                      <p style="font-size: 13px;" class="text-dark"> <label for=""> <i class="material-icons" aria-hidden="true">check_circle</i> Somos una plataforma amigable y fácil de usar.</label> </p>
+                    </div>
+                    <div class="col-12">
+                      <p style="font-size: 13px;" class="text-dark"> <label for=""> <i class="material-icons" aria-hidden="true">check_circle</i> Te damos datos y métricas avanzadas de tu negocio .</label> </p>
+                    </div>
+                    <div class="col-12">
+                      <p style="font-size: 13px;" class="text-dark"> <label for=""> <i class="material-icons" aria-hidden="true">check_circle</i> Puedes gestionar tu inventario fácilmente .</label> </p>
+                    </div>
+                    <div class="col-12">
+                      <p style="font-size: 13px;" class="text-dark"> <label for=""> <i class="material-icons" aria-hidden="true">check_circle</i> Automatizamos procesos .</label> </p>
+                    </div>
+                    <div class="col-12">
+                      <button style="height: 56px;" type="button" class="btn btn-danger" (click)="openEmail()">Empieza ya</button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col-12 col-sm-6">
+              <img src="./assets/imagenes/LOKOMPRO.png" alt="" style="width: 100%;">
+            </div>
+          </div>
+        </div>
+        <div class="col-12" style="padding: 4% 1%;">
+          <div class="row" style="padding: 25px;  background: #00aaff;">
+            <div class="col-12">
+              <div class="row" style="margin-top: 20px;">
+                <div class="col-12">
+                  <h1 class="text-white">Empieza con LOKOMPROAQUI en 3 pasos </h1>
+                </div>
+                <div class="row">
+                  <div class="col-sm-4 col-6">
+                    <img src="./assets/imagenes/FORMULARIO.png" alt="" style="width: 100%;">
+                    <div
+                      style="padding: 5px;"
+                    >
+                      <p style="    color: white;">1. Registrate con tus datos y elige el nombre de tu tienda</p>
+                    </div>
+                  </div>
+                  <div class="col-sm-4 col-6">
+                    <img src="./assets/imagenes/CAJAS.png" alt="" style="width: 100%;">
+                    <div
+                      style="padding: 5px;"
+                    >
+                      <p style="    color: white;">2. Completa los datos y sube el catálogo de productos</p>
+                    </div>
+                  </div>
+                  <div class="col-sm-4 col-6">
+                    <img src="./assets/imagenes/DINERO.png" alt="" style="width: 100%;">
+                    <div
+                      style="padding: 5px;"
+                    >
+                      <p style="    color: white;">3. Comparte el link de tu tienda y empieza a vender</p>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-12">
+                  <div class="d-flex justify-content-center">
+                    <div>
+                      <button style="height: 56px;" type="button" class="btn btn-danger" (click)="openEmail()">Empieza ya</button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-12" style="padding: 4% 1%;">
+          <div class="row" style="padding: 25px;  background: #00aaff;">
+            <div class="col-12 col-sm-6" style="    margin: auto;">
+              <div class="d-flex justify-content-center">
+                <div style="    padding: 20px;">
+                  <h1 style="text-align: center;" class="font-weight-bold text-white">La Mejor comunidad e-commerce</h1>
+                  <div class="row">
+                    <div class="col-6">
+                      <p style="font-size: 13px;" class="text-white"> <label for=""> <i class="material-icons" aria-hidden="true">check_circle</i> Haz dropshipping y conéctate con todo tipo de proveedores .</label> </p>
+                    </div>
+                    <div class="col-6">
+                      <p style="font-size: 13px;" class="text-white"> <label for=""> <i class="material-icons" aria-hidden="true">check_circle</i> Acompañamiento personalizado desde tu registro.</label> </p>
+                    </div>
+                    <div class="col-6">
+                      <p style="font-size: 13px;" class="text-white"> <label for=""> <i class="material-icons" aria-hidden="true">check_circle</i> Comparte tus productos para que todos los vendan .</label> </p>
+                    </div>
+                    <div class="col-6">
+                      <p style="font-size: 13px;" class="text-white"> <label for=""> <i class="material-icons" aria-hidden="true">check_circle</i> GESTIONA TU TIENDA ONLINE DE FORMA FÁCIL .</label> </p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col-12 col-sm-6">
+              <img src="./assets/imagenes/comunidad.png" alt="" style="width: 100%;">
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-12" style="    text-align: center;
+            background: #0db1f8;
+            padding: 156px 35px;
+            color: white;"
+          >
+            <h1>¿Y ahora?... comencemos.</h1>
+            <div>
+                <div>
+                  <input type="text" [(ngModel)]="data.usu_email" > <button style="height: 56px;" type="button" class="btn btn-danger" (click)="openEmail()">Crear negocio</button>
+                </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-12">
+          <div class="content">
+            <h1 style="text-align: center;">Registrarte?</h1>
+            <div style="text-align: center;">
+              <button type="button" class="btn btn-primary" (click)="handleOpenDialog( 'vendedor' );">Como Vendedor?</button>
+              <button type="button" class="btn btn-success" (click)="handleOpenDialog( 'proveedor' );">Como Proveedor?</button>
+            </div>
+          </div>
+        </div>
+        <div class="col-12">
+            <h1 style="text-align: center;">¿QUÉ ES LOKOMPROAQUI?</h1>
+            <div class="video-container">
+              <iframe width="400" height="315" src="https://www.youtube.com/embed/qMYKvn5dbvg?si=d1e8bC_bHLgKaJdn" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+            </div>
+        </div>
+    </div>
+    <br><br><br><br><br><br>
+</div>

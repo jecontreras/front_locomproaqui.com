@@ -1,0 +1,147 @@
+<div class="main-content">
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-md-12">
+        <div class="card" style="overflow-x: scroll;">
+          <br>
+          <br>
+          <div class="card-header card-header-primary card-header-icon">
+            <div class="card-icon">
+              <i class="material-icons">assignment</i>
+            </div>
+            <h4 class="card-title">Usuarios</h4>
+          </div>
+          <div class="card-body">
+            <div class="toolbar">
+              <!--        Here you can write extra buttons/actions for the toolbar              -->
+            </div>
+            <div *ngIf="loader" class="loader">
+              <ngx-spinner bdOpacity=0.9 bdColor="" size="default" color="#581f87" type="ball-pulse-sync"
+                [fullScreen]="false">
+              </ngx-spinner>
+            </div>
+            <div id="datatables_filter" class="dataTables_filter row">
+              <label class="form-group col">
+                <input [(ngModel)]="datoBusqueda" type="search" class="form-control form-control-sm"
+                  placeholder="Buscar Usuario" aria-controls="datatables" (change)="buscar()"></label>
+              <div>
+                <button (click)="buscar()" [disabled]="loader" mat-raised-button mat-min-fab
+                  class="btn btn-primary btn-just-icon btn-round">
+                  <i class="material-icons">search</i>
+                </button>
+                <button (click)="crear(false)" class="btn btn-primary btn-just-icon btn-round" mat-raised-button
+                  mat-min-fab>
+                  <i class="material-icons">add_circle_outline</i>
+                </button>
+              </div>
+              <div class="col-12 container">
+                <div class="row">
+                  <div class="col-3">
+                    <label for="exampleFormControlSelect1">sabes qué es droppshipping</label>
+                    <select class="form-control" [(ngModel)]="search.queEsDropp">
+                      <option value="si">SI</option>
+                      <option value="no">NO</option>
+                    </select>
+                  </div>
+                  <div class="col-3">
+                    <label for="exampleFormControlSelect1">Cuanto tiempo llevas vendiendo de manera
+                      virtual</label>
+                    <select class="form-control" [(ngModel)]="search.tiempoVendiendo">
+                      <option value="menos3">3 meses o menos</option>
+                      <option value="mas6">De 6 meses a un año</option>
+                      <option value="mas12">Más de un año</option>
+                    </select>
+                  </div>
+                  <div class="col-3">
+                    <label for="exampleFormControlSelect1">Cuantas ventas crees que puedes realizar
+                      mensualmente</label>
+                    <select class="form-control" [(ngModel)]="search.ventasRealizarMensual">
+                      <option value="30">1 a 30</option>
+                      <option value="100">de 31 a 100</option>
+                      <option value="110">más de 100</option>
+                    </select>
+                  </div>
+                  <div class="col-3">
+                    <label for="exampleFormControlSelect1">Pagas publicidad en alguna red social para
+                      vender</label>
+                    <select class="form-control" [(ngModel)]="search.pagasPublicidad">
+                      <option value="si">SI</option>
+                      <option value="no">NO</option>
+                    </select>
+                  </div>
+                  <div class="col-3">
+                    <label for="exampleFormControlSelect1">Categoria Perfil</label>
+                    <select class="form-control" [(ngModel)]="search.categoriaPerfil">
+                      <option [value]="item.id" *ngFor="let item of listCategoriaPerfil" >{{ item.categoria }}</option>
+                    </select>
+                  </div>
+                  <div class="col-3">
+                    <label for="exampleFormControlSelect1">Perfil</label>
+                    <select class="form-control" [(ngModel)]="search.usu_perfil">
+                      <option [value]="item.id" *ngFor="let item of listPerfiles">{{ item.prf_descripcion }}</option>
+                    </select>
+                  </div>
+                  <div class="col-12">
+                    <div class="d-flex justify-content-center">
+                      <div>
+                        <button type="button" class="btn btn-warning" (click)="limpiarText()">limpiar</button>
+                      </div>
+                      <div>
+                        <button type="button" class="btn btn-primary" (click)="buscarText()">Buscar</button>
+                      </div>
+                    </div>
+                    <br>
+                  </div>
+                </div>
+              </div>
+
+            </div>
+            <div class="search-results col-12 row" infiniteScroll [infiniteScrollDistance]="3"
+              [infiniteScrollThrottle]="50" (scrolled)="onScroll()">
+              <div class="col-12 material-datatables" *ngIf="!loader">
+                <table id="datatables" class="table table-striped table-no-bordered table-hover" cellspacing="0"
+                  width="100%" style="width:100%">
+                  <thead>
+                    <tr>
+                      <th *ngFor="let row of dataTable.headerRow">{{ row }}</th>
+                    </tr>
+                  </thead>
+                  <tfoot>
+                    <tr>
+                      <th *ngFor="let row of dataTable.headerRow">{{ row }}</th>
+                    </tr>
+                  </tfoot>
+                  <tbody>
+                    <tr *ngFor="let row of dataTable.dataRows; let idx=index">
+
+                      <td>
+                        <button (click)="crear(row)" class="btn btn-primary btn-just-icon btn-round">
+                          <i class="material-icons">remove_red_eye</i>
+                        </button>
+                        <button (click)="delete(row, idx)" class="btn btn-danger btn-just-icon btn-round">
+                          <i class="material-icons">delete_forever</i>
+                        </button>
+                      </td>
+                      <td>{{ row['usu_nombre'] }}</td>
+                      <td>{{ row['usu_perfil']?.prf_descripcion }}</td>
+                      <td>{{ row['usu_email'] }}</td>
+                      <td>{{ row['usu_telefono'] }}</td>
+                      <td>{{ row['createdAt'] }}</td>
+                      <td>{{ row['pro_estado'] == 0 ? 'Activo' : 'Activo' }}</td>
+                    </tr>
+                  </tbody>
+                </table>
+                <div class="col-md-12 p-5">
+                  <ngx-spinner bdOpacity=0.9 bdColor="" size="default" color="#581f87" type="ball-pulse-sync"
+                    [fullScreen]="false">
+                  </ngx-spinner>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <br><br><br><br>
+  </div>
+</div>

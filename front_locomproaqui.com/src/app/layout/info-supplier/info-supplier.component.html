@@ -1,0 +1,53 @@
+<app-menu></app-menu>
+
+<div class="row" style="    margin: 5px;">
+    <div class="col-12" class="colorFondo1">
+      <div class="row" >
+        <div class="col-12 col-sm-6" style="    margin-top: 20px; margin: auto; ">
+            <div class="h_iframe">
+                <iframe  frameborder="0" allowfullscreen  src="https://www.youtube.com/embed/qMYKvn5dbvg?si=d1e8bC_bHLgKaJdn"></iframe>
+                <br><br>
+            </div>
+        </div>
+        <div class="col-12 col-sm-6" style="margin: auto;">
+            <h5>
+                Te doy la bienvenida a nuestro nuevo portal de proveedores verificados lokomproaqui, aquí vas a encontrar a los mejores y más confiables proveedores de nuestra plataforma.
+                Ellos te entregarán material gráfico para tus campañas, podremos conocer sus políticas de garantías y si quieres hacer dropshipping con ellos te dejarémos un botón de contacto para que un asesor te atienda en el menor tiempo posible. ¡Ve y conócelos!
+            </h5>
+        </div>
+      </div>
+    </div>
+    <div class="col-12">
+        <app-contador-shipping></app-contador-shipping>
+    </div>
+    <div class="col-12">
+        <section style="    text-align: center; color: #02a0e3;">
+            <h3 class="font-weight-bold">Nuestros</h3>
+            <h1 class="font-weight-bold">PROVEEDORES</h1>
+        </section>
+    </div>
+    <div class="col-12">
+        <div class="row">
+            <div class="col-6 col-sm-3" *ngFor="let item of listSupplier">
+                <mat-card class="example-card">
+                      <img style="    padding: 5%;" mat-card-image class="img-responsive btn-block imgProductos pointer " [src]="item.usu_imagen">
+                </mat-card>
+            </div>
+        </div>
+    </div>
+    <div class="col-12">
+        <br>
+        <div class="d-flex justify-content-center">
+            <div>
+                <p>+ {{ counts }} Proveedores</p>
+            </div>
+        </div>
+    </div>
+    <div class="col-12">
+        <div class="d-flex justify-content-center">
+            <div>
+                <button type="button" class="btn btn-dark" (click)="handleOpenCheckIn('proveedor')">Registrarme como Proveedor</button>
+            </div>
+        </div>
+    </div>
+</div>

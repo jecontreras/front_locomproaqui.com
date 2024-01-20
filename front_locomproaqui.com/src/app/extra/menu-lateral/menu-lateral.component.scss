@@ -1,0 +1,121 @@
+.social-bar {
+	position: absolute;
+	right: 0px;
+    top: 195px;
+	//top: 35%;
+	font-size: 1.5rem;
+	display: flex;
+	flex-direction: column;
+	align-items: flex-end;
+	z-index: 100;
+}
+.anchos1{
+	width: 100%;
+	margin: 2px 0;
+}
+
+.icon {
+	color: white;
+	text-decoration: none;
+	padding: .7rem;
+    display: flex;
+	transition: all .5s;
+}
+.altosIcons {
+	height: 13px;
+  margin-left: 2px;
+}
+.fab {
+    width: 20px !important;
+
+}
+.icon-flecha {
+    background: orange;
+    width: 42px;
+    cursor: pointer;
+
+}
+.fa-angle-right {
+    color: white;
+}
+.fa-grin-beam {
+    color: white;
+}
+.feed {
+	color: white !important;
+	cursor: pointer;
+}
+.icon-facebook {
+	background: #02a0e3;
+	border-radius: 20px;
+}
+
+.icon-color {
+	//background: #02a0e3;
+	border-radius: 20px;
+}
+
+.icon-twitter {
+	background: #02a0e3;
+	border-radius: 20px;
+}
+
+.icon-youtube {
+	background: #ff0000 !important;
+	border-radius: 20px;
+}
+
+.icon-instagram {
+	background: #d70046 !important;
+	border-radius: 20px;
+}
+.icon-whattsapp {
+	background: #02a0e3;
+	border-radius: 20px;
+}
+.icon-feedback {
+	background: #02a0e3;
+	border-radius: 20px;
+    writing-mode: vertical-lr;
+    font-size: 14.5px;
+}
+.icono-feed {
+    margin-bottom: 0px;
+	background: #02a0e3;
+	border-radius: 100px;
+}
+
+/*.icon:first-child {
+	border-radius: 1rem 0 0 0;
+}
+
+.icon:last-child {
+	border-radius: 0 0 0 1rem;
+}
+*/
+
+.whatsapp-button {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  background-color: #25d366; /* Ajusta el color de fondo de acuerdo a tus preferencias */
+  color: #fff; /* Ajusta el color del texto para que sea legible en el fondo */
+  padding: 10px;
+  border-radius: 50%;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+  cursor: pointer;
+  text-align: center;
+  font-size: 18px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-decoration: none;
+}
+
+.whatsapp-button i {
+  margin-bottom: 5px;
+}
+
+.whatsapp-button {
+  z-index: 999; /* O un número más alto si es necesario */
+}

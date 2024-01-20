@@ -1,0 +1,20 @@
+export interface USER {
+    username: String;
+    id: String;
+    name: String;
+    codigo: String;
+    celular: String;
+    indicativo: String;
+    estado: String;
+    sexo: String;
+    tipodoc: String;
+    email: String;
+    foto: String;
+    documento: String;
+    pais: String;
+    departamento: String;
+    ciudad: String;
+    direccion: String;
+    codigopostal: String;
+    rol: Object;
+};

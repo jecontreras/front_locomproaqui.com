@@ -1,0 +1,32 @@
+<div class="main-content">
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-md-12">
+        <div class="card" style="overflow-x: scroll;">
+          <br>
+          <br>
+          <div class="card-header card-header-primary card-header-icon">
+            <div class="card-icon">
+              <i class="material-icons">assignment</i>
+            </div>
+            <h4 class="card-title">Productos</h4>
+          </div>
+          <div class="col-12">
+            <mat-tab-group mat-align-tabs="center">
+              <mat-tab label="Productos" *ngIf="rolName === 'administrador'">
+                <app-table-product [_dataConfig]="_dataConfig"></app-table-product>
+              </mat-tab>
+              <mat-tab label="Mis Productos">
+                <app-table-product [_dataConfig]="_dataConfig2"></app-table-product>
+              </mat-tab>
+              <mat-tab label="Productos por Activar de proveedor">
+                <app-table-product [_dataConfig]="_dataConfig3"></app-table-product>
+              </mat-tab>
+            </mat-tab-group>
+          </div>
+        </div>
+      </div>
+    </div>
+    <br><br><br><br>
+  </div>
+</div>

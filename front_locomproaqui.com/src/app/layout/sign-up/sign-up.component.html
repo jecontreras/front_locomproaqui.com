@@ -1,0 +1,133 @@
+<div class="row" style="background: #02a0e3; height: -webkit-fill-available;">
+  <div class="col-12 row colorFondo5" style="margin: 0 -1px;">
+      <div class="col-12">
+        <div class="d-flex justify-content-center">
+          <div>
+            <img src="./assets/logo.svg" alt="" style="width: 250px;" [routerLink]="[ '/articulo' ]">
+            <br>
+          </div>
+        </div>
+        <div class="d-flex justify-content-center" style="margin-top: 25px;">
+          <div style="    text-align: center; " style="width: 520px;     background: white;
+          padding: 10px 40px;
+          border-radius: 5px; color: #02a0e3;">
+            <h2 style="text-align: center;">Registrarme</h2>
+            <h3 style="text-align: center;" *ngIf="dataCabeza">
+              Te Invito {{ dataCabeza.usu_usuario }}
+            </h3>
+            <p style="text-align: center;">Rellena el Siguiente formulario para crear una cuenta</p>
+            <div class="row">
+              <div class="col-12">
+                  <div class="input-group mb-3">
+                      <span class="input-group-text" id="basic-addon1">
+                        <span class="lnr lnr-shirt"></span>
+                      </span>
+                      <input type="text" class="form-control" placeholder="Nombre" aria-label="Username" aria-describedby="basic-addon1" [(ngModel)]="data.usu_nombre">
+                    </div>
+              </div>
+              <div class="col-12">
+                  <div class="input-group mb-3">
+                      <span class="input-group-text" id="basic-addon1">
+                        <span class="lnr lnr-users"></span>
+                      </span>
+                      <input type="text" class="form-control" placeholder="Apellido" aria-label="Username" aria-describedby="basic-addon1" [(ngModel)]="data.usu_apellido">
+                    </div>
+              </div>
+              <div class="col-12">
+                <div class="input-group mb-3">
+                    <span class="input-group-text" id="basic-addon1">
+                      <span class="lnr lnr-user"></span>
+                    </span>
+                    <input type="text" class="form-control" placeholder="Como quieres llamar a tu tienda ( Dayana Store )" aria-label="usu_usuario" aria-describedby="basic-addon1" [(ngModel)]="data.usu_usuario" (ngModelChange)="validadUsername()">
+                    <div *ngIf="!disabledusername">
+                      <span class="bg-danger text-white rounded">El Nombre de su tienda Ya Se Encuentra Registrado Por Favor Utilizar
+                          Otro</span>
+                    </div>
+                  </div>
+            </div>
+              <div class="col-12">
+                  <div class="d-flex bd-highlight">
+                      <div class="bd-highlight" style="width: 90px;">
+                          <select class="form-control form-control" [(ngModel)]="data.usu_indicativo" required>
+                              <option [value]="item.phone_code" *ngFor="let item of listIndicativos">{{
+                                  item.nombre }}
+                                  +{{ item.phone_code }}</option>
+                          </select>
+                      </div>
+                      <div class="flex-grow-1 bd-highlight" style="margin-left: 15px;">
+                          <input type="number" class="form-control" placeholder="Escriba numero del Cel" aria-label="cel" aria-describedby="basic-addon1" [(ngModel)]="data.usu_telefono">
+                      </div>
+                    </div>
+              </div>
+              <div class="col-12">
+                  <br>
+                  <div class="input-group mb-3">
+                      <span class="input-group-text" id="basic-addon1">
+                        <span class="lnr lnr-envelope"></span>
+                      </span>
+                      <input type="text" class="form-control" placeholder="Correo" aria-label="Correo" aria-describedby="basic-addon1" [(ngModel)]="data.usu_email" (blur)="validadorEmail( data.usu_email )">
+                      <span class="text-danger">{{ error }}</span>
+                    </div>
+              </div>
+              <div class="col-12">
+                <div class="input-group mb-3">
+                  <span class="input-group-text" id="basic-addon1">
+                    <span class="lnr lnr-lock"></span>
+                  </span>
+                  <input type="password" class="form-control" placeholder="Contraseña" aria-label="Contraseña" aria-describedby="basic-addon1" [(ngModel)]="data.usu_clave" #passwordInput>
+                  <button class="btn btn-outline-secondary" type="button" (click)="togglePasswordVisibility(passwordInput)">
+                    <span [ngClass]="{'lnr lnr-enter': !showPassword, 'lnr lnr-eye-off': showPassword}" class="lnr lnr-eye"></span>
+                  </button>
+                </div>
+              </div>
+              <div class="col-12">
+                  <div class="input-group mb-3">
+                      <span class="input-group-text" id="basic-addon1">
+                        <span class="lnr lnr-lock"></span>
+                      </span>
+                      <input type="password" class="form-control" placeholder="Confirnar Contraseña" aria-label="Confirmar Contraseña" aria-describedby="basic-addon1" [(ngModel)]="data.usu_confir" #passwordInputC>
+                      <button class="btn btn-outline-secondary" type="button" (click)="togglePasswordVisibility(passwordInputC)">
+                        <span [ngClass]="{'lnr lnr-enter': !showPassword, 'lnr lnr-eye-off': showPassword}" class="lnr lnr-eye"></span>
+                      </button>
+                    </div>
+              </div>
+              <div class="col-12">
+                  <div class="d-flex bd-highlight mb-3">
+                      <div class="p-2 bd-highlight">
+                          <div class="form-check">
+                              <input class="form-check-input" type="checkbox" name="flexRadioDefault" id="flexRadioDefault1" [(ngModel)]="data.optVendedor" (click)="validateClick()">
+                              <label class="form-check-label" for="flexRadioDefault1">
+                                Vendedor
+                              </label>
+                            </div>
+                      </div>
+                      <div class="p-2 bd-highlight">
+                          <div class="form-check">
+                              <input class="form-check-input" type="checkbox" name="flexRadioDefault" id="flexRadioDefault2" [(ngModel)]="data.optProveedor" (click)="validateClick()">
+                              <label class="form-check-label" for="flexRadioDefault2">
+                                Proveedor
+                              </label>
+                            </div>
+                      </div>
+                      <div class="ms-auto p-2 bd-highlight"></div>
+                    </div>
+              </div>
+              <div class="col-12">
+                  <div class="d-flex bd-highlight mb-3">
+                      <div class="p-2 bd-highlight"></div>
+                      <div class="p-2 bd-highlight"></div>
+                      <div class="ms-auto p-2 bd-highlight">
+                          <button type="button" class="btn btn-primary" style="    font-size: 20px; background: #02a0e3;" (click)="submit()">Crear Cuenta</button>
+                      </div>
+                    </div>
+              </div>
+              <div class="col-12">
+                  <h6 style="text-align: center; color: #646464;">Ya tienes una cuenta? <a style="color: #02a0e3;" class="pointer" [routerLink]="[ '/login' ]">Iniciar Sesion</a></h6>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <br><br><br><br><br><br>
+    </div>
+</div>

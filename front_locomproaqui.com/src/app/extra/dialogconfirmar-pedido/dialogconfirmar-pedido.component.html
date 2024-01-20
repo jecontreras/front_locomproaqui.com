@@ -1,0 +1,149 @@
+<h2 mat-dialog-title>
+    DATOS DE ENVIÓ
+</h2>
+
+<mat-dialog-content class="mat-typography">
+    <div class="form row" *ngIf="!data.id">
+        <div class="col-12">
+            <div *ngFor="let item of listCarrito">
+                <p>
+                    &nbsp;<img class="tyslo-image" data-v-7cfc0e7c="" height="60"
+                        [src]="item.foto || 'https://cdn.shopify.com/s/files/1/0631/5255/4203/products/adidasdama.jpg?v=1646070873'"
+                        style='background-color: #fefefe; border-radius: 6px; box-sizing: border-box; color: rgba(18, 18, 18, 0.75); font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol"; font-size: 16px; letter-spacing: 0.6px; min-width: 60px; vertical-align: middle;'
+                        width="60" />
+                </p>
+                <div class="tyslo-group"
+                    style='background-color: #fefefe; box-sizing: border-box; color: rgba(18, 18, 18, 0.75); font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol"; font-size: 16px; letter-spacing: 0.6px; margin-bottom: 10px;'>
+                    <div data-v-7cfc0e7c="" style="box-sizing: border-box;">
+                        <div class="align-items-center line d-flex justify-content-between" data-v-7cfc0e7c=""
+                            style="align-items: center !important; border-bottom: 1px solid rgb(217, 217, 217); box-sizing: border-box; display: flex !important; justify-content: space-between !important; margin-bottom: 6px; padding-bottom: 10px; padding-top: 6px;">
+                            <div class="me-4" data-v-7cfc0e7c=""
+                                style="box-sizing: border-box; margin-right: 1.5rem !important;">
+                                <div class="position-relative" data-v-7cfc0e7c=""
+                                    style="box-sizing: border-box; position: relative !important;">
+                                    <span class="
+                                        position-absolute
+                                        top-0
+                                        start-100
+                                        translate-middle
+                                        badge
+                                        rounded-pill
+                                        bg-secondary
+                              " data-v-7cfc0e7c=""
+                                        style="background-color: rgb(108, 117, 125) !important; border-color: rgba(var(--color-badge-border),var(--alpha-badge-border)); border-image: initial; border-radius: 50rem !important; border-style: solid; border-width: 1px; box-sizing: border-box; color: white; display: inline-block; font-size: 0.75em; font-weight: 700; left: 60px; letter-spacing: 0.1rem; line-height: 1; padding: 0.35em 0.65em; position: absolute !important; text-align: center; top: 0px !important; transform: translate(-50%, -50%) !important; vertical-align: baseline; white-space: nowrap; word-break: break-word;">{{ item.cantidad || 1 }}</span>
+                                </div>
+                            </div>
+                            <div class="flex-grow-1" data-v-7cfc0e7c=""
+                                style="box-sizing: border-box; flex-grow: 1 !important;">
+                                <a data-v-7cfc0e7c=""
+                                    href="https://dazurysport.com/products/diesel-color-negro?variant=42525128786139"
+                                    style="box-sizing: border-box; color: #0d6efd;" target="_blank">
+                                    <div class="product-title" data-v-7cfc0e7c=""
+                                        style="-webkit-box-orient: vertical; -webkit-line-clamp: 2; box-sizing: border-box; display: -webkit-box; line-height: 1.2; max-height: 2.4em; overflow: hidden; text-overflow: ellipsis;">
+                                        {{ item.titulo || 'diesel color negro' }}
+                                    </div>
+                                </a><small class="product-title variant" data-v-7cfc0e7c=""
+                                    style="-webkit-box-orient: vertical; -webkit-line-clamp: 2; box-sizing: border-box; color: black; display: -webkit-box; font-size: 0.875em; line-height: 1.2; max-height: 2.4em; overflow: hidden; text-overflow: ellipsis;"></small>
+                            </div>
+                            <div class="line-price text-end align-items-center" data-v-7cfc0e7c=""
+                                style="align-items: center !important; box-sizing: border-box; color: black; margin: 0px 10px; text-align: right !important;">
+                                <span data-v-7cfc0e7c="" style="box-sizing: border-box;">{{ _tools.monedaChange( 3,2, item.costoTotal || 0 ) }}</span>
+                            </div>
+                            <span class="flex-shrink-1 close" data-v-7cfc0e7c=""
+                                style="box-sizing: border-box; color: #aaaaaa; flex-shrink: 1 !important; font-size: 20px; font-weight: 700; margin: 0px 10px;">×</span>
+                        </div>
+                    </div>
+                    <div class="row"
+                        style="--bs-gutter-x: 1.5rem; --bs-gutter-y: 0; box-sizing: border-box; display: flex; flex-wrap: wrap; margin-left: calc(var(--bs-gutter-x)*-0.5); margin-right: calc(var(--bs-gutter-x)*-0.5); margin-top: calc(var(--bs-gutter-y)*-1);">
+                    </div>
+                </div>
+            </div>
+            <div class="tyslo-group"
+                style='background-color: #fefefe; box-sizing: border-box; color: rgba(18, 18, 18, 0.75); font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol"; font-size: 16px; letter-spacing: 0.6px; margin-bottom: 10px;'>
+                <div class="total-container" data-v-2b9a7796=""
+                    style="box-sizing: border-box; color: black; margin: 10px 0px;">
+                    <div class="p-1" data-v-2b9a7796="" style="box-sizing: border-box; padding: 0.25rem !important;">
+                        <div class="d-flex justify-content-between py-1" data-v-2b9a7796=""
+                            style="box-sizing: border-box; display: flex !important; justify-content: space-between !important; padding-bottom: 0.25rem !important; padding-top: 0.25rem !important;">
+                            <div class="fw-normal label-title" data-v-2b9a7796=""
+                                style="box-sizing: border-box; color: #535353;">
+                                Subtotal
+                            </div>
+                            <div class="label-value" data-v-2b9a7796="" style="box-sizing: border-box;">
+                                <span data-v-2b9a7796="" style="box-sizing: border-box;">{{ _tools.monedaChange( 3,2,this.data.total || 0 ) }}</span>
+                            </div>
+                        </div>
+                        <div class="
+                        d-flex
+                        justify-content-between
+                        my-1
+                        total-row
+                        align-items-baseline
+                        fw-bold
+                      " data-v-2b9a7796=""
+                            style="align-items: baseline !important; border-top: 1px solid rgba(175, 175, 175, 0.34) !important; box-sizing: border-box; display: flex !important; font-weight: 700 !important; justify-content: space-between !important; margin-bottom: 0.25rem !important; margin-top: 0.25rem !important;">
+                            <div data-v-2b9a7796="" style="box-sizing: border-box;">Envio</div>
+                            <div class="total-value" data-v-2b9a7796=""
+                                style="box-sizing: border-box; font-size: 20px;">
+                                <span data-v-2b9a7796="" style="box-sizing: border-box;">Gratis contra entrega</span>
+                            </div>
+                        </div>
+                        <div class="
+                        d-flex
+                        justify-content-between
+                        my-1
+                        total-row
+                        align-items-baseline
+                        fw-bold
+                      " data-v-2b9a7796=""
+                            style="align-items: baseline !important; border-top: 1px solid rgba(175, 175, 175, 0.34) !important; box-sizing: border-box; display: flex !important; font-weight: 700 !important; justify-content: space-between !important; margin-bottom: 0.25rem !important; margin-top: 0.25rem !important;">
+                            <div data-v-2b9a7796="" style="box-sizing: border-box;">Total</div>
+                            <div class="total-value" data-v-2b9a7796=""
+                                style="box-sizing: border-box; font-size: 20px;">
+                                <span data-v-2b9a7796="" style="box-sizing: border-box;">{{ _tools.monedaChange( 3,2,this.data.total || 0 ) }}</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+        <div class="form-group col-12">
+            <label for="exampleFormControlInput1">Nombre y apellido</label>
+            <input type="text" [(ngModel)]="data.nombre" class="form-control form-control-sm"
+                placeholder="Nombre y apellido" required>
+        </div>
+        <div class="form-group col-12">
+            <label for="exampleFormControlInput1">Cedula</label>
+            <input type="text" [(ngModel)]="data.cedula" class="form-control form-control-sm"
+                placeholder="Es necesario tu cedula para llenar la informacion de la guia" required>
+        </div>
+        <div class="form-group col-12">
+            <label for="exampleFormControlInput1">Numero de Telefono</label>
+            <input type="text" [(ngModel)]="data.telefono" class="form-control form-control-sm"
+                placeholder="Numero telefono" required>
+        </div>
+        <div class="form-group col-12">
+            <label for="exampleFormControlInput1">Dirección de Entrega</label>
+            <input type="text" [(ngModel)]="data.direccion" class="form-control form-control-sm"
+                placeholder="Direccion de entrega" required>
+        </div>
+        <div class="form-group col-12">
+            <label for="exampleFormControlInput1">Ciudad o municipio</label>
+            <input type="text" [(ngModel)]="data.ciudad" class="form-control form-control-sm"
+                placeholder="Ciudad o municipio" required>
+        </div>
+        <div class="form-group col-12">
+            <label for="exampleFormControlInput1">Barrio o localidad</label>
+            <input type="text" [(ngModel)]="data.barrio" class="form-control form-control-sm"
+                placeholder="Barrio o localidad" required>
+        </div>
+    </div>
+</mat-dialog-content>
+
+<mat-dialog-actions align="end">
+    <button mat-button mat-dialog-close>Cerrar</button>
+    <button mat-button cdkFocusInitial (click)="finalizando()" *ngIf="!data.id">
+        <span>Confirmar Compra</span>
+    </button>
+</mat-dialog-actions>

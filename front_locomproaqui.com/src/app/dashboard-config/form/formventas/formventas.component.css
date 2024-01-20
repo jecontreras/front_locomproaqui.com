@@ -1,0 +1,69 @@
+#app {
+  text-align: center;
+  color: #2c3e50;
+  margin-top: 60px;
+}
+
+#video {
+  background-color: #000000;
+}
+
+#canvas {
+  display: none;
+}
+
+li {
+  display: inline;
+  padding: 5px;
+}
+
+img {
+  height: 9%;
+  width: 60px;
+}
+
+.checks {
+  background-color: #b1b1b1;
+}
+
+.mensaje {
+  background-color: #8dffb6;
+}
+
+.item {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: row;
+          flex-direction: row;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  white-space: nowrap;
+  line-height: 45px;
+  height: 45px;
+  padding: 0 16px;
+  text-align: left;
+  max-width: 100%;
+  -webkit-box-sizing: border-box;
+          box-sizing: border-box;
+}
+
+span {
+  margin-left: 5px;
+}
+
+.devolucion {
+  background: red;
+  color: white;
+  padding: 5px;
+}
+
+.envio {
+  background: #007810;
+  color: white;
+  padding: 5px;
+}
+/*# sourceMappingURL=formventas.component.css.map */

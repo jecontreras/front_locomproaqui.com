@@ -1,0 +1,9 @@
+{
+    "version": 3,
+    "mappings": "AAAA,AAAA,WAAW,CAAA;EACP,UAAU,EAAE,kBAAkB;CACjC;;AACD,AAAA,UAAU,CAAA;EACN,YAAY,EAAE,GAAG;CACpB;;AAED,AAAA,gBAAgB,CAAA;EACZ,UAAU,EAAE,kBAAkB;CACjC;;AACD,AAAA,gBAAgB,CAAA;EACZ,UAAU,EAAE,kBAAkB;CACjC;;AACD,AAAA,cAAc,CAAA;EACV,UAAU,EAAE,kBAAkB;CACjC;;AACD,AAAA,gBAAgB,CAAA;EACZ,UAAU,EAAE,kBAAkB;CACjC;;AACD,AAAA,YAAY,CAAA;EACR,UAAU,EAAE,kBAAkB;CACjC",
+    "sources": [
+        "formventas-lider.component.scss"
+    ],
+    "names": [],
+    "file": "formventas-lider.component.css"
+}

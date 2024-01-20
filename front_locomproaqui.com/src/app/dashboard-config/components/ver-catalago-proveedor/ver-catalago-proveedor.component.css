@@ -1,0 +1,91 @@
+.catEstilo {
+  padding: 10px;
+  font-size: 20px;
+}
+
+.estiloCategoria {
+  padding: 11px;
+  color: black;
+  text-align: center;
+}
+
+.cambiaColor {
+  color: red;
+  border-bottom: 1px solid #f35757;
+}
+
+.pbutton {
+  padding-top: 21px;
+}
+
+.color1 {
+  color: black;
+}
+
+.subButtons {
+  margin: 10px 0;
+  border-radius: 10px;
+}
+
+.estiloCategoria:hover {
+  background: #e2e2e2;
+}
+
+.paddins1 {
+  padding: 15px;
+}
+
+.textInfo {
+  font-size: 11px;
+}
+
+.search-results {
+  height: 100%;
+}
+
+.buttonAncho {
+  font-size: 11px;
+}
+
+.paddinButtom {
+  padding: 25px;
+}
+
+.example-card {
+  max-width: 250px;
+}
+
+.example-header-image {
+  background-size: cover;
+}
+
+.marginEspacios {
+  margin: 2px !important;
+}
+
+li {
+  list-style: none;
+}
+
+.img-contenedor img {
+  -webkit-transition: all .9s ease;
+  /* Safari y Chrome */
+  -moz-transition: all .9s ease;
+  /* Firefox */
+  -o-transition: all .9s ease;
+  /* IE 9 */
+  -ms-transition: all .9s ease;
+  /* Opera */
+  width: 100%;
+}
+
+.img-contenedor:hover img {
+  -webkit-transform: scale(1.25);
+  transform: scale(1.25);
+}
+
+.img-contenedor {
+  /*Ancho y altura son modificables al requerimiento de cada uno*/
+  overflow: hidden;
+}
+/*# sourceMappingURL=ver-catalago-proveedor.component.css.map */

@@ -1,0 +1,276 @@
+<!-- Start slider -->
+<section id="aa-slider">
+    <div class="aa-slider-area">
+        <div id="sequence" class="seq">
+            <!-- <div class="seq-screen">
+                <ul class="seq-canvas">
+                    <li>
+                        <img data-seq src="./assets/imagenes/1920x700.png" alt="Male Female slide img" />
+                        <div class="seq-model">
+                        </div>
+                        <div class="seq-title">
+                            <span data-seq>Save Up to 50% Off</span>
+                            <h2 data-seq>Best Collection</h2>
+                            <p data-seq>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Minus, illum.</p>
+                            <a data-seq href="#" class="aa-shop-now-btn aa-secondary-btn">SHOP NOW</a>
+                        </div>
+                    </li>
+                </ul>
+            </div> -->
+            <ng-image-slider [images]="imageObject" [infinite]="sliderInfinite" [imagePopup]="sliderImagePopup"
+                [showArrow]="sliderArrowShow" [imageSize]="{width: sliderImageWidth, height: sliderImageHeight}"
+                [autoSlide]="sliderAutoSlide ? 1 : 0" [slideImage]="sliderSlideImage"
+                [animationSpeed]="sliderAnimationSpeed" (imageClick)="imageOnClick($event)"
+                (arrowClick)="arrowOnClick($event)" (lightboxArrowClick)="lightboxArrowClick($event)" #nav>
+            </ng-image-slider>
+        </div>
+    </div>
+</section>
+
+<section id="aa-product">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="row">
+                    <div class="aa-product-area">
+                        <div class="aa-product-inner">
+                            <!-- start prduct navigation -->
+                            <ul class="nav nav-tabs aa-products-tab centrarp">
+                                <li class="active" (click)="SeleccionCategoria( {} )"><a href="#"
+                                        data-toggle="tab">Todos</a></li>
+                                <li *ngFor="let item of listCategorias"><a class="text-secondary" href="#" data-toggle="tab"
+                                        (click)="SeleccionCategoria( item )"> {{ item.cat_nombre }}</a></li>
+                            </ul>
+                            <!-- Tab panes -->
+                            <div class="content">
+                                <div class="row centrarp">
+                                    <ul class="aa-product-catg aa-popular-slider">
+                                        <!-- start single product item -->
+                                        <li *ngFor="let item of listProductos" id="anchosLi" class="producto">
+                                            <figure>
+                                                <a class="aa-product-img" href="#"
+                                                    [routerLink]="[ '/tienda/productosView', item.id ]"><img
+                                                        class="anchosProductos" [src]="item.foto"
+                                                        alt="polo shirt img"></a>
+                                                <a class="aa-add-card-btn pointer" (click)="AgregarCart(item)"><span
+                                                        class="fa fa-shopping-cart"></span>Agregar al Carro</a>
+                                                <figcaption>
+                                                    <h4 class="aa-product-title"><a href="#">{{ item.pro_nombre }}</a>
+                                                    </h4>
+                                                    <span
+                                                        class="aa-product-price">{{ _formato.monedaChange( 3, 2, item.pro_uni_venta ) }}</span><span
+                                                        class="aa-product-price"><del>{{ _formato.monedaChange( 3, 2, item.pro_uni_venta * 2 ) }}</del></span>
+                                                </figcaption>
+                                            </figure>
+                                            <div class="aa-product-hvr-content">
+                                                <a href="https://www.facebook.com/sharer/sharer.php?kid_directed_site=0&u=https://www.locomproaqui.com/productos/15?u=https://www.locomproaqui.com/productos/{{ item.id }}"
+                                                    target="_blank" data-toggle="tooltip" data-placement="top"
+                                                    title="Compartir"><span class="fa fa-exchange"></span></a>
+                                                <a class="pointer" (click)="viewProducto( item )"
+                                                    title="Ver Producto"><span class="fa fa-search"></span></a>
+                                            </div>
+                                            <!-- product badge -->
+                                            <span class="aa-badge aa-sale" href="#">SALE!</span>
+                                        </li>
+                                        <li>
+                                            <a class="aa-browse-btn" href="#">Ver mas Productos <span
+                                                    class="fa fa-long-arrow-right"></span></a>
+                                        </li>
+                                    </ul>
+                                    <div class="mx-auto" style="width: 200px;">
+                                        <ngx-spinner bdOpacity=0.9 bdColor="" size="default" color="#581f87"
+                                            type="ball-pulse-sync" [fullScreen]="false">
+                                        </ngx-spinner>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- / Products section -->
+<!-- banner section -->
+<section id="aa-banner">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="row">
+                    <div class="aa-banner-area">
+                        <a href="#"><img [src]="tiendaInfo.portada1 || './assets/img/fashion-banner.jpg'"
+                                alt="fashion banner img"></a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- popular section -->
+<section id="aa-popular-category">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="row">
+                    <div class="aa-popular-category-area">
+                        <!-- start prduct navigation -->
+                        <ul class="nav nav-tabs aa-products-tab centrarp">
+                            <li class="active"><a href="#popular" data-toggle="tab"
+                                    (click)="eventoSeleccion( 'popular' )" class="text-secondary">Popular</a></li>
+                            <li><a href="#featured" data-toggle="tab"
+                                    (click)="eventoSeleccion( 'destacado' )" class="text-secondary">Destacado</a></li>
+                            <li><a href="#latest" data-toggle="tab" (click)="eventoSeleccion( 'ultimo' )">Último</a>
+                            </li>
+                        </ul>
+                        <!-- Tab panes -->
+                        <div class="content">
+                            <div class="row centrarp">
+                                <ul class="aa-product-catg aa-popular-slider">
+                                    <!-- start single product item -->
+                                    <li *ngFor="let item of listProductos2" id="anchosLi" class="producto">
+                                        <figure>
+                                            <a class="aa-product-img" href="#"
+                                                [routerLink]="[ '/tienda/productosView', item.id ]"><img
+                                                    class="anchosProductos" [src]="item.foto" alt="polo shirt img"></a>
+                                            <a class="aa-add-card-btn pointer" (click)="AgregarCart(item)"><span
+                                                    class="fa fa-shopping-cart"></span>Agregar al Carro</a>
+                                            <figcaption>
+                                                <h4 class="aa-product-title"><a href="#">{{ item.pro_nombre }}</a></h4>
+                                                <span
+                                                    class="aa-product-price">{{ _formato.monedaChange( 3, 2, item.pro_uni_venta ) }}</span><span
+                                                    class="aa-product-price"><del>{{ _formato.monedaChange( 3, 2, item.pro_uni_venta * 2 ) }}</del></span>
+                                            </figcaption>
+                                        </figure>
+                                        <div class="aa-product-hvr-content">
+                                            <a href="https://www.facebook.com/sharer/sharer.php?kid_directed_site=0&u=https://www.locomproaqui.com/productos/15?u=https://www.locomproaqui.com/productos/{{ item.id }}"
+                                                target="_blank" data-toggle="tooltip" data-placement="top"
+                                                title="Compartir"><span class="fa fa-exchange"></span></a>
+                                            <a class="pointer" (click)="viewProducto( item )" title="Ver Producto"><span
+                                                    class="fa fa-search"></span></a>
+                                        </div>
+                                        <!-- product badge -->
+                                        <span class="aa-badge aa-sale" href="#">SALE!</span>
+                                    </li>
+                                    <li>
+                                        <a class="aa-browse-btn" href="#">Ver mas Productos <span
+                                                class="fa fa-long-arrow-right"></span></a>
+                                    </li>
+                                </ul>
+                                <div class="mx-auto" style="width: 200px;">
+                                    <ngx-spinner bdOpacity=0.9 bdColor="" size="default" color="#581f87"
+                                        type="ball-pulse-sync" [fullScreen]="false">
+                                    </ngx-spinner>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- / popular section -->
+<!-- Support section -->
+<section id="aa-support">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="aa-support-area">
+                    <!-- single support -->
+                    <div class="col-md-4 col-sm-4 col-xs-12">
+                        <div class="aa-support-single">
+                            <span class="fa fa-truck"></span>
+                            <h4>ENVIO GRATIS</h4>
+                            <!-- <P>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quam, nobis.</P> -->
+                        </div>
+                    </div>
+                    <!-- single support -->
+                    <div class="col-md-4 col-sm-4 col-xs-12">
+                        <div class="aa-support-single">
+                            <span class="fa fa-clock-o"></span>
+                            <h4>30 DÍAS DE DEVOLUCIÓN DEL DINERO</h4>
+                            <!-- <P>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quam, nobis.</P> -->
+                        </div>
+                    </div>
+                    <!-- single support -->
+                    <div class="col-md-4 col-sm-4 col-xs-12">
+                        <div class="aa-support-single">
+                            <span class="fa fa-phone"></span>
+                            <h4>SOPORTE 24/7</h4>
+                            <!-- <P>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quam, nobis.</P> -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!--<section id="aa-testimonial">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="aa-testimonial-area">
+                    <ul class="aa-testimonial-slider">
+                        <li>
+                            <div class="aa-testimonial-single">
+                                <img class="aa-testimonial-img" src="./assets/img/testimonial-img-2.jpg"
+                                    alt="testimonial img">
+                                <span class="fa fa-quote-left aa-testimonial-quote"></span>
+                                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Sunt distinctio omnis
+                                    possimus, facere, quidem qui!consectetur adipisicing elit. Sunt distinctio omnis
+                                    possimus, facere, quidem qui.</p>
+                                <div class="aa-testimonial-info">
+                                    <p>Allison</p>
+                                    <span>Designer</span>
+                                    <a href="#">Dribble.com</a>
+                                </div>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>-->
+
+<section id="aa-client-brand">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="aa-client-brand-area">
+                    <ng-image-slider [images]="imageObject" [infinite]="sliderInfinite" [imagePopup]="sliderImagePopup"
+                        [showArrow]="sliderArrowShow"
+                        [imageSize]="{width: sliderImageWidth2, height: sliderImageHeight2}"
+                        [autoSlide]="sliderAutoSlide ? 1 : 0" [slideImage]="sliderSlideImage"
+                        [animationSpeed]="sliderAnimationSpeed" (imageClick)="imageOnClick($event)"
+                        (arrowClick)="arrowOnClick($event)" (lightboxArrowClick)="lightboxArrowClick($event)" #nav>
+                    </ng-image-slider>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- / Client Brand -->
+
+<!-- Subscribe section -->
+<section id="aa-subscribe">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="aa-subscribe-area">
+                    <h3>Suscribete nuestro boletín</h3>
+                    <p>Tendra informacion detallada!</p>
+                    <div class="aa-subscribe-form">
+                        <input type="email" [(ngModel)]="boletin.email" (change)="enviarBoletin()"
+                            placeholder="Introduce tu correo electrónico">
+                        <input type="submit" (click)="enviarBoletin()" value="Suscribate">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<script src="./assets/js/sequence.js"></script>
+<script src="./assets/js/sequence-theme.modern-slide-in.js"></script>

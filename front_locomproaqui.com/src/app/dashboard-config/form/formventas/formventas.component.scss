@@ -1,0 +1,74 @@
+#app {
+    text-align: center;
+    color: #2c3e50;
+    margin-top: 60px;
+}
+#video {
+    background-color: #000000;
+}
+#canvas {
+    display: none;
+}
+li {
+    display: inline;
+    padding: 5px;
+}
+
+img{
+  height: 9%;
+  width: 60px;
+}
+
+.checks{
+  background-color: #b1b1b1;;
+}
+
+.mensaje{
+  background-color: #8dffb6;
+}
+
+.item {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    white-space: nowrap;
+    line-height: 45px;
+    height: 45px;
+    padding: 0 16px;
+    text-align: left;
+    max-width: 100%;
+    box-sizing: border-box;
+  }
+  span {
+    margin-left: 5px;
+  }
+
+  .devolucion{
+    background: red;
+    color: white;
+    padding: 5px;
+  }
+
+  .envio{
+    background: rgb(0, 120, 16);
+    color: white;
+    padding: 5px;
+  }
+
+  .example-card {
+    width: 200px; /* Tamaño fijo del card */
+    height: 650px; /* Ajusta la altura según tus necesidades */
+    display: flex;
+    flex-direction: column;
+  }
+
+  .card-image-container {
+    flex: 1; /* La imagen ocupa todo el espacio vertical disponible */
+    overflow: hidden; /* Para que la imagen no se salga del card */
+  }
+
+  .card-image-container img {
+    width: 100%;
+    height: 245px;
+    object-fit: cover; /* Evita que la imagen se distorsione */
+  }

@@ -1,0 +1,74 @@
+.mat-form-field {
+  margin-right: 8px;
+}
+.anchos{
+    margin: 5px;
+}
+
+.selecciono {
+    background: #dff907;
+}
+
+.ancho {
+    width: 100%;
+  }
+  .fondoFoto{
+    height: 2pc;
+    width: 100%;
+  }
+.precio {
+  font-size: 25px;
+  background: #76ffb3;
+  color: white;
+  padding: 6px;
+  border-radius: 10px;
+}
+
+.testimonial-section {
+  background-color: black;
+  color: white;
+  padding: 20px;
+}
+
+.testimonial-section h2 {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.testimonial-list {
+  list-style: none;
+  padding: 0;
+}
+
+.testimonial-item {
+  display: flex;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.testimonial-image img {
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+}
+
+.testimonial-content {
+  margin-left: 20px;
+}
+
+.testimonial-author {
+  font-weight: bold;
+}
+
+.testimonial-date {
+  font-size: 12px;
+  margin-bottom: 5px;
+}
+
+.testimonial-rating {
+  color: #ffd700; /* Color dorado para las estrellas (amarillo) */
+}
+
+.testimonial-description {
+  font-size: 14px;
+}

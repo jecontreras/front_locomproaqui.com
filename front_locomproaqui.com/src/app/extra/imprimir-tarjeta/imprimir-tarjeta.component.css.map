@@ -1,0 +1,9 @@
+{
+    "version": 3,
+    "mappings": "AAAA,AAAA,MAAM,CAAA;EACF,SAAS,EAAE,IAAI;CAClB;;AAED,AAAA,aAAa,CAAC;EACV,gBAAgB,EAAE,kBAAkB;CACvC;;AAED,AAAA,QAAQ,CAAA;EACJ,KAAK,EAAE,KAAK;EACZ,MAAM,EAAE,KAAK;EACb,MAAM,EAAE,eAAe;EACvB,OAAO,EAAE,IAAI;EACb,aAAa,EAAE,IAAI;EACnB,UAAU,EAAE,OAAO;CACtB",
+    "sources": [
+        "imprimir-tarjeta.component.scss"
+    ],
+    "names": [],
+    "file": "imprimir-tarjeta.component.css"
+}
