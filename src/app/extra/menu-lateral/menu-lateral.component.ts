@@ -15,6 +15,7 @@ export class MenuLateralComponent implements OnInit {
   urlInstagram:string;
   urlYoutube:string;
   urlWhatsapp: string;
+  whatsappContact;
   @ViewChild('color1',{ static: false } ) private color1: any
   @ViewChild('color2',{ static: false } ) private color2: any
   @ViewChild('color3',{ static: false } ) private color3: any
@@ -30,12 +31,25 @@ export class MenuLateralComponent implements OnInit {
       this.dataUser = store.user || {};
       this.rellenoRedes();
     });
+
+    //EDU ene26
+    this.whatsappContact = 321111111;
+    this._store.subscribe((store: any) => { console.log("lateral")
+      this.whatsappContact = store.name.configuracion.cdVentas
+      try{
+        if(store.name.user.usu_perfil.id == 5)
+          this.whatsappContact = store.name.configuracion.cdPedidos
+      }catch(err){ console.log("visitante", this.whatsappContact ) }
+      console.log("stores", store)
+    })
+
   }
 
   ngOnInit() {
-
+    
     setInterval(()=> {
       let color:string = ( this.dataUser.usu_color || "#02a0e3" );
+      
       if( this.userId.id ) color = this.userId.usu_color || "#02a0e3";
       try {
         /*this.color1.nativeElement.style.backgroundColor = color
@@ -46,7 +60,7 @@ export class MenuLateralComponent implements OnInit {
 
       }
     }, 100 );
-
+    
   }
   rellenoRedes(){
     if(this.dataUser.id || !this.userId.id) {

@@ -113,9 +113,9 @@
                         <td>{{ row['cob_metodo'] }}</td>
                         <td>{{ row['cob_pais'] }}</td>
                         <td>
-                          <span *ngIf="row['cob_estado'] == 0">Activo</span>
-                          <span *ngIf="row['cob_estado'] == 1">Aprobado</span>
-                          <span *ngIf="row['cob_estado'] == 2">Rechazado</span>
+                          <span *ngIf="row['cob_estado'] == 0" class="text-danger">Activo</span>
+                          <span *ngIf="row['cob_estado'] == 1" class="text-primary">Aprobado</span>
+                          <span *ngIf="row['cob_estado'] == 2" class="text-muted">Rechazado</span>
                         </td>
                         <td>{{ row['createdAt'] }}</td>
                         <td>{{ row['usu_clave_int']?.usu_email }}</td>
