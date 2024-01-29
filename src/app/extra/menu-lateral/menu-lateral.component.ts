@@ -33,19 +33,17 @@ export class MenuLateralComponent implements OnInit {
     });
 
     //EDU ene26
-    this.whatsappContact = 3213692393;
-    this._store.subscribe((store: any) => { console.log("lateral")
+    this.whatsappContact = "0000";
+    this._store.subscribe((store: any) => {
     try{
       this.whatsappContact = store.name.configuracion.cdVentas
       try{
         if(store.name.user.usu_perfil.id == 5)
-          this.whatsappContact = store.name.configuracion.cdPedidos
+          this.whatsappContact = store.name.configuracion.clInformacion
       }catch(err){ console.log("vendedor", this.whatsappContact ) }
-      console.log("stores", store)
+      //console.log("stores", store)
     }catch(err){ console.log("visitante") }
-      
     })
-
   }
 
   ngOnInit() {
