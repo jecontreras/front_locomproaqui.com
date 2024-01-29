@@ -33,20 +33,22 @@ export class MenuLateralComponent implements OnInit {
     });
 
     //EDU ene26
-    this.whatsappContact = 321111111;
+    this.whatsappContact = 3213692393;
     this._store.subscribe((store: any) => { console.log("lateral")
+    try{
       this.whatsappContact = store.name.configuracion.cdVentas
       try{
         if(store.name.user.usu_perfil.id == 5)
           this.whatsappContact = store.name.configuracion.cdPedidos
-      }catch(err){ console.log("visitante", this.whatsappContact ) }
+      }catch(err){ console.log("vendedor", this.whatsappContact ) }
       console.log("stores", store)
+    }catch(err){ console.log("visitante") }
+      
     })
 
   }
 
   ngOnInit() {
-    
     setInterval(()=> {
       let color:string = ( this.dataUser.usu_color || "#02a0e3" );
       
@@ -59,8 +61,7 @@ export class MenuLateralComponent implements OnInit {
       } catch (error) {
 
       }
-    }, 100 );
-    
+    }, 100 )
   }
   rellenoRedes(){
     if(this.dataUser.id || !this.userId.id) {
