@@ -1,5 +1,5 @@
-<div class="container">
-    <div class="row">
+<div class="container-fluid p-4">
+    <div class="row py-3">
         <div class="col-12">
             <div class="d-flex justify-content-center">
                 <div>
@@ -7,33 +7,41 @@
                 </div>
             </div>
         </div>
+    </div>
+    <div class="row py-3">
         <div class="col-6">
             <label for="exampleFormControlInput1">Numero de celular de informacion</label>
             <input type="text" [(ngModel)]="data.clInformacion" class="form-control form-control-sm">
         </div>
-        <div class="col-6">
+        <!-- <div class="col-6">
             <label for="exampleFormControlInput1">Numero de celular de Pedidos</label>
             <input type="text" [(ngModel)]="data.cdPedidos" class="form-control form-control-sm">
-        </div>
+        </div> -->
         <div class="col-6">
             <label for="exampleFormControlInput1">Numero de celular de Ventas</label>
             <input type="text" [(ngModel)]="data.cdVentas" class="form-control form-control-sm">
         </div>
-        <div class="col-6">
+        <!-- <div class="col-6">
             <label for="exampleFormControlInput1">Numero de celular de Retiros dinero</label>
             <input type="text" [(ngModel)]="data.cdRetiros" class="form-control form-control-sm">
-        </div>
+        </div> -->
+    </div>
+    <div class="row py-3">
         <div class="col-6">
             <button type="button" class="btn btn-success" (click)="guardar()">Guardar</button>
         </div>
-        <div class="col-12">
-            <div class="d-flex flex-row-reverse bd-highlight">
+    </div>
+</div>
+<div class="container-fluid p-2">
+    <div class="row pt-5">
+        <div class="col-12 d-flex flex-column align-items-end">
+            <!-- <div class=" "> -->
                 <div class="p-2 bd-highlight">
                     <button mat-raised-button color="primary" (click)="newComentario()">+</button>
                     <button mat-raised-button color="primary" (click)="createComentario()">Crear banner</button>
                     <button mat-raised-button color="warn" (click)="dropComentario()">Eliminar banner</button>
                 </div>
-            </div>
+            <!-- </div> -->
         </div>
         <div class="col-12">
             <mat-list>
@@ -46,5 +54,4 @@
             </mat-list>
         </div>
     </div>
-
 </div>
