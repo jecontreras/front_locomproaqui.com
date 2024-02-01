@@ -22,7 +22,7 @@ export class MyProductsComponent implements OnInit {
       state: 0
     },
     page:0,
-    limit: 10
+    limit: 50
   };
   urlColor = "#02a0e3";
   dataUser:any = {};
@@ -49,6 +49,12 @@ export class MyProductsComponent implements OnInit {
   ngOnInit(): void {
     this.querysArticle.where.user = this.dataUser.id;
     console.log("***", this.activate.snapshot, this.dataUser)
+    this.getArticle();
+  }
+
+  handlePageNext(){
+    this.notscrolly = false;
+    this.querysArticle.page++;
     this.getArticle();
   }
 

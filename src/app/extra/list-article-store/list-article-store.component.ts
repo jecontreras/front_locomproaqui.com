@@ -160,6 +160,12 @@ export class ListArticleStoreComponent implements OnInit {
     this.getArticle();
   }
 
+  handlePageNext(){
+    this.notscrolly = false;
+    this.querysArticle.page++;
+    this.getArticle();
+  }
+
   onScroll( ev:any ){
     if (this.notscrolly && this.notEmptyPost) {
        this.notscrolly = false;

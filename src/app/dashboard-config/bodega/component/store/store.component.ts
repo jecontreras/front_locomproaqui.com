@@ -23,7 +23,7 @@ export class StoreComponent implements OnInit {
       estado: 0
     },
     page:0,
-    limit: 10
+    limit: 50
   };
   urlColor = "#02a0e3";
   notscrolly:boolean=true;
@@ -58,10 +58,8 @@ export class StoreComponent implements OnInit {
     if( this.filter.txt === ''){
       this.querysStore = {
         where: {
-          pro_estado: 0,
-          idPrice: 1,
-          pro_activo: 0,
-          pro_mp_venta: 0
+          rol:"proveedor",
+          estado: 0
         },
         limit: 10,
         page: 0
@@ -107,11 +105,17 @@ export class StoreComponent implements OnInit {
        this.getStore();
      }
    }
+  handlePageNext(){
+    this.notscrolly = false;
+    this.querysStore.page++;
+    this.getStore();
+  }
 
   getStore(){
     this.spinner.show();
     return new Promise( resolve =>{
       this.querysStore.where.rol= "proveedor";
+      this.querysStore.where.proValidate = true;
       if( this.dataStore.id ) this.querysStore.where.pro_usu_creacion = this.dataStore.id;
       this._user.getStore( this.querysStore ).subscribe( res =>{
         this.counts = res.count;

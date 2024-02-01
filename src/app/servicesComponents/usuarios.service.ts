@@ -58,6 +58,10 @@ export class UsuariosService {
     return this._model.querys('tblusuario/'+query.id, query, 'put');
   }
 
+  updatePlatform(query:any){
+    return this._model.querys('tblusuario/updatePlatform', query, 'post');
+  }
+
   delete(query:any){
     return this._model.querys('tblusuario/'+query.id, query, 'delete');
   }

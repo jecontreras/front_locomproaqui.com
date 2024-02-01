@@ -402,7 +402,7 @@ style="line-height: 1; margin: 10px 0px; padding: 5px; text-shadow: transparent 
           style="background-color: rgb(255, 255, 255); color: rgb(37, 42, 50); text-align: left; font-weight: normal; font-style: normal;">
       </div>
     </div>
-    <div *ngIf="( data['pro_categoria']?.id == 16 ) || ( data['pro_categoria']?.id == 14 ) || ( data['pro_categoria']?.id == 84 )">
+    <div *ngIf="data['listTallas']?.length > 0 ">
       <div class="form-element required input" style="margin: 10px 0px 0px;" index=3 step=1 >
         <label class=fe-label style="color: rgb(37, 42, 50); text-align: left; font-weight: normal; font-style: normal;">Talla &nbsp;
         </label>

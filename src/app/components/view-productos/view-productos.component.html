@@ -1,11 +1,11 @@
 <div mat-dialog-title>
   <div class="row">
     <div class="col-12" style="border-radius: 20px;">
-      <div class="d-flex bd-highlight p-2" style="padding-top: 0px;">
-        <div class="p-2 flex-grow-1 bd-highlight">
+      <div class="d-flex bd-highlight" style="padding-top: 0px;">
+        <div class="p-1 flex-grow-1 bd-highlight">
           <h4 style="text-align: center;" class="fw-bold">{{ data.pro_nombre | slice: 0:12 }} ... </h4>
         </div>
-        <div class="p-2 bd-highlight">
+        <div class="p-1 bd-highlight">
           <button type="button" class="btn btn-danger" mat-dialog-close>
             X
           </button>
@@ -98,7 +98,7 @@
                             <section class="  p-1" style="text-align: center; border-radius: 20px; ">
                               <div class="row">
                                 <div class="col-12">
-                                  <section class="paddinLader">
+                                  <section class="paddinLader" *ngIf="seleccionoColor.tallaSelect[0].tal_descripcion !== 'Unica'">
                                     <label for="exampleFormControlSelect1">Tallas disponibles:</label>
                                     <select class="form-control form-control-sm text-align" [(ngModel)]="data.tallas"
                                         (change)="seleccionTalla()" [disabled]="!data.color">
@@ -106,6 +106,11 @@
                                             Tamaño: {{
                                             item.tal_descripcion }} UND: {{ item.cantidad }}</option>
                                     </select>
+                                  </section>
+                                  <section class="paddinLader" *ngIf="seleccionoColor.tallaSelect[0].tal_descripcion === 'Unica'">
+                                    <p>
+                                      Cantidades {{ seleccionoColor.tallaSelect[0].cantidad }}
+                                    </p>
                                   </section>
                                 </div>
                                 <div class="col-12" *ngIf="!data.coinShop">
@@ -124,8 +129,8 @@
                       <div class="container borderBotton">
                         <div class="row">
                           <div class="col-12">
-                            <div class="d-flex flex-row bd-highlight mb-3" style="    margin-top: 15px; border-radius: 20px;">
-                              <div class="p-1 bd-highlight" style="margin: auto;">
+                            <div class="d-flex flex-row bd-highlight mb-1" style="    margin-top: 15px; border-radius: 20px;">
+                              <div class="p-1 bd-highlight" style="margin: 10px;">
                                 <img [src]="urlFoto" alt="" class="img-profile" (error)="handleImageError($event)" loading="lazy">
                               </div>
                               <div class="p-1 bd-highlight" style="margin: auto; margin-left: -10px;">
@@ -167,7 +172,25 @@
                 </div>
             </div>
         </div>
-
+        <section *ngIf="breakpoint === 1" style="text-align: center;">
+          <button type="button" class="btn btn-success m-1" *ngIf="disabledView === 'createPrice'" (click)="handleAddStore()">
+            Actualizar Precio
+          </button>
+    
+          <button cdkFocusInitial (click)="handleAddStore()" type="button" class="btn btn-primary m-1" *ngIf="disabledView === 'store' && dataUser.id">
+            Agregar a mi Tienda
+          </button>
+    
+          <button type="button" class="btn btn-danger m-1" *ngIf="disabledView === 'createPrice'" (click)="handleDroppArticle()">
+            Quitar de mi Tienda
+          </button>
+    
+          <a *ngIf="data['pro_categoria']" target="_blank" [routerLink]="[ '/listproduct/categoria', data['pro_categoria'].id ] " class="btn btn-primary m-1"> ver productos similares </a>
+    
+          <button cdkFocusInitial (click)="AgregarCart(false)" type="button" class="btn btn-primary m-1" *ngIf="(disabledView !== 'store') && (disabledView !== 'createPrice')">
+            {{ titleButton }}
+          </button>
+        </section>
     </div>
   </div>
 </mat-dialog-content>
@@ -198,24 +221,5 @@
         </button>
       </div>
     </div>
-    <section *ngIf="breakpoint === 1">
-      <button type="button" class="btn btn-success m-1" *ngIf="disabledView === 'createPrice'" (click)="handleAddStore()">
-        Actualizar Precio
-      </button>
-
-      <button cdkFocusInitial (click)="handleAddStore()" type="button" class="btn btn-primary m-1" *ngIf="disabledView === 'store' && dataUser.id">
-        Agregar a mi Tienda
-      </button>
-
-      <button type="button" class="btn btn-danger m-1" *ngIf="disabledView === 'createPrice'" (click)="handleDroppArticle()">
-        Quitar de mi Tienda
-      </button>
-
-      <a *ngIf="data['pro_categoria']" target="_blank" [routerLink]="[ '/listproduct/categoria', data['pro_categoria'].id ] " class="btn btn-primary m-1"> ver productos similares </a>
-
-      <button cdkFocusInitial (click)="AgregarCart(false)" type="button" class="btn btn-primary m-1" *ngIf="(disabledView !== 'store') && (disabledView !== 'createPrice')">
-        {{ titleButton }}
-      </button>
-    </section>
 </mat-dialog-actions>
 
