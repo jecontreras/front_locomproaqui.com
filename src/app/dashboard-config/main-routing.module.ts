@@ -14,6 +14,7 @@ import { ReferidosComponent } from './components/referidos/referidos.component';
 
 import { TestimonioComponent } from './components/testimonios/testimonios.component';
 import { VentastableComponent } from './table/ventastable/ventastable.component';
+import { VentasProveedorComponent } from './components/ventas-proveedor/ventas-proveedor.component';
 import { VentasLiderComponent } from './components/ventas-lider/ventas-lider.component';
 import { CatalogoComponent } from './components/catalogo/catalogo.component';
 import { AdminComponent } from './components/admin/admin.component';
@@ -42,6 +43,7 @@ const dashboardRoutes: Routes = [
      {path: 'usuarios', component: UsuariosComponent},
      {path: 'catalago', component: CatalogoComponent},
      {path: 'ventas', component: VentasComponent},
+     {path: 'ventasProveedor', component: VentasProveedorComponent},
      {path: 'ventasLider', component: VentasLiderComponent},
      {path: 'cobros', component: CobrosComponent},
      {path: 'bancos', component: BancosComponent},

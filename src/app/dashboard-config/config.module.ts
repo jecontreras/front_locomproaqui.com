@@ -35,6 +35,7 @@ import { TestimonioComponent } from './components/testimonios/testimonios.compon
 import { VentastableComponent } from './table/ventastable/ventastable.component';
 import { Ng2SmartTableModule } from 'ng2-smart-table';
 import { VentasLiderComponent } from './components/ventas-lider/ventas-lider.component';
+import { VentasProveedorComponent } from './components/ventas-proveedor/ventas-proveedor.component';
 import { FormventasLiderComponent } from './form/formventas-lider/formventas-lider.component';
 import { CatalogoComponent } from './components/catalogo/catalogo.component';
 import { FormcatalogoComponent } from './form/formcatalogo/formcatalogo.component';
@@ -110,6 +111,7 @@ import { RechargeComponent } from './components/recharge/recharge.component';
     FormtestimoniosComponent,
     TestimonioComponent,
     VentastableComponent,
+    VentasProveedorComponent,
     VentasLiderComponent,
     FormventasLiderComponent,
     CatalogoComponent,
