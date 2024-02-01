@@ -24,7 +24,14 @@ export class ViewProductosComponent implements OnInit {
   dataUser:any = {};
   urlFoto:string;
   galeria:any = [];
-  seleccionoColor:any = {};
+  seleccionoColor:any = {
+    tallaSelect: [
+      {
+        tal_descripcion: "Unica",
+        cantidad: 9999
+      }
+    ]
+  };
   seleccionnTalla:any = {};
   contador:number = 0;
   disabledBtn:boolean = false;

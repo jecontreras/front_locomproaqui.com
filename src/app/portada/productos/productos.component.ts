@@ -102,7 +102,7 @@ export class ProductosComponent implements OnInit {
     if( !this.activate.snapshot.paramMap.get('idCategory') ) this.getProductos();
     this.getCategorias();
     this.getProductosRecomendado();
-    setInterval(()=> {
+    let interval1 = setInterval(()=> {
 
       let valorParams = Number( this.activate.snapshot.paramMap.get('idCategory'));
       if( valorParams === 0 ) valorParams = 800;
@@ -160,7 +160,7 @@ export class ProductosComponent implements OnInit {
   }
 
   getCategorias(){
-    this._categorias.get( { where:{ cat_activo: 0, cat_padre:null }, limit: 10000 } ).subscribe( async (res:any)=>{
+    this._categorias.get( { idUser: this.userCabeza.id, where:{ cat_activo: 0, cat_padre:null }, limit: 10000 } ).subscribe( async (res:any)=>{
       //this.listCategorias = res.data;
       for( let item of res.data ){
         let resSubt = ( await this.getSubcategoria( item.id ) ) || [];
@@ -197,7 +197,7 @@ export class ProductosComponent implements OnInit {
   async getSubcategoria( id:any ){
     return new Promise
     ( resolve =>{
-      this._categorias.get( { where: { cat_padre: id, cat_activo: 0 }, limit: 1000 } ).subscribe(( res:any )=>{
+      this._categorias.get( { idUser: this.userCabeza.id, where: { cat_padre: id, cat_activo: 0 }, limit: 1000 } ).subscribe(( res:any )=>{
         //console.log("****164", res, id)
         resolve( res.data );
       }, ()=> resolve( false ) );
@@ -216,7 +216,7 @@ export class ProductosComponent implements OnInit {
   }
 
   SeleccionCategoria( obj:any ){
-    //console.log("***184", obj)
+    console.log("***184", obj)
     //this.query = { where:{ pro_activo: 0 }, page: 0, limit: 10 };
     for( let row of this.listCategorias ) row.check = false;
     obj.check=true;
@@ -231,7 +231,8 @@ export class ProductosComponent implements OnInit {
     //if( obj.id === 0 || obj.id === 800 ) delete this.query.where.pro_categoria;
     this.getProductos();
     this.dataSeleccionda = obj.cat_nombre;
-    if( obj.cat_nombre ) this._router.navigate(['/front/index/'+this.userCabeza.usu_telefono]);
+    if( ( obj.cat_nombre || obj.title ) && obj.id ) this._router.navigate(['/front/index/'+this.userCabeza.usu_telefono+"/"+obj.id ]);
+    if( obj.id === 0 ) this._router.navigate(['/front/index/'+this.userCabeza.usu_telefono] );
   }
 
   searchColor( color:string ){
@@ -245,6 +246,13 @@ export class ProductosComponent implements OnInit {
        this.getProductos();
      }
    }
+
+   handlePageNext(){
+    this.notscrolly = false;
+    this.query.page++;
+    this.query.limit = 30;
+    this.getProductos();
+  }
 
   getProductos(){
     this.spinner.show();

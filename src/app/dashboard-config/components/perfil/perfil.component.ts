@@ -270,9 +270,21 @@ export class PerfilComponent implements OnInit {
         let accion = new UserAction(res, 'put');
         this._store.dispatch(accion);
         this.handleCategorySelect();
+        this.updatePlatform();
         resolve( true );
       }, (error) => { console.error(error); this._tools.presentToast("Error de Servidor"); resolve( false ); })
     })
+  }
+
+  updatePlatform(){
+    this._user.updatePlatform(
+      {
+        usu_telefono: this.data.usu_telefono,
+        usu_ciudad: this.data.usu_ciudad,
+        usu_email: this.data.usu_email,
+        direccion: this.data.direccion
+      }
+    ).subscribe( res => res );
   }
 
   abrrirTienda() {
