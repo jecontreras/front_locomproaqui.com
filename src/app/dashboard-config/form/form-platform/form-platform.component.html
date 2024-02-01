@@ -70,6 +70,6 @@
     <button mat-button mat-dialog-close>Cerrar</button>
     <button mat-button cdkFocusInitial (click)="submit()" [disabled]="disabledButton">
         <span *ngIf="!id">Guardar Cambios</span>
-        <span *ngIf="id">Actulizar Cambios</span>
+        <span *ngIf="id" class="btn btn-info" >Actualizar Cambios</span>
     </button>
   </mat-dialog-actions>

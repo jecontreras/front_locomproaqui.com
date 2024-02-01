@@ -548,7 +548,7 @@ export class HeaderComponent implements OnInit {
       },
       {
         icons: 'people_alt',
-        nombre: 'Lista de Transportadoras',
+        nombre: 'Activar Transportadoras',
         disable: this.rolUser == 'administrador' || this.rolUser == 'proveedor',
         url: '/config/listaPlatform',
         submenus:[]

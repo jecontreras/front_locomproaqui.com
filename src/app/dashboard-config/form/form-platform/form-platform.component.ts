@@ -7,6 +7,7 @@ import { PlatformService } from 'src/app/servicesComponents/platform.service';
 import * as _ from 'lodash';
 import { DANEGROUP } from 'src/app/JSON/dane-nogroup';
 import { VentasService } from 'src/app/servicesComponents/ventas.service';
+import { UsuariosService } from 'src/app/servicesComponents/usuarios.service';
 
 @Component({
   selector: 'app-form-platform',
@@ -32,7 +33,7 @@ export class FormPlatformComponent implements OnInit {
     public dialogRef: MatDialogRef<FormPlatformComponent>,
     @Inject(MAT_DIALOG_DATA) public datas: any,
     private _platform: PlatformService,
-    private _ventas: VentasService
+    private _ventas: VentasService,
   ) {
     this._store.subscribe((store: any) => {
       store = store.name;
@@ -46,6 +47,7 @@ export class FormPlatformComponent implements OnInit {
     if(Object.keys(this.datas.datos).length > 0) {
       this.data = _.clone(this.datas.datos);
       this.id = this.data.id;
+      this.data.direccion = this.data.user.usu_direccion
     }else{
       this.data.email = this.dataUser.usu_email;
       this.data.nombreEmpresa = this.dataUser.usu_usuario;
