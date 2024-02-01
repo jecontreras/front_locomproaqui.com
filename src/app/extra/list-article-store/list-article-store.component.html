@@ -13,6 +13,11 @@
             <p> Email: {{ dataStore.usu_email }} </p>
             <p> Celular: {{ dataStore.usu_telefono }} </p>
             <p> Ciudad: {{ dataStore.usu_ciudad }} </p>
+            <button type="button" data-toggle="tooltip" data-placement="right"
+              class="sc-logout btn btn-warning btn-sm pull-right buttonAncho"
+              (click)="handleProductTs( )"
+              data-original-title="Todos Los Productos">Agregar Todos Los Productos
+            </button>
           </div>
         </div>
       </li>
@@ -100,7 +105,7 @@
   <div class="col-12">
     <div class="d-flex justify-content-center">
       <div>
-        <a class="pointer text-primary" (click)="handlePageNext()">VER MÁS BODEGAS </a>
+        <a class="pointer text-primary" (click)="handlePageNext()">VER MÁS PRODUCTOS </a>
       </div>
     </div>
   </div>

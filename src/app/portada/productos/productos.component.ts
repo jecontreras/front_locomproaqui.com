@@ -247,6 +247,13 @@ export class ProductosComponent implements OnInit {
      }
    }
 
+   handlePageNext(){
+    this.notscrolly = false;
+    this.query.page++;
+    this.query.limit = 30;
+    this.getProductos();
+  }
+
   getProductos(){
     this.spinner.show();
     this._productos.getStore(this.query).subscribe((res:any)=>{
