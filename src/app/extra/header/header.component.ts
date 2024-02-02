@@ -492,9 +492,16 @@ export class HeaderComponent implements OnInit {
         submenus:[]
       },
       {
+        icons: 'menu_book',
+        nombre: 'Mis Producto En la Tienda',
+        disable: this.rolUser == 'administrador' || this.rolUser == 'proveedor',
+        url: '/storeProductActivated/'+this.dataUser.id,
+        submenus: []
+      },
+      {
         icons: 'local_grocery_store',
         nombre: 'Autorizar Despacho',
-        disable: ( this.rolUser !== 'visitante' ) && ( this.rolUser != 'proveedor' ) && ( this.rolUser != 'administrador' ),
+        disable: ( this.rolUser !== 'visitante' ) && ( this.rolUser != 'proveedor' ),
         url: '/config/ventasPosibles',
         submenus:[]
       },
