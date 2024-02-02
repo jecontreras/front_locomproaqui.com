@@ -63,7 +63,7 @@
       </div>
 
 
-        <div class="col-12 col-sm-6" style="border-radius: 20px;">
+        <div class="col-12 col-sm-6" style="border-radius: 20px; max-height: 422px; overflow-y: auto;">
             <div class="container shadow" style="height: 100%;">
                 <div class="content" style="width: 100%;">
                   <div class="row ">
@@ -155,6 +155,25 @@
                               </div>
                             </div>
                           </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="col-12 " *ngIf="data.pro_usu_creacion">
+                      <div class="container borderBotton">
+                        <div class="row">
+                            <div class="col-12">
+                              <h3>PROVEEDOR:</h3>
+                              <div class="d-flex flex-row bd-highlight mb-1" style="    margin-top: 15px; border-radius: 20px;">
+                                <div class="p-1 bd-highlight" style="margin: 10px;">
+                                  <img [src]="data.pro_usu_creacion.usu_imagen" alt="" class="img-profile" (error)="handleImageError($event)" loading="lazy">
+                                </div>
+                                <div class="p-1 bd-highlight" style="margin: auto; margin-left: -10px;">
+                                  <h4 style="margin: 0 !important;">Nombre: {{ data.pro_usu_creacion.usu_usuario | slice: 0:12 }} </h4>
+                                  <h5 style="margin: 0 !important;">Whatsapp: {{ data.pro_usu_creacion.usu_telefono }} </h5>
+                                  <h5 style="margin: 0 !important;">Ubicación: {{ data.pro_usu_creacion.usu_ciudad | slice: 0:12 }} </h5>
+                                </div>
+                              </div>
+                            </div>
                         </div>
                       </div>
                     </div>

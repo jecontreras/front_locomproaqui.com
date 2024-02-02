@@ -117,12 +117,32 @@ export class StoreComponent implements OnInit {
       this.querysStore.where.rol= "proveedor";
       this.querysStore.where.proValidate = true;
       if( this.dataStore.id ) this.querysStore.where.pro_usu_creacion = this.dataStore.id;
-      this._user.getStore( this.querysStore ).subscribe( res =>{
+      this._user.getStore( this.querysStore ).subscribe( res =>{ 
         this.counts = res.count;
         console.log("***", this.counts)
         this.listStore = _.unionBy(this.listStore || [], res.data, 'id');
         this.spinner.hide();
         if (res.data.length === 0 ) {
+          this.notEmptyPost =  false;
+        }
+        this.notscrolly = true;
+        resolve( true );
+      },()=> resolve( false ) )
+    });
+  }
+
+  getStores(){
+    this.spinner.show();
+    return new Promise( resolve =>{
+      this.querysStore.where.rol= "proveedor";
+      this.querysStore.where.proValidate = true;
+      if( this.dataStore.id ) this.querysStore.where.pro_usu_creacion = this.dataStore.id;
+      this._user.getStores( this.querysStore ).subscribe( res =>{ 
+        this.counts = res.count;
+        //console.log("***", this.counts)
+        this.listStore = _.unionBy(this.listStore || [], res, 'id');
+        this.spinner.hide();
+        if (res.length === 0 ) {
           this.notEmptyPost =  false;
         }
         this.notscrolly = true;

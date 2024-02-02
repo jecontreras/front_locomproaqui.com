@@ -91,6 +91,7 @@ export class FormPosiblesVentasComponent implements OnInit {
       res.tallaSelect = this.data.ven_tallas;
       res.costo = res.pro_vendedor;
       res.loVendio = this.data.ven_precio;
+      res.bodegaName = res.pro_usu_creacion.usu_usuario,
       this.listCarrito.push( res );
       console.log("****79", this.listCarrito )
     });

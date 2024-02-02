@@ -29,6 +29,7 @@ import { VentasClienteComponent } from './components/ventas-cliente/ventas-clien
 import { ListSizeComponent } from './components/list-size/list-size.component';
 import { ListPlatformComponent } from './components/list-platform/list-platform.component';
 import { RechargeComponent } from './components/recharge/recharge.component';
+import { StoreProductActivatedComponent } from './components/store-product-activated/store-product-activated.component';
 
 const dashboardRoutes: Routes = [
  {
@@ -62,6 +63,7 @@ const dashboardRoutes: Routes = [
      {path: 'listaTalla', component: ListSizeComponent},
      {path: 'listaPlatform', component: ListPlatformComponent },
      {path: 'ventasPosibles', component: VentasClienteComponent },
+     {path: 'storeProductActivated/:idStore', component: StoreProductActivatedComponent},
      {path: 'recharge', component: RechargeComponent },
      {
         path: 'store',
