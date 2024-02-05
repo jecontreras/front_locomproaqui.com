@@ -9,7 +9,7 @@
               <div class="card-icon">
                 <i class="material-icons">assignment</i>
               </div>
-              <h4 class="card-title px-2">Ventas de Proveeedor</h4>
+              <h4 class="card-title px-2">Ventas No despachadas</h4>
             </div>
             <div class="card-body">
               <div class="toolbar">
@@ -24,7 +24,7 @@
                   [fullScreen]="false">
                 </ngx-spinner>
               </div>
-              <div id="datatables_filter" class="dataTables_filter row">
+              <!-- <div id="datatables_filter" class="dataTables_filter row">
                 <div class="col-12 row">
                   <label class="form-group col espaciosL">
                     <input [(ngModel)]="datoBusqueda" type="search" class="form-control form-control-sm" (change)="buscar()"
@@ -37,26 +37,16 @@
                   </div>
                 </div>
 
-              </div>
-              <div class="col-12">
+              </div> -->
+              <!-- <div class="col-12">
                 <button class="btn btn-primary" type="button" title="Refresh" data-toggle="tooltip" data-placement="bottom"
                   (click)="buscar()" [disabled]="loader">
                   <i class="material-icons">remove_red_eye</i>
                 </button>
-                <button class="btn btn-danger" type="button" title="Erase" data-toggle="tooltip" data-placement="bottom"
-                  (click)="procesoDelete()" [disabled]="btnDisabled">
-                  <span class="lnr lnr-trash"></span>
-                </button>
-              </div>
-              <!--<div class="col-12" *ngIf="activando">
-                <div class="col-md-3 col-sm-4 col-lg-3 col-xs-3">
-                  <span>Total Utilidad de venta</span>
-                  <p>$ {{ ( dataInfo.pagado || 0 ).toLocaleString(1) }} COP</p>
-                </div>
-              </div>-->
+              </div> -->
               <div class="search-results col-12 row" infiniteScroll [infiniteScrollDistance]="3"
                 [infiniteScrollThrottle]="50" (scrolled)="onScroll()">
-                <div class="col-12 material-datatables" *ngIf="!loader">
+                <div class="col-12 material-datatables">
                   <table id="datatables" class="table table-striped table-no-bordered table-hover" cellspacing="0"
                     width="100%" style="width:100%">
                     <thead>
@@ -79,24 +69,19 @@
                         'colorEliminado':row['ven_estado'] == 5,
                         'colorPagado':row['ven_retiro'] >= 1
                       }">
+                      <td  [(ngModel)]="row['ven_estado']" ></td>
+                        <!-- <td *ngIf="row['ven_estado'] == 5">
 
-                        <td *ngIf="row['ven_estado'] == 5">
-
-                        </td>
-                        <td>
+                        </td> -->
+                        <!-- <td>
                           <mat-checkbox color="primary" class="example-margin" [(ngModel)]="row.checks"></mat-checkbox>
-                        </td>
+                        </td> -->
                         <td *ngIf="row['ven_estado'] != 5">
                           <div *ngIf="row.ven_estado == 0">
-                            <span class="text-warning fondos" >Debes Autorizar Despacho </span><br>
+                            <span class="text-warning" >Debe Realizar Despacho </span><br>
                           </div>
                           <div *ngIf="row.ven_estado == 1">
                             <span class="text-warning fondos pointer" [routerLink]="[ '/config/ventas' ]" >Venta Generada Esperando guia </span><br>
-                          </div>
-                          <div>
-                            <button (click)="crear(row)" class="btn btn-primary btn-just-icon btn-round">
-                              <i class="material-icons">remove_red_eye</i>
-                            </button><br>
                           </div>
                         </td>
                         <td>{{ row['ven_nombre_cliente'] }}</td>
@@ -105,13 +90,13 @@
                             {{ row['ven_telefono_cliente'] }} <img src="./assets/img/what.jpg" class="pointer" style="width: 35px;" (click)="openUrl( row['ven_telefono_cliente'], row['ven_nombre_cliente'], row )">
                           </span>
                         </td>
-                        <td>{{ row['createdAt'] | date:'medium' }}</td>
+                        <td>{{ row['ven_updatedA'] | date:'medium' }}</td>
                         <td *ngIf="row['ven_estado'] == 0">Pendiente</td>
                         <td *ngIf="row['ven_estado'] == 1">Exitosa</td>
                         <td *ngIf="row['ven_estado'] == 2">Rechazada</td>
                         <td *ngIf="row['ven_estado'] == 3">Despachado</td>
                         <td *ngIf="row['ven_estado'] == 5">Eliminado</td>
-                        <!-- <td>{{ row['ven_tallas'] }}</td> -->
+                        <td>{{ row['usu_nombre'] }}</td>
                       </tr>
                     </tbody>
                   </table>

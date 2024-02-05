@@ -59,6 +59,6 @@ export class VentasService {
     return this._model.querys('ventasDBI/querys',query, 'post');
   }
   getVentasProveedores( query:any ){
-    return this._model.querys('tblventas/querys',query, 'post');
+    return this._model.querys('tblventas/ventasProveedoresView',query, 'post');
   }
 }
