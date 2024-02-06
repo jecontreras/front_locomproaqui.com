@@ -42,6 +42,7 @@ export class FormproductosComponent implements OnInit {
 
   btnDisabled: boolean = false;
   disableEliminar: boolean = false;
+  disableActivar: boolean = true;
   tallaSelect: any = [];
   formatoMoneda:any = {};
 
@@ -191,13 +192,10 @@ export class FormproductosComponent implements OnInit {
     }, 1000 );
   }
 
-
-
   onRemove(event) {
     //console.log(event);
     this.files.splice(this.files.indexOf(event), 1);
   }
-
 
   codigo() {
     return (Date.now().toString(20).substr(2, 3) + Math.random().toString(20).substr(2, 3)).toUpperCase();
@@ -315,6 +313,7 @@ export class FormproductosComponent implements OnInit {
     else this.data.checkMayor = 0;
     if (this.id) {
       this.updates();
+      this.disableActivar = false;
     }
     else { this.guardar(); }
   }
@@ -357,6 +356,10 @@ export class FormproductosComponent implements OnInit {
     if( !this.data.pro_vendedor ) return this._tools.error( { mensaje: "Problemas Precio de Vendedor del Producto", footer: 'Falta agregar Detalle del campo' } );
     if( !this.data.pro_uni_venta ) return this._tools.error( { mensaje: "Problemas Precio de Cliente final del Producto", footer: 'Falta agregar Detalle del campo' } );
     if( !this.data.pro_sw_tallas ) return this._tools.error( { mensaje: "Problemas Talla del Producto", footer: 'Falta agregar Detalle del campo' } );
+    if( !this.data.alto ){ return this._tools.error( { mensaje: "Problemas: Alto del producto", footer: 'Debes agregar el campo Alto' } );}
+    if( !this.data.ancho ) return this._tools.error( { mensaje: "Problemas: Ancho del producto", footer: 'Debes agregar el campo Ancho' } );
+    if( !this.data.largo ) return this._tools.error( { mensaje: "Problemas: Largo del producto", footer: 'Debes agregar el campo Largo' } );
+    if( !this.data.peso ) return this._tools.error( { mensaje: "Problemas: Peso del producto", footer: 'Debes agregar el campo Peso' } );
     if( this.listColor.length === 0 ) return this._tools.error( { mensaje: "Problemas Colores del Producto", footer: 'Falta agregar Detalle del campo' } );
     if( this.listColor.length ){
       let error = 0;
@@ -368,7 +371,7 @@ export class FormproductosComponent implements OnInit {
         let filtro = row.tallaSelect.find( off => off.check === true );
         if( !filtro ) error++;
       }
-      if( error > 0 ) return this._tools.error( { mensaje: "Problemas En los detalles de colores Llenar completo las cantidad de cada item ", footer: 'Falta agregar Detalle del campo' } );
+      if( error > 0 ) return this._tools.error( { mensaje: "Problemas En los detalles de colores Llenar completo las cantidad de cada item ", footer: 'También verificar la casilla de chequeo' } );
     }
     if( !this.data.pro_descripcion ) return this._tools.error( { mensaje: "Problemas Descripcion del Producto", footer: 'Falta agregar Detalle del campo' } );
     if( !this.data.foto ) return this._tools.error( { mensaje: "Problemas Foto del Producto", footer: 'Falta agregar Detalle del campo' } );
@@ -409,6 +412,7 @@ export class FormproductosComponent implements OnInit {
         this._tools.presentToast("Exitoso");
         this.data.id = res.id;
         this.updateCache();
+        this.disableActivar = false;
         resolve(res);
       }, (error) => { this._tools.presentToast("Error"); resolve(false) });
     });
