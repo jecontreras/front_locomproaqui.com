@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { IntroduccionComponent } from './components/introduccion/introduccion.component';
 import { ImprimirTarjetaComponent } from './extra/imprimir-tarjeta/imprimir-tarjeta.component';
+import { CursosViewComponent } from './dashboard-config/components/cursosView/cursosView.component';
 
 const routes: Routes = [
   { path: '',
@@ -48,6 +49,7 @@ const routes: Routes = [
     component: ImprimirTarjetaComponent
   },
   { path: '', redirectTo: "pedidos", pathMatch: 'full' },
+  { path: 'cursosView/:id', component : CursosViewComponent },
 ];
 
 @NgModule({

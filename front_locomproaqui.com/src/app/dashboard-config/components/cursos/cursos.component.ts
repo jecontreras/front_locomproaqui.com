@@ -29,8 +29,8 @@ export class CursosComponent implements OnInit {
   }
 
   getCursos(){  
-    this._cursos.get( this.querys ).subscribe( ( res:any )=>{
-      this.listCursos = res.data;
+    this._cursos.get( this.querys ).subscribe( ( res:any )=>{ console.log("ubotvo")
+      this.listCursos = res.data; 
       this.dataSelec = res.data[0] || {};
       this.selectCurso( this.dataSelec );
     });

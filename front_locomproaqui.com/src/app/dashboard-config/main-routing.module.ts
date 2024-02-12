@@ -24,6 +24,7 @@ import { VerProductoProveedorComponent } from './components/ver-producto-proveed
 import { VerProveedorComponent } from './components/ver-proveedor/ver-proveedor.component';
 import { MisDespachoComponent } from './components/mis-despacho/mis-despacho.component';
 import { CursosComponent } from './components/cursos/cursos.component';
+import { CursosViewComponent } from './components/cursosView/cursosView.component';
 import { VentasClienteComponent } from './components/ventas-cliente/ventas-cliente.component';
 import { ListSizeComponent } from './components/list-size/list-size.component';
 import { ListPlatformComponent } from './components/list-platform/list-platform.component';
@@ -57,6 +58,7 @@ const dashboardRoutes: Routes = [
      {path: 'verProductoProveedor/:id', component: VerProductoProveedorComponent},
      {path: 'misDespacho', component: MisDespachoComponent},
      {path: 'cursos', component: CursosComponent},
+     {path: 'cursosView', component: CursosViewComponent},
      {path: 'listaTalla', component: ListSizeComponent},
      {path: 'listaPlatform', component: ListPlatformComponent },
      {path: 'ventasPosibles', component: VentasClienteComponent },

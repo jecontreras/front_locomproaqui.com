@@ -57,6 +57,7 @@ import {AutocompleteLibModule} from 'angular-ng-autocomplete';
 import { FormcrearguiaComponent } from './form/formcrearguia/formcrearguia.component';
 import { FormlistventasComponent } from './form/formlistventas/formlistventas.component';
 import { CursosComponent } from './components/cursos/cursos.component';
+import { CursosViewComponent } from './components/cursosView/cursosView.component';
 import { MatVideoModule } from 'mat-video';
 import { VentasClienteComponent } from './components/ventas-cliente/ventas-cliente.component';
 import { FormPosiblesVentasComponent } from './form/form-posibles-ventas/form-posibles-ventas.component';
@@ -126,6 +127,7 @@ import { RechargeComponent } from './components/recharge/recharge.component';
     FormcrearguiaComponent,
     FormlistventasComponent,
     CursosComponent,
+    CursosViewComponent,
     VentasClienteComponent,
     FormPosiblesVentasComponent,
     FormProductComponent,
