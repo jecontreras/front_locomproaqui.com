@@ -49,7 +49,7 @@ const routes: Routes = [
     component: ImprimirTarjetaComponent
   },
   { path: '', redirectTo: "pedidos", pathMatch: 'full' },
-  { path: 'cursosView/:id', component : CursosViewComponent },
+  
 ];
 
 @NgModule({

@@ -84,7 +84,8 @@ const dashboardRoutes: Routes = [
           loadChildren: () => import('./admin/admin.module').then(m => m.AdminModule )
         }]
       },
-     {path: '**', redirectTo: 'pedidos', pathMatch: 'full'}
+     {path: '**', redirectTo: 'pedidos', pathMatch: 'full'},
+     { path: 'cursosView/:id', component : CursosViewComponent },
    ]
   }
 ];
