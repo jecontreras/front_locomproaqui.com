@@ -35,6 +35,7 @@ import { TestimonioComponent } from './components/testimonios/testimonios.compon
 import { VentastableComponent } from './table/ventastable/ventastable.component';
 import { Ng2SmartTableModule } from 'ng2-smart-table';
 import { VentasLiderComponent } from './components/ventas-lider/ventas-lider.component';
+import { VentasProveedorComponent } from './components/ventas-proveedor/ventas-proveedor.component';
 import { FormventasLiderComponent } from './form/formventas-lider/formventas-lider.component';
 import { CatalogoComponent } from './components/catalogo/catalogo.component';
 import { FormcatalogoComponent } from './form/formcatalogo/formcatalogo.component';
@@ -67,6 +68,7 @@ import { FormListSizeComponent } from './form/form-list-size/form-list-size.comp
 import { ListPlatformComponent } from './components/list-platform/list-platform.component';
 import { FormPlatformComponent } from './form/form-platform/form-platform.component';
 import { RechargeComponent } from './components/recharge/recharge.component';
+import { StoreProductActivatedComponent } from './components/store-product-activated/store-product-activated.component';
 
 @NgModule({
   entryComponents: [
@@ -110,6 +112,7 @@ import { RechargeComponent } from './components/recharge/recharge.component';
     FormtestimoniosComponent,
     TestimonioComponent,
     VentastableComponent,
+    VentasProveedorComponent,
     VentasLiderComponent,
     FormventasLiderComponent,
     CatalogoComponent,
@@ -134,7 +137,8 @@ import { RechargeComponent } from './components/recharge/recharge.component';
     FormListSizeComponent,
     ListPlatformComponent,
     FormPlatformComponent,
-    RechargeComponent
+    RechargeComponent,
+    StoreProductActivatedComponent
   ],
   imports: [
     CommonModule,

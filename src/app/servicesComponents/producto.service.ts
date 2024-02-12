@@ -37,6 +37,9 @@ export class ProductoService {
   getListgetNews(query:any){
     return this._model.querys('tblproductos/getNews',query, 'post');
   }
+  getListgeMore(query:any){
+    return this._model.querys('tblproductos/getMore',query, 'post');
+  }
   getListgetBanner(query:any){
     return this._model.querys('tblproductos/getBanners',query, 'post');
   }

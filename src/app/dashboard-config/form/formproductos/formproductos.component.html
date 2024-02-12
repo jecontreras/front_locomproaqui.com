@@ -171,7 +171,7 @@
                 </div>
                 <div class="form-group col-md-6 col-sm-4 col-lg-4 col-xs-6">
                     <label>Alto (CM)</label>
-                    <input type="number" [(ngModel)]="data.alto" class="form-control form-control-sm">
+                    <input type="number" [(ngModel)]="data.alto" class="form-control form-control-sm" #txtalto>
                 </div>
                 <div class="form-group col-md-6 col-sm-4 col-lg-4 col-xs-6">
                     <label>Ancho (CM)</label>
@@ -432,9 +432,9 @@
     <button mat-button mat-dialog-close color="warn">Cerrar</button>
     <button mat-button cdkFocusInitial color="primary" (click)="submit()" *ngIf="( this.id ) ">
         <span *ngIf="!id">Guardar Cambios</span>
-        <span *ngIf="id">Actulizar Cambios</span>
+        <span *ngIf="id" class="btn btn-info">Actualizar Cambios</span>
     </button>
-    <button (click)="handleActivate()" mat-raised-button color="accent" *ngIf="id && data.pro_activo !== 0 ">
+    <button (click)="handleActivate()" mat-raised-button color="accent" *ngIf="id && data.pro_activo !== 0 " [disabled]="disableActivar">
         Activar Producto / Mostrar a la Comunidad
     </button>
 </mat-dialog-actions>

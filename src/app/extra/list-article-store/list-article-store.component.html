@@ -13,6 +13,11 @@
             <p> Email: {{ dataStore.usu_email }} </p>
             <p> Celular: {{ dataStore.usu_telefono }} </p>
             <p> Ciudad: {{ dataStore.usu_ciudad }} </p>
+            <button type="button" data-toggle="tooltip" data-placement="right"
+              class="sc-logout btn btn-warning btn-sm pull-right buttonAncho"
+              (click)="handleProductTs( )"
+              data-original-title="Todos Los Productos">Agregar Todos Los Productos
+            </button>
           </div>
         </div>
       </li>
@@ -98,9 +103,16 @@
     </div>
   </div>
   <div class="col-12">
+    <div class="d-flex justify-content-center">
+      <div>
+        <a class="pointer text-primary" (click)="handlePageNext()">VER MÁS PRODUCTOS </a>
+      </div>
+    </div>
+  </div>
+  <div class="col-12">
     <div class="d-flex flex-row-reverse bd-highlight">
       <div class="p-2 bd-highlight">
-        <mat-paginator [length]="counts" [pageSizeOptions]="[10, 25, 100]" (page)="onScroll($event)"></mat-paginator>
+        <mat-paginator [length]="counts" [pageSizeOptions]="[50, 100, 200]" (page)="onScroll($event)"></mat-paginator>
       </div>
     </div>
   </div>

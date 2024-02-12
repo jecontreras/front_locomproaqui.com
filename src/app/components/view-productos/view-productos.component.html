@@ -1,34 +1,41 @@
 <div mat-dialog-title>
   <div class="row">
     <div class="col-12" style="border-radius: 20px;">
-      <div class="d-flex bd-highlight p-2" style="padding-top: 0px;">
-        <div class="p-2 flex-grow-1 bd-highlight">
+      <div class="d-flex bd-highlight" style="padding-top: 0px;">
+        <div class="p-1 flex-grow-1 bd-highlight">
           <h4 style="text-align: center;" class="fw-bold">{{ data.pro_nombre | slice: 0:12 }} ... </h4>
         </div>
-        <div class="p-2 bd-highlight">
+        <div class="p-1 bd-highlight">
           <button type="button" class="btn btn-danger" mat-dialog-close>
             X
           </button>
         </div>
       </div>
     </div>
-    <div class="col-6">
-      <section style="text-align: center; border-radius: 20px; padding-top: 5px;" class="p-2">
-        <h5 class="" *ngIf="data.precio_vendedor">
-          Precio a distribuidor:
-        </h5>
-        <h5>{{ _tools.monedaChange( 3, 2, ( coinShop == true ? ( data.pro_vendedorCompra || data.precio_vendedor ) : data.precio_vendedor ) ) }}</h5>
-      </section>
-    </div>
-    <div class="col-6">
-      <section style="text-align: center; border-radius: 20px; padding-top: 5px;" class="p-2">
-        <h5 class="" *ngIf="dataUser.id">Precio Sugerido:</h5>
-          <h5 class="" *ngIf="dataUser.id">{{ _tools.monedaChange( 3, 2, data.pro_uni_venta ) }}</h5>
-          <h5 class="" *ngIf="!dataUser.id">Precio:</h5>
-          <h5 class="" *ngIf="!dataUser.id">{{ _tools.monedaChange( 3, 2, data.pro_uni_venta ) }}</h5>
-          <span *ngIf="!data.precio_vendedor && dataUser.id" class="precios">Ganas el {{ porcentajeMostrar }} % : &nbsp; {{ gananciaEstimada }}</span>
-      </section>
-    </div>
+    <div class="col-lg-6 col-xs-2">&nbsp;</div>
+    <div class="col-lg-6 col-xs-10">
+      <div class="row">
+
+      
+      <div class="col-6">
+        <section style="text-align: center; border-radius: 20px; padding-top: 5px;" class="p-2">
+          <h5 class="" *ngIf="data.precio_vendedor">
+            Precio a distribuidor:
+          </h5>
+          <h5>{{ _tools.monedaChange( 3, 2, ( coinShop == true ? ( data.pro_vendedorCompra || data.precio_vendedor ) : data.precio_vendedor ) ) }}</h5>
+        </section>
+      </div>
+      <div class="col-6">
+        <section style="text-align: center; border-radius: 20px; padding-top: 5px;" class="p-2">
+          <h5 class="" *ngIf="dataUser.id">Precio Sugerido:</h5>
+            <h5 class="" *ngIf="dataUser.id">{{ _tools.monedaChange( 3, 2, data.pro_uni_venta ) }}</h5>
+            <h5 class="" *ngIf="!dataUser.id">Precio:</h5>
+            <h5 class="" *ngIf="!dataUser.id">{{ _tools.monedaChange( 3, 2, data.pro_uni_venta ) }}</h5>
+            <span *ngIf="!data.precio_vendedor && dataUser.id" class="precios">Ganas el {{ porcentajeMostrar }} % : &nbsp; {{ gananciaEstimada }}</span>
+        </section>
+      </div>
+  </div>
+</div>
   </div>
 </div>
 <mat-dialog-content class="mat-typography">
@@ -63,7 +70,7 @@
       </div>
 
 
-        <div class="col-12 col-sm-6" style="border-radius: 20px;">
+        <div class="col-12 col-sm-6" style="border-radius: 20px; max-height: 422px; overflow-y: auto;">
             <div class="container shadow" style="height: 100%;">
                 <div class="content" style="width: 100%;">
                   <div class="row ">
@@ -98,7 +105,7 @@
                             <section class="  p-1" style="text-align: center; border-radius: 20px; ">
                               <div class="row">
                                 <div class="col-12">
-                                  <section class="paddinLader">
+                                  <section class="paddinLader" *ngIf="seleccionoColor.tallaSelect[0].tal_descripcion !== 'Unica'">
                                     <label for="exampleFormControlSelect1">Tallas disponibles:</label>
                                     <select class="form-control form-control-sm text-align" [(ngModel)]="data.tallas"
                                         (change)="seleccionTalla()" [disabled]="!data.color">
@@ -106,6 +113,11 @@
                                             Tamaño: {{
                                             item.tal_descripcion }} UND: {{ item.cantidad }}</option>
                                     </select>
+                                  </section>
+                                  <section class="paddinLader" *ngIf="seleccionoColor.tallaSelect[0].tal_descripcion === 'Unica'">
+                                    <p>
+                                      Cantidades {{ seleccionoColor.tallaSelect[0].cantidad }}
+                                    </p>
                                   </section>
                                 </div>
                                 <div class="col-12" *ngIf="!data.coinShop">
@@ -124,8 +136,8 @@
                       <div class="container borderBotton">
                         <div class="row">
                           <div class="col-12">
-                            <div class="d-flex flex-row bd-highlight mb-3" style="    margin-top: 15px; border-radius: 20px;">
-                              <div class="p-1 bd-highlight" style="margin: auto;">
+                            <div class="d-flex flex-row bd-highlight mb-1" style="    margin-top: 15px; border-radius: 20px;">
+                              <div class="p-1 bd-highlight" style="margin: 10px;">
                                 <img [src]="urlFoto" alt="" class="img-profile" (error)="handleImageError($event)" loading="lazy">
                               </div>
                               <div class="p-1 bd-highlight" style="margin: auto; margin-left: -10px;">
@@ -153,6 +165,25 @@
                         </div>
                       </div>
                     </div>
+                    <div class="col-12 " *ngIf="data.pro_usu_creacion">
+                      <div class="container borderBotton">
+                        <div class="row">
+                            <div class="col-12">
+                              <h3>PROVEEDOR:</h3>
+                              <div class="d-flex flex-row bd-highlight mb-1" style="    margin-top: 15px; border-radius: 20px;">
+                                <div class="p-1 bd-highlight" style="margin: 10px;">
+                                  <img [src]="data.pro_usu_creacion.usu_imagen" alt="" class="img-profile" (error)="handleImageError($event)" loading="lazy">
+                                </div>
+                                <div class="p-1 bd-highlight" style="margin: auto; margin-left: -10px;">
+                                  <h4 style="margin: 0 !important;">Nombre: {{ data.pro_usu_creacion.usu_usuario | slice: 0:12 }} </h4>
+                                  <h5 style="margin: 0 !important;">Whatsapp: {{ data.pro_usu_creacion.usu_telefono }} </h5>
+                                  <h5 style="margin: 0 !important;">Ubicación: {{ data.pro_usu_creacion.usu_ciudad | slice: 0:12 }} </h5>
+                                </div>
+                              </div>
+                            </div>
+                        </div>
+                      </div>
+                    </div>
                     <div class="col-12 p-3" style="max-height: 200px; overflow-y: auto;">
                       <div class="container borderBotton">
                         <div class="row">
@@ -167,7 +198,25 @@
                 </div>
             </div>
         </div>
-
+        <section *ngIf="breakpoint === 1" style="text-align: center;">
+          <button type="button" class="btn btn-success m-1" *ngIf="disabledView === 'createPrice'" (click)="handleAddStore()">
+            Actualizar Precio
+          </button>
+    
+          <button cdkFocusInitial (click)="handleAddStore()" type="button" class="btn btn-primary m-1" *ngIf="disabledView === 'store' && dataUser.id">
+            Agregar a mi Tienda
+          </button>
+    
+          <button type="button" class="btn btn-danger m-1" *ngIf="disabledView === 'createPrice'" (click)="handleDroppArticle()">
+            Quitar de mi Tienda
+          </button>
+    
+          <a *ngIf="data['pro_categoria']" target="_blank" [routerLink]="[ '/listproduct/categoria', data['pro_categoria'].id ] " class="btn btn-primary m-1"> ver productos similares </a>
+    
+          <button cdkFocusInitial (click)="AgregarCart(false)" type="button" class="btn btn-primary m-1" *ngIf="(disabledView !== 'store') && (disabledView !== 'createPrice')">
+            {{ titleButton }}
+          </button>
+        </section>
     </div>
   </div>
 </mat-dialog-content>
@@ -198,24 +247,5 @@
         </button>
       </div>
     </div>
-    <section *ngIf="breakpoint === 1">
-      <button type="button" class="btn btn-success m-1" *ngIf="disabledView === 'createPrice'" (click)="handleAddStore()">
-        Actualizar Precio
-      </button>
-
-      <button cdkFocusInitial (click)="handleAddStore()" type="button" class="btn btn-primary m-1" *ngIf="disabledView === 'store' && dataUser.id">
-        Agregar a mi Tienda
-      </button>
-
-      <button type="button" class="btn btn-danger m-1" *ngIf="disabledView === 'createPrice'" (click)="handleDroppArticle()">
-        Quitar de mi Tienda
-      </button>
-
-      <a *ngIf="data['pro_categoria']" target="_blank" [routerLink]="[ '/listproduct/categoria', data['pro_categoria'].id ] " class="btn btn-primary m-1"> ver productos similares </a>
-
-      <button cdkFocusInitial (click)="AgregarCart(false)" type="button" class="btn btn-primary m-1" *ngIf="(disabledView !== 'store') && (disabledView !== 'createPrice')">
-        {{ titleButton }}
-      </button>
-    </section>
 </mat-dialog-actions>
 

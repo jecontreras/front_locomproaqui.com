@@ -166,6 +166,8 @@
                           <div>
                               <label for="exampleFormControlInput1">Codigo</label>
                               <input type="text" [(ngModel)]="item.codigoImg" class="form-control form-control-sm" [disabled]="data.id">
+                              <label for="exampleFormControlInput1">Bodega: </label>
+                              <input type="text" [(ngModel)]="item.bodegaName" class="form-control form-control-sm" [disabled]="data.id">
                               <label for="exampleFormControlInput1">Cantidad</label>
                               <input type="number" [(ngModel)]="item.cantidad" class="form-control form-control-sm" (change)="suma()" [disabled]="data.id">
                               <label for="exampleFormControlInput1">Color</label>

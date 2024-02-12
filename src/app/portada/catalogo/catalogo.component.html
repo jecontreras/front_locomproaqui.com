@@ -129,7 +129,7 @@ text-align: center;
 <div class=element-wrapper>
 <div
 style="font-size: 178%; line-height: 1; color: rgb(0, 0, 0); margin: 0px; padding: 5px; background-color: white; text-shadow: transparent 0px 0px 0px;"><div class=headline-inner style="    text-align: center;">
-<h3><strong>ANTES <s>$150.000</s></strong></h3>
+<h3><strong>ANTES <s>{{ this._tools.monedaChange( 3, 2, (data.pro_uni_venta + (data.pro_uni_venta * 0.3) ) ) }}</s></strong></h3>
 </div>
 </div>
 </div>
@@ -402,7 +402,7 @@ style="line-height: 1; margin: 10px 0px; padding: 5px; text-shadow: transparent 
           style="background-color: rgb(255, 255, 255); color: rgb(37, 42, 50); text-align: left; font-weight: normal; font-style: normal;">
       </div>
     </div>
-    <div *ngIf="( data['pro_categoria']?.id == 16 ) || ( data['pro_categoria']?.id == 14 ) || ( data['pro_categoria']?.id == 84 )">
+    <div *ngIf="data['listTallas']?.length > 0 ">
       <div class="form-element required input" style="margin: 10px 0px 0px;" index=3 step=1 >
         <label class=fe-label style="color: rgb(37, 42, 50); text-align: left; font-weight: normal; font-style: normal;">Talla &nbsp;
         </label>

@@ -172,9 +172,10 @@
               </section>
             </div>
             <div class="col-12">
-              <div class="d-flex justify-content-center">
+              <div class="d-flex justify-content-center py-5">
                 <div>
-                  <a [routerLink]="[ '/listproduct' ]" target="_blank" class="pointer text-primary">VER MÁS PUBLICACIONES </a>
+                  <!-- <a [routerLink]="[ '/listproduct' ]" target="_blank" class="pointer ">VER MÁS PUBLICACIONES </a> -->
+                  <a (click)="getListProductsMore()" target="_blank" class="pointer btn btn-lg btn-primary" style="padding:10px">VER MÁS PUBLICACIONES </a>
                 </div>
               </div>
             </div>

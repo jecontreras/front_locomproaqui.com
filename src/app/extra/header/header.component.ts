@@ -492,9 +492,16 @@ export class HeaderComponent implements OnInit {
         submenus:[]
       },
       {
+        icons: 'menu_book',
+        nombre: 'Mis Producto En la Tienda',
+        disable: this.rolUser == 'administrador' || this.rolUser == 'proveedor',
+        url: '/storeProductActivated/'+this.dataUser.id,
+        submenus: []
+      },
+      {
         icons: 'local_grocery_store',
         nombre: 'Autorizar Despacho',
-        disable: ( this.rolUser !== 'visitante' ) && ( this.rolUser != 'proveedor' ) && ( this.rolUser != 'administrador' ),
+        disable: ( this.rolUser !== 'visitante' ) && ( this.rolUser != 'proveedor' ),
         url: '/config/ventasPosibles',
         submenus:[]
       },
@@ -527,6 +534,13 @@ export class HeaderComponent implements OnInit {
       },*/
       {
         icons: 'local_grocery_store',
+        nombre: 'Ventas Proveedor',
+        disable: this.rolUser == 'administrador',
+        url: '/config/ventasProveedor',
+        submenus:[]
+      },
+      {
+        icons: 'local_grocery_store',
         nombre: 'Ventas de Subvendedor',
         disable: this.rolUser == 'administrador',
         url: '/config/ventasLider',
@@ -548,7 +562,7 @@ export class HeaderComponent implements OnInit {
       },
       {
         icons: 'people_alt',
-        nombre: 'Lista de Transportadoras',
+        nombre: 'Activar Transportadoras',
         disable: this.rolUser == 'administrador' || this.rolUser == 'proveedor',
         url: '/config/listaPlatform',
         submenus:[]

@@ -51,7 +51,7 @@ export class ListDispatchComponent implements OnInit {
     this.dataTable.footerRow = this.Header;
 
     let interval = setInterval(()=>{
-      try {
+      try { console.log("dev this.dataTable.dataRows", this.dataTable.dataRows)
         if( this.dataTable) this.dataCache = _.clone( this.dataTable.dataRows )
         if( this.dataCache.length ) clearInterval( interval );
       } catch (error) { }

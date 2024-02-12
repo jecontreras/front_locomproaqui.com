@@ -14,6 +14,7 @@ import { ReferidosComponent } from './components/referidos/referidos.component';
 
 import { TestimonioComponent } from './components/testimonios/testimonios.component';
 import { VentastableComponent } from './table/ventastable/ventastable.component';
+import { VentasProveedorComponent } from './components/ventas-proveedor/ventas-proveedor.component';
 import { VentasLiderComponent } from './components/ventas-lider/ventas-lider.component';
 import { CatalogoComponent } from './components/catalogo/catalogo.component';
 import { AdminComponent } from './components/admin/admin.component';
@@ -28,6 +29,7 @@ import { VentasClienteComponent } from './components/ventas-cliente/ventas-clien
 import { ListSizeComponent } from './components/list-size/list-size.component';
 import { ListPlatformComponent } from './components/list-platform/list-platform.component';
 import { RechargeComponent } from './components/recharge/recharge.component';
+import { StoreProductActivatedComponent } from './components/store-product-activated/store-product-activated.component';
 
 const dashboardRoutes: Routes = [
  {
@@ -42,6 +44,7 @@ const dashboardRoutes: Routes = [
      {path: 'usuarios', component: UsuariosComponent},
      {path: 'catalago', component: CatalogoComponent},
      {path: 'ventas', component: VentasComponent},
+     {path: 'ventasProveedor', component: VentasProveedorComponent},
      {path: 'ventasLider', component: VentasLiderComponent},
      {path: 'cobros', component: CobrosComponent},
      {path: 'bancos', component: BancosComponent},
@@ -60,6 +63,7 @@ const dashboardRoutes: Routes = [
      {path: 'listaTalla', component: ListSizeComponent},
      {path: 'listaPlatform', component: ListPlatformComponent },
      {path: 'ventasPosibles', component: VentasClienteComponent },
+     {path: 'storeProductActivated/:idStore', component: StoreProductActivatedComponent},
      {path: 'recharge', component: RechargeComponent },
      {
         path: 'store',

@@ -270,15 +270,22 @@
                           <!--<span class="aa-badge aa-sale" href="#">OFERTA!</span>-->
                         </li>
                       </ul>
-                      <div class="mx-auto" style="width: 200px; text-align: center;" *ngIf="listProductos.length == 0 && !loader">
-                        NO SE ENCONTRARON PRODUCTOS
-                      </div>
                       <div class="mx-auto" style="width: 200px;" *ngIf="loader">
                         <mat-spinner></mat-spinner>
                       </div>
                       <ngx-spinner bdOpacity="0.9" bdColor="" size="default" color="#581f87" type="ball-pulse-sync" [fullScreen]="false">
                       </ngx-spinner>
                     </div>
+                  </div>
+                </div>
+              </div>
+              <div class="col-12">
+                <div class="d-flex justify-content-center">
+                  <div>
+                    <div class="mx-auto" style="width: 200px; text-align: center;" *ngIf="listProductos.length == 0 && !loader">
+                      NO SE ENCONTRARON PRODUCTOS
+                    </div>
+                    <a class="pointer text-primary" (click)="handlePageNext()" *ngIf="listProductos.length && !loader">VER MÁS PRODUCTOS </a>
                   </div>
                 </div>
               </div>

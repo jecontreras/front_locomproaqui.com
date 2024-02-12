@@ -130,6 +130,7 @@ export class ListPlatformComponent implements OnInit {
         };
         this.dataTable.headerRow = this.dataTable.headerRow;
         this.dataTable.footerRow = this.dataTable.footerRow;
+        console.log("response.data;",response.data)
         this.dataTable.dataRows = response.data;
         this.paginas = Math.ceil(response.count/10);
         this.loader = false;

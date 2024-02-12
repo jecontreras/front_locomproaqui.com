@@ -91,6 +91,20 @@ export class ListArticleStoreComponent implements OnInit {
     })
   }
 
+  async handleProductTs( ){
+    let alert:any = await  this._tools.confirm({title:"Importante", detalle:"Deseas! Agregar Todos Los Productos de Esta Bodega", confir:"Si Acepto"});
+    console.log("***", alert)
+    if( alert.dismiss == "cancel" ) return false;
+    let data = {
+      user: this.dataUser.id,
+      create: this.dataStore.id
+    };
+    this._article.createPriceArticleFull( data ).subscribe( res =>{
+      if( res.status == 400 ) return this._tools.tooast({ icon: "error",title: "Importante", detalle: res.data } )
+      this._tools.tooast({ title: "Completado", detalle: "Se Agregaron Todos los Productos de Esta Bodega!!!"})
+    },()=> this._tools.tooast({ icon: "error",title: "Importante", detalle: "Problemas de Conexion !!!" } ) );
+  }
+
   getCategory(){
     this._category.get({ where: { cat_activo: 0, cat_padre: null }, limit: 1000 }).subscribe( async (res: any) => {
       for (let row of res.data) {
@@ -157,6 +171,12 @@ export class ListArticleStoreComponent implements OnInit {
       ];
     }
     this.listArticle = [];
+    this.getArticle();
+  }
+
+  handlePageNext(){
+    this.notscrolly = false;
+    this.querysArticle.page++;
     this.getArticle();
   }
 
