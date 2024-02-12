@@ -25,6 +25,7 @@ import { VerProductoProveedorComponent } from './components/ver-producto-proveed
 import { VerProveedorComponent } from './components/ver-proveedor/ver-proveedor.component';
 import { MisDespachoComponent } from './components/mis-despacho/mis-despacho.component';
 import { CursosComponent } from './components/cursos/cursos.component';
+import { CursosViewComponent } from './components/cursosView/cursosView.component';
 import { VentasClienteComponent } from './components/ventas-cliente/ventas-cliente.component';
 import { ListSizeComponent } from './components/list-size/list-size.component';
 import { ListPlatformComponent } from './components/list-platform/list-platform.component';
@@ -86,7 +87,8 @@ const dashboardRoutes: Routes = [
           loadChildren: () => import('./admin/admin.module').then(m => m.AdminModule )
         }]
       },
-     {path: '**', redirectTo: 'pedidos', pathMatch: 'full'}
+     {path: '**', redirectTo: 'pedidos', pathMatch: 'full'},
+     { path: 'cursosView/:id', component : CursosViewComponent },
    ]
   }
 ];
