@@ -111,11 +111,11 @@ export class MisDespachoComponent implements OnInit {
     };
     if( this.rolName != 'administrador') this.query.where.creacion = this.dataUser.id;
     this.cargarCompletas();
-    // this.cargarTodos2();
-    // this.cargarTodos3();
-    // this.cargarTodos4();
-    // this.cargarTodos5();
-    // this.cargarTodos6();
+    this.cargarTodos2();
+    this.cargarTodos3();
+    this.cargarTodos4();
+    this.cargarTodos5();
+    this.cargarTodos6();
     //this.getDineros();
   }
 
@@ -221,7 +221,7 @@ export class MisDespachoComponent implements OnInit {
   cargarCompletas() { // completadas
     this.spinner.show();
     this._productos.getVentaComplete( this.querysSale ).subscribe(res=>{
-      console.log("****55 completas", res)
+      // console.log("****55 completas", res)
       this.counts = res.count;
       this.reacudo = res.total;
       this.dataTable.headerRow = this.dataTable.headerRow;

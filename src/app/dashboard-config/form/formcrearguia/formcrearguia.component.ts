@@ -26,7 +26,7 @@ export class FormcrearguiaComponent implements OnInit {
     private _store: Store<STORAGES>,
     private _ventas: VentasService,
     private _tools: ToolsService
-  ) { 
+  ) {
     this._store.subscribe((store: any) => {
       store = store.name;
       //this.dataUser = store.user || {};
@@ -127,7 +127,7 @@ export class FormcrearguiaComponent implements OnInit {
       celularDestinatario: Number( this.data.ven_telefono_cliente ),
       ciudadDestinatario: /*11001000,*/ Number( this.data.codeCiudad ),
       barrioDestinatario: this.data.ven_barrio,
-      totalPeso: Number( this.data.pesoReal ), 
+      totalPeso: Number( this.data.pesoReal ),
       totalPesovolumen: Number( this.data.pesoVolumen ),
       totalValorMercancia: Number( this.data.ven_total ),
       observaciones: this.data.ven_observacion || "",
@@ -154,7 +154,7 @@ export class FormcrearguiaComponent implements OnInit {
       remitenteBarrio: "comuneros", // strint
       destinatarioFechaExpedicion: "2019-10-10", // strint
       destinatarioCelular: this.data.ven_telefono_cliente, // number
-      observacionAdicional: "mercancia nacional", //string 
+      observacionAdicional: "mercancia nacional", //string
       txtUnidades: this.data.numeroUnidad || 1,
       txtPeso: this.data.pesoReal,
       txtVolumen: this.data.pesoVolumen || 5,
@@ -172,7 +172,7 @@ export class FormcrearguiaComponent implements OnInit {
     this.data2.txtDice = this.textData;
     if( this.btndisabled ) return false;
     this.btndisabled = true;
-    console.log("submit data2", this.data2)
+    //console.log("submit data2", this.data2)
     this._ventas.createFelte( this.data2 ).subscribe( ( res:any ) => {
       res = res.data;
       console.log( res );
@@ -183,6 +183,6 @@ export class FormcrearguiaComponent implements OnInit {
       this.dialogRef.close( res );
     },(error)=> { this.btndisabled = false;  this._tools.basicIcons({ header: "Error!", subheader: "No pudimos crear el flete por favor actualizar pagina" }); } );
   }
-  
+
 
 }

@@ -54,7 +54,7 @@ export class ListDispatchComponent implements OnInit {
       try {
         if( this.dataTable){
           this.dataCache = _.clone( this.dataTable.dataRows )
-          console.log("dev this.dataTable.dataRows", this.dataCache)
+          // console.log("dev this.dataTable.dataRows", this.dataCache)
         }
        // if( this.dataCache.length ) clearInterval( interval );
       } catch (error) { }
@@ -100,7 +100,7 @@ export class ListDispatchComponent implements OnInit {
           let idx = _.findIndex( this.dataTable.dataRows, [ 'id', obj.id ] );
           //console.log("**",idx)
           if( idx >= 0 ) {
-            console.log("**",this.dataTable['dataRows'][idx], filtro)
+            // console.log("**",this.dataTable['dataRows'][idx], filtro)
             this.dataTable['dataRows'][idx]['ventas']['ven_estado'] = filtro['ventas']['ven_estado'];
             this.dataTable['dataRows'][idx]['ventas']['ven_numero_guia'] = filtro['ventas']['ven_numero_guia'];
           }

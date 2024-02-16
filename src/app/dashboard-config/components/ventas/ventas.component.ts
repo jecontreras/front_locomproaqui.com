@@ -96,7 +96,7 @@ export class VentasComponent implements OnInit {
   }
 
   getUserCabeza(){
-    console.log( this.dataUser)
+    // console.log( this.dataUser)
     if( !this.dataUser.empresa ) return false;
     delete this.query.where.usu_clave_int;
     this.query.where.ven_empresa = this.dataUser.empresa.id;
@@ -227,7 +227,7 @@ export class VentasComponent implements OnInit {
         this.dataTable.footerRow = this.dataTable.footerRow;
         this.dataTable.dataRows.push(... response.data)
         this.dataTable.dataRows = _.unionBy(this.dataTable.dataRows || [], this.dataTable.dataRows, 'id');
-        console.log("datrow", this.dataTable.dataRows)
+        // console.log("datrow", this.dataTable.dataRows)
         this.loader = false;
         this.spinner.hide();
          if (response.data.length === 0 ) {
@@ -279,7 +279,7 @@ export class VentasComponent implements OnInit {
       delete this.query.where.ven_retiro;
     }
     if( this.filtro.vendedor ) {
-      console.log( this.filtro )
+      // console.log( this.filtro )
       this.query.where.usu_clave_int = this.filtro.vendedor.id;
       this.getValorVenta();
     }
@@ -290,7 +290,7 @@ export class VentasComponent implements OnInit {
 
   getValorVenta(){
     let filtro: any = { where:{ user: this.query.where.usu_clave_int, estado: this.query.where.ven_estado } };
-    console.log( filtro );
+    // console.log( filtro );
     this._ventas.getMontos( filtro ).subscribe((res:any)=>this.dataInfo = res.data);
   }
 
@@ -302,7 +302,7 @@ export class VentasComponent implements OnInit {
     this.dataTable.dataRows = [];
 
     this.query.page =  0;
-    console.log( "**", this.filtro.ven_estado )
+    // console.log( "**", this.filtro.ven_estado )
     if( Number( this.filtro.ven_estado ) == 5 ) { this.query.where.ven_estado = { '!=': [4, 2] }; this.query.where.ven_retiro = null; }
     if( Number( this.filtro.ven_estado ) == 6 ) { this.query.where.ven_estado = { '!=': [4, 2] }; this.query.where.ven_retiro = { '!=': null }; }
     else this.query.where.ven_estado = Number( this.filtro.ven_estado );
