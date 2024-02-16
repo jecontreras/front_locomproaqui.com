@@ -172,6 +172,7 @@ export class FormcrearguiaComponent implements OnInit {
     this.data2.txtDice = this.textData;
     if( this.btndisabled ) return false;
     this.btndisabled = true;
+    console.log("submit data2", this.data2)
     this._ventas.createFelte( this.data2 ).subscribe( ( res:any ) => {
       res = res.data;
       console.log( res );

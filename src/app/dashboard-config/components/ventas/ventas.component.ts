@@ -8,7 +8,7 @@ import * as _ from 'lodash';
 import { STORAGES } from 'src/app/interfaces/sotarage';
 import { Store } from '@ngrx/store';
 import { FormpuntosComponent } from '../../form/formpuntos/formpuntos.component';
-import * as moment from 'moment'; 
+import * as moment from 'moment';
 import { UsuariosService } from 'src/app/servicesComponents/usuarios.service'
 import { VentastableComponent } from '../../table/ventastable/ventastable.component';
 import { Router } from '@angular/router';
@@ -44,7 +44,7 @@ export class VentasComponent implements OnInit {
     page: 0,
     limit: 10
   };
-  Header:any = [ '','Acciones','Numero Guia','Re: Producto','Nombre de la tienda', 'Fecha Venta','Estado', 'Pagado', 'Ganancia'];
+  Header:any = [ '','Acciones','Numero Guia','Re: Producto','Nombre de la tienda', 'Fecha Venta','Estado', 'Pagado', 'Ganancia','Estado'];
   $:any;
   public datoBusqueda = '';
 
@@ -128,9 +128,9 @@ export class VentasComponent implements OnInit {
           if( !filtro ) return false;
           let idx = _.findIndex( this.dataTable.dataRows, [ 'id', obj.id ] );
           console.log("**",idx)
-          if( idx >= 0 ) { 
+          if( idx >= 0 ) {
             console.log("**",this.dataTable['dataRows'][idx], filtro)
-            this.dataTable['dataRows'][idx] = { ven_estado: filtro.ven_estado, ...filtro}; 
+            this.dataTable['dataRows'][idx] = { ven_estado: filtro.ven_estado, ...filtro};
           }
       }
     });
@@ -144,7 +144,7 @@ export class VentasComponent implements OnInit {
         this.estadoNotificaciones( res );
       });
     });
-  } 
+  }
 
   estadoNotificaciones(obj:any){
     let data:any ={
@@ -218,7 +218,8 @@ export class VentasComponent implements OnInit {
   cargarTodos() {
     this.spinner.show();
     //if(this.dataUser.usu_perfil.prf_descripcion == 'administrador') this.query.where.ven_subVendedor = 0;
-    this._ventas.get(this.query)
+    const query = {}
+    this._ventas.get(query)
     .subscribe(
       (response: any) => {
         this.counts = response.count;
@@ -226,10 +227,10 @@ export class VentasComponent implements OnInit {
         this.dataTable.footerRow = this.dataTable.footerRow;
         this.dataTable.dataRows.push(... response.data)
         this.dataTable.dataRows = _.unionBy(this.dataTable.dataRows || [], this.dataTable.dataRows, 'id');
+        console.log("datrow", this.dataTable.dataRows)
         this.loader = false;
-          this.spinner.hide();
-          
-          if (response.data.length === 0 ) {
+        this.spinner.hide();
+         if (response.data.length === 0 ) {
             this.notEmptyPost =  false;
           }
           this.notscrolly = true;
@@ -241,7 +242,7 @@ export class VentasComponent implements OnInit {
 
   buscar() {
     this.loader = true;
-    this.notscrolly = true 
+    this.notscrolly = true
     this.notEmptyPost = true;
     this.dataTable.dataRows = [];
     //console.log(this.datoBusqueda);
@@ -277,7 +278,7 @@ export class VentasComponent implements OnInit {
       delete this.query.where.ven_estado;
       delete this.query.where.ven_retiro;
     }
-    if( this.filtro.vendedor ) { 
+    if( this.filtro.vendedor ) {
       console.log( this.filtro )
       this.query.where.usu_clave_int = this.filtro.vendedor.id;
       this.getValorVenta();
@@ -296,7 +297,7 @@ export class VentasComponent implements OnInit {
   buscarEstado(){
     if( this.loader ) return false;
     this.loader = true;
-    this.notscrolly = true 
+    this.notscrolly = true
     this.notEmptyPost = true;
     this.dataTable.dataRows = [];
 
@@ -306,7 +307,7 @@ export class VentasComponent implements OnInit {
     if( Number( this.filtro.ven_estado ) == 6 ) { this.query.where.ven_estado = { '!=': [4, 2] }; this.query.where.ven_retiro = { '!=': null }; }
     else this.query.where.ven_estado = Number( this.filtro.ven_estado );
 
-    if( this.filtro.vendedor ) { 
+    if( this.filtro.vendedor ) {
       this.query.where.usu_clave_int = this.filtro.vendedor.id;
       this.getValorVenta();
     }
@@ -320,7 +321,7 @@ export class VentasComponent implements OnInit {
     if( !( moment(moment( this.filtro.fechaFinal ).format(dateFormat),dateFormat ).isValid() ) ) return false;
 
     this.loader = false;
-    this.notscrolly = true 
+    this.notscrolly = true
     this.notEmptyPost = true;
     this.dataTable.dataRows = [];
 
@@ -362,7 +363,7 @@ export class VentasComponent implements OnInit {
     }
     if( obj.transportadoraSelect == "CORDINADORA") {
       Url+= `Transportadora CORDINADORA >>>>>>`;
-      this._ventas.imprimirFlete( { 
+      this._ventas.imprimirFlete( {
         codigo_remision: obj.ven_numero_guia
       }).subscribe(( res:any ) =>{
         this._tools.downloadPdf( res.data, obj.ven_numero_guia );

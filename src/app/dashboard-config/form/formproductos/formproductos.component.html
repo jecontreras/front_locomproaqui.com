@@ -18,7 +18,8 @@
                     <div class="form-group col-md-4 col-sm-4 col-lg-4 col-xs-4">
                         <label>Precio a distribuidor</label>
                         <input currencyMask class="form-control form-control-sm" [(ngModel)]="data.pro_vendedor"
-                            [options]="formatoMoneda" (keyup)="data.pro_vendedorCompra = data.pro_vendedor" />
+                            [options]="formatoMoneda" />
+                            <!-- (keyup)="data.pro_vendedorCompra = data.pro_vendedor"  -->
                     </div>
                     <div class="form-group col-md-4 col-sm-4 col-lg-4 col-xs-4">
                         <label>Precio sugerido de venta</label>
@@ -29,7 +30,7 @@
                       <label>Precio Vendedor Compra</label>
                       <input currencyMask class="form-control form-control-sm" [(ngModel)]="data.pro_vendedorCompra"
                           [options]="formatoMoneda" />
-                  </div>-->
+                    </div>-->
                     <div class="form-group col-md-4 col-sm-4 col-lg-4 col-xs-4">
                         <label for="exampleFormControlSelect1">Categoria:</label>
                         <select class="form-control form-control-sm" [(ngModel)]="data.pro_categoria" required>

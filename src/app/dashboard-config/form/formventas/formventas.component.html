@@ -336,8 +336,8 @@
 </mat-dialog-actions>
 <mat-dialog-actions align="end">
     <button mat-button mat-dialog-close color="warn">Cerrar</button>
-    <button mat-button cdkFocusInitial color="primary" (click)="submit()" [disabled]="disabledButton"  *ngIf="superSub == true || data.ven_estado != 1">
+    <button mat-button cdkFocusInitial color="primary" class="btn-info" (click)="submit()" [disabled]="disabledButton"  *ngIf="superSub == true || data.ven_estado != 1">
         <span *ngIf="!id">Subir tu orden</span>
-        <span *ngIf="id">Actulizar Cambios</span>
+        <span *ngIf="id">Actualizar Cambios</span>
     </button>
 </mat-dialog-actions>

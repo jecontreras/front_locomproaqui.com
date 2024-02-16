@@ -81,7 +81,7 @@ export class ViewProductosComponent implements OnInit {
       //console.log(store);
       if (!store) return false;
       this.userId = store.usercabeza;
-      this.dataUser = store.user || {};
+      this.dataUser = store.user || {}; console.log("this.dataUser",this.dataUser)
       this.listCart = store.cart || [];
       try {
         if (this.dataUser.categoriaPerfil) this.porcentajeUser = this.dataUser.categoriaPerfil.precioPorcentaje;

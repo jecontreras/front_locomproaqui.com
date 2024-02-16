@@ -35,7 +35,7 @@ export class ListDispatchComponent implements OnInit {
   listCarrito = []
   btnDisabled:boolean = false;
   loader = false;
-  
+
   constructor(
     public _tools: ToolsService,
     public dialog: MatDialog,
@@ -50,25 +50,27 @@ export class ListDispatchComponent implements OnInit {
     this.dataTable.headerRow = this.Header;
     this.dataTable.footerRow = this.Header;
 
-    let interval = setInterval(()=>{
-      try { console.log("dev this.dataTable.dataRows", this.dataTable.dataRows)
-        if( this.dataTable) this.dataCache = _.clone( this.dataTable.dataRows )
-        if( this.dataCache.length ) clearInterval( interval );
+    // let interval = setInterval(()=>{
+      try {
+        if( this.dataTable){
+          this.dataCache = _.clone( this.dataTable.dataRows )
+          console.log("dev this.dataTable.dataRows", this.dataCache)
+        }
+       // if( this.dataCache.length ) clearInterval( interval );
       } catch (error) { }
-    }, 3000 );
+    // }, 3000 );
   }
   datoBusqueda:string;
 
-  
   buscar( ) {
     this.datoBusqueda = this._tools.limpiarString( this.datoBusqueda );
     if( this.datoBusqueda ){
       this.dataTable.dataRows = this.dataCache.filter( item=>{
           return item.colorSelect === this.datoBusqueda ||
           item.titulo === this.datoBusqueda ||
-          this._tools.limpiarString( item.ventas.slug ) === this.datoBusqueda || 
-          item.ventas.transportadoraSelect === this.datoBusqueda || 
-          item.ventas.ven_numero_guia === this.datoBusqueda || 
+          this._tools.limpiarString( item.ventas.slug ) === this.datoBusqueda ||
+          item.ventas.transportadoraSelect === this.datoBusqueda ||
+          item.ventas.ven_numero_guia === this.datoBusqueda ||
           item.ventas.ven_telefono_cliente === this.datoBusqueda
         }
       );if( this.dataTable.dataRows.length === 0 ) {
@@ -78,7 +80,7 @@ export class ListDispatchComponent implements OnInit {
   }
 
   filterDate( ){
-    this.dataTable.dataRows = this.dataCache.filter( item => 
+    this.dataTable.dataRows = this.dataCache.filter( item =>
       item.createdAt >=moment( this.filtro.dateStart ).format("YYYY-MM-DD") &&
       item.createdAt <=moment( this.filtro.dateEnd ).format("YYYY-MM-DD")
     );

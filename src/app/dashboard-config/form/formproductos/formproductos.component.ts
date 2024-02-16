@@ -399,14 +399,24 @@ export class FormproductosComponent implements OnInit {
     }
     if ( this.id ) this.submit();
   }
+  
+  precioVendedor(x){
+    const r = 1000
+    x = x + (x * 0.025)
+    let xx = Math.floor(x/r)
+    if(xx!=x/r){xx++}
+    return (xx*r)
+  }
 
   guardar() {
     return new Promise(resolve => {
       if( this.data.opt == 'demo' ) this.data.pro_mp_venta = 1;
       if( this.rolUser != 'administrador') this.data.pro_activo = 3;
+      //dando precio a pro_vendedor
+      this.data.pro_vendedorCompra = this.precioVendedor(this.data.pro_vendedor); 
       this.data.pro_usu_creacion = this.dataUser.id;
       this.data = _.omit(this.data, [ 'todoArmare' ])
-    this.data = _.omitBy(this.data, _.isNull);
+      this.data = _.omitBy(this.data, _.isNull);
       this._productos.create(this.data).subscribe((res: any) => {
         //console.log(res);
         this._tools.presentToast("Exitoso");
@@ -422,14 +432,16 @@ export class FormproductosComponent implements OnInit {
     this.data = _.omit(this.data, [ 'pro_usu_creacion', 'todoArmare' ])
     this.data = _.omitBy(this.data, _.isNull);
     if( this.rolUser == 'administrador' ) this.data.pro_activo = 0;
+    //dando precio a pro_vendedor
+    this.data.pro_vendedorCompra = this.precioVendedor(this.data.pro_vendedor);
     this._productos.update(this.data).subscribe((res: any) => {
-      this._tools.presentToast("Actualizado");
-      this.updateCache();
-      res.listColor = this.data.listColor;
-      this.data = res;
-      if( this.data.pro_sw_tallas ) this.data.pro_sw_tallas = this.data.pro_sw_tallas.id;
-      if ( this.data.pro_sub_categoria ) this.data.pro_sub_categoria = this.data.pro_sub_categoria.id;
-      this.procesoEdision();
+    this._tools.presentToast("Actualizado");
+    this.updateCache();
+    res.listColor = this.data.listColor;
+    this.data = res;
+    if( this.data.pro_sw_tallas ) this.data.pro_sw_tallas = this.data.pro_sw_tallas.id;
+    if ( this.data.pro_sub_categoria ) this.data.pro_sub_categoria = this.data.pro_sub_categoria.id;
+    this.procesoEdision();
     }, (error) => { console.error(error); this._tools.presentToast("Error de servidor") });
   }
   onSelects(event: any, opt:string = 'foto') {

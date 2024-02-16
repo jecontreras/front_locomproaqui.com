@@ -175,7 +175,8 @@
                               <label for="exampleFormControlInput1">Tallas</label>
                               <input type="number" [(ngModel)]="item.tallaSelect" class="form-control form-control-sm" disabled>
                               <label for="exampleFormControlInput1">Vr.Unidad:</label>
-                              <input disabled currencyMask [(ngModel)]="item.costo" class="form-control form-control-sm" [options]="opcionCurrencys"/>
+                              <input *ngIf="this.dataUser.usu_perfil.id ==1" disabled currencyMask [(ngModel)]="item.pro_vendedorCompra" class="form-control form-control-sm" [options]="opcionCurrencys"/>
+                              <input *ngIf="this.dataUser.usu_perfil.id !=1" disabled currencyMask [(ngModel)]="item.pro_vendedor" class="form-control form-control-sm" [options]="opcionCurrencys"/>
                               <label for="exampleFormControlInput1">Vr.Vendido:</label>
                               <input disabled currencyMask [(ngModel)]="item.loVendio" class="form-control form-control-sm" [options]="opcionCurrencys"/>
                           </div>
@@ -189,8 +190,8 @@
 
 <mat-dialog-actions align="end">
     <button mat-button mat-dialog-close>Cerrar</button>
-    <button mat-button cdkFocusInitial color="primary" (click)="submit()" [disabled]="disabledButton" >
-        <span *ngIf="id">Enviar Orden de Despacho</span>
+    <button mat-button cdkFocusInitial color="info" (click)="submit()" [disabled]="disabledButton" >
+        <span *ngIf="id" class="btn btn-info">Enviar Orden de Despacho</span>
     </button>
     <!-- <button mat-button (click)="OrdenValidadWhatsapp( data )" *ngIf="data.id && data.ven_estado == 3">
         <span>Enviar Guia Whatsapp</span>

@@ -11,7 +11,7 @@
               &nbsp;
               <h4 class="card-title">Ventas</h4>
             </div>
-            
+
           </div>
           <div class="card-body">
             <div class="toolbar">
@@ -219,11 +219,14 @@
                       <td *ngIf="row['ven_estado'] == 3">Despachado</td>
                       <td *ngIf="row['ven_estado'] == 5">Eliminado</td>
                       <td *ngIf="row['ven_estado'] == 6">Preparación</td>
+                      <td><span *ngIf="row['ven_estado'] == 1">No</span></td>
+                      <td><span *ngIf="row['ven_estado'] == 1">{{ row['ven_ganancias'] }}</span></td>
                       <td>
-                        <img src="./assets/icons/pago.png" alt="" *ngIf="row['ven_retirado'] == 1" style="width: 25%;">
-                        <span *ngIf="row['ven_imagen_tiket'] && row['ven_retirado'] == 0">lista para cobrar</span>
+                        <img *ngIf="row['ven_retirado'] == 1" src="./assets/icons/pago.png" alt=""  style="width: 25%;">
+                        <span *ngIf="row['ven_imagen_tiket'] && row['ven_retirado'] == 0">Lista para cobrar</span>
+                        <span *ngIf="row['ven_estado'] == 2">{{ row['ven_motivo_rechazo'] }}</span>
                       </td>
-                      <td>{{ row['ven_motivo_rechazo'] }}</td>
+
                       <!-- <td>{{ row['ven_tallas'] }}</td> -->
                     </tr>
                   </tbody>

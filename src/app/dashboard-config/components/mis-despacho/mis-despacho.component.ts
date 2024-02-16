@@ -33,12 +33,12 @@ export class MisDespachoComponent implements OnInit {
   };
   Header:any = [ 'Seleccionar','Transportadora','Productos', 'Fecha de orden', 'Estado de la orden', 'Numero del vendedor','Nombre cliente final',"Valor bodega", 'Venta final'];
   $:any;
-  
+
   notscrolly:boolean=true;
   notEmptyPost:boolean = true;
   dataUser:any = {};
   rolName:string;
-  
+
   reacudo:number;
   Pdreacudo:number;
   Pcreacudo:number;
@@ -64,7 +64,7 @@ export class MisDespachoComponent implements OnInit {
     private _productos: ProductoService,
     private spinner: NgxSpinnerService,
     private _store: Store<STORAGES>,
-    
+
   ) {
     this._store.subscribe( ( store: any ) => {
       store = store.name;
@@ -110,12 +110,12 @@ export class MisDespachoComponent implements OnInit {
       dataRows: []
     };
     if( this.rolName != 'administrador') this.query.where.creacion = this.dataUser.id;
-    this.cargarTodos();
-    this.cargarTodos2();
-    this.cargarTodos3();
-    this.cargarTodos4();
-    this.cargarTodos5();
-    this.cargarTodos6();
+    this.cargarCompletas();
+    // this.cargarTodos2();
+    // this.cargarTodos3();
+    // this.cargarTodos4();
+    // this.cargarTodos5();
+    // this.cargarTodos6();
     //this.getDineros();
   }
 
@@ -177,7 +177,7 @@ export class MisDespachoComponent implements OnInit {
     });
   }
 
-  cargarTodos3() {
+  cargarTodos3() { //guias pagas al proveedor
     this.spinner.show();
     this._productos.getVentaCompleteComplete( this.querysComplete ).subscribe(res=>{
       //console.log("****55", res)
@@ -216,10 +216,12 @@ export class MisDespachoComponent implements OnInit {
     });
   }
 
-  cargarTodos() {
+  guiasCompletadas(){ console.log("guias completadas")  }
+
+  cargarCompletas() { // completadas
     this.spinner.show();
     this._productos.getVentaComplete( this.querysSale ).subscribe(res=>{
-      //console.log("****55", res)
+      console.log("****55 completas", res)
       this.counts = res.count;
       this.reacudo = res.total;
       this.dataTable.headerRow = this.dataTable.headerRow;
