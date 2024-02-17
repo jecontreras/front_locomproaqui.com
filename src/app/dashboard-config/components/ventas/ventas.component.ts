@@ -44,7 +44,7 @@ export class VentasComponent implements OnInit {
     page: 0,
     limit: 10
   };
-  Header:any = [ '','Acciones','Numero Guia','Re: Producto','Nombre de la tienda', 'Fecha Venta','Estado', 'Pagado', 'Ganancia','Estado'];
+  Header:any = [ '','Acciones','Numero Guia','Re: Producto','Nombre de la tienda', 'Fecha Venta','Estado', 'Pagado', 'Ganancia'];
   $:any;
   public datoBusqueda = '';
 
@@ -219,7 +219,7 @@ export class VentasComponent implements OnInit {
     this.spinner.show();
     //if(this.dataUser.usu_perfil.prf_descripcion == 'administrador') this.query.where.ven_subVendedor = 0;
     const query = {}
-    this._ventas.get(query)
+    this._ventas.get(this.query)
     .subscribe(
       (response: any) => {
         this.counts = response.count;
