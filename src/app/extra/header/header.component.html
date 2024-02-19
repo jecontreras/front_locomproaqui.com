@@ -202,7 +202,7 @@
                     {{ _tools.monedaChange( 3,2,( dataInfo?.porcobrado ) || 0 ) }}
                   </span>
                   <span class="text-white" [routerLink]="[ '/config/bank/index' ]" *ngIf="rolUser === 'proveedor'">
-                   {{ _tools.monedaChange( 3,2, ( reacudo ) || 0 ) }}
+                  --  {{ _tools.monedaChange( 3,2, ( reacudo ) || 0 ) }}
                   </span>
                 </div>
                 <div class="p-2 bd-highlight" *ngIf="rolUser !== 'proveedor'">
