@@ -21,7 +21,7 @@
                         *ngFor="let key of item.subCategoria; let idx=index"
                         (click)="imageOnClick(idx, key, 'no');" [ngClass]="{ 'cambiaColor': key.check == true }"
                       >
-                        {{ key.cat_nombre }}
+                       {{ key.cat_nombre }}
                       </button>
                     </mat-menu>
                   </span>

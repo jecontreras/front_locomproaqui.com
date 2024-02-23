@@ -54,10 +54,10 @@
                       <div class="poly-price-current">
                         <label for="">
                           <p class="andes-money-amount andes-money-amount--cents-superscript">
-                              Tu lo Vendes: {{ _tools.monedaChange( 3,2,( item.pro_uni_venta || 0 ) )  }}
+                              Tu lo Vendes en: {{ _tools.monedaChange( 3,2,( item.pro_uni_venta || 0 ) )  }}
                           </p>
                           <p class="andes-money-amount andes-money-amount--cents-superscript">
-                            Tu le Sales: {{ _tools.monedaChange( 3,2,( item.pro_vendedorCompra || 0 ) )  }}
+                            Te Sale en: {{ _tools.monedaChange( 3,2,( item.pro_vendedorCompra || 0 ) )  }}
                           </p>
                         </label>
                       </div>
@@ -91,7 +91,8 @@
       <ng-template swiperSlide *ngFor="let item of listGaleria; index as i">
         <section style="text-align: center; max-width: 50%; margin-left: 50px;" (click)="handleSelect( item )">
           <figure class="figure pointer">
-            <img [src]="item[lyImg]" alt="Imagen 2" class="square-image" (error)="handleImageError($event)">
+            <!-- <img [src]="item[lyImg]" alt="Imagen 2" class="circular--square" (error)="handleImageError($event)"> -->
+            <img src="./assets/imagenes/categorias/{{item.id}}.png" alt="Imagen 2" (error)="handleImageError($event)">
           </figure>
           <h6 style="font-size: 10px;">{{ item.title }}</h6>
         </section>
