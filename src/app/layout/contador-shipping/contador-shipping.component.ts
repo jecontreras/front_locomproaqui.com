@@ -9,7 +9,7 @@ import { ToolsService } from 'src/app/services/tools.service';
 export class ContadorShippingComponent implements OnInit {
   contect = {
     contadorC: 0,
-    titleC: "Comercio <br> Registrados",
+    titleC: "Comercios <br> Registrados",
     contadorD: 0,
     titleD: "Proveedores <br> dropshipping",
     contadorE: 0,
@@ -24,7 +24,7 @@ export class ContadorShippingComponent implements OnInit {
   ngOnInit(): void {
     setInterval(()=>{
       if( this.contect.contadorC <= 7000 ) this.contect.contadorC++;
-      if( this.contect.contadorD <= 50 ) this.contect.contadorD++;
+      if( this.contect.contadorD <= 150 ) this.contect.contadorD++;
       if( this.contect.contadorE <= 3200 ) this.contect.contadorE+=10;
       if( this.contect.contadorM <= 520 ) this.contect.contadorM++;
     }, 5 )

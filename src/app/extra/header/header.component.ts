@@ -233,6 +233,7 @@ export class HeaderComponent implements OnInit {
   loadCoin() {
     this._productos.getVentaComplete( this.querysSale ).subscribe(res=>{
       //console.log("***191",res)
+      console.log("_productos.getVentaComplete",res)
       this.reacudo = res.total;
     });
   }
