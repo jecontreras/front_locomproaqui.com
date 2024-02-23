@@ -201,7 +201,7 @@
                   <span class="text-white" [routerLink]="[ '/config/cobros' ]" *ngIf="rolUser !== 'proveedor'">
                     {{ _tools.monedaChange( 3,2,( dataInfo?.porcobrado ) || 0 ) }}
                   </span>
-                  <div class="d-flex align-items-center" *ngIf="rolUser === 'proveedor'">
+                  <div class="d-flex align-items-center" *ngIf="rolUser === 'proveedor1'">
                     <div class="px-3">
                       En Transito<br>
                       <span class="text-white" [routerLink]="[ '/config/bank/index' ]">
