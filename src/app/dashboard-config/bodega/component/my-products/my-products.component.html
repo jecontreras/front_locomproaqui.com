@@ -3,9 +3,9 @@
     <div class="col-12">
       <nav class="navbar navbar-light bg-light">
         <a class="navbar-brand">Mi Tienda {{ dataUser.usu_usuario }} </a>
-        <form class="form-inline">
-          <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
-          <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+        <form class="form-inline d-flex">
+          <input class="form-control mr-sm-2 px-3" type="search" placeholder="tu producto.." aria-label="Search">
+          <button class="btn btn-outline-success my-2 my-sm-0 px-3" type="submit">Buscar</button>
         </form>
       </nav>
     </div>
@@ -46,10 +46,10 @@
             </div>
           </div>
         </div>
-        <div class="col-12">
+        <div class="col-12 py-3">
           <div class="d-flex justify-content-center">
             <div>
-              <a class="pointer text-primary" (click)="handlePageNext()">VER MÁS BODEGAS </a>
+              <a class="pointer text-primary btn btn-primary text-white" (click)="handlePageNext()">VER MÁS DE MIS PRODUCTOS </a>
             </div>
           </div>
         </div>

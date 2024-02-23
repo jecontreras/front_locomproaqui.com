@@ -16,7 +16,7 @@
     <div class="col-lg-6 col-xs-10">
       <div class="row">
 
-      
+
       <div class="col-6">
         <section style="text-align: center; border-radius: 20px; padding-top: 5px;" class="p-2">
           <h5>
@@ -88,8 +88,8 @@
                                   <select class="form-control form-control-sm text-align" [(ngModel)]="data.color"
                                       (change)="colorSeleccionado( );">
                                       <option value="null">Todos</option>
-                                      <option [value]="item.talla" *ngFor="let item of data.listColor">{{
-                                          item.talla }}
+                                      <option [value]="item.talla" *ngFor="let item of data.listColor">
+                                        {{ item.talla }}
                                       </option>
                                   </select>
                                   </section>
@@ -124,7 +124,7 @@
                                 </div>
                                 <div class="col-12" *ngIf="!data.coinShop">
                                   <section class="paddinLader">
-                                    <label>Lo Vendiste</label>
+                                    <label>Lo Vendes en:</label>
                                     <input currencyMask [(ngModel)]="data.encuanto" class="form-control form-control-sm text-align" [options]="opcionCurrencys" (blur)="validando()"/>
                                   </section>
                                 </div>
@@ -204,17 +204,17 @@
           <button type="button" class="btn btn-success m-1" *ngIf="disabledView === 'createPrice'" (click)="handleAddStore()">
             Actualizar Precio
           </button>
-    
+
           <button cdkFocusInitial (click)="handleAddStore()" type="button" class="btn btn-primary m-1" *ngIf="disabledView === 'store' && dataUser.id">
             Agregar a mi Tienda
           </button>
-    
+
           <button type="button" class="btn btn-danger m-1" *ngIf="disabledView === 'createPrice'" (click)="handleDroppArticle()">
             Quitar de mi Tienda
           </button>
-    
+
           <a *ngIf="data['pro_categoria']" target="_blank" [routerLink]="[ '/listproduct/categoria', data['pro_categoria'].id ] " class="btn btn-primary m-1"> ver productos similares </a>
-    
+
           <button cdkFocusInitial (click)="AgregarCart(false)" type="button" class="btn btn-primary m-1" *ngIf="(disabledView !== 'store') && (disabledView !== 'createPrice')">
             {{ titleButton }}
           </button>
@@ -241,7 +241,7 @@
         </button>
       </div>
       <div *ngIf="data['pro_categoria']">
-        <a target="_blank" [routerLink]="[ '/listproduct/categoria', data['pro_categoria'].id ] " style="padding: 2% 50px;" class="btn btn-primary"> ver productos similares </a>
+        <a target="_blank" [routerLink]="[ '/listproduct/categoria', data['pro_categoria'].id ] " style="padding: 2% 50px;" class="btn btn-primary"> Ver Productos Similares </a>
       </div>
       <div *ngIf="(disabledView !== 'store') && (disabledView !== 'createPrice')">
         <button cdkFocusInitial (click)="AgregarCart(false)" type="button" class="btn btn-primary" style="padding: 2% 50px;">

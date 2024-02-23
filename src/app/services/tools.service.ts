@@ -55,7 +55,7 @@ export class ToolsService {
   error(text: any) {
     Swal.fire({
       icon: 'error',
-      title: 'Oops...',
+      title: text.title ||'Oops...',
       text: text.mensaje,
       footer: text.footer || ''
     });
@@ -191,23 +191,23 @@ export class ToolsService {
   limpiarString( inputString:string ) {
     // Eliminar espacios en blanco y caracteres especiales
     const stringLimpio = inputString.replace(/[^\w\s]/gi, '').replace(/\s+/g, '');
-  
+
     return stringLimpio;
   }
 
   buscarConPalabraClave(array, palabraClave) {
     // Convertir la palabra clave a minúsculas para hacer la búsqueda insensible a mayúsculas
     const palabraClaveLowerCase = palabraClave.toLowerCase();
-  
+
     // Filtrar el array para incluir solo los elementos que contienen la palabra clave
     const resultados = array.filter(elemento => {
       // Convertir cada elemento a minúsculas para hacer la comparación insensible a mayúsculas
       const elementoLowerCase = elemento.ventas.slug.toLowerCase();
-  
+
       // Verificar si el elemento contiene la palabra clave
       return elementoLowerCase.includes(palabraClaveLowerCase);
     });
-  
+
     return resultados;
   }
 
