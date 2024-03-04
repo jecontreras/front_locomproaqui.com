@@ -61,4 +61,9 @@ export class VentasService {
   getVentasProveedores( query:any ){
     return this._model.querys('tblventas/ventasProveedoresView',query, 'post');
   }
+  getVentasExitosasProveedor( query:any ){
+    return this._model.querys('tblventas/getVentasExitosasProveedor',query, 'post');
+  }
+
+
 }

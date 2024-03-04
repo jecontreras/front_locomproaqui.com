@@ -138,7 +138,7 @@
                   </tfoot>
                   <tbody>
                     <tr *ngFor="let row of dataTable.dataRows; let idx=index" [ngClass]="{
-                      'colorFondo':row['ven_subVendedor'] == 1,
+                      'colorFondo':row['ven_estado'] == 1,
                       'colorCompletado':row['ven_estado'] == 1,
                       'colorDespachado':row['ven_estado'] == 3,
                       'colorEntrante':row['ven_estado'] == 0,
@@ -219,11 +219,14 @@
                       <td *ngIf="row['ven_estado'] == 3">Despachado</td>
                       <td *ngIf="row['ven_estado'] == 5">Eliminado</td>
                       <td *ngIf="row['ven_estado'] == 6">Preparación</td>
-                      <td><span *ngIf="row['ven_estado'] == 1">No</span></td>
+                      <td>
+                        <!-- <span *ngIf="row['ven_estado'] == 1">No</span> -->
+                        <span *ngIf="row['ven_estado'] == 1 && row['ven_imagen_tiket'] =='' && row['ven_retirado'] == 0">Lista para cobrar</span>
+                      </td>
                       <td><span *ngIf="row['ven_estado'] == 1">{{ row['ven_ganancias'] }}</span></td>
                       <td>
                         <img *ngIf="row['ven_retirado'] == 1" src="./assets/icons/pago.png" alt=""  style="width: 25%;">
-                        <span *ngIf="row['ven_imagen_tiket'] && row['ven_retirado'] == 0">Lista para cobrar</span>
+
                         <span *ngIf="row['ven_estado'] == 2">{{ row['ven_motivo_rechazo'] }}</span>
                       </td>
 

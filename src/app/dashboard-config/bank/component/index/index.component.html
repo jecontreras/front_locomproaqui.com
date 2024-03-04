@@ -4,7 +4,6 @@
             <div class="d-flex bd-highlight">
                 <div class="p-2 flex-grow-1 bd-highlight"><h2>Mi Billetera</h2></div>
                 <div class="p-2 bd-highlight">
-                    <button type="button" class="btn btn-primary mx-auto" (click)="handleDisbursement({})">Solicitar Desembolso</button>
                     <!--<button type="button" class="btn btn-primary mx-auto">Exportar Transacciones</button>-->
                 </div>
             </div>
@@ -17,7 +16,9 @@
                             <div class="col-12"><h3>Dinero para solicitar desembolso</h3></div>
                             <div class="col-12"><h4 class="text-success">{{ _tools.monedaChange( 3,2,( dataConfig.money || 0 ) ) }}</h4></div>
                             <div class="col-12">
-                                <button type="button" class="btn btn-primary" (click)="handleDisbursement({})">Desembolsar</button>
+                                <!-- <button type="button" class="btn btn-primary" (click)="handleDisbursement({})" [disabled]="btnDesembolsarDisabled">Desembolsar</button> -->
+                                <button type="button" class="btn btn-primary mx-auto" (click)="handleDisbursement({})" [disabled]="btnDesembolsarDisabled">Solicitar Desembolso</button>
+
                                 <br>
                             </div>
                             <div class="col-12">
@@ -29,7 +30,7 @@
                                 </p>
                             </div>
                         </div>
-                        <div class="row p-3">
+                        <!-- <div class="row p-3">
                             <div class="col-12">
                                 <h3>Dinero recaudado en proceso de reintegro</h3>
                                 <div class="col-12"><h4 class="text-warning"> {{ _tools.monedaChange( 3,2,( dataConfig.pendingMoney || 0 ) ) }} </h4></div>
@@ -58,7 +59,7 @@
                                     </li>
                                   </ul>
                             </div>
-                        </div>
+                        </div> -->
                     </div>
                 </div>
                 <div class="col-sm-8 col-12">
@@ -68,19 +69,19 @@
                                 <div class="d-flex flex-wrap">
                                     <div class="mx-auto">
                                         <h4>Ingresos</h4>
-                                        <p>{{ _tools.monedaChange( 3,2,( dataConfig.income || 0 ) ) }}</p>
+                                        <p>{{ _tools.monedaChange( 3,2,( dataConfig.receive || 0 ) ) }}</p>
                                     </div>
-                                    <div class="mx-auto">
+                                    <!-- <div class="mx-auto">
                                         <h4>Recibiste</h4>
                                         <p>{{ _tools.monedaChange( 3,2,( dataConfig.receive || 0 ) ) }} </p>
-                                    </div>
+                                    </div> -->
                                     <div class="mx-auto">
                                       <h4>Pendiente Pago de Transportadora</h4>
                                       <p>{{ _tools.monedaChange( 3,2,( dataConfig.incomeTransportBuy || 0 ) ) }}</p>
-                                  </div>
+                                    </div>
                                     <div class="mx-auto">
-                                        <h4>Fecha</h4>
-                                        <p>{{ dataConfig.date | date:'medium' }} </p>
+                                        <!-- <h4>Fecha</h4>
+                                        <p>{{ dataConfig.date | date:'medium' }} </p> -->
                                     </div>
                                 </div>
                             </div>
@@ -89,7 +90,8 @@
                                     <thead class="thead-dark">
                                       <tr>
                                         <th scope="col">Transacciones</th>
-                                        <th scope="col">Ingreso</th>
+                                        <th scope="col">Solicitado</th>
+                                        <th scope="col">Fecha</th>
                                         <th scope="col">Recibiste</th>
                                         <th scope="col">Fecha</th>
                                       </tr>
@@ -97,16 +99,19 @@
                                     <tbody>
                                       <tr *ngFor="let item of lisTransactions">
                                         <td>
-                                            {{ item.transactions }}
+                                            {{ item.cob_descripcion }}
                                         </td>
                                         <td>
-                                            {{ _tools.monedaChange( 3,2,( item.income || 0 ) ) }}
+                                            {{ _tools.monedaChange( 3,2,( item.cob_monto || 0 ) ) }}
                                         </td>
                                         <td>
-                                            {{ _tools.monedaChange( 3,2,( item.discharge || 0 ) ) }}
+                                          {{  item.cob_fecha_cobro }}
+                                       </td>
+                                        <td>
+                                            {{ _tools.monedaChange( 3,2,( item.totalrecibir || 0 ) ) }}
                                         </td>
                                         <td>
-                                            {{ item.receive }}
+                                            {{ item.cob_fecha_pago }}
                                         </td>
                                       </tr>
                                     </tbody>

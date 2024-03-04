@@ -9,35 +9,31 @@
         <div class="form-group col-12" *ngIf="data.id && superSub">
             <div class="row">
                 <label class="col">Subir Imagen</label>
-                <button class="btn btn-primary btn-just-icon btn-round" (click)="subirFile(false)" *ngIf="files.length > 0">
+                <button class="btn btn-warning btn-just-icon btn-round" (click)="subirFile(false)" *ngIf="files.length > 0">
                     Subir Imagen
                 </button>
             </div>
             <ngx-dropzone (change)="onSelect($event)" accept="image/jpeg,image/jpg,image/png,image/gif"  multiple="false">
-                <ngx-dropzone-label>Abrir archivos</ngx-dropzone-label>
+                <ngx-dropzone-label>Sube el Comprobante de Pago</ngx-dropzone-label>
                 <ngx-dropzone-image-preview ngProjectAs="ngx-dropzone-preview" *ngFor="let f of files" [file]="f"
                     [removable]="true" (removed)="onRemove(f)" multiple="false">
                     <ngx-dropzone-label>{{ f.name }} ({{ f.type }})</ngx-dropzone-label>
                 </ngx-dropzone-image-preview>
             </ngx-dropzone>
         </div>
-        <div class="form-group col-md-6 col-sm-4 col-lg-4 col-xs-4" *ngIf="data.id">
-            <button class="btn btn-primary btn-just-icon btn-round" (click)="openVentasList()">
-                Ventas Solicitadas
-            </button>
-        </div>
-        <div class="form-group col-md-6 col-sm-4 col-lg-4 col-xs-4">
+
+        <!-- <div class="form-group col-md-6 col-sm-4 col-lg-4 col-xs-4">
             <label for="exampleFormControlSelect1">Pais Donde vas a retirar</label>
             <select class="form-control form-control-sm" [(ngModel)]="data.cob_pais">
                 <option value="colombia">Colombiano</option>
                 <option value="venezuela">Venezolano</option>
             </select>
-        </div>
-        <div class="form-group col-md-6 col-sm-4 col-lg-4 col-xs-4" *ngIf="data.id && superSub">
+        </div> -->
+        <div class="form-group col-md-6 col-sm-4 col-lg-4 col-xs-4" *ngIf="data.id && superSub" >
             <label for="exampleFormControlSelect1">Estado del Cobro</label>
-            <select class="form-control form-control-sm" [(ngModel)]="data.cob_estado">
+            <select class="form-control form-control-sm" [(ngModel)]="data.cob_estado" [disabled]="true">
                 <option type="number" value="0">Activa</option>
-                <option type="number" value="1">Aprabado</option>
+                <option type="number" value="1">Aprobado</option>
                 <option type="number" value="2">Rechazada</option>
                 <!--<option type="number" value="3">Eliminado</option>-->
             </select>
@@ -61,36 +57,15 @@
             <input type="text" disabled [(ngModel)]="data.usu_clave_int.usu_email" class="form-control form-control-sm">
         </div>
         <div class="form-group col-md-6 col-sm-4 col-lg-4 col-xs-4" *ngIf="data.id">
-            <label>Fecha de retiro</label>
+            <label>Fecha Solicitado</label>
             <input type="text" disabled [(ngModel)]="data.createdAt" class="form-control form-control-sm">
         </div>
         <div class="form-group col-md-6 col-sm-4 col-lg-4 col-xs-4">
-            <label>Número para llamarte en caso de falta de información</label>
+            <label>Número para llamar en caso de falta de información</label>
             <input type="text" [(ngModel)]="data.cob_num_celular" class="form-control form-control-sm">
         </div>
-        <div class="form-group col-md-6 col-sm-4 col-lg-4 col-xs-4" *ngIf="data.cob_pais == 'colombia'">
-            <label>Metodo de pago para colombianos (Llenar si eres Colombiano)</label>
-            <select class="form-control form-control-sm" [(ngModel)]="data.cob_metodo">
-                <option value="cuenta_de_ahorro_bancolombia">CUENTA DE AHORRO BANCOLOMBIA</option>
-                <option value="nequi">NEQUI</option>
-                <option value="davi_plata">DAVI PLATA</option>
-                <option value="ahorro_a_la_mano_bancolombia">AHORRO A LA MANO BANCOLOMBIA</option>
-            </select>
-        </div>
-        <div class="form-group col-md-6 col-sm-4 col-lg-4 col-xs-4" *ngIf="data.cob_pais == 'venezuela'">
-            <label>Metodo de pago para Venezolanos (Llenar si eres Venezolano)</label>
-            <select class="form-control form-control-sm" [(ngModel)]="data.cob_metodo">
-                <option value="Efecty">EFECTY</option>
-                <option value="transfer_bancaria">TRANSFERENCIA BANCARIA</option>
-            </select>
-        </div>
-        <div class="form-group col-md-6 col-sm-4 col-lg-4 col-xs-4" *ngIf="data.cob_pais == 'colombia'">
-            <label *ngIf="data.cob_metodo == 'nequi' || data.cob_metodo == 'davi_plata'">Número de Celular de la cuenta
-                {{ data.cob_metodo }}</label>
-            <label *ngIf="data.cob_metodo != 'nequi' && data.cob_metodo != 'davi_plata'">Número de la cuenta
-                bancaria</label>
-            <input type="text" [(ngModel)]="data.cob_num_cuenta" class="form-control form-control-sm">
-        </div>
+
+
         <div class="form-group col-12 row" *ngIf="data.cob_pais == 'venezuela'">
             <div class="form-group col-md-6 col-sm-4 col-lg-4 col-xs-4" *ngIf="data.cob_metodo == 'Efecty'">
                 <label>Numero de cedula</label>
@@ -118,19 +93,19 @@
             </div>
         </div>
         <div class="form-group col-md-6 col-sm-4 col-lg-4 col-xs-4">
-            <label>Monto</label>
-            <input [disabled]="!superSub" currencyMask [(ngModel)]="data.cob_monto" class="form-control form-control-sm" [options]="opcionCurrencys"/>
+            <label>Monto Solicitado</label>
+            <input [disabled]="true" currencyMask [(ngModel)]="data.cob_monto" class="form-control form-control-sm" [options]="opcionCurrencys"/>
         </div>
-        <div class="form-group col-md-6 col-sm-4 col-lg-4 col-xs-4">
+        <!-- <div class="form-group col-md-6 col-sm-4 col-lg-4 col-xs-4">
             <label>Devoluciones - </label>
             <input [disabled]="!superSub" currencyMask [(ngModel)]="data.devoluciones" class="form-control form-control-sm" [options]="opcionCurrencys"/>
-        </div>
-        <div class="form-group col-md-6 col-sm-4 col-lg-4 col-xs-4" *ngIf="data.id">
+        </div> -->
+        <!-- <div class="form-group col-md-6 col-sm-4 col-lg-4 col-xs-4" *ngIf="data.id">
             <label>Valor Total del flete -</label>
             <input [disabled]="!superSub" currencyMask [(ngModel)]="data.sumaFlete" class="form-control form-control-sm" [options]="opcionCurrencys"/>
-        </div>
+        </div> -->
         <div class="form-group col-md-6 col-sm-4 col-lg-4 col-xs-4">
-            <label>Total Dinero Recibir </label>
+            <label>Total Dinero a Enviar </label>
             <input [disabled]="!superSub" currencyMask [(ngModel)]="data.totalrecibir" class="form-control form-control-sm" [options]="opcionCurrencys"/>
         </div>
         <!--<div class="form-group col-md-6 col-sm-4 col-lg-4 col-xs-4">
@@ -141,12 +116,17 @@
             <label>Descripcion</label>
             <textarea class="form-control" [(ngModel)]="data.cob_descripcion" rows="3"></textarea>
         </div>
+        <div class="form-group col-md-6 col-sm-4 col-lg-12 col-xs-4" *ngIf="data.id">
+          <button class="btn btn-primary btn-just-icon btn-round" (click)="openVentasList()">
+              Ventas Solicitadas
+          </button>
+      </div>
     </div>
 </mat-dialog-content>
 <mat-dialog-actions align="end">
     <button mat-button mat-dialog-close mat-raised-button color="warn">Cerrar</button>
     <button mat-button cdkFocusInitial (click)="submit()" [disabled]="disabledButton" mat-raised-button color="primary">
         <span *ngIf="!id">Enviar solicitud</span>
-        <span *ngIf="id">Actulizar Cambios</span>
+        <span *ngIf="id && data.cob_estado == 0" class="btn btn-success">Realizar Pago</span>
     </button>
 </mat-dialog-actions>

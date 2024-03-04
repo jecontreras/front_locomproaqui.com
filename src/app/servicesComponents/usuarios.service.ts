@@ -84,6 +84,9 @@ export class UsuariosService {
   getRecaudo(query:any){
     return this._model.querys('platadistribuidor/querys',query, 'post');
   }
+  getCobros(query:any){ console.log("_usuSVC getCobros")
+    return this._model.querys('tblcobrar/cobros',query, 'post');
+  }
   getPerfiles(query:any){
     return this._model.querys('tblcategoriaperfil/querys',query, 'post');
   }

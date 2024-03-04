@@ -62,7 +62,7 @@ export class ToolsService {
   }
   tooast(text: any) {
     Swal.fire({
-      position: text.position || 'top-end',
+      // position: text.position || 'top-end',
       icon: text.icon || 'success',
       title: text.title || 'Your work has been saved',
       showConfirmButton: text.show || false,

@@ -4,6 +4,7 @@ import { NgxSpinnerService } from 'ngx-spinner';
 import { FormlistventasComponent } from 'src/app/dashboard-config/form/formlistventas/formlistventas.component';
 import { ToolsService } from 'src/app/services/tools.service';
 import { VentasService } from 'src/app/servicesComponents/ventas.service';
+import { VentasProductosService } from 'src/app/servicesComponents/ventas-productos.service';
 import * as _ from 'lodash';
 import { DataTable, STORAGES } from 'src/app/interfaces/sotarage';
 import { Store } from '@ngrx/store';
@@ -23,7 +24,8 @@ export class FormListSaleComponent implements OnInit {
     page: 0,
     limit: 100
   };
-  Header:any = [ 'Codigo','Numero de Guia','Foto','Precio de Venta','Ganancia de la plataforma','Mi Ganacia', 'Talla', 'Fecha Venta', 'Estado' ];
+  // Header:any = [ 'Codigo','Numero de Guia','Foto','Precio de Venta','Ganancia de la plataforma','Mi Ganacia', 'Talla', 'Fecha Venta', 'Estado' ];
+  Header:any = [ 'Codigo','Numero de Guia','Foto', 'Talla', 'Fecha Venta', 'Estado' ];
   $:any;
 
   notscrolly:boolean=true;
@@ -34,9 +36,11 @@ export class FormListSaleComponent implements OnInit {
   superSub:boolean = false;
   suma:number = 0;
   formatoMoneda:any = {};
-  
+  amount:number = 0;
+
   constructor(
     private _ventas: VentasService,
+    private _ventasproductos: VentasProductosService,
     public dialogRef: MatDialogRef<FormlistventasComponent>,
     @Inject(MAT_DIALOG_DATA) public datas: any,
     public _tools: ToolsService,
@@ -59,7 +63,9 @@ export class FormListSaleComponent implements OnInit {
       dataRows: []
     };
     this.data = _.clone( this.datas.datos );
-    console.log("****50", this.data )
+    console.log("ngOnInit()", this.data )
+    this.amount = this.data.data.amount
+    console.log("this.amount", this.amount)
     if( this.data.data.id ) this.cargarTodos();
     else this.populateList();
   }
@@ -80,6 +86,15 @@ export class FormListSaleComponent implements OnInit {
 
   populateList(){
     let suma = 0;
+    // // este proceso en stand by por que no funciona al usar el enpoint tblproductos
+    // // console.log("populateList() this.data.list", this.data.list[0].ventas.id)
+    // // //deob obtner el id de las ventas que esten completas pero no pagas
+    // // let query = {
+    // //  ventas : this.data.list[0].ventas.id
+    // // }
+    // //  let res = this._ventasproductos.getProductos(query)
+    // // console.log("ventasproductos.get res",res)
+
     for( let row of this.data.list ){
       let gananciaLk = 0;
       try { gananciaLk = ( row.precio * ( row.producto.precioLokompro || 5 ) ) / 100; } catch (error) { }
@@ -89,7 +104,7 @@ export class FormListSaleComponent implements OnInit {
       let data:any = {
         code: row.titulo,
         foto: row.fotoproducto,
-        loVendio: row.precio,
+        loVendio: row.loVendio,
         miGanancia: row.precioVendedor - gananciaLk,
         precioVendedor: row.precioVendedor,
         talla: row.tallaSelect,

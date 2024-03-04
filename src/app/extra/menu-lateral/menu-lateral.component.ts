@@ -47,9 +47,9 @@ export class MenuLateralComponent implements OnInit {
   }
 
   ngOnInit() {
-    setInterval(()=> {
+    // setInterval(()=> {
       let color:string = ( this.dataUser.usu_color || "#02a0e3" );
-      
+
       if( this.userId.id ) color = this.userId.usu_color || "#02a0e3";
       try {
         /*this.color1.nativeElement.style.backgroundColor = color
@@ -59,7 +59,7 @@ export class MenuLateralComponent implements OnInit {
       } catch (error) {
 
       }
-    }, 100 )
+    // }, 100 )
   }
   rellenoRedes(){
     if(this.dataUser.id || !this.userId.id) {

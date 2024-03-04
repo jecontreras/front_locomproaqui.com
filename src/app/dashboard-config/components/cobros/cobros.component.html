@@ -75,7 +75,7 @@
                           class="btn btn-primary btn-just-icon btn-round">
                           <i class="material-icons">search</i>
                       </button>
-                      <button (click)="crear(false)" class="btn btn-primary btn-just-icon btn-round" mat-raised-button mat-min-fab >
+                      <button (click)="crear(false)" class="btn btn-primary btn-just-icon btn-round" mat-raised-button mat-min-fab [disabled]="true">
                           <i class="material-icons">add_circle_outline</i>
                       </button>
                   </div>
@@ -119,6 +119,10 @@
                         </td>
                         <td>{{ row['createdAt'] }}</td>
                         <td>{{ row['usu_clave_int']?.usu_email }}</td>
+                        <td>
+                          <span *ngIf="row['usu_clave_int']?.usu_perfil == 1" class="text-info">Vendedor</span>
+                          <span *ngIf="row['usu_clave_int']?.usu_perfil == 5" class="text-warning">Proveedor</span>
+                        </td>
                         <td>{{ row['cob_num_cedula'] }}</td>
                         <td>{{ row['cob_num_celular'] }}</td>
                         <td>{{ row['cob_num_cuenta'] }}</td>

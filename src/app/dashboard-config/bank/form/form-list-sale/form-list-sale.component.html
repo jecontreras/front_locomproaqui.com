@@ -24,7 +24,7 @@
             <td>
                 <img [src]="row.foto" class="pointer" style="width: 35px;">
             </td>
-            <td>
+            <!-- <td>
               <span>
                 {{ _tools.monedaChange( 3,2, row['loVendio'] || 0 ) }}
               </span>
@@ -38,7 +38,7 @@
                 <span>
                     {{ _tools.monedaChange( 3,2, row['miGanancia'] || 0 ) }}
                 </span>
-            </td>
+            </td> -->
             <td>{{ row['talla']}} </td>
             <td>
               <span *ngIf="row.fecha">{{ row['fecha']  }}</span>
@@ -60,8 +60,8 @@
 <mat-dialog-actions align="end">
     <div>
       <label for="exampleFormControlSelect1">Total de ganancia:</label>
-      <input currencyMask class="form-control form-control-sm" [(ngModel)]="suma"
+      <input currencyMask class="form-control form-control-sm" [(ngModel)]="this.amount"
       [options]="formatoMoneda" disabled/>
     </div>
-    <button mat-button mat-dialog-close>Cerrar</button>
+    <button mat-button mat-dialog-close class="btn btn-danger">Cerrar</button>
 </mat-dialog-actions>

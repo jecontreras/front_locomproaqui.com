@@ -259,7 +259,7 @@
           </div>
           <!-- Bienvenida -->
           <h2 class="text-center text-dark altos titulo1" *ngIf="dataUser.id">
-            BIENVENIDO A TU OFICINA VIRTUAL " {{ dataUser.usu_usuario }} "
+            <h5>BIENVENIDO A TU OFICINA VIRTUAL</h5><h1>{{ dataUser.usu_usuario }}</h1>
           </h2>
           <h2 class="text-center text-dark altos titulo1" *ngIf="!dataUser.id">
             BIENVENIDO A {{ userId.usu_usuario || 'LOKOMPROAQUI'}}
