@@ -83,6 +83,7 @@ export class TableProductComponent implements OnInit {
     //this._dataConfig.query.where.pro_usu_creacion = this.dataUser.id;
     this.cargarTodos();
     this.listSeller = await this.getSeller();
+    console.log("dataConfig", this._dataConfig)
   }
 
   async handleCreate(){
@@ -141,6 +142,20 @@ export class TableProductComponent implements OnInit {
 
     dialogRef.afterClosed().subscribe(result => {
       console.log(`Dialog result: ${result}`);
+    });
+  }
+  handleInactivate(obj:any, idx:any){
+    let datos = {
+      id: obj.id,
+      pro_activo: 3
+    }
+    this._tools.confirm({title:"Inactivar", detalle:"Deseas Inactivar este Producto?", confir:"Si Inactivar"}).then((opt)=>{
+      if(opt.value){ console.log("datos", datos)
+        this._productos.update(datos).subscribe((res:any)=>{
+          this._dataConfig.tablet.dataTable.dataRows.splice(idx, 1);
+          this._tools.presentToast("Producto Inactvo")
+        },(error)=>{console.error(error); this._tools.presentToast("Error de servidor") })
+      }
     });
   }
   handleDelete(obj:any, idx:any){
