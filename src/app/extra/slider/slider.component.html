@@ -35,9 +35,9 @@
   <!-- [style.width.%]="90" [style.margin-right.px]="10" -->
   <ng-container style="margin-left: 50px;">
     <ng-template data-swiper-autoplay="7000" swiperSlide *ngFor="let item of listGaleria; index as i" class="mat-elevation-z3" style="border: 1px solid #ededed !important;
-    border-radius: 20px !important;">
+    border-radius: 25px !important;">
       <div role="group" class="andes-carousel-snapped__slide andes-carousel-snapped__slide--spacing-12 "
-        [attr.aria-label]="i + 1 + ' de ' + listGaleria.length" [attr.data-slider]="i">
+        [attr.aria-label]="i + 1 + ' de ' + listGaleria.length" [attr.data-slider]="i" style="border-radius: 15px;">
         <div class="row">
           <div class="col-12" style="    padding: 10%;">
             <div class="d-flex justify-content-center">
@@ -46,24 +46,24 @@
                   class="pointer" alt="">
               </div>
             </div>
-              <div class="poly-column poly-column--grid-card">
-                  <a class="poly-text poly-column__title poly-title poly-title--grid-card poly-lh-s poly-fs-s pointer"
-                  (click)="handleView( item )"   tabindex="-1">{{ (item.pro_nombre.length > 10) ? (item.pro_nombre | slice:0:10) + '...' : item.pro_nombre }} </a>
+              <div class="poly-column poly-column--grid-card" style="padding-top: 10px;">
+                  <a class="poly-text poly-column__title poly-title poly-title--grid-card poly-lh-s poly-fs-s pointer text-primary"
+                  (click)="handleView( item )"   tabindex="-1" style="text-decoration: none;font-size: 16px;padding-top: 10px;">{{ (item.pro_nombre.length > 10) ? (item.pro_nombre | slice:0:22) + '...' : item.pro_nombre }} </a>
 
                   <div class="poly-price poly-column__price">
                       <div class="poly-price-current">
                         <label for="">
-                          <p class="andes-money-amount andes-money-amount--cents-superscript">
+                          <p class="andes-money-amount andes-money-amount--cents-superscript" style="padding-top: 10px; margin-bottom: auto;">
                               Tu lo Vendes en: {{ _tools.monedaChange( 3,2,( item.pro_uni_venta || 0 ) )  }}
                           </p>
-                          <p class="andes-money-amount andes-money-amount--cents-superscript">
-                            Te Sale en: {{ _tools.monedaChange( 3,2,( item.pro_vendedorCompra || 0 ) )  }}
+                          <p class="andes-money-amount andes-money-amount--cents-superscript" style="font-size: 16px;" >
+                            Te Sale en: <b> {{ _tools.monedaChange( 3,2,( item.pro_vendedorCompra || 0 ) )  }}</b>
                           </p>
                         </label>
                       </div>
                   </div>
-                  <section class="poly-text poly-shipping poly-column__shipping poly-text-positive poly-fw-semibold poly-fs-s" style="text-align: center;">
-                      <a *ngIf="item.pro_categoria" class="pointer text-primary" style="font-size: 15px;" target="_blank" [routerLink]="[ '/listproduct/categoria', item.pro_categoria.id ] " >Ver Más</a>
+                  <section class="poly-text poly-shipping poly-column__shipping poly-text-positive poly-fw-semibold poly-fs-s" style="text-align: right;">
+                      <a *ngIf="item.pro_categoria" class="btn btn-small btn-warning text-white" style="font-size: 15px;" target="_blank" [routerLink]="[ '/listproduct/categoria', item.pro_categoria.id ] " >Ver Más</a>
                   </section>
               </div>
           </div>
@@ -94,7 +94,7 @@
             <!-- <img [src]="item[lyImg]" alt="Imagen 2" class="circular--square" (error)="handleImageError($event)"> -->
             <img src="./assets/imagenes/categorias/{{item.id}}.png" alt="Imagen 2" (error)="handleImageError($event)">
           </figure>
-          <h6 style="font-size: 10px;">{{ item.title }}</h6>
+          <h6 style="font-size: 10px;">{{ item.title }} !!</h6>
         </section>
       </ng-template>
     </ng-container>

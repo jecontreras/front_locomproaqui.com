@@ -228,7 +228,7 @@ export class PedidosComponent implements OnInit {
 
   getListInitNews(){
     this._productos.getListgetNews( { } ).subscribe( res => {
-      console.log("getListInitNews", res.data )
+      //console.log("getListInitNews", res.data )
       this.listNovedades = res.data;
     })
   }
@@ -358,7 +358,7 @@ export class PedidosComponent implements OnInit {
     //this.query.where.pro_usu_creacion = 100000;
     if( this.dataUser.id ) this.query.where.idPrice = this.dataUser.id;
     this._productos.get(this.query).subscribe((res: any) => {
-      console.log("res", res);
+      console.log("._productos.get res", res);
       this.loader = false;
       this.counts = res.count;
       this.spinner.hide();

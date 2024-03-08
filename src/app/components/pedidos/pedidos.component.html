@@ -35,7 +35,7 @@
         <div class="container">
           <div class="row">
             <div class="col-12">
-              <h5 style="margin-left: 25px;">NOVEDADES</h5>   
+              <h5 style="margin-left: 25px;">NOVEDADES</h5>
             </div>
             <div class="col-12 col-sm-6 col-md-6 col-lg-4" *ngFor="let item of listNovedades">
 
@@ -90,8 +90,8 @@
                         <figcaption class="figure-caption text-center">{{ item['article'][0].title }}</figcaption>
                       </figure>
                     </div>
-                    <div class="text-left mt-2">
-                      <a class="pointer text-primary" target="_blank" [routerLink]="[ '/listproduct',item['user']['usu_usuario'] ]">Ver Más</a>
+                    <div class="pt-4 pl-5" style="text-align: center;">
+                      <a class="btn btn-primary text-white" target="_blank" [routerLink]="[ '/listproduct',item['user']['usu_usuario'] ]" style="padding-left: 15px;padding-right: 15px;">Ver Más</a>
                     </div>
                   </div>
                 </div>
@@ -99,10 +99,12 @@
 
               <section style="    padding: 5%;" *ngIf="item.tipe === 3">
                 <div class="card mat-elevation-z8" style="width: 100%; padding: 15px;    border-radius: 20px; ">
-                  <div class="card-header bg-transparent">
-                    <h5 style="    margin-bottom: 10px;">{{ item.title }} </h5>
-                    <p style="    margin-bottom: 10px;">{{ item.subtitle }} </p>
-                    <a style="    margin-bottom: 10px;" class="pointer text-primary">link: clicleo aqui </a>
+                  <div class="card-header bg-transparent" [routerLink]="[ '/config/cursos' ]">
+                    <!-- <h5 style="    margin-bottom: 10px;">{{ item.title }} </h5>
+                    <p style="    margin-bottom: 10px;">{{ item.subtitle }} </p> -->
+                    <h5 style="margin-bottom: 10px;"> lokomproaqui.com </h5>
+                    <p style="margin-bottom: 10px;"> Conoce más como creas tu tienda en lokompaqui.com </p>
+                    <a style="margin-bottom: 10px;padding-left:15px;padding-right:15px;" class="pl-3 btn btn-small btn-info text-white">Haz click aqui </a>
                   </div>
                 </div>
               </section>
@@ -141,8 +143,8 @@
                         <img [src]="item['user']?.usu_imagen" alt="" class="rounded-circle img-profile" (error)="handleImageError($event)">
                       </div>
                       <div class="p-2 bd-highlight" style="margin: auto; margin-left: -10px;">
-                        <h6>{{ item['user']?.usu_usuario }}</h6>
-                        <h6>Proveedor</h6>
+                        <h5>{{ item['user']?.usu_usuario }}</h5>
+                        <h6 class="text-secondary">Proveedor</h6>
                       </div>
                     </div>
                   </div>
