@@ -35,7 +35,7 @@ export class CobrosComponent implements OnInit {
     },
     page: 0
   };
-  Header:any = [ 'Acciones', 'Monto','Método de pago', 'Pais', 'Estado', 'Fecha Cobro','Email','Cédula','Celular','Cuenta Bancaria','Fecha Pago' ];
+  Header:any = [ 'Acciones', 'Monto','Método de pago', 'Pais', 'Estado', 'Fecha Cobro','Email','Perfil','Cédula','Celular','Cuenta Bancaria','Fecha Pago' ];
   $:any;
   public datoBusqueda = '';
   dataUser:any = {};
@@ -46,7 +46,7 @@ export class CobrosComponent implements OnInit {
   btnDisableRetiro:boolean = true;
   activando:boolean = false;
   count:number = 0;
-  
+
   constructor(
     private _cobros: CobrosService,
     public dialog: MatDialog,
@@ -104,6 +104,7 @@ export class CobrosComponent implements OnInit {
     dialogRef.afterClosed().subscribe(result => {
       console.log(`Dialog result: ${result}`);
       this.disabledRetiro();
+      this.cargarTodos();
     });
   }
 

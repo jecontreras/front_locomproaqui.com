@@ -36,13 +36,47 @@
           <input [disabled]="!superSub" currencyMask [(ngModel)]="data.amount" class="form-control form-control-sm" [options]="opcionCurrencys"/>
         </div>
         <div class="form-group col-md-6 col-sm-4 col-lg-4 col-xs-4">
+          <!-- colombianos (Llenar si eres Colombiano) -->
+          <label>Metodo de pago para</label>
+          <select class="form-control form-control-sm" [(ngModel)]="data.cob_metodo">
+              <option value="cuenta_de_ahorro_bancolombia">CUENTA DE AHORRO BANCOLOMBIA</option>
+              <option value="nequi">NEQUI</option>
+              <option value="davi_plata">DAVI PLATA</option>
+              <option value="ahorro_a_la_mano_bancolombia">AHORRO A LA MANO BANCOLOMBIA</option>
+          </select>
+      </div>
+      <!-- <div class="form-group col-md-6 col-sm-4 col-lg-4 col-xs-4" *ngIf="data.cob_pais == 'venezuela'">
+          <label>Metodo de pago para Venezolanos (Llenar si eres Venezolano)</label>
+          <select class="form-control form-control-sm" [(ngModel)]="data.cob_metodo">
+              <option value="Efecty">EFECTY</option>
+              <option value="transfer_bancaria">TRANSFERENCIA BANCARIA</option>
+          </select>
+      </div> -->
+      <div class="form-group col-md-6 col-sm-4 col-lg-4 col-xs-4">
+        <label *ngIf="data.cob_metodo == 'nequi' || data.cob_metodo == 'davi_plata'">Número de Celular de la cuenta
+          {{ data.cob_metodo }}</label>
+              <label *ngIf="data.cob_metodo != 'nequi' && data.cob_metodo != 'davi_plata'">Número de la cuenta
+                  bancaria</label>
+                <label>  </label>
+            <input type="text" [(ngModel)]="data.cob_num_cuenta" class="form-control form-control-sm">
+        </div>
+
+        <!-- <div class="form-group col-md-6 col-sm-4 col-lg-4 col-xs-4">
+          <label>Cuenta</label>
+          <input [(ngModel)]="data.cob_num_cuenta" class="form-control form-control-sm"/>
+        </div> -->
+        <!-- <div class="form-group col-md-6 col-sm-4 col-lg-4 col-xs-4">
+          <label>Banco</label>
+          <input [(ngModel)]="data.cob_nombre_banco" class="form-control form-control-sm" />
+        </div> -->
+        <!-- <div class="form-group col-md-6 col-sm-4 col-lg-4 col-xs-4">
           <label for="exampleFormControlSelect1">Tipo de Banco</label>
           <select class="form-control form-control-sm" [(ngModel)]="data.bank" required="true">
             <option type="number" [value]="row.id" *ngFor="let row of listBank" >{{ row.bank }} - {{ row.numeroCuenta }} tipo {{ row.accounType === 0 ? 'ahorros': 'corriente' }} </option>
           </select>
-        </div>
+        </div> -->
         <div class="form-group col-md-6 col-sm-4 col-lg-4 col-xs-4">
-          <button class="btn btn-primary btn-just-icon btn-round" (click)="openVentasList()">
+          <button class="btn btn-primary btn-just-icon btn-round" (click)="openVentasList()" [disabled]="btnVentasSolDisabled">
             Ventas Solicitadas
           </button>
         </div>
@@ -53,7 +87,7 @@
 
 <mat-dialog-actions align="end">
   <button mat-button mat-dialog-close color="warn">Cerrar</button>
-  <button mat-button cdkFocusInitial (click)="submit()" [disabled]="disabledButton" color="primary">
+  <button mat-button cdkFocusInitial (click)="submit()" [disabled]="disabledButton" class="btn btn-primary">
     <span>Enviar solicitud</span>
   </button>
 </mat-dialog-actions>

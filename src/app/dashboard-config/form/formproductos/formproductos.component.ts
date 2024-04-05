@@ -42,7 +42,7 @@ export class FormproductosComponent implements OnInit {
 
   btnDisabled: boolean = false;
   disableEliminar: boolean = false;
-  disableActivar: boolean = true;
+  activarIsDisabled: boolean = false;
   tallaSelect: any = [];
   formatoMoneda:any = {};
 
@@ -119,8 +119,8 @@ export class FormproductosComponent implements OnInit {
         this.procesoEdision();
         if( this.data.pro_categoria ) this.getSubCategorias( this.data.pro_categoria );
       }
-    } else { 
-      this.id = ""; this.data.pro_codigo = this.codigo(); this.data.pro_sw_tallas = 5; this.disableSpinner = false; this.listFotos = []; 
+    } else {
+      this.id = ""; this.data.pro_codigo = this.codigo(); this.data.pro_sw_tallas = 5; this.disableSpinner = false; this.listFotos = [];
       this.nextAdd( '001' );
     }
     this.data.activarBTN = false;
@@ -304,6 +304,9 @@ export class FormproductosComponent implements OnInit {
   }
 
   submit() {
+    let validate = this.validateGuardar();
+    if( !validate ) return false;
+
     // valida si es el administrador
     // if( !this.data.activarBTN ) return false;
     ///////////////////////////////////////////
@@ -313,7 +316,7 @@ export class FormproductosComponent implements OnInit {
     else this.data.checkMayor = 0;
     if (this.id) {
       this.updates();
-      this.disableActivar = false;
+      this.activarIsDisabled = false;
     }
     else { this.guardar(); }
   }
@@ -349,6 +352,11 @@ export class FormproductosComponent implements OnInit {
     })
   }
 
+  validateGuardar(){
+
+    return true;
+  }
+
   validateProduct(){
     if( !this.data.pro_nombre ) return this._tools.error( { mensaje: "Problemas Nombre del Producto", footer: 'Falta agregar Detalle del campo' } );
     if( !this.data.pro_categoria ) return this._tools.error( { mensaje: "Problemas Categoria del Producto", footer: 'Falta agregar Detalle del campo' } );
@@ -360,20 +368,29 @@ export class FormproductosComponent implements OnInit {
     if( !this.data.ancho ) return this._tools.error( { mensaje: "Problemas: Ancho del producto", footer: 'Debes agregar el campo Ancho' } );
     if( !this.data.largo ) return this._tools.error( { mensaje: "Problemas: Largo del producto", footer: 'Debes agregar el campo Largo' } );
     if( !this.data.peso ) return this._tools.error( { mensaje: "Problemas: Peso del producto", footer: 'Debes agregar el campo Peso' } );
-    if( this.listColor.length === 0 ) return this._tools.error( { mensaje: "Problemas Colores del Producto", footer: 'Falta agregar Detalle del campo' } );
+    if( this.listColor.length === 0 ) return this._tools.error( { mensaje: "Problemas Colores del Producto", footer: 'Falta agregar Colores al Producto' } );
     if( this.listColor.length ){
       let error = 0;
+      console.log("valiudate product", this.listColor)
       for( let row of this.listColor ){
         if( !row.talla ) error++;
         if( !row.id ) error++;
-        if( !row.foto ) error++;
+        if( !row.foto ){
+          error++;
+          this.activarIsDisabled = true;
+          return this._tools.error( { mensaje: "Problemas Colores del Producto", footer: 'Falta agregar imagen a la Talla de Producto' } );
+
+        }
         for( let item of row.tallaSelect ) if( item.check ) if( !item.cantidad ) error++;
         let filtro = row.tallaSelect.find( off => off.check === true );
         if( !filtro ) error++;
       }
-      if( error > 0 ) return this._tools.error( { mensaje: "Problemas En los detalles de colores Llenar completo las cantidad de cada item ", footer: 'También verificar la casilla de chequeo' } );
+      if( error > 0 ) return this._tools.error( { mensaje: "Problemas En los detalles de colores. Llenar completo las cantidad de cada item ", footer: 'También verificar la casilla de Chequeo' } );
     }
-    if( !this.data.pro_descripcion ) return this._tools.error( { mensaje: "Problemas Descripcion del Producto", footer: 'Falta agregar Detalle del campo' } );
+    if( !this.data.pro_descripcion ){
+      this.activarIsDisabled = true;
+      return this._tools.error( { mensaje: "Problemas Descripcion del Producto", footer: 'Falta agregar Detalle del campo' } );
+    }
     if( !this.data.foto ) return this._tools.error( { mensaje: "Problemas Foto del Producto", footer: 'Falta agregar Detalle del campo' } );
 
     return true;
@@ -400,19 +417,29 @@ export class FormproductosComponent implements OnInit {
     if ( this.id ) this.submit();
   }
 
+  precioVendedor(x){
+    const r = 1000
+    x = x + (x * 0.025)
+    let xx = Math.floor(x/r)
+    if(xx!=x/r){xx++}
+    return (xx*r)
+  }
+
   guardar() {
     return new Promise(resolve => {
       if( this.data.opt == 'demo' ) this.data.pro_mp_venta = 1;
       if( this.rolUser != 'administrador') this.data.pro_activo = 3;
+      //dando precio a pro_vendedor
+      this.data.pro_vendedorCompra = this.precioVendedor(this.data.pro_vendedor);
       this.data.pro_usu_creacion = this.dataUser.id;
       this.data = _.omit(this.data, [ 'todoArmare' ])
-    this.data = _.omitBy(this.data, _.isNull);
+      this.data = _.omitBy(this.data, _.isNull);
       this._productos.create(this.data).subscribe((res: any) => {
         //console.log(res);
         this._tools.presentToast("Exitoso");
         this.data.id = res.id;
         this.updateCache();
-        this.disableActivar = false;
+        this.activarIsDisabled = false;
         resolve(res);
       }, (error) => { this._tools.presentToast("Error"); resolve(false) });
     });
@@ -422,14 +449,16 @@ export class FormproductosComponent implements OnInit {
     this.data = _.omit(this.data, [ 'pro_usu_creacion', 'todoArmare' ])
     this.data = _.omitBy(this.data, _.isNull);
     if( this.rolUser == 'administrador' ) this.data.pro_activo = 0;
+    //dando precio a pro_vendedor
+    this.data.pro_vendedorCompra = this.precioVendedor(this.data.pro_vendedor);
     this._productos.update(this.data).subscribe((res: any) => {
-      this._tools.presentToast("Actualizado");
-      this.updateCache();
-      res.listColor = this.data.listColor;
-      this.data = res;
-      if( this.data.pro_sw_tallas ) this.data.pro_sw_tallas = this.data.pro_sw_tallas.id;
-      if ( this.data.pro_sub_categoria ) this.data.pro_sub_categoria = this.data.pro_sub_categoria.id;
-      this.procesoEdision();
+    this._tools.presentToast("Actualizado");
+    this.updateCache();
+    res.listColor = this.data.listColor;
+    this.data = res;
+    if( this.data.pro_sw_tallas ) this.data.pro_sw_tallas = this.data.pro_sw_tallas.id;
+    if ( this.data.pro_sub_categoria ) this.data.pro_sub_categoria = this.data.pro_sub_categoria.id;
+    this.procesoEdision();
     }, (error) => { console.error(error); this._tools.presentToast("Error de servidor") });
   }
   onSelects(event: any, opt:string = 'foto') {
@@ -485,6 +514,8 @@ export class FormproductosComponent implements OnInit {
     this.btnDisabled = false;
     this._tools.presentToast("Exitoso");
     if( !this.data.id ) return false;
+    this.activarIsDisabled = true;
+    console.log("subir files activarIsDisabled" , this.activarIsDisabled )
     this.getSubCategorias( this.data.pro_categoria );
 
   }

@@ -89,7 +89,7 @@ export class FormPosiblesVentasComponent implements OnInit {
       res.colorSelect = this.data.ven_observacion;
       res.color = this.data.ven_observacion;
       res.tallaSelect = this.data.ven_tallas;
-      res.costo = res.pro_vendedor;
+      res.costo = res.pro_vendedorCompra;
       res.loVendio = this.data.ven_precio;
       res.bodegaName = res.pro_usu_creacion.usu_usuario,
       this.listCarrito.push( res );
@@ -203,13 +203,16 @@ export class FormPosiblesVentasComponent implements OnInit {
     this.data.historySettlementFletes = JSON.stringify( item );
     this.suma();
     //if( this.id ) this.submit();
+    console.log(" selectTrans(", this.data)
     return true;
   }
 
   suma() {
     //console.log( this.data, this.listCarrito, this.namePorcentaje );
     //if( this.superSub == false && this.id ) return false;
-    if( this.id ) return this.sumaIds();
+    //EDU se comenta por que abjo  se calcula
+    // if( this.id ) return this.sumaIds();
+
     let total: number = 0;
     let total1: number = 0;
     this.data.ven_ganancias = 0;
@@ -221,25 +224,34 @@ export class FormPosiblesVentasComponent implements OnInit {
       if( row.costoTotal === 0 ) row.costoTotal = ( row.costo * row.cantidad ) || 0;
       total1 += ( Number( row.loVendio ) );
       //console.log("********", row );
-      if ( this.namePorcentaje == "dropshipping básico" ) row.comision = ( row.costoTotal * ( this.dataUser.porcentaje || 10 ) / 100 );
-      else this.data.ven_ganancias+= ( ( row.loVendio  ) - row.costoTotal ) || 0;
+      //EDU se ajusta por manera definida por victor
+      // if ( this.namePorcentaje == "dropshipping básico" ) row.comision = ( row.costoTotal * ( this.dataUser.porcentaje || 10 ) / 100 );
+      // else
+
+      //console.log("ven_ganacias",row.loVendio, row.costo)
+      this.data.ven_ganancias+= ( ( row.loVendio  ) - row.costo ) || 0;
 
     }
 
     this.data.ven_totalDistribuidor = total;
     this.data.ven_total = total1;
+    //calcular ganancias
+    console.log("this.data.ven_ganancias - this.data.fleteValor", this.data.ven_ganancias, this.data.fleteValor)
+    this.data.ven_ganancias = this.data.ven_ganancias - this.data.fleteValor
+    console.log("suma ven_ganancias", this.data.ven_ganancias)
     //console.log( this.dataUser, this.namePorcentaje )
-    if ( this.namePorcentaje == "dropshipping básico" ) this.data.ven_ganancias = (total * ( this.dataUser.porcentaje || 10 ) / 100 );
-    else {
-      if( this.data.cubreEnvio == 'tienda') {
-        this.data.ven_ganancias = ( ( this.data.ven_ganancias - ( this.data.fleteValor || 0  ) ) || 0 );
-        if( this.data.ven_ganancias <= 0 ) {
-          this.data.ven_total = this.data.ven_total + ( this.data.fleteValor || 0 ) ;
-          this.data.ven_ganancias = 0;
-        }
-      }
-      else this.data.ven_total = this.data.ven_total + ( this.data.fleteValor || 0 ) ;
-    }
+    //EDU se comenta- por que el procesos debe ser de la manera definida por victor
+    // if ( this.namePorcentaje == "dropshipping básico" ) this.data.ven_ganancias = (total * ( this.dataUser.porcentaje || 10 ) / 100 );
+    // else {
+    //   if( this.data.cubreEnvio == 'tienda') {
+    //     this.data.ven_ganancias = ( ( this.data.ven_ganancias - ( this.data.fleteValor || 0  ) ) || 0 );
+    //     if( this.data.ven_ganancias <= 0 ) {
+    //       this.data.ven_total = this.data.ven_total + ( this.data.fleteValor || 0 ) ;
+    //       this.data.ven_ganancias = 0;
+    //     }
+    //   }
+    //   else this.data.ven_total = this.data.ven_total + ( this.data.fleteValor || 0 ) ;
+    // }
   }
 
   sumaIds() {
@@ -284,7 +296,7 @@ export class FormPosiblesVentasComponent implements OnInit {
 
 
   async submit() {
-    if ( this.listCarrito.length == 0 ) return this._tools.tooast({ title: "Tiene que existir almenos un articulo seleccionado", icon: "warning" });
+    if ( this.listCarrito.length == 0 ) return this._tools.tooast({ title: "Debe existir al menos un articulo seleccionado", icon: "warning" });
     if ( !this.data.ciudadDestino ) return this._tools.tooast({ title: "Tiene que Seleccionar una ciudad de destino", icon: "warning" });
     if( !this.data.transportadoraSelect ) return this._tools.tooast({ title: "Tienes que seleccionar por medio de envio lo vas a enviar ( Obligatorio )", icon: "warning" });
     if (this.dataUser.empresa) {

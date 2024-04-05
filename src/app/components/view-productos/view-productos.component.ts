@@ -81,7 +81,7 @@ export class ViewProductosComponent implements OnInit {
       //console.log(store);
       if (!store) return false;
       this.userId = store.usercabeza;
-      this.dataUser = store.user || {};
+      this.dataUser = store.user || {}; console.log("this.dataUser",this.dataUser)
       this.listCart = store.cart || [];
       try {
         if (this.dataUser.categoriaPerfil) this.porcentajeUser = this.dataUser.categoriaPerfil.precioPorcentaje;
@@ -134,7 +134,7 @@ export class ViewProductosComponent implements OnInit {
     event.target.alt = 'Imagen no disponible';
   }
 
-  validPriceUser(){
+  validPriceUser(){ //consulto el configurado por el vendedor
     this._products.getPrice( { where:{
       article: this.data.id,
       user: this.dataUser.id,
@@ -144,7 +144,9 @@ export class ViewProductosComponent implements OnInit {
       if( res ) {
         this.data.idMyProduct = res.id;
         if( this.data.view === "store") this.disabledView = 'createPrice';
-        this.data.idPrice = res.price;
+        //el precio configurado del vendedor
+        this.data.idPrice = res.price; //console.log("res.price", res.price)
+        this.data.encuanto = res.price;
       }
     });
   }
@@ -428,7 +430,7 @@ export class ViewProductosComponent implements OnInit {
 
   validando(){
     console.log( this.data )
-    if( ( this.data.encuanto < this.data.pro_vendedor )  ) { this.disabledPr = false; return this._tools.tooast({ title: "lo sentimos pero no se puedes vender este producto en este precio", icon: "warning" });}
+    if( ( this.data.encuanto < this.data.pro_vendedor )  ) { this.disabledPr = false; return this._tools.tooast({ title: "Lo sentimos! Pero se puedes vender este producto en este precio", icon: "warning" });}
     this.disabledPr = true;
   }
 
@@ -438,23 +440,35 @@ export class ViewProductosComponent implements OnInit {
 
   async handleAddStore(){
     let coinAlert = await this._tools.alertInput({
-      title: "Valor a Vender ¡sin puntos solo numerico!",
+      // title: "Valor a Vender <br>¡sin puntos solo numerico!",
+      title: "Lo vas a vender en",
       input: "text",
       value: String( this.data.pro_uni_venta ),
       confirme: "Agregar"
     });
     console.log("***383", coinAlert);
+    console.log("coin alert", coinAlert)
     coinAlert = Number( coinAlert['value']);
-    if( !coinAlert ) return this._tools.tooast({ icon: "error",title: "Importante", detalle: "Lo Sentimos Necesitamos un Valor de Venta Gracias!!!" } )
-    let data = {
-      article: this.data.id,
-      user: this.dataUser.id,
-      price: coinAlert
-    };
-    this._products.createPrice( data ).subscribe( res =>{
-      this._tools.tooast({ title: "Completado", detalle: "Este Producto Esta Agregado a tu Cuentas!!!"})
-      this.dialogRef.close('creo');
-    });
+
+    const nuevoValor:number = Number( coinAlert )
+    if( !coinAlert || coinAlert == "" ) return false
+    else{
+      console.log("nuevoValor", nuevoValor)
+      if(nuevoValor <= (this.data.pro_vendedorCompra + 15000))
+        return this._tools.error({ icon: "error",title: "Importante", mensaje: "Lo Sentimos. Tu nuevo valor es menor al precio de distribuidor.", footer: "Recuerda que también debes calcular el precio del envio" } )
+      else{
+        let data = {
+          article: this.data.id,
+          user: this.dataUser.id,
+          price: coinAlert
+        };
+        this._products.createPrice( data ).subscribe( res =>{
+          this._tools.tooast({ title: "Completo", detalle: "Este Producto ha sido Agregado a tu Cuenta."})
+          this.dialogRef.close('creo');
+        });
+      }
+
+    }
   }
 
   async handleDroppArticle(){

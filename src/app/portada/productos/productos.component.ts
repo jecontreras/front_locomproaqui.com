@@ -171,6 +171,7 @@ export class ProductosComponent implements OnInit {
         };
         this.listCategorias.push( dataEnd );
       }
+      console.log("categorias", this.listCategorias)
       this.listCategorias.unshift({
         id: 0,
         title: "TODOS",

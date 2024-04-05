@@ -68,6 +68,8 @@ export class FormcobrosComponent implements OnInit {
       this.data.cob_pais = 'colombia';
       this.getInfoUser();
     }
+    this.disabledButton = true;
+    this.data.totalrecibir = this.data.cob_monto
   }
 
   getInfoUser(){
@@ -89,22 +91,23 @@ export class FormcobrosComponent implements OnInit {
     this.files.splice(this.files.indexOf(event), 1);
   }
 
-  subirFile(item:any){
+  subirFile(item:any){ //console.log("subir file")
     let form:any = new FormData();
     form.append('file', this.files[0]);
     this._tools.ProcessTime({});
     //this._archivos.create( this.files[0] );
     this._archivos.create( form ).subscribe((res:any)=>{
-      // console.log(res);
+      //console.log("._archivos.create res",res);
       this.data.fotoPago = res.files;//URL+`/${res}`;
-      if( this.id ) { this.submit(); this.crearNotificacion(); }
-      this._tools.presentToast("Exitoso");
+      // if( this.id ) { this.submit(); this.crearNotificacion(); }
+      this._tools.presentToast("Carga de imagen Exitos");
+      this.disabledButton = false;
     },(error)=>{console.error(error); this._tools.presentToast("Error de servidor")});
 
   }
 
   submit(){
-    this.disabledButton = true;
+
     if(this.id) {
       if(!this.superSub) if(this.clone.ven_estado == 1) { this._tools.presentToast("Error no puedes ya editar el Cobro ya esta aprobada"); return false; }
       this.updates();
@@ -138,15 +141,31 @@ export class FormcobrosComponent implements OnInit {
     return true;
   }
 
-  updates(){
-    let data:any = _.omit( this.data, ['usu_clave_int'] );
+  updates(){ //console.log("updates")
+    this.disabledButton = true;
+    // let data:any = _.omit( this.data, ['usu_clave_int'] );
+    let data:any = _.omit( this.data, "" );
+    let errores = 0
     data = _.omitBy( data, _.isNull );
+    data.fotoPago = this.data.fotoPago
     if( !data.sumaFlete ) data.sumaFlete = 0;
-    if( data.cob_estado == 1 )  data.cob_fecha_pago = moment().format('DD-MM-YYYY HH:MM:SS');
-    this._cobros.update( data ).subscribe((res:any)=>{
+    //if( data.cob_estado == 1 )  data.cob_fecha_pago = moment().format('DD-MM-YYYY HH:MM:SS');
+    if(data.totalrecibir == 0){ this._tools.tooast( { icon: "warning",title: 'Debes Diligenciar un Valor a pagar' } ); errores++; }
+    if(data.totalrecibir < data.cob_monto ){ this._tools.tooast( { icon: "warning",title: 'El valor del Pago es menor al Cobro Solicitado' } ); errores++; }
+    //console.log("data", data)
+    if(errores == 0){
+      this._cobros.pay( data ).subscribe((res:any)=>{
+        if( res.status === 400 ){
+          this._tools.tooast( { icon: "error",title: 'Lo sentimos tenemos Problemas! '+ res.data } );
+          this.disabledButton = false;
+        }
+        if(res.status === 200){
+          this._tools.tooast( { icon: "success",title : res.data } );
+        }
+      },(error)=>{console.error(error); this._tools.presentToast("Error de servidor"); this.disabledButton = false});
+    }else{
       this.disabledButton = false;
-      this._tools.presentToast("Actualizado");
-    },(error)=>{console.error(error); this._tools.presentToast("Error de servidor"); this.disabledButton = false});
+    }
   }
 
   crearNotificacion(){

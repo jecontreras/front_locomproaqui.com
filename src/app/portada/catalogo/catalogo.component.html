@@ -489,7 +489,9 @@ style="line-height: 1; margin: 10px 0px; padding: 5px; text-shadow: transparent 
                   <span class="top-tag" style="background: rgb(255, 0, 0);">EL MAS VENDIDO 🔥</span></span>
               </div>
               <div class="pl-price">
-                  <span class="pl-pvalue"><p style="text-align: center;"><s>$150.000</s></p><p style="text-align: center;"><strong style="color: rgb(230, 0, 0);">{{ _tools.monedaChange( 3, 2, data.pro_uni_venta ) }} </strong></p></span>
+                  <span class="pl-pvalue">
+                    <p style="text-align: center;"><s>{{ this._tools.monedaChange( 3, 2, (data.pro_uni_venta + (data.pro_uni_venta * 0.3) ) ) }}</s></p>
+                    <p style="text-align: center;"><strong style="color: rgb(230, 0, 0);">{{ _tools.monedaChange( 3, 2, data.pro_uni_venta ) }} </strong></p></span>
               </div>
           </label>
           <!--<div class="pl-variants">
@@ -538,16 +540,22 @@ style="line-height: 1; margin: 10px 0px; padding: 5px; text-shadow: transparent 
     </div>
     <div class="os-items" style="color: rgb(37, 42, 50); font-size: 14px;">
       <div class="os-row">
-                      <div class="os-name">{{ data.pro_nombre}} <span class="os-voption">&nbsp;&nbsp; ● &nbsp;&nbsp;</span>
-                      </div>
-                      <div class="os-price"><p style="text-align: center;"><s>$250.000</s></p><p style="text-align: center;"><strong style="color: rgb(230, 0, 0);"> {{ _tools.monedaChange( 3, 2, data.pro_uni_venta ) }} </strong></p></div>
-                  </div>
-                  <div class="os-row">
-                      <div class="os-name">ENVIO NACIONAL
-                      </div>
-                      <div class="os-price"><p style="text-align: center;"><strong>Gratis</strong></p></div>
-                  </div>
-                </div>
+        <div class="os-name">{{ data.pro_nombre}} <span class="os-voption">&nbsp;&nbsp; ● &nbsp;&nbsp;</span>
+        </div>
+        <div class="os-price">
+          <p style="text-align: center;">
+            <s>{{ this._tools.monedaChange( 3, 2, (data.pro_uni_venta + (data.pro_uni_venta * 0.3) ) ) }}</s>
+          </p>
+          <p style="text-align: center;">
+            <strong style="color: rgb(230, 0, 0);"> {{ _tools.monedaChange( 3, 2, data.pro_uni_venta ) }} </strong></p>
+        </div>
+      </div>
+      <div class="os-row">
+          <div class="os-name">ENVIO NACIONAL
+          </div>
+          <div class="os-price"><p style="text-align: center;"><strong>Gratis</strong></p></div>
+      </div>
+    </div>
     <div class="os-total os-row" style="color: rgb(7, 7, 7); font-weight: bold; font-size: 14px;">
       <div class="os-name">TOTAL</div>
       <div class="os-price">{{this._tools.monedaChange( 3, 2, data.pro_uni_venta ) }} </div>

@@ -32,6 +32,7 @@ export class IndexComponent implements OnInit {
   rolName:string;
   listBank:any = [];
   listPendiente:any = [];
+  btnDesembolsarDisabled:boolean = true;
 
   constructor(
     private _sale: ProductoService,
@@ -53,11 +54,14 @@ export class IndexComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.getDineros();
-    this.getSalesComplete();
-    this.getSalesProcess();
-    this.getListBank();
-    this.getTransportBuyEarning();
+    // this.getSalesComplete();
+    this.getSales();
+    this.getDineros(); //recibiste
+   // this.getTransportBuyEarning(); //Pendiente Pago de Transportadora
+    //this.getSalesProcess();
+    // this.getListBank();
+    this.getCobros(); //cobros
+
   }
 
   getTransportBuyEarning(){
@@ -73,10 +77,9 @@ export class IndexComponent implements OnInit {
   }
 
   getDineros(){
-    this._usuarios.getRecaudo( { where: { usuario: this.dataUser.id } } )
-    .subscribe( (res: any ) => {
+     this._usuarios.getRecaudo( { where: { usuario: this.dataUser.id } }).subscribe( (res: any ) => {
       try {
-        this.dataConfig.receive = res.data[0].valor;
+        //this.dataConfig.receive = res.data[0].valor;
         this.dataConfig.date = moment().format()
       } catch (error) {
         this.dataConfig.income = 0;
@@ -86,24 +89,85 @@ export class IndexComponent implements OnInit {
     });
   }
 
+  getSales(){ //console.log("get sales")
+      //debo enviar el id del usuario y el usu_perfil
+      let query = { usu_id : 0, usu_perfil : 0}
+      let totalCompletas =0
+      let totalDespachado = 0
+      query.usu_id =  this.querysSale.where.creacion
+      query.usu_perfil = this.dataUser.usu_perfil.id
+      // console.log(" getSales() query", query)
+      this._sale.getVentas( query ).subscribe(res=>{
+      // console.log("getSales res", res)
+      for( let row of res.data ){
+        if(query.usu_perfil == 5){ //proveedor
+          if(row.ven_estado == 1 && row.cob_id_proveedor == 0) totalCompletas += row.ven_totaldistribuidor
+          if(row.ven_estado == 3) totalDespachado += row.ven_totaldistribuidor
+        }
+        if(query.usu_perfil == 1 ){ //vendedor
+          if(row.ven_estado == 1 && row.cob_id_vendedor == 0) totalCompletas += row.ven_ganancias
+          if(row.ven_estado == 3) totalDespachado += row.ven_ganacias
+        }
+
+      };
+      this.dataConfig.money = totalCompletas; //Dinero para solicitar desembolso
+      this.dataConfig.incomeTransportBuy = totalDespachado;
+      if(this.dataConfig.money > 0)
+        this.btnDesembolsarDisabled = false
+        //this.dataConfig.receive = res.total;
+
+    });
+  }
+
   getSalesComplete(){
     this._sale.getVentaComplete( this.querysSale ).subscribe(res=>{
-      console.log("****55", res)
+      // console.log("****55", res)
       this.dataConfig.money = res.total;
-        this.dataConfig.income = res.totalSinLK;
-        this.dataConfig.receive = res.total;
-      for( let row of res.data ) this.lisTransactions.push( {
-        transactions: "Recaudo de pedido contraentrega",
-        income: row.loVendio,
-        discharge: row.precioVendedor,
-        receive: row.ventas.create
-      });
+      this.dataConfig.income = res.totalSinLK;
+      this.btnDesembolsarDisabled = false
+        //this.dataConfig.receive = res.total;
+      // for( let row of res.data ) this.lisTransactions.push( {
+      //   transactions: "Recaudo de pedido contraentrega",
+      //   income: row.loVendio,
+      //   discharge: row.precioVendedor,
+      //   receive: row.ventas.create
+      // });
+    });
+  }
+
+  getCobros(){ //console.log("getcobros")
+    // obtener los cobros
+    // this._usuarios.getRecaudo( { where: { usuario: this.dataUser.id } } )
+    let total = 0
+    let peticion = {
+      "where": {},
+      "page": 0,
+      "limit": 10
+    }
+    peticion.where = { "usu_clave_int" : this.dataUser.id }
+    this._usuarios.getCobros(peticion ).subscribe( (res: any ) => {
+      try {
+        //console.log("_usuarios.getCobros res", res)
+        for( let row of res.dataEnd ){
+          this.lisTransactions.push( {
+            cob_descripcion: row.cob_descripcion,
+            cob_monto: row.cob_monto,
+            cob_fecha_cobro: row.cob_fecha_cobro,
+            totalrecibir: row.totalrecibir,
+            cob_fecha_pago: row.cob_fecha_pago
+          });
+          total +=  row.totalrecibir
+        }
+        this.dataConfig.receive = total
+      } catch (error) {
+
+      }
     });
   }
 
   getSalesProcess(){
     this._sale.getVentaCompleteEarring( this.querysSale ).subscribe(res=>{
-      console.log("****55", res)
+      // console.log("****55", res)
       this.dataConfig.pendingMoney = res.total;
       this.listPendiente = res.data;
       for( let row of res.data ) this.lisTransactionsProcess.push( {
@@ -115,13 +179,14 @@ export class IndexComponent implements OnInit {
     });
   }
 
-  handleDisbursement( obj ){
+  handleDisbursement( obj ){ //solicitar desembolso
+    this.btnDesembolsarDisabled = true
     const dialogRef = this.dialog.open(FormDisbursementComponent,{
       data: { data: obj || {} }
     });
 
     dialogRef.afterClosed().subscribe( async ( result ) => {
-      console.log(`Dialog result: ${result}`);
+      // console.log(`Dialog result: ${result}`);
       if( result === 'creo' ) location.reload();
     });
   }
@@ -132,7 +197,7 @@ export class IndexComponent implements OnInit {
     });
 
     dialogRef.afterClosed().subscribe(result => {
-      console.log(`Dialog result: ${result}`);
+      // console.log(`Dialog result: ${result}`);
     });
   }
 

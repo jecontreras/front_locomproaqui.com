@@ -160,7 +160,7 @@ export class HeaderComponent implements OnInit {
     }*/
     //console.log( this.isHandset$, this.breakpoint, window.innerWidth )
 
-    setInterval(()=> {
+    // setInterval(()=> {
       this.routName = ( window.location.pathname.split("/"))[1];
       try {
         //console.log( this.nav)
@@ -174,18 +174,31 @@ export class HeaderComponent implements OnInit {
         //console.log("***144",color, this.dataUser )
         this.nav.nativeElement.style.backgroundColor = color;
       } catch (error) {}
-    }, 1000 );
+    // }, 1000 );
 
     try {
       if( this.dataUser.estado === 0 && this.dataUser.usu_perfil.prf_descripcion === 'proveedor' ){
-        this.listAlert.unshift(
-          {
-            id: this._tools.codigo(),
-            titulo: "Importante",
-            descripcion: "¡Felicidad Tu Cuenta esta activada!",
-            tipoDe: 2
-          }
-        );
+        //console.log("updatedAT", this.dataUser.updatedAt)
+        const fecha = new Date();
+        const hoy = Date.now()
+        let date1 = new Date(this.dataUser.createdAt);
+        let date2 = new Date(hoy);
+        let Difference_In_Time =
+            date2.getTime() - date1.getTime();
+
+        let Difference_In_Days =
+            Math.round
+                (Difference_In_Time / (1000 * 3600 * 24));
+        if(Difference_In_Days < 15){
+          this.listAlert.unshift(
+            {
+              id: this._tools.codigo(),
+              titulo: "Importante",
+              descripcion: "¡Felicidades, Tu Cuenta está activa! 👌😍",
+              tipoDe: 2
+            }
+          );
+        }
       }
       if( this.dataUser.estado === 1 && this.dataUser.usu_perfil.prf_descripcion === 'proveedor' ){
         if( this.dataUser.pdfCComercio && this.dataUser.pdfCc && this.dataUser.pdfRut && this.dataUser.usu_ciudad && this.dataUser.usu_email && this.dataUser.usu_telefono ){
@@ -223,7 +236,7 @@ export class HeaderComponent implements OnInit {
     } catch (error) {
       //console.log(error)
     }
-    console.log("***149", this.rolUser)
+    //console.log("***149", this.rolUser)
     this.listMenus();
     if( this.dataUser.id )this.getCarrito();
     if( this.dataUser.id ) this.getAlert();
@@ -233,6 +246,7 @@ export class HeaderComponent implements OnInit {
   loadCoin() {
     this._productos.getVentaComplete( this.querysSale ).subscribe(res=>{
       //console.log("***191",res)
+      //console.log("_productos.getVentaComplete",res)
       this.reacudo = res.total;
     });
   }
@@ -460,7 +474,7 @@ export class HeaderComponent implements OnInit {
 
   async listMenus(){
     let submenus = await this.getCategorias();
-    console.log( submenus );
+    //console.log( submenus );
     this.menus = [
       {
         icons: 'home',
@@ -514,9 +528,16 @@ export class HeaderComponent implements OnInit {
       },
       {
         icons: 'shop',
-        nombre: 'Mis Cobros',
-        disable: ( this.rolUser !== 'visitante' ) && ( this.rolUser != 'proveedor' ),
+        nombre: 'Mis Cobros!',
+        disable: ( this.rolUser !== 'visitante' ) && ( this.rolUser != 'proveedor' ) && ( this.rolUser != 'vendedor' ),
         url: '/config/cobros',
+        submenus:[]
+      },
+      {
+        icons: 'shop',
+        nombre: 'Mi Biletera',
+        disable: ( this.rolUser == 'vendedor' ),
+        url: '/config/bank/index',
         submenus:[]
       },
       /*{
@@ -786,7 +807,7 @@ export class HeaderComponent implements OnInit {
   }
 
   shareTienda(){
-    console.log("***ENTre")
+    //console.log("***ENTre")
     const selBox = document.createElement('textarea');
     selBox.style.position = 'fixed';
     selBox.style.left = '0';
@@ -802,7 +823,7 @@ export class HeaderComponent implements OnInit {
   }
 
   navegar( item:any, obj:any = null ){
-    console.log("*", item, item.url[1])
+    //console.log("*", item, item.url[1])
     for( let row of this.menus ) row.check = false;
     item.check = true;
     if( obj ) obj.check = true;
@@ -811,7 +832,7 @@ export class HeaderComponent implements OnInit {
     if( item.opt ) this.router.navigate(item.url);
     else this.router.navigate([ item.url ]);
     this.sidenav.close();
-    console.log("*SALIR")
+   //console.log("*SALIR")
 
   }
 
@@ -887,7 +908,7 @@ export class HeaderComponent implements OnInit {
   }
 
   handleRechargeNalance(){
-    console.log("***838")
+    //("***838")
     this.router.navigate(["/config/recharge"]);
   }
 
@@ -907,7 +928,7 @@ export class HeaderComponent implements OnInit {
           }
         );
       }
-      console.log("****684", this.listAlert)
+      //console.log("****684", this.listAlert)
     });
   }
 
@@ -926,14 +947,14 @@ export class HeaderComponent implements OnInit {
     });
 
     dialogRef.afterClosed().subscribe(result => {
-      console.log(`Dialog result: ${result}`);
+      //console.log(`Dialog result: ${result}`);
       this.listAlert = this.listAlert.find((row:any) => row.id !== obj.id );
     });
   }
 
   closeAlert( item ){
     this.listAlert = this.listAlert.filter( ( row:any ) => row.id !== item.id ) || [];
-    console.log(this.listAlert)
+    //console.log(this.listAlert)
   }
 
   salir( opt:boolean =  false ){
@@ -951,7 +972,7 @@ export class HeaderComponent implements OnInit {
   }
 
   openTienda( opt:string ){
-    console.log( opt )
+    //console.log( opt )
     if( opt == 'visitante' )
     {
       /*let accion = new UserprAction( this.dataUser, 'post' );
@@ -994,13 +1015,13 @@ export class HeaderComponent implements OnInit {
         prf_usu_actualiz: "",
         updatedAt: "2021-02-26T18:35:35.893Z"
       };
-      console.log( this.dataUser)
+      //console.log( this.dataUser)
       let clon:any = _.clone( this.dataUser );
       accion = new UserAction( {}, 'delete');
       this._store.dispatch( accion );
       accion = new UserAction( clon, 'post');
       this._store.dispatch( accion );
-      console.log( clon, this.dataUser)
+      //console.log( clon, this.dataUser)
       this.router.navigate(['/pedidos' ]);
       setTimeout( ()=> location.reload(), 1000 );
       return false;
