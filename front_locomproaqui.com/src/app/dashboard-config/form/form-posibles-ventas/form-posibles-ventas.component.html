@@ -187,7 +187,7 @@
 
 <mat-dialog-actions align="end">
     <button mat-button mat-dialog-close>Cerrar</button>
-    <button mat-button cdkFocusInitial color="primary" (click)="submit()" [disabled]="disabledButton" >
+    <button mat-button cdkFocusInitial color="primary" (click)="submit()" [disabled]="disabledButton" class="btn-info" >
         <span *ngIf="id">Enviar Orden de Despacho</span>
     </button>
     <!-- <button mat-button (click)="OrdenValidadWhatsapp( data )" *ngIf="data.id && data.ven_estado == 3">
