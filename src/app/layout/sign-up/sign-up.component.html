@@ -12,10 +12,10 @@
           padding: 10px 40px;
           border-radius: 5px; color: #02a0e3;">
             <h2 style="text-align: center;">Registrarme</h2>
-            <h3 style="text-align: center;" *ngIf="dataCabeza">
-              Te Invito {{ dataCabeza.usu_usuario }}
+            <h3 style="text-align: center;" *ngIf="dataCabeza.usu_usuario">
+              Te Invitó {{ dataCabeza.usu_usuario }}
             </h3>
-            <p style="text-align: center;">Rellena el Siguiente formulario para crear una cuenta</p>
+            <p style="text-align: center;">Diligencia el Siguiente Formulario para crear una Cuenta</p>
             <div class="row">
               <div class="col-12">
                   <div class="input-group mb-3">
@@ -47,7 +47,7 @@
             </div>
               <div class="col-12">
                   <div class="d-flex bd-highlight">
-                      <div class="bd-highlight" style="width: 90px;">
+                      <div class="bd-highlight" style="width: 140px;">
                           <select class="form-control form-control" [(ngModel)]="data.usu_indicativo" required>
                               <option [value]="item.phone_code" *ngFor="let item of listIndicativos">{{
                                   item.nombre }}
@@ -55,7 +55,7 @@
                           </select>
                       </div>
                       <div class="flex-grow-1 bd-highlight" style="margin-left: 15px;">
-                          <input type="number" class="form-control" placeholder="Escriba numero del Cel" aria-label="cel" aria-describedby="basic-addon1" [(ngModel)]="data.usu_telefono">
+                          <input type="number" class="form-control" placeholder="Escribe numero del Cel" aria-label="cel" aria-describedby="basic-addon1" [(ngModel)]="data.usu_telefono">
                       </div>
                     </div>
               </div>
@@ -97,15 +97,15 @@
                           <div class="form-check">
                               <input class="form-check-input" type="checkbox" name="flexRadioDefault" id="flexRadioDefault1" [(ngModel)]="data.optVendedor" (click)="validateClick()">
                               <label class="form-check-label" for="flexRadioDefault1">
-                                Vendedor
+                                Quiero ser <br>Vendedor
                               </label>
                             </div>
                       </div>
                       <div class="p-2 bd-highlight">
-                          <div class="form-check">
+                          <div class="form-check pl-5">
                               <input class="form-check-input" type="checkbox" name="flexRadioDefault" id="flexRadioDefault2" [(ngModel)]="data.optProveedor" (click)="validateClick()">
                               <label class="form-check-label" for="flexRadioDefault2">
-                                Proveedor
+                                Quiero ser <br>Proveedor
                               </label>
                             </div>
                       </div>
@@ -122,7 +122,7 @@
                     </div>
               </div>
               <div class="col-12">
-                  <h6 style="text-align: center; color: #646464;">Ya tienes una cuenta? <a style="color: #02a0e3;" class="pointer" [routerLink]="[ '/login' ]">Iniciar Sesion</a></h6>
+                  <h6 style="text-align: center; color: #646464;">Ya tienes una cuenta? <a style="color: #02a0e3;" class="pointer" [routerLink]="[ '/login' ]">Iniciar Sesión</a></h6>
               </div>
             </div>
           </div>
