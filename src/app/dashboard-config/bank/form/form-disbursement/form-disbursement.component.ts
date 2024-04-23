@@ -24,6 +24,7 @@ export class FormDisbursementComponent implements OnInit {
   data:any = {
     // bank: 2
   };
+  params:any = {}
   opcionCurrencys: any = {};
   superSub:boolean = false;
   clone:any = {};
@@ -62,19 +63,21 @@ export class FormDisbursementComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    //console.log("datas", this.datas)
+    this.data.amount = this.datas.data.amount
     this.opcionCurrencys = this._tools.currency;
-    // this.getBank(); //envia el registro del cobro
-    this.getSalesComplete();
+    //console.log("this.dataUser", this.dataUser)
     this.data.cob_num_cedula = this.dataUser.usu_cedula
     this.data.cob_num_celular = this.dataUser.usu_telefono
-    //console.log("this.dataUser", this.dataUser)
+    this.btnVentasSolDisabled = false
+    this.disabledButton = false
+    //this.getSalesComplete()
   }
 
-  getSalesComplete(){
+  getSalesComplete(){ 
     let total = 0
     this._sale.getVentaComplete( this.querysSale ).subscribe(res=>{
       this.lisTransactionsC = res.data;
-
       this.btnVentasSolDisabled = false
       this.disabledButton = false
       for( let row of res.data ) this.lisTransactions.push( {
@@ -88,8 +91,9 @@ export class FormDisbursementComponent implements OnInit {
     let query = { usu_id : 0, usu_perfil : 0}
     query.usu_id =  this.querysSale.where.creacion
     query.usu_perfil = this.dataUser.usu_perfil.id
+    console.log(query)
     this._sale.getVentas( query ).subscribe(res=>{
-      //console.log("getSalesComplete()", res)
+      console.log("getSalesComplete() getVenta", res)
       this.data.listVentas = []
       this.data.cob_listaVentas = []
       for( let row of res.data ){
@@ -98,6 +102,8 @@ export class FormDisbursementComponent implements OnInit {
             this.data.cob_listaVentas.push({
               id : row.id
             })
+            total+= row.ven_totaldistribuidor
+            this.data.cob_listaVentas.push(row)
         }
         if(query.usu_perfil == 1 ){ //vendedor
           //console.log("row", row)
@@ -107,13 +113,13 @@ export class FormDisbursementComponent implements OnInit {
             })
             total+= row.ven_ganancias
           }
-
         }
       }
-      if(query.usu_perfil == 1 ){ //console.log("es vend" , total)
-        this.data.amount = total
-      }else
-        this.data.amount = res.total;
+      // if(query.usu_perfil == 1 ){ //console.log("es vend" , total)
+      //   this.data.amount = total
+      // }else
+        this.data.amount = total;
+        console.log("this.data.cob_listaVentas", this.data.cob_listaVentas)
     })
   }
 
@@ -125,15 +131,7 @@ export class FormDisbursementComponent implements OnInit {
   }
 
   async submit(){ //console.log("submit")
-
-    // this._tools.ProcessTime({ title: "", tiempo: 4000 })
-    // if( this.id ) {
-    //   if( !this.superSub ) if( this.clone.ven_estado == 1 ) { this._tools.presentToast("Error no puedes ya editar el Cobro ya esta aprobada"); return false; }
-    //   await this.handleUpdates();
-    // }
     await this.handleAddCobro();
-
-    // this.dialogRef.close('creo');
   }
 
   async handleUpdates(){
@@ -144,30 +142,14 @@ export class FormDisbursementComponent implements OnInit {
     const dialogRef = this.dialog.open(FormListSaleComponent,{
       data: {
         datos: {
-          list: this.lisTransactionsC,
-          data: this.data,
+          list: this.datas.data.lisTransactions,
+          amount : this.data.amount
         }
       }
     });
 
     dialogRef.afterClosed().subscribe(result => {
       //console.log(`Dialog result: ${result}`);
-    });
-  }
-
-  handleAdd(){ //console.log("handleAdd")
-    return new Promise( resolve =>{
-      this.data.listVentas = _.map( this.lisTransactions, 'id' );
-      this.data.user = this.dataUser.id;
-      this.data.
-      console.log("data", this.data)
-      this._supplier.create( this.data ).subscribe( res =>{
-        if( res.status === 400 ){
-          this._tools.tooast( { icon: "error",title: 'Lo sentimos tenemos Problemas! '+ res.data } );
-        }
-        else this._tools.tooast( { title: 'Proceso de retiro confirmado! Tu proceso estará en proceso demora 3 - 6 días hábiles' } );
-        resolve( res );
-      },()=> resolve( {}) );
     });
   }
 
@@ -181,14 +163,13 @@ export class FormDisbursementComponent implements OnInit {
     if(this.data.cob_num_cuenta.length  < 6 ){  this._tools.tooast( { icon: "warning",title: 'Debes diligenciar un numero de Cuenta Válido' } ); errores++; }
   }
   if(errores == 0){
-    // this.data.listVentas = _.map( this.lisTransactions, 'id' ); // cargo las ventas
     this.data.usu_clave_int = this.dataUser.id;
     this.data.cob_monto = this.data.amount
     this.data.cob_fecha_cobro = new Date()
     this.data.cob_descripcion = "Pago Comision por Venta"
     this.data.usu_perfil = this.dataUser.usu_perfil.id;
-    //this.data.cob_listaVentas = _.map( this.lisTransactions, 'id' );
-    //console.log("handleAddCobro",this.data)
+    this.data.cob_listaVentas = _.map( this.datas.data.lisTransactions, 'id' );
+    console.log("handleAddCobro",this.data)
     this._cobros.create( this.data ).subscribe( res =>{
       if( res.status === 400 ){
         this._tools.tooast( { icon: "error",title: 'Lo sentimos tenemos Problemas! '+ res.data } );

@@ -58,7 +58,7 @@ export class VentasService {
   getPossibleSales( query:any ){
     return this._model.querys('ventasDBI/querys',query, 'post');
   }
-  getVentasProveedores( query:any ){
+  getVentasProveedores( query:any ){ //console.log("getVentasProveedores query", query)
     return this._model.querys('tblventas/ventasProveedoresView',query, 'post');
   }
   getVentasExitosasProveedor( query:any ){

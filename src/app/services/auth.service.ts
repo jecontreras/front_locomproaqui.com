@@ -136,7 +136,7 @@ export class AuthService implements CanActivate {
     }
     validandoConfig(){
       this._admin.get( {  } ).subscribe(( res:any )=>{
-        console.log("***", res)
+        //console.log("***", res)
         let accion = new ConfiguracionAction( res.data[0], 'post' );
         this._store.dispatch( accion );
       });

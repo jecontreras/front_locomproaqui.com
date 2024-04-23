@@ -27,10 +27,11 @@ export class FormPosiblesVentasComponent implements OnInit {
   mensajeWhat: string;
 
   disableBtnFile: boolean = false;
+  disabledEtiqueta: boolean = true;
   urlImagen: any;
   opcionCurrencys: any = {};
   disableSpinner:boolean = true;
-
+  porcentajeMostrar: any;
   tablet:any = {
     header: ["Mensaje","Transp","Origen / Destino","Unid","Total Kilos","Valoración","Flete","Valor Tarifa","Total","Tiempos Aprox"],
     listRow: []
@@ -45,6 +46,7 @@ export class FormPosiblesVentasComponent implements OnInit {
   errorCotisa:string;
   coinShop:boolean = false;
   rolUser:string;
+  proveedorContacto:string;
 
   constructor(
     private _ventas: VentasService,
@@ -69,6 +71,7 @@ export class FormPosiblesVentasComponent implements OnInit {
     this.getDetails();
     await this.getCiudades();
     this.listCiudades = this.listCiudades.filter( ( row:any )=> row.code > 0 );
+    this.disabledButton = true
   }
 
   getDetails(){
@@ -94,6 +97,7 @@ export class FormPosiblesVentasComponent implements OnInit {
       res.bodegaName = res.pro_usu_creacion.usu_usuario,
       this.listCarrito.push( res );
       console.log("****79", this.listCarrito )
+      this.proveedorContacto = res.pro_usu_creacion.usu_telefono
     });
   }
 
@@ -109,8 +113,8 @@ export class FormPosiblesVentasComponent implements OnInit {
   async precioRutulo( ev:any ){
     console.log( ev );
     if( this.data.ven_numero_guia ) return this._tools.confirm( { title: "Lo sentimos tienes una guia generada ya", detalle: "1.Toca cancelar la guia si te quedo mal. 2.hablar con el servicio al cliente", icon: "error" } );
-    if( this.disabledButton ) return false;
-    this.disabledButton = true;
+    // if( this.disabledButton ) return false;
+    // this.disabledButton = true;
     if( this.id && ( this.data.ven_estado == 1 && this.data.ven_estado == 2 && this.data.ven_estado == 3 && this.data.ven_estado == 4 ) ) { this.disabledButton = false; return false;}
     if( ev.state ) if( ev ) this.data.ciudadDestino = ev;
     let result:any;
@@ -124,7 +128,7 @@ export class FormPosiblesVentasComponent implements OnInit {
     console.log( result, this.data )
     this.progreses = false;
     this.disableSpinner = false;
-    this.disabledButton = false;
+    this.disabledEtiqueta= false;
   }
 
   async PrecioContraEntrega(){
@@ -201,9 +205,11 @@ export class FormPosiblesVentasComponent implements OnInit {
     this.data.fleteManejo = item.fleteManejo;
     this.data.flteTotal = item.fleteTotal;
     this.data.historySettlementFletes = JSON.stringify( item );
+    this.porcentajeMostrar = 
     this.suma();
     //if( this.id ) this.submit();
     console.log(" selectTrans(", this.data)
+    this.disabledButton = false
     return true;
   }
 
@@ -369,6 +375,9 @@ export class FormPosiblesVentasComponent implements OnInit {
       this.disabled = false;
       this._tools.tooast({ title: "Hemos Recibido tu Pedido de Manera Exitosa" });
 
+      
+      let url = `https://wa.me/57${ this.proveedorContacto }?text=${encodeURIComponent(` Hola servicio al cliente necesito mas informacion gracias`)}`;
+      window.open( url, "Mas Informacion", "width=640, height=480");
       //this.dialog.closeAll();
       let accion: any = new CartAction({}, 'drop');
       this._store.dispatch(accion);

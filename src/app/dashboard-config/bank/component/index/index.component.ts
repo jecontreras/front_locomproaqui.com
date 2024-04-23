@@ -18,7 +18,6 @@ import * as moment from 'moment';
 })
 export class IndexComponent implements OnInit {
   dataConfig:any = {
-
   };
   querysSale:any = {
     where:{
@@ -26,8 +25,8 @@ export class IndexComponent implements OnInit {
     limit: 10,
     skip: 0
   }
-  lisTransactions:any = [];
-  lisTransactionsProcess:any = [];
+  lisTransactions:any = []; // lista de cobros
+  lisTransactionsProcess:any = []; //lista de ventas para cobrar
   dataUser:any = {};
   rolName:string;
   listBank:any = [];
@@ -64,12 +63,6 @@ export class IndexComponent implements OnInit {
 
   }
 
-  getTransportBuyEarning(){
-    this._sale.getVentaCompleteEarningBuy( { where: { user: this.dataUser.id }, limit: 1000 } ).subscribe( res => {
-      this.dataConfig.incomeTransportBuy = res.total;
-    });
-  }
-
   getListBank(){
     this._bank.get( { where: { user: this.dataUser.id }, limit: 1000 } ).subscribe( res => {
       this.listBank = res.data;
@@ -89,29 +82,44 @@ export class IndexComponent implements OnInit {
     });
   }
 
-  getSales(){ //console.log("get sales")
+  getSales(){ console.log("get sales")
       //debo enviar el id del usuario y el usu_perfil
       let query = { usu_id : 0, usu_perfil : 0}
       let totalCompletas =0
       let totalDespachado = 0
+      let totalPdtePagoTrans = 0
       query.usu_id =  this.querysSale.where.creacion
       query.usu_perfil = this.dataUser.usu_perfil.id
       // console.log(" getSales() query", query)
       this._sale.getVentas( query ).subscribe(res=>{
-      // console.log("getSales res", res)
+      console.log("getSales res", res)
       for( let row of res.data ){
         if(query.usu_perfil == 5){ //proveedor
-          if(row.ven_estado == 1 && row.cob_id_proveedor == 0) totalCompletas += row.ven_totaldistribuidor
+          if(row.ven_estado == 1 && row.cob_id_proveedor == 0){
+            if(row.pagaPlataforma == 1){
+              totalCompletas += row.ven_totaldistribuidor
+              this.lisTransactionsProcess.push(row)
+            }else{
+              totalPdtePagoTrans += row.ven_totaldistribuidor
+            }
+          } 
           if(row.ven_estado == 3) totalDespachado += row.ven_totaldistribuidor
         }
         if(query.usu_perfil == 1 ){ //vendedor
-          if(row.ven_estado == 1 && row.cob_id_vendedor == 0) totalCompletas += row.ven_ganancias
+          if(row.ven_estado == 1 && row.cob_id_vendedor == 0){
+            if(row.pagaPlataforma == 1){
+              totalCompletas += row.ven_ganancias
+              this.lisTransactionsProcess.push(row)
+            }else
+              totalPdtePagoTrans += row.ven_ganancias
+          } 
           if(row.ven_estado == 3) totalDespachado += row.ven_ganacias
         }
 
       };
       this.dataConfig.money = totalCompletas; //Dinero para solicitar desembolso
-      this.dataConfig.incomeTransportBuy = totalDespachado;
+      this.dataConfig.pdtePagoTrans = totalPdtePagoTrans; //pendiente pago transportadora
+      this.dataConfig.enTransito = totalDespachado; //
       if(this.dataConfig.money > 0)
         this.btnDesembolsarDisabled = false
         //this.dataConfig.receive = res.total;
@@ -119,7 +127,7 @@ export class IndexComponent implements OnInit {
     });
   }
 
-  getSalesComplete(){
+  getSalesComplete(){ //no usable
     this._sale.getVentaComplete( this.querysSale ).subscribe(res=>{
       // console.log("****55", res)
       this.dataConfig.money = res.total;
@@ -135,7 +143,7 @@ export class IndexComponent implements OnInit {
     });
   }
 
-  getCobros(){ //console.log("getcobros")
+  getCobros(){ console.log("getcobros")
     // obtener los cobros
     // this._usuarios.getRecaudo( { where: { usuario: this.dataUser.id } } )
     let total = 0
@@ -165,7 +173,7 @@ export class IndexComponent implements OnInit {
     });
   }
 
-  getSalesProcess(){
+  getSalesProcess(){ //no usable
     this._sale.getVentaCompleteEarring( this.querysSale ).subscribe(res=>{
       // console.log("****55", res)
       this.dataConfig.pendingMoney = res.total;
@@ -180,6 +188,8 @@ export class IndexComponent implements OnInit {
   }
 
   handleDisbursement( obj ){ //solicitar desembolso
+    obj.amount = this.dataConfig.money
+    obj.lisTransactions = this.lisTransactionsProcess
     this.btnDesembolsarDisabled = true
     const dialogRef = this.dialog.open(FormDisbursementComponent,{
       data: { data: obj || {} }

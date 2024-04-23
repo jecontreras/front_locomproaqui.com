@@ -113,10 +113,10 @@ export class MisDespachoComponent implements OnInit {
       dataRows: []
     };
     if( this.rolName != 'administrador') this.query.where.creacion = this.dataUser.id;
+    this.cargarTodos4(); //pendietes por imprimir
     this.cargarCompletas();
     this.cargarTodos2();
     this.cargarTodos3();
-    this.cargarTodos4();
     this.cargarTodos5();
     this.cargarTodos6();
     //this.getDineros();
@@ -164,6 +164,7 @@ export class MisDespachoComponent implements OnInit {
     this.spinner.show();
     this._productos.getVentaCompletePendients( this.querysSale ).subscribe(res=>{
      // console.log("****55", res)
+     console.log("ctodos4", res.data)
       this.counts2 = res.count;
       this.Pdreacudo = res.total;
       this.dataTable4.headerRow = this.dataTable4.headerRow;
@@ -199,7 +200,7 @@ export class MisDespachoComponent implements OnInit {
         this.notscrolly = true;
     });
   }
-  cargarTodos2() {
+  cargarTodos2() { //despachadas
     this.spinner.show();
     this._productos.getVentaCompleteEarring( this.querysSale ).subscribe(res=>{
       //console.log("****55", res)
