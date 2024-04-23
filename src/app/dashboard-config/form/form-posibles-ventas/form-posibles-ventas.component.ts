@@ -47,6 +47,8 @@ export class FormPosiblesVentasComponent implements OnInit {
   coinShop:boolean = false;
   rolUser:string;
   proveedorContacto:string;
+  proveedorNombre: string;
+  productoFoto: string;
 
   constructor(
     private _ventas: VentasService,
@@ -98,6 +100,8 @@ export class FormPosiblesVentasComponent implements OnInit {
       this.listCarrito.push( res );
       console.log("****79", this.listCarrito )
       this.proveedorContacto = res.pro_usu_creacion.usu_telefono
+      this.proveedorNombre = res.bodegaName
+      this.productoFoto = res.foto
     });
   }
 
@@ -376,7 +380,15 @@ export class FormPosiblesVentasComponent implements OnInit {
       this._tools.tooast({ title: "Hemos Recibido tu Pedido de Manera Exitosa" });
 
       
-      let url = `https://wa.me/57${ this.proveedorContacto }?text=${encodeURIComponent(` Hola servicio al cliente necesito mas informacion gracias`)}`;
+      // let url = `https://wa.me/57${ this.proveedorContacto }?text=${encodeURIComponent(` Hola servicio al cliente necesito mas informacion gracias`)}`;
+      let url = `https://wa.me/57${ this.proveedorContacto }?text=${encodeURIComponent(`
+          Hola bodega (${ this.proveedorNombre } :
+          Acabo de enviar una orden de despacho de este producto:  
+          ${ this.productoFoto }
+          A tu usuario de Lokomproaqui.com agradezco la prioridad de despacho ya que es de gran importancia para satisfacer a nuestro cliente
+          Envío de 4 -8 días hábiles
+      EN ESPERA DE LA GUÍA DE DESPACHO.
+    `)}`;
       window.open( url, "Mas Informacion", "width=640, height=480");
       //this.dialog.closeAll();
       let accion: any = new CartAction({}, 'drop');
