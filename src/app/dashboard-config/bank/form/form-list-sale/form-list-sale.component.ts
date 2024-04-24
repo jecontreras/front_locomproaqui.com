@@ -92,8 +92,9 @@ export class FormListSaleComponent implements OnInit {
     //tomos los id de las ventas
     let ventas_id:any = [];
     this.data.list.map(item => ventas_id.push(item.id));
+
     let query = {
-     where : { ventas : this.data.list[0].id }
+     where : { ventas : ventas_id }
     }
     this._ventasproductos.get(query)
     .subscribe(

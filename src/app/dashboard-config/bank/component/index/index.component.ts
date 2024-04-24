@@ -119,7 +119,7 @@ export class IndexComponent implements OnInit {
       };
       this.dataConfig.money = totalCompletas; //Dinero para solicitar desembolso
       this.dataConfig.pdtePagoTrans = totalPdtePagoTrans; //pendiente pago transportadora
-      this.dataConfig.enTransito = totalDespachado; //
+      this.dataConfig.enTransito = totalDespachado; // pedidos en estado 3
       if(this.dataConfig.money > 0)
         this.btnDesembolsarDisabled = false
         //this.dataConfig.receive = res.total;

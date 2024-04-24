@@ -172,7 +172,7 @@ export class FormDisbursementComponent implements OnInit {
     console.log("handleAddCobro",this.data)
     this._cobros.create( this.data ).subscribe( res =>{
       if( res.status === 400 ){
-        this._tools.tooast( { icon: "error",title: 'Lo sentimos tenemos Problemas! '+ res.data } );
+        this._tools.tooast( { icon: "error",title: 'Lo sentimos, tenemos Problemas! '+ res.data } );
         this.disabledButton = false;
       }
       else{
