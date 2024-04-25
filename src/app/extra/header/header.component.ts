@@ -84,7 +84,8 @@ export class HeaderComponent implements OnInit {
   reacudo:number;
   routName:string = "";
   validatorVist:boolean;
-
+  usuPerfil: number = 0;
+  billetera = { enTransito : 0, pendiente : 0, porCobrar : 0  }
   constructor(
     public changeDetectorRef: ChangeDetectorRef,
     public media: MediaMatcher, private router: Router,
@@ -121,7 +122,9 @@ export class HeaderComponent implements OnInit {
       }
       //console.log( window.innerWidth )
       this.disabledSearch = window.innerWidth <= 600 ? true : false;
+       
       if( this.dataUser.id ){
+        console.log("datauser", this.dataUser)
         this.rolUser = this.dataUser.usu_perfil.prf_descripcion;
         this.activando = false;
         if(this.dataUser.usu_perfil.prf_descripcion == 'administrador') this.activando = true;
@@ -136,6 +139,8 @@ export class HeaderComponent implements OnInit {
         }
         if( this.porcentajeUser > this.dataUser.porcentaje ) this.porcentajeMostrar = this.porcentajeUser;
         else this.porcentajeMostrar = this.dataUser.porcentaje;
+        this.usuPerfil = this.dataUser.usu_perfil.id
+        console.log("usuperfil", this.usuPerfil)
       }
       this.submitChat();
     });
@@ -241,6 +246,46 @@ export class HeaderComponent implements OnInit {
     if( this.dataUser.id )this.getCarrito();
     if( this.dataUser.id ) this.getAlert();
     this.getEventos();
+
+    this.billeteraCalcular()
+  }
+
+  billeteraCalcular(){
+    let query = { usu_id : 0, usu_perfil : 0}
+      let totalCompletas =0
+      let totalDespachado = 0
+      let totalPdtePagoTrans = 0
+      query.usu_id = this.userId.id
+      query.usu_perfil = this.dataUser.usu_perfil.id
+      console.log(" billeteraCalcular() query", query)
+      this._productos.getVentas( query ).subscribe(res=>{
+      //console.log("getSales res", res)
+      for( let row of res.data ){
+        if(query.usu_perfil == 5){ //proveedor
+          if(row.ven_estado == 1 && row.cob_id_proveedor == 0){
+            if(row.pagaPlataforma == 1){
+              totalCompletas += row.ven_totaldistribuidor
+            }else{
+              totalPdtePagoTrans += row.ven_totaldistribuidor
+            }
+          } 
+          if(row.ven_estado == 3) totalDespachado += row.ven_totaldistribuidor
+        }
+        if(query.usu_perfil == 1 ){ //vendedor
+          if(row.ven_estado == 1 && row.cob_id_vendedor == 0){
+            if(row.pagaPlataforma == 1){
+              totalCompletas += row.ven_ganancias
+            }else
+              totalPdtePagoTrans += row.ven_ganancias
+          } 
+          if(row.ven_estado == 3) totalDespachado += row.ven_ganacias
+        }
+      };
+      this.billetera.porCobrar = totalCompletas; //Dinero para solicitar desembolso
+      this.billetera.pendiente = totalPdtePagoTrans; //pendiente pago transportadora
+      this.billetera.enTransito = totalDespachado; // pedidos en estado 3
+      console.log("billetera", this.billetera)
+    });
   }
 
   loadCoin() {

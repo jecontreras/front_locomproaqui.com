@@ -127,4 +127,6 @@ export class LoginsComponent implements OnInit {
     localStorage.removeItem('user');
   }
 
+  
+
 }

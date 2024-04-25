@@ -82,7 +82,7 @@ export class IndexComponent implements OnInit {
     });
   }
 
-  getSales(){ console.log("get sales")
+  getSales(){ //console.log("get sales")
       //debo enviar el id del usuario y el usu_perfil
       let query = { usu_id : 0, usu_perfil : 0}
       let totalCompletas =0
@@ -92,7 +92,7 @@ export class IndexComponent implements OnInit {
       query.usu_perfil = this.dataUser.usu_perfil.id
       // console.log(" getSales() query", query)
       this._sale.getVentas( query ).subscribe(res=>{
-      console.log("getSales res", res)
+      //console.log("getSales res", res)
       for( let row of res.data ){
         if(query.usu_perfil == 5){ //proveedor
           if(row.ven_estado == 1 && row.cob_id_proveedor == 0){
@@ -143,7 +143,7 @@ export class IndexComponent implements OnInit {
     });
   }
 
-  getCobros(){ console.log("getcobros")
+  getCobros(){ //console.log("getcobros")
     // obtener los cobros
     // this._usuarios.getRecaudo( { where: { usuario: this.dataUser.id } } )
     let total = 0
