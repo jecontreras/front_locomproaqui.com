@@ -61,29 +61,41 @@ export class ToolsService {
     });
   }
   modalInputSelect( ){
-    return new Promise( resolve =>{
+    return new Promise(resolve => {
       Swal.fire({
         title: 'Selecciona una Talla',
         html: `
-        <select id="mySelect" class="form-control" >
-          <option>35</option>
-          <option>36</option>
-          <option>37</option>
-          <option>38</option>
-          <option>39</option>
-          <option>40</option>
-        </select>
+          <div class="form-group">
+            <label for="exampleFormControlSelect1">Tallas Disponibles</label>
+            <div class="select-with-arrow">
+              <select class="form-control" id="mySelect">
+                <option>35</option>
+                <option>36</option>
+                <option>37</option>
+                <option>38</option>
+                <option>39</option>
+                <option>40</option>
+              </select>
+              <i class="fas fa-chevron-down"></i>
+            </div>
+          </div>
+          <mat-form-field class="example-full-width">
+            <mat-label>Cantidad</mat-label>
+            <input matInput id="cantidadInput" type="number" class="form-control" placeholder="Cantidad a adquirir">
+          </mat-form-field>
         `,
         showCancelButton: true,
         focusConfirm: false,
-        preConfirm: ( $event ) => {
+        preConfirm: () => {
           const selectedOption = (document.getElementById('mySelect') as HTMLSelectElement).value;
+          const cantidad = (document.getElementById('cantidadInput') as HTMLInputElement).value;
           console.log('Selected option:', selectedOption);
-          Swal.fire(`Seleccionaste: ${selectedOption}`);
-          return resolve( selectedOption );
+          console.log('Cantidad a adquirir:', cantidad);
+          resolve({ talla: selectedOption, cantidad: cantidad });
         }
       });
     });
+    
   }
   tooast(text: any) {
     Swal.fire({

@@ -39,8 +39,13 @@ export class LandingComponent implements OnInit {
         row.tallaSelect = row.tallaSelect.filter( item => item.check === true );
         this.listGaleria.push( ...row.galeriaList );
       }
+      this.listGaleria.sort(() => this.getRandomNumber());
     } catch (error) { }
     //console.log("****", this.dataPro, this.listGaleria)
+  }
+
+  getRandomNumber() {
+    return Math.random() - 0.5;
   }
 
   scrollToNextStep() {
@@ -84,33 +89,40 @@ export class LandingComponent implements OnInit {
   async handleOpenDialogPhoto( row, item ){
     this._ToolServices.openFotoAlert( row.foto );
     item.foto = row.foto;
-    let selectTalla = await this._ToolServices.modalInputSelect();
-    //console.log("****70", selectTalla)
+    let selectTalla:any = await this._ToolServices.modalInputSelect();
+    console.log("****70", selectTalla)
     if( !selectTalla ) return false;
-    row.tal_descripcion = selectTalla;
-    this.handleOpenDialogAmount( row, item )
+    row.tal_descripcion = selectTalla.talla;
+    row.amountAd = selectTalla.cantidad;
+    this.handleOpenDialogAmount( row, item, false )
   }
 
   async handleDeleteItem( item ){
     let alert = await this._ToolServices.confirm({title:"Eliminar", detalle:"Deseas Eliminar Item", confir:"Si Eliminar"});
     if( !alert.value ) return false;
-    this.listDataAggregate = this.listDataAggregate.filter( row => row.codigo !== item.codigo );
+    this.listDataAggregate = this.listDataAggregate.filter( row => row.id !== item.id );
     this.suma();
   }
 
-  async handleOpenDialogAmount( row, item ){
-    let result:any = await this._ToolServices.alertInput( { input: "number", title: "Cantidad adquirir", confirme: "Aceptar" } );
-    if( !result.value ) return false;
-    this.listDataAggregate.push( { ref: item.talla, foto: item.detailsP.foto, amountAd: Number( result.value ), talla: row.tal_descripcion, id: this._ToolServices.codigo() } );
+  async handleOpenDialogAmount( row, item, opt ){
+    if( opt === true ) {
+      let result:any = await this._ToolServices.alertInput( { input: "number", title: "Cantidad adquirir", confirme: "Aceptar" } );
+      if( !result.value ) return false;
+      row.cantidadAd = result.value;
+    }
+    this.listDataAggregate.push( { ref: item.talla, foto: item.detailsP.foto, amountAd: Number( row.amountAd ), talla: row.tal_descripcion, id: this._ToolServices.codigo() } );
+    console.log("***114", this.listDataAggregate)
     this.suma();
-    this._ToolServices.presentToast("Producto Agregado al Carrito")
+    this._ToolServices.basic("Producto Agregado al Carrito")
   }
 
   suma(){
+    this.data.sumAmount = 0;
     for( let row of this.listDataAggregate ){
-      this.data.sumAmount = row.amountAd;
+      this.data.sumAmount+= row.amountAd;
     }
-    this.data.priceTotal = this.dataPro.pro_vendedor * this.data.sumAmount;
+    if( this.data.sumAmount >= 6 ) this.data.priceTotal = this.dataPro.pro_vendedor * this.data.sumAmount;
+    else this.data.priceTotal = this.dataPro.pro_uni_venta * this.data.sumAmount;
   } 
 
   handleEndOrder(){
@@ -129,6 +141,12 @@ export class LandingComponent implements OnInit {
       this.btnDisabled = false;
     },()=> this.btnDisabled = true);
     //console.log("***data", dataEnd)
+  }
+
+  validarCantidad(){
+    let sum = 0;
+    for( let row of this.listDataAggregate ) sum+=row.amountAd
+    if( sum < 6 ) this._ToolServices.basicIcons( { header: "Alerta", subheader: "Recuerda que para aplicar al precio de $15.500 son despues de 6 pares en adelante de lo contrario saldran a $25.000"})
   }
 
   validarInput(){

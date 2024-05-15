@@ -90,8 +90,7 @@
                             </style>
                             <div class="paragraph-inner">
                               <p style="text-align: center;"><strong>ANTES&nbsp;<s>$35.000</s></strong>
-                              <p style="text-align: center;"><strong style="font-size: 36px; color: rgb(79, 154, 10);">SOLO $15.900
-                                  HOY</strong>
+                              <p style="text-align: center;"><strong style="font-size: 36px; color: rgb(79, 154, 10);">SOLO {{ _ToolServices.monedaChange( 3, 2, dataPro.pro_vendedor ) }} DESDE 6 PARES EN ADELANTE </strong>
                               <p style="text-align: center;"><span style="font-size: 23px;">﻿AHORRAS 20%</span></p>
                             </div>
                           </div>
@@ -172,8 +171,12 @@
                 </div>
             </div>
         </section>
-        <section data-v-6bea8f81="" data-eid="28469" id="28469" class="section full no-desktop" style="margin: 30px 0px 0px; background-color: rgb(0, 0, 0); background-size: auto; background-repeat: no-repeat;">
-            <div [innerHtml]="data.pro_descripcion " > </div>
+        <section data-v-6bea8f81="" data-eid="902501" id="902501" class="section full" style="background-size: auto; background-repeat: no-repeat;">
+            <div data-v-4b3acc2c="" data-v-6bea8f81="" data-eid="582968" id="582968" class="section_row" style="border-width: 0px; border-style: solid; border-color: transparent; color: rgb(48, 48, 48); font-size: 14px; text-align: initial; margin: 0px; padding: 0px; background-size: auto; background-repeat: no-repeat;">
+                <div data-v-796cd32d="" data-v-4b3acc2c="" class="row-column" style="width: 100%;">
+                    <div [innerHtml]="dataPro.pro_descripcion" > </div>
+                </div>
+            </div>
         </section>
         <section data-v-6bea8f81="" data-eid="28469" id="28469" class="section full no-desktop" style="margin: 30px 0px 0px; background-color: rgb(0, 0, 0); background-size: auto; background-repeat: no-repeat;">
             <div data-v-4b3acc2c="" data-v-6bea8f81="" data-eid="17349" id="17349" class="section_row" style="margin: 20px 0px; background-size: auto; background-repeat: no-repeat;">
@@ -302,6 +305,7 @@
                         <div data-v-3607a525="" class="headline el-109983" style='line-height: 1; color: rgb(255, 255, 255); font-family: "Abril Fatface";  padding: 5px; background-color: rgb(21, 20, 20); text-shadow: transparent 0px 0px 0px;'>
                             <div class="headline-inner">
                                 <h3>Armando tu Pedido</h3>
+                                <p style="    font-size: 30px;" class="text-danger">Recuerda que Para que Aplique el Precio de $15.500 La Compra Minima es de 6 pares en adelante</p>
                             </div>
                         </div>
                     </div>
@@ -319,7 +323,7 @@
                                         <div data-v-3607a525="" data-v-796cd32d="" data-eid="109983" class="element-wrapper">
                                             <div data-v-3607a525="" class="headline el-109983" style='line-height: 1; color: rgb(255, 255, 255); font-family: "Abril Fatface";  padding: 5px; background-color: rgb(21, 20, 20); text-shadow: transparent 0px 0px 0px;'>
                                                 <div class="headline-inner">
-                                                    <h4><span class="text-danger">Paso 1:</span> Cual te Gusta!</h4>
+                                                    <h4><span class="text-danger">Paso 1:</span> Cuales te Gustan!</h4>
                                                 </div>
                                             </div>
                                         </div>
@@ -345,14 +349,14 @@
                                             </mat-select>
                                         </mat-form-field>
                                     </div>
-                                    <div class="col-12">
+                                    <!--<div class="col-12">
                                         <mat-form-field class="anchosP">
                                             <mat-label> Talla </mat-label>
                                             <mat-select [(ngModel)]="item.detailsP.talla">
-                                            <mat-option *ngFor="let row of item.tallaSelect" [value]="row.tal_descripcion" (click)="handleOpenDialogAmount( row, item )"> {{ row.tal_descripcion }} </mat-option>
+                                            <mat-option *ngFor="let row of item.tallaSelect" [value]="row.tal_descripcion" (click)="handleOpenDialogAmount( row, item, true )"> {{ row.tal_descripcion }} </mat-option>
                                             </mat-select>
                                         </mat-form-field>
-                                    </div>
+                                    </div>-->
                                   </div>
                                 </mat-card-content>
                               </mat-card>                              
@@ -394,7 +398,7 @@
                                         </mat-form-field>
                                         <mat-form-field class="example-full-width">
                                             <mat-label>Cantidad</mat-label>
-                                            <input matInput [(ngModel)]="item.amountAd">
+                                            <input matInput [(ngModel)]="item.amountAd" (change)="suma()">
                                         </mat-form-field>                   
                                       </span>
                                     </div>
@@ -416,7 +420,8 @@
                                     <div class="row align-items-center">
                                       <div class="col-auto">
                                         <h4>
-                                            Precio: {{ _ToolServices.monedaChange( 3, 2, dataPro.pro_vendedor ) }}
+                                            <span *ngIf="data.sumAmount >=6">Precio: {{ _ToolServices.monedaChange( 3, 2, dataPro.pro_vendedor ) }}</span>
+                                            <span *ngIf="data.sumAmount <6">Precio: {{ _ToolServices.monedaChange( 3, 2, dataPro.pro_uni_venta ) }}</span>
                                         </h4>
                                       </div>
                                       <div class="col ml--2">
@@ -498,7 +503,7 @@
                                 <div class="form-group col-12 col-sm-6">
                                     <mat-form-field class="example-full-width">
                                         <mat-label>Numero de Whatsapp</mat-label>
-                                        <input matInput [(ngModel)]="data.numero" placeholder="Numero de Whatsapp" type="text">
+                                        <input matInput [(ngModel)]="data.numero" placeholder="Numero de Whatsapp" type="number">
                                     </mat-form-field>
                                 </div>
                             </div>
