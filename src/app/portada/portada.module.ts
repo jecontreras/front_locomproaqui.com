@@ -26,6 +26,7 @@ import { ConfigModule } from '../dashboard-config/config.module';
 import { ExtraModule } from '../extra/extra.module';
 import { NgxCurrencyModule } from 'ngx-currency';
 import { LandingComponent } from './landing/landing.component';
+import { AutocompleteLibModule } from 'angular-ng-autocomplete';
 
 
 @NgModule({
@@ -51,7 +52,8 @@ import { LandingComponent } from './landing/landing.component';
     NgxImageZoomModule,
     ConfigModule,
     ExtraModule,
-    NgxCurrencyModule
+    NgxCurrencyModule,
+    AutocompleteLibModule
   ],
   exports: [ InfoProductoComponent ]
 })

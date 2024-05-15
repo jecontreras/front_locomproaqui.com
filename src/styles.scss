@@ -16,6 +16,10 @@ html, body {
   src: url('./assets/fonts/axiforma/Axiforma-Regular.ttf');
 }
 
+.optionHeight{
+  height: 8em !important;
+}
+
 .zoom-on-hover {
   transition: transform 0.3s ease;
 }
