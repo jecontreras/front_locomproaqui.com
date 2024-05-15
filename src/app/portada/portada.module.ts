@@ -25,12 +25,13 @@ import { NgxDropzoneModule } from 'ngx-dropzone';
 import { ConfigModule } from '../dashboard-config/config.module';
 import { ExtraModule } from '../extra/extra.module';
 import { NgxCurrencyModule } from 'ngx-currency';
+import { LandingComponent } from './landing/landing.component';
 
 
 @NgModule({
   entryComponents: [ InfoProductoComponent,ChecktDialogComponent, ],
   declarations: [
-    MainsComponent, TiendaComponent, ProductosComponent, FooterComponent, MenuComponent, InfoProductoComponent, ProductosViewComponent, ContactoComponent, ChecktComponent, CarritoComponent, CompletarComponent, ChecktDialogComponent, DetallePedidoComponent, CatalogoComponent],
+    MainsComponent, TiendaComponent, ProductosComponent, FooterComponent, MenuComponent, InfoProductoComponent, ProductosViewComponent, ContactoComponent, ChecktComponent, CarritoComponent, CompletarComponent, ChecktDialogComponent, DetallePedidoComponent, CatalogoComponent, LandingComponent],
   imports: [
     PortadaRoutingModule,
     CommonModule,
