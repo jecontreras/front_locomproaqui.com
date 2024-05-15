@@ -60,6 +60,31 @@ export class ToolsService {
       footer: text.footer || ''
     });
   }
+  modalInputSelect( ){
+    return new Promise( resolve =>{
+      Swal.fire({
+        title: 'Selecciona una Talla',
+        html: `
+        <select id="mySelect" class="form-control" >
+          <option>35</option>
+          <option>36</option>
+          <option>37</option>
+          <option>38</option>
+          <option>39</option>
+          <option>40</option>
+        </select>
+        `,
+        showCancelButton: true,
+        focusConfirm: false,
+        preConfirm: ( $event ) => {
+          const selectedOption = (document.getElementById('mySelect') as HTMLSelectElement).value;
+          console.log('Selected option:', selectedOption);
+          Swal.fire(`Seleccionaste: ${selectedOption}`);
+          return resolve( selectedOption );
+        }
+      });
+    });
+  }
   tooast(text: any) {
     Swal.fire({
       // position: text.position || 'top-end',
