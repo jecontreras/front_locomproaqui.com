@@ -169,7 +169,7 @@ export class LandingComponent implements OnInit {
       *Barrio*: ${ data.barrio }
       *Numero de mi Pedido*: ${ data.id }
     `;*/
-    let urlWhatsapp = `Hola Servicio al Cliente de VICTOR LANDAZURY
+    let urlWhatsapp = `https://wa.me/573112128943?text=Hola Servicio al Cliente de VICTOR LANDAZURY
             Acabo de realizar un Pedido
             Mi Nombre es: ${ data.nombre }      
             Ciudad: ${ data.ciudad }

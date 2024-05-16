@@ -21,7 +21,7 @@ export class MenuLateralComponent implements OnInit {
   @ViewChild('color3',{ static: false } ) private color3: any
   @ViewChild('color4',{ static: false } ) private color4: any
   RouterName:string;
-  urlWhatsapp1:string = "https://wa.me/573108131582?text=Hola Servicio al cliente"
+  urlWhatsapp1:string = "https://wa.me/573112128943?text=Hola Servicio al cliente"
 
   constructor(
     private _store: Store<STORAGES>,
