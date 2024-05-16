@@ -160,7 +160,7 @@ export class LandingComponent implements OnInit {
   }
 
   openWhatsapp( data:any ){
-    let urlWhatsapp = `https://wa.me/573108131582?text=
+    /*let urlWhatsapp = `https://wa.me/573108131582?text=
       *Hola Servicio al Cliente este es mi Pedido*
       *Nombre*: ${ data.nombre }
       *Ciudad*: ${ data.ciudad }
@@ -168,7 +168,21 @@ export class LandingComponent implements OnInit {
       *Direccion*: ${ data.direccion }
       *Barrio*: ${ data.barrio }
       *Numero de mi Pedido*: ${ data.id }
-    `;
+    `;*/
+    let urlWhatsapp = `Hola Servicio al Cliente de VICTOR LANDAZURY
+            Acabo de realizar un Pedido
+            Mi Nombre es: ${ data.nombre }      
+            Ciudad: ${ data.ciudad }
+            Numero: ${ data.numero} Direccion: ${ data.direccion }
+            Barrio: ${ data.barrio }     
+            ID de Pedido: ${ data.id }
+            
+            Cantidad de pares: ${ this.data.sumAmount }
+            
+            Valor a pagar ${  this.data.priceTotal }
+            ((A espera que le agregues el valor de envío*para saber cuánto debo pagar en total al momento de recibir el pedido))
+            
+            Quedo al pendiente de la guía de despacho tan pronto la tengas me la envías muchas gracias 🫂🤝`;
     window.open( urlWhatsapp );
     this.data = {};
     this.listDataAggregate = [];
