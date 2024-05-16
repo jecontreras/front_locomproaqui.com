@@ -1,4 +1,4 @@
-<div class="social-bar" *ngIf="estado">
+<div class="social-bar" *ngIf="estado && RouterName !== '/front/landing' ">
     <!--<a class="icon icon-flecha anchos1" (click)="estado = !estado" matTooltip="Ocultar Elementos">
       <i class="material-icons altosIcons">keyboard_arrow_right</i>
     </a>-->
@@ -25,7 +25,7 @@
 
 
   <!-- Modal -->
-  <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div *ngIf="RouterName !== '/front/landing'" class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
       <div class="modal-content">
         <div class="modal-header">
@@ -46,7 +46,13 @@
   </div>
 
   <div class="whatsapp-button">
-    <a href='https://api.whatsapp.com/send?phone={{whatsappContact}}&text=Hola%20servicio%20al%20cliente%20%F0%9F%98%8A%20'
+    <a [href]='urlWhatsapp'
+      *ngIf="RouterName !== '/front/landing'"
+       target="_blank">
+      <img src="./assets/icons/whatsapp.png" alt="" style="width: 30px;">
+    </a>
+    <a [href]='urlWhatsapp1'
+      *ngIf="RouterName === '/front/landing'"
        target="_blank">
       <img src="./assets/icons/whatsapp.png" alt="" style="width: 30px;">
     </a>

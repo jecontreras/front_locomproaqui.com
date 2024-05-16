@@ -1,0 +1,6 @@
+<mat-form-field>
+    <mat-label>Selecciona una talla</mat-label>
+    <mat-select [(value)]="selectedOption">
+      <mat-option *ngFor="let option of options" [value]="option">{{ option }}</mat-option>
+    </mat-select>
+  </mat-form-field>
