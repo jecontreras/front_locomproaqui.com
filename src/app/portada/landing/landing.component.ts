@@ -63,9 +63,11 @@ export class LandingComponent implements OnInit {
     list.foto = photo;
   }
 
-  handleOpenDialogPhoto( row, item ){
-    this._ToolServices.openFotoAlert( row.foto );
+  async handleOpenDialogPhoto( row, item ){
+    await this._ToolServices.openFotoAlert( row.foto );
     item.foto = row.foto;
+    let result:any = await this._ToolServices.alertInput( { input: "select", title: "Cantidad adquirir", confirme: "Aceptar" } );
+    if( !result.value ) return false;
   }
 
   async handleDeleteItem( item ){

@@ -357,15 +357,15 @@
                                 <li class="list-group-item px-0">
                                     <div class="row align-items-center">
                                       <div class="col-auto">
-                                        Precio: {{ _ToolServices.monedaChange( 3, 2, dataPro.pro_vendedor ) }}
+                                        <span class="text-danger">Precio: </span> {{ _ToolServices.monedaChange( 3, 2, dataPro.pro_vendedor ) }}
                                       </div>
                                       <div class="col ml--2">
                                         <h4 class="mb-0">
-                                          Cantidades Pares {{ data.sumAmount }}
+                                          <span class="text-danger" >Cantidades Pares: </span> {{ data.sumAmount }}
                                         </h4>
                                       </div>
                                       <div class="col-auto">
-                                        Total a Pagar Sin Envio {{ _ToolServices.monedaChange( 3, 2, data.priceTotal ) }}
+                                        <span class="text-danger" >Total a Pagar Sin Envio:</span> {{ _ToolServices.monedaChange( 3, 2, data.priceTotal ) }}
                                       </div>
                                     </div>
                                   </li>

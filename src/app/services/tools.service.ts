@@ -113,14 +113,14 @@ export class ToolsService {
   }
 
   openFotoAlert( foto:string ){
-    Swal.fire({
+    return Swal.fire({
       title: '',
       text: '',
       imageUrl: foto,
       imageWidth: 400,
       imageHeight: 200,
       imageAlt: '',
-    })
+    });
   }
 
   ProcessTime(text: any) {
