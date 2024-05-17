@@ -169,20 +169,20 @@ export class LandingComponent implements OnInit {
       *Barrio*: ${ data.barrio }
       *Numero de mi Pedido*: ${ data.id }
     `;*/
-    let urlWhatsapp = `https://wa.me/573112128943?text=Hola Servicio al Cliente de VICTOR LANDAZURY
-            Acabo de realizar un Pedido
-            Mi Nombre es: ${ data.nombre }      
-            Ciudad: ${ data.ciudad }
-            Numero: ${ data.numero} Direccion: ${ data.direccion }
-            Barrio: ${ data.barrio }     
-            ID de Pedido: ${ data.id }
-            
-            Cantidad de pares: ${ this.data.sumAmount }
-            
-            Valor a pagar ${  this.data.priceTotal }
-            ((A espera que le agregues el valor de envío*para saber cuánto debo pagar en total al momento de recibir el pedido))
-            
-            Quedo al pendiente de la guía de despacho tan pronto la tengas me la envías muchas gracias 🫂🤝`;
+    let urlWhatsapp = `https://wa.me/573112128943?text=${ encodeURIComponent(` Hola Servicio al Cliente de VICTOR LANDAZURY
+      Acabo de realizar un Pedido \n
+      Mi Nombre es: ${ data.nombre } \n      
+      Ciudad: ${ data.ciudad } \n
+      Numero: ${ data.numero} Direccion: ${ data.direccion } \n
+      Barrio: ${ data.barrio } \n
+      ID de Pedido: ${ data.id } \n
+      
+      Cantidad de pares: ${ this.data.sumAmount } \n
+      
+      Valor a pagar ${  this.data.priceTotal } \n
+      ((A espera que le agregues el valor de envío*para saber cuánto debo pagar en total al momento de recibir el pedido)) \n
+      
+      Quedo al pendiente de la guía de despacho tan pronto la tengas me la envías muchas gracias 🙂 `)}`;
     window.open( urlWhatsapp );
     this.data = {};
     this.listDataAggregate = [];
