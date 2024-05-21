@@ -11,6 +11,7 @@ import { DetallePedidoComponent } from './detalle-pedido/detalle-pedido.componen
 import { CatalogoComponent } from './catalogo/catalogo.component';
 import { PedidosComponent } from '../components/pedidos/pedidos.component';
 import { LandingComponent } from './landing/landing.component';
+import { LandingWhatsappComponent } from './landing-whatsapp/landing-whatsapp.component';
 
 
 const routes: Routes = [
@@ -65,7 +66,11 @@ const routes: Routes = [
           {
             path: 'landing',
             component: LandingComponent
-          }
+          },
+          {
+            path: 'landingWhatsapp/:code',
+            component: LandingWhatsappComponent
+          },
         ]
       },
       // {
