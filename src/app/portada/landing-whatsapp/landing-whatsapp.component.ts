@@ -1,6 +1,6 @@
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { DANEGROUP } from 'src/app/JSON/dane-nogroup';
+import { DANEGROUP, TRIDYCIUDAD } from 'src/app/JSON/dane-nogroup';
 import { ToolsService } from 'src/app/services/tools.service';
 import { ProductoService } from 'src/app/servicesComponents/producto.service';
 import { VentasService } from 'src/app/servicesComponents/ventas.service';
@@ -16,8 +16,8 @@ export class LandingWhatsappComponent implements OnInit {
   listGaleria:any = [];
   viewPhoto:string;
   listDataAggregate:any = [];
-  listCiudades:any = DANEGROUP;
-  keyword = 'name';
+  listCiudades:any = TRIDYCIUDAD;
+  keyword = 'ciudad';
   data:any = {};
   @ViewChild('nextStep', { static: true }) nextStep: ElementRef;
   currentIndex: number = 0;
@@ -146,7 +146,10 @@ export class LandingWhatsappComponent implements OnInit {
     this.btnDisabled = true;
     let dataEnd:any = this.data;
     dataEnd.listProduct = this.listDataAggregate;
-    if( dataEnd.ciudad.name ) dataEnd.ciudad = dataEnd.ciudad.name;
+    if( dataEnd.ciudad.ciudad_full ) {
+      dataEnd.codeCiudad = dataEnd.ciudad.id_ciudad;
+      dataEnd.ciudad = dataEnd.ciudad.ciudad_full;
+    }
     dataEnd.stateWhatsapp = 1;
     this._ventas.updateVentasL( dataEnd ).subscribe( res =>{
       //console.log("*****101", res)
@@ -207,6 +210,18 @@ export class LandingWhatsappComponent implements OnInit {
 
   async precioRutulo( ev:any ){
     console.log("***EVE", ev);
+    let data = {
+      peso: 1,
+      alto: 9,
+      ancho: 21,
+      profundo: 28,
+      idDestino: ev.id_ciudad,
+      valor_declarado: ( this.data.priceTotal * 50 ) / 100 ,
+      valor_recaudar: this.data.priceTotal
+    };
+    this._ventas.getFleteValorTriidy( data ).subscribe( res =>{
+      this.data.totalFlete = res.data;
+    });
   }
   onChangeSearch( ev:any ){
     //console.log( ev )

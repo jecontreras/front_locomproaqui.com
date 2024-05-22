@@ -147,7 +147,12 @@
                                       </div>
                                       <div class="col-auto">
                                         <h4>
-                                            Total a Pagar Sin Envio {{ _ToolServices.monedaChange( 3, 2, data.priceTotal ) }}
+                                            Total a Pagar Sin Envio {{ _ToolServices.monedaChange( 3, 2, data.priceTotal|| 0 ) }}
+                                        </h4>
+                                      </div>
+                                      <div class="col-auto">
+                                        <h4>
+                                            Total a Pagar {{ _ToolServices.monedaChange( 3, 2, data.totalFlete || 0 ) }}
                                         </h4>
                                       </div>
                                     </div>
@@ -193,9 +198,10 @@
     
                                         <ng-template #itemTemplate let-item>
                                             <div class="item">
-                                                <span [innerHTML]="item.city"></span> &nbsp; | &nbsp;
-                                                <small>Departamento: {{ item.state }}</small> &nbsp; | &nbsp;
-                                                <small>--: {{ item.name }}</small>
+                                                <span [innerHTML]="item.ciudad"></span> &nbsp; | &nbsp;
+                                                <small>Departamento: {{ item.departamento }}</small> &nbsp; | &nbsp;
+                                                <small>--: {{ item.ciudad_full }}</small>
+                                                <small>Transportadora: {{ item.transportadora }}</small>
                                             </div>
                                         </ng-template>
     
