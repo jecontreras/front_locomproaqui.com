@@ -37,6 +37,9 @@ export class VentasService {
   getFleteValor(query:any){
     return this._model.querys('tblventas/getFleteValor',query, 'post');
   }
+  getFleteValorTriidy(query:any){
+    return this._model.querysFlete('fletes/getFleteTriidy',query, 'post');
+  }
   cancelarFlete(query:any){
     return this._model.querys('tblventas/cancelarGuia',query, 'post');
   }

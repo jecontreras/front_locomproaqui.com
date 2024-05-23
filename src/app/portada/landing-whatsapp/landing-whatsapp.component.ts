@@ -1,38 +1,44 @@
-import { Component, OnInit, ViewChild, ElementRef  } from '@angular/core';
-import { DANEGROUP } from 'src/app/JSON/dane-nogroup';
+import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
+import { DANEGROUP, TRIDYCIUDAD } from 'src/app/JSON/dane-nogroup';
 import { ToolsService } from 'src/app/services/tools.service';
 import { ProductoService } from 'src/app/servicesComponents/producto.service';
 import { VentasService } from 'src/app/servicesComponents/ventas.service';
 
 @Component({
-  selector: 'app-landing',
-  templateUrl: './landing.component.html',
-  styleUrls: ['./landing.component.scss']
+  selector: 'app-landing-whatsapp',
+  templateUrl: './landing-whatsapp.component.html',
+  styleUrls: ['./landing-whatsapp.component.scss']
 })
-export class LandingComponent implements OnInit {
+export class LandingWhatsappComponent implements OnInit {
+
   dataPro:any = [];
   listGaleria:any = [];
   viewPhoto:string;
   listDataAggregate:any = [];
-  listCiudades:any = DANEGROUP;
-  keyword = 'name';
-  data:any = {
-    sumAmount: 0,
-    priceTotal: 0
-  };
+  listCiudades:any = TRIDYCIUDAD;
+  keyword = 'ciudad';
+  data:any = {};
   @ViewChild('nextStep', { static: true }) nextStep: ElementRef;
   currentIndex: number = 0;
   btnDisabled: boolean = false;
+  codeId:string;
 
   constructor(
     private _productServices: ProductoService,
     public _ToolServices: ToolsService,
-    private _ventas: VentasService
+    private _ventas: VentasService,
+    private activate: ActivatedRoute,
   ) { }
 
   async ngOnInit() {
     this.dataPro = await this.getProduct();
     this.viewPhoto = this.dataPro.foto;
+    this.codeId = this.activate.snapshot.paramMap.get('code');
+    this.data = await this.getVentaCode( );
+    this.data.sumAmount = 0;
+    this.data.priceTotal = 0;
+    
     try {
       for( let row of this.dataPro.listColor ){
         row.detailsP = {};
@@ -42,6 +48,12 @@ export class LandingComponent implements OnInit {
       this.listGaleria.sort(() => this.getRandomNumber());
     } catch (error) { }
     //console.log("****", this.dataPro, this.listGaleria)
+  }
+
+  getVentaCode(){
+    return new Promise( resolve =>{
+      this._ventas.getVentasL( { where: { code: this.codeId } } ).subscribe( res => resolve( res.data[0] || {} ), error => resolve( error ) );
+    });
   }
 
   getRandomNumber() {
@@ -77,8 +89,6 @@ export class LandingComponent implements OnInit {
       });
     });
   }
-
-
 
   handleOpenViewPhoto( photo:string ){
     this.viewPhoto = photo;
@@ -125,6 +135,8 @@ export class LandingComponent implements OnInit {
     }
     if( this.data.sumAmount >= 6 ) this.data.priceTotal = this.dataPro.pro_vendedor * this.data.sumAmount;
     else this.data.priceTotal = this.dataPro.pro_uni_venta * this.data.sumAmount;
+    this.data.countItem = this.listDataAggregate.length;
+    this.data.totalAPagar = this.data.priceTotal;
   } 
 
   handleEndOrder(){
@@ -134,38 +146,22 @@ export class LandingComponent implements OnInit {
     this.btnDisabled = true;
     let dataEnd:any = this.data;
     dataEnd.listProduct = this.listDataAggregate;
-    //edu
-    console.log("ciudad",dataEnd.ciudad); const ciudad_code = dataEnd.ciudad.code
-    if( dataEnd.ciudad.name ) dataEnd.ciudad = dataEnd.ciudad.name;
-    this._ventas.createVentasL( dataEnd ).subscribe( res =>{
+    if( dataEnd.ciudad.ciudad_full ) {
+      dataEnd.codeCiudad = dataEnd.ciudad.id_ciudad;
+      dataEnd.ciudad = dataEnd.ciudad.ciudad_full;
+    }
+    dataEnd.stateWhatsapp = 1;
+    this._ventas.updateVentasL( dataEnd ).subscribe( res =>{
       //console.log("*****101", res)
       if( !res.id ) return false;
-      this.openWhatsapp( res );
-      this._ToolServices.presentToast("Pedido Tomado, en Espera de un Asesor se comunique con usted!");
+      //this.openWhatsapp( res );
+      this._ToolServices.presentToast("Pedido Tomado en Espera de un Asesor te comunicas con usted!");
       this.btnDisabled = false;
-      //edu
-      dataEnd.ciudad_code = ciudad_code; this.pedidoGuardar(dataEnd);
+      this._ToolServices.modaHtmlEnd( dataEnd );
+      this.data = [];
+      this.listDataAggregate = [];
     },()=> this.btnDisabled = true);
     //console.log("***data", dataEnd)
-  }
-
-  pedidoGuardar(pedido){
-    console.log("pedido", pedido)
-    const options = {
-      method : "POST",
-      headers : {
-        "Content-Type" : "application/json"
-      },
-      body : JSON.stringify(pedido)
-    }
-    const url = "https://ginga.com.co/pedidosweb/api/lokompro/pedido.php";
-    fetch( url,options)
-    .then(response => response.json())
-    .then(data => { console.log(data)
-      if(data.response == "ok"){
-        console.log("Pedido Realizado")
-      }
-    })
   }
 
   validarCantidad(){
@@ -216,6 +212,52 @@ export class LandingComponent implements OnInit {
 
   async precioRutulo( ev:any ){
     console.log("***EVE", ev);
+    let data = {
+      peso: 1 ,
+      alto: 9,
+      ancho: 21,
+      profundo: 28,
+      idDestino: ev.id_ciudad,
+      valor_declarado: ( this.data.priceTotal * 50 ) / 100 ,
+      valor_recaudar: this.data.priceTotal
+    };
+    if ( this.data.sumAmount > 6 )  {
+      data.peso = 2;
+      data.alto= 9 * 2;
+    }
+    else if ( this.data.sumAmount > 12 )  {
+      data.peso = 3;
+      data.alto= 9 * 3;
+    }
+    else if ( this.data.sumAmount > 18 )  {
+      data.peso = 4;
+      data.alto= 9 * 4;
+    }
+    else if ( this.data.sumAmount > 24 )  {
+      data.peso = 5;
+      data.alto= 9 * 5;
+    }
+    else if ( this.data.sumAmount > 31 )  {
+      data.peso = 6;
+      data.alto= 9 * 6;
+    }
+    else if ( this.data.sumAmount > 37 )  {
+      data.peso = 7;
+      data.alto= 9 * 7;
+    }
+    else if ( this.data.sumAmount > 43 )  {
+      data.peso = 8;
+      data.alto= 9 * 8;
+    }
+    else if ( this.data.sumAmount > 49 )  {
+      data.peso = 9;
+      data.alto= 9 * 9;
+    }
+    else data.peso = 1;
+    this._ventas.getFleteValorTriidy( data ).subscribe( res =>{
+      this.data.totalFlete = Number( res.data || 0 );
+      this.suma();
+    });
   }
   onChangeSearch( ev:any ){
     //console.log( ev )
