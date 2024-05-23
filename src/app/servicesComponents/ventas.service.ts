@@ -64,6 +64,15 @@ export class VentasService {
   getVentasExitosasProveedor( query:any ){
     return this._model.querys('tblventas/getVentasExitosasProveedor',query, 'post');
   }
+  getVentasL(query:any){
+    return this._model.querys('ventaLandazury/querys',query, 'post');
+  }
+  createVentasL(query:any){
+    return this._model.querys('ventaLandazury',query, 'post');
+  }
+  updateVentasL(query:any){
+    return this._model.querys('ventaLandazury/'+query.id,query, 'put');
+  }
 
 
 }

@@ -699,6 +699,13 @@ export class HeaderComponent implements OnInit {
         submenus:[]
       },
       {
+        icons: 'storefront',
+        nombre: 'Ventas Vera',
+        disable: this.rolUser == 'administrador',
+        url: '/config/ventasVictorVera',
+        submenus:[]
+      },
+      {
         icons: 'settings',
         nombre: 'Edicion Productos',
         url: '/config/productos',

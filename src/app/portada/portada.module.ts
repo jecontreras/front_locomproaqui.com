@@ -25,12 +25,15 @@ import { NgxDropzoneModule } from 'ngx-dropzone';
 import { ConfigModule } from '../dashboard-config/config.module';
 import { ExtraModule } from '../extra/extra.module';
 import { NgxCurrencyModule } from 'ngx-currency';
+import { LandingComponent } from './landing/landing.component';
+import { AutocompleteLibModule } from 'angular-ng-autocomplete';
+import { SelectSizeDialogComponent } from './select-size-dialog/select-size-dialog.component';
 
 
 @NgModule({
   entryComponents: [ InfoProductoComponent,ChecktDialogComponent, ],
   declarations: [
-    MainsComponent, TiendaComponent, ProductosComponent, FooterComponent, MenuComponent, InfoProductoComponent, ProductosViewComponent, ContactoComponent, ChecktComponent, CarritoComponent, CompletarComponent, ChecktDialogComponent, DetallePedidoComponent, CatalogoComponent],
+    MainsComponent, TiendaComponent, ProductosComponent, FooterComponent, MenuComponent, InfoProductoComponent, ProductosViewComponent, ContactoComponent, ChecktComponent, CarritoComponent, CompletarComponent, ChecktDialogComponent, DetallePedidoComponent, CatalogoComponent, LandingComponent, SelectSizeDialogComponent],
   imports: [
     PortadaRoutingModule,
     CommonModule,
@@ -50,7 +53,8 @@ import { NgxCurrencyModule } from 'ngx-currency';
     NgxImageZoomModule,
     ConfigModule,
     ExtraModule,
-    NgxCurrencyModule
+    NgxCurrencyModule,
+    AutocompleteLibModule
   ],
   exports: [ InfoProductoComponent ]
 })

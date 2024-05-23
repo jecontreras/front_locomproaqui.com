@@ -7,7 +7,7 @@ export const environment = {
   //url: "https://lokomproaqui.herokuapp.com",
   //url: "https://apilokomprojs-7681dc4951e1.herokuapp.com",
   url: "http://localhost:1337",
-  //url: "https://apilokomprojs-46c477c2e9f6.herokuapp.com",
+  // url: "https://1337-jecontreras-backlocompr-ethuyt9i4mk.ws-us110.gitpod.io",
   //url: "https://backlocompro.herokuapp.com",
   //urlEnvios: "http://localhost:1338",
   // urlEnvios: "https://apienviosrapidos-ce1b900c1c5b.herokuapp.com",

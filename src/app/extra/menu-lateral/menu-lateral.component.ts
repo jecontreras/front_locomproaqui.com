@@ -20,6 +20,8 @@ export class MenuLateralComponent implements OnInit {
   @ViewChild('color2',{ static: false } ) private color2: any
   @ViewChild('color3',{ static: false } ) private color3: any
   @ViewChild('color4',{ static: false } ) private color4: any
+  RouterName:string;
+  urlWhatsapp1:string = "https://wa.me/573112128943?text=Hola Servicio al cliente"
 
   constructor(
     private _store: Store<STORAGES>,
@@ -47,6 +49,7 @@ export class MenuLateralComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.RouterName = location.pathname;
     // setInterval(()=> {
       let color:string = ( this.dataUser.usu_color || "#02a0e3" );
 
