@@ -157,7 +157,9 @@ export class LandingWhatsappComponent implements OnInit {
       //this.openWhatsapp( res );
       this._ToolServices.presentToast("Pedido Tomado en Espera de un Asesor te comunicas con usted!");
       this.btnDisabled = false;
-      setTimeout(()=> window.close(), 3000 );
+      this._ToolServices.modaHtmlEnd( dataEnd );
+      this.data = [];
+      this.listDataAggregate = [];
     },()=> this.btnDisabled = true);
     //console.log("***data", dataEnd)
   }
@@ -211,7 +213,7 @@ export class LandingWhatsappComponent implements OnInit {
   async precioRutulo( ev:any ){
     console.log("***EVE", ev);
     let data = {
-      peso: 1,
+      peso: 1 ,
       alto: 9,
       ancho: 21,
       profundo: 28,
@@ -219,8 +221,42 @@ export class LandingWhatsappComponent implements OnInit {
       valor_declarado: ( this.data.priceTotal * 50 ) / 100 ,
       valor_recaudar: this.data.priceTotal
     };
+    if ( this.data.sumAmount > 6 )  {
+      data.peso = 2;
+      data.alto= 9 * 2;
+    }
+    else if ( this.data.sumAmount > 12 )  {
+      data.peso = 3;
+      data.alto= 9 * 3;
+    }
+    else if ( this.data.sumAmount > 18 )  {
+      data.peso = 4;
+      data.alto= 9 * 4;
+    }
+    else if ( this.data.sumAmount > 24 )  {
+      data.peso = 5;
+      data.alto= 9 * 5;
+    }
+    else if ( this.data.sumAmount > 31 )  {
+      data.peso = 6;
+      data.alto= 9 * 6;
+    }
+    else if ( this.data.sumAmount > 37 )  {
+      data.peso = 7;
+      data.alto= 9 * 7;
+    }
+    else if ( this.data.sumAmount > 43 )  {
+      data.peso = 8;
+      data.alto= 9 * 8;
+    }
+    else if ( this.data.sumAmount > 49 )  {
+      data.peso = 9;
+      data.alto= 9 * 9;
+    }
+    else data.peso = 1;
     this._ventas.getFleteValorTriidy( data ).subscribe( res =>{
-      this.data.totalFlete = res.data;
+      this.data.totalFlete = Number( res.data || 0 );
+      this.suma();
     });
   }
   onChangeSearch( ev:any ){

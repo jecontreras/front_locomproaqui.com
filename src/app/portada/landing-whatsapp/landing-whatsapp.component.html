@@ -152,7 +152,7 @@
                                       </div>
                                       <div class="col-auto">
                                         <h4>
-                                            Total a Pagar {{ _ToolServices.monedaChange( 3, 2, data.totalFlete || 0 ) }}
+                                            Total a Pagar {{ _ToolServices.monedaChange( 3, 2, ( data.totalFlete || 0 ) + ( data.priceTotal || 0 ) ) }}
                                         </h4>
                                       </div>
                                     </div>
@@ -201,7 +201,12 @@
                                                 <span [innerHTML]="item.ciudad"></span> &nbsp; | &nbsp;
                                                 <small>Departamento: {{ item.departamento }}</small> &nbsp; | &nbsp;
                                                 <small>--: {{ item.ciudad_full }}</small>
-                                                <small>Transportadora: {{ item.transportadora }}</small>
+                                                <small>
+                                                    <img *ngIf="item.transportadora === 'Envia'" style="width: 100%; width: 60px;"  src="./assets/img/envia.jpg" alt="">
+                                                    <img *ngIf="item.transportadora === 'InterRapidisimo'" style="width: 100%; width: 60px;"  src="./assets/img/logoInter.png" alt="">
+                                                    <img *ngIf="item.transportadora === 'Servientrega'" style="width: 100%; width: 60px;"  src="./assets/img/servientrega.jpeg" alt="">
+                                                    <img *ngIf="item.transportadora === 'Coordinadora'" style="width: 100%; width: 60px;"  src="./assets/img/logoCordinadora.png" alt="">
+                                                </small>
                                             </div>
                                         </ng-template>
     
