@@ -78,6 +78,8 @@ export class LandingComponent implements OnInit {
     });
   }
 
+
+
   handleOpenViewPhoto( photo:string ){
     this.viewPhoto = photo;
   }
@@ -132,15 +134,38 @@ export class LandingComponent implements OnInit {
     this.btnDisabled = true;
     let dataEnd:any = this.data;
     dataEnd.listProduct = this.listDataAggregate;
+    //edu
+    console.log("ciudad",dataEnd.ciudad); const ciudad_code = dataEnd.ciudad.code
     if( dataEnd.ciudad.name ) dataEnd.ciudad = dataEnd.ciudad.name;
     this._ventas.createVentasL( dataEnd ).subscribe( res =>{
       //console.log("*****101", res)
       if( !res.id ) return false;
       this.openWhatsapp( res );
-      this._ToolServices.presentToast("Pedido Tomado en Espera de un Asesor te comunicas con usted!");
+      this._ToolServices.presentToast("Pedido Tomado, en Espera de un Asesor se comunique con usted!");
       this.btnDisabled = false;
+      //edu
+      dataEnd.ciudad_code = ciudad_code; this.pedidoGuardar(dataEnd);
     },()=> this.btnDisabled = true);
     //console.log("***data", dataEnd)
+  }
+
+  pedidoGuardar(pedido){
+    console.log("pedido", pedido)
+    const options = {
+      method : "POST",
+      headers : {
+        "Content-Type" : "application/json"
+      },
+      body : JSON.stringify(pedido)
+    }
+    const url = "https://ginga.com.co/pedidosweb/api/lokompro/pedido.php";
+    fetch( url,options)
+    .then(response => response.json())
+    .then(data => { console.log(data)
+      if(data.response == "ok"){
+        console.log("Pedido Realizado")
+      }
+    })
   }
 
   validarCantidad(){
