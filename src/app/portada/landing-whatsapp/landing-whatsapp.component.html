@@ -152,6 +152,11 @@
                                       </div>
                                       <div class="col-auto">
                                         <h4>
+                                            Precio del Envio {{ _ToolServices.monedaChange( 3, 2, data.totalFlete || 0 ) }}
+                                        </h4>
+                                      </div>
+                                      <div class="col-auto">
+                                        <h4>
                                             Total a Pagar {{ _ToolServices.monedaChange( 3, 2, ( data.totalFlete || 0 ) + ( data.priceTotal || 0 ) ) }}
                                         </h4>
                                       </div>

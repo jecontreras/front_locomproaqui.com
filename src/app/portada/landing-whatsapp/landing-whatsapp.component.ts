@@ -36,6 +36,7 @@ export class LandingWhatsappComponent implements OnInit {
     this.viewPhoto = this.dataPro.foto;
     this.codeId = this.activate.snapshot.paramMap.get('code');
     this.data = await this.getVentaCode( );
+    if( this.data.id ) { this.listDataAggregate = this.data.listProduct || []; this.suma(); }
     this.data.sumAmount = 0;
     this.data.priceTotal = 0;
     
@@ -135,11 +136,11 @@ export class LandingWhatsappComponent implements OnInit {
     }
     if( this.data.sumAmount >= 6 ) this.data.priceTotal = this.dataPro.pro_vendedor * this.data.sumAmount;
     else this.data.priceTotal = this.dataPro.pro_uni_venta * this.data.sumAmount;
-    this.data.countItem = this.listDataAggregate.length;
+    this.data.countItem = this.data.sumAmount;
     this.data.totalAPagar = this.data.priceTotal;
   } 
 
-  handleEndOrder(){
+  async handleEndOrder(){
     if( this.btnDisabled ) return false;
     let validate = this.validarInput();
     if( !validate ) return false;
@@ -151,15 +152,19 @@ export class LandingWhatsappComponent implements OnInit {
       dataEnd.ciudad = dataEnd.ciudad.ciudad_full;
     }
     dataEnd.stateWhatsapp = 1;
+    let result = await this._ToolServices.modaHtmlEnd( dataEnd );
+    console.log("1111", result );
+    if( !result ) {this.btnDisabled = false; return this._ToolServices.presentToast("Editar Tu Pedido..."); }
+
     this._ventas.updateVentasL( dataEnd ).subscribe( res =>{
       //console.log("*****101", res)
       if( !res.id ) return false;
       //this.openWhatsapp( res );
       this._ToolServices.presentToast("Pedido Tomado en Espera de un Asesor te comunicas con usted!");
       this.btnDisabled = false;
-      this._ToolServices.modaHtmlEnd( dataEnd );
       this.data = [];
       this.listDataAggregate = [];
+      setTimeout(()=> window.close(), 5000 );
     },()=> this.btnDisabled = true);
     //console.log("***data", dataEnd)
   }
@@ -221,41 +226,53 @@ export class LandingWhatsappComponent implements OnInit {
       valor_declarado: ( this.data.priceTotal * 50 ) / 100 ,
       valor_recaudar: this.data.priceTotal
     };
+    let sumaFlete = 0;
     if ( this.data.sumAmount > 6 )  {
       data.peso = 2;
       data.alto= 9 * 2;
+      sumaFlete = 2000;
     }
     else if ( this.data.sumAmount > 12 )  {
       data.peso = 3;
       data.alto= 9 * 3;
+      sumaFlete = 3000;
     }
     else if ( this.data.sumAmount > 18 )  {
       data.peso = 4;
       data.alto= 9 * 4;
+      sumaFlete = 4000;
     }
     else if ( this.data.sumAmount > 24 )  {
       data.peso = 5;
       data.alto= 9 * 5;
+      sumaFlete = 5000;
     }
     else if ( this.data.sumAmount > 31 )  {
       data.peso = 6;
       data.alto= 9 * 6;
+      sumaFlete = 6000;
     }
     else if ( this.data.sumAmount > 37 )  {
       data.peso = 7;
       data.alto= 9 * 7;
+      sumaFlete = 7000;
     }
     else if ( this.data.sumAmount > 43 )  {
       data.peso = 8;
       data.alto= 9 * 8;
+      sumaFlete = 8000;
     }
     else if ( this.data.sumAmount > 49 )  {
       data.peso = 9;
       data.alto= 9 * 9;
+      sumaFlete = 9000;
     }
-    else data.peso = 1;
+    else {
+      data.peso = 1;
+      sumaFlete = 1000;
+    }
     this._ventas.getFleteValorTriidy( data ).subscribe( res =>{
-      this.data.totalFlete = Number( res.data || 0 );
+      this.data.totalFlete = Number( ( res.data || 0 ) ) + sumaFlete ;
       this.suma();
     });
   }

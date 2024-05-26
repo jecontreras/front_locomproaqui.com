@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { IntroduccionComponent } from './components/introduccion/introduccion.component';
 import { ImprimirTarjetaComponent } from './extra/imprimir-tarjeta/imprimir-tarjeta.component';
+import { PoliticasComponent } from './components/politicas/politicas.component';
 
 const routes: Routes = [
   { path: '',
@@ -48,6 +49,10 @@ const routes: Routes = [
     component: ImprimirTarjetaComponent
   },
   { path: '', redirectTo: "pedidos", pathMatch: 'full' },
+  {
+    path: "politicas",
+    component: PoliticasComponent
+  },
 ];
 
 @NgModule({

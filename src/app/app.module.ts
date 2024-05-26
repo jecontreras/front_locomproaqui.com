@@ -43,12 +43,14 @@ import { ExtraModule } from './extra/extra.module';
     import  { FacebookLoginProvider, GoogleLoginProvider, SocialLoginModule, SocialAuthServiceConfig } from 'angularx-social-login';
 import { PortadaModule } from './portada/portada.module';
 import { SwiperModule } from 'swiper/angular';
+import { PoliticasComponent } from './components/politicas/politicas.component';
 @NgModule({
   entryComponents:[],
   declarations: [
     AppComponent,
     RegistroComponent,
-    IntroduccionComponent
+    IntroduccionComponent,
+    PoliticasComponent
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'serverApp' }),

@@ -103,47 +103,54 @@ export class ToolsService {
         title: 'Detalle de mi Pedido',
         html: `
         <div class="row">
-        <div class="col-12">
+          <div class="col-12">
             <label>Nombre: </label> <span> ${  data.nombre }</span>
-        </div>
-        <div class="col-12">
+          </div>
+          <div class="col-12">
             <label>Ciudad: </label> <span> ${  data.ciudad }</span>
-        </div>
-        <div class="col-12">
+          </div>
+          <div class="col-12">
             <label>Dirección: </label> <span> ${  data.direccion }</span>
-        </div>
-        <div class="col-12">
+          </div>
+          <div class="col-12">
             <label>Barrio: </label> <span> ${  data.barrio }</span>
-        </div>
-        <div class="col-12">
+          </div>
+          <div class="col-12">
             <label>Numero de Whatsapp: </label> <span> ${  data.numero }</span>
-        </div>
-        <div class="col-12">
+          </div>
+          <div class="col-12">
             <label>Cantidad Pares: </label> <span> ${  data.sumAmount }</span>
-        </div>
-        <div class="col-12">
+          </div>
+          <div class="col-12">
             <label>Precio Articulos: </label> <span> ${  data.totalAPagar }</span>
-        </div>
-        <div class="col-12">
+          </div>
+          <div class="col-12">
             <label>Precio de Envio: </label> <span> ${  data.totalFlete }</span>
-        </div>
-        <div class="col-12">
+          </div>
+          <div class="col-12">
             <label>Precio Total a Pagar: </label> <span> ${  data.totalFlete + data.totalAPagar }</span>
+          </div>
+          <div class="col-12">
+            <h3>
+              Inmediatamente le des click al botón de Confirmar tu pedido entra al área de empaque y despacho en un momento te será enviada la guía vía WhatsApp muchas gracias por tu compra
+            </h3>
+          </div>
         </div>
-        <div class="col-12">
-          <h3>Ya tu pedido lo tomamos por WhatsApp . Ya te confirmamos: cierra esta ventana para continuar.</h3>
-        </div>
-    </div>
         `,
         showCancelButton: true,
-        focusConfirm: false,
-        preConfirm: () => {
-          resolve( true );
+        confirmButtonText: 'Confirmar',
+        cancelButtonText: 'Editar',
+        focusConfirm: false
+      }).then((result:any) => {
+        if (result.value) {
+          resolve(true); // El usuario confirmó el pedido
+        } else {
+          resolve(false); // El usuario decidió editar el pedido
         }
       });
     });
-    
   }
+  
   tooast(text: any) {
     Swal.fire({
       // position: text.position || 'top-end',
