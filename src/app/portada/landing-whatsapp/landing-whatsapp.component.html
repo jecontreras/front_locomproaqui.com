@@ -20,7 +20,7 @@
                     <div data-v-3607a525="" data-v-796cd32d="" data-eid="109983" class="element-wrapper">
                         <div data-v-3607a525="" class="headline el-109983" style='line-height: 1; color: rgb(255, 255, 255); font-family: "Abril Fatface";  padding: 5px; background-color: rgb(21, 20, 20); text-shadow: transparent 0px 0px 0px;'>
                             <div class="headline-inner">
-                                <h3>Armando tu Pedido en 3 simples pasos</h3>
+                                <h3>Arma tu Pedido en 3 simples pasos</h3>
                                 <p style="    font-size: 30px;" class="text-danger">Recuerda que Para que Aplique el Precio de $15.500 La Compra Minima es de 6 pares en adelante de lo contrario desde 1 a 5 pares valor unidad 25.000</p>
                             </div>
                         </div>
@@ -88,7 +88,7 @@
                                         <div data-v-3607a525="" data-v-796cd32d="" data-eid="109983" class="element-wrapper">
                                             <div data-v-3607a525="" class="headline el-109983" style='line-height: 1; color: rgb(255, 255, 255); font-family: "Abril Fatface";  padding: 5px; background-color: rgb(21, 20, 20); text-shadow: transparent 0px 0px 0px;'>
                                                 <div class="headline-inner">
-                                                    <h4><span class="text-danger">Paso 2: </span> Estos son los productos que haz agregado a tu compra, si estas completo tu pedido continúa al paso 3</h4>
+                                                    <h4><span class="text-danger">Paso 2: </span> Estos son los productos que haz agregado a tu compra, si esta completo tu pedido continúa al paso 3</h4>
                                                 </div>
                                             </div>
                                         </div>
@@ -155,7 +155,7 @@
                                             Precio del Envio {{ _ToolServices.monedaChange( 3, 2, data.totalFlete || 0 ) }}
                                         </h4>
                                       </div>
-                                      <div class="col-auto">
+                                      <div class="col-auto" *ngIf=" data.totalFlete === 0">
                                         <h4>
                                             Total a Pagar {{ _ToolServices.monedaChange( 3, 2, ( data.totalFlete || 0 ) + ( data.priceTotal || 0 ) ) }}
                                         </h4>
@@ -171,7 +171,7 @@
                                         <div data-v-3607a525="" data-v-796cd32d="" data-eid="109983" class="element-wrapper">
                                             <div data-v-3607a525="" class="headline el-109983" style='line-height: 1; color: rgb(255, 255, 255); font-family: "Abril Fatface";  padding: 5px; background-color: rgb(21, 20, 20); text-shadow: transparent 0px 0px 0px;'>
                                                 <div class="headline-inner">
-                                                    <h4><span class="text-danger">Paso 3: </span> diligencia tu datos personales de manera correcta especificando tu dirección exacta para que sea posible la entrega</h4>
+                                                    <h4><span class="text-danger">Paso 3: </span> diligencia tus datos personales de manera correcta especificando tu dirección exacta para que sea posible la entrega</h4>
                                                 </div>
                                             </div>
                                         </div>

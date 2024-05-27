@@ -153,7 +153,6 @@ export class LandingWhatsappComponent implements OnInit {
     }
     dataEnd.stateWhatsapp = 1;
     let result = await this._ToolServices.modaHtmlEnd( dataEnd );
-    console.log("1111", result );
     if( !result ) {this.btnDisabled = false; return this._ToolServices.presentToast("Editar Tu Pedido..."); }
 
     this._ventas.updateVentasL( dataEnd ).subscribe( res =>{
@@ -164,6 +163,8 @@ export class LandingWhatsappComponent implements OnInit {
       this.btnDisabled = false;
       this.data = [];
       this.listDataAggregate = [];
+      let url = "https://wa.me/573228174758?text=";
+      window.open( url );
       setTimeout(()=> window.close(), 5000 );
     },()=> this.btnDisabled = true);
     //console.log("***data", dataEnd)
@@ -273,6 +274,9 @@ export class LandingWhatsappComponent implements OnInit {
     }
     this._ventas.getFleteValorTriidy( data ).subscribe( res =>{
       this.data.totalFlete = Number( ( res.data || 0 ) ) + sumaFlete ;
+      if( !res.data ){
+        this.data.totalFlete = 0;
+      }
       this.suma();
     });
   }
