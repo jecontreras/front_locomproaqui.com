@@ -160,7 +160,7 @@ export class LandingWhatsappComponent implements OnInit {
       //console.log("*****101", res)
       if( !res.id ) return false;
       //this.openWhatsapp( res );
-      this._ToolServices.presentToast("Pedido Tomado en Espera de un Asesor te comunicas con usted!");
+      this._ToolServices.presentToast("Tu pedido ha sido enviado correctamente gracias por tu compra.!");
       this.btnDisabled = false;
       this.data = [];
       this.listDataAggregate = [];
