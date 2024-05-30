@@ -1,5 +1,5 @@
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { DANEGROUP, TRIDYCIUDAD } from 'src/app/JSON/dane-nogroup';
 import { ToolsService } from 'src/app/services/tools.service';
 import { ProductoService } from 'src/app/servicesComponents/producto.service';
@@ -23,12 +23,15 @@ export class LandingWhatsappComponent implements OnInit {
   currentIndex: number = 0;
   btnDisabled: boolean = false;
   codeId:string;
+  view:string = "one";
+  dataEnvioDetails:any = {};
 
   constructor(
     private _productServices: ProductoService,
     public _ToolServices: ToolsService,
     private _ventas: VentasService,
     private activate: ActivatedRoute,
+    private Router: Router
   ) { }
 
   async ngOnInit() {
@@ -161,13 +164,44 @@ export class LandingWhatsappComponent implements OnInit {
       //this.openWhatsapp( res );
       this._ToolServices.presentToast("Tu pedido ha sido enviado correctamente gracias por tu compra.!");
       this.btnDisabled = false;
-      this.data = [];
+      //this.data = [];
       this.listDataAggregate = [];
-      let url = "https://wa.me/573228174758?text=";
-      window.open( url );
-      setTimeout(()=> window.close(), 5000 );
+      //let url = "https://wa.me/573228174758?text=";
+      //window.open( url );
+      //setTimeout(()=> window.close(), 5000 );
+      this.view = 'foor';
     },()=> this.btnDisabled = true);
     //console.log("***data", dataEnd)
+  }
+
+  handleOpenWhatsapp(){
+    let url = "https://wa.me/573228174758?text=";
+    window.open( url );
+    setTimeout(()=> window.close(), 5000 );
+  }
+
+  HandleOpenNewBuy(){
+    let dats = { 
+      "sumAmount": 0,
+      "priceTotal": 0,
+      "nombre": ".",
+      "ciudad": ".",
+      "direccion": ".",
+      "barrio": ".",
+      "numero": this.data.numero,
+      "listProduct": [],
+      "code": this._ToolServices.codigo(),
+      "countItem": 0,
+      "totalFlete": 0,
+      "totalAPagar": 0
+   };
+   this._ventas.createVentasL( dats ).subscribe( res =>{
+    if( res ){
+      this.Router.navigate(['/front/landingWhatsapp', dats.code ] );
+      setTimeout(()=> location.reload(), 3000 );
+    }
+   } );
+
   }
 
   validarCantidad(){
@@ -277,11 +311,17 @@ export class LandingWhatsappComponent implements OnInit {
       if( !res.data ){
         this.data.totalFlete = 0;
       }
+      this._ToolServices.basic("Precio del Envio "+ this._ToolServices.monedaChange( 3, 2, ( this.data.totalFlete ) ) + " Transportadora "+  ev.transportadora );
+      this.dataEnvioDetails = ev;
       this.suma();
     });
   }
   onChangeSearch( ev:any ){
     //console.log( ev )
+  }
+
+  handleSelect( view:string, opt:number ){
+    this.view = view;
   }
 
 }
