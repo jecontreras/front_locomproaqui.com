@@ -290,18 +290,18 @@
 
   <!-- src/app/product-list/product-list.component.html -->
 <!-- src/app/app.component.html -->
-<section *ngIf="view === 'one'">
-      <div class="centered-content" (click)="view='two'">
+<section *ngIf="view === 'three'">
+      <div class="centered-content" (click)="view='three'">
         <div class="row" style="text-align: center;">
           <img src="./assets/imagenes/txt1.png" alt="">
         </div>
       </div>
       
-      <footer class="footer" (click)="view='two'">
+      <footer class="footer" (click)="view='three'">
         <p>Realiza tu Pedido</p>
       </footer>
 </section>
-<section *ngIf="view === 'two'">
+<section *ngIf="view === 'three'">
   <!-- src/app/app.component.html -->
 <div class="header text-white text-center py-4" style="    height: 116px; background: #19173d;">
   <img src="./assets/imagenes/txtheader1.png" alt="">
@@ -316,15 +316,53 @@
         <br>
       </div>
       <div class="col-md-6 mb-4">
-        <img src="./assets/imagenes/txtcubo1.png" alt="" class="rounded" (click)="handleSelect('three', 1)">
+        <div class="d-flex justify-content-center">
+          <div>
+            <div class="card" style="width: 18rem;     color: white; background: #19173d; border-radius: 20px;     height: 250px;">
+              <div class="card-body" style="padding: 12px 31px !important;">
+                <h1 class="card-title" style="    color: #ff008a; font-size: 45px;">
+                  Pack6
+                </h1>
+                <h6 class="card-subtitle mb-2 text-muted" style="    font-size: 13px; background: white; border-radius: 10px;">
+                  SANDALIAS
+                </h6>
+                <p class="card-text" style="text-align: center; color: white;">
+                  Para que aplique el precio de $15.500 tu compra minima debe ser de 6 pares en adelante.
+                </p>
+                <p class="card-link" style="text-align: center; color: white;">
+                  Ejemplo: 6 pares por $93.000 + envió.
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
       <div class="col-md-6 mb-4">
-        <img src="./assets/imagenes/txtcubo2.png" alt="" class="rounded" (click)="handleSelect('three', 2)">
+        <div class="d-flex justify-content-center">
+          <div>
+            <div class="card" style="width: 18rem;     color: white; background: #19173d; border-radius: 20px;     height: 250px;">
+              <div class="card-body" style="padding: 12px 31px !important;">
+                <h1 class="card-title" style="    color: #ff008a; font-size: 45px;">
+                  Pack
+                </h1>
+                <h6 class="card-subtitle mb-2 text-muted" style="    font-size: 13px; background: white; border-radius: 10px;">
+                  PERSONAL
+                </h6>
+                <p class="card-text" style="text-align: center; color: white;">
+                  Si lo que quieres es realizar tu compra para tu uso de 1 a 5 pares te saldria la unidad en $25.000.
+                </p>
+                <p class="card-link" style="text-align: center; color: white;">
+                  Ejemplo: 2 pares por $50.000 + envió.
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   </div>
   
-  <footer class="footer bg-light text-center py-3">
+  <footer class="footer text-center py-3">
     <label class="exTrega">Pago Contra entrega</label>
     <p class="m-0">Emprende por tan solo $15.500</p>
   </footer>
@@ -360,7 +398,7 @@
     </div>
   </div>
   
-  <footer class="footer bg-light text-center py-3">
+  <footer class="footer text-center py-3">
     <label class="exTrega">Pago Contra entrega</label>
     <p class="m-0">Emprende por tan solo $15.500</p>
   </footer>
@@ -368,12 +406,22 @@
   <div class="row">
     <div class="col-12">
       <br>
-      <img src="./assets/imagenes/txt2.png" alt="">
+      <div class="d-flex justify-content-center">
+        <div>
+          <div  style="width: 100%">
+            <div class="card-body" style="padding: 12px 31px !important;">
+              <p class="card-text" style="text-align: center;     font-size: 16px;">
+                <strong>Recuerda</strong> que para que <strong>aplique</strong> el precio de <strong>$15.500</strong> la compra <strong>mínima</strong> debe <strong>ser</strong> de <strong>6 pares</strong> en adelante de lo <strong>contrario</strong> de 1 a 5 el <strong>valor</strong> unidad seria <strong>$25.000</strong>
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
       <br>
     </div>
     <div class="col-12" style="    padding: 0 35px;">
       <h1 class="text-pink" style="text-align: center;     font-size: 55px;">Paso 1</h1>
-      <h5 style="text-align: center;margin: 10px 35px;">Seleccione las referencias, tallas y colores y la cantidad que deseas</h5>
+      <h5 style="text-align: center;margin: 10px 10px;">Seleccione las referencias, tallas y colores y la cantidad que deseas</h5>
       <br>
     </div>
     <div class="col-12">
@@ -398,7 +446,7 @@
     </div>
     <div class="col-12" style="    padding: 0 35px;">
       <h1 class="text-pink" style="text-align: center;     font-size: 55px;">Paso 2</h1>
-      <h5 style="text-align: center;margin: 10px 35px;">Estos son los productos que haz agregado a tu compra, si esta completo tu pedido continua el paso 3</h5>
+      <h5 style="text-align: center;margin: 10px 10px;">Estos son los productos que haz agregado a tu compra, si esta completo tu pedido continua el paso 3</h5>
       <br>
     </div>
     <div class="col-12">
@@ -486,7 +534,7 @@
     </div>
     <div class="col-12" style="    padding: 0 35px;">
       <h1 class="text-pink" style="text-align: center;     font-size: 55px;">Paso 3</h1>
-      <h5 style="text-align: center;margin: 10px 35px;">Diligencia sus datos personales de manera correcta, especifica tu dirección exacta para que sea posible la entrega.</h5>
+      <h5 style="text-align: center;margin: 10px 10px;">Diligencia sus datos personales de manera correcta, especifica tu dirección exacta para que sea posible la entrega.</h5>
       <br>
     </div>
     <div class="col-12">
@@ -563,7 +611,7 @@
     </div>
     <div class="col-12" style="    padding: 0 35px;">
       <h1 class="text-pink" style="text-align: center;     font-size: 55px;">Paso 4</h1>
-      <h5 style="text-align: center;margin: 10px 35px;">Click</h5>
+      <h5 style="text-align: center;margin: 10px 10px;">Click</h5>
       <br>
     </div>
     <div>
