@@ -135,7 +135,7 @@ export class LandingWhatsappComponent implements OnInit {
   suma(){
     this.data.sumAmount = 0;
     for( let row of this.listDataAggregate ){
-      this.data.sumAmount+= row.amountAd;
+      this.data.sumAmount+= Number( row.amountAd );
     }
     if( this.data.sumAmount >= 6 ) this.data.priceTotal = this.dataPro.pro_vendedor * this.data.sumAmount;
     else this.data.priceTotal = this.dataPro.pro_uni_venta * this.data.sumAmount;
