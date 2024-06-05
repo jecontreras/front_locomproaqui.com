@@ -2424,7 +2424,7 @@ export const DANEGROUP: any = [
 	{"code": "0","city": "ZIMBABWE-ZIMBABWE","state": "ZIMBABWE-ZIMBABWE","active": "", "name": "ZIMBABWE-ZIMBABWE"}
 ];
 export const TRIDYCIUDAD :{ id_ciudad: number; ciudad: string; departamento: string; contraentrega: string; transportadora:string; ciudad_full: string;}[] = [
-    {
+    /*{
         "id_ciudad": 1,
         "ciudad": "ALCALA",
         "departamento": "VALLE DEL CAUCA",
@@ -10495,7 +10495,7 @@ export const TRIDYCIUDAD :{ id_ciudad: number; ciudad: string; departamento: str
         "contraentrega": "NO",
         "transportadora": "Envia",
         "ciudad_full": "CAMPANA (GUAJIRA)"
-    },
+    },*/
     {
         "id_ciudad": 1137,
         "ciudad": "ABEJORRAL",
@@ -13752,14 +13752,14 @@ export const TRIDYCIUDAD :{ id_ciudad: number; ciudad: string; departamento: str
         "transportadora": "Servientrega",
         "ciudad_full": "GUAYABAL DE SIQUIMA (CUNDINAMARCA)"
     },
-    {
+    /*{
         "id_ciudad": 1565,
         "ciudad": "GUAYABAL",
         "departamento": "SUCRE",
         "contraentrega": "NO",
         "transportadora": "Envia",
         "ciudad_full": "GUAYABAL (SUCRE)"
-    },
+    },*/
     {
         "id_ciudad": 1566,
         "ciudad": "GUAYABETAL",
@@ -19904,7 +19904,7 @@ export const TRIDYCIUDAD :{ id_ciudad: number; ciudad: string; departamento: str
         "transportadora": "Servientrega",
         "ciudad_full": "PLANETA RICA (CORDOBA)"
     },
-    {
+    /*{
         "id_ciudad": 2372,
         "ciudad": "IBAGUE",
         "departamento": "TOLIMA",
@@ -19919,7 +19919,7 @@ export const TRIDYCIUDAD :{ id_ciudad: number; ciudad: string; departamento: str
         "contraentrega": "SI",
         "transportadora": "Domicilio",
         "ciudad_full": "CALI (VALLE DEL CAUCA)"
-    },
+    },*/
     {
         "id_ciudad": 2374,
         "ciudad": "PIEDECUESTA",
@@ -19944,7 +19944,7 @@ export const TRIDYCIUDAD :{ id_ciudad: number; ciudad: string; departamento: str
         "transportadora": "Servientrega",
         "ciudad_full": "FLORENCIA (CAQUETA)"
     },
-    {
+    /*{
         "id_ciudad": 2378,
         "ciudad": "PALMIRA",
         "departamento": "VALLE DEL CAUCA",
@@ -19975,7 +19975,7 @@ export const TRIDYCIUDAD :{ id_ciudad: number; ciudad: string; departamento: str
         "contraentrega": "SI",
         "transportadora": "Domicilio",
         "ciudad_full": "CANDELARIA (VALLE DEL CAUCA)"
-    },
+    },*/
     {
         "id_ciudad": 2386,
         "ciudad": "URIBIA",
@@ -19992,7 +19992,7 @@ export const TRIDYCIUDAD :{ id_ciudad: number; ciudad: string; departamento: str
         "transportadora": "Servientrega",
         "ciudad_full": "YAGUARA (HUILA)"
     },
-    {
+    /*{
         "id_ciudad": 2388,
         "ciudad": "MANIZALES ",
         "departamento": "CALDAS",
@@ -20071,7 +20071,7 @@ export const TRIDYCIUDAD :{ id_ciudad: number; ciudad: string; departamento: str
         "contraentrega": "SI",
         "transportadora": "Domicilio",
         "ciudad_full": "SANTA MARTA  (MAGDALENA)"
-    },
+    },*/
     {
         "id_ciudad": 2402,
         "ciudad": "ABEJORRAL",
@@ -28472,7 +28472,7 @@ export const TRIDYCIUDAD :{ id_ciudad: number; ciudad: string; departamento: str
         "transportadora": "Servientrega",
         "ciudad_full": "GUAYATA (BOYACA)"
     },
-    {
+    /*{
         "id_ciudad": 3623,
         "ciudad": "LA CEJA",
         "departamento": "ANTIOQUIA",
@@ -28631,7 +28631,7 @@ export const TRIDYCIUDAD :{ id_ciudad: number; ciudad: string; departamento: str
         "contraentrega": "SI",
         "transportadora": "Domicilio",
         "ciudad_full": "MARINILLA (ANTIOQUIA)"
-    },
+    },*/
     {
         "id_ciudad": 4359,
         "ciudad": "ALBAN",
@@ -28640,7 +28640,7 @@ export const TRIDYCIUDAD :{ id_ciudad: number; ciudad: string; departamento: str
         "transportadora": "InterRapidisimo",
         "ciudad_full": "ALBAN (NARIÑO)"
     },
-    {
+    /*{
         "id_ciudad": 4360,
         "ciudad": "SAN ANDRES",
         "departamento": "ARCHIPIELAGO",
@@ -28856,14 +28856,14 @@ export const TRIDYCIUDAD :{ id_ciudad: number; ciudad: string; departamento: str
         "transportadora": "InterRapidisimo",
         "ciudad_full": "SANTA BARBARA (NARIÑO)"
     },
-    {
+    /*{
         "id_ciudad": 4401,
         "ciudad": "ZONA BANANERA",
         "departamento": "MAGDALENA",
         "contraentrega": "NO",
         "transportadora": "Envia",
         "ciudad_full": "ZONA BANANERA (MAGDALENA)"
-    },
+    },*/
     {
         "id_ciudad": 4403,
         "ciudad": "PUERTO BOYACA",
@@ -28936,14 +28936,14 @@ export const TRIDYCIUDAD :{ id_ciudad: number; ciudad: string; departamento: str
         "transportadora": "Coordinadora",
         "ciudad_full": "ENVIGADO (ANTIOQUIA)"
     },
-    {
+    /*{
         "id_ciudad": 4413,
         "ciudad": "Puerto Leguizamo",
         "departamento": "Putumayo",
         "contraentrega": "SI",
         "transportadora": "Envia",
         "ciudad_full": "Puerto Leguizamo (Putumayo)"
-    },
+    },*/
     {
         "id_ciudad": 4414,
         "ciudad": "ACACIAS",
@@ -36744,12 +36744,12 @@ export const TRIDYCIUDAD :{ id_ciudad: number; ciudad: string; departamento: str
         "transportadora": "Coordinadora",
         "ciudad_full": "MITU (VAUPES)"
     },
-    {
+    /*{
         "id_ciudad": 5564,
         "ciudad": "La Virginia",
         "departamento": "Risaralda",
         "contraentrega": "SI",
         "transportadora": "Domicilio",
         "ciudad_full": "La Virginia (Risaralda)"
-    }
+    }*/
 ]
