@@ -1,9 +1,11 @@
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import { MatDialog } from '@angular/material';
 import { ActivatedRoute, Router } from '@angular/router';
 import { DANEGROUP, TRIDYCIUDAD } from 'src/app/JSON/dane-nogroup';
 import { ToolsService } from 'src/app/services/tools.service';
 import { ProductoService } from 'src/app/servicesComponents/producto.service';
 import { VentasService } from 'src/app/servicesComponents/ventas.service';
+import { DialogPedidoArmaComponent } from '../dialog-pedido-arma/dialog-pedido-arma.component';
 
 @Component({
   selector: 'app-landing-whatsapp',
@@ -23,7 +25,7 @@ export class LandingWhatsappComponent implements OnInit {
   currentIndex: number = 0;
   btnDisabled: boolean = false;
   codeId:string;
-  view:string = "three";
+  view:string = "one";
   dataEnvioDetails:any = {};
 
   constructor(
@@ -31,6 +33,7 @@ export class LandingWhatsappComponent implements OnInit {
     public _ToolServices: ToolsService,
     private _ventas: VentasService,
     private activate: ActivatedRoute,
+    public dialog: MatDialog,
     private Router: Router
   ) { }
 
@@ -39,6 +42,7 @@ export class LandingWhatsappComponent implements OnInit {
     this.viewPhoto = this.dataPro.foto;
     this.codeId = this.activate.snapshot.paramMap.get('code');
     this.data = await this.getVentaCode( );
+    this.view = "three";
     if( this.data.id ) { this.listDataAggregate = this.data.listProduct || []; this.suma(); }
     this.data.sumAmount = 0;
     this.data.priceTotal = 0;
@@ -103,14 +107,21 @@ export class LandingWhatsappComponent implements OnInit {
   }
 
   async handleOpenDialogPhoto( row, item ){
-    this._ToolServices.openFotoAlert( row.foto );
+    //this._ToolServices.openFotoAlert( row.foto );
+    console.log("***ENTRO", row, item)
     item.foto = row.foto;
-    let selectTalla:any = await this._ToolServices.modalInputSelect();
-    console.log("****70", selectTalla)
-    if( !selectTalla ) return false;
-    row.tal_descripcion = selectTalla.talla;
-    row.amountAd = selectTalla.cantidad;
-    this.handleOpenDialogAmount( row, item, false )
+    const dialogRef = this.dialog.open(DialogPedidoArmaComponent,{
+      data: { foto: row.foto },
+      width: '350px',
+    });
+    dialogRef.afterClosed().subscribe(selectTalla => {
+      console.log(`Dialog result:`, selectTalla);
+      row.tal_descripcion = selectTalla.talla;
+      row.amountAd = selectTalla.cantidad;
+      
+      this.handleOpenDialogAmount( row, item, false )
+    });
+
   }
 
   async handleDeleteItem( item ){
@@ -129,7 +140,7 @@ export class LandingWhatsappComponent implements OnInit {
     this.listDataAggregate.push( { ref: item.talla, foto: item.detailsP.foto, amountAd: Number( row.amountAd ), talla: row.tal_descripcion, id: this._ToolServices.codigo() } );
     console.log("***114", this.listDataAggregate)
     this.suma();
-    this._ToolServices.basic("Producto Agregado al Carrito")
+    this._ToolServices.presentToast("Producto Agregado al Carrito")
   }
 
   suma(){
@@ -166,10 +177,11 @@ export class LandingWhatsappComponent implements OnInit {
       this.btnDisabled = false;
       //this.data = [];
       this.listDataAggregate = [];
-      //let url = "https://wa.me/573228174758?text=";
-      //window.open( url );
-      //setTimeout(()=> window.close(), 5000 );
       this.view = 'foor';
+      setTimeout(()=> {
+      let url = "https://wa.me/573228174758?text=";
+       window.open( url );
+      }, 9000 );
     },()=> this.btnDisabled = true);
     //console.log("***data", dataEnd)
   }
