@@ -93,6 +93,7 @@ export class LandingWhatsappComponent implements OnInit {
     return new Promise( resolve => {
       this._ventas.getCiudades( { where: { }, limit: 100000 } ).subscribe( ( res:any )=>{
         this.listCiudades = res.data;
+        console.log("list ciudades", this.listCiudades)
         resolve( this.listCiudades );
       });
     });
@@ -168,7 +169,6 @@ export class LandingWhatsappComponent implements OnInit {
     dataEnd.stateWhatsapp = 1;
     let result = await this._ToolServices.modaHtmlEnd( dataEnd );
     if( !result ) {this.btnDisabled = false; return this._ToolServices.presentToast("Editar Tu Pedido..."); }
-
     this._ventas.updateVentasL( dataEnd ).subscribe( res =>{
       //console.log("*****101", res)
       if( !res.id ) return false;
@@ -182,8 +182,32 @@ export class LandingWhatsappComponent implements OnInit {
       let url = "https://wa.me/573228174758?text=";
        window.open( url );
       }, 9000 );
+      //edu
+      dataEnd.transportadora = this.dataEnvioDetails.transportadora
+      this.pedidoGuardar(dataEnd); //edu
     },()=> this.btnDisabled = true);
     //console.log("***data", dataEnd)
+  }
+
+  //edu
+  pedidoGuardar(pedido){             
+    console.log("pedido", pedido)
+    const options = {
+      method : "POST",
+      headers : {
+        "Content-Type" : "application/json"
+      },
+      body : JSON.stringify(pedido)
+    }
+    let url = "http://localhost/pedidosweb/api/lokompro/pedidolw.php";
+    url = "https://ginga.com.co/pedidosweb/api/lokompro/pedidolw.php";
+    fetch( url,options)
+    .then(response => response.json())
+    .then(data => { console.log(data)
+      if(data.response == "ok"){
+        console.log("Pedido Realizado")
+      }
+    })
   }
 
   handleOpenWhatsapp(){

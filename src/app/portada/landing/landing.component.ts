@@ -149,7 +149,7 @@ export class LandingComponent implements OnInit {
     //console.log("***data", dataEnd)
   }
 
-  pedidoGuardar(pedido){
+  pedidoGuardar(pedido){             
     console.log("pedido", pedido)
     const options = {
       method : "POST",
