@@ -19,6 +19,7 @@ export class LandingWhatsappComponent implements OnInit {
   viewPhoto:string;
   listDataAggregate:any = [];
   listCiudades:any = TRIDYCIUDAD;
+  listCiudadesF:any = [];
   keyword = 'ciudad';
   data:any = {};
   @ViewChild('nextStep', { static: true }) nextStep: ElementRef;
@@ -152,7 +153,7 @@ export class LandingWhatsappComponent implements OnInit {
     if( this.data.sumAmount >= 6 ) this.data.priceTotal = this.dataPro.pro_vendedor * this.data.sumAmount;
     else this.data.priceTotal = this.dataPro.pro_uni_venta * this.data.sumAmount;
     this.data.countItem = this.data.sumAmount;
-    this.data.totalAPagar = this.data.priceTotal;
+    this.data.totalAPagar = this.data.priceTotal + ( this.data.totalFlete || 0 );
   } 
 
   async handleEndOrder(){
@@ -169,6 +170,7 @@ export class LandingWhatsappComponent implements OnInit {
     dataEnd.stateWhatsapp = 1;
     let result = await this._ToolServices.modaHtmlEnd( dataEnd );
     if( !result ) {this.btnDisabled = false; return this._ToolServices.presentToast("Editar Tu Pedido..."); }
+    this.suma();
     this._ventas.updateVentasL( dataEnd ).subscribe( res =>{
       //console.log("*****101", res)
       if( !res.id ) return false;
@@ -401,7 +403,8 @@ export class LandingWhatsappComponent implements OnInit {
     if( !res.data ){
       this.data.totalFlete = 0;
     }
-    this._ToolServices.basic("Precio del Envio "+ this._ToolServices.monedaChange( 3, 2, ( this.data.totalFlete ) ) + " Transportadora "+  ev.transportadora );
+    //this._ToolServices.basic("Precio del Envio "+ this._ToolServices.monedaChange( 3, 2, ( this.data.totalFlete ) ) + " Transportadora "+  ev.transportadora );
+    this._ToolServices.presentToast("Precio del Envio "+ this._ToolServices.monedaChange( 3, 2, ( this.data.totalFlete ) ) + " Transportadora "+  ev.transportadora );
     this.dataEnvioDetails = ev;
     this.suma();
   }
@@ -413,8 +416,15 @@ export class LandingWhatsappComponent implements OnInit {
       });
     });
   }
-  onChangeSearch( ev:any ){
+  onChangeSearch( val:any ){
     //console.log( ev )
+    if (val) {
+      this.listCiudadesF = this.listCiudades.filter((ciudad) =>
+        ciudad.ciudad.toLowerCase().includes(val.toLowerCase())
+      );
+    } else {
+      this.listCiudadesF = [];
+    }
   }
 
   handleSelect( view:string, opt:number ){
