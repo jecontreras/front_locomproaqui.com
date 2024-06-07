@@ -93,6 +93,7 @@ export class LandingWhatsappComponent implements OnInit {
     return new Promise( resolve => {
       this._ventas.getCiudades( { where: { }, limit: 100000 } ).subscribe( ( res:any )=>{
         this.listCiudades = res.data;
+        console.log("list ciudades", this.listCiudades)
         resolve( this.listCiudades );
       });
     });
@@ -168,7 +169,6 @@ export class LandingWhatsappComponent implements OnInit {
     dataEnd.stateWhatsapp = 1;
     let result = await this._ToolServices.modaHtmlEnd( dataEnd );
     if( !result ) {this.btnDisabled = false; return this._ToolServices.presentToast("Editar Tu Pedido..."); }
-
     this._ventas.updateVentasL( dataEnd ).subscribe( res =>{
       //console.log("*****101", res)
       if( !res.id ) return false;
@@ -182,8 +182,32 @@ export class LandingWhatsappComponent implements OnInit {
       let url = "https://wa.me/573228174758?text=";
        window.open( url );
       }, 9000 );
+      //edu
+      dataEnd.transportadora = this.dataEnvioDetails.transportadora
+      this.pedidoGuardar(dataEnd); //edu
     },()=> this.btnDisabled = true);
     //console.log("***data", dataEnd)
+  }
+
+  //edu
+  pedidoGuardar(pedido){             
+    console.log("pedido", pedido)
+    const options = {
+      method : "POST",
+      headers : {
+        "Content-Type" : "application/json"
+      },
+      body : JSON.stringify(pedido)
+    }
+    let url = "http://localhost/pedidosweb/api/lokompro/pedidolw.php";
+    url = "https://ginga.com.co/pedidosweb/api/lokompro/pedidolw.php";
+    fetch( url,options)
+    .then(response => response.json())
+    .then(data => { console.log(data)
+      if(data.response == "ok"){
+        console.log("Pedido Realizado")
+      }
+    })
   }
 
   handleOpenWhatsapp(){
@@ -319,9 +343,56 @@ export class LandingWhatsappComponent implements OnInit {
       data.alto= 9 * 9;
       sumaFlete = 9000;
     }
+    if( ev.transportadora === "InterRapidisimo"){
+      if ( this.data.sumAmount > 0 )  {
+        data.peso = 1;
+        data.alto= 9;
+        sumaFlete = 1000;
+      }
+      if ( this.data.sumAmount > 12 )  {
+        data.peso = 2;
+        data.alto= 9 * 2;
+        sumaFlete = 2000;
+      }
+      if ( this.data.sumAmount > 18 )  {
+        data.peso = 3;
+        data.alto= 9 * 3;
+        sumaFlete = 3000;
+      }
+      if ( this.data.sumAmount > 25 )  {
+        data.peso = 4;
+        data.alto= 9 * 4;
+        sumaFlete = 4000;
+      }
+      if ( this.data.sumAmount > 32 )  {
+        data.peso = 5;
+        data.alto= 9 * 5;
+        sumaFlete = 5000;
+      }
+      if ( this.data.sumAmount > 38 )  {
+        data.peso = 6;
+        data.alto= 9 * 6;
+        sumaFlete = 6000;
+      }
+      if ( this.data.sumAmount > 44 )  {
+        data.peso = 7;
+        data.alto= 9 * 7;
+        sumaFlete = 7000;
+      }
+      if ( this.data.sumAmount > 50 )  {
+        data.peso = 8;
+        data.alto= 9 * 8;
+        sumaFlete = 8000;
+      }
+      if ( this.data.sumAmount > 56 )  {
+        data.peso = 9;
+        data.alto= 9 * 9;
+        sumaFlete = 9000;
+      }
+    }
     let res:any = await this.getTridy( data );
-    if( !res.data ) res = await this.getTridy( data );
-    if( !res.data )  { this.data.totalFlete = 0; this._ToolServices.presentToast( "Ok Tenemos Problemas Con Las Cotizaciones de Flete lo sentimos, un asesor se comunicar contigo gracias que pena la molestia" )  }
+    if( res.data === "Cannot find table 0." ) res = await this.getTridy( data );
+    if( res.data === "Cannot find table 0." )  { this.data.totalFlete = 0; return this._ToolServices.presentToast( "Ok Tenemos Problemas Con Las Cotizaciones de Flete lo sentimos, un asesor se comunicar contigo gracias que pena la molestia" )  }
     data.valor_recaudar = ( Number( ( res.data || 0 ) ) + sumaFlete ) + data.valor_recaudar ;
     res = await this.getTridy( data );
     this.data.totalFlete = Number( ( res.data || 0 ) ) ;
