@@ -42,7 +42,12 @@ export class LandingWhatsappComponent implements OnInit {
     this.dataPro = await this.getProduct();
     this.viewPhoto = this.dataPro.foto;
     this.codeId = this.activate.snapshot.paramMap.get('code');
-    this.data = await this.getVentaCode( );
+    this.data = await this.getVentaCode();
+    if( !this.data.id ){
+      let alert = await this._ToolServices.confirm({title:"Crear Pedido", detalle:"Deseas Crear un nuevo Pedido", confir:"Si Crear"});
+      if( !alert.value ) return false;      
+      this.HandleOpenNewBuy();
+    }
     this.view = "three";
     if( this.data.id ) { this.listDataAggregate = this.data.listProduct || []; this.suma(); }
     this.data.sumAmount = 0;
@@ -61,7 +66,7 @@ export class LandingWhatsappComponent implements OnInit {
 
   getVentaCode(){
     return new Promise( resolve =>{
-      this._ventas.getVentasL( { where: { code: this.codeId } } ).subscribe( res => resolve( res.data[0] || {} ), error => resolve( error ) );
+      this._ventas.getVentasL( { where: { code: this.codeId, stateWhatsapp: 0 } } ).subscribe( res => resolve( res.data[0] || {} ), error => resolve( error ) );
     });
   }
 
@@ -226,7 +231,7 @@ export class LandingWhatsappComponent implements OnInit {
       "ciudad": ".",
       "direccion": ".",
       "barrio": ".",
-      "numero": this.data.numero,
+      "numero": this.data.numero || 0,
       "listProduct": [],
       "code": this._ToolServices.codigo(),
       "countItem": 0,
@@ -307,42 +312,42 @@ export class LandingWhatsappComponent implements OnInit {
     }
     if ( this.data.sumAmount > 6 )  {
       data.peso = 2;
-      data.alto= 9 * 2;
+      data.alto= 9;
       sumaFlete = 2000;
     }
     if ( this.data.sumAmount > 12 )  {
       data.peso = 3;
-      data.alto= 9 * 3;
+      data.alto= 9;
       sumaFlete = 3000;
     }
     if ( this.data.sumAmount > 18 )  {
       data.peso = 4;
-      data.alto= 9 * 4;
+      data.alto= 9;
       sumaFlete = 4000;
     }
     if ( this.data.sumAmount > 24 )  {
       data.peso = 5;
-      data.alto= 9 * 5;
+      data.alto= 9;
       sumaFlete = 5000;
     }
     if ( this.data.sumAmount > 31 )  {
       data.peso = 6;
-      data.alto= 9 * 6;
+      data.alto= 9;
       sumaFlete = 6000;
     }
     if ( this.data.sumAmount > 37 )  {
       data.peso = 7;
-      data.alto= 9 * 7;
+      data.alto= 9;
       sumaFlete = 7000;
     }
     if ( this.data.sumAmount > 43 )  {
       data.peso = 8;
-      data.alto= 9 * 8;
+      data.alto= 9;
       sumaFlete = 8000;
     }
     if ( this.data.sumAmount > 49 )  {
       data.peso = 9;
-      data.alto= 9 * 9;
+      data.alto= 9;
       sumaFlete = 9000;
     }
     if( ev.transportadora === "InterRapidisimo"){
@@ -353,42 +358,42 @@ export class LandingWhatsappComponent implements OnInit {
       }
       if ( this.data.sumAmount > 12 )  {
         data.peso = 2;
-        data.alto= 9 * 2;
+        data.alto= 9 ;
         sumaFlete = 2000;
       }
       if ( this.data.sumAmount > 18 )  {
         data.peso = 3;
-        data.alto= 9 * 3;
+        data.alto= 9;
         sumaFlete = 3000;
       }
       if ( this.data.sumAmount > 25 )  {
         data.peso = 4;
-        data.alto= 9 * 4;
+        data.alto= 9;
         sumaFlete = 4000;
       }
       if ( this.data.sumAmount > 32 )  {
         data.peso = 5;
-        data.alto= 9 * 5;
+        data.alto= 9;
         sumaFlete = 5000;
       }
       if ( this.data.sumAmount > 38 )  {
         data.peso = 6;
-        data.alto= 9 * 6;
+        data.alto= 9;
         sumaFlete = 6000;
       }
       if ( this.data.sumAmount > 44 )  {
         data.peso = 7;
-        data.alto= 9 * 7;
+        data.alto= 9;
         sumaFlete = 7000;
       }
       if ( this.data.sumAmount > 50 )  {
         data.peso = 8;
-        data.alto= 9 * 8;
+        data.alto= 9;
         sumaFlete = 8000;
       }
       if ( this.data.sumAmount > 56 )  {
         data.peso = 9;
-        data.alto= 9 * 9;
+        data.alto= 9;
         sumaFlete = 9000;
       }
     }
