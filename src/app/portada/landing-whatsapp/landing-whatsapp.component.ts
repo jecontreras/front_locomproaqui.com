@@ -171,11 +171,15 @@ export class LandingWhatsappComponent implements OnInit {
     if( dataEnd.ciudad.ciudad_full ) {
       dataEnd.codeCiudad = dataEnd.ciudad.id_ciudad;
       dataEnd.ciudad = dataEnd.ciudad.ciudad_full;
+      dataEnd.transportadora = dataEnd.ciudad.transportadora;
     }
     dataEnd.stateWhatsapp = 1;
+    this.suma();
+    await this.precioRutulo( { id_ciudad:dataEnd.codeCiudad,  transportadora: dataEnd.transportadora} );
+    dataEnd.totalFlete = this.data.totalFlete;
+    this.suma();
     let result = await this._ToolServices.modaHtmlEnd( dataEnd );
     if( !result ) {this.btnDisabled = false; return this._ToolServices.presentToast("Editar Tu Pedido..."); }
-    this.suma();
     this._ventas.updateVentasL( dataEnd ).subscribe( res =>{
       //console.log("*****101", res)
       if( !res.id ) return false;
@@ -294,126 +298,131 @@ export class LandingWhatsappComponent implements OnInit {
   }
 
   async precioRutulo( ev:any ){
-    console.log("***EVE", ev);
-    let data = {
-      peso: 1 ,
-      alto: 9,
-      ancho: 21,
-      profundo: 28,
-      idDestino: ev.id_ciudad,
-      valor_declarado: ( this.data.priceTotal * 50 ) / 100 ,
-      valor_recaudar: this.data.priceTotal
-    };
-    let sumaFlete = 0;
-    if ( this.data.sumAmount > 0 )  {
-      data.peso = 1;
-      data.alto= 9;
-      sumaFlete = 1000;
-    }
-    if ( this.data.sumAmount > 6 )  {
-      data.peso = 2;
-      data.alto= 9;
-      sumaFlete = 2000;
-    }
-    if ( this.data.sumAmount > 12 )  {
-      data.peso = 3;
-      data.alto= 9;
-      sumaFlete = 3000;
-    }
-    if ( this.data.sumAmount > 18 )  {
-      data.peso = 4;
-      data.alto= 9;
-      sumaFlete = 4000;
-    }
-    if ( this.data.sumAmount > 24 )  {
-      data.peso = 5;
-      data.alto= 9;
-      sumaFlete = 5000;
-    }
-    if ( this.data.sumAmount > 31 )  {
-      data.peso = 6;
-      data.alto= 9;
-      sumaFlete = 6000;
-    }
-    if ( this.data.sumAmount > 37 )  {
-      data.peso = 7;
-      data.alto= 9;
-      sumaFlete = 7000;
-    }
-    if ( this.data.sumAmount > 43 )  {
-      data.peso = 8;
-      data.alto= 9;
-      sumaFlete = 8000;
-    }
-    if ( this.data.sumAmount > 49 )  {
-      data.peso = 9;
-      data.alto= 9;
-      sumaFlete = 9000;
-    }
-    if( ev.transportadora === "InterRapidisimo"){
+    return new Promise( async ( resolve ) =>{
+      console.log("***EVE", ev);
+      let data = {
+        peso: 1 ,
+        alto: 9,
+        ancho: 21,
+        profundo: 28,
+        idDestino: ev.id_ciudad,
+        valor_declarado: ( this.data.priceTotal * 50 ) / 100 ,
+        valor_recaudar: this.data.priceTotal
+      };
+      let sumaFlete = 0;
       if ( this.data.sumAmount > 0 )  {
         data.peso = 1;
         data.alto= 9;
         sumaFlete = 1000;
       }
-      if ( this.data.sumAmount > 12 )  {
+      if ( this.data.sumAmount > 6 )  {
         data.peso = 2;
-        data.alto= 9 ;
+        data.alto= 9;
         sumaFlete = 2000;
       }
-      if ( this.data.sumAmount > 18 )  {
+      if ( this.data.sumAmount > 12 )  {
         data.peso = 3;
         data.alto= 9;
         sumaFlete = 3000;
       }
-      if ( this.data.sumAmount > 25 )  {
+      if ( this.data.sumAmount > 18 )  {
         data.peso = 4;
         data.alto= 9;
         sumaFlete = 4000;
       }
-      if ( this.data.sumAmount > 32 )  {
+      if ( this.data.sumAmount > 24 )  {
         data.peso = 5;
         data.alto= 9;
         sumaFlete = 5000;
       }
-      if ( this.data.sumAmount > 38 )  {
+      if ( this.data.sumAmount > 31 )  {
         data.peso = 6;
         data.alto= 9;
         sumaFlete = 6000;
       }
-      if ( this.data.sumAmount > 44 )  {
+      if ( this.data.sumAmount > 37 )  {
         data.peso = 7;
         data.alto= 9;
         sumaFlete = 7000;
       }
-      if ( this.data.sumAmount > 50 )  {
+      if ( this.data.sumAmount > 43 )  {
         data.peso = 8;
         data.alto= 9;
         sumaFlete = 8000;
       }
-      if ( this.data.sumAmount > 56 )  {
+      if ( this.data.sumAmount > 49 )  {
         data.peso = 9;
         data.alto= 9;
         sumaFlete = 9000;
       }
-    }
-    this.btnDisabled = true;
-    let res:any = await this.getTridy( data );
-    if( res.data === "Cannot find table 0." ) res = await this.getTridy( data );
-    if( res.data === "Cannot find table 0." )  { this.btnDisabled = false; this.data.totalFlete = 0; return this._ToolServices.presentToast( "Ok Tenemos Problemas Con Las Cotizaciones de Flete lo sentimos, un asesor se comunicar contigo gracias que pena la molestia" )  }
-    data.valor_recaudar = ( Number( ( res.data || 0 ) ) + sumaFlete ) + data.valor_recaudar ;
-    res = await this.getTridy( data );
-    this.data.totalFlete = Number( ( res.data || 0 ) ) ;
-    this.data.totalFlete = Number(this.data.totalFlete.toFixed(2));
-    console.log(this.data.totalFlete); // Muestra 1.78
-    if( !res.data ){
-      this.data.totalFlete = 0;
-    }
-    //this._ToolServices.basic("Precio del Envio "+ this._ToolServices.monedaChange( 3, 2, ( this.data.totalFlete ) ) + " Transportadora "+  ev.transportadora );
-    this._ToolServices.presentToast("Precio del Envio "+ this._ToolServices.monedaChange( 3, 2, ( this.data.totalFlete ) ) + " Transportadora "+  ev.transportadora );
-    this.dataEnvioDetails = ev;
-    this.suma();
-    this.btnDisabled = false;
+      if( ev.transportadora === "InterRapidisimo"){
+        if ( this.data.sumAmount > 0 )  {
+          data.peso = 1;
+          data.alto= 9;
+          sumaFlete = 1000;
+        }
+        if ( this.data.sumAmount > 12 )  {
+          data.peso = 2;
+          data.alto= 9 ;
+          sumaFlete = 2000;
+        }
+        if ( this.data.sumAmount > 18 )  {
+          data.peso = 3;
+          data.alto= 9;
+          sumaFlete = 3000;
+        }
+        if ( this.data.sumAmount > 25 )  {
+          data.peso = 4;
+          data.alto= 9;
+          sumaFlete = 4000;
+        }
+        if ( this.data.sumAmount > 32 )  {
+          data.peso = 5;
+          data.alto= 9;
+          sumaFlete = 5000;
+        }
+        if ( this.data.sumAmount > 38 )  {
+          data.peso = 6;
+          data.alto= 9;
+          sumaFlete = 6000;
+        }
+        if ( this.data.sumAmount > 44 )  {
+          data.peso = 7;
+          data.alto= 9;
+          sumaFlete = 7000;
+        }
+        if ( this.data.sumAmount > 50 )  {
+          data.peso = 8;
+          data.alto= 9;
+          sumaFlete = 8000;
+        }
+        if ( this.data.sumAmount > 56 )  {
+          data.peso = 9;
+          data.alto= 9;
+          sumaFlete = 9000;
+        }
+      }
+      this.btnDisabled = true;
+      let res:any = await this.getTridy( data );
+      if( res.data === "Cannot find table 0." ) res = await this.getTridy( data );
+      if( res.data === "Cannot find table 0." )  { this.btnDisabled = false; this.data.totalFlete = 0; resolve( true ); return this._ToolServices.presentToast( "Ok Tenemos Problemas Con Las Cotizaciones de Flete lo sentimos, un asesor se comunicar contigo gracias que pena la molestia" )  }
+      data.valor_recaudar = ( Number( ( res.data || 0 ) ) + sumaFlete ) + data.valor_recaudar ;
+      res = await this.getTridy( data );
+      this.data.totalFlete = Number( ( res.data || 0 ) ) ;
+      this.data.totalFlete = Number(this.data.totalFlete.toFixed(2));
+      this.data.transportadora = ev.transportadora;
+      this.data.id_ciudad = ev.id_ciudad;
+      console.log(this.data.totalFlete); // Muestra 1.78
+      if( !res.data ){
+        this.data.totalFlete = 0;
+      }
+      //this._ToolServices.basic("Precio del Envio "+ this._ToolServices.monedaChange( 3, 2, ( this.data.totalFlete ) ) + " Transportadora "+  ev.transportadora );
+      this._ToolServices.presentToast("Precio del Envio "+ this._ToolServices.monedaChange( 3, 2, ( this.data.totalFlete ) ) + " Transportadora "+  ev.transportadora );
+      this.dataEnvioDetails = ev;
+      this.suma();
+      this.btnDisabled = false;
+      resolve( true );
+    })
   }
 
   getTridy( data ){
