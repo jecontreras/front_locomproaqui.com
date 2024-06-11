@@ -44,8 +44,8 @@ export class LandingWhatsappComponent implements OnInit {
     this.codeId = this.activate.snapshot.paramMap.get('code');
     this.data = await this.getVentaCode();
     if( !this.data.id ){
-      let alert = await this._ToolServices.confirm({title:"Crear Pedido", detalle:"Deseas Crear un nuevo Pedido", confir:"Si Crear"});
-      if( !alert.value ) return false;      
+      /*let alert = await this._ToolServices.confirm({title:"Crear Pedido", detalle:"Deseas Crear un nuevo Pedido", confir:"Si Crear"});
+      if( !alert.value ) return false;      */
       this.HandleOpenNewBuy();
     }
     this.view = "three";
@@ -397,9 +397,10 @@ export class LandingWhatsappComponent implements OnInit {
         sumaFlete = 9000;
       }
     }
+    this.btnDisabled = true;
     let res:any = await this.getTridy( data );
     if( res.data === "Cannot find table 0." ) res = await this.getTridy( data );
-    if( res.data === "Cannot find table 0." )  { this.data.totalFlete = 0; return this._ToolServices.presentToast( "Ok Tenemos Problemas Con Las Cotizaciones de Flete lo sentimos, un asesor se comunicar contigo gracias que pena la molestia" )  }
+    if( res.data === "Cannot find table 0." )  { this.btnDisabled = false; this.data.totalFlete = 0; return this._ToolServices.presentToast( "Ok Tenemos Problemas Con Las Cotizaciones de Flete lo sentimos, un asesor se comunicar contigo gracias que pena la molestia" )  }
     data.valor_recaudar = ( Number( ( res.data || 0 ) ) + sumaFlete ) + data.valor_recaudar ;
     res = await this.getTridy( data );
     this.data.totalFlete = Number( ( res.data || 0 ) ) ;
@@ -412,6 +413,7 @@ export class LandingWhatsappComponent implements OnInit {
     this._ToolServices.presentToast("Precio del Envio "+ this._ToolServices.monedaChange( 3, 2, ( this.data.totalFlete ) ) + " Transportadora "+  ev.transportadora );
     this.dataEnvioDetails = ev;
     this.suma();
+    this.btnDisabled = false;
   }
 
   getTridy( data ){
