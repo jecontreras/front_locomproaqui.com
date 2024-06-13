@@ -10,7 +10,6 @@ import { ToolsService } from 'src/app/services/tools.service';
 export class DialogPedidoArmaComponent implements OnInit {
   data:any = {
     talla: 0,
-    cantidad: 0
   };
   constructor(
     public dialogRef: MatDialogRef<DialogPedidoArmaComponent>,

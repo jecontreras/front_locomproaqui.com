@@ -496,7 +496,7 @@
                       <div></div>
                       <div>
                         <p>
-                          {{ _ToolServices.monedaChange( 3, 2, ( data.totalFlete || 0 ) + ( data.priceTotal || 0 ) ) }}
+                          {{ _ToolServices.monedaChange( 3, 2, ( data.totalAPagar || 0 ) ) }}
                         </p>
                       </div>
                     </div>
@@ -540,7 +540,7 @@
                   </section>
                   <section *ngIf="!data.checkCity">
                       <label>Ciudad Destino *</label>
-                      <ng-autocomplete [(ngModel)]="data.ciudad" [data]="listCiudades" [searchKeyword]="keyword" placeHolder="Buscar Ciudad" autocomplete="off"
+                      <ng-autocomplete [(ngModel)]="data.ciudad" [data]="listCiudadesF" [searchKeyword]="keyword" placeHolder="Buscar Ciudad" autocomplete="off"
                           historyIdentifier="listCiudades" [itemTemplate]="itemTemplate" [notFoundTemplate]="notFoundTemplate" (selected)='precioRutulo($event)' (inputChanged)='onChangeSearch($event)'>
                       </ng-autocomplete>
         

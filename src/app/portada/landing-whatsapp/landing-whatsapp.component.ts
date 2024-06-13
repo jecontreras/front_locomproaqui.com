@@ -19,6 +19,7 @@ export class LandingWhatsappComponent implements OnInit {
   viewPhoto:string;
   listDataAggregate:any = [];
   listCiudades:any = TRIDYCIUDAD;
+  listCiudadesF:any = [];
   keyword = 'ciudad';
   data:any = {};
   @ViewChild('nextStep', { static: true }) nextStep: ElementRef;
@@ -41,7 +42,12 @@ export class LandingWhatsappComponent implements OnInit {
     this.dataPro = await this.getProduct();
     this.viewPhoto = this.dataPro.foto;
     this.codeId = this.activate.snapshot.paramMap.get('code');
-    this.data = await this.getVentaCode( );
+    this.data = await this.getVentaCode();
+    if( !this.data.id ){
+      /*let alert = await this._ToolServices.confirm({title:"Crear Pedido", detalle:"Deseas Crear un nuevo Pedido", confir:"Si Crear"});
+      if( !alert.value ) return false;      */
+      this.HandleOpenNewBuy();
+    }
     this.view = "three";
     if( this.data.id ) { this.listDataAggregate = this.data.listProduct || []; this.suma(); }
     this.data.sumAmount = 0;
@@ -60,7 +66,7 @@ export class LandingWhatsappComponent implements OnInit {
 
   getVentaCode(){
     return new Promise( resolve =>{
-      this._ventas.getVentasL( { where: { code: this.codeId } } ).subscribe( res => resolve( res.data[0] || {} ), error => resolve( error ) );
+      this._ventas.getVentasL( { where: { code: this.codeId, stateWhatsapp: 0 } } ).subscribe( res => resolve( res.data[0] || {} ), error => resolve( error ) );
     });
   }
 
@@ -152,21 +158,30 @@ export class LandingWhatsappComponent implements OnInit {
     if( this.data.sumAmount >= 6 ) this.data.priceTotal = this.dataPro.pro_vendedor * this.data.sumAmount;
     else this.data.priceTotal = this.dataPro.pro_uni_venta * this.data.sumAmount;
     this.data.countItem = this.data.sumAmount;
-    this.data.totalAPagar = this.data.priceTotal;
+    this.data.totalAPagar = this.data.priceTotal + ( this.data.totalFlete || 0 );
   } 
 
-  async handleEndOrder(){
+  async handleEndOrder(){ console.log("handle Order")
     if( this.btnDisabled ) return false;
     let validate = this.validarInput();
     if( !validate ) return false;
     this.btnDisabled = true;
     let dataEnd:any = this.data;
     dataEnd.listProduct = this.listDataAggregate;
+    //edu
+    console.log("this.data.transportadora",this.data.transportadora)
+    dataEnd.transportadora = this.data.transportadora //EDU
+    
     if( dataEnd.ciudad.ciudad_full ) {
       dataEnd.codeCiudad = dataEnd.ciudad.id_ciudad;
       dataEnd.ciudad = dataEnd.ciudad.ciudad_full;
+      // dataEnd.transportadora = dataEnd.ciudad.transportadora; // EDU quedaba indefinido 20240613
     }
     dataEnd.stateWhatsapp = 1;
+    this.suma();
+    await this.precioRutulo( { id_ciudad:dataEnd.codeCiudad,  transportadora: dataEnd.transportadora} );
+    dataEnd.totalFlete = this.data.totalFlete;
+    this.suma();
     let result = await this._ToolServices.modaHtmlEnd( dataEnd );
     if( !result ) {this.btnDisabled = false; return this._ToolServices.presentToast("Editar Tu Pedido..."); }
     this._ventas.updateVentasL( dataEnd ).subscribe( res =>{
@@ -182,9 +197,7 @@ export class LandingWhatsappComponent implements OnInit {
       let url = "https://wa.me/573228174758?text=";
        window.open( url );
       }, 9000 );
-      //edu
-      console.log("this.dataEnvioDetails",this.dataEnvioDetails)
-      dataEnd.transportadora = this.dataEnvioDetails.transportadora
+      //EDU
       this.pedidoGuardar(dataEnd); //edu
     },()=> this.btnDisabled = true);
     //console.log("***data", dataEnd)
@@ -225,7 +238,7 @@ export class LandingWhatsappComponent implements OnInit {
       "ciudad": ".",
       "direccion": ".",
       "barrio": ".",
-      "numero": this.data.numero,
+      "numero": this.data.numero || 0,
       "listProduct": [],
       "code": this._ToolServices.codigo(),
       "countItem": 0,
@@ -288,73 +301,150 @@ export class LandingWhatsappComponent implements OnInit {
   }
 
   async precioRutulo( ev:any ){
-    console.log("***EVE", ev);
-    let data = {
-      peso: 1 ,
-      alto: 9,
-      ancho: 21,
-      profundo: 28,
-      idDestino: ev.id_ciudad,
-      valor_declarado: ( this.data.priceTotal * 50 ) / 100 ,
-      valor_recaudar: this.data.priceTotal
-    };
-    let sumaFlete = 0;
-    if ( this.data.sumAmount > 6 )  {
-      data.peso = 2;
-      data.alto= 9 * 2;
-      sumaFlete = 2000;
-    }
-    else if ( this.data.sumAmount > 12 )  {
-      data.peso = 3;
-      data.alto= 9 * 3;
-      sumaFlete = 3000;
-    }
-    else if ( this.data.sumAmount > 18 )  {
-      data.peso = 4;
-      data.alto= 9 * 4;
-      sumaFlete = 4000;
-    }
-    else if ( this.data.sumAmount > 24 )  {
-      data.peso = 5;
-      data.alto= 9 * 5;
-      sumaFlete = 5000;
-    }
-    else if ( this.data.sumAmount > 31 )  {
-      data.peso = 6;
-      data.alto= 9 * 6;
-      sumaFlete = 6000;
-    }
-    else if ( this.data.sumAmount > 37 )  {
-      data.peso = 7;
-      data.alto= 9 * 7;
-      sumaFlete = 7000;
-    }
-    else if ( this.data.sumAmount > 43 )  {
-      data.peso = 8;
-      data.alto= 9 * 8;
-      sumaFlete = 8000;
-    }
-    else if ( this.data.sumAmount > 49 )  {
-      data.peso = 9;
-      data.alto= 9 * 9;
-      sumaFlete = 9000;
-    }
-    else {
-      data.peso = 1;
-      sumaFlete = 1000;
-    }
-    this._ventas.getFleteValorTriidy( data ).subscribe( res =>{
-      this.data.totalFlete = Number( ( res.data || 0 ) ) + sumaFlete ;
+    return new Promise( async ( resolve ) =>{
+      console.log("***EVE", ev);
+      let data = {
+        peso: 1 ,
+        alto: 9,
+        ancho: 21,
+        profundo: 28,
+        idDestino: ev.id_ciudad,
+        valor_declarado: ( this.data.priceTotal * 50 ) / 100 ,
+        valor_recaudar: this.data.priceTotal
+      };
+      let sumaFlete = 0;
+      if ( this.data.sumAmount > 0 )  {
+        data.peso = 1;
+        data.alto= 9;
+        sumaFlete = 1000;
+      }
+      if ( this.data.sumAmount > 6 )  {
+        data.peso = 2;
+        data.alto= 9;
+        sumaFlete = 2000;
+      }
+      if ( this.data.sumAmount > 12 )  {
+        data.peso = 3;
+        data.alto= 9;
+        sumaFlete = 3000;
+      }
+      if ( this.data.sumAmount > 18 )  {
+        data.peso = 4;
+        data.alto= 9;
+        sumaFlete = 4000;
+      }
+      if ( this.data.sumAmount > 24 )  {
+        data.peso = 5;
+        data.alto= 9;
+        sumaFlete = 5000;
+      }
+      if ( this.data.sumAmount > 31 )  {
+        data.peso = 6;
+        data.alto= 9;
+        sumaFlete = 6000;
+      }
+      if ( this.data.sumAmount > 37 )  {
+        data.peso = 7;
+        data.alto= 9;
+        sumaFlete = 7000;
+      }
+      if ( this.data.sumAmount > 43 )  {
+        data.peso = 8;
+        data.alto= 9;
+        sumaFlete = 8000;
+      }
+      if ( this.data.sumAmount > 49 )  {
+        data.peso = 9;
+        data.alto= 9;
+        sumaFlete = 9000;
+      }
+      if( ev.transportadora === "InterRapidisimo"){
+        if ( this.data.sumAmount > 0 )  {
+          data.peso = 1;
+          data.alto= 9;
+          sumaFlete = 1000;
+        }
+        if ( this.data.sumAmount > 12 )  {
+          data.peso = 2;
+          data.alto= 9 ;
+          sumaFlete = 2000;
+        }
+        if ( this.data.sumAmount > 18 )  {
+          data.peso = 3;
+          data.alto= 9;
+          sumaFlete = 3000;
+        }
+        if ( this.data.sumAmount > 25 )  {
+          data.peso = 4;
+          data.alto= 9;
+          sumaFlete = 4000;
+        }
+        if ( this.data.sumAmount > 32 )  {
+          data.peso = 5;
+          data.alto= 9;
+          sumaFlete = 5000;
+        }
+        if ( this.data.sumAmount > 38 )  {
+          data.peso = 6;
+          data.alto= 9;
+          sumaFlete = 6000;
+        }
+        if ( this.data.sumAmount > 44 )  {
+          data.peso = 7;
+          data.alto= 9;
+          sumaFlete = 7000;
+        }
+        if ( this.data.sumAmount > 50 )  {
+          data.peso = 8;
+          data.alto= 9;
+          sumaFlete = 8000;
+        }
+        if ( this.data.sumAmount > 56 )  {
+          data.peso = 9;
+          data.alto= 9;
+          sumaFlete = 9000;
+        }
+      }
+      this.btnDisabled = true;
+      let res:any = await this.getTridy( data );
+      if( res.data === "Cannot find table 0." ) res = await this.getTridy( data );
+      if( res.data === "Cannot find table 0." )  { this.btnDisabled = false; this.data.totalFlete = 0; resolve( true ); return this._ToolServices.presentToast( "Ok Tenemos Problemas Con Las Cotizaciones de Flete lo sentimos, un asesor se comunicar contigo gracias que pena la molestia" )  }
+      data.valor_recaudar = ( Number( ( res.data || 0 ) ) + sumaFlete ) + data.valor_recaudar ;
+      res = await this.getTridy( data );
+      this.data.totalFlete = Number( ( res.data || 0 ) ) ;
+      this.data.totalFlete = Number(this.data.totalFlete.toFixed(2));
+      this.data.transportadora = ev.transportadora;
+      console.log("transportadora", this.data.transportadora)
+      this.data.id_ciudad = ev.id_ciudad;
+      console.log(this.data.totalFlete); // Muestra 1.78
       if( !res.data ){
         this.data.totalFlete = 0;
       }
-      this._ToolServices.basic("Precio del Envio "+ this._ToolServices.monedaChange( 3, 2, ( this.data.totalFlete ) ) + " Transportadora "+  ev.transportadora );
+      //this._ToolServices.basic("Precio del Envio "+ this._ToolServices.monedaChange( 3, 2, ( this.data.totalFlete ) ) + " Transportadora "+  ev.transportadora );
+      this._ToolServices.presentToast("Precio del Envio "+ this._ToolServices.monedaChange( 3, 2, ( this.data.totalFlete ) ) + " Transportadora "+  ev.transportadora );
       this.dataEnvioDetails = ev;
       this.suma();
+      this.btnDisabled = false;
+      resolve( true );
+    })
+  }
+
+  getTridy( data ){
+    return new Promise( resolve =>{
+      this._ventas.getFleteValorTriidy( data ).subscribe( res =>{
+        resolve( res );
+      });
     });
   }
-  onChangeSearch( ev:any ){
+  onChangeSearch( val:any ){
     //console.log( ev )
+    if (val) {
+      this.listCiudadesF = this.listCiudades.filter((ciudad) =>
+        ciudad.ciudad.toLowerCase().includes(val.toLowerCase())
+      );
+    } else {
+      this.listCiudadesF = [];
+    }
   }
 
   handleSelect( view:string, opt:number ){

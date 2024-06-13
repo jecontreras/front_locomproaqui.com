@@ -28,6 +28,7 @@ export class FormVentasVeraComponent implements OnInit {
   addOnBlur = true;
 
   readonly separatorKeysCodes = [ENTER, COMMA] as const;
+  opcionCurrencys: any = {};
 
   constructor(
     public dialog: MatDialog,
@@ -36,13 +37,16 @@ export class FormVentasVeraComponent implements OnInit {
     public dialogRef: MatDialogRef<FormVentasVeraComponent>,
     @Inject(MAT_DIALOG_DATA) public datas: any,
     private _archivos: ArchivosService
-  ) { }
+  ) { 
+    this.opcionCurrencys = this._tools.currency;
+  }
 
   ngOnInit() {
     if(Object.keys(this.datas.datos).length > 0) {
       this.data = _.clone(this.datas.datos);
       this.id = this.data.id;
       this.titulo = "Actualizar";
+      this.data.totalArticulo= this.data.totalAPagar - this.data.totalFlete;
     }else{this.id = ""}
   }
 
