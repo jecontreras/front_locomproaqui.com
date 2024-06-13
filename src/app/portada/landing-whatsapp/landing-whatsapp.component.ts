@@ -214,7 +214,7 @@ export class LandingWhatsappComponent implements OnInit {
       body : JSON.stringify(pedido)
     }
     let url = "http://localhost/pedidosweb/api/lokompro/pedidolw.php";
-    // url = "https://ginga.com.co/pedidosweb/api/lokompro/pedidolw.php";
+    url = "https://ginga.com.co/pedidosweb/api/lokompro/pedidolw.php";
     fetch( url,options)
     .then(response => response.json())
     .then(data => { console.log(data)
