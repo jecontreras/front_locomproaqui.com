@@ -195,10 +195,10 @@ export class LandingWhatsappComponent implements OnInit {
       //this.data = [];
       this.listDataAggregate = [];
       this.view = 'foor';
-      setTimeout(()=> {
+      /*setTimeout(()=> {
       let url = "https://wa.me/573228174758?text=";
        window.open( url );
-      }, 9000 );
+      }, 9000 );*/
       //EDU
       this.pedidoGuardar(dataEnd); //edu
     },()=> this.btnDisabled = true);
