@@ -28,6 +28,7 @@ export class LandingWhatsappComponent implements OnInit {
   codeId:string;
   view:string = "one";
   dataEnvioDetails:any = {};
+  numberId:number;
 
   constructor(
     private _productServices: ProductoService,
@@ -42,6 +43,7 @@ export class LandingWhatsappComponent implements OnInit {
     this.dataPro = await this.getProduct();
     this.viewPhoto = this.dataPro.foto;
     this.codeId = this.activate.snapshot.paramMap.get('code');
+    this.numberId = Number( ( this.activate.snapshot.paramMap.get('number') ) || 0 );
     this.data = await this.getVentaCode();
     if( !this.data.id ){
       /*let alert = await this._ToolServices.confirm({title:"Crear Pedido", detalle:"Deseas Crear un nuevo Pedido", confir:"Si Crear"});
@@ -183,7 +185,7 @@ export class LandingWhatsappComponent implements OnInit {
     this._ventas.updateVentasL( dataEnd ).subscribe( res =>{
       //console.log("*****101", res)
       if( !res.id ) return false;
-      //this.openWhatsapp( res );
+      if( this.numberId ) this.openWhatsapp( res );
       this._ToolServices.presentToast("Tu pedido ha sido enviado correctamente gracias por tu compra.!");
       this.btnDisabled = false;
       //this.data = [];
@@ -277,7 +279,7 @@ export class LandingWhatsappComponent implements OnInit {
       *Barrio*: ${ data.barrio }
       *Numero de mi Pedido*: ${ data.id }
     `;*/
-    let urlWhatsapp = `https://wa.me/573112128943?text=${ encodeURIComponent(` Hola Servicio al Cliente de VICTOR LANDAZURY
+    let urlWhatsapp = `https://wa.me/57${ this.numberId }?text=${ encodeURIComponent(` Hola Servicio al Cliente de VICTOR LANDAZURY
       Acabo de realizar un Pedido \n
       Mi Nombre es: ${ data.nombre } \n      
       Ciudad: ${ data.ciudad } \n
