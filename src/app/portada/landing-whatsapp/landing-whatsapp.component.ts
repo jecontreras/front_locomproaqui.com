@@ -163,17 +163,21 @@ export class LandingWhatsappComponent implements OnInit {
     this.data.totalAPagar = this.data.priceTotal + ( this.data.totalFlete || 0 );
   } 
 
-  async handleEndOrder(){
+  async handleEndOrder(){ console.log("handle Order")
     if( this.btnDisabled ) return false;
     let validate = this.validarInput();
     if( !validate ) return false;
     this.btnDisabled = true;
     let dataEnd:any = this.data;
     dataEnd.listProduct = this.listDataAggregate;
+    //edu
+    console.log("this.data.transportadora",this.data.transportadora)
+    dataEnd.transportadora = this.data.transportadora //EDU
+    
     if( dataEnd.ciudad.ciudad_full ) {
       dataEnd.codeCiudad = dataEnd.ciudad.id_ciudad;
       dataEnd.ciudad = dataEnd.ciudad.ciudad_full;
-      dataEnd.transportadora = dataEnd.ciudad.transportadora;
+      // dataEnd.transportadora = dataEnd.ciudad.transportadora; // EDU quedaba indefinido 20240613
     }
     dataEnd.stateWhatsapp = 1;
     this.suma();
@@ -195,8 +199,7 @@ export class LandingWhatsappComponent implements OnInit {
       let url = "https://wa.me/573228174758?text=";
        window.open( url );
       }, 9000 );
-      //edu
-      dataEnd.transportadora = this.dataEnvioDetails.transportadora
+      //EDU
       this.pedidoGuardar(dataEnd); //edu
     },()=> this.btnDisabled = true);
     //console.log("***data", dataEnd)
@@ -413,6 +416,7 @@ export class LandingWhatsappComponent implements OnInit {
       this.data.totalFlete = Number( ( res.data || 0 ) ) ;
       this.data.totalFlete = Number(this.data.totalFlete.toFixed(2));
       this.data.transportadora = ev.transportadora;
+      console.log("transportadora", this.data.transportadora)
       this.data.id_ciudad = ev.id_ciudad;
       console.log(this.data.totalFlete); // Muestra 1.78
       if( !res.data ){
