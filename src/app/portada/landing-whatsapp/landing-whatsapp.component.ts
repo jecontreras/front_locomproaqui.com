@@ -241,8 +241,10 @@ export class LandingWhatsappComponent implements OnInit {
   }
 
   handleOpenWhatsapp(){
-    let url = "https://wa.me/573228174758?text=";
-    window.open( url );
+    if( !this.numberId ) {
+      let url = "https://wa.me/573228174758?text=";
+      window.open( url );
+    }
     setTimeout(()=> window.close(), 5000 );
   }
 
@@ -296,7 +298,7 @@ export class LandingWhatsappComponent implements OnInit {
       *Barrio*: ${ data.barrio }
       *Numero de mi Pedido*: ${ data.id }
     `;*/
-    let urlWhatsapp = `https://wa.me/${ this.indicativoId }${ this.numberId }?text=${ encodeURIComponent(` Hola Servicio al Cliente de VICTOR LANDAZURY
+    /*let urlWhatsapp = `https://wa.me/${ this.indicativoId }${ this.numberId }?text=${ encodeURIComponent(` Hola Servicio al Cliente de VICTOR LANDAZURY
       Acabo de realizar un Pedido \n
       Mi Nombre es: ${ data.nombre } \n      
       Ciudad: ${ data.ciudad } \n
@@ -311,7 +313,27 @@ export class LandingWhatsappComponent implements OnInit {
       * valor del Flete: * ${ this.data.totalFlete } \n
       * Total a Pagar: * ${  this.data.totalAPagar } \n
       
-      Quedo al pendiente de la guía de despacho tan pronto la tengas me la envías muchas gracias 🙂 `)}`;
+      Quedo al pendiente de la guía de despacho tan pronto la tengas me la envías muchas gracias 🙂 `)}`;*/
+    let urlWhatsapp = `https://wa.me/${ this.indicativoId }${ this.numberId }?text=${ encodeURIComponent(` Cod: 785
+¡Gracias por tu compra, Victor!🤩
+
+¡Es un honor para nosotros que hagas parte de nuestra familia! ✨
+
+✈ Tus datos para la entrega son: 
+
+Nombre: ${ data.nombre }
+WhatsApp: ${ data.numero}
+Dirección: ${ data.direccion }
+Ciudad: ${ data.ciudad }
+Cantidad de pares: ${ this.data.sumAmount } *
+* Transportadora: * ${ this._ToolServices.monedaChange( 3,2, ( this.data.transportadora || 0 ) ) }
+Valor de productos: ${ this._ToolServices.monedaChange(3,2,( ( this.data.totalAPagar -  this.data.totalFlete ) || 0 )) }
+Valor de flete: ${ this._ToolServices.monedaChange( 3,2, ( this.data.totalFlete || 0 ) ) }
+Monto a cancelar: ${ this._ToolServices.monedaChange( 3,2, ( this.data.totalAPagar || 0 ) ) } ¡Pagas al recibir!
+
+⏳ Tiempo de entrega: 2 a 8 días hábiles (depende de tu ubicación y transportadora).
+
+🤝 en el transcurso del día te enviaremos la guía de tu pedido`)}`;
     window.open( urlWhatsapp );
     this.data = {};
     this.listDataAggregate = [];
