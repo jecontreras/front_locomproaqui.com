@@ -40,6 +40,7 @@ export class LandingWhatsappComponent implements OnInit {
 
   async ngOnInit() {
     this.dataPro = await this.getProduct();
+    console.log("articulos", this.dataPro)
     this.viewPhoto = this.dataPro.foto;
     this.codeId = this.activate.snapshot.paramMap.get('code');
     this.data = await this.getVentaCode();
