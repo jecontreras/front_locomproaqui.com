@@ -265,7 +265,7 @@ export class LandingWhatsappComponent implements OnInit {
    };
    this._ventas.createVentasL( dats ).subscribe( res =>{
     if( res ){
-      this.Router.navigate(['/front/landingWhatsapp', dats.code ] );
+      this.Router.navigate(['/front/landingWhatsapp', dats.code, `+${ this.indicativoId }${ this.numberId }`] );
       setTimeout(()=> location.reload(), 3000 );
     }
    } );
