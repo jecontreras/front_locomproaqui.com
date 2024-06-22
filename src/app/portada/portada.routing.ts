@@ -71,6 +71,10 @@ const routes: Routes = [
             path: 'landingWhatsapp/:code',
             component: LandingWhatsappComponent
           },
+          {
+            path: 'landingWhatsapp/:code/:number',
+            component: LandingWhatsappComponent
+          },
         ]
       },
       // {

@@ -6,6 +6,7 @@ import { ToolsService } from 'src/app/services/tools.service';
 import { ProductoService } from 'src/app/servicesComponents/producto.service';
 import { VentasService } from 'src/app/servicesComponents/ventas.service';
 import { DialogPedidoArmaComponent } from '../dialog-pedido-arma/dialog-pedido-arma.component';
+import { Indicativo } from 'src/app/JSON/indicativo';
 
 @Component({
   selector: 'app-landing-whatsapp',
@@ -28,7 +29,10 @@ export class LandingWhatsappComponent implements OnInit {
   codeId:string;
   view:string = "one";
   dataEnvioDetails:any = {};
-
+  numberId:string;
+  indicativoId: string;
+  listIndiPais = Indicativo;
+  namePais:string = "Colombia";
   constructor(
     private _productServices: ProductoService,
     public _ToolServices: ToolsService,
@@ -43,6 +47,17 @@ export class LandingWhatsappComponent implements OnInit {
     console.log("articulos", this.dataPro)
     this.viewPhoto = this.dataPro.foto;
     this.codeId = this.activate.snapshot.paramMap.get('code');
+    let formatN = this.activate.snapshot.paramMap.get('number');
+    console.log("**********48", this.activate.snapshot.paramMap, formatN)
+    try {
+      this.numberId = ( formatN.split("+") )[1];
+      this.indicativoId = ( formatN.split("+") )[0]
+      let filterNamePais = this.listIndiPais.find( row => row.phone_code === this.indicativoId );
+      if( filterNamePais ) this.namePais = filterNamePais.name;
+    } catch (error) {
+      this.numberId = "3108131582";
+      this.indicativoId = "57";
+    }
     this.data = await this.getVentaCode();
     if( !this.data.id ){
       /*let alert = await this._ToolServices.confirm({title:"Crear Pedido", detalle:"Deseas Crear un nuevo Pedido", confir:"Si Crear"});
@@ -124,6 +139,7 @@ export class LandingWhatsappComponent implements OnInit {
     });
     dialogRef.afterClosed().subscribe(selectTalla => {
       console.log(`Dialog result:`, selectTalla);
+      if( !selectTalla.talla || !selectTalla.cantidad ) return false;
       row.tal_descripcion = selectTalla.talla;
       row.amountAd = selectTalla.cantidad;
       
@@ -133,8 +149,8 @@ export class LandingWhatsappComponent implements OnInit {
   }
 
   async handleDeleteItem( item ){
-    let alert = await this._ToolServices.confirm({title:"Eliminar", detalle:"Deseas Eliminar Item", confir:"Si Eliminar"});
-    if( !alert.value ) return false;
+    /*let alert = await this._ToolServices.confirm({title:"Eliminar", detalle:"Deseas Eliminar Item", confir:"Si Eliminar"});
+    if( !alert.value ) return false;*/
     this.listDataAggregate = this.listDataAggregate.filter( row => row.id !== item.id );
     this.suma();
   }
@@ -188,16 +204,16 @@ export class LandingWhatsappComponent implements OnInit {
     this._ventas.updateVentasL( dataEnd ).subscribe( res =>{
       //console.log("*****101", res)
       if( !res.id ) return false;
-      //this.openWhatsapp( res );
+      if( this.numberId ) this.openWhatsapp( res );
       this._ToolServices.presentToast("Tu pedido ha sido enviado correctamente gracias por tu compra.!");
       this.btnDisabled = false;
       //this.data = [];
       this.listDataAggregate = [];
       this.view = 'foor';
-      setTimeout(()=> {
+      /*setTimeout(()=> {
       let url = "https://wa.me/573228174758?text=";
        window.open( url );
-      }, 9000 );
+      }, 9000 );*/
       //EDU
       this.pedidoGuardar(dataEnd); //edu
     },()=> this.btnDisabled = true);
@@ -281,7 +297,7 @@ export class LandingWhatsappComponent implements OnInit {
       *Barrio*: ${ data.barrio }
       *Numero de mi Pedido*: ${ data.id }
     `;*/
-    let urlWhatsapp = `https://wa.me/573112128943?text=${ encodeURIComponent(` Hola Servicio al Cliente de VICTOR LANDAZURY
+    let urlWhatsapp = `https://wa.me/${ this.indicativoId }${ this.numberId }?text=${ encodeURIComponent(` Hola Servicio al Cliente de VICTOR LANDAZURY
       Acabo de realizar un Pedido \n
       Mi Nombre es: ${ data.nombre } \n      
       Ciudad: ${ data.ciudad } \n
@@ -291,8 +307,10 @@ export class LandingWhatsappComponent implements OnInit {
       
       Cantidad de pares: ${ this.data.sumAmount } \n
       
-      Valor a pagar ${  this.data.priceTotal } \n
-      ((A espera que le agregues el valor de envío*para saber cuánto debo pagar en total al momento de recibir el pedido)) \n
+      * Transportadora: * ${ this.data.transportadora } \n
+      * valor de los Zapatos: * ${ this.data.totalAPagar -  this.data.totalFlete }
+      * valor del Flete: * ${ this.data.totalFlete } \n
+      * Total a Pagar: * ${  this.data.totalAPagar } \n
       
       Quedo al pendiente de la guía de despacho tan pronto la tengas me la envías muchas gracias 🙂 `)}`;
     window.open( urlWhatsapp );
