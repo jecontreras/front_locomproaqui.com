@@ -59,7 +59,10 @@ export class LandingWhatsappComponent implements OnInit {
       this.numberId = "3108131582";
       this.indicativoId = "57";
     }
-    this.data = await this.getVentaCode();
+    let res:any = await this.getVentaCode();
+    this.data.id = res.id;
+    this.data.code = res.code;
+
     if( !this.data.id ){
       /*let alert = await this._ToolServices.confirm({title:"Crear Pedido", detalle:"Deseas Crear un nuevo Pedido", confir:"Si Crear"});
       if( !alert.value ) return false;      */
@@ -317,7 +320,7 @@ export class LandingWhatsappComponent implements OnInit {
       
       Quedo al pendiente de la guía de despacho tan pronto la tengas me la envías muchas gracias 🙂 `)}`;*/
     let urlWhatsapp = `https://wa.me/${ this.indicativoId }${ this.numberId }?text=${ encodeURIComponent(` Cod: 785
-¡Gracias por tu compra, Victor!🤩
+¡Gracias por tu compra, ${ data.nombre }!🤩
 
 ¡Es un honor para nosotros que hagas parte de nuestra familia! ✨
 
@@ -327,8 +330,8 @@ Nombre: ${ data.nombre }
 WhatsApp: ${ data.numero}
 Dirección: ${ data.direccion }
 Ciudad: ${ data.ciudad }
-Cantidad de pares: ${ this.data.sumAmount } *
-* Transportadora: * ${ this._ToolServices.monedaChange( 3,2, ( this.data.transportadora || 0 ) ) }
+Cantidad de pares: * ${ this.data.sumAmount } *
+* Transportadora: * ${ this.data.transportadora }
 Valor de productos: ${ this._ToolServices.monedaChange(3,2,( ( this.data.totalAPagar -  this.data.totalFlete ) || 0 )) }
 Valor de flete: ${ this._ToolServices.monedaChange( 3,2, ( this.data.totalFlete || 0 ) ) }
 Monto a cancelar: ${ this._ToolServices.monedaChange( 3,2, ( this.data.totalAPagar || 0 ) ) } ¡Pagas al recibir!

@@ -122,13 +122,16 @@ export class ToolsService {
             <label>Cantidad Pares: </label> <span> ${  data.sumAmount }</span>
           </div>
           <div class="col-12">
-            <label>Precio Articulos: </label> <span> ${  this.monedaChange( 3, 2, ( data.totalAPagar || 0 ) ) }</span>
+            <label>Transportadora: </label> <span> ${  data.transportadora }</span>
+          </div>
+          <div class="col-12">
+            <label>Precio Articulos: </label> <span> ${  this.monedaChange( 3, 2, ( data.priceTotal || 0 ) ) }</span>
           </div>
           <div class="col-12">
             <label>Precio de Envio: </label> <span> ${  this.monedaChange( 3, 2, ( data.totalFlete || 0 ) ) }</span>
           </div>
           <div class="col-12">
-            <label>Precio Total a Pagar: </label> <span> ${  this.monedaChange( 3, 2, ( Number( data.totalFlete + data.totalAPagar ) || 0 ) ) }</span>
+            <label>Precio Total a Pagar: </label> <span> ${  this.monedaChange( 3, 2, ( Number( data.totalAPagar ) || 0 ) ) }</span>
           </div>
           <div class="col-12">
             <h3>
