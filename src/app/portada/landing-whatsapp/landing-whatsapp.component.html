@@ -258,6 +258,7 @@
                       </ng-autocomplete>
         
                       <ng-template #itemTemplate let-item>
+                        <!--  *ngIf="item.contraentrega == 'SI'" -->
                           <div class="item">
                               <span [innerHTML]="item.ciudad"></span> &nbsp; | &nbsp;
                               <small>Departamento: {{ item.departamento }}</small> &nbsp; | &nbsp;
@@ -292,6 +293,15 @@
                       </div>
                     </div>
                   </section>
+                  <section *ngIf="contraentregaAlert" >
+                    <h3 style="text-align: center;margin: 10px 10px;">
+                      Para este destino no manejamos pago contraentrega. 
+                    </h3>
+                    <h4 style="text-align: center;margin: 10px 10px;color:#6610f2;">
+                       Realiza tu pedido y un asesor se comunicará contigo para llegar a una solución a tu entrega.
+                    </h4>
+                      
+                  </section>
                 </div>
               </div>
             </div>
@@ -308,7 +318,7 @@
             <div>
               <div class="d-flex justify-content-center">
                 <div>
-                  <button type="submit" class="btn btn-pink" (click)="handleEndOrder()" [disabled]="finalizarBoton">Finalizar Pedido</button>
+                  <button type="submit" class="btn btn-pink" (click)="pedidoConfirmar()" [disabled]="finalizarBoton">Finalizar Pedido</button>
                 </div>
               </div>
             </div>
