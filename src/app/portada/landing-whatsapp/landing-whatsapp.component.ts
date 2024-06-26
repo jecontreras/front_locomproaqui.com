@@ -83,7 +83,7 @@ export class LandingWhatsappComponent implements OnInit {
       this.listGaleria.sort(() => this.getRandomNumber());
     } catch (error) { }
     //console.log("****", this.dataPro, this.listGaleria)
-    console.log("list ciudades", this.listCiudades)
+    //console.log("list ciudades", this.listCiudades)
   }
 
   getVentaCode(){
