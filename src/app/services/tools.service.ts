@@ -339,7 +339,7 @@ export class ToolsService {
 
   }
 
-  monedaChange(cif = 3, dec = 2, valor: any) {
+  monedaChange(cif = 3, dec = 2, valor: any, code:string = "COP" ) {
     // tomamos el valor que tiene el input
     //  console.log(valor, cif, dec)
     if (!valor) return 0;
@@ -374,7 +374,7 @@ export class ToolsService {
       separados = [inputNum[0]]
     }
     separados = separados.filter((row: any) => row != "");
-    return '$' + separados.join("."); //+ ',' + inputNum[1];
+    return '$' + separados.join(".") + " "+code; //+ ',' + inputNum[1];
   }
   monedaChange2(cif = 3, dec = 2, valor: any) {
     // tomamos el valor que tiene el input

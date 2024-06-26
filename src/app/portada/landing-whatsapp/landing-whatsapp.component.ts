@@ -15,7 +15,7 @@ import { Indicativo } from 'src/app/JSON/indicativo';
 })
 export class LandingWhatsappComponent implements OnInit {
 
-  dataPro:any = [];
+  dataPro:any = {};
   listGaleria:any = [];
   viewPhoto:string;
   listDataAggregate:any = [];
@@ -35,6 +35,8 @@ export class LandingWhatsappComponent implements OnInit {
   namePais:string = "Colombia";
   finalizarBoton: boolean = false;
   contraentregaAlert: boolean = false;
+  price:number = 15500;
+  code:string = "COP"
   constructor(
     private _productServices: ProductoService,
     public _ToolServices: ToolsService,
@@ -54,11 +56,17 @@ export class LandingWhatsappComponent implements OnInit {
     try {
       this.numberId = ( formatN.split("+") )[1];
       this.indicativoId = ( formatN.split("+") )[0]
-      let filterNamePais = this.listIndiPais.find( row => row.phone_code === this.indicativoId );
-      if( filterNamePais ) this.namePais = filterNamePais.name;
+      let filterNamePais = this.listIndiPais.find( row => row.iso3 === this.indicativoId );
+      if( filterNamePais ) {
+        this.namePais = filterNamePais.name;
+        if( this.namePais === 'Panama' ) {
+          this.price = 5;
+          this.code = "USD";
+        }
+      }
     } catch (error) {
       this.numberId = "3108131582";
-      this.indicativoId = "57";
+      this.indicativoId = "COL";
     }
     let res:any = await this.getVentaCode();
     this.data.id = res.id;
@@ -174,11 +182,16 @@ export class LandingWhatsappComponent implements OnInit {
 
   suma(){
     this.data.sumAmount = 0;
+    let sumPrice = this.dataPro.pro_vendedor;
+    if( this.namePais === 'Panama'){
+      sumPrice = this.price;
+    }
+    console.log("******1", this.price, this.namePais)
     for( let row of this.listDataAggregate ){
       this.data.sumAmount+= Number( row.amountAd );
     }
-    if( this.data.sumAmount >= 6 ) this.data.priceTotal = this.dataPro.pro_vendedor * this.data.sumAmount;
-    else this.data.priceTotal = this.dataPro.pro_uni_venta * this.data.sumAmount;
+    if( this.data.sumAmount >= 6 ) this.data.priceTotal = sumPrice * this.data.sumAmount;
+    else this.data.priceTotal =  sumPrice * this.data.sumAmount;
     this.data.countItem = this.data.sumAmount;
     this.data.totalAPagar = this.data.priceTotal + ( this.data.totalFlete || 0 );
   } 
@@ -355,7 +368,7 @@ export class LandingWhatsappComponent implements OnInit {
       * Total a Pagar: * ${  this.data.totalAPagar } \n
       
       Quedo al pendiente de la guía de despacho tan pronto la tengas me la envías muchas gracias 🙂 `)}`;*/
-    let urlWhatsapp = `https://wa.me/${ this.indicativoId }${ this.numberId }?text=${ encodeURIComponent(` Cod: 785
+    let urlWhatsapp = `https://wa.me/57${ this.numberId }?text=${ encodeURIComponent(` Cod: 785
 ¡Gracias por tu compra, ${ data.nombre }!🤩
 
 ¡Es un honor para nosotros que hagas parte de nuestra familia! ✨
@@ -453,46 +466,6 @@ Monto a cancelar: ${ this._ToolServices.monedaChange( 3,2, ( this.data.totalAPag
         if ( this.data.sumAmount > 6 && this.data.sumAmount <= 18 )  {
           data.peso = 2;
         }
-        // if ( this.data.sumAmount > 12 )  {
-        //   data.peso = 2;
-        //   data.alto= 9 ;
-        //   sumaFlete = 2000;
-        // }
-        // if ( this.data.sumAmount > 18 )  {
-        //   data.peso = 3;
-        //   data.alto= 9;
-        //   sumaFlete = 3000;
-        // }
-        // if ( this.data.sumAmount > 25 )  {
-        //   data.peso = 4;
-        //   data.alto= 9;
-        //   sumaFlete = 4000;
-        // }
-        // if ( this.data.sumAmount > 32 )  {
-        //   data.peso = 5;
-        //   data.alto= 9;
-        //   sumaFlete = 5000;
-        // }
-        // if ( this.data.sumAmount > 38 )  {
-        //   data.peso = 6;
-        //   data.alto= 9;
-        //   sumaFlete = 6000;
-        // }
-        // if ( this.data.sumAmount > 44 )  {
-        //   data.peso = 7;
-        //   data.alto= 9;
-        //   sumaFlete = 7000;
-        // }
-        // if ( this.data.sumAmount > 50 )  {
-        //   data.peso = 8;
-        //   data.alto= 9;
-        //   sumaFlete = 8000;
-        // }
-        // if ( this.data.sumAmount > 56 )  {
-        //   data.peso = 9;
-        //   data.alto= 9;
-        //   sumaFlete = 9000;
-        // }
       }
       this.data.af = sumaFlete; //el AF
       this.btnDisabled = true;
