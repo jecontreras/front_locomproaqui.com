@@ -183,6 +183,7 @@ export class LandingWhatsappComponent implements OnInit {
   suma(){
     this.data.sumAmount = 0;
     let sumPrice = this.dataPro.pro_vendedor;
+    console.log("****186", sumPrice, this.namePais)
     if( this.namePais === 'Panama'){
       sumPrice = this.price;
     }

@@ -186,7 +186,7 @@
                       <div><p>Precio:</p></div>
                       <div></div>
                       <div>
-                        <p *ngIf="data.sumAmount >=6">{{ _ToolServices.monedaChange( 3, 2, ( dataPro.pro_vendedor ), code ) }}</p>
+                        <p *ngIf="data.sumAmount >=6">{{ _ToolServices.monedaChange( 3, 2, ( dataPro.price ), code ) }}</p>
                         <p *ngIf="( data.sumAmount <6 ) && namePais === 'Colombia'">{{ _ToolServices.monedaChange( 3, 2, ( dataPro.pro_uni_venta ), code ) }}</p>
                           <p *ngIf="( data.sumAmount <6 ) && namePais !== 'Colombia'">{{ _ToolServices.monedaChange( 3, 2, ( 0 ), code ) }}</p>
                       </div>
