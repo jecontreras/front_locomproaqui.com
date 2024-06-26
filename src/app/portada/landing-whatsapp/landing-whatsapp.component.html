@@ -39,17 +39,17 @@
                           SANDALIAS
                         </h6>
                         <p class="card-text" style="text-align: center; color: white;">
-                          Para que aplique el precio de $15.500 tu compra minima debe ser de 6 pares en adelante.
+                          Para que aplique el precio de {{ _ToolServices.monedaChange( 3,2, ( this.price || 0 ), code ) }} tu compra minima debe ser de 6 pares en adelante.
                         </p>
                         <p class="card-link" style="text-align: center; color: white;">
-                          Ejemplo: 6 pares por $93.000 + envió.
+                          Ejemplo: 6 pares por {{ _ToolServices.monedaChange( 3,2, ( ( this.price * 6 ) || 0 ), code ) }} + envió.
                         </p>
                       </div>
                     </div>
                   </div>
                 </div>
               </div>
-              <div class="col-md-6 mb-4">
+              <div class="col-md-6 mb-4" *ngIf="namePais === 'Colombia'">
                 <div class="d-flex justify-content-center">
                   <div>
                     <div class="card" style="width: 18rem;     color: white; background: #19173d; border-radius: 20px;     height: 250px;">
@@ -76,7 +76,7 @@
           
           <footer class="footer text-center py-3">
             <label class="exTrega">Pago Contra entrega</label>
-            <p class="m-0">Emprende por tan solo $15.500</p>
+            <p class="m-0">Emprende por tan solo {{ _ToolServices.monedaChange( 3,2, ( this.price || 0 ), code ) }}</p>
           </footer>
           
             
@@ -91,7 +91,7 @@
                   <div  style="width: 100%">
                     <div class="card-body" style="padding: 12px 31px !important;">
                       <p class="card-text" style="text-align: center;     font-size: 16px;">
-                        <strong>Recuerda</strong> que para que <strong>aplique</strong> el precio de <strong>$15.500</strong> la compra <strong>mínima</strong> debe <strong>ser</strong> de <strong>6 pares</strong> en adelante de lo <strong>contrario</strong> de 1 a 5 el <strong>valor</strong> unidad seria <strong>$25.000</strong>
+                        <strong>Recuerda</strong> que para que <strong>aplique</strong> el precio de <strong>{{ _ToolServices.monedaChange( 3,2, ( this.price || 0 ), code ) }} </strong> la compra <strong>mínima</strong> debe <strong>ser</strong> de <strong>6 pares</strong> <span *ngIf="namePais === 'Colombia'">en adelante de lo <strong>contrario</strong> de 1 a 5 el <strong>valor</strong> unidad seria <strong>$25.000</strong></span>
                       </p>
                     </div>
                   </div>
@@ -186,22 +186,23 @@
                       <div><p>Precio:</p></div>
                       <div></div>
                       <div>
-                        <p *ngIf="data.sumAmount >=6">{{ _ToolServices.monedaChange( 3, 2, dataPro.pro_vendedor ) }}</p>
-                        <p *ngIf="data.sumAmount <6">{{ _ToolServices.monedaChange( 3, 2, dataPro.pro_uni_venta ) }}</p>
+                        <p *ngIf="data.sumAmount >=6">{{ _ToolServices.monedaChange( 3, 2, ( dataPro.pro_vendedor ), code ) }}</p>
+                        <p *ngIf="( data.sumAmount <6 ) && namePais === 'Colombia'">{{ _ToolServices.monedaChange( 3, 2, ( dataPro.pro_uni_venta ), code ) }}</p>
+                          <p *ngIf="( data.sumAmount <6 ) && namePais !== 'Colombia'">{{ _ToolServices.monedaChange( 3, 2, ( 0 ), code ) }}</p>
                       </div>
                     </div>
                     <div class="d-flex justify-content-between">
                       <div><p>Total a Pagar sin envió:</p></div>
                       <div></div>
                       <div>
-                        <p>{{ _ToolServices.monedaChange( 3, 2, data.priceTotal|| 0 ) }}</p>
+                        <p>{{ _ToolServices.monedaChange( 3, 2, ( data.priceTotal || 0 ), code ) }}</p>
                       </div>
                     </div>
                     <div class="d-flex justify-content-between">
                       <div><p>Precio envió:</p></div>
                       <div></div>
                       <div>
-                        <p>{{ _ToolServices.monedaChange( 3, 2, data.totalFlete || 0 ) }}</p>
+                        <p>{{ _ToolServices.monedaChange( 3, 2, ( data.totalFlete || 0 ), code ) }}</p>
                       </div>
                     </div>
                     <div class="d-flex justify-content-between" *ngIf="data.totalFlete">
@@ -209,7 +210,7 @@
                       <div></div>
                       <div>
                         <p>
-                          {{ _ToolServices.monedaChange( 3, 2, ( data.totalAPagar || 0 ) ) }}
+                          {{ _ToolServices.monedaChange( 3, 2, ( ( data.totalAPagar || 0 )), code ) }}
                         </p>
                       </div>
                     </div>
@@ -289,7 +290,7 @@
                           <img *ngIf="dataEnvioDetails.transportadora === 'Coordinadora'" style="width: 100%; width: 60px;"  src="./assets/img/logoCordinadora.png" alt="">
                         </div>
                         <div></div>
-                        <div><h6>Precio envio: {{ _ToolServices.monedaChange( 3, 2, ( data.totalFlete || 0 ) ) }}</h6></div>
+                        <div><h6>Precio envio: {{ _ToolServices.monedaChange( 3, 2, ( data.totalFlete || 0 ), code ) }}</h6></div>
                       </div>
                     </div>
                   </section>
