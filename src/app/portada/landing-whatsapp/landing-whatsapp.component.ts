@@ -190,8 +190,20 @@ export class LandingWhatsappComponent implements OnInit {
     for( let row of this.listDataAggregate ){
       this.data.sumAmount+= Number( row.amountAd );
     }
-    if( this.data.sumAmount >= 6 ) this.data.priceTotal = sumPrice * this.data.sumAmount;
-    else this.data.priceTotal =  sumPrice * this.data.sumAmount;
+    if( this.data.sumAmount >= 6 ) {
+      this.data.priceTotal = sumPrice * this.data.sumAmount;
+      if( this.namePais === 'Panama'){
+        this.finalizarBoton = false;
+      }
+    }
+    else {
+      this.data.priceTotal =  sumPrice * this.data.sumAmount;
+      if( this.namePais === 'Panama'){
+        this.finalizarBoton = true;
+        this._ToolServices.presentToast("La Compra Minima es de 6 pares de calzado");
+      }
+      
+    }
     this.data.countItem = this.data.sumAmount;
     this.data.totalAPagar = this.data.priceTotal + ( this.data.totalFlete || 0 );
   } 
