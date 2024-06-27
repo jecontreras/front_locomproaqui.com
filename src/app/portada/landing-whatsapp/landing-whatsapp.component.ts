@@ -58,8 +58,8 @@ export class LandingWhatsappComponent implements OnInit {
     let formatN = this.activate.snapshot.paramMap.get('number');
     console.log("**********48", this.activate.snapshot.paramMap, formatN)
     try {
-      this.numberId = ( formatN.split("+") )[1];
-      this.indicativoId = ( formatN.split("+") )[0]
+      this.numberId = ( formatN.split("&") )[1];
+      this.indicativoId = ( formatN.split("&") )[0]
       let filterNamePais = this.listIndiPais.find( row => row.iso3 === this.indicativoId );
       if( filterNamePais ) {
         this.namePais = filterNamePais.name;
@@ -238,7 +238,7 @@ export class LandingWhatsappComponent implements OnInit {
     }
     dataEnd.stateWhatsapp = 1;
     this.suma();
-    if( !this.contraentregaAlert ) await this.precioRutulo( { id_ciudad:dataEnd.codeCiudad,  transportadora: dataEnd.transportadora} );
+    if( !this.contraentregaAlert ) await this.precioRutulo( { id_ciudad:dataEnd.codeCiudad,  transportadora: dataEnd.transportadora, contraentrega: 'SI' } );
     dataEnd.totalFlete = this.data.totalFlete;
     this.suma();
     if( this.contraentregaAlert === true ) dataEnd.contraEntrega = 1;
@@ -428,7 +428,11 @@ Monto a cancelar: ${ this._ToolServices.monedaChange( 3,2, ( this.data.totalAPag
   async precioRutulo( ev:any ){
     return new Promise( async ( resolve ) =>{
       console.log("***EVE", ev);
-      if(ev.contraentrega != "SI"){ this.data.transportadora = ev.transportadora; return this.contraentregaAlert = true  }
+      this.data.transportadora = ev.transportadora;
+      this.data.totalFlete = 0;
+      this.data.id_ciudad = ev.id_ciudad;
+      this.dataEnvioDetails = ev;
+      if(ev.contraentrega != "SI"){ return this.contraentregaAlert = true  }
       let data = {
         peso: 1 ,
         alto: 9,
@@ -511,14 +515,12 @@ Monto a cancelar: ${ this._ToolServices.monedaChange( 3,2, ( this.data.totalAPag
       console.log("con AF" , this.data.totalFlete)
       // this.data.totalFlete += data.valor_recaudar
       console.log("transportadora", this.data.transportadora)
-      this.data.id_ciudad = ev.id_ciudad;
       console.log(this.data.totalFlete); // Muestra 1.78
       if( !res.data ){
         this.data.totalFlete = 0;
       }
       //this._ToolServices.basic("Precio del Envio "+ this._ToolServices.monedaChange( 3, 2, ( this.data.totalFlete ) ) + " Transportadora "+  ev.transportadora );
       this._ToolServices.presentToast("Precio del Envio "+ this._ToolServices.monedaChange( 3, 2, ( this.data.totalFlete ) ) + " Transportadora "+  ev.transportadora );
-      this.dataEnvioDetails = ev;
       this.suma();
       this.btnDisabled = false;
       resolve( true );

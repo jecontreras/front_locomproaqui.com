@@ -186,7 +186,7 @@ export class ToolsService {
             </div>
             <div class="col-12">
               <h3>
-                Inmediatamente, le des clic al botón de confirmar tu pedido entra al área de empaque y despacho pronto uno de nuestros asesores te enviará la guía y te cotizarán el envío, vía WhatsApp muchas gracias por tu compra
+                Inmediatamente, le des click al botón de confirmar tu pedido entra al área de empaque y despacho pronto uno de nuestros asesores te enviará la guía y te cotizarán el envío, vía WhatsApp muchas gracias por tu compra
               </h3>
             </div>
           </div>
