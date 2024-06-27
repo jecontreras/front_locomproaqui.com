@@ -43,11 +43,15 @@ export class LandingWhatsappComponent implements OnInit {
     private _ventas: VentasService,
     private activate: ActivatedRoute,
     public dialog: MatDialog,
-    private Router: Router
+    private Router: Router,
   ) { }
 
   async ngOnInit() {
-    this.dataPro = await this.getProduct();
+    this.dataInit( true );
+    this.getCiudades();
+  }
+  async dataInit( off = true ){
+    if( off ) this.dataPro = await this.getProduct();
     console.log("articulos", this.dataPro)
     this.viewPhoto = this.dataPro.foto;
     this.codeId = this.activate.snapshot.paramMap.get('code');
@@ -127,7 +131,8 @@ export class LandingWhatsappComponent implements OnInit {
 
   async getCiudades(){
     return new Promise( resolve => {
-      this._ventas.getCiudades( { where: { }, limit: 100000 } ).subscribe( ( res:any )=>{
+      this._ventas.getCiudadesTridy( { where: { }, limit: 100000 } ).subscribe( ( res:any )=>{
+        //this.listCiudades = res.data;
         this.listCiudades = res.data;
         resolve( this.listCiudades );
       });
@@ -174,7 +179,7 @@ export class LandingWhatsappComponent implements OnInit {
       if( !result.value ) return false;
       row.cantidadAd = result.value;
     }
-    this.listDataAggregate.push( { ref: item.talla, foto: item.detailsP.foto, amountAd: Number( row.amountAd ), talla: row.tal_descripcion, id: this._ToolServices.codigo() } );
+    this.listDataAggregate.push( { ref: item.talla, foto: item.detailsP.foto, amountAd: Number( row.amountAd ), talla: row.tal_descripcion, id: this._ToolServices.codigo(), price: this.price } );
     console.log("***114", this.listDataAggregate)
     this.suma();
     this._ToolServices.presentToast("Producto Agregado al Carrito")
@@ -233,11 +238,12 @@ export class LandingWhatsappComponent implements OnInit {
     }
     dataEnd.stateWhatsapp = 1;
     this.suma();
-    //await this.precioRutulo( { id_ciudad:dataEnd.codeCiudad,  transportadora: dataEnd.transportadora} );
+    await this.precioRutulo( { id_ciudad:dataEnd.codeCiudad,  transportadora: dataEnd.transportadora} );
     dataEnd.totalFlete = this.data.totalFlete;
     this.suma();
     let result = await this._ToolServices.modaHtmlEnd( dataEnd );
     if( !result ) {this.btnDisabled = false; return this._ToolServices.presentToast("Editar Tu Pedido..."); }
+    if( this.contraentregaAlert === true ) dataEnd.contraEntrega = 1;
     this._ventas.updateVentasL( dataEnd ).subscribe( res =>{
       //console.log("*****101", res)
       if( !res.id ) return false;
@@ -332,8 +338,10 @@ export class LandingWhatsappComponent implements OnInit {
    };
    this._ventas.createVentasL( dats ).subscribe( res =>{
     if( res ){
+      console.log("*****335", '/front/landingWhatsapp'+dats.code+this.indicativoId+this.numberId);
       this.Router.navigate(['/front/landingWhatsapp', dats.code, `+${ this.indicativoId }${ this.numberId }`] );
-      setTimeout(()=> location.reload(), 3000 );
+      setTimeout(()=> this.dataInit( false ), 3000 );
+      //setTimeout(()=> location.reload(), 3000 );
     }
    } );
 
@@ -416,7 +424,7 @@ Monto a cancelar: ${ this._ToolServices.monedaChange( 3,2, ( this.data.totalAPag
   async precioRutulo( ev:any ){
     return new Promise( async ( resolve ) =>{
       console.log("***EVE", ev);
-      if(ev.contraentrega != "SI"){ this.contraentregaAlert = true  }
+      if(ev.contraentrega != "SI"){ return this.contraentregaAlert = true  }
       let data = {
         peso: 1 ,
         alto: 9,

@@ -148,7 +148,7 @@
                       <div class="col-12">
                         <mat-form-field class="example-full-width">
                             <mat-label>Talla</mat-label>
-                            <input matInput [(ngModel)]="item.talla">
+                            <input matInput [(ngModel)]="item.talla" disabled>
                         </mat-form-field>
                       </div>
                       <div>
@@ -231,19 +231,23 @@
               <div style="width: 100%;">
                 <div class="mb-3">
                   <label for="name" class="form-label">Nombre Completo</label>
-                  <input type="text" class="form-control" id="name" placeholder="Tu Nombre Completo" [(ngModel)]="data.nombre">
+                  <input type="text" class="form-control"  placeholder="Tu Nombre Completo" [(ngModel)]="data.nombre">
                 </div>
                 <div class="mb-3">
                   <label for="address1" class="form-label">Dirección</label>
-                  <input type="text" class="form-control" id="address1" placeholder="Dirección" [(ngModel)]="data.direccion">
+                  <input type="text" class="form-control"  placeholder="Dirección" [(ngModel)]="data.direccion">
                 </div>
                 <div class="mb-3">
                   <label for="address2" class="form-label">Barrio</label>
-                  <input type="text" class="form-control" id="address2" placeholder="Dirección" [(ngModel)]="data.barrio">
+                  <input type="text" class="form-control"  placeholder="Dirección" [(ngModel)]="data.barrio">
                 </div>
                 <div class="mb-3">
                   <label for="whatsapp" class="form-label">Número de Whatsapp</label>
-                  <input type="text" class="form-control" id="whatsapp" placeholder="Número de Whatsapp" [(ngModel)]="data.numero">
+                  <input type="text" class="form-control" placeholder="Número de Whatsapp" [(ngModel)]="data.numero">
+                </div>
+                <div class="mb-3">
+                  <label for="whatsapp" class="form-label">Número de Llamada</label>
+                  <input type="text" class="form-control" placeholder="Número de Llamada" [(ngModel)]="data.celL">
                 </div>
                 <div class="mb-3">
                   <section *ngIf="data.checkCity">
