@@ -224,7 +224,7 @@ export class LandingWhatsappComponent implements OnInit {
     this.celularConfirmar(dataEnd);
   }
 
-  async handleEndOrder(){ console.log("handle Order")
+  async handleEndOrder(){ console.log("handle Order", this.btnDisabled)
     if( this.btnDisabled ) return false;
     let validate = this.validarInput();
     if( !validate ) return false;
@@ -238,12 +238,15 @@ export class LandingWhatsappComponent implements OnInit {
     }
     dataEnd.stateWhatsapp = 1;
     this.suma();
-    await this.precioRutulo( { id_ciudad:dataEnd.codeCiudad,  transportadora: dataEnd.transportadora} );
+    if( !this.contraentregaAlert ) await this.precioRutulo( { id_ciudad:dataEnd.codeCiudad,  transportadora: dataEnd.transportadora} );
     dataEnd.totalFlete = this.data.totalFlete;
     this.suma();
+    if( this.contraentregaAlert === true ) dataEnd.contraEntrega = 1;
+    else dataEnd.contraEntrega = 0;
     let result = await this._ToolServices.modaHtmlEnd( dataEnd );
     if( !result ) {this.btnDisabled = false; return this._ToolServices.presentToast("Editar Tu Pedido..."); }
-    if( this.contraentregaAlert === true ) dataEnd.contraEntrega = 1;
+    dataEnd.paisCreado = this.namePais;
+    dataEnd.numberCreado = this.numberId;
     this._ventas.updateVentasL( dataEnd ).subscribe( res =>{
       //console.log("*****101", res)
       if( !res.id ) return false;
@@ -359,6 +362,7 @@ export class LandingWhatsappComponent implements OnInit {
     if( !this.data.direccion ) { this._ToolServices.presentToast("Falta Tu Dirección!"); return false; }
     if( !this.data.barrio ) {this._ToolServices.presentToast("Falta Tu Barrio!"); return false; }
     if( !this.data.numero ) {this._ToolServices.presentToast("Falta Tu Numero!"); return false; }
+    if( !this.data.celL ) {this._ToolServices.presentToast("Falta Tu Numero de contacto!"); return false; }
     if( this.listDataAggregate.length === 0 ) {this._ToolServices.presentToast("Falta Tu Agregar Articulos Al Carrito!"); return false; }
     return true;
   }
@@ -424,7 +428,7 @@ Monto a cancelar: ${ this._ToolServices.monedaChange( 3,2, ( this.data.totalAPag
   async precioRutulo( ev:any ){
     return new Promise( async ( resolve ) =>{
       console.log("***EVE", ev);
-      if(ev.contraentrega != "SI"){ return this.contraentregaAlert = true  }
+      if(ev.contraentrega != "SI"){ this.data.transportadora = ev.transportadora; return this.contraentregaAlert = true  }
       let data = {
         peso: 1 ,
         alto: 9,
@@ -506,7 +510,6 @@ Monto a cancelar: ${ this._ToolServices.monedaChange( 3,2, ( this.data.totalAPag
       this.data.totalFlete += sumaFlete
       console.log("con AF" , this.data.totalFlete)
       // this.data.totalFlete += data.valor_recaudar
-      this.data.transportadora = ev.transportadora;
       console.log("transportadora", this.data.transportadora)
       this.data.id_ciudad = ev.id_ciudad;
       console.log(this.data.totalFlete); // Muestra 1.78

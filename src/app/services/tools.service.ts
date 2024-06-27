@@ -99,58 +99,110 @@ export class ToolsService {
   }
   modaHtmlEnd( data ){
     return new Promise(resolve => {
-      Swal.fire({
-        title: 'Detalle de mi Pedido',
-        html: `
-        <div class="row">
-          <div class="col-12">
-            <label>Nombre: </label> <span> ${  data.nombre }</span>
+      if( data.contraEntrega === 0 ){
+        Swal.fire({
+          title: 'Detalle de mi Pedido',
+          html: `
+          <div class="row">
+            <div class="col-12">
+              <label>Nombre: </label> <span> ${  data.nombre }</span>
+            </div>
+            <div class="col-12">
+              <label>Ciudad: </label> <span> ${  data.ciudad }</span>
+            </div>
+            <div class="col-12">
+              <label>Dirección: </label> <span> ${  data.direccion }</span>
+            </div>
+            <div class="col-12">
+              <label>Barrio: </label> <span> ${  data.barrio }</span>
+            </div>
+            <div class="col-12">
+              <label>Numero de Whatsapp: </label> <span> ${  data.numero }</span>
+            </div>
+            <div class="col-12">
+              <label>Cantidad Pares: </label> <span> ${  data.sumAmount }</span>
+            </div>
+            <div class="col-12">
+              <label>Transportadora: </label> <span> ${  data.transportadora }</span>
+            </div>
+            <div class="col-12">
+              <label>Precio Articulos: </label> <span> ${  this.monedaChange( 3, 2, ( data.priceTotal || 0 ) ) }</span>
+            </div>
+            <div class="col-12">
+              <label>Precio de Envio: </label> <span> ${  this.monedaChange( 3, 2, ( data.totalFlete || 0 ) ) }</span>
+            </div>
+            <div class="col-12">
+              <label>Precio Total a Pagar: </label> <span> ${  this.monedaChange( 3, 2, ( Number( data.totalAPagar ) || 0 ) ) }</span>
+            </div>
+            <div class="col-12">
+              <h3>
+                Inmediatamente le des click al botón de Confirmar tu pedido entra al área de empaque y despacho Pronto uno de nuestros asesores te enviará la guía, vía WhatsApp muchas gracias por tu compra
+              </h3>
+            </div>
           </div>
-          <div class="col-12">
-            <label>Ciudad: </label> <span> ${  data.ciudad }</span>
+          `,
+          showCancelButton: true,
+          confirmButtonText: 'Confirmar',
+          cancelButtonText: 'Editar',
+          focusConfirm: false
+        }).then((result:any) => {
+          if (result.value) {
+            resolve(true); // El usuario confirmó el pedido
+          } else {
+            resolve(false); // El usuario decidió editar el pedido
+          }
+        });
+      }else{
+        Swal.fire({
+          title: 'Detalle de mi Pedido',
+          html: `
+          <div class="row">
+            <div class="col-12">
+              <label>Nombre: </label> <span> ${  data.nombre }</span>
+            </div>
+            <div class="col-12">
+              <label>Ciudad: </label> <span> ${  data.ciudad }</span>
+            </div>
+            <div class="col-12">
+              <label>Dirección: </label> <span> ${  data.direccion }</span>
+            </div>
+            <div class="col-12">
+              <label>Barrio: </label> <span> ${  data.barrio }</span>
+            </div>
+            <div class="col-12">
+              <label>Numero de Whatsapp: </label> <span> ${  data.numero }</span>
+            </div>
+            <div class="col-12">
+              <label>Cantidad Pares: </label> <span> ${  data.sumAmount }</span>
+            </div>
+            <div class="col-12">
+              <label>Transportadora: </label> <span> ${  data.transportadora }</span>
+            </div>
+            <div class="col-12">
+              <label>Precio Articulos: </label> <span> ${  this.monedaChange( 3, 2, ( data.priceTotal || 0 ) ) }</span>
+            </div>
+            <div class="col-12">
+              <label>Precio de Envio: </label> <span> No disponible esperar a que un asesor se comunique con usted</span>
+            </div>
+            <div class="col-12">
+              <h3>
+                Inmediatamente, le des clic al botón de confirmar tu pedido entra al área de empaque y despacho pronto uno de nuestros asesores te enviará la guía y te cotizarán el envío, vía WhatsApp muchas gracias por tu compra
+              </h3>
+            </div>
           </div>
-          <div class="col-12">
-            <label>Dirección: </label> <span> ${  data.direccion }</span>
-          </div>
-          <div class="col-12">
-            <label>Barrio: </label> <span> ${  data.barrio }</span>
-          </div>
-          <div class="col-12">
-            <label>Numero de Whatsapp: </label> <span> ${  data.numero }</span>
-          </div>
-          <div class="col-12">
-            <label>Cantidad Pares: </label> <span> ${  data.sumAmount }</span>
-          </div>
-          <div class="col-12">
-            <label>Transportadora: </label> <span> ${  data.transportadora }</span>
-          </div>
-          <div class="col-12">
-            <label>Precio Articulos: </label> <span> ${  this.monedaChange( 3, 2, ( data.priceTotal || 0 ) ) }</span>
-          </div>
-          <div class="col-12">
-            <label>Precio de Envio: </label> <span> ${  this.monedaChange( 3, 2, ( data.totalFlete || 0 ) ) }</span>
-          </div>
-          <div class="col-12">
-            <label>Precio Total a Pagar: </label> <span> ${  this.monedaChange( 3, 2, ( Number( data.totalAPagar ) || 0 ) ) }</span>
-          </div>
-          <div class="col-12">
-            <h3>
-              Inmediatamente le des click al botón de Confirmar tu pedido entra al área de empaque y despacho Pronto uno de nuestros asesores te enviará la guía, vía WhatsApp muchas gracias por tu compra
-            </h3>
-          </div>
-        </div>
-        `,
-        showCancelButton: true,
-        confirmButtonText: 'Confirmar',
-        cancelButtonText: 'Editar',
-        focusConfirm: false
-      }).then((result:any) => {
-        if (result.value) {
-          resolve(true); // El usuario confirmó el pedido
-        } else {
-          resolve(false); // El usuario decidió editar el pedido
-        }
-      });
+          `,
+          showCancelButton: true,
+          confirmButtonText: 'Confirmar',
+          cancelButtonText: 'Editar',
+          focusConfirm: false
+        }).then((result:any) => {
+          if (result.value) {
+            resolve(true); // El usuario confirmó el pedido
+          } else {
+            resolve(false); // El usuario decidió editar el pedido
+          }
+        });
+      }
     });
   }
   
