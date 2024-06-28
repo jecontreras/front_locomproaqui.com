@@ -224,6 +224,10 @@ export class LandingWhatsappComponent implements OnInit {
     this.celularConfirmar(dataEnd);
   }
 
+  handleCheckContra(){
+    this.contraentregaAlert = true;
+  }
+
   async handleEndOrder(){ console.log("handle Order", this.btnDisabled)
     if( this.btnDisabled ) return false;
     let validate = this.validarInput();
@@ -432,6 +436,7 @@ Monto a cancelar: ${ this._ToolServices.monedaChange( 3,2, ( this.data.totalAPag
       this.data.totalFlete = 0;
       this.data.id_ciudad = ev.id_ciudad;
       this.dataEnvioDetails = ev;
+      this.contraentregaAlert = false;
       if(ev.contraentrega != "SI"){ return this.contraentregaAlert = true  }
       let data = {
         peso: 1 ,
