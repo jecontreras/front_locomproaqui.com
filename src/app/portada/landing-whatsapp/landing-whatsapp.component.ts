@@ -43,19 +43,23 @@ export class LandingWhatsappComponent implements OnInit {
     private _ventas: VentasService,
     private activate: ActivatedRoute,
     public dialog: MatDialog,
-    private Router: Router
+    private Router: Router,
   ) { }
 
   async ngOnInit() {
-    this.dataPro = await this.getProduct();
+    this.dataInit( true );
+    this.getCiudades();
+  }
+  async dataInit( off = true ){
+    if( off ) this.dataPro = await this.getProduct();
     console.log("articulos", this.dataPro)
     this.viewPhoto = this.dataPro.foto;
     this.codeId = this.activate.snapshot.paramMap.get('code');
     let formatN = this.activate.snapshot.paramMap.get('number');
     console.log("**********48", this.activate.snapshot.paramMap, formatN)
     try {
-      this.numberId = ( formatN.split("+") )[1];
-      this.indicativoId = ( formatN.split("+") )[0]
+      this.numberId = ( formatN.split("&") )[1];
+      this.indicativoId = ( formatN.split("&") )[0]
       let filterNamePais = this.listIndiPais.find( row => row.iso3 === this.indicativoId );
       if( filterNamePais ) {
         this.namePais = filterNamePais.name;
@@ -127,7 +131,8 @@ export class LandingWhatsappComponent implements OnInit {
 
   async getCiudades(){
     return new Promise( resolve => {
-      this._ventas.getCiudades( { where: { }, limit: 100000 } ).subscribe( ( res:any )=>{
+      this._ventas.getCiudadesTridy( { where: { }, limit: 100000 } ).subscribe( ( res:any )=>{
+        //this.listCiudades = res.data;
         this.listCiudades = res.data;
         resolve( this.listCiudades );
       });
@@ -174,7 +179,7 @@ export class LandingWhatsappComponent implements OnInit {
       if( !result.value ) return false;
       row.cantidadAd = result.value;
     }
-    this.listDataAggregate.push( { ref: item.talla, foto: item.detailsP.foto, amountAd: Number( row.amountAd ), talla: row.tal_descripcion, id: this._ToolServices.codigo() } );
+    this.listDataAggregate.push( { ref: item.talla, foto: item.detailsP.foto, amountAd: Number( row.amountAd ), talla: row.tal_descripcion, id: this._ToolServices.codigo(), price: this.price } );
     console.log("***114", this.listDataAggregate)
     this.suma();
     this._ToolServices.presentToast("Producto Agregado al Carrito")
@@ -183,6 +188,7 @@ export class LandingWhatsappComponent implements OnInit {
   suma(){
     this.data.sumAmount = 0;
     let sumPrice = this.dataPro.pro_vendedor;
+    console.log("****186", sumPrice, this.namePais)
     if( this.namePais === 'Panama'){
       sumPrice = this.price;
     }
@@ -190,8 +196,20 @@ export class LandingWhatsappComponent implements OnInit {
     for( let row of this.listDataAggregate ){
       this.data.sumAmount+= Number( row.amountAd );
     }
-    if( this.data.sumAmount >= 6 ) this.data.priceTotal = sumPrice * this.data.sumAmount;
-    else this.data.priceTotal =  sumPrice * this.data.sumAmount;
+    if( this.data.sumAmount >= 6 ) {
+      this.data.priceTotal = sumPrice * this.data.sumAmount;
+      if( this.namePais === 'Panama'){
+        this.finalizarBoton = false;
+      }
+    }
+    else {
+      this.data.priceTotal =  sumPrice * this.data.sumAmount;
+      if( this.namePais === 'Panama'){
+        this.finalizarBoton = true;
+        this._ToolServices.presentToast("La Compra Minima es de 6 pares de calzado");
+      }
+      
+    }
     this.data.countItem = this.data.sumAmount;
     this.data.totalAPagar = this.data.priceTotal + ( this.data.totalFlete || 0 );
   } 
@@ -206,7 +224,7 @@ export class LandingWhatsappComponent implements OnInit {
     this.celularConfirmar(dataEnd);
   }
 
-  async handleEndOrder(){ console.log("handle Order")
+  async handleEndOrder(){ console.log("handle Order", this.btnDisabled)
     if( this.btnDisabled ) return false;
     let validate = this.validarInput();
     if( !validate ) return false;
@@ -220,11 +238,15 @@ export class LandingWhatsappComponent implements OnInit {
     }
     dataEnd.stateWhatsapp = 1;
     this.suma();
-    //await this.precioRutulo( { id_ciudad:dataEnd.codeCiudad,  transportadora: dataEnd.transportadora} );
+    if( !this.contraentregaAlert ) await this.precioRutulo( { id_ciudad:dataEnd.codeCiudad,  transportadora: dataEnd.transportadora, contraentrega: 'SI' } );
     dataEnd.totalFlete = this.data.totalFlete;
     this.suma();
+    if( this.contraentregaAlert === true ) dataEnd.contraEntrega = 1;
+    else dataEnd.contraEntrega = 0;
     let result = await this._ToolServices.modaHtmlEnd( dataEnd );
     if( !result ) {this.btnDisabled = false; return this._ToolServices.presentToast("Editar Tu Pedido..."); }
+    dataEnd.paisCreado = this.namePais;
+    dataEnd.numberCreado = this.numberId;
     this._ventas.updateVentasL( dataEnd ).subscribe( res =>{
       //console.log("*****101", res)
       if( !res.id ) return false;
@@ -319,8 +341,10 @@ export class LandingWhatsappComponent implements OnInit {
    };
    this._ventas.createVentasL( dats ).subscribe( res =>{
     if( res ){
+      console.log("*****335", '/front/landingWhatsapp'+dats.code+this.indicativoId+this.numberId);
       this.Router.navigate(['/front/landingWhatsapp', dats.code, `+${ this.indicativoId }${ this.numberId }`] );
-      setTimeout(()=> location.reload(), 3000 );
+      setTimeout(()=> this.dataInit( false ), 3000 );
+      //setTimeout(()=> location.reload(), 3000 );
     }
    } );
 
@@ -338,6 +362,7 @@ export class LandingWhatsappComponent implements OnInit {
     if( !this.data.direccion ) { this._ToolServices.presentToast("Falta Tu Dirección!"); return false; }
     if( !this.data.barrio ) {this._ToolServices.presentToast("Falta Tu Barrio!"); return false; }
     if( !this.data.numero ) {this._ToolServices.presentToast("Falta Tu Numero!"); return false; }
+    if( !this.data.celL ) {this._ToolServices.presentToast("Falta Tu Numero de contacto!"); return false; }
     if( this.listDataAggregate.length === 0 ) {this._ToolServices.presentToast("Falta Tu Agregar Articulos Al Carrito!"); return false; }
     return true;
   }
@@ -403,7 +428,11 @@ Monto a cancelar: ${ this._ToolServices.monedaChange( 3,2, ( this.data.totalAPag
   async precioRutulo( ev:any ){
     return new Promise( async ( resolve ) =>{
       console.log("***EVE", ev);
-      if(ev.contraentrega != "SI"){ this.contraentregaAlert = true  }
+      this.data.transportadora = ev.transportadora;
+      this.data.totalFlete = 0;
+      this.data.id_ciudad = ev.id_ciudad;
+      this.dataEnvioDetails = ev;
+      if(ev.contraentrega != "SI"){ return this.contraentregaAlert = true  }
       let data = {
         peso: 1 ,
         alto: 9,
@@ -485,16 +514,13 @@ Monto a cancelar: ${ this._ToolServices.monedaChange( 3,2, ( this.data.totalAPag
       this.data.totalFlete += sumaFlete
       console.log("con AF" , this.data.totalFlete)
       // this.data.totalFlete += data.valor_recaudar
-      this.data.transportadora = ev.transportadora;
       console.log("transportadora", this.data.transportadora)
-      this.data.id_ciudad = ev.id_ciudad;
       console.log(this.data.totalFlete); // Muestra 1.78
       if( !res.data ){
         this.data.totalFlete = 0;
       }
       //this._ToolServices.basic("Precio del Envio "+ this._ToolServices.monedaChange( 3, 2, ( this.data.totalFlete ) ) + " Transportadora "+  ev.transportadora );
       this._ToolServices.presentToast("Precio del Envio "+ this._ToolServices.monedaChange( 3, 2, ( this.data.totalFlete ) ) + " Transportadora "+  ev.transportadora );
-      this.dataEnvioDetails = ev;
       this.suma();
       this.btnDisabled = false;
       resolve( true );
