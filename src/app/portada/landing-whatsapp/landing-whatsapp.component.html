@@ -282,7 +282,7 @@
                       </ng-template>
                   </section>
                   <section style="text-align: center;">
-                    <mat-checkbox class="example-margin" [(ngModel)]="data.checkCity" (click)="data.ciudad = ''">No Encontre mi Ciudad</mat-checkbox>
+                    <mat-checkbox class="example-margin" [(ngModel)]="data.checkCity" (click)="data.ciudad = ''; handleCheckContra();">No Encontre mi Ciudad</mat-checkbox>
                   </section>
                   <section *ngIf="dataEnvioDetails.transportadora">
                     <div>

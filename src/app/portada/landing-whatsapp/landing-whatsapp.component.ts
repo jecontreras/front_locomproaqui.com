@@ -224,6 +224,10 @@ export class LandingWhatsappComponent implements OnInit {
     this.celularConfirmar(dataEnd);
   }
 
+  handleCheckContra(){
+    this.contraentregaAlert = true;
+  }
+
   async handleEndOrder(){ console.log("handle Order", this.btnDisabled)
     if( this.btnDisabled ) return false;
     let validate = this.validarInput();
@@ -432,7 +436,8 @@ Monto a cancelar: ${ this._ToolServices.monedaChange( 3,2, ( this.data.totalAPag
       this.data.totalFlete = 0;
       this.data.id_ciudad = ev.id_ciudad;
       this.dataEnvioDetails = ev;
-      if(ev.contraentrega != "SI"){ return this.contraentregaAlert = true  }
+      this.contraentregaAlert = false;
+      if(ev.contraentrega != "SI"){ return this.contraentregaAlert = true;  }
       let data = {
         peso: 1 ,
         alto: 9,
@@ -500,7 +505,7 @@ Monto a cancelar: ${ this._ToolServices.monedaChange( 3,2, ( this.data.totalAPag
       this.btnDisabled = true;
       let res:any = await this.getTridy( data );
       if( res.data === "Cannot find table 0." ) res = await this.getTridy( data );
-      if( res.data === "Cannot find table 0." )  { this.btnDisabled = false; this.data.totalFlete = 0; resolve( true ); return this._ToolServices.presentToast( "Ok Tenemos Problemas Con Las Cotizaciones de Flete lo sentimos, un asesor se comunicar contigo gracias que pena la molestia" )  }
+      if( res.data === "Cannot find table 0." )  { this.btnDisabled = false; this.data.totalFlete = 0; this.contraentregaAlert = true; resolve( true ); return this._ToolServices.presentToast( "Ok Tenemos Problemas Con Las Cotizaciones de Flete lo sentimos, un asesor se comunicar contigo gracias que pena la molestia" )  }
       // data.valor_recaudar = ( Number( ( res.data || 0 ) ) + sumaFlete ) ;
       res = await this.getTridy( data );
       this.data.totalFlete = Number( ( res.data || 0 ) ) ;
