@@ -96,6 +96,8 @@ export class LandingWhatsappComponent implements OnInit {
     } catch (error) { }
     //console.log("****", this.dataPro, this.listGaleria)
     //console.log("list ciudades", this.listCiudades)
+    if(!this.numberId)
+      this.numberId = formatN
   }
 
   getVentaCode(){
@@ -188,15 +190,18 @@ export class LandingWhatsappComponent implements OnInit {
   suma(){
     this.data.sumAmount = 0;
     let sumPrice = this.dataPro.pro_vendedor;
-    console.log("****186", sumPrice, this.namePais)
+    //console.log("****186", sumPrice, this.namePais)
     if( this.namePais === 'Panama'){
       sumPrice = this.price;
     }
-    console.log("******1", this.price, this.namePais)
+    //console.log("******1", this.price, this.namePais)
     for( let row of this.listDataAggregate ){
       this.data.sumAmount+= Number( row.amountAd );
     }
     if( this.data.sumAmount >= 6 ) {
+      this.listDataAggregate.forEach(item => {
+        item.price = 15500;
+      });
       this.data.priceTotal = sumPrice * this.data.sumAmount;
       if( this.namePais === 'Panama'){
         this.finalizarBoton = false;
@@ -207,6 +212,12 @@ export class LandingWhatsappComponent implements OnInit {
       if( this.namePais === 'Panama'){
         this.finalizarBoton = true;
         this._ToolServices.presentToast("La Compra Minima es de 6 pares de calzado");
+      }else{
+        //cambiar el precio a 25500
+        this.listDataAggregate.forEach(item => {
+          item.price = 25000;
+        });
+        console.log("listaproductos", this.listDataAggregate)
       }
       
     }
@@ -219,8 +230,10 @@ export class LandingWhatsappComponent implements OnInit {
     let dataEnd:any = this.data;
     dataEnd.listProduct = this.listDataAggregate;
     console.log("this.data.transportadora",this.data.transportadora)
+    console.log("af", this.data.af)
     dataEnd.transportadora = this.data.transportadora //EDU
-    dataEnd.numerowsap = this.numberId
+    dataEnd.numerowsap = this.numberId;
+    console.log("numerowsap", dataEnd.numerowsap);
     this.celularConfirmar(dataEnd);
   }
 
@@ -438,7 +451,7 @@ Monto a cancelar: ${ this._ToolServices.monedaChange( 3,2, ( this.data.totalAPag
       this.dataEnvioDetails = ev;
       this.contraentregaAlert = false;
       if(ev.contraentrega != "SI"){ return this.contraentregaAlert = true;  }
-      let data = {
+      let dataT = {
         peso: 1 ,
         alto: 9,
         ancho: 21,
@@ -449,78 +462,78 @@ Monto a cancelar: ${ this._ToolServices.monedaChange( 3,2, ( this.data.totalAPag
       };
       let sumaFlete = 0;
       if ( this.data.sumAmount > 0 )  {
-        data.peso = 1;
-        data.alto= 9;
+        dataT.peso = 1;
+        dataT.alto= 9;
         sumaFlete = 1000;
       }
       if ( this.data.sumAmount > 6 )  {
-        data.peso = 2;
-        data.alto= 9;
+        dataT.peso = 2;
+        dataT.alto= 9;
         sumaFlete = 2000;
       }
       if ( this.data.sumAmount > 12 )  {
-        data.peso = 3;
-        data.alto= 9;
+        dataT.peso = 3;
+        dataT.alto= 9;
         sumaFlete = 3000;
       }
       if ( this.data.sumAmount > 18 )  {
-        data.peso = 4;
-        data.alto= 9;
+        dataT.peso = 4;
+        dataT.alto= 9;
         sumaFlete = 4000;
       }
       if ( this.data.sumAmount > 24 )  {
-        data.peso = 5;
-        data.alto= 9;
+        dataT.peso = 5;
+        dataT.alto= 9;
         sumaFlete = 5000;
       }
       if ( this.data.sumAmount > 31 )  {
-        data.peso = 6;
-        data.alto= 9;
+        dataT.peso = 6;
+        dataT.alto= 9;
         sumaFlete = 6000;
       }
       if ( this.data.sumAmount > 37 )  {
-        data.peso = 7;
-        data.alto= 9;
+        dataT.peso = 7;
+        dataT.alto= 9;
         sumaFlete = 7000;
       }
       if ( this.data.sumAmount > 43 )  {
-        data.peso = 8;
-        data.alto= 9;
+        dataT.peso = 8;
+        dataT.alto= 9;
         sumaFlete = 8000;
       }
       if ( this.data.sumAmount > 49 )  {
-        data.peso = 9;
-        data.alto= 9;
+        dataT.peso = 9;
+        dataT.alto= 9;
         sumaFlete = 9000;
       }
       if( ev.transportadora === "InterRapidisimo"){
         if ( this.data.sumAmount > 1 && this.data.sumAmount <= 6 )  {
-          data.peso = 1;
+          dataT.peso = 1;
         }
         if ( this.data.sumAmount > 6 && this.data.sumAmount <= 18 )  {
-          data.peso = 2;
+          dataT.peso = 2;
         }
       }
       this.data.af = sumaFlete; //el AF
       this.btnDisabled = true;
-      let res:any = await this.getTridy( data );
-      if( res.data === "Cannot find table 0." ) res = await this.getTridy( data );
+      let res:any = await this.getTridy( dataT );
+      if( res.data === "Cannot find table 0." ) res = await this.getTridy( dataT );
       if( res.data === "Cannot find table 0." )  { this.btnDisabled = false; this.data.totalFlete = 0; this.contraentregaAlert = true; resolve( true ); return this._ToolServices.presentToast( "Ok Tenemos Problemas Con Las Cotizaciones de Flete lo sentimos, un asesor se comunicar contigo gracias que pena la molestia" )  }
       // data.valor_recaudar = ( Number( ( res.data || 0 ) ) + sumaFlete ) ;
-      res = await this.getTridy( data );
+      res = await this.getTridy( dataT );
       this.data.totalFlete = Number( ( res.data || 0 ) ) ;
-      console.log("res triidy", this.data.totalFlete)
+      //console.log("res triidy", this.data.totalFlete)
       this.data.totalFlete = Number(this.data.totalFlete.toFixed(2));
       this.data.totalFlete = this.redondeaAlAlza(this.data.totalFlete,1000);
-      console.log("redondeado",this.data.totalFlete )
+      //console.log("redondeado",this.data.totalFlete )
       this.data.totalFlete += 5000
-      console.log("aumento 5k", this.data.totalFlete)
-      console.log("af", sumaFlete )
+      //console.log("aumento 5k", this.data.totalFlete)
+      //console.log("af", sumaFlete )
       this.data.totalFlete += sumaFlete
-      console.log("con AF" , this.data.totalFlete)
+      console.log("con AF" , this.data.totalFlete, "AF", this.data.af)
       // this.data.totalFlete += data.valor_recaudar
       console.log("transportadora", this.data.transportadora)
-      console.log(this.data.totalFlete); // Muestra 1.78
+      console.log("this.data.totalFlete",this.data.totalFlete); // Muestra 1.78
       if( !res.data ){
         this.data.totalFlete = 0;
       }
