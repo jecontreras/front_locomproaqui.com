@@ -186,9 +186,7 @@
                       <div><p>Precio:</p></div>
                       <div></div>
                       <div>
-                        <p *ngIf="data.sumAmount >=6">{{ _ToolServices.monedaChange( 3, 2, ( dataPro.price ), code ) }}</p>
-                        <p *ngIf="( data.sumAmount <6 ) && namePais === 'Colombia'">{{ _ToolServices.monedaChange( 3, 2, ( dataPro.pro_uni_venta ), code ) }}</p>
-                          <p *ngIf="( data.sumAmount <6 ) && namePais !== 'Colombia'">{{ _ToolServices.monedaChange( 3, 2, ( 0 ), code ) }}</p>
+                        <p>{{ _ToolServices.monedaChange( 3, 2, ( price || 0 ), code ) }}</p>
                       </div>
                     </div>
                     <div class="d-flex justify-content-between">
@@ -354,7 +352,7 @@
               <div class="d-flex justify-content-center">
                 <button type="button" 
                   class="btn btn-primary btn-lg btn-block" style="width: 250px;text-align: center; display: grid;"
-                  (click)="handleOpenWhatsapp()"
+                  (click)="openWhatsapp( data )"
                 >Ok</button>
               </div>
             </div>

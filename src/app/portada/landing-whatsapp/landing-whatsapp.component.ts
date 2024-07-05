@@ -48,15 +48,14 @@ export class LandingWhatsappComponent implements OnInit {
 
   async ngOnInit() {
     this.dataInit( true );
-    this.getCiudades();
   }
   async dataInit( off = true ){
     if( off ) this.dataPro = await this.getProduct();
-    console.log("articulos", this.dataPro)
+    //console.log("articulos", this.dataPro)
     this.viewPhoto = this.dataPro.foto;
     this.codeId = this.activate.snapshot.paramMap.get('code');
     let formatN = this.activate.snapshot.paramMap.get('number');
-    console.log("**********48", this.activate.snapshot.paramMap, formatN)
+    //console.log("**********48", this.activate.snapshot.paramMap, formatN)
     try {
       this.numberId = ( formatN.split("&") )[1];
       this.indicativoId = ( formatN.split("&") )[0]
@@ -66,12 +65,17 @@ export class LandingWhatsappComponent implements OnInit {
         if( this.namePais === 'Panama' ) {
           this.price = 5;
           this.code = "USD";
+        }else{
+          this.price = this.dataPro.pro_vendedor;
+          this.code = "COP";
         }
       }
     } catch (error) {
       this.numberId = "3108131582";
       this.indicativoId = "COL";
+      this.price = this.dataPro.pro_vendedor;
     }
+    this.getCiudades();
     let res:any = await this.getVentaCode();
     this.data.id = res.id;
     this.data.code = res.code;
@@ -82,9 +86,9 @@ export class LandingWhatsappComponent implements OnInit {
       this.HandleOpenNewBuy();
     }
     this.view = "three";
-    if( this.data.id ) { this.listDataAggregate = this.data.listProduct || []; this.suma(); }
     this.data.sumAmount = 0;
     this.data.priceTotal = 0;
+    if( this.data.id ) { this.listDataAggregate = this.data.listProduct || []; this.suma(); }
     
     try {
       for( let row of this.dataPro.listColor ){
@@ -130,13 +134,34 @@ export class LandingWhatsappComponent implements OnInit {
   }
 
   async getCiudades(){
-    return new Promise( resolve => {
-      this._ventas.getCiudadesTridy( { where: { }, limit: 100000 } ).subscribe( ( res:any )=>{
-        //this.listCiudades = res.data;
-        this.listCiudades = res.data;
-        resolve( this.listCiudades );
+
+    if( this.namePais === 'Colombia'){
+      return new Promise( resolve => {
+        this._ventas.getCiudadesTridy( { where: { }, limit: 100000 } ).subscribe( ( res:any )=>{
+          //this.listCiudades = res.data;
+          this.listCiudades = res.data;
+          resolve( this.listCiudades );
+        });
       });
-    });
+    }else{
+      return new Promise( resolve =>{
+          const options = {
+            method : "POST",
+            headers : {
+              "Content-Type" : "application/json"
+            },
+            body : JSON.stringify({ pais: "PANAMA" } )
+          }
+          let url = "https://ginga.com.co/pedidosweb/api/lokompro/ciudades.php";
+          fetch( url,options)
+          .then(response => response.json())
+          .then(data => { 
+            this.listCiudades = data || [];
+            resolve( this.listCiudades );
+          })
+      })
+    }
+
   }
 
   handleOpenViewPhoto( photo:string ){
@@ -149,14 +174,14 @@ export class LandingWhatsappComponent implements OnInit {
 
   async handleOpenDialogPhoto( row, item ){
     //this._ToolServices.openFotoAlert( row.foto );
-    console.log("***ENTRO", row, item)
+    //console.log("***ENTRO", row, item)
     item.foto = row.foto;
     const dialogRef = this.dialog.open(DialogPedidoArmaComponent,{
       data: { foto: row.foto },
       width: '350px',
     });
     dialogRef.afterClosed().subscribe(selectTalla => {
-      console.log(`Dialog result:`, selectTalla);
+      //console.log(`Dialog result:`, selectTalla);
       if( !selectTalla.talla || !selectTalla.cantidad ) return false;
       row.tal_descripcion = selectTalla.talla;
       row.amountAd = selectTalla.cantidad;
@@ -187,26 +212,22 @@ export class LandingWhatsappComponent implements OnInit {
 
   suma(){
     this.data.sumAmount = 0;
-    let sumPrice = this.dataPro.pro_vendedor;
+    let sumPrice = this.price;
     console.log("****186", sumPrice, this.namePais)
-    if( this.namePais === 'Panama'){
-      sumPrice = this.price;
-    }
-    console.log("******1", this.price, this.namePais)
-    for( let row of this.listDataAggregate ){
-      this.data.sumAmount+= Number( row.amountAd );
-    }
+    for( let row of this.listDataAggregate ) this.data.sumAmount+= Number( row.amountAd )
     if( this.data.sumAmount >= 6 ) {
       this.data.priceTotal = sumPrice * this.data.sumAmount;
-      if( this.namePais === 'Panama'){
-        this.finalizarBoton = false;
-      }
+      if( this.namePais === 'Panama') this.finalizarBoton = false;
+      if( this.namePais === 'Colombia')  this.price = this.dataPro.pro_vendedor;
     }
     else {
-      this.data.priceTotal =  sumPrice * this.data.sumAmount;
-      if( this.namePais === 'Panama'){
+      if( this.namePais === 'Panama'){ //PANAMA
+        this.data.priceTotal =  sumPrice * this.data.sumAmount;
         this.finalizarBoton = true;
         this._ToolServices.presentToast("La Compra Minima es de 6 pares de calzado");
+      }else{ // COLOMBIA
+        this.data.priceTotal = this.dataPro.pro_uni_venta * this.data.sumAmount;
+        this.price = this.dataPro.pro_uni_venta;
       }
       
     }
@@ -234,39 +255,46 @@ export class LandingWhatsappComponent implements OnInit {
     if( !validate ) return false;
     this.btnDisabled = true;
     let dataEnd:any = this.data;
-    
+    this.view = 'one';
     if( dataEnd.ciudad.ciudad_full ) {
       dataEnd.codeCiudad = dataEnd.ciudad.id_ciudad;
       dataEnd.ciudad = dataEnd.ciudad.ciudad_full;
       // dataEnd.transportadora = dataEnd.ciudad.transportadora; // EDU quedaba indefinido 20240613
     }
     dataEnd.stateWhatsapp = 1;
+    dataEnd.paisCreado = this.namePais;
+    dataEnd.numberCreado = this.numberId;
     this.suma();
     if( !this.contraentregaAlert ) await this.precioRutulo( { id_ciudad:dataEnd.codeCiudad,  transportadora: dataEnd.transportadora, contraentrega: 'SI' } );
     dataEnd.totalFlete = this.data.totalFlete;
     this.suma();
     if( this.contraentregaAlert === true ) dataEnd.contraEntrega = 1;
     else dataEnd.contraEntrega = 0;
+    this.ProcessNextUpdateVentaL( dataEnd )
     let result = await this._ToolServices.modaHtmlEnd( dataEnd );
-    if( !result ) {this.btnDisabled = false; return this._ToolServices.presentToast("Editar Tu Pedido..."); }
-    dataEnd.paisCreado = this.namePais;
-    dataEnd.numberCreado = this.numberId;
-    this._ventas.updateVentasL( dataEnd ).subscribe( res =>{
-      //console.log("*****101", res)
-      if( !res.id ) return false;
-      if( this.numberId ) this.openWhatsapp( res );
-      this._ToolServices.presentToast("Tu pedido ha sido enviado correctamente gracias por tu compra.!");
-      this.btnDisabled = false;
-      //this.data = [];
-      this.listDataAggregate = [];
-      this.view = 'foor';
-      /*setTimeout(()=> {
-      let url = "https://wa.me/573228174758?text=";
-       window.open( url );
-      }, 9000 );*/
-      this.pedidoGuardar(dataEnd)
-    },()=> this.btnDisabled = true);
-    //console.log("***data", dataEnd)
+    if( !result ) {this.btnDisabled = false; this.view = 'three'; return this._ToolServices.presentToast("Editar Tu Pedido..."); }
+    let res:any = await this.ProcessNextUpdateVentaL( dataEnd );
+    //console.log("*****101", res)
+    this.view = 'three';
+    if( !res.id ) { this._ToolServices.presentToast("Ok, tenemos problemas con tu envío, por favor recargar tu página!"); this.btnDisabled = false; return false; };
+    this.data = res;
+    if( this.numberId ) this.openWhatsapp( res );
+    this._ToolServices.presentToast("Tu pedido ha sido enviado correctamente gracias por tu compra.!");
+    this.btnDisabled = false;
+    //this.data = [];
+    this.listDataAggregate = [];
+    this.view = 'foor';
+    /*setTimeout(()=> {
+    let url = "https://wa.me/573228174758?text=";
+     window.open( url );
+    }, 9000 );*/
+    this.pedidoGuardar(dataEnd)
+  }
+
+  ProcessNextUpdateVentaL( dataEnd ){
+    return new Promise( resolve =>{
+      this._ventas.updateVentasL( dataEnd ).subscribe( res => resolve( res) );
+    })
   }
 
   celularConfirmar(pedido){             
@@ -341,12 +369,14 @@ export class LandingWhatsappComponent implements OnInit {
       "code": this._ToolServices.codigo(),
       "countItem": 0,
       "totalFlete": 0,
-      "totalAPagar": 0
+      "totalAPagar": 0,
+      paisCreado: this.namePais,
+      numberCreado: this.numberId
    };
    this._ventas.createVentasL( dats ).subscribe( res =>{
     if( res ){
-      console.log("*****335", '/front/landingWhatsapp'+dats.code+this.indicativoId+this.numberId);
-      this.Router.navigate(['/front/landingWhatsapp', dats.code, `+${ this.indicativoId }${ this.numberId }`] );
+      //console.log("*****335", '/front/landingWhatsapp'+dats.code+this.indicativoId+this.numberId);
+      this.Router.navigate(['/front/landingWhatsapp', dats.code, `${ this.indicativoId }&${ this.numberId }` ] );
       setTimeout(()=> this.dataInit( false ), 3000 );
       //setTimeout(()=> location.reload(), 3000 );
     }
@@ -372,31 +402,6 @@ export class LandingWhatsappComponent implements OnInit {
   }
 
   openWhatsapp( data:any ){
-    /*let urlWhatsapp = `https://wa.me/573108131582?text=
-      *Hola Servicio al Cliente este es mi Pedido*
-      *Nombre*: ${ data.nombre }
-      *Ciudad*: ${ data.ciudad }
-      *Numero*: ${ data.numero }
-      *Direccion*: ${ data.direccion }
-      *Barrio*: ${ data.barrio }
-      *Numero de mi Pedido*: ${ data.id }
-    `;*/
-    /*let urlWhatsapp = `https://wa.me/${ this.indicativoId }${ this.numberId }?text=${ encodeURIComponent(` Hola Servicio al Cliente de VICTOR LANDAZURY
-      Acabo de realizar un Pedido \n
-      Mi Nombre es: ${ data.nombre } \n      
-      Ciudad: ${ data.ciudad } \n
-      Numero: ${ data.numero} Direccion: ${ data.direccion } \n
-      Barrio: ${ data.barrio } \n
-      ID de Pedido: ${ data.id } \n
-      
-      Cantidad de pares: ${ this.data.sumAmount } \n
-      
-      * Transportadora: * ${ this.data.transportadora } \n
-      * valor de los Zapatos: * ${ this.data.totalAPagar -  this.data.totalFlete }
-      * valor del Flete: * ${ this.data.totalFlete } \n
-      * Total a Pagar: * ${  this.data.totalAPagar } \n
-      
-      Quedo al pendiente de la guía de despacho tan pronto la tengas me la envías muchas gracias 🙂 `)}`;*/
     let urlWhatsapp = `https://wa.me/57${ this.numberId }?text=${ encodeURIComponent(` Cod: 785
 ¡Gracias por tu compra, ${ data.nombre }!🤩
 
@@ -408,7 +413,7 @@ Nombre: ${ data.nombre }
 WhatsApp: ${ data.numero}
 Dirección: ${ data.direccion }
 Ciudad: ${ data.ciudad }
-Cantidad de pares: * ${ this.data.sumAmount } *
+Cantidad de pares: * ${ this.data.countItem } *
 * Transportadora: * ${ this.data.transportadora }
 Valor de productos: ${ this._ToolServices.monedaChange(3,2,( ( this.data.totalAPagar -  this.data.totalFlete ) || 0 )) }
 Valor de flete: ${ this._ToolServices.monedaChange( 3,2, ( this.data.totalFlete || 0 ) ) }
@@ -494,10 +499,10 @@ Monto a cancelar: ${ this._ToolServices.monedaChange( 3,2, ( this.data.totalAPag
         sumaFlete = 9000;
       }
       if( ev.transportadora === "InterRapidisimo"){
-        if ( this.data.sumAmount > 1 && this.data.sumAmount <= 6 )  {
+        if ( this.data.sumAmount >= 6 )  {
           data.peso = 1;
         }
-        if ( this.data.sumAmount > 6 && this.data.sumAmount <= 18 )  {
+        if ( this.data.sumAmount >= 18 )  {
           data.peso = 2;
         }
       }
@@ -519,8 +524,8 @@ Monto a cancelar: ${ this._ToolServices.monedaChange( 3,2, ( this.data.totalAPag
       this.data.totalFlete += sumaFlete
       console.log("con AF" , this.data.totalFlete)
       // this.data.totalFlete += data.valor_recaudar
-      console.log("transportadora", this.data.transportadora)
-      console.log(this.data.totalFlete); // Muestra 1.78
+      //console.log("transportadora", this.data.transportadora)
+      //console.log(this.data.totalFlete); // Muestra 1.78
       if( !res.data ){
         this.data.totalFlete = 0;
       }

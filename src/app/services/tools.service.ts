@@ -135,9 +135,9 @@ export class ToolsService {
               <label>Precio Total a Pagar: </label> <span> ${  this.monedaChange( 3, 2, ( Number( data.totalAPagar ) || 0 ) ) }</span>
             </div>
             <div class="col-12">
-              <h3>
+              <h4>
                 Inmediatamente le des click al botón de Confirmar tu pedido entra al área de empaque y despacho Pronto uno de nuestros asesores te enviará la guía, vía WhatsApp muchas gracias por tu compra
-              </h3>
+              </h4>
             </div>
           </div>
           `,
@@ -177,7 +177,7 @@ export class ToolsService {
               <label>Cantidad Pares: </label> <span> ${  data.sumAmount }</span>
             </div>
             <div class="col-12">
-              <label>Transportadora: </label> <span> ${  data.transportadora }</span>
+              <label>Transportadora: </label> <span> ${ ( data.transportadora || '' ) }</span>
             </div>
             <div class="col-12">
               <label>Precio Articulos: </label> <span> ${  this.monedaChange( 3, 2, ( data.priceTotal || 0 ) ) }</span>
@@ -186,9 +186,9 @@ export class ToolsService {
               <label>Precio de Envio: </label> <span> No disponible esperar a que un asesor se comunique con usted</span>
             </div>
             <div class="col-12">
-              <h3>
+              <h4>
                 Inmediatamente, le des click al botón de Finalizar tu pedido entra al área de empaque y despacho pronto uno de nuestros asesores te enviará la guía y te cotizarán el envío, vía WhatsApp muchas gracias por tu compra
-              </h3>
+              </h4>
             </div>
           </div>
           `,
