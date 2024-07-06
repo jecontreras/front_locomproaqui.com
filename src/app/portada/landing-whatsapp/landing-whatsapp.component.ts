@@ -1,12 +1,13 @@
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { MatDialog } from '@angular/material';
 import { ActivatedRoute, Router } from '@angular/router';
-import { DANEGROUP, TRIDYCIUDAD } from 'src/app/JSON/dane-nogroup';
+import { TRIDYCIUDAD } from 'src/app/JSON/dane-nogroup';
 import { ToolsService } from 'src/app/services/tools.service';
 import { ProductoService } from 'src/app/servicesComponents/producto.service';
 import { VentasService } from 'src/app/servicesComponents/ventas.service';
 import { DialogPedidoArmaComponent } from '../dialog-pedido-arma/dialog-pedido-arma.component';
 import { Indicativo } from 'src/app/JSON/indicativo';
+import { departamento } from 'src/app/JSON/departamentos';
 
 @Component({
   selector: 'app-landing-whatsapp',
@@ -20,6 +21,8 @@ export class LandingWhatsappComponent implements OnInit {
   viewPhoto:string;
   listDataAggregate:any = [];
   listCiudades:any = TRIDYCIUDAD;
+  listDepartamentoFullTD:any = departamento;
+  listCiudadesRSelect:any = [];
   listCiudadesF:any = [];
   keyword = 'ciudad';
   data:any = {};
@@ -246,7 +249,7 @@ export class LandingWhatsappComponent implements OnInit {
   }
 
   handleCheckContra(){
-    this.contraentregaAlert = true;
+    this.contraentregaAlert = !this.contraentregaAlert;
   }
 
   async handleEndOrder(){ console.log("handle Order", this.btnDisabled)
@@ -545,7 +548,7 @@ Monto a cancelar: ${ this._ToolServices.monedaChange( 3,2, ( this.data.totalAPag
     });
   }
   onChangeSearch( val:any ){
-    //console.log( ev )
+    console.log( val, this.listCiudades )
     this.contraentregaAlert = false
     if (val) {
       this.listCiudadesF = this.listCiudades.filter((ciudad) =>
@@ -558,6 +561,17 @@ Monto a cancelar: ${ this._ToolServices.monedaChange( 3,2, ( this.data.totalAPag
 
   handleSelect( view:string, opt:number ){
     this.view = view;
+  }
+
+  handleSelectDepartament(){
+    let filterR = this.listCiudades.find( row => row.id_ciudad == this.data.departamento )
+    console.log("***566", this.data, filterR )
+    if( filterR ){
+      this.listCiudadesRSelect = filterR.ciudadesList
+    }
+  }
+  handleProcesFlete(){
+    console.log("*¨**574", this.data )
   }
 
 }
