@@ -216,9 +216,9 @@ export class LandingWhatsappComponent implements OnInit {
     console.log("****186", sumPrice, this.namePais)
     for( let row of this.listDataAggregate ) this.data.sumAmount+= Number( row.amountAd )
     if( this.data.sumAmount >= 6 ) {
-      this.data.priceTotal = sumPrice * this.data.sumAmount;
       if( this.namePais === 'Panama') this.finalizarBoton = false;
       if( this.namePais === 'Colombia')  this.price = this.dataPro.pro_vendedor;
+      this.data.priceTotal = this.price * this.data.sumAmount;
     }
     else {
       if( this.namePais === 'Panama'){ //PANAMA
@@ -226,8 +226,8 @@ export class LandingWhatsappComponent implements OnInit {
         this.finalizarBoton = true;
         this._ToolServices.presentToast("La Compra Minima es de 6 pares de calzado");
       }else{ // COLOMBIA
-        this.data.priceTotal = this.dataPro.pro_uni_venta * this.data.sumAmount;
         this.price = this.dataPro.pro_uni_venta;
+        this.data.priceTotal = this.price * this.data.sumAmount;
       }
       
     }
