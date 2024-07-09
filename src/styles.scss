@@ -15,6 +15,37 @@ html, body {
   font-family: 'Axiforma';
   src: url('./assets/fonts/axiforma/Axiforma-Regular.ttf');
 }
+.select-with-arrow {
+  position: relative;
+}
+
+.select-with-arrow select {
+  padding-right: 30px; /* Ajusta el padding derecho según el ancho de tu ícono */
+}
+
+.select-with-arrow i {
+  position: absolute;
+  right: 10px; /* Ajusta la posición del ícono según tu diseño */
+  top: calc(50% - 0.5em); /* Centra verticalmente el ícono */
+}
+
+.swal-content-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.swal-content-container select,
+.swal-content-container input {
+  margin: 10px;
+  padding: 10px;
+  width: 100%;
+}
+
+
+.optionHeight{
+  height: 8em !important;
+}
 
 .zoom-on-hover {
   transition: transform 0.3s ease;
@@ -38,8 +69,8 @@ span,
 label,
 a{
    //font-family: 'LaBelleAurore' !important;
-   font-family: 'Inter', sans-serif;
-   font-family: 'Maven Pro', sans-serif;
+   font-family: 'Inter', Axiforma;
+   font-family: 'Maven Pro', Axiforma;
 }
 
 .headerColor{

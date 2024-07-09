@@ -86,8 +86,8 @@
 </mat-dialog-content>
 
 <mat-dialog-actions align="end">
-  <button mat-button mat-dialog-close color="warn">Cerrar</button>
-  <button mat-button cdkFocusInitial (click)="submit()" [disabled]="disabledButton" class="btn btn-primary">
+  <button mat-button mat-dialog-close class="btn btn-outline-danger">Cerrar</button>
+  <button mat-button cdkFocusInitial (click)="submit()" [disabled]="disabledButton" class="btn btn-success">
     <span>Enviar solicitud</span>
   </button>
 </mat-dialog-actions>

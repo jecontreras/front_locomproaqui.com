@@ -37,6 +37,9 @@ export class VentasService {
   getFleteValor(query:any){
     return this._model.querys('tblventas/getFleteValor',query, 'post');
   }
+  getFleteValorTriidy(query:any){
+    return this._model.querysFlete('fletes/getFleteTriidy',query, 'post');
+  }
   cancelarFlete(query:any){
     return this._model.querys('tblventas/cancelarGuia',query, 'post');
   }
@@ -58,11 +61,23 @@ export class VentasService {
   getPossibleSales( query:any ){
     return this._model.querys('ventasDBI/querys',query, 'post');
   }
-  getVentasProveedores( query:any ){
+  getVentasProveedores( query:any ){ //console.log("getVentasProveedores query", query)
     return this._model.querys('tblventas/ventasProveedoresView',query, 'post');
   }
   getVentasExitosasProveedor( query:any ){
     return this._model.querys('tblventas/getVentasExitosasProveedor',query, 'post');
+  }
+  getVentasL(query:any){
+    return this._model.querys('ventaLandazury/querys',query, 'post');
+  }
+  createVentasL(query:any){
+    return this._model.querys('ventaLandazury',query, 'post');
+  }
+  updateVentasL(query:any){
+    return this._model.querys('ventaLandazury/'+query.id,query, 'put');
+  }
+  getCiudadesTridy(query:any){
+    return this._model.querysFlete('CiudadesTridy/querys',query, 'post');
   }
 
 

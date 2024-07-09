@@ -31,6 +31,7 @@ import { ListSizeComponent } from './components/list-size/list-size.component';
 import { ListPlatformComponent } from './components/list-platform/list-platform.component';
 import { RechargeComponent } from './components/recharge/recharge.component';
 import { StoreProductActivatedComponent } from './components/store-product-activated/store-product-activated.component';
+import { ListVentasVeraComponent } from './components/list-ventas-vera/list-ventas-vera.component';
 
 const dashboardRoutes: Routes = [
  {
@@ -64,6 +65,7 @@ const dashboardRoutes: Routes = [
      {path: 'listaTalla', component: ListSizeComponent},
      {path: 'listaPlatform', component: ListPlatformComponent },
      {path: 'ventasPosibles', component: VentasClienteComponent },
+     {path: 'ventasVictorVera', component: ListVentasVeraComponent },
      {path: 'storeProductActivated/:idStore', component: StoreProductActivatedComponent},
      {path: 'recharge', component: RechargeComponent },
      {

@@ -62,12 +62,15 @@ export class FormListSaleComponent implements OnInit {
       footerRow: this.Header,
       dataRows: []
     };
+    console.log("datas", this.datas)
     this.data = _.clone( this.datas.datos );
     console.log("ngOnInit()", this.data )
-    this.amount = this.data.data.amount
+    this.amount = this.datas.datos.amount
     console.log("this.amount", this.amount)
-    if( this.data.data.id ) this.cargarTodos();
-    else this.populateList();
+    // if( this.data.data.id )
+    //   this.cargarTodos();
+    // else
+      this.populateList();
   }
 
   onScroll(){
@@ -86,41 +89,44 @@ export class FormListSaleComponent implements OnInit {
 
   populateList(){
     let suma = 0;
-    // // este proceso en stand by por que no funciona al usar el enpoint tblproductos
-    // // console.log("populateList() this.data.list", this.data.list[0].ventas.id)
-    // // //deob obtner el id de las ventas que esten completas pero no pagas
-    // // let query = {
-    // //  ventas : this.data.list[0].ventas.id
-    // // }
-    // //  let res = this._ventasproductos.getProductos(query)
-    // // console.log("ventasproductos.get res",res)
+    //tomos los id de las ventas
+    let ventas_id:any = [];
+    this.data.list.map(item => ventas_id.push(item.id));
 
-    for( let row of this.data.list ){
-      let gananciaLk = 0;
-      try { gananciaLk = ( row.precio * ( row.producto.precioLokompro || 5 ) ) / 100; } catch (error) { }
-
-      if( !row.ventas ) continue;
-      console.log("***83", row, row.id)
-      let data:any = {
-        code: row.titulo,
-        foto: row.fotoproducto,
-        loVendio: row.loVendio,
-        miGanancia: row.precioVendedor - gananciaLk,
-        precioVendedor: row.precioVendedor,
-        talla: row.tallaSelect,
-        pricePlatform: gananciaLk,
-        ven_numero_guia: row.ventas.ven_numero_guia,
-        fecha: row.ventas.ven_fecha_venta || row.ventas.createdAt,
-        estado: row.ventas.ven_estado ? 'Exitoso' : 'Reexpedición'
-      }
-      if( data.ven_numero_guia ) {
-        this.dataTable.dataRows.push( data );
-        suma+=data.miGanancia;
-      }
+    let query = {
+     where : { ventas : ventas_id }
     }
-    this.loader = false;
-    this.suma = suma;
-    console.log("****82", this.dataTable)
+    this._ventasproductos.get(query)
+    .subscribe(
+      (response: any) => {
+        //console.log("ventasproductos.get res",response)
+        for( let row of response.data ){
+          let gananciaLk = 0;
+          try { gananciaLk = ( row.precio * ( row.producto.precioLokompro || 5 ) ) / 100; } catch (error) { }
+
+          if( !row.ventas ) continue;
+          console.log("***83", row, row.id)
+          let data:any = {
+            code: row.titulo,
+            foto: row.fotoproducto,
+            loVendio: row.loVendio,
+            miGanancia: row.precioVendedor - gananciaLk,
+            precioVendedor: row.precioVendedor,
+            talla: row.colorSelect,
+            pricePlatform: gananciaLk,
+            ven_numero_guia: row.ventas.ven_numero_guia,
+            fecha: row.ventas.ven_fecha_venta || row.ventas.createdAt,
+            estado: row.ventas.ven_estado ? 'Exitoso' : 'Reexpedición'
+          }
+          if( data.ven_numero_guia ) {
+            this.dataTable.dataRows.push( data );
+            suma+=data.miGanancia;
+          }
+        }
+        this.loader = false;
+        this.suma = suma;
+        //console.log("****82", this.dataTable)
+      });
   }
 
   cargarTodos() {

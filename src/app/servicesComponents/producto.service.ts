@@ -49,7 +49,7 @@ export class ProductoService {
   getVenta(query:any){
     return this._model.querys('tblventasproducto/querys',query, 'post');
   }
-  getVentas(query:any){
+  getVentas(query:any){ //console.log("ventasProveedoresView query", query)
     return this._model.querys('tblventas/ventasProveedoresView',query, 'post');
   }
   getVentaComplete(query:any){

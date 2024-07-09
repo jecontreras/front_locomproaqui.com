@@ -7,6 +7,7 @@ export interface STORAGES {
     configuracion?: CONFIGURACION;
     userpr?: USERPR;
     categoria?: CATEGORIA
+    billetera?: BILLETERA;
 };
 
 export interface CATEGORIA{
@@ -45,4 +46,8 @@ export interface USER{
 
 export interface USERCABEZA{
     
+}
+
+export interface BILLETERA{
+
 }

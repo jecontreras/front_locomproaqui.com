@@ -68,20 +68,20 @@
                             <div class="col-12">
                                 <div class="d-flex flex-wrap">
                                     <div class="mx-auto">
-                                        <h4>Ingresos</h4>
-                                        <p>{{ _tools.monedaChange( 3,2,( dataConfig.receive || 0 ) ) }}</p>
+                                        <p>Ingresos Recibidos</p>
+                                        <h5>{{ _tools.monedaChange( 3,2,( dataConfig.receive || 0 ) ) }}</h5>
                                     </div>
                                     <!-- <div class="mx-auto">
                                         <h4>Recibiste</h4>
                                         <p>{{ _tools.monedaChange( 3,2,( dataConfig.receive || 0 ) ) }} </p>
                                     </div> -->
                                     <div class="mx-auto">
-                                      <h4>Pendiente Pago de Transportadora</h4>
-                                      <p>{{ _tools.monedaChange( 3,2,( dataConfig.incomeTransportBuy || 0 ) ) }}</p>
+                                      <p>Pendiente Pago de Transportadora</p>
+                                      <h5>{{ _tools.monedaChange( 3,2,( dataConfig.pdtePagoTrans || 0 ) ) }}</h5>
                                     </div>
                                     <div class="mx-auto">
-                                        <!-- <h4>Fecha</h4>
-                                        <p>{{ dataConfig.date | date:'medium' }} </p> -->
+                                        <p>En Transito</p>
+                                        <h5>{{ _tools.monedaChange( 3,2,( dataConfig.enTransito || 0 ) ) }}</h5>
                                     </div>
                                 </div>
                             </div>
@@ -89,7 +89,7 @@
                                 <table class="table">
                                     <thead class="thead-dark">
                                       <tr>
-                                        <th scope="col">Transacciones</th>
+                                        <th scope="col">Cobros</th>
                                         <th scope="col">Solicitado</th>
                                         <th scope="col">Fecha</th>
                                         <th scope="col">Recibiste</th>

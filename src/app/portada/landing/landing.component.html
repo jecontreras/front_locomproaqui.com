@@ -1,0 +1,540 @@
+<div id="render-table" class="main_wrapper_main mobile_grid">
+    <main class="main-wrapper" style="padding: 0 10px !important;">
+        <section data-v-6bea8f81="" data-eid="902501" id="902501" class="section full" style="background-size: auto; background-repeat: no-repeat;">
+            <div data-v-4b3acc2c="" data-v-6bea8f81="" data-eid="582968" id="582968" class="section_row" style="border-width: 0px; border-style: solid; border-color: transparent; color: rgb(48, 48, 48); font-size: 14px; text-align: initial; margin: 0px; padding: 0px; background-size: auto; background-repeat: no-repeat;">
+                <div data-v-796cd32d="" data-v-4b3acc2c="" class="row-column" style="width: 100%;">
+                    <div data-v-3607a525="" data-v-796cd32d="" data-eid="109983" class="element-wrapper">
+                        <div data-v-3607a525="" class="headline el-109983" style='line-height: 1; color: rgb(255, 255, 255); font-family: "Abril Fatface";  padding: 5px; background-color: rgb(21, 20, 20); text-shadow: transparent 0px 0px 0px;'>
+                            <div class="headline-inner">
+                                <h3>SANDALIAS A BUEN PRECIO</h3>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <section data-v-6bea8f81="" data-eid="57872" id="57872" class="section full"
+                style="background-size: auto; background-repeat: no-repeat; padding: 0px; margin: -50px 0px 0px;">
+                <div data-v-4b3acc2c="" data-v-6bea8f81="" data-eid="72523" id="72523" class="section_row"
+                    style="margin: 50px 0px 0px; background-size: auto; background-repeat: no-repeat;">
+                    <div data-v-796cd32d="" data-v-4b3acc2c="" class="row-column" style="width: 50%;">
+                        <div data-v-3607a525="" data-v-796cd32d="" data-eid="824336" class="element-wrapper">
+                            <div data-v-3607a525="" class="image-slider el-824336"
+                                style="margin: 10px 0px 0px; object-fit: scale-down;">
+                                <div class="is-image-wrapper">
+                                    <div class="image-resize img">
+                                        <img  
+                                            [src]="listGaleria[currentIndex]?.foto"
+                                            width="100%" 
+                                            height="550px" 
+                                            class="lazyload" 
+                                            style="object-fit: scale-down;"
+                                        >
+                                    </div>
+                                    <a class="prev" (click)="showPreviousPhoto()">❮</a> <!-- Llama a la función showPreviousPhoto al hacer clic -->
+                                    <a class="next" (click)="showNextPhoto()">❯</a> <!-- Llama a la función showNextPhoto al hacer clic -->
+                                </div>
+                                <div class="is-thumbs-wrapper">
+                                    <div class="is-thumbnails">
+                                        <div class="is-thumbnail selected" style="width: 60px; height: 60px;" *ngFor="let item of listGaleria" (click)="handleOpenViewPhoto( item.foto )">
+                                            <img 
+                                                [src]="item.foto"
+                                                data-src="{{ item.foto}}"
+                                                loading="lazy" class="lazyload">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        
+                        <!-- Otros elementos omitidos por brevedad -->
+                    </div>
+                    <div data-v-796cd32d="" data-v-4b3acc2c="" class="row-column" style="width: 50%;">
+                        <div data-v-3607a525="" data-v-796cd32d="" data-eid="45784" class="element-wrapper">
+                          <div data-v-3607a525="" class="paragraph el-45784 no-mobile"
+                            style="color: rgb(0, 0, 0); font-family: Merriweather; line-height: 1.2; margin: 20px; padding: 10px; text-shadow: transparent 0px 0px 0px;">
+                            <style>
+                              .el-45784 {
+                                font-size: calc(30px + 8 * ((100vw - 320px) / 960));
+                                text-align: center;
+                              }
+                  
+                              @media screen and (min-width: 480px) {
+                                .el-45784 {
+                                  font-size: calc(35px + 8 * ((100vw - 320px) / 960));
+                                  text-align: center;
+                                }
+                              }
+                  
+                              @media screen and (min-width: 1024px) {
+                                .el-45784 {
+                                  font-size: 50px;
+                                  text-align: center;
+                                }
+                              }
+                            </style>
+                            <div class="paragraph-inner">
+                              <h1><strong style="color: rgb(252, 1, 1);">ARMA TU COMBO</strong><strong> PREFERIDO</strong></h1>
+                            </div>
+                          </div>
+                        </div>
+                        <div data-v-3607a525="" data-v-796cd32d="" data-eid="46201" class="element-wrapper">
+                          <div data-v-3607a525="" class="paragraph el-46201"
+                            style="line-height: 1.2; margin: 10px 0px 0px; padding: 10px; text-shadow: transparent 0px 0px 0px;">
+                            <style>
+                              .el-46201 {
+                                font-size: 32px;
+                                text-align: center;
+                              }
+                            </style>
+                            <div class="paragraph-inner">
+                              <p style="text-align: center;"><strong>ANTES&nbsp;<s>$35.000</s></strong>
+                              <p style="text-align: center;"><strong style="font-size: 36px; color: rgb(79, 154, 10);">SOLO {{ _ToolServices.monedaChange( 3, 2, dataPro.pro_vendedor ) }} DESDE 6 PARES EN ADELANTE </strong>
+                              <p style="text-align: center;"><span style="font-size: 23px;">﻿AHORRAS 20%</span></p>
+                            </div>
+                          </div>
+                        </div>
+                        <div data-v-3607a525="" data-v-796cd32d="" data-eid="1313" class="element-wrapper">
+                          <div data-v-3607a525="" class="btn-container el-1313">
+                            <style>
+                              .el-1313 {
+                                align-items: stretch;
+                              }
+                  
+                              @media screen and (min-width: 480px) {
+                                .el-1313 {
+                                  align-items: stretch;
+                                }
+                              }
+                  
+                              @media screen and (min-width: 1024px) {
+                                .el-1313 {
+                                  align-items: stretch;
+                                }
+                              }
+                            </style><a (click)="scrollToNextStep()" class="btn"
+                              style="border-width: 1px; border-style: solid; border-color: rgb(235, 53, 51); margin: 10px 20px 0px; padding: 10px; background-color: rgb(235, 53, 51);"><span
+                                class="btn-headline" style="font-weight: bold; font-size: 30px; text-align: center;">COMPRA YA</span>
+                              <div class="btn-sub-headline" style="color: rgb(246, 249, 254); font-size: 16px; text-align: center;">PAGAS
+                                EN CASA</div>
+                            </a>
+                          </div>
+                        </div>
+                        <div data-v-3607a525="" data-v-796cd32d="" data-eid="92198" class="element-wrapper">
+                          <div data-v-3607a525="" class="img no-desktop no-tablet el-92198" style="margin: 10px 0px 0px;">
+                            <style>
+                              .el-92198 {
+                                align-items: center;
+                              }
+                            </style><img crossorigin="anonymous"
+                              src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw=="
+                              data-srcset="//img.funnelish.com/3383/15052/1622816427-trust_badge2_1280x1280_efaa283b-cfab-442c-9456-3a4e477f0cac.png?auto=webp&clip=bounds 1x"
+                              alt="" data-sizes="auto"
+                              data-src="//img.funnelish.com/3383/15052/1622816427-trust_badge2_1280x1280_efaa283b-cfab-442c-9456-3a4e477f0cac.png?auto=webp&clip=bounds"
+                              width="100%" height="auto" class="lazyload" style="object-fit: scale-down;">
+                          </div>
+                        </div>
+                      </div>
+                </div>
+        </section>
+        <section data-v-6bea8f81="" data-eid="99010" id="99010" class="section full" style="background-color: rgb(0, 0, 0); background-size: auto; background-repeat: no-repeat;">
+            <div data-v-4b3acc2c="" data-v-6bea8f81="" data-eid="60116" id="60116" class="section_row" style="background-size: auto; background-repeat: no-repeat;">
+                <div data-v-796cd32d="" data-v-4b3acc2c="" class="row-column" style="width: 20%;">
+                    <div data-v-3607a525="" data-v-796cd32d="" data-eid="87866" class="element-wrapper">
+                        <div data-v-3607a525="" class="img no-mobile el-87866" style="margin: 0px;">
+                            <img crossorigin="anonymous" src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==" data-srcset="//img.funnelish.com/3383/15052/1622816536-leftarrow.png?auto=webp&clip=bounds&width=100 1x" alt="" data-sizes="auto" data-src="//img.funnelish.com/3383/15052/1622816536-leftarrow.png?auto=webp&clip=bounds&width=100" width="100px" height="auto" class="lazyload" style="object-fit: scale-down;">
+                        </div>
+                    </div>
+                </div>
+                <div data-v-796cd32d="" data-v-4b3acc2c="" class="row-column" style="width: 60%;">
+                    <div data-v-3607a525="" data-v-796cd32d="" data-eid="76051" class="element-wrapper">
+                        <div data-v-3607a525="" class="headline el-76051" style="line-height: 1; color: white; margin: 0px; padding: 5px 10px; text-shadow: transparent 0px 0px 0px;">
+                            <div class="headline-inner">
+                                <p style="text-align: center;"><strong>COMPRAS AL MAYOR</strong></p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <section data-v-6bea8f81="" data-eid="902501" id="902501" class="section full" style="background-size: auto; background-repeat: no-repeat;">
+            <div data-v-4b3acc2c="" data-v-6bea8f81="" data-eid="582968" id="582968" class="section_row" style="border-width: 0px; border-style: solid; border-color: transparent; color: rgb(48, 48, 48); font-size: 14px; text-align: initial; margin: 0px; padding: 0px; background-size: auto; background-repeat: no-repeat;">
+                <div data-v-796cd32d="" data-v-4b3acc2c="" class="row-column" style="width: 100%;">
+                    <div data-v-3607a525="" data-v-796cd32d="" data-eid="109983" class="element-wrapper">
+                        <div data-v-3607a525="" class="headline el-109983" style='line-height: 1; color: rgb(255, 255, 255); font-family: "Abril Fatface";  padding: 5px; background-color: rgb(21, 20, 20); text-shadow: transparent 0px 0px 0px;'>
+                            <div class="headline-inner">
+                                <h3>DETALLES IMPORTANTES</h3>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <section data-v-6bea8f81="" data-eid="902501" id="902501" class="section full" style="background-size: auto; background-repeat: no-repeat;">
+            <div data-v-4b3acc2c="" data-v-6bea8f81="" data-eid="582968" id="582968" class="section_row" style="border-width: 0px; border-style: solid; border-color: transparent; color: rgb(48, 48, 48); font-size: 14px; text-align: initial; margin: 0px; padding: 0px; background-size: auto; background-repeat: no-repeat;">
+                <div data-v-796cd32d="" data-v-4b3acc2c="" class="row-column" style="width: 100%;">
+                    <div [innerHtml]="dataPro.pro_descripcion" > </div>
+                </div>
+            </div>
+        </section>
+        <section data-v-6bea8f81="" data-eid="28469" id="28469" class="section full no-desktop" style="margin: 30px 0px 0px; background-color: rgb(0, 0, 0); background-size: auto; background-repeat: no-repeat;">
+            <div data-v-4b3acc2c="" data-v-6bea8f81="" data-eid="17349" id="17349" class="section_row" style="margin: 20px 0px; background-size: auto; background-repeat: no-repeat;">
+                <div data-v-796cd32d="" data-v-4b3acc2c="" class="row-column" style="width: 20%;">
+                    <div data-v-3607a525="" data-v-796cd32d="" data-eid="91288" class="element-wrapper">
+                        <div data-v-3607a525="" class="img no-mobile el-91288" style="margin: 0px;">
+                            <img crossorigin="anonymous" src="//img.funnelish.com/3383/15052/1622816536-leftarrow.png?auto=webp&clip=bounds&width=100" data-srcset="//img.funnelish.com/3383/15052/1622816536-leftarrow.png?auto=webp&clip=bounds&width=100 1x" alt="" data-sizes="auto" data-src="//img.funnelish.com/3383/15052/1622816536-leftarrow.png?auto=webp&clip=bounds&width=100" width="100px" height="auto" class="lazyload" style="object-fit: scale-down;">
+                        </div>
+                    </div>
+                </div>
+                <div data-v-796cd32d="" data-v-4b3acc2c="" class="row-column" style="width: 60%;">
+                    <div data-v-3607a525="" data-v-796cd32d="" data-eid="45080" class="element-wrapper">
+                        <div data-v-3607a525="" class="headline el-45080" style="line-height: 1; color: white; margin: 0px; padding: 5px 10px; text-shadow: transparent 0px 0px 0px;">
+                            <p style="text-align: center;">ENVIOS A TODA COLOMBIA</p>
+                        </div>
+                    </div>
+                    <div data-v-3607a525="" data-v-796cd32d="" data-eid="7919" class="element-wrapper">
+                        <div data-v-3607a525="" class="btn-container el-7919">
+                            <a (click)="scrollToNextStep()" class="btn" style="border-width: 1px; border-style: solid; border-color: rgb(235, 53, 51); margin: 10px 20px 0px; padding: 10px; background-color: rgb(235, 53, 51);">
+                                <span class="btn-headline" style="font-weight: bold; font-size: 22px; text-align: center;">COMPRA YA</span>
+                                <div class="btn-sub-headline" style="color: rgb(246, 249, 254); font-size: 16px; text-align: center;">PAGAS EN CASA</div>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                <div data-v-796cd32d="" data-v-4b3acc2c="" class="row-column" style="width: 19.9999%;">
+                    <div data-v-3607a525="" data-v-796cd32d="" data-eid="63259" class="element-wrapper">
+                        <div data-v-3607a525="" class="img no-mobile el-63259" style="margin: 0px;">
+                            <img crossorigin="anonymous" src="//img.funnelish.com/3383/15052/1622816539-rightarrow.png?auto=webp&clip=bounds&width=100" data-srcset="//img.funnelish.com/3383/15052/1622816539-rightarrow.png?auto=webp&clip=bounds&width=100 1x" alt="" data-sizes="auto" data-src="//img.funnelish.com/3383/15052/1622816539-rightarrow.png?auto=webp&clip=bounds&width=100" width="100px" height="auto" class="lazyload" style="object-fit: scale-down;">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <section data-v-6bea8f81="" data-eid="11032" id="11032" class="section full no-desktop no-mobile no-tablet" style="margin: 30px 0px; background-size: auto; background-repeat: no-repeat;">
+            <div data-v-4b3acc2c="" data-v-6bea8f81="" data-eid="86709" id="86709" class="section_row" style="background-size: auto; background-repeat: no-repeat;">
+                <div data-v-796cd32d="" data-v-4b3acc2c="" class="row-column" style="width: 100%;">
+                    <div data-v-3607a525="" data-v-796cd32d="" data-eid="31675" class="element-wrapper">
+                        <div data-v-3607a525="" class="headline el-31675" style="line-height: 1; margin: 10px 0px 0px; padding: 5px 10px; text-shadow: transparent 0px 0px 0px;">
+                            <h1 style="text-align: center;"><span style="font-size: 50px;">Lo que nuestras clientes están diciendo</span></h1>
+                        </div>
+                    </div>
+                    <div data-v-3607a525="" data-v-796cd32d="" data-eid="87232" class="element-wrapper">
+                        <div data-v-3607a525="" class="headline el-87232" style="line-height: 1; margin: 10px 0px 0px; padding: 5px 50px; text-shadow: transparent 0px 0px 0px;">
+                            <div class="headline-inner">
+                                <h1 style="text-align: center;"><strong>5 out of 5 stars</strong></h1>
+                            </div>
+                        </div>
+                    </div>
+                    <div data-v-3607a525="" data-v-796cd32d="" data-eid="87693" class="element-wrapper">
+                        <div data-v-3607a525="" class="img no-mobile el-87693" style="margin: 10px 0px 0px;">
+                            <img crossorigin="anonymous" src="//img.funnelish.com/3383/17213/1632646314-faucet%20features%20%28500%20x%20200%20px%29%20%282%29.png?auto=webp&clip=bounds&width=455&height=67" data-srcset="//img.funnelish.com/3383/17213/1632646314-faucet%20features%20%28500%20x%20200%20px%29%20%282%29.png?auto=webp&clip=bounds&width=455&height=67 1x" alt="" data-sizes="auto" data-src="//img.funnelish.com/3383/17213/1632646314-faucet%20features%20%28500%20x%20200%20px%29%20%282%29.png?auto=webp&clip=bounds&width=455&height=67" width="455px" height="67px" class="lazyload" style="object-fit: scale-down;">
+                        </div>
+                    </div>
+                    <div data-v-3607a525="" data-v-796cd32d="" data-eid="38095" class="element-wrapper">
+                        <div data-v-3607a525="" class="img no-desktop no-tablet el-38095" style="margin: 10px 0px 0px;">
+                            <img crossorigin="anonymous" src="//img.funnelish.com/3383/17213/1632646314-faucet%20features%20%28500%20x%20200%20px%29%20%282%29.png?auto=webp&clip=bounds&width=200" data-srcset="//img.funnelish.com/3383/17213/1632646314-faucet%20features%20%28500%20x%20200%20px%29%20%282%29.png?auto=webp&clip=bounds&width=200 1x" alt="" data-sizes="auto" data-src="//img.funnelish.com/3383/17213/1632646314-faucet%20features%20%28500%20x%20200%20px%29%20%282%29.png?auto=webp&clip=bounds&width=200" width="200px" height="auto" class="lazyload" style="object-fit: scale-down;">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <section 
+            data-v-6bea8f81="" 
+            data-eid="537830" 
+            id="537830" 
+            class="section full" 
+            style="background-size: auto; background-repeat: no-repeat;"
+            *ngFor="let row of dataPro.listColor"
+        >
+            <div data-v-4b3acc2c="" data-v-6bea8f81="" data-eid="721126" id="721126" class="section_row" style="border-width: 0px; border-style: solid; border-color: transparent; color: rgb(48, 48, 48); font-size: 14px; text-align: initial; margin: 0px; padding: 0px; background-color: rgba(31, 30, 30, 0); background-size: auto; background-repeat: no-repeat;">
+                <div data-v-796cd32d="" data-v-4b3acc2c="" class="row-column" style="width: 100%;">
+                    <div data-v-3607a525="" data-v-796cd32d="" data-eid="12672" class="element-wrapper">
+                        <div data-v-3607a525="" class="headline el-12672" style='line-height: 1; font-family: "Abril Fatface"; margin: 10px 0px 0px; padding: 5px; text-shadow: transparent 0px 0px 0px;'>
+                            <h3><span style="font-size: 48px;"> {{ row.talla }} </span></h3>
+                        </div>
+                    </div>
+                    <div data-v-3607a525="" data-v-796cd32d="" data-eid="552706" class="element-wrapper">
+                        <div data-v-3607a525="" class="image-slider el-552706" style="margin: 10px 0px 0px; object-fit: scale-down;">
+                            <div class="is-image-wrapper">
+                                <div class="image-resize img">
+                                    <img  
+                                        src="{{ row.foto }}?auto=compress,format&optimize=medium&fit=clip&w=100%&h=550" 
+                                        data-srcset="{{ row.foto }}?auto=compress,format&optimize=medium&fit=clip&w=100%&h=550 1x" 
+                                        alt="" 
+                                        data-sizes="auto" 
+                                        data-src="{{ row.foto }}?auto=compress,format&optimize=medium&fit=clip&w=100%&h=550" 
+                                        width="100%" 
+                                        height="550px" 
+                                        class="lazyload" 
+                                        style="object-fit: scale-down;"
+                                    >
+                                </div>
+                                <a class="prev">❮</a>
+                                <a class="next">❯</a>
+                            </div>
+                            <div class="is-thumbs-wrapper">
+                                <div class="is-thumbnails">
+                                    <div 
+                                        *ngFor="let item of row.galeriaList"
+                                        (click)="handleOpenViewPhotoG( item.foto, row )"
+                                        class="is-thumbnail" 
+                                        style="width: 60px; height: 60px;"
+                                    >
+                                        <img src="{{ item.foto }}?auto=compress,format&fit=clip&w=60&h=60" loading="lazy" class="lazyload">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <section>
+                <a (click)="scrollToNextStep()" class="btn"
+                    style="border-width: 1px; border-style: solid; border-color: rgb(235, 53, 51); margin: 10px 20px 0px; padding: 10px; background-color: rgb(235, 53, 51);"><span
+                    class="btn-headline" style="font-weight: bold; font-size: 30px; text-align: center;">COMPRA YA</span>
+                    <div class="btn-sub-headline" style="color: rgb(246, 249, 254); font-size: 16px; text-align: center;">PAGAS
+                    EN CASA</div>
+                </a>
+            </section>
+        </section>
+        <section #nextStep id="next-step" data-v-6bea8f81="" data-eid="902501" id="902501" class="section full" style="background-size: auto; background-repeat: no-repeat;">
+            <div data-v-4b3acc2c="" data-v-6bea8f81="" data-eid="582968" id="582968" class="section_row" style="border-width: 0px; border-style: solid; border-color: transparent; color: rgb(48, 48, 48); font-size: 14px; text-align: initial; margin: 0px; padding: 0px; background-size: auto; background-repeat: no-repeat;">
+                <div data-v-796cd32d="" data-v-4b3acc2c="" class="row-column" style="width: 100%;">
+                    <div data-v-3607a525="" data-v-796cd32d="" data-eid="109983" class="element-wrapper">
+                        <div data-v-3607a525="" class="headline el-109983" style='line-height: 1; color: rgb(255, 255, 255); font-family: "Abril Fatface";  padding: 5px; background-color: rgb(21, 20, 20); text-shadow: transparent 0px 0px 0px;'>
+                            <div class="headline-inner">
+                                <h3>Armando tu Pedido</h3>
+                                <p style="    font-size: 30px;" class="text-danger">Recuerda que Para que Aplique el Precio de $15.500 La Compra Minima es de 6 pares en adelante</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <section>
+            <div class="row">
+                <div class="col-12 col-sm-6">
+                    <div class="row">
+                        <div class="col-12">
+                            <section data-v-6bea8f81="" data-eid="902501" id="902501" class="section full" style="background-size: auto; background-repeat: no-repeat;">
+                                <div data-v-4b3acc2c="" data-v-6bea8f81="" data-eid="582968" id="582968" class="section_row" style="border-width: 0px; border-style: solid; border-color: transparent; color: rgb(48, 48, 48); font-size: 14px; text-align: initial; margin: 0px; padding: 0px; background-size: auto; background-repeat: no-repeat;">
+                                    <div data-v-796cd32d="" data-v-4b3acc2c="" class="row-column" style="width: 100%;">
+                                        <div data-v-3607a525="" data-v-796cd32d="" data-eid="109983" class="element-wrapper">
+                                            <div data-v-3607a525="" class="headline el-109983" style='line-height: 1; color: rgb(255, 255, 255); font-family: "Abril Fatface";  padding: 5px; background-color: rgb(21, 20, 20); text-shadow: transparent 0px 0px 0px;'>
+                                                <div class="headline-inner">
+                                                    <h4><span class="text-danger">Paso 1:</span> Cuales te Gustan!</h4>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </section>
+                        </div>
+                        <div class="col-6 col-sm-6" style="margin: 0 0 20px 0;" *ngFor="let item of dataPro.listColor">
+                            <mat-card class="example-card">
+                                <mat-card-header>
+                                  <mat-card-title> {{ item.talla }} </mat-card-title>
+                                </mat-card-header>
+                                <img mat-card-image [src]="item.foto" alt="Photo of a Shiba Inu">
+                                <mat-card-content>
+                                  <div class="row">
+                                    <div class="col-12">
+                                        <mat-form-field class="anchosP">
+                                            <mat-label> Colores </mat-label>
+                                            <mat-select [(ngModel)]="item.detailsP.foto">
+                                            <mat-option *ngFor="let row of item.galeriaList" [value]="row.foto" (click)="handleOpenDialogPhoto( row, item )" class="optionHeight">  
+                                                <img [src]="row.foto" style="width: 40%;">
+                                            </mat-option>
+                                            </mat-select>
+                                        </mat-form-field>
+                                    </div>
+                                    <!--<div class="col-12">
+                                        <mat-form-field class="anchosP">
+                                            <mat-label> Talla </mat-label>
+                                            <mat-select [(ngModel)]="item.detailsP.talla">
+                                            <mat-option *ngFor="let row of item.tallaSelect" [value]="row.tal_descripcion" (click)="handleOpenDialogAmount( row, item, true )"> {{ row.tal_descripcion }} </mat-option>
+                                            </mat-select>
+                                        </mat-form-field>
+                                    </div>-->
+                                  </div>
+                                </mat-card-content>
+                              </mat-card>                              
+                        </div>
+                    </div>
+                </div>
+                <div class="col-12 col-sm-6">
+                    <div class="row">
+                        <div class="col-12">
+                            <section data-v-6bea8f81="" data-eid="902501" id="902501" class="section full" style="background-size: auto; background-repeat: no-repeat;">
+                                <div data-v-4b3acc2c="" data-v-6bea8f81="" data-eid="582968" id="582968" class="section_row" style="border-width: 0px; border-style: solid; border-color: transparent; color: rgb(48, 48, 48); font-size: 14px; text-align: initial; margin: 0px; padding: 0px; background-size: auto; background-repeat: no-repeat;">
+                                    <div data-v-796cd32d="" data-v-4b3acc2c="" class="row-column" style="width: 100%;">
+                                        <div data-v-3607a525="" data-v-796cd32d="" data-eid="109983" class="element-wrapper">
+                                            <div data-v-3607a525="" class="headline el-109983" style='line-height: 1; color: rgb(255, 255, 255); font-family: "Abril Fatface";  padding: 5px; background-color: rgb(21, 20, 20); text-shadow: transparent 0px 0px 0px;'>
+                                                <div class="headline-inner">
+                                                    <h4><span class="text-danger">Paso 2: </span> Mis Productos Agregados al Carrito</h4>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </section>
+                        </div>
+                        <div class="col-12">
+                            <ul class="list-group list-group-flush list my--3">
+                                <li class="list-group-item px-0" *ngFor="let item of listDataAggregate">
+                                  <div class="row align-items-center">
+                                    <div class="col-auto">
+                                      <!-- Avatar -->
+                                      <a class="avatar rounded-circle pointer">
+                                        <img alt="Image placeholder" [src]="item.foto" style="    width: 100px; border-radius: 10px;">
+                                      </a>
+                                    </div>
+                                    <div class="col ml--2">
+                                      <span class="text-success">
+                                        <mat-form-field class="example-full-width">
+                                            <mat-label>Talla</mat-label>
+                                            <input matInput [(ngModel)]="item.talla">
+                                        </mat-form-field>
+                                        <mat-form-field class="example-full-width">
+                                            <mat-label>Cantidad</mat-label>
+                                            <input matInput [(ngModel)]="item.amountAd" (change)="suma()">
+                                        </mat-form-field>                   
+                                      </span>
+                                    </div>
+                                    <div class="col-auto">
+                                        <button mat-mini-fab color="warn" aria-label="Example icon button with a filter list icon"(click)="handleDeleteItem( item )">
+                                            <mat-icon>close</mat-icon>
+                                        </button>
+                                    </div>
+                                  </div>
+                                </li>
+                                <li class="list-group-item px-0">
+                                    <div class="row align-items-center">
+                                        <div>
+                                            <h4 class="text-danger">Resumen de mi Pedido</h4>
+                                        </div>
+                                    </div>
+                                </li>
+                                <li class="list-group-item px-0">
+                                    <div class="row align-items-center">
+                                      <div class="col-auto">
+                                        <h4>
+                                            <span *ngIf="data.sumAmount >=6">Precio: {{ _ToolServices.monedaChange( 3, 2, dataPro.pro_vendedor ) }}</span>
+                                            <span *ngIf="data.sumAmount <6">Precio: {{ _ToolServices.monedaChange( 3, 2, dataPro.pro_uni_venta ) }}</span>
+                                        </h4>
+                                      </div>
+                                      <div class="col ml--2">
+                                        <h4 class="mb-0">
+                                          <span class="text-danger" >Cantidades Pares: </span> {{ data.sumAmount }}
+                                        </h4>
+                                      </div>
+                                      <div class="col-auto">
+                                        <h4>
+                                            Total a Pagar Sin Envio {{ _ToolServices.monedaChange( 3, 2, data.priceTotal ) }}
+                                        </h4>
+                                      </div>
+                                    </div>
+                                  </li>
+                            </ul>
+                        </div>
+                        <div class="col-12">
+                            <section data-v-6bea8f81="" data-eid="902501" id="902501" class="section full" style="background-size: auto; background-repeat: no-repeat;">
+                                <div data-v-4b3acc2c="" data-v-6bea8f81="" data-eid="582968" id="582968" class="section_row" style="border-width: 0px; border-style: solid; border-color: transparent; color: rgb(48, 48, 48); font-size: 14px; text-align: initial; margin: 0px; padding: 0px; background-size: auto; background-repeat: no-repeat;">
+                                    <div data-v-796cd32d="" data-v-4b3acc2c="" class="row-column" style="width: 100%;">
+                                        <div data-v-3607a525="" data-v-796cd32d="" data-eid="109983" class="element-wrapper">
+                                            <div data-v-3607a525="" class="headline el-109983" style='line-height: 1; color: rgb(255, 255, 255); font-family: "Abril Fatface";  padding: 5px; background-color: rgb(21, 20, 20); text-shadow: transparent 0px 0px 0px;'>
+                                                <div class="headline-inner">
+                                                    <h4><span class="text-danger">Paso 3: </span> Llenando mis Datos Personales</h4>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </section>
+                        </div>
+                        <div class="col-12">
+                            <br><br>
+                            <div class="row">
+                                <div class="form-group col-12 col-sm-6">
+                                    <mat-form-field class="example-full-width">
+                                        <mat-label>Nombre y Apellido</mat-label>
+                                        <input matInput [(ngModel)]="data.nombre" placeholder="Nombre y Apellido" type="text">
+                                    </mat-form-field>
+                                </div>
+                                <div class="form-group col-12 col-sm-6">
+                                    <section *ngIf="data.checkCity">
+                                        <mat-form-field class="example-full-width">
+                                            <mat-label>Ciudad</mat-label>
+                                            <input matInput [(ngModel)]="data.ciudad" placeholder="Ciudad de Destino" type="text">
+                                        </mat-form-field>
+                                    </section>
+                                    <section *ngIf="!data.checkCity">
+                                        <label>Ciudad Destino *</label>
+                                        <ng-autocomplete [(ngModel)]="data.ciudad" [data]="listCiudades" [searchKeyword]="keyword" placeHolder="Buscar Ciudad" autocomplete="off"
+                                            historyIdentifier="listCiudades" [itemTemplate]="itemTemplate" [notFoundTemplate]="notFoundTemplate" (selected)='precioRutulo($event)' (inputChanged)='onChangeSearch($event)'>
+                                        </ng-autocomplete>
+    
+                                        <ng-template #itemTemplate let-item>
+                                            <div class="item">
+                                                <span [innerHTML]="item.city"></span> &nbsp; | &nbsp;
+                                                <small>Departamento: {{ item.state }}</small> &nbsp; | &nbsp;
+                                                <small>--: {{ item.name }}</small>
+                                            </div>
+                                        </ng-template>
+    
+                                        <ng-template #notFoundTemplate let-notFound>
+                                            <div [innerHTML]="notFound"></div>
+                                        </ng-template>
+                                    </section>
+                                    <mat-checkbox class="example-margin" [(ngModel)]="data.checkCity" (click)="data.ciudad = ''">No Encontre mi Ciudad</mat-checkbox>
+                                </div>
+                                <div class="form-group col-12 col-sm-6">
+                                    <mat-form-field class="example-full-width">
+                                        <mat-label>Dirección</mat-label>
+                                        <input matInput [(ngModel)]="data.direccion" placeholder="Dirección de Destino" type="text">
+                                    </mat-form-field>
+                                </div>
+                                <div class="form-group col-12 col-sm-6">
+                                    <mat-form-field class="example-full-width">
+                                        <mat-label>Barrio</mat-label>
+                                        <input matInput [(ngModel)]="data.barrio" placeholder="Barrio de mi ubicación" type="text">
+                                    </mat-form-field>
+                                </div>
+                                <div class="form-group col-12 col-sm-6">
+                                    <mat-form-field class="example-full-width">
+                                        <mat-label>Numero de Whatsapp</mat-label>
+                                        <input matInput [(ngModel)]="data.numero" placeholder="Numero de Whatsapp" type="number">
+                                    </mat-form-field>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-12">
+                            <section data-v-6bea8f81="" data-eid="902501" id="902501" class="section full" style="background-size: auto; background-repeat: no-repeat;">
+                                <div data-v-4b3acc2c="" data-v-6bea8f81="" data-eid="582968" id="582968" class="section_row" style="border-width: 0px; border-style: solid; border-color: transparent; color: rgb(48, 48, 48); font-size: 14px; text-align: initial; margin: 0px; padding: 0px; background-size: auto; background-repeat: no-repeat;">
+                                    <div data-v-796cd32d="" data-v-4b3acc2c="" class="row-column" style="width: 100%;">
+                                        <div data-v-3607a525="" data-v-796cd32d="" data-eid="109983" class="element-wrapper">
+                                            <div data-v-3607a525="" class="headline el-109983" style='line-height: 1; color: rgb(255, 255, 255); font-family: "Abril Fatface";  padding: 5px; background-color: rgb(21, 20, 20); text-shadow: transparent 0px 0px 0px;'>
+                                                <div class="headline-inner">
+                                                    <h4><span class="text-danger">Paso 4: </span> Finalizar Pedido</h4>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </section>
+                        </div>
+                        <div class="col-12">
+                            <div class="d-flex justify-content-center">
+                                <div>
+                                    <br>
+                                    <button mat-raised-button color="primary" (click)="handleEndOrder()" [disabled]="btnDisabled">Finalizar Pedido</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+</div>

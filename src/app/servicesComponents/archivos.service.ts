@@ -14,7 +14,7 @@ export class ArchivosService {
 
   create(query:any){
     //this.FileFirebase( query );
-    return this._model.querys('archivos/file',query, 'post');
+    return this._model.querys('archivos/media',query, 'post');
   }
 
   createFile(query:any){

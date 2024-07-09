@@ -5,7 +5,7 @@ import * as _ from 'lodash';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
 import { ToolsService } from 'src/app/services/tools.service';
 import { FormventasComponent } from '../formventas/formventas.component';
-
+import { VentasProductosService } from 'src/app/servicesComponents/ventas-productos.service';
 declare interface DataTable {
   headerRow: string[];
   footerRow: string[];
@@ -31,7 +31,7 @@ export class FormlistventasComponent implements OnInit {
     page: 0,
     limit: 100
   };
-  Header:any = [ 'Opciones', 'Vendedor','Nombre Cliente','Teléfono Cliente','Ganancia Vendedor' , 'valor flete', 'Fecha Venta', 'Estado','Ganancia', 'Numero Guia', 'Evidencia' ];
+  Header:any = [ 'Opciones', 'Vendedor','Nombre Cliente','Teléfono Cliente','Ganancia Vendedor' , 'valor flete', 'Fecha Venta', 'Estado','Ganancia Proveedor', 'Numero Guia', 'Evidencia' ];
   $:any;
   
   notscrolly:boolean=true;
@@ -42,6 +42,7 @@ export class FormlistventasComponent implements OnInit {
   constructor(
     private _ventas: VentasService,
     private spinner: NgxSpinnerService,
+    private _ventasproductos: VentasProductosService,
     public dialogRef: MatDialogRef<FormlistventasComponent>,
     @Inject(MAT_DIALOG_DATA) public datas: any,
     public _tools: ToolsService,
@@ -72,18 +73,59 @@ export class FormlistventasComponent implements OnInit {
     this.cargarTodos();
   }
 
+  cargarTodosx(){
+    // let ventas_id:any = [];
+    // this.datas.datos.cob_listaVentas.map(item => ventas_id.push(item.id));
+    let query = {
+      where : { ventas : JSON.parse(this.datas.datos.cob_listaVentas) }
+     }
+     this._ventasproductos.get(query)
+     .subscribe(
+       (response: any) => {
+         console.log("ventasproductos.get res",response)
+         for( let row of response.data ){
+           let gananciaLk = 0;
+           try { gananciaLk = ( row.precio * ( row.producto.precioLokompro || 5 ) ) / 100; } catch (error) { }
+ 
+           if( !row.ventas ) continue;
+           console.log("***83", row, row.id)
+           let data:any = {
+             code: row.titulo,
+             foto: row.fotoproducto,
+             loVendio: row.loVendio,
+             miGanancia: row.precioVendedor - gananciaLk,
+             precioVendedor: row.precioVendedor,
+             talla: row.colorSelect,
+             pricePlatform: gananciaLk,
+             ven_numero_guia: row.ventas.ven_numero_guia,
+             fecha: row.ventas.ven_fecha_venta || row.ventas.createdAt,
+             estado: row.ventas.ven_estado ? 'Exitoso' : 'Reexpedición'
+           }
+           if( data.ven_numero_guia ) {
+             this.dataTable.dataRows.push( data );
+           }
+         }
+         this.loader = false;
+       });
+  }
+
+
   cargarTodos() {
     this.query.where.ven_retiro = this.data.id;
-    this._ventas.get(this.query)
+    console.log("this query", this.query)
+    console.log("this datas", this.datas)
+    let query = {
+      where : { id : JSON.parse(this.datas.datos.cob_listaVentas) }
+     }
+    this._ventas.get(query)
     .subscribe(
-      (response: any) => {
+      (response: any) => { console.log("ventas._get response", response)
         this.counts = response.count;
         this.dataTable.headerRow = this.dataTable.headerRow;
         this.dataTable.footerRow = this.dataTable.footerRow;
         this.dataTable.dataRows.push(... response.data)
         this.dataTable.dataRows = _.unionBy(this.dataTable.dataRows || [], this.dataTable.dataRows, 'id');
         this.loader = false;
-          
           if (response.data.length === 0 ) {
             this.notEmptyPost =  false;
           }

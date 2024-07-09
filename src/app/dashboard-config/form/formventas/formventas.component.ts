@@ -155,7 +155,8 @@ export class FormventasComponent implements OnInit {
     }
     this.progreses = false;
     this.disableSpinner = false;
-    this.disabledButton = false;
+    //desactivo para que se active cuando se genere la guia
+    this.disabledButton = true;
     try {
       //console.log(  this.listCarrito[0].coinShop )
       if( this.listCarrito[0].coinShop == true ){ this.coinShop = this.listCarrito[0].coinShop; this.changeCity();}
@@ -357,7 +358,8 @@ export class FormventasComponent implements OnInit {
     }
   }
 
-  async submit() {
+  async submit() { 
+    this.disabledButton = true; //desactivo boton para evitar doble registro
     //console.log( this.data.ven_tipo == 'pago_anticipado', !this.data.ven_imagen_conversacion, this.data )
     if( this.data.ven_tipo == 'pago_anticipado' && !this.data.ven_imagen_conversacion ) {
       if( this.files.length >0 ) this.subirFile( 'ven_imagen_conversacion' );
@@ -621,6 +623,7 @@ export class FormventasComponent implements OnInit {
       if( this.data.transportadoraSelect === "TCC") this.imprimirGuia();
       this.data.ven_estado = 6;
       this.updates();
+      this.disabledButton = false;
     });
   }
 
