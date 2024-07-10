@@ -31,11 +31,12 @@ import { SelectSizeDialogComponent } from './select-size-dialog/select-size-dial
 import { LandingWhatsappComponent } from './landing-whatsapp/landing-whatsapp.component';
 import { DialogPedidoArmaComponent } from './dialog-pedido-arma/dialog-pedido-arma.component';
 import { NgSelectModule } from '@ng-select/ng-select';
+import { LandingTestComponent } from './landing-test/landing-test.component';
 
 @NgModule({
   entryComponents: [ InfoProductoComponent,ChecktDialogComponent, DialogPedidoArmaComponent ],
   declarations: [
-    MainsComponent, TiendaComponent, ProductosComponent, FooterComponent, MenuComponent, InfoProductoComponent, ProductosViewComponent, ContactoComponent, ChecktComponent, CarritoComponent, CompletarComponent, ChecktDialogComponent, DetallePedidoComponent, CatalogoComponent, LandingComponent, SelectSizeDialogComponent, LandingWhatsappComponent, DialogPedidoArmaComponent],
+    MainsComponent, TiendaComponent, ProductosComponent, FooterComponent, MenuComponent, InfoProductoComponent, ProductosViewComponent, ContactoComponent, ChecktComponent, CarritoComponent, CompletarComponent, ChecktDialogComponent, DetallePedidoComponent, CatalogoComponent, LandingComponent, SelectSizeDialogComponent, LandingWhatsappComponent, DialogPedidoArmaComponent, LandingTestComponent],
   imports: [
     PortadaRoutingModule,
     CommonModule,

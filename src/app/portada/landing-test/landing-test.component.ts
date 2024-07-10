@@ -11,12 +11,11 @@ import { departamento } from 'src/app/JSON/departamentos';
 import * as _ from 'lodash';
 
 @Component({
-  selector: 'app-landing-whatsapp',
-  templateUrl: './landing-whatsapp.component.html',
-  styleUrls: ['./landing-whatsapp.component.scss']
+  selector: 'app-landing-test',
+  templateUrl: './landing-test.component.html',
+  styleUrls: ['./landing-test.component.scss']
 })
-export class LandingWhatsappComponent implements OnInit {
-
+export class LandingTestComponent implements OnInit {
   dataPro:any = {};
   listGaleria:any = [];
   viewPhoto:string;
@@ -437,7 +436,7 @@ Monto a cancelar: ${ this._ToolServices.monedaChange( 3,2, ( this.data.totalAPag
       this.data.id_ciudad = ev.id_ciudad;
       this.dataEnvioDetails = ev;
       this.contraentregaAlert = false;
-      if(ev.contraentrega != "SI" || !this.data.id_ciudad ){ this.contraentregaAlert = true; this.data.totalFlete = 0;  return resolve( true ) }
+      if(ev.contraentrega != "SI"){ this.contraentregaAlert = true;  return resolve( true ) }
       let data = {
         peso: 1 ,
         alto: 9,
@@ -601,9 +600,6 @@ Monto a cancelar: ${ this._ToolServices.monedaChange( 3,2, ( this.data.totalAPag
         ciudad_full: filterR.ciudad_full,
         id_ciudad: filterR.id_ciudad,
       };
-    }
-    if( this.namePais === 'Panama'){
-      this.data.ciudad = filterR.ciudad_full
     }
     if( valAlto[0] ){
       this.data.transportadora = valAlto[0].transportadora;
