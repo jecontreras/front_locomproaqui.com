@@ -30,7 +30,7 @@ import { AutocompleteLibModule } from 'angular-ng-autocomplete';
 import { SelectSizeDialogComponent } from './select-size-dialog/select-size-dialog.component';
 import { LandingWhatsappComponent } from './landing-whatsapp/landing-whatsapp.component';
 import { DialogPedidoArmaComponent } from './dialog-pedido-arma/dialog-pedido-arma.component';
-
+import { NgSelectModule } from '@ng-select/ng-select';
 
 @NgModule({
   entryComponents: [ InfoProductoComponent,ChecktDialogComponent, DialogPedidoArmaComponent ],
@@ -55,6 +55,7 @@ import { DialogPedidoArmaComponent } from './dialog-pedido-arma/dialog-pedido-ar
     NgxImageZoomModule,
     ConfigModule,
     ExtraModule,
+    NgSelectModule,
     NgxCurrencyModule,
     AutocompleteLibModule
   ],

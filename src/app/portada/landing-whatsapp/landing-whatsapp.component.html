@@ -8,7 +8,7 @@
                   <img src="./assets/imagenes/txt1.png" alt="">
                 </div>
               </div>
-              
+
               <footer class="footer" (click)="view='three'">
                 <p>Realiza tu Pedido</p>
               </footer>
@@ -21,7 +21,7 @@
               <h6 class="m-0">Precios de Fábrica imperdible</h6>
             </div>
           </div>
-          
+
           <div class="container">
             <div class="row justify-content-center" style="width: 110%;">
               <div class="col-12">
@@ -73,15 +73,15 @@
               </div>
             </div>
           </div>
-          
+
           <footer class="footer text-center py-3">
             <label class="exTrega">Pago Contra entrega</label>
             <p class="m-0">Emprende por tan solo {{ _ToolServices.monedaChange( 3,2, ( this.price || 0 ), code ) }}</p>
           </footer>
-          
-            
+
+
         </section>
-        
+
         <section *ngIf="view === 'three'">
           <div class="row">
             <div class="col-12">
@@ -119,7 +119,7 @@
                       <mat-form-field class="anchosP" *ngIf="row.detailsP">
                           <mat-label> Colores disponibles </mat-label>
                           <mat-select [(ngModel)]="row.detailsP.foto">
-                          <mat-option *ngFor="let item of row.galeriaList" [value]="item.foto" (click)="handleOpenDialogPhoto( item, row )" class="optionHeight">  
+                          <mat-option *ngFor="let item of row.galeriaList" [value]="item.foto" (click)="handleOpenDialogPhoto( item, row )" class="optionHeight">
                               <img [src]="item.foto" style="width: 40%;">
                           </mat-option>
                           </mat-select>
@@ -215,7 +215,7 @@
                   </div>
                 </div>
               </div>
-        
+
             </div>
             <div class="col-12" style="    padding: 0 35px;">
               <h1 class="text-pink" style="text-align: center;     font-size: 55px;">Paso 3</h1>
@@ -223,9 +223,9 @@
               <br>
             </div>
             <div class="col-12">
-              <h3 style="text-align: center;">Tus Datos</h3>
+              <h3 style="text-align: center;" class="text-pink">Tus Datos</h3>
             </div>
-            <div class="col-12" style="    padding: 0 35px;">
+            <div class="col-12" style="    padding: 0 35px;" [class.mat-elevation-z2]="true">
               <div style="width: 100%;">
                 <div class="col-auto">
                   <label class="sr-only" for="inlineFormInputGroup">Nombre Completo</label>
@@ -243,7 +243,7 @@
                   <div class="input-group mb-2">
                     <div class="input-group-prepend">
                       <div class="input-group-text">
-                        <mat-icon> person_pin</mat-icon>
+                        <mat-icon>room</mat-icon>
                       </div>
                     </div>
                     <input type="text" class="form-control" placeholder="Carrera, Calle, Avenida, Transversal" [(ngModel)]="data.direccion">
@@ -254,7 +254,7 @@
                   <div class="input-group mb-2">
                     <div class="input-group-prepend">
                       <div class="input-group-text">
-                        <mat-icon> person_pin</mat-icon>
+                        <mat-icon>room</mat-icon>
                       </div>
                     </div>
                     <input type="text" class="form-control" placeholder="Barrio o punta de referencia" [(ngModel)]="data.barrio">
@@ -265,7 +265,7 @@
                   <div class="input-group mb-2">
                     <div class="input-group-prepend">
                       <div class="input-group-text">
-                        <mat-icon> person_pin</mat-icon>
+                        <mat-icon> call</mat-icon>
                       </div>
                     </div>
                     <input type="text" class="form-control" placeholder="Número de Whatsapp" [(ngModel)]="data.numero">
@@ -276,7 +276,7 @@
                   <div class="input-group mb-2">
                     <div class="input-group-prepend">
                       <div class="input-group-text">
-                        <mat-icon> person_pin</mat-icon>
+                        <mat-icon> call</mat-icon>
                       </div>
                     </div>
                     <input type="text" class="form-control" placeholder="Número de Llamada" [(ngModel)]="data.celL">
@@ -298,7 +298,7 @@
                   <ng-autocomplete [(ngModel)]="data.ciudad" [data]="listCiudadesF" [searchKeyword]="keyword" placeHolder="Buscar Ciudad" autocomplete="off"
                         historyIdentifier="listCiudades" [itemTemplate]="itemTemplate" [notFoundTemplate]="notFoundTemplate" (selected)='precioRutulo($event)' (inputChanged)='onChangeSearch($event)'>
                     </ng-autocomplete>
-      
+
                     <ng-template #itemTemplate let-item>
                         <div class="item">
                             <span [innerHTML]="item.ciudad"></span> &nbsp; | &nbsp;
@@ -312,7 +312,7 @@
                             </small>
                         </div>
                     </ng-template>
-      
+
                     <ng-template #notFoundTemplate let-notFound>
                         <div [innerHTML]="notFound"></div>
                     </ng-template>
@@ -322,29 +322,58 @@
                   <div class="input-group mb-2">
                     <div class="input-group-prepend">
                       <div class="input-group-text">
-                        <mat-icon> person_pin</mat-icon>
+                        <mat-icon>room</mat-icon>
                       </div>
                     </div>
-                    <select class="form-control" [(ngModel)]="data.departamento" (change)="handleSelectDepartament()">
-                      <option *ngFor="let item of listCiudades" [value]="item.id_ciudad">
-                        {{ item.departamento }}
-                      </option>
-                    </select>
+                    <ng-select
+                      style="    width: 85%;"
+                      [(ngModel)]="data.departamento"
+                      [items]="listCiudades"
+                      bindLabel="departamento"
+                      bindValue="id_ciudad"
+                      placeholder="Seleccione un departamento"
+                      [searchable]="true"
+                      (change)="handleSelectDepartament()"
+                      >
+                    </ng-select>
+
+                    <!--<p>Departamento seleccionado: {{ data.departamento }}</p>-->
                   </div>
                 </div>
-                <div class="col-auto">
+                <div class="col-auto" *ngIf="!data.checkCity">
                   <label class="sr-only" for="inlineFormInputGroup">Ciudades </label>
                   <div class="input-group mb-2">
                     <div class="input-group-prepend">
                       <div class="input-group-text">
-                        <mat-icon> person_pin</mat-icon>
+                        <mat-icon>store</mat-icon>
                       </div>
                     </div>
-                    <select class="form-control" [(ngModel)]="data.ciudades" (change)="handleProcesFlete()">
-                      <option *ngFor="let item of listCiudadesRSelect" [value]="item.id_ciudad">
-                        {{ item.ciudad }}
-                      </option>
-                    </select>
+                    <ng-select
+                      style="    width: 85%;"
+                      [(ngModel)]="data.ciudades"
+                      [items]="listCiudadesRSelect"
+                      bindLabel="ciudad"
+                      bindValue="id_ciudad"
+                      placeholder="Seleccione un departamento"
+                      [searchable]="true"
+                      (change)="handleProcesFlete()"
+                      >
+                    </ng-select>
+
+                    <!--<p>Ciudad seleccionado: {{ data.departamento }}</p>-->
+                  </div>
+                </div>
+                <div class="mb-3" *ngIf="data.checkCity">
+                  <div class="col-auto">
+                    <label class="sr-only" for="inlineFormInputGroup">Ciudad Destino Tu Donde Vives*</label>
+                    <div class="input-group mb-2">
+                      <div class="input-group-prepend">
+                        <div class="input-group-text">
+                          <mat-icon> person_pin</mat-icon>
+                        </div>
+                      </div>
+                      <input type="text" class="form-control" placeholder="Ciudad de Destino" [(ngModel)]="data.ciudad">
+                    </div>
                   </div>
                 </div>
                 <div class="mb-3">
@@ -353,10 +382,10 @@
                     <div>
                       <div class="d-flex justify-content-between">
                         <div>
-                          <img *ngIf="dataEnvioDetails.transportadora === 'Envia'" style="width: 100%; width: 60px;"  src="./assets/img/envia.jpg" alt="">
+                          <!--<img *ngIf="dataEnvioDetails.transportadora === 'Envia'" style="width: 100%; width: 60px;"  src="./assets/img/envia.jpg" alt="">
                           <img *ngIf="dataEnvioDetails.transportadora === 'InterRapidisimo'" style="width: 100%; width: 60px;"  src="./assets/img/logoInter.png" alt="">
                           <img *ngIf="dataEnvioDetails.transportadora === 'Servientrega'" style="width: 100%; width: 60px;"  src="./assets/img/servientrega.jpeg" alt="">
-                          <img *ngIf="dataEnvioDetails.transportadora === 'Coordinadora'" style="width: 100%; width: 60px;"  src="./assets/img/logoCordinadora.png" alt="">
+                          <img *ngIf="dataEnvioDetails.transportadora === 'Coordinadora'" style="width: 100%; width: 60px;"  src="./assets/img/logoCordinadora.png" alt="">-->
                         </div>
                         <div></div>
                         <div><h6>Precio envio: {{ _ToolServices.monedaChange( 3, 2, ( data.totalFlete || 0 ), code ) }}</h6></div>
@@ -365,12 +394,12 @@
                   </section>
                   <section *ngIf="contraentregaAlert" >
                     <h3 style="text-align: center;margin: 10px 10px;">
-                      Para este destino no manejamos pago contraentrega. 
+                      Para este destino no manejamos pago contraentrega.
                     </h3>
                     <h4 style="text-align: center;margin: 10px 10px;color:#6610f2;">
                        Continúa tu pedido y un asesor se comunicará contigo para llegar a una solución a tu entrega.
                     </h4>
-                      
+
                   </section>
                 </div>
               </div>
@@ -398,15 +427,15 @@
               </div>
             </div>
           </div>
-          
+
         </section>
-        
+
         <section *ngIf="view === 'foor'">
           <br>
           <div class="text-white text-center py-4" style="height: 75px;">
             <img src="./assets/imagenes/txtheader2.png" alt="">
           </div>
-        
+
           <div class="row">
             <div class="col-12 text-center">
               <img src="./assets/imagenes/txtcubo3.png" alt="">
@@ -417,7 +446,7 @@
             </div>
             <div class="col-12">
               <div class="d-flex justify-content-center">
-                <button type="button" 
+                <button type="button"
                   class="btn btn-primary btn-lg btn-block" style="width: 250px;text-align: center; display: grid;"
                   (click)="openWhatsapp( data )"
                 >Ok</button>
@@ -432,9 +461,11 @@
             </div>
           </div>
         </section>
+        <section>
+          <br><br><br>
+        </section>
       </div>
     </div>
   </mat-drawer-content>
 </mat-drawer-container>
 
-  

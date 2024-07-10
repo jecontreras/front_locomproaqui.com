@@ -8,6 +8,7 @@ import { VentasService } from 'src/app/servicesComponents/ventas.service';
 import { DialogPedidoArmaComponent } from '../dialog-pedido-arma/dialog-pedido-arma.component';
 import { Indicativo } from 'src/app/JSON/indicativo';
 import { departamento } from 'src/app/JSON/departamentos';
+import * as _ from 'lodash';
 
 @Component({
   selector: 'app-landing-whatsapp',
@@ -92,7 +93,7 @@ export class LandingWhatsappComponent implements OnInit {
     this.data.sumAmount = 0;
     this.data.priceTotal = 0;
     if( this.data.id ) { this.listDataAggregate = this.data.listProduct || []; this.suma(); }
-    
+
     try {
       for( let row of this.dataPro.listColor ){
         row.detailsP = {};
@@ -140,7 +141,7 @@ export class LandingWhatsappComponent implements OnInit {
 
     if( this.namePais === 'Colombia'){
       return new Promise( resolve => {
-        this._ventas.getCiudadesTridy( { where: { }, limit: 100000 } ).subscribe( ( res:any )=>{
+        this._ventas.getCiudadesTridy( { where: { pais:'COLOMBIA' }, limit: 100000 } ).subscribe( ( res:any )=>{
           //this.listCiudades = res.data;
           this.listCiudades = res.data;
           resolve( this.listCiudades );
@@ -148,20 +149,11 @@ export class LandingWhatsappComponent implements OnInit {
       });
     }else{
       return new Promise( resolve =>{
-          const options = {
-            method : "POST",
-            headers : {
-              "Content-Type" : "application/json"
-            },
-            body : JSON.stringify({ pais: "PANAMA" } )
-          }
-          let url = "https://ginga.com.co/pedidosweb/api/lokompro/ciudades.php";
-          fetch( url,options)
-          .then(response => response.json())
-          .then(data => { 
-            this.listCiudades = data || [];
-            resolve( this.listCiudades );
-          })
+        this._ventas.getCiudadesTridy( { where: { pais:'PANAMA' }, limit: 100000 } ).subscribe( ( res:any )=>{
+          //this.listCiudades = res.data;
+          this.listCiudades = res.data;
+          resolve( this.listCiudades );
+        });
       })
     }
 
@@ -188,7 +180,7 @@ export class LandingWhatsappComponent implements OnInit {
       if( !selectTalla.talla || !selectTalla.cantidad ) return false;
       row.tal_descripcion = selectTalla.talla;
       row.amountAd = selectTalla.cantidad;
-      
+
       this.handleOpenDialogAmount( row, item, false )
     });
 
@@ -232,11 +224,11 @@ export class LandingWhatsappComponent implements OnInit {
         this.price = this.dataPro.pro_uni_venta;
         this.data.priceTotal = this.price * this.data.sumAmount;
       }
-      
+
     }
     this.data.countItem = this.data.sumAmount;
     this.data.totalAPagar = this.data.priceTotal + ( this.data.totalFlete || 0 );
-  } 
+  }
 
   //edu
   async pedidoConfirmar(){ console.log("pedidoconfirmar")
@@ -259,10 +251,10 @@ export class LandingWhatsappComponent implements OnInit {
     this.btnDisabled = true;
     let dataEnd:any = this.data;
     this.view = 'one';
+    console.log("*****262", dataEnd.ciudad )
     if( dataEnd.ciudad.ciudad_full ) {
       dataEnd.codeCiudad = dataEnd.ciudad.id_ciudad;
       dataEnd.ciudad = dataEnd.ciudad.ciudad_full;
-      // dataEnd.transportadora = dataEnd.ciudad.transportadora; // EDU quedaba indefinido 20240613
     }
     dataEnd.stateWhatsapp = 1;
     dataEnd.paisCreado = this.namePais;
@@ -300,7 +292,7 @@ export class LandingWhatsappComponent implements OnInit {
     })
   }
 
-  celularConfirmar(pedido){             
+  celularConfirmar(pedido){
     console.log("pedido", pedido)
     const options = {
       method : "POST",
@@ -326,7 +318,7 @@ export class LandingWhatsappComponent implements OnInit {
   }
 
   //edu
-  pedidoGuardar(pedido){             
+  pedidoGuardar(pedido){
     console.log("pedido", pedido)
     const options = {
       method : "POST",
@@ -360,7 +352,7 @@ export class LandingWhatsappComponent implements OnInit {
   }
 
   HandleOpenNewBuy(){
-    let dats = { 
+    let dats = {
       "sumAmount": 0,
       "priceTotal": 0,
       "nombre": ".",
@@ -410,7 +402,7 @@ export class LandingWhatsappComponent implements OnInit {
 
 ¡Es un honor para nosotros que hagas parte de nuestra familia! ✨
 
-✈ Tus datos para la entrega son: 
+✈ Tus datos para la entrega son:
 
 Nombre: ${ data.nombre }
 WhatsApp: ${ data.numero}
@@ -437,7 +429,7 @@ Monto a cancelar: ${ this._ToolServices.monedaChange( 3,2, ( this.data.totalAPag
     return (xx*r)
 }
 
-  async precioRutulo( ev:any ){
+  async precioRutulo( ev:any, opt:boolean = true ){
     return new Promise( async ( resolve ) =>{
       console.log("***EVE", ev);
       this.data.transportadora = ev.transportadora;
@@ -445,7 +437,7 @@ Monto a cancelar: ${ this._ToolServices.monedaChange( 3,2, ( this.data.totalAPag
       this.data.id_ciudad = ev.id_ciudad;
       this.dataEnvioDetails = ev;
       this.contraentregaAlert = false;
-      if(ev.contraentrega != "SI"){ return this.contraentregaAlert = true;  }
+      if(ev.contraentrega != "SI"){ this.contraentregaAlert = true;  return resolve( true ) }
       let data = {
         peso: 1 ,
         alto: 9,
@@ -453,7 +445,8 @@ Monto a cancelar: ${ this._ToolServices.monedaChange( 3,2, ( this.data.totalAPag
         profundo: 28,
         idDestino: ev.id_ciudad,
         valor_declarado: ( this.data.priceTotal * 50 ) / 100 ,
-        valor_recaudar: this.data.priceTotal
+        valor_recaudar: this.data.priceTotal,
+        transport: ev.transportadora
       };
       let sumaFlete = 0;
       if ( this.data.sumAmount > 0 )  {
@@ -502,20 +495,29 @@ Monto a cancelar: ${ this._ToolServices.monedaChange( 3,2, ( this.data.totalAPag
         sumaFlete = 9000;
       }
       if( ev.transportadora === "InterRapidisimo"){
-        if ( this.data.sumAmount >= 6 )  {
-          data.peso = 1;
-        }
-        if ( this.data.sumAmount >= 18 )  {
+        if ( this.data.sumAmount >= 6 && this.data.sumAmount <= 17 )  {
           data.peso = 2;
+        }
+        if ( this.data.sumAmount >= 18 && this.data.sumAmount <= 25 )  {
+          data.peso = 4;
+        }
+        if ( this.data.sumAmount >= 26 && this.data.sumAmount <= 32 )  {
+          data.peso = 5;
+        }
+        if ( this.data.sumAmount >= 33 && this.data.sumAmount <= 38 )  {
+          data.peso = 6;
+        }
+        if ( this.data.sumAmount >= 39 && this.data.sumAmount <= 44 )  {
+          data.peso = 7;
         }
       }
       this.data.af = sumaFlete; //el AF
       this.btnDisabled = true;
       let res:any = await this.getTridy( data );
       if( res.data === "Cannot find table 0." ) res = await this.getTridy( data );
-      if( res.data === "Cannot find table 0." )  { this.btnDisabled = false; this.data.totalFlete = 0; this.contraentregaAlert = true; resolve( true ); return this._ToolServices.presentToast( "Ok Tenemos Problemas Con Las Cotizaciones de Flete lo sentimos, un asesor se comunicar contigo gracias que pena la molestia" )  }
-      // data.valor_recaudar = ( Number( ( res.data || 0 ) ) + sumaFlete ) ;
-      res = await this.getTridy( data );
+      if( res.data === "Cannot find table 0." )  { this.btnDisabled = false; this.data.totalFlete = 0; this.contraentregaAlert = true; resolve( false ); return this._ToolServices.presentToast( "Ok Tenemos Problemas Con Las Cotizaciones de Flete lo sentimos, un asesor se comunicar contigo gracias que pena la molestia" )  }
+      /*data.valor_recaudar = ( Number( ( res.data || 0 ) ) + sumaFlete ) ;
+      res = await this.getTridy( data );*/
       this.data.totalFlete = Number( ( res.data || 0 ) ) ;
       console.log("res triidy", this.data.totalFlete)
       this.data.totalFlete = Number(this.data.totalFlete.toFixed(2));
@@ -533,10 +535,10 @@ Monto a cancelar: ${ this._ToolServices.monedaChange( 3,2, ( this.data.totalAPag
         this.data.totalFlete = 0;
       }
       //this._ToolServices.basic("Precio del Envio "+ this._ToolServices.monedaChange( 3, 2, ( this.data.totalFlete ) ) + " Transportadora "+  ev.transportadora );
-      this._ToolServices.presentToast("Precio del Envio "+ this._ToolServices.monedaChange( 3, 2, ( this.data.totalFlete ) ) + " Transportadora "+  ev.transportadora );
+      if( opt === true ) this._ToolServices.presentToast("Precio del Envio "+ this._ToolServices.monedaChange( 3, 2, ( this.data.totalFlete ) ) + " Transportadora "+  ev.transportadora );
       this.suma();
       this.btnDisabled = false;
-      resolve( true );
+      resolve( this.data.totalFlete );
     })
   }
 
@@ -570,8 +572,46 @@ Monto a cancelar: ${ this._ToolServices.monedaChange( 3,2, ( this.data.totalAPag
       this.listCiudadesRSelect = filterR.ciudadesList
     }
   }
-  handleProcesFlete(){
-    console.log("*¨**574", this.data )
+  async handleProcesFlete(){
+    console.log("*¨**574", this.data, this.listCiudadesRSelect );
+    let dataFletePrice = [];
+    let filterR = this.listCiudadesRSelect.find( row => row.id_ciudad == this.data.ciudades );
+    console.log("****", filterR)
+    if( filterR ){
+      let dataF:any = {};
+      let index = 0;
+      for( let row of filterR.transport ){
+        if( row.contraentrega === 'SI' && row.transportadora !== "Domicilio" ){
+          dataF = {
+            transportadora: row.transportadora,
+            id_ciudad: row.id_ciudad,
+            contraentrega: String( row.contraentrega ),
+          };
+          let r = await this.precioRutulo( dataF, false )
+          if( r === false ) continue;
+          dataFletePrice.push( { ...dataF, price: r } );
+          if( index >=2 ) break; // Consulta con 3 transportadoras
+          index++;
+        }
+      }
+    }
+    let valAlto = _.orderBy(dataFletePrice, ['price'], ['desc']); // ORdenar Cual es el mas Caro
+    console.log("*****588", valAlto )
+    if( this.namePais === 'Colombia'){
+      this.data.ciudad = {
+        ciudad_full: filterR.ciudad_full,
+        id_ciudad: filterR.id_ciudad,
+      };
+    }
+    if( valAlto[0] ){
+      this.data.transportadora = valAlto[0].transportadora;
+      this.data.totalFlete = valAlto[0].price;
+      this.suma();
+      this._ToolServices.presentToast("Precio del Envio "+ this._ToolServices.monedaChange( 3, 2, ( valAlto[0].price ) ) + " Transportadora "+  this.data.transportadora );
+    }else{
+      this.contraentregaAlert = true;
+    }
+    console.log("*****600", this.data)
   }
 
 }
