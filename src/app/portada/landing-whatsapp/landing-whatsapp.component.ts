@@ -47,12 +47,25 @@ export class LandingWhatsappComponent implements OnInit {
     private _ventas: VentasService,
     private activate: ActivatedRoute,
     public dialog: MatDialog,
-    private Router: Router,
+    private Router: Router
   ) { }
 
   async ngOnInit() {
     this.dataInit( true );
   }
+  getLocation() {
+    this._ToolServices.getPosition().then((position) => {
+      const latitude = position.coords.latitude;
+      const longitude = position.coords.longitude;
+      console.log("Latitude: " + latitude + " Longitude: " + longitude);
+      this.data.latitude  = latitude;
+      this.data.longitude = longitude;
+      // Aquí puedes enviar la ubicación al servidor o usarla como desees
+    }).catch((error) => {
+      console.error("Error getting location: ", error);
+    });
+  }
+
   async dataInit( off = true ){
     if( off ) this.dataPro = await this.getProduct();
     //console.log("articulos", this.dataPro)
@@ -102,6 +115,7 @@ export class LandingWhatsappComponent implements OnInit {
       }
       this.listGaleria.sort(() => this.getRandomNumber());
     } catch (error) { }
+    setTimeout(()=> this.getLocation(), 5000 );
     //console.log("****", this.dataPro, this.listGaleria)
     //console.log("list ciudades", this.listCiudades)
   }
@@ -177,7 +191,7 @@ export class LandingWhatsappComponent implements OnInit {
     });
     dialogRef.afterClosed().subscribe(selectTalla => {
       //console.log(`Dialog result:`, selectTalla);
-      if( !selectTalla.talla || !selectTalla.cantidad ) return false;
+      if( !selectTalla.talla || !selectTalla.cantidad || !item.foto ) return false;
       row.tal_descripcion = selectTalla.talla;
       row.amountAd = selectTalla.cantidad;
 
@@ -199,6 +213,7 @@ export class LandingWhatsappComponent implements OnInit {
       if( !result.value ) return false;
       row.cantidadAd = result.value;
     }
+    if( !item.detailsP.foto ) return this._ToolServices.presentToast("Tenemos problemas, seleccionar una foto")
     this.listDataAggregate.push( { ref: item.talla, foto: item.detailsP.foto, amountAd: Number( row.amountAd ), talla: row.tal_descripcion, id: this._ToolServices.codigo(), price: this.price } );
     console.log("***114", this.listDataAggregate)
     this.suma();
@@ -209,7 +224,10 @@ export class LandingWhatsappComponent implements OnInit {
     this.data.sumAmount = 0;
     let sumPrice = this.price;
     console.log("****186", sumPrice, this.namePais)
-    for( let row of this.listDataAggregate ) this.data.sumAmount+= Number( row.amountAd )
+    for( let row of this.listDataAggregate ) {
+      row.price = this.price;
+      this.data.sumAmount+= Number( row.amountAd )
+    }
     if( this.data.sumAmount >= 6 ) {
       if( this.namePais === 'Panama') this.finalizarBoton = false;
       if( this.namePais === 'Colombia')  this.price = this.dataPro.pro_vendedor;
@@ -242,6 +260,8 @@ export class LandingWhatsappComponent implements OnInit {
 
   handleCheckContra(){
     this.contraentregaAlert = !this.contraentregaAlert;
+    this.data.totalFlete = 0;
+    this.suma();
   }
 
   async handleEndOrder(){ console.log("handle Order", this.btnDisabled)
@@ -251,16 +271,16 @@ export class LandingWhatsappComponent implements OnInit {
     this.btnDisabled = true;
     let dataEnd:any = this.data;
     this.view = 'one';
-    console.log("*****262", dataEnd.ciudad )
     if( dataEnd.ciudad.ciudad_full ) {
       dataEnd.codeCiudad = dataEnd.ciudad.id_ciudad;
       dataEnd.ciudad = dataEnd.ciudad.ciudad_full;
+      console.log("*****262", dataEnd )
     }
     dataEnd.stateWhatsapp = 1;
     dataEnd.paisCreado = this.namePais;
     dataEnd.numberCreado = this.numberId;
     this.suma();
-    if( !this.contraentregaAlert ) await this.precioRutulo( { id_ciudad:dataEnd.codeCiudad,  transportadora: dataEnd.transportadora, contraentrega: 'SI' } );
+    if( !this.contraentregaAlert ) await this.handleProcesFlete( false );
     dataEnd.totalFlete = this.data.totalFlete;
     this.suma();
     if( this.contraentregaAlert === true ) dataEnd.contraEntrega = 1;
@@ -428,7 +448,7 @@ Monto a cancelar: ${ this._ToolServices.monedaChange( 3,2, ( this.data.totalAPag
     if (xx!=xx/r) {xx++}
     return (xx*r)
 }
-
+btnFleteDisable:boolean = false;
   async precioRutulo( ev:any, opt:boolean = true ){
     return new Promise( async ( resolve ) =>{
       console.log("***EVE", ev);
@@ -513,6 +533,7 @@ Monto a cancelar: ${ this._ToolServices.monedaChange( 3,2, ( this.data.totalAPag
       }
       this.data.af = sumaFlete; //el AF
       this.btnDisabled = true;
+      this._ToolServices.presentToast( "Estamos consultando tu flete esperé un momento, gracias..." );
       let res:any = await this.getTridy( data );
       if( res.data === "Cannot find table 0." ) res = await this.getTridy( data );
       if( res.data === "Cannot find table 0." )  { this.btnDisabled = false; this.data.totalFlete = 0; this.contraentregaAlert = true; resolve( false ); return this._ToolServices.presentToast( "Ok Tenemos Problemas Con Las Cotizaciones de Flete lo sentimos, un asesor se comunicar contigo gracias que pena la molestia" )  }
@@ -572,11 +593,12 @@ Monto a cancelar: ${ this._ToolServices.monedaChange( 3,2, ( this.data.totalAPag
       this.listCiudadesRSelect = filterR.ciudadesList
     }
   }
-  async handleProcesFlete(){
+  async handleProcesFlete( opt:boolean = true ){
     console.log("*¨**574", this.data, this.listCiudadesRSelect );
     let dataFletePrice = [];
     let filterR = this.listCiudadesRSelect.find( row => row.id_ciudad == this.data.ciudades );
     console.log("****", filterR)
+    if( this.listDataAggregate.length === 0 ) return true;
     if( filterR ){
       let dataF:any = {};
       let index = 0;
@@ -597,13 +619,16 @@ Monto a cancelar: ${ this._ToolServices.monedaChange( 3,2, ( this.data.totalAPag
     }
     let valAlto = _.orderBy(dataFletePrice, ['price'], ['asc']); // ORdenar Cual es el menos Caro
     if( this.namePais === 'Colombia'){
-      this.data.ciudad = {
-        ciudad_full: filterR.ciudad_full,
-        id_ciudad: filterR.id_ciudad,
-      };
+      if( opt === true ){
+        this.data.ciudad = {
+          ciudad_full: filterR.ciudad_full,
+          id_ciudad: filterR.id_ciudad,
+        };
+      }
     }
     if( this.namePais === 'Panama'){
       this.data.ciudad = filterR.ciudad_full
+      this.data.codeCiudad = Number( filterR.id_ciudad )
     }
     if( valAlto[0] ){
       this.data.transportadora = valAlto[0].transportadora;

@@ -31,6 +31,16 @@ export class ToolsService {
     });
   }
 
+  getPosition(): Promise<any> {
+    return new Promise((resolve, reject) => {
+      if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(resolve, reject);
+      } else {
+        reject(new Error("Geolocation is not supported by this browser."));
+      }
+    });
+  }
+
   async presentToast(mensaje: string, type = 'completado') {
     this.snackBar.open(mensaje, type, { duration: 5000 });
   }
@@ -95,7 +105,7 @@ export class ToolsService {
         }
       });
     });
-    
+
   }
   modaHtmlEnd( data ){
     return new Promise(resolve => {
@@ -207,7 +217,7 @@ export class ToolsService {
       }
     });
   }
-  
+
   tooast(text: any) {
     Swal.fire({
       // position: text.position || 'top-end',
@@ -277,7 +287,7 @@ export class ToolsService {
       title: text.title || 'Cargando...',
       html: '',
       timer: text.tiempo || 6000,
-      timerProgressBar: true,
+      timerProgressBar: false,
       onBeforeOpen: () => {
         Swal.showLoading()
         timerInterval = setInterval(() => {
