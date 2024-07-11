@@ -12,6 +12,7 @@ import { CatalogoComponent } from './catalogo/catalogo.component';
 import { PedidosComponent } from '../components/pedidos/pedidos.component';
 import { LandingComponent } from './landing/landing.component';
 import { LandingWhatsappComponent } from './landing-whatsapp/landing-whatsapp.component';
+import { LandingTestComponent } from './landing-test/landing-test.component';
 
 
 const routes: Routes = [
@@ -74,6 +75,18 @@ const routes: Routes = [
           {
             path: 'landingWhatsapp/:code/:number',
             component: LandingWhatsappComponent
+          },
+          {
+            path: 'landingTest',
+            component: LandingTestComponent
+          },
+          {
+            path: 'landingTestWhatsapp/:code',
+            component: LandingTestComponent
+          },
+          {
+            path: 'landingTestWhatsapp/:code/:number',
+            component: LandingTestComponent
           },
         ]
       },
