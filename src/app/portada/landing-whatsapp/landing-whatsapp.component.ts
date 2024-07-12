@@ -95,7 +95,7 @@ export class LandingWhatsappComponent implements OnInit {
       this.listGaleria.sort(() => this.getRandomNumber());
     } catch (error) { }
     //console.log("****", this.dataPro, this.listGaleria)
-    //console.log("list ciudades", this.listCiudades)
+    console.log("list ciudades", this.listCiudades)
     if(!this.numberId)
       this.numberId = formatN
   }
@@ -195,9 +195,7 @@ export class LandingWhatsappComponent implements OnInit {
       sumPrice = this.price;
     }
     //console.log("******1", this.price, this.namePais)
-    for( let row of this.listDataAggregate ){
-      this.data.sumAmount+= Number( row.amountAd );
-    }
+    
     if( this.data.sumAmount >= 6 ) {
       this.listDataAggregate.forEach(item => {
         item.price = 15500;
@@ -206,8 +204,7 @@ export class LandingWhatsappComponent implements OnInit {
       if( this.namePais === 'Panama'){
         this.finalizarBoton = false;
       }
-    }
-    else {
+    } else { 
       this.data.priceTotal =  sumPrice * this.data.sumAmount;
       if( this.namePais === 'Panama'){
         this.finalizarBoton = true;
@@ -218,11 +215,16 @@ export class LandingWhatsappComponent implements OnInit {
           item.price = 25000;
         });
         console.log("listaproductos", this.listDataAggregate)
+        for( let row of this.listDataAggregate ){
+          this.data.sumAmount+= Number( row.amountAd );
+        }
+        this.data.priceTotal = this.data.sumAmount * 25000;
       }
       
     }
     this.data.countItem = this.data.sumAmount;
     this.data.totalAPagar = this.data.priceTotal + ( this.data.totalFlete || 0 );
+    
   } 
 
   //edu
@@ -461,51 +463,38 @@ Monto a cancelar: ${ this._ToolServices.monedaChange( 3,2, ( this.data.totalAPag
         valor_recaudar: this.data.priceTotal
       };
       let sumaFlete = 0;
-      if ( this.data.sumAmount > 0 )  {
-        dataT.peso = 1;
-        dataT.alto= 9;
-        sumaFlete = 1000;
-      }
-      if ( this.data.sumAmount > 6 )  {
-        dataT.peso = 2;
+      if ( this.data.sumAmount > 0 )  { //de 1  a 5
         dataT.alto= 9;
         sumaFlete = 2000;
       }
-      if ( this.data.sumAmount > 12 )  {
-        dataT.peso = 3;
+      if ( this.data.sumAmount >= 6 )  { // de 6 a 11
         dataT.alto= 9;
         sumaFlete = 3000;
       }
-      if ( this.data.sumAmount > 18 )  {
-        dataT.peso = 4;
+      if ( this.data.sumAmount >= 13 )  { //de  a 20 
         dataT.alto= 9;
         sumaFlete = 4000;
       }
-      if ( this.data.sumAmount > 24 )  {
-        dataT.peso = 5;
+      if ( this.data.sumAmount >= 21 )  { // de 21  A 32
         dataT.alto= 9;
         sumaFlete = 5000;
       }
-      if ( this.data.sumAmount > 31 )  {
-        dataT.peso = 6;
+      if ( this.data.sumAmount >= 33 )  { //de 33 a 48
         dataT.alto= 9;
         sumaFlete = 6000;
       }
-      if ( this.data.sumAmount > 37 )  {
-        dataT.peso = 7;
+      if ( this.data.sumAmount > 49 )  {
         dataT.alto= 9;
         sumaFlete = 7000;
       }
-      if ( this.data.sumAmount > 43 )  {
-        dataT.peso = 8;
-        dataT.alto= 9;
-        sumaFlete = 8000;
-      }
-      if ( this.data.sumAmount > 49 )  {
-        dataT.peso = 9;
-        dataT.alto= 9;
-        sumaFlete = 9000;
-      }
+      //calcular peso
+      if(this.data.sumAmount <= 6){  dataT.peso = 1 }
+      if(this.data.sumAmount >=7 ){  dataT.peso = 2 }
+      if(this.data.sumAmount >=13 ){  dataT.peso = 3 }
+      if(this.data.sumAmount >=19 ){  dataT.peso = 4 }
+      if(this.data.sumAmount >=26 ){  dataT.peso = 5 }
+      if(this.data.sumAmount >=33 ){  dataT.peso = 6 }
+      if(this.data.sumAmount >=39 ){  dataT.peso = 7 }
       if( ev.transportadora === "InterRapidisimo"){
         if ( this.data.sumAmount > 1 && this.data.sumAmount <= 6 )  {
           dataT.peso = 1;
