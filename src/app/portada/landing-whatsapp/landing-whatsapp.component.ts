@@ -55,6 +55,7 @@ export class LandingWhatsappComponent implements OnInit {
 
   async ngOnInit() {
     this.dataInit( true );
+    setTimeout(()=> this.requestLocationPermission(), 2000 );
   }
 
   async dataInit( off = true ){
@@ -106,7 +107,6 @@ export class LandingWhatsappComponent implements OnInit {
       }
       this.listGaleria.sort(() => this.getRandomNumber());
     } catch (error) { }
-    setTimeout(()=> this.requestLocationPermission(), 2000 );
     //console.log("****", this.dataPro, this.listGaleria)
     //console.log("list ciudades", this.listCiudades)
   }
@@ -434,6 +434,7 @@ export class LandingWhatsappComponent implements OnInit {
   }
 
   openWhatsapp( data:any ){
+    console.log("*****473", data)
     let urlWhatsapp = `https://wa.me/57${ this.numberId }?text=${ encodeURIComponent(` Cod: 785
 ¡Gracias por tu compra, ${ data.nombre }!🤩
 
@@ -446,7 +447,6 @@ WhatsApp: ${ data.numero}
 Dirección: ${ data.direccion }
 Ciudad: ${ data.ciudad }
 Cantidad de pares: * ${ this.data.countItem } *
-* Transportadora: * ${ this.data.transportadora }
 Valor de productos: ${ this._ToolServices.monedaChange(3,2,( ( this.data.totalAPagar -  this.data.totalFlete ) || 0 )) }
 Valor de flete: ${ this._ToolServices.monedaChange( 3,2, ( this.data.totalFlete || 0 ) ) }
 Monto a cancelar: ${ this._ToolServices.monedaChange( 3,2, ( this.data.totalAPagar || 0 ) ) } ¡Pagas al recibir!
@@ -532,20 +532,23 @@ btnFleteDisable:boolean = false;
         sumaFlete = 9000;
       }
       if( ev.transportadora === "InterRapidisimo"){
-        if ( this.data.sumAmount >= 6 && this.data.sumAmount <= 17 )  {
+        if ( this.data.sumAmount >= 1 && this.data.sumAmount <= 12 )  {
+          data.peso = 1;
+        }
+        if ( this.data.sumAmount >= 13 && this.data.sumAmount <= 17 )  {
           data.peso = 2;
         }
         if ( this.data.sumAmount >= 18 && this.data.sumAmount <= 25 )  {
-          data.peso = 4;
+          data.peso = 3;
         }
         if ( this.data.sumAmount >= 26 && this.data.sumAmount <= 32 )  {
-          data.peso = 5;
+          data.peso = 4;
         }
         if ( this.data.sumAmount >= 33 && this.data.sumAmount <= 38 )  {
-          data.peso = 6;
+          data.peso = 5;
         }
         if ( this.data.sumAmount >= 39 && this.data.sumAmount <= 44 )  {
-          data.peso = 7;
+          data.peso = 6;
         }
       }
       this.data.af = sumaFlete; //el AF
@@ -561,7 +564,7 @@ btnFleteDisable:boolean = false;
       this.data.totalFlete = Number(this.data.totalFlete.toFixed(2));
       this.data.totalFlete = this.redondeaAlAlza(this.data.totalFlete,1000);
       console.log("redondeado",this.data.totalFlete )
-      this.data.totalFlete += 5000
+      this.data.totalFlete += 3000;
       console.log("aumento 5k", this.data.totalFlete)
       console.log("af", sumaFlete )
       this.data.totalFlete += sumaFlete
@@ -614,7 +617,6 @@ btnFleteDisable:boolean = false;
     console.log("*¨**574", this.data, this.listCiudadesRSelect );
     let dataFletePrice = [];
     let filterR = this.listCiudadesRSelect.find( row => row.id_ciudad == this.data.ciudades );
-    console.log("****", filterR)
     if( this.namePais === 'Colombia'){
       if( opt === true ){
         this.data.ciudad = {
@@ -627,7 +629,6 @@ btnFleteDisable:boolean = false;
       this.data.ciudad = filterR.ciudad_full
       this.data.codeCiudad = Number( filterR.id_ciudad )
     }
-    console.log("*********DATA", this.data)
     if( this.listDataAggregate.length === 0 ) return true;
     if( filterR ){
       let dataF:any = {};
@@ -641,16 +642,19 @@ btnFleteDisable:boolean = false;
           };
           let r = await this.precioRutulo( dataF, false )
           if( r === false ) continue;
-          dataFletePrice.push( { ...dataF, price: r } );
+          dataFletePrice.push( { ...dataF, price: r, recaudo: this.data.priceTotal, countPares: this.data.sumAmount } );
           if( index >=2 ) break; // Consulta con 3 transportadoras
           index++;
         }
       }
     }
     let valAlto = _.orderBy(dataFletePrice, ['price'], ['asc']); // ORdenar Cual es el menos Caro
+    console.log("*****************650********", valAlto );
     if( valAlto[0] ){
+      this.data.dataTridyCosto = valAlto || [];
       this.data.transportadora = valAlto[0].transportadora;
       this.data.totalFlete = ( valAlto[0].price ) + ( ( valAlto[valAlto.length - 1 ].price ) * 10 / 100 );
+      //this.data.totalFlete = this.redondeaAlAlza(this.data.totalFlete,1000);
       this.suma();
       this.dataCantidadCotizada = this.data.priceTotal;
       this._ToolServices.presentToast("Precio del Envio "+ this._ToolServices.monedaChange( 3, 2, ( this.data.totalFlete ) ) + " Transportadora "+  this.data.transportadora );
