@@ -32,11 +32,12 @@ import { LandingWhatsappComponent } from './landing-whatsapp/landing-whatsapp.co
 import { DialogPedidoArmaComponent } from './dialog-pedido-arma/dialog-pedido-arma.component';
 import { NgSelectModule } from '@ng-select/ng-select';
 import { LandingTestComponent } from './landing-test/landing-test.component';
+import { AlertDialogLocationComponent } from './alert-dialog-location/alert-dialog-location.component';
 
 @NgModule({
-  entryComponents: [ InfoProductoComponent,ChecktDialogComponent, DialogPedidoArmaComponent ],
+  entryComponents: [ InfoProductoComponent,ChecktDialogComponent, DialogPedidoArmaComponent, AlertDialogLocationComponent ],
   declarations: [
-    MainsComponent, TiendaComponent, ProductosComponent, FooterComponent, MenuComponent, InfoProductoComponent, ProductosViewComponent, ContactoComponent, ChecktComponent, CarritoComponent, CompletarComponent, ChecktDialogComponent, DetallePedidoComponent, CatalogoComponent, LandingComponent, SelectSizeDialogComponent, LandingWhatsappComponent, DialogPedidoArmaComponent, LandingTestComponent],
+    MainsComponent, TiendaComponent, ProductosComponent, FooterComponent, MenuComponent, InfoProductoComponent, ProductosViewComponent, ContactoComponent, ChecktComponent, CarritoComponent, CompletarComponent, ChecktDialogComponent, DetallePedidoComponent, CatalogoComponent, LandingComponent, SelectSizeDialogComponent, LandingWhatsappComponent, DialogPedidoArmaComponent, LandingTestComponent, AlertDialogLocationComponent],
   imports: [
     PortadaRoutingModule,
     CommonModule,
