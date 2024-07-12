@@ -226,6 +226,7 @@
               <h3 style="text-align: center;" class="text-pink">Tus Datos</h3>
             </div>
             <div class="col-12" style="    padding: 0 35px;" [class.mat-elevation-z2]="true">
+              <br><br>
               <div style="width: 100%;">
                 <div class="col-auto">
                   <label class="sr-only" for="inlineFormInputGroup">Nombre Completo</label>
@@ -236,28 +237,6 @@
                       </div>
                     </div>
                     <input type="text" class="form-control" placeholder="Tu Nombre Completo" [(ngModel)]="data.nombre">
-                  </div>
-                </div>
-                <div class="col-auto">
-                  <label class="sr-only" for="inlineFormInputGroup">Dirección exacta</label>
-                  <div class="input-group mb-2">
-                    <div class="input-group-prepend">
-                      <div class="input-group-text">
-                        <mat-icon>room</mat-icon>
-                      </div>
-                    </div>
-                    <input type="text" class="form-control" placeholder="Carrera, Calle, Avenida, Transversal" [(ngModel)]="data.direccion">
-                  </div>
-                </div>
-                <div class="col-auto">
-                  <label class="sr-only" for="inlineFormInputGroup">Barrio o sector</label>
-                  <div class="input-group mb-2">
-                    <div class="input-group-prepend">
-                      <div class="input-group-text">
-                        <mat-icon>room</mat-icon>
-                      </div>
-                    </div>
-                    <input type="text" class="form-control" placeholder="Barrio o punta de referencia" [(ngModel)]="data.barrio">
                   </div>
                 </div>
                 <div class="col-auto">
@@ -282,51 +261,16 @@
                     <input type="number" class="form-control" placeholder="Número de Llamada" [(ngModel)]="data.celL">
                   </div>
                 </div>
-                <!--<div class="col-auto" *ngIf="data.checkCity">
-                  <label class="sr-only" for="inlineFormInputGroup">Ciudad Destino *</label>
-                  <div class="input-group mb-2">
-                    <div class="input-group-prepend">
-                      <div class="input-group-text">
-                        <mat-icon> person_pin</mat-icon>
-                      </div>
-                    </div>
-                    <input type="text" class="form-control" placeholder="Ciudad de Destino" [(ngModel)]="data.ciudad">
-                  </div>
-                </div>
-                <div class="col-auto" *ngIf="!data.checkCity">
-                  <label class="sr-only" for="inlineFormInputGroup">Ciudad Destino *</label>
-                  <ng-autocomplete [(ngModel)]="data.ciudad" [data]="listCiudadesF" [searchKeyword]="keyword" placeHolder="Buscar Ciudad" autocomplete="off"
-                        historyIdentifier="listCiudades" [itemTemplate]="itemTemplate" [notFoundTemplate]="notFoundTemplate" (selected)='precioRutulo($event)' (inputChanged)='onChangeSearch($event)'>
-                    </ng-autocomplete>
-
-                    <ng-template #itemTemplate let-item>
-                        <div class="item">
-                            <span [innerHTML]="item.ciudad"></span> &nbsp; | &nbsp;
-                            <small>Departamento: {{ item.departamento }}</small> &nbsp; | &nbsp;
-                            <small>--: {{ item.ciudad_full }}</small>
-                            <small>
-                                <img *ngIf="item.transportadora === 'Envia'" style="width: 100%; width: 60px;"  src="./assets/img/envia.jpg" alt="">
-                                <img *ngIf="item.transportadora === 'InterRapidisimo'" style="width: 100%; width: 60px;"  src="./assets/img/logoInter.png" alt="">
-                                <img *ngIf="item.transportadora === 'Servientrega'" style="width: 100%; width: 100px;"  src="./assets/img/servientrega.jpeg" alt="">
-                                <img *ngIf="item.transportadora === 'Coordinadora'" style="width: 100%; width: 100px;"  src="./assets/img/logoCordinadora.png" alt="">
-                            </small>
-                        </div>
-                    </ng-template>
-
-                    <ng-template #notFoundTemplate let-notFound>
-                        <div [innerHTML]="notFound"></div>
-                    </ng-template>
-                </div>-->
                 <div class="col-auto">
-                  <label class="sr-only" for="inlineFormInputGroup">Departamento / Estado</label>
+                  <label class="sr-only" for="inlineFormInputGroup">Departamento</label>
                   <div class="input-group mb-2">
-                    <div class="input-group-prepend">
+                    <!--<div class="input-group-prepend">
                       <div class="input-group-text">
                         <mat-icon>room</mat-icon>
                       </div>
-                    </div>
+                    </div>-->
                     <ng-select
-                      style="    width: 85%;"
+                      style="width: -webkit-fill-available;"
                       [(ngModel)]="data.departamento"
                       [items]="listCiudades"
                       bindLabel="departamento"
@@ -337,19 +281,18 @@
                       >
                     </ng-select>
 
-                    <!--<p>Departamento seleccionado: {{ data.departamento }}</p>-->
                   </div>
                 </div>
                 <div class="col-auto" *ngIf="!data.checkCity">
                   <label class="sr-only" for="inlineFormInputGroup">Ciudades </label>
                   <div class="input-group mb-2">
-                    <div class="input-group-prepend">
+                    <!--<div class="input-group-prepend">
                       <div class="input-group-text">
                         <mat-icon>store</mat-icon>
                       </div>
-                    </div>
+                    </div>-->
                     <ng-select
-                      style="    width: 85%;"
+                      style="width: -webkit-fill-available;"
                       [(ngModel)]="data.ciudades"
                       [items]="listCiudadesRSelect"
                       bindLabel="ciudad"
@@ -359,8 +302,6 @@
                       (change)="handleProcesFlete()"
                       >
                     </ng-select>
-
-                    <!--<p>Ciudad seleccionado: {{ data.departamento }}</p>-->
                   </div>
                 </div>
                 <div class="mb-3" *ngIf="data.checkCity">
@@ -406,6 +347,29 @@
                     </h4>
 
                   </section>
+                </div>
+                <div class="col-auto">
+                  <label class="sr-only" for="inlineFormInputGroup">Dirección exacta</label>
+                  <div class="input-group mb-2">
+                    <div class="input-group-prepend">
+                      <div class="input-group-text">
+                        <mat-icon>room</mat-icon>
+                      </div>
+                    </div>
+                    <input type="text" class="form-control" placeholder="Carrera, Calle, Avenida, Transversal" [(ngModel)]="data.direccion">
+                  </div>
+                </div>
+                <div class="col-auto">
+                  <label class="sr-only" for="inlineFormInputGroup">Barrio o sector</label>
+                  <div class="input-group mb-2">
+                    <div class="input-group-prepend">
+                      <div class="input-group-text">
+                        <mat-icon>room</mat-icon>
+                      </div>
+                    </div>
+                    <input type="text" class="form-control" placeholder="Barrio o punta de referencia" [(ngModel)]="data.barrio">
+                  </div>
+                <br><br>
                 </div>
               </div>
             </div>

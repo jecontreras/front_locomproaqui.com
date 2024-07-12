@@ -9,9 +9,8 @@ export const environment = {
   url: "https://apilokomproaqui1-9219656b6da1.herokuapp.com",
   //url : "https://apilokomproaqui1-9219656b6da1.herokuapp.com",
   //url: "https://backlocompro.herokuapp.com",
-  urlEnvios: "https://1337-jecontreras-backenvios-w7x5q2a4c9r.ws-us115.gitpod.io",
-  // urlEnvios: "https://apienviosrapidos-ce1b900c1c5b.herokuapp.com",
-  //urlEnvios: "https://apienviosrapidos1-6de692d2f911.herokuapp.com",
+  //urlEnvios: "https://1337-jecontreras-backenvios-w7x5q2a4c9r.ws-us115.gitpod.io",
+  urlEnvios: "https://apienviosrapidos1-6de692d2f911.herokuapp.com",
   urlFront: "http://localhost:4200",
   keyEpayco: "fd1fee1f6f008ddf010440f8c092a2cb",
   estadoPruebaPagos: true
