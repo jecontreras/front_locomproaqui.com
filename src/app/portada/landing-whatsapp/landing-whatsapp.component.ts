@@ -283,7 +283,7 @@ export class LandingWhatsappComponent implements OnInit {
   }
 
   async handleEndOrder(){ console.log("handle Order", this.btnDisabled)
-    if( this.btnDisabled ) return false;
+    if( this.btnDisabled ) return this._ToolServices.presentToast("Espera un momento que estamos consultando tu flete");
     let validate = this.validarInput();
     if( !validate ) return false;
     this.btnDisabled = true;

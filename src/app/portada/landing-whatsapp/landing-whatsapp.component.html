@@ -76,7 +76,7 @@
 
           <footer class="footer text-center py-3">
             <label class="exTrega">Pago Contra entrega</label>
-            <p class="m-0">Emprende por tan solo {{ _ToolServices.monedaChange( 3,2, ( this.price || 0 ), code ) }}</p>
+            <p class="m-0">Emprende por tan solo {{ _ToolServices.monedaChange( 3,2, ( this.price2 || 0 ), code ) }}</p>
           </footer>
 
 
@@ -92,6 +92,7 @@
                     <div class="card-body" style="padding: 12px 31px !important;">
                       <p class="card-text" style="text-align: center;     font-size: 16px;">
                         <strong>Recuerda</strong> que para que <strong>aplique</strong> el precio de <strong>{{ _ToolServices.monedaChange( 3,2, ( this.price2 || 0 ), code ) }} </strong> la compra <strong>mínima</strong> debe <strong>ser</strong> de <strong>6 pares</strong> <span *ngIf="namePais === 'Colombia'">en adelante de lo <strong>contrario</strong> de 1 a 5 el <strong>valor</strong> unidad seria <strong>$25.000</strong></span>
+                        <strong>Recuerda</strong> que para que <strong>aplique</strong> el precio de <strong>{{ _ToolServices.monedaChange( 3,2, ( this.price2 || 0 ), code ) }} </strong> la compra <strong>mínima</strong> debe <strong>ser</strong> de <strong>6 pares</strong> <span *ngIf="namePais === 'Colombia'"> en adelante de lo <strong>contrario</strong> de 1 a 5 el <strong>valor</strong> unidad seria <strong>$25.000</strong></span>
                       </p>
                     </div>
                   </div>
@@ -284,7 +285,7 @@
                   </div>
                 </div>
                 <div class="col-auto" *ngIf="!data.checkCity">
-                  <label class="sr-only" for="inlineFormInputGroup">Ciudades </label>
+                  <label class="sr-only" for="inlineFormInputGroup">Ciudades - Municipio - Corregimiento</label>
                   <div class="input-group mb-2">
                     <!--<div class="input-group-prepend">
                       <div class="input-group-text">
@@ -297,7 +298,7 @@
                       [items]="listCiudadesRSelect"
                       bindLabel="ciudad"
                       bindValue="id_ciudad"
-                      placeholder="Seleccione un departamento"
+                      placeholder="Seleccione tu ciudad"
                       [searchable]="true"
                       (change)="handleProcesFlete()"
                       >
@@ -367,7 +368,7 @@
                         <mat-icon>room</mat-icon>
                       </div>
                     </div>
-                    <input type="text" class="form-control" placeholder="Barrio o punta de referencia" [(ngModel)]="data.barrio">
+                    <input type="text" class="form-control" placeholder="Barrio o punto de referencia" [(ngModel)]="data.barrio">
                   </div>
                 <br><br>
                 </div>
@@ -392,6 +393,11 @@
               <div class="d-flex justify-content-center">
                 <div>
                   <button type="submit" class="btn btn-pink" (click)="pedidoConfirmar()" [disabled]="finalizarBoton">Continuar Pedido</button>
+                  <div *ngIf="btnDisabled" class="loader">
+                    <div class="spinner-border text-primary" role="status">
+                      <span class="sr-only"></span>
+                    </div>
+                  </div>
                 </div>
               </div>
             </div>
@@ -415,10 +421,10 @@
             </div>
             <div class="col-12">
               <div class="d-flex justify-content-center">
-                <button type="button"
+                <!--<button type="button"
                   class="btn btn-primary btn-lg btn-block" style="width: 250px;text-align: center; display: grid;"
                   (click)="openWhatsapp( data )"
-                >Ok</button>
+                >Ok</button>-->
               </div>
             </div>
             <div class="col-12">
