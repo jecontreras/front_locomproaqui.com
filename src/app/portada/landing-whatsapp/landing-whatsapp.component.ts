@@ -42,6 +42,7 @@ export class LandingWhatsappComponent implements OnInit {
   contraentregaAlert: boolean = false;
   price:number = 15500;
   code:string = "COP";
+  price2:number = 15500;
   dataCantidadCotizada:number;
 
   constructor(
@@ -74,9 +75,11 @@ export class LandingWhatsappComponent implements OnInit {
         if( this.namePais === 'Panama' ) {
           this.price = 5;
           this.code = "USD";
+          this.price2 = 5;
         }else{
           this.price = this.dataPro.pro_vendedor;
           this.code = "COP";
+          this.price2 = 15500;
         }
       }
     } catch (error) {
@@ -280,7 +283,7 @@ export class LandingWhatsappComponent implements OnInit {
   }
 
   async handleEndOrder(){ console.log("handle Order", this.btnDisabled)
-    if( this.btnDisabled ) return false;
+    if( this.btnDisabled ) return this._ToolServices.presentToast("Espera un momento que estamos consultando tu flete");
     let validate = this.validarInput();
     if( !validate ) return false;
     this.btnDisabled = true;
