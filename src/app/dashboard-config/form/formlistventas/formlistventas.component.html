@@ -51,8 +51,9 @@
             <td *ngIf="row['ven_estado'] == 2">Rechazada</td>
             <td *ngIf="row['ven_estado'] == 3">Despachado</td>
             <td>
-              <img src="./assets/icons/pago.png" alt="" *ngIf="row['ven_retirado'] == 1" style="width: 25%;">
-              <span *ngIf="row['ven_imagen_tiket'] && row['ven_retirado'] == 0">lista para cobrar</span>
+              {{ row['ven_totalDistribuidor'] }}
+              <!-- <img src="./assets/icons/pago.png" alt="" *ngIf="row['ven_retirado'] == 1" style="width: 25%;">
+              <span *ngIf="row['ven_imagen_tiket'] && row['ven_retirado'] == 0">lista para cobrar</span> -->
             </td>
             <td>{{ row['ven_numero_guia'] }}</td>
             <td>
@@ -74,5 +75,5 @@
   </div>
 </mat-dialog-content>
 <mat-dialog-actions align="end">
-    <button mat-button mat-dialog-close>Cerrar</button>
+    <button mat-button mat-dialog-close class="btn btn-outline-danger">Cerrar</button>
 </mat-dialog-actions>

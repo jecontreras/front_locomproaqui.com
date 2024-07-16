@@ -12,6 +12,9 @@ import { CART } from 'src/app/interfaces/sotarage';
 export class MainsComponent implements OnInit {
   data:any = {};
   id:string;
+  view:string;
+  view2:string;
+
   constructor(
     private _store: Store<CART>,
   ) { 
@@ -24,6 +27,8 @@ export class MainsComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.view = location.pathname;
+    this.view2 = ( this.view.split("/") )[2];
   }
 
 }

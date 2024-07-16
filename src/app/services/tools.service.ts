@@ -31,6 +31,16 @@ export class ToolsService {
     });
   }
 
+  getPosition(): Promise<any> {
+    return new Promise((resolve, reject) => {
+      if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(resolve, reject);
+      } else {
+        reject(new Error("Geolocation is not supported by this browser."));
+      }
+    });
+  }
+
   async presentToast(mensaje: string, type = 'completado') {
     this.snackBar.open(mensaje, type, { duration: 5000 });
   }
@@ -60,6 +70,148 @@ export class ToolsService {
       footer: text.footer || ''
     });
   }
+  modalInputSelect( ){
+    return new Promise(resolve => {
+      Swal.fire({
+        title: 'Selecciona una Talla',
+        html: `
+          <div class="form-group">
+            <label for="exampleFormControlSelect1">Tallas Disponibles</label>
+            <div class="select-with-arrow">
+              <select class="form-control" id="mySelect">
+                <option>35</option>
+                <option>36</option>
+                <option>37</option>
+                <option>38</option>
+                <option>39</option>
+                <option>40</option>
+              </select>
+              <i class="fas fa-chevron-down"></i>
+            </div>
+          </div>
+          <mat-form-field class="example-full-width">
+            <mat-label>Cantidad</mat-label>
+            <input matInput id="cantidadInput" type="number" class="form-control" placeholder="Cantidad a adquirir">
+          </mat-form-field>
+        `,
+        showCancelButton: true,
+        focusConfirm: false,
+        preConfirm: () => {
+          const selectedOption = (document.getElementById('mySelect') as HTMLSelectElement).value;
+          const cantidad = (document.getElementById('cantidadInput') as HTMLInputElement).value;
+          console.log('Selected option:', selectedOption);
+          console.log('Cantidad a adquirir:', cantidad);
+          resolve({ talla: selectedOption, cantidad: cantidad });
+        }
+      });
+    });
+
+  }
+  modaHtmlEnd( data ){
+    return new Promise(resolve => {
+      if( data.contraEntrega === 0 ){
+        Swal.fire({
+          title: 'Detalle de mi Pedido',
+          html: `
+          <div class="row">
+            <div class="col-12">
+              <label>Nombre: </label> <span> ${  data.nombre }</span>
+            </div>
+            <div class="col-12">
+              <label>Ciudad: </label> <span> ${  data.ciudad }</span>
+            </div>
+            <div class="col-12">
+              <label>Dirección: </label> <span> ${  data.direccion }</span>
+            </div>
+            <div class="col-12">
+              <label>Barrio: </label> <span> ${  data.barrio }</span>
+            </div>
+            <div class="col-12">
+              <label>Numero de Whatsapp: </label> <span> ${  data.numero }</span>
+            </div>
+            <div class="col-12">
+              <label>Cantidad Pares: </label> <span> ${  data.sumAmount }</span>
+            </div>
+            <div class="col-12">
+              <label>Precio Articulos: </label> <span> ${  this.monedaChange( 3, 2, ( data.priceTotal || 0 ) ) }</span>
+            </div>
+            <div class="col-12">
+              <label>Precio de Envio: </label> <span> ${  this.monedaChange( 3, 2, ( data.totalFlete || 0 ) ) }</span>
+            </div>
+            <div class="col-12">
+              <label>Precio Total a Pagar: </label> <span> ${  this.monedaChange( 3, 2, ( Number( data.totalAPagar ) || 0 ) ) }</span>
+            </div>
+            <div class="col-12">
+              <h4>
+                Inmediatamente le des click al botón de Confirmar tu pedido entra al área de empaque y despacho Pronto uno de nuestros asesores te enviará la guía, vía WhatsApp muchas gracias por tu compra
+              </h4>
+            </div>
+          </div>
+          `,
+          showCancelButton: true,
+          confirmButtonColor: '#5CB85C',
+          confirmButtonText: 'Confirmar',
+          cancelButtonText: 'Editar',
+          focusConfirm: false
+        }).then((result:any) => {
+          if (result.value) {
+            resolve(true); // El usuario confirmó el pedido
+          } else {
+            resolve(false); // El usuario decidió editar el pedido
+          }
+        });
+      }else{
+        Swal.fire({
+          title: 'Detalle de mi Pedido',
+          html: `
+          <div class="row">
+            <div class="col-12">
+              <label>Nombre: </label> <span> ${  data.nombre }</span>
+            </div>
+            <div class="col-12">
+              <label>Ciudad: </label> <span> ${  data.ciudad }</span>
+            </div>
+            <div class="col-12">
+              <label>Dirección: </label> <span> ${  data.direccion }</span>
+            </div>
+            <div class="col-12">
+              <label>Barrio: </label> <span> ${  data.barrio }</span>
+            </div>
+            <div class="col-12">
+              <label>Numero de Whatsapp: </label> <span> ${  data.numero }</span>
+            </div>
+            <div class="col-12">
+              <label>Cantidad Pares: </label> <span> ${  data.sumAmount }</span>
+            </div>
+            <div class="col-12">
+              <label>Precio Articulos: </label> <span> ${  this.monedaChange( 3, 2, ( data.priceTotal || 0 ) ) }</span>
+            </div>
+            <div class="col-12">
+              <label>Precio de Envio: </label> <span> No disponible esperar a que un asesor se comunique con usted</span>
+            </div>
+            <div class="col-12">
+              <h4>
+                Inmediatamente, le des click al botón de Finalizar tu pedido entra al área de empaque y despacho pronto uno de nuestros asesores te enviará la guía y te cotizarán el envío, vía WhatsApp muchas gracias por tu compra
+              </h4>
+            </div>
+          </div>
+          `,
+          showCancelButton: true,
+
+          confirmButtonText: 'Confirmar',
+          cancelButtonText: 'Editar',
+          focusConfirm: false
+        }).then((result:any) => {
+          if (result.value) {
+            resolve(true); // El usuario confirmó el pedido
+          } else {
+            resolve(false); // El usuario decidió editar el pedido
+          }
+        });
+      }
+    });
+  }
+
   tooast(text: any) {
     Swal.fire({
       // position: text.position || 'top-end',
@@ -113,14 +265,14 @@ export class ToolsService {
   }
 
   openFotoAlert( foto:string ){
-    Swal.fire({
+    return Swal.fire({
       title: '',
       text: '',
       imageUrl: foto,
       imageWidth: 400,
       imageHeight: 200,
       imageAlt: '',
-    })
+    });
   }
 
   ProcessTime(text: any) {
@@ -129,7 +281,7 @@ export class ToolsService {
       title: text.title || 'Cargando...',
       html: '',
       timer: text.tiempo || 6000,
-      timerProgressBar: true,
+      timerProgressBar: false,
       onBeforeOpen: () => {
         Swal.showLoading()
         timerInterval = setInterval(() => {
@@ -245,7 +397,7 @@ export class ToolsService {
 
   }
 
-  monedaChange(cif = 3, dec = 2, valor: any) {
+  monedaChange(cif = 3, dec = 2, valor: any, code:string = "COP" ) {
     // tomamos el valor que tiene el input
     //  console.log(valor, cif, dec)
     if (!valor) return 0;
@@ -280,7 +432,7 @@ export class ToolsService {
       separados = [inputNum[0]]
     }
     separados = separados.filter((row: any) => row != "");
-    return '$' + separados.join("."); //+ ',' + inputNum[1];
+    return '$' + separados.join(".") + " "+code; //+ ',' + inputNum[1];
   }
   monedaChange2(cif = 3, dec = 2, valor: any) {
     // tomamos el valor que tiene el input

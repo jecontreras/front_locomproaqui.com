@@ -5,11 +5,11 @@
           <div class="card" style="overflow-x: scroll;">
             <br>
             <br>
-            <div class="card-header card-header-primary card-header-icon">
+            <div class="card-header card-header-primary card-header-icon d-flex">
               <div class="card-icon">
                 <i class="material-icons">assignment</i>
               </div>
-              <h4 class="card-title">Ventas Posibles</h4>
+              &nbsp;<h4 class="card-title">Ventas Posibles</h4>
             </div>
             <div class="card-body">
               <div class="toolbar">
@@ -25,11 +25,15 @@
                 </ngx-spinner>
               </div>
               <div id="datatables_filter" class="dataTables_filter row">
-                <div class="col-12 row">
-                  <label class="form-group col espaciosL">
+                <div class="col-12 row d-flex">
+                  <!-- <label class="form-group col espaciosL"> -->
+                  <div class="col">
                     <input [(ngModel)]="datoBusqueda" type="search" class="form-control form-control-sm" (change)="buscar()"
-                      placeholder="Buscar Ventas" aria-controls="datatables"></label>
-                  <div>
+                    placeholder="Buscar Ventas" aria-controls="datatables">
+                  </div>
+                    
+                  <!-- </label> -->
+                  <div class="col">
                     <button (click)="buscar()" [disabled]="loader" mat-raised-button mat-min-fab
                       class="btn btn-primary btn-just-icon btn-round espaciosL">
                       <i class="material-icons">search</i>
@@ -106,10 +110,10 @@
                           </span>
                         </td>
                         <td>{{ row['createdAt'] | date:'medium' }}</td>
-                        <td *ngIf="row['ven_estado'] == 0">Pendiente</td>
+                        <td *ngIf="row['ven_estado'] == 0">Por Autorizar</td>
                         <td *ngIf="row['ven_estado'] == 1">Exitosa</td>
                         <td *ngIf="row['ven_estado'] == 2">Rechazada</td>
-                        <td *ngIf="row['ven_estado'] == 3">Despachado</td>
+                        <td *ngIf="row['ven_estado'] == 3">Pendiente</td>
                         <td *ngIf="row['ven_estado'] == 5">Eliminado</td>
                         <!-- <td>{{ row['ven_tallas'] }}</td> -->
                       </tr>

@@ -68,6 +68,7 @@ export class FormcobrosComponent implements OnInit {
       this.data.cob_pais = 'colombia';
       this.getInfoUser();
     }
+    console.log("this.datas",this.datas)
     this.disabledButton = true;
     this.data.totalrecibir = this.data.cob_monto
   }

@@ -10,11 +10,11 @@ export class VentasProductosService {
     private _model: ServiciosService
   ) { }
 
-  get(query:any){
+  get(query:any){ //console.log("tblventasproducto/querys", query)
     return this._model.querys('tblventasproducto/querys',query, 'post');
   }
 
-  getProductos(query:any){ console.log("vp SVC getProductos query", query)
+  getProductos(query:any){ //console.log("vp SVC getProductos query", query)
     return this._model.querys('tblventas/getProductosVenta',query, 'post');
   }
 

@@ -1,0 +1,295 @@
+.example-full-width{
+  width: 160px;
+}
+.example-container {
+  height: -webkit-fill-available;
+}
+
+.example-sidenav-content {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.example-sidenav {
+  padding: 0;
+}
+
+body, html {
+    margin: 0;
+    padding: 0;
+    font-family: Arial, sans-serif;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .banner {
+    background-color: #f14e95;
+    color: white;
+    text-align: center;
+    padding: 20px 0;
+    width: 100%;
+  }
+  
+  .banner h1 {
+    margin: 0;
+  }
+  
+  .centered-content {
+    flex-grow: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: calc(100vh - 12px); /* Adjust height based on banner and footer height */
+    background: #19173d;
+  }
+  
+  footer.footer {
+    color: white;
+    text-align: center;
+    padding: 10px 0;
+    width: 100%;
+    position: relative;
+  }
+  
+  @media screen and (max-width: 600px) {
+    .banner {
+      padding: 10px 0;
+    }
+  
+    footer.footer {
+      padding: 5px 0;
+    }
+  }
+  
+  
+  /* src/app/product-list/product-list.component.css */
+.container {
+    text-align: center;
+    font-family: Arial, sans-serif;
+  }
+  
+  /* Resto de los estilos */
+  .logo {
+    width: 150px;
+    margin: 20px 0;
+  }
+  
+  h2 {
+    color: #f14e95;
+  }
+  
+  .product-grid {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+  
+  .product-item {
+    border: 1px solid #ddd;
+    margin: 10px;
+    padding: 10px;
+    border-radius: 10px;
+    width: 150px;
+  }
+  
+  .product-item img {
+    width: 100%;
+    border-radius: 10px;
+  }
+  
+  .product-info {
+    margin-top: 10px;
+  }
+  
+  .product-info p {
+    margin: 5px 0;
+  }
+  
+  /*button {
+    background-color: #f14e95;
+    color: white;
+    border: none;
+    padding: 5px 10px;
+    border-radius: 5px;
+    cursor: pointer;
+  }*/
+  
+  button:hover {
+    background-color: #d13c7b;
+  }
+  
+
+  
+
+  /* src/styles.css */
+.header {
+    background-color: #343a40;
+  }
+  
+  .text-pink {
+    color: #f14e95;
+  }
+  
+  .subheader {
+    background-color: #f14e95;
+  }
+  
+  .custom-card {
+    //background-color: #2d2f36;
+    color: white;
+    border-radius: 15px;
+  }
+  
+  .custom-card .card-title {
+    font-size: 1.5rem;
+    margin-bottom: 10px;
+  }
+  
+  .custom-card .card-subtitle {
+    margin-bottom: 20px;
+  }
+  
+  .custom-card .card-text {
+    margin-bottom: 10px;
+  }
+  
+  .footer { 
+    color: #6c757d;
+  }
+  
+  .footer p {
+    margin: 0;
+  }
+
+  /* src/styles.css */
+.header {
+    background-color: #343a40;
+  }
+  
+  .text-pink {
+    color: #f14e95;
+  }
+  
+  .custom-card {
+    border: none;
+    border-radius: 10px;
+    overflow: hidden;
+  }
+  
+  .custom-card .card-body {
+    background-color: #f8f9fa;
+    padding: 10px;
+    text-align: center;
+  }
+  
+  .custom-card .card-img-top {
+    width: 100%;
+    height: auto;
+    object-fit: cover;
+  }
+  
+  .btn-pink {
+    background-color: #f14e95;
+    color: white;
+    border: none;
+    padding: 5px 10px;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+  
+  .btn-pink:hover {
+    background-color: #d13c7b;
+  }
+  
+  .footer {
+    color: #6c757d;
+  }
+  
+  .footer p {
+    margin: 0;
+  }
+  
+  .exTrega{
+    background: #ff008a;
+    border-radius: 5px;
+    padding: 0 9px;
+  }
+  /* src/styles.css */
+.custom-card {
+  border: none;
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+.custom-card .card-body {
+  background-color: #f8f9fa;
+  padding: 10px;
+}
+
+.custom-card .card-title {
+  font-size: 1.2rem;
+  font-weight: bold;
+}
+
+.custom-card .card-text {
+  font-size: 1rem;
+}
+
+.img-fluid {
+  width: 250px;
+  height: auto;
+  object-fit: cover;
+}
+
+.btn-pink {
+  background-color: #f14e95;
+  color: white;
+  border: none;
+  padding: 5px 10px;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.btn-pink:hover {
+  background-color: #d13c7b;
+}
+
+/* src/styles.css */
+.btn-pink {
+  background-color: #f14e95;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.btn-pink:hover {
+  background-color: #d13c7b;
+}
+
+/* src/styles.css */
+/* Personaliza el botón principal */
+.btn-primary {
+  background-color: #f14e95;
+  border-color: #f14e95;
+}
+
+.btn-primary:hover {
+  background-color: #d13c7b;
+  border-color: #d13c7b;
+}
+
+/* Personaliza el botón secundario */
+.btn-outline-secondary {
+  color: #f14e95;
+  border-color: #f14e95;
+}
+
+.btn-outline-secondary:hover {
+  color: white;
+  background-color: #f14e95;
+  border-color: #f14e95;
+}

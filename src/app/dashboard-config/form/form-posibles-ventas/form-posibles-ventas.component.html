@@ -44,7 +44,7 @@
         </div>-->
         <div class="form-group col-xs-5 col-sm-5 col-12">
             <label>Ciudad Destino *</label>
-            <input type="text" class="form-control form-control-sm" [(ngModel)]="data.ven_ciudad">
+            <input type="text" class="form-control form-control-sm border border-success" [(ngModel)]="data.ven_ciudad">
         </div>
         <div class="form-group col-md-6 col-sm-4 col-lg-4 col-xs-6">
             <label for="exampleFormControlInput1">Barrio del Cliente</label>
@@ -75,10 +75,16 @@
         <div class="form-group col-xs-5 col-sm-5 col-12">
           <label>Ciudad Destino *</label>
           <!-- <input type="text" class="form-control form-control-sm" [(ngModel)]="data.ciudadDestino"> -->
-          <ng-autocomplete [(ngModel)]="data.ciudadDestino" [data]="listCiudades" [searchKeyword]="keyword" placeHolder="Buscar Ciudad" autocomplete="off"
+          <ng-autocomplete [(ngModel)]="data.ciudadDestino" [data]="listCiudades" [searchKeyword]="keyword" placeholder="Digita la Ciudad de Destino" autocomplete="off"
               historyIdentifier="listCiudades" [itemTemplate]="itemTemplate" [notFoundTemplate]="notFoundTemplate" (selected)='precioRutulo($event)' (inputChanged)='onChangeSearch($event)' [disabled]="coinShop">
           </ng-autocomplete>
-
+          <h5 class="text-primary">Digita la Ciudad de Destino</h5>
+          <style>
+            .ng-autocomplete input{
+                border-color: #198754 !important;
+                background-color: #90d5b8;
+            }
+          </style>
           <ng-template #itemTemplate let-item>
               <div class="item">
                   <!-- <img src="{{item.flag}}" height="25"> -->
@@ -129,14 +135,14 @@
               </div>
               <div class="col-12" *ngIf="progreses">
                   <div class="d-flex justify-content-center row">
-                      <div class="spinner-grow text-primary" role="status"><span class="sr-only">Loading...</span></div>
-                      <div class="spinner-grow text-secondary" role="status"><span class="sr-only">Loading...</span></div>
-                      <div class="spinner-grow text-success" role="status"><span class="sr-only">Loading...</span></div>
-                      <div class="spinner-grow text-danger" role="status"><span class="sr-only">Loading...</span></div>
-                      <div class="spinner-grow text-warning" role="status"><span class="sr-only">Loading...</span></div>
-                      <div class="spinner-grow text-info" role="status"><span class="sr-only">Loading...</span></div>
-                      <div class="spinner-grow text-light" role="status"><span class="sr-only">Loading...</span></div>
-                      <div class="spinner-grow text-dark" role="status"><span class="sr-only">Loading...</span></div>
+                      <div class="spinner-grow text-primary" role="status"><span class="sr-only">&nbsp;</span></div>
+                      <div class="spinner-grow text-secondary" role="status"><span class="sr-only">&nbsp;</span></div>
+                      <div class="spinner-grow text-success" role="status"><span class="sr-only">&nbsp;</span></div>
+                      <div class="spinner-grow text-danger" role="status"><span class="sr-only">&nbsp;</span></div>
+                      <div class="spinner-grow text-warning" role="status"><span class="sr-only">&nbsp;</span></div>
+                      <div class="spinner-grow text-info" role="status"><span class="sr-only">&nbsp;</span></div>
+                      <div class="spinner-grow text-light" role="status"><span class="sr-only">&nbsp;</span></div>
+                      <div class="spinner-grow text-dark" role="status"><span class="sr-only">&nbsp;</span></div>
                   </div>
               </div>
 
@@ -153,9 +159,14 @@
                   </div>
               </div>
           </div>
+            <div class="col-12" *ngIf="!this.disabledEtiqueta" >
+                <div class="d-flex justify-content-center row">
+                    <h5 class="text-primary">Selecciona una Transportadora</h5>
+                </div>
+            </div>
         </div>
         <div class="form-group col-12 bg-primary text-white rounded">
-          <h2>Producto</h2>
+          <h2>Producto(s) a Vender</h2>
       </div>
       <div class="form-group col-12 row">
           <div class="col-6 col-md-4 col-sm-4 col-lg-2 col-xs-2" *ngFor="let item of listCarrito">
@@ -187,11 +198,32 @@
       </div>
     </div>
 </mat-dialog-content>
+<mat-dialog-actions *ngIf="!disabledButton" >
+    <div class="row" style="width: 100%;">
+        <div class="col-6 col-sm-3 col-xs-3" *ngIf="!coinShop">
+            <label for="exampleFormControlInput1" class="text-primary">Precio Total: </label> <br>
+            <span>$ {{ ( data.ven_total || 0 ).toLocaleString(1) }} COP</span>
+        </div>
+        <div class="col-6 col-sm-3 col-xs-3">
+            <label for="exampleFormControlInput1" class="text-primary">Valor Producto: </label> <br>
+            <span>$ {{ ( data.ven_totalDistribuidor || 0 ).toLocaleString(1) }} COP</span>
+        </div>
+        <div class="col-6 col-sm-3 col-xs-3">
+            <label for="exampleFormControlInput1" class="text-success">Valor del Envío: </label> <br>
+            <span>$ {{ ( data.fleteValor || 0 ).toLocaleString(1) }} COP</span>
+        </div>
+        <div class="col-6 col-sm-3 col-xs-3">
+            <!-- {{ ((data.ven_ganancias / data.ven_total) * 100)}}% : -->
+            <label for="exampleFormControlInput1" class="text-success">Tu ganancia es: </label> <br>
+            <h5 >$ {{ ( data.ven_ganancias || 0 ).toLocaleString(1) }} COP</h5>
+        </div>
+    </div>
+</mat-dialog-actions>
 
 <mat-dialog-actions align="end">
-    <button mat-button mat-dialog-close>Cerrar</button>
-    <button mat-button cdkFocusInitial color="info" (click)="submit()" [disabled]="disabledButton" >
-        <span *ngIf="id" class="btn btn-info">Enviar Orden de Despacho</span>
+    <button mat-button mat-dialog-close class="btn btn-outline-danger">Cerrar</button>
+    <button mat-button cdkFocusInitial class="btn btn-success" (click)="submit()" [disabled]="disabledButton" >
+        <span *ngIf="id">Enviar Orden de Despacho</span>
     </button>
     <!-- <button mat-button (click)="OrdenValidadWhatsapp( data )" *ngIf="data.id && data.ven_estado == 3">
         <span>Enviar Guia Whatsapp</span>

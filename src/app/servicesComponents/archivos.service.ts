@@ -14,12 +14,17 @@ export class ArchivosService {
 
   create(query:any){
     //this.FileFirebase( query );
-    return this._model.querys('archivos/file',query, 'post');
+    return this._model.querys('archivos/media',query, 'post');
   }
 
   createFile(query:any){
     //this.FileFirebase( query );
     return this._model.querys('archivos/fileTotal',query, 'post');
+  }
+
+  createGif(query:any){
+    //this.FileFirebase( query );
+    return this._model.querys('archivos/fileGif',query, 'post');
   }
 
   getBase64(file) {
