@@ -262,7 +262,8 @@
                   </div>
                 </div>
                 <div class="col-auto">
-                  <label class="sr-only" for="inlineFormInputGroup">Departamento</label>
+                  <label class="sr-only" for="inlineFormInputGroup" *ngIf="namePais === 'Colombia'">Departamento</label>
+                  <label class="sr-only" for="inlineFormInputGroup" *ngIf="namePais !== 'Colombia'">Provincia - Comarca</label>
                   <div class="input-group mb-2">
                     <!--<div class="input-group-prepend">
                       <div class="input-group-text">
@@ -275,7 +276,7 @@
                       [items]="listCiudades"
                       bindLabel="departamento"
                       bindValue="id_ciudad"
-                      placeholder="Seleccione un departamento"
+                      placeholder="Seleccione un {{ namePais === 'Colombia' ? 'departamento' : 'Provincia' }}"
                       [searchable]="true"
                       (change)="handleSelectDepartament()"
                       >
