@@ -77,6 +77,27 @@
               <input matInput [(ngModel)]="data.paisCreado" placeholder="Pais de origen" disabled type="text">
           </mat-form-field>
         </div>
+        <div class="form-group col-12 col-sm-6">
+          <mat-form-field class="example-full-width">
+              <mat-label>Latitude</mat-label>
+              <input matInput [(ngModel)]="data.latitude" placeholder="Latitude" disabled type="text">
+          </mat-form-field>
+        </div>
+        <div class="form-group col-12 col-sm-6">
+          <mat-form-field class="example-full-width">
+              <mat-label>Longitude</mat-label>
+              <input matInput [(ngModel)]="data.longitude" placeholder="Longitud" disabled type="text">
+          </mat-form-field>
+        </div>
+        <div class="col-12" *ngIf="data.longitude">
+          <div style="height: 500px;">
+            <div leaflet
+                 [leafletOptions]="options"
+                 [leafletLayers]="layers">
+            </div>
+          </div>
+
+        </div>
         <div class="col-12">
             <div class="row">
                 <div class="col-12">
