@@ -30,7 +30,7 @@ export class ListVentasVeraComponent implements OnInit {
     where:{ },
     limit: 100
   };
-  Header:any = [ 'Acciones','Nombre','Numero','Ciudad','Barrio','Creado' ];
+  Header:any = [ 'Acciones','Nombre','Numero','Ciudad','Barrio', 'Pais','Creado' ];
   $:any;
   public datoBusqueda = '';
   count:number = 0;
@@ -69,6 +69,7 @@ export class ListVentasVeraComponent implements OnInit {
 
 
   cargarTodos() {
+    this.query.where.nombre = { '!=' : ['.'] }
     this._ventasSerices.getVentasL(this.query)
     .subscribe(
       (response: any) => {
@@ -138,7 +139,7 @@ export class ListVentasVeraComponent implements OnInit {
 
     $('.card .material-datatables label').addClass('form-group');
   }
-  buscar() {
+  buscar( opt:string = "none" ) {
     this.loader = true;
     this.dataTable.dataRows = [];
     this.query = {};
@@ -146,31 +147,41 @@ export class ListVentasVeraComponent implements OnInit {
     this.datoBusqueda = this.datoBusqueda.trim();
     this.query = {
       where:{ },
+      page: 0,
       limit: 100
     };
-    if (this.datoBusqueda != '') {
-      this.query.where.or = [
-        {
-          nombre: {
-            contains: this.datoBusqueda|| ''
+    if( opt === 'none' ){
+      if (this.datoBusqueda != '') {
+        this.query.where.or = [
+          {
+            nombre: {
+              contains: this.datoBusqueda|| ''
+            }
+          },
+          {
+            ciudad: {
+              contains: this.datoBusqueda|| ''
+            }
+          },
+          {
+            code: {
+              contains: this.datoBusqueda|| ''
+            }
+          },
+          {
+            transportadora: {
+              contains: this.datoBusqueda|| ''
+            }
           }
-        },
-        {
-          ciudad: {
-            contains: this.datoBusqueda|| ''
-          }
-        },
-        {
-          code: {
-            contains: this.datoBusqueda|| ''
-          }
-        },
-        {
-          transportadora: {
-            contains: this.datoBusqueda|| ''
-          }
-        }
-      ];
+        ];
+        let validat:any = Number( this.datoBusqueda );
+        if( validat >= 0 ) this.query.where.or.push( {
+          numero: Number( this.datoBusqueda ) || Number(0)
+        } );
+      }
+    }else{
+      this.query.where.paisCreado = this.datoBusqueda;
+      this.datoBusqueda = ""
     }
     this.cargarTodos();
   }

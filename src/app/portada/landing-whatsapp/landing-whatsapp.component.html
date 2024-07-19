@@ -107,6 +107,11 @@
               </div>
               <h1 class="text-pink" style="text-align: center;     font-size: 55px;">Paso 1</h1>
               <h5 style="text-align: center;margin: 10px 10px;">Seleccione las referencias, tallas y colores y la cantidad que deseas</h5>
+              <div class="d-flex justify-content-center">
+                <div>
+                  <button type="button" class="btn btn-success" (click)="handleOpenPhoto()">Ver Todas Las Fotos</button>
+                </div>
+              </div>
               <br>
             </div>
             <div class="col-12">
@@ -129,11 +134,11 @@
                 </div>
               </div>
             </div>
-            <div class="col-12" style="    padding: 0 35px;">
+            <section class="col-12" style="    padding: 0 35px;"  #nextStep id="next-step">
               <h1 class="text-pink" style="text-align: center;     font-size: 55px;">Paso 2</h1>
               <h5 style="text-align: center;margin: 10px 10px;">Estos son los productos que haz agregado a tu compra, si esta completo tu pedido continua el paso 3</h5>
               <br>
-            </div>
+            </section>
             <div class="col-12">
               <div class="container mt-4">
                 <div class="row mb-3" *ngFor="let item of listDataAggregate">
@@ -160,7 +165,7 @@
                       <div class="col-12">
                         <div class="d-flex bd-highlight">
                           <div class="p-2 flex-grow-1 bd-highlight"></div>
-                          <div class="p-2 bd-highlight"><span><p style="font-size: 10px;">Agregar Más</p></span></div>
+                          <!--<div class="p-2 bd-highlight"><span><p style="font-size: 10px;">Agregar Más</p></span></div>-->
                           <!--<div class="p-2 bd-highlight"><mat-icon style="background-color: #f14e95;border-radius: 25px; color: white;">add</mat-icon></div>-->
                           <div class="p-2 bd-highlight"><mat-icon style="background-color: #ff0000;border-radius: 25px; color: white;" (click)="handleDeleteItem( item )">close</mat-icon></div>
                         </div>

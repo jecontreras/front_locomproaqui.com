@@ -25,7 +25,7 @@
 
 
   <!-- Modal -->
-  <div *ngIf="( RouterName !== '/front/landing' && RouterName2 !== 'landingWhatsapp' )" class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div *ngIf="( RouterName3 !== 'front' && RouterName2 !== 'landingWhatsapp' )" class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
       <div class="modal-content">
         <div class="modal-header">
@@ -46,14 +46,14 @@
   </div>
 
   <div class="whatsapp-button">
-    <a [href]='urlWhatsapp'
-      *ngIf="( RouterName !== '/front/landing' && RouterName2 !== 'landingWhatsapp' )"
+    <a [href]='urlWhatsapp1'
+      *ngIf="( RouterName3 !== 'front' && RouterName2 !== 'landingWhatsapp' )"
        target="_blank">
       <img src="./assets/icons/whatsapp.png" alt="" style="width: 30px;">
     </a>
-    <!--<a [href]='urlWhatsapp1'
-      *ngIf="RouterName === '/front/landing'"
+    <a [href]='urlWhatsapp'
+      *ngIf="RouterName3 === 'front'"
        target="_blank">
       <img src="./assets/icons/whatsapp.png" alt="" style="width: 30px;">
-    </a>-->
+    </a>
   </div>

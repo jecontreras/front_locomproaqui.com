@@ -33,11 +33,12 @@ import { DialogPedidoArmaComponent } from './dialog-pedido-arma/dialog-pedido-ar
 import { NgSelectModule } from '@ng-select/ng-select';
 import { LandingTestComponent } from './landing-test/landing-test.component';
 import { AlertDialogLocationComponent } from './alert-dialog-location/alert-dialog-location.component';
+import { ListGaleryLandingComponent } from './list-galery-landing/list-galery-landing.component';
 
 @NgModule({
-  entryComponents: [ InfoProductoComponent,ChecktDialogComponent, DialogPedidoArmaComponent, AlertDialogLocationComponent ],
+  entryComponents: [ InfoProductoComponent,ChecktDialogComponent, DialogPedidoArmaComponent, AlertDialogLocationComponent, ListGaleryLandingComponent ],
   declarations: [
-    MainsComponent, TiendaComponent, ProductosComponent, FooterComponent, MenuComponent, InfoProductoComponent, ProductosViewComponent, ContactoComponent, ChecktComponent, CarritoComponent, CompletarComponent, ChecktDialogComponent, DetallePedidoComponent, CatalogoComponent, LandingComponent, SelectSizeDialogComponent, LandingWhatsappComponent, DialogPedidoArmaComponent, LandingTestComponent, AlertDialogLocationComponent],
+    MainsComponent, TiendaComponent, ProductosComponent, FooterComponent, MenuComponent, InfoProductoComponent, ProductosViewComponent, ContactoComponent, ChecktComponent, CarritoComponent, CompletarComponent, ChecktDialogComponent, DetallePedidoComponent, CatalogoComponent, LandingComponent, SelectSizeDialogComponent, LandingWhatsappComponent, DialogPedidoArmaComponent, LandingTestComponent, AlertDialogLocationComponent, ListGaleryLandingComponent],
   imports: [
     PortadaRoutingModule,
     CommonModule,

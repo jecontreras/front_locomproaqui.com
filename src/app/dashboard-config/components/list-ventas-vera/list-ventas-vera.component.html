@@ -22,19 +22,18 @@
                 Loading..
               </div>
               <div id="datatables_filter" class="dataTables_filter row">
-                <label class="form-group col">
-                  <input [(ngModel)]="datoBusqueda" (change)="buscar()" type="search" class="form-control form-control-sm"
-                    placeholder="Buscar Ventas" aria-controls="datatables"></label>
-                <div>
-                    <button (click)="buscar()" [disabled]="loader" mat-raised-button mat-min-fab
-                        class="btn btn-primary btn-just-icon btn-round">
-                        <i class="material-icons">search</i>
-                    </button>
-                    <button (click)="crear(false)" class="btn btn-primary btn-just-icon btn-round" mat-raised-button mat-min-fab>
-                        <i class="material-icons">add_circle_outline</i>
-                    </button>
+                <div class="search-container">
+                  <input [(ngModel)]="datoBusqueda" (change)="buscar('none')" type="search" class="form-control form-control-sm"
+                    placeholder="Buscar Ventas" aria-controls="datatables">
+                  <div class="form-group p-3">
+                    <label for="exampleFormControlSelect1">Pais </label><div>
+                    <select class="search-select" placeholder="Buscar Por Pais" [(ngModel)]="datoBusqueda" (change)="buscar('pais')">
+                      <option value="option1" value="colombia">Colombia</option>
+                      <option value="option2" value="panama">Panama</option>
+                    </select>
+                  </div>
+                  <button class="search-button" (click)="buscar('none')">Buscar</button>
                 </div>
-
               </div>
               <div class="col-12 material-datatables" *ngIf="!loader">
                 <table id="datatables" class="table table-striped table-no-bordered table-hover" cellspacing="0"
@@ -55,7 +54,8 @@
                             'colorFondo':row['estado'] == 1,
                             'colorCompletado':row['estado'] == 2,
                             'colorDespachado':row['estado'] == 1,
-                            'colorEntrante':row['estado'] == 0
+                            'colorEntrante':row['estado'] == 0,
+                            'colorEliminado':row['estado'] == 3
                         }"
                     >
 
@@ -71,6 +71,10 @@
                       <td>{{row['numero']}}</td>
                       <td>{{row['ciudad']}}</td>
                       <td>{{ row['barrio']  }}</td>
+                      <td>
+                        <img src="./assets/imagenes/colombia.jpg" alt="" *ngIf="row['paisCreado'] === 'Colombia'" style="width: 100%; height: 50px;">
+                        <img src="./assets/imagenes/panama.jpg" alt="" *ngIf="row['paisCreado'] === 'Panama'" style="width: 100%; height: 50px;">
+                      </td>
                       <td>{{ row['createdAt'] | date:'medium' }}</td>
 
                     </tr>

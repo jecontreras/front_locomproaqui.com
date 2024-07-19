@@ -1,4 +1,4 @@
-import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef  } from '@angular/core';
 import { MatDialog } from '@angular/material';
 import { ActivatedRoute, Router } from '@angular/router';
 import { TRIDYCIUDAD } from 'src/app/JSON/dane-nogroup';
@@ -10,6 +10,7 @@ import { Indicativo } from 'src/app/JSON/indicativo';
 import { departamento } from 'src/app/JSON/departamentos';
 import * as _ from 'lodash';
 import { AlertDialogLocationComponent } from '../alert-dialog-location/alert-dialog-location.component';
+import { ListGaleryLandingComponent } from '../list-galery-landing/list-galery-landing.component';
 
 @Component({
   selector: 'app-landing-whatsapp',
@@ -28,7 +29,7 @@ export class LandingWhatsappComponent implements OnInit {
   listCiudadesF:any = [];
   keyword = 'ciudad';
   data:any = {};
-  @ViewChild('nextStep', { static: true }) nextStep: ElementRef;
+  @ViewChild('nextStep', { static: false }) nextStep: ElementRef;
   currentIndex: number = 0;
   btnDisabled: boolean = false;
   codeId:string;
@@ -44,6 +45,7 @@ export class LandingWhatsappComponent implements OnInit {
   code:string = "COP";
   price2:number = 15500;
   dataCantidadCotizada:number;
+  btnFleteDisable:boolean = false;
 
   constructor(
     private _productServices: ProductoService,
@@ -56,7 +58,7 @@ export class LandingWhatsappComponent implements OnInit {
 
   async ngOnInit() {
     this.dataInit( true );
-    setTimeout(()=> this.requestLocationPermission(), 2000 );
+    setTimeout(()=> this.checkLocationPermission(), 2000 );
   }
 
   async dataInit( off = true ){
@@ -114,23 +116,47 @@ export class LandingWhatsappComponent implements OnInit {
     //console.log("list ciudades", this.listCiudades)
   }
 
+  checkLocationPermission() {
+    navigator.permissions.query({ name: 'geolocation' }).then((result) => {
+      if (result.state === 'granted') {
+        this.getLocation();
+      } else if (result.state === 'prompt') {
+        this.requestLocationPermission();
+      } else {
+        console.log('Location permission denied');
+        this.requestLocationPermission();
+      }
+    });
+  }
+
   requestLocationPermission() {
     const dialogRef = this.dialog.open(AlertDialogLocationComponent);
 
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
-        this.getLocation();
+        navigator.geolocation.getCurrentPosition(
+          (position) => {
+            this.getLocation();
+            localStorage.setItem('locationPermission', 'granted');
+          },
+          (error) => {
+            console.error('Error getting location: ', error);
+          }
+        );
       } else {
         console.log('Location permission denied');
+        alert('La ubicación es obligatoria para utilizar esta aplicación. Por favor, permite el acceso a la ubicación.');
+        this.requestLocationPermission();
       }
     });
   }
+
   getLocation() {
     this._ToolServices.getPosition().then((position) => {
       const latitude = position.coords.latitude;
       const longitude = position.coords.longitude;
       console.log("Latitude: " + latitude + " Longitude: " + longitude);
-      this.data.latitude  = latitude;
+      this.data.latitude = latitude;
       this.data.longitude = longitude;
       // Aquí puedes enviar la ubicación al servidor o usarla como desees
     }).catch((error) => {
@@ -149,6 +175,7 @@ export class LandingWhatsappComponent implements OnInit {
   }
 
   scrollToNextStep() {
+    console.log("*****", this.nextStep )
     if (this.nextStep) {
       this.nextStep.nativeElement.scrollIntoView({ behavior: 'smooth', block: 'start' });
     }
@@ -233,7 +260,7 @@ export class LandingWhatsappComponent implements OnInit {
     }
     if( !item.detailsP.foto ) return this._ToolServices.presentToast("Tenemos problemas, seleccionar una foto")
     this.listDataAggregate.push( { ref: item.talla, foto: item.detailsP.foto, amountAd: Number( row.amountAd ), talla: row.tal_descripcion, id: this._ToolServices.codigo(), price: this.price } );
-    console.log("***114", this.listDataAggregate)
+    //console.log("***114", this.listDataAggregate)
     this.suma();
     this._ToolServices.presentToast("Producto Agregado al Carrito")
   }
@@ -241,7 +268,7 @@ export class LandingWhatsappComponent implements OnInit {
   suma(){
     this.data.sumAmount = 0;
     let sumPrice = this.price;
-    console.log("****186", sumPrice, this.namePais)
+    //console.log("****186", sumPrice, this.namePais)
     for( let row of this.listDataAggregate ) {
       row.price = this.price;
       this.data.sumAmount+= Number( row.amountAd )
@@ -270,7 +297,7 @@ export class LandingWhatsappComponent implements OnInit {
   async pedidoConfirmar(){ console.log("pedidoconfirmar")
     let dataEnd:any = this.data;
     dataEnd.listProduct = this.listDataAggregate;
-    console.log("this.data.transportadora",this.data.transportadora)
+    //console.log("this.data.transportadora",this.data.transportadora)
     dataEnd.transportadora = this.data.transportadora //EDU
     dataEnd.numerowsap = this.numberId
     this.celularConfirmar(dataEnd);
@@ -292,7 +319,7 @@ export class LandingWhatsappComponent implements OnInit {
     if( dataEnd.ciudad.ciudad_full ) {
       dataEnd.codeCiudad = dataEnd.ciudad.id_ciudad;
       dataEnd.ciudad = dataEnd.ciudad.ciudad_full;
-      console.log("*****262", dataEnd )
+      //console.log("*****262", dataEnd )
     }
     dataEnd.stateWhatsapp = 1;
     dataEnd.paisCreado = this.namePais;
@@ -359,7 +386,7 @@ export class LandingWhatsappComponent implements OnInit {
 
   //edu
   pedidoGuardar(pedido){
-    console.log("pedido", pedido)
+    //console.log("pedido", pedido)
     const options = {
       method : "POST",
       headers : {
@@ -371,7 +398,7 @@ export class LandingWhatsappComponent implements OnInit {
     url = "https://ginga.com.co/pedidosweb/api/lokompro/pedidolw.php";
     fetch( url,options)
     .then(response => response.json())
-    .then(data => { console.log("api pedidoslw",data)
+    .then(data => { //console.log("api pedidoslw",data)
       if(data.response == "ok"){
         console.log("Pedido Realizado")
         this.handleEndOrder()
@@ -437,7 +464,7 @@ export class LandingWhatsappComponent implements OnInit {
   }
 
   openWhatsapp( data:any ){
-    console.log("*****473", data)
+    //console.log("*****473", data)
     let urlWhatsapp = `https://wa.me/57${ this.numberId }?text=${ encodeURIComponent(` Cod: 785
 ¡Gracias por tu compra, ${ data.nombre }!🤩
 
@@ -452,7 +479,7 @@ Ciudad: ${ data.ciudad }
 Cantidad de pares: * ${ this.data.countItem } *
 Valor de productos: ${ this._ToolServices.monedaChange(3,2,( ( this.data.totalAPagar -  this.data.totalFlete ) || 0 )) }
 Valor de flete: ${ this._ToolServices.monedaChange( 3,2, ( this.data.totalFlete || 0 ) ) }
-Monto a cancelar: ${ this._ToolServices.monedaChange( 3,2, ( this.data.totalAPagar || 0 ) ) } ¡Pagas al recibir!
+Monto a cancelar: ${ this._ToolServices.monedaChange( 3,2, ( this.data.totalAPagar || 0 ) ) } ${ this.namePais === 'Colombia' ? '¡Pagas al recibir!' : ''}
 
 ⏳ Tiempo de entrega: 2 a 8 días hábiles (depende de tu ubicación y transportadora).
 
@@ -468,7 +495,7 @@ Monto a cancelar: ${ this._ToolServices.monedaChange( 3,2, ( this.data.totalAPag
     if (xx!=xx/r) {xx++}
     return (xx*r)
 }
-btnFleteDisable:boolean = false;
+
   async precioRutulo( ev:any, opt:boolean = true ){
     return new Promise( async ( resolve ) =>{
       console.log("***EVE", ev);
@@ -563,15 +590,15 @@ btnFleteDisable:boolean = false;
       /*data.valor_recaudar = ( Number( ( res.data || 0 ) ) + sumaFlete ) ;
       res = await this.getTridy( data );*/
       this.data.totalFlete = Number( ( res.data || 0 ) ) ;
-      console.log("res triidy", this.data.totalFlete)
+      //console.log("res triidy", this.data.totalFlete)
       this.data.totalFlete = Number(this.data.totalFlete.toFixed(2));
       this.data.totalFlete = this.redondeaAlAlza(this.data.totalFlete,1000);
-      console.log("redondeado",this.data.totalFlete )
+      //console.log("redondeado",this.data.totalFlete )
       this.data.totalFlete += 3000;
-      console.log("aumento 5k", this.data.totalFlete)
-      console.log("af", sumaFlete )
+      //console.log("aumento 5k", this.data.totalFlete)
+      //console.log("af", sumaFlete )
       this.data.totalFlete += sumaFlete
-      console.log("con AF" , this.data.totalFlete)
+      //console.log("con AF" , this.data.totalFlete)
       // this.data.totalFlete += data.valor_recaudar
       //console.log("transportadora", this.data.transportadora)
       //console.log(this.data.totalFlete); // Muestra 1.78
@@ -594,7 +621,7 @@ btnFleteDisable:boolean = false;
     });
   }
   onChangeSearch( val:any ){
-    console.log( val, this.listCiudades )
+    //console.log( val, this.listCiudades )
     this.contraentregaAlert = false
     if (val) {
       this.listCiudadesF = this.listCiudades.filter((ciudad) =>
@@ -620,22 +647,22 @@ btnFleteDisable:boolean = false;
     console.log("*¨**574", this.data, this.listCiudadesRSelect );
     let dataFletePrice = [];
     let filterR = this.listCiudadesRSelect.find( row => row.id_ciudad == this.data.ciudades );
-    if( this.namePais === 'Colombia'){
-      if( opt === true ){
-        this.data.ciudad = {
-          ciudad_full: filterR.ciudad_full,
-          id_ciudad: filterR.id_ciudad,
-        };
-      }
-    }
-    if( this.namePais === 'Panama'){
-      this.data.ciudad = filterR.ciudad_full
-      this.data.codeCiudad = Number( filterR.id_ciudad )
-    }
-    if( this.listDataAggregate.length === 0 ) return true;
     if( filterR ){
+      if( this.namePais === 'Colombia'){
+        if( opt === true ){
+          this.data.ciudad = {
+            ciudad_full: filterR.ciudad_full,
+            id_ciudad: filterR.id_ciudad,
+          };
+        }
+      }
+      if( this.namePais === 'Panama'){
+        this.data.ciudad = filterR.ciudad_full
+        this.data.codeCiudad = Number( filterR.id_ciudad )
+      }
       let dataF:any = {};
       let index = 0;
+      if( this.listDataAggregate.length === 0 ) return true;
       for( let row of filterR.transport ){
         if( row.contraentrega === 'SI' && row.transportadora !== "Domicilio" ){
           dataF = {
@@ -652,7 +679,9 @@ btnFleteDisable:boolean = false;
       }
     }
     let valAlto = _.orderBy(dataFletePrice, ['price'], ['asc']); // ORdenar Cual es el menos Caro
-    console.log("*****************650********", valAlto );
+    valAlto = this.cleanData( valAlto ); // elimina los undefinde y los Nan
+    valAlto = valAlto.filter( valAlto => valAlto.price ) // Busca los que si tienen precio
+    //console.log("*****************650********", valAlto );
     if( valAlto[0] ){
       this.data.dataTridyCosto = valAlto || [];
       this.data.transportadora = valAlto[0].transportadora;
@@ -662,9 +691,45 @@ btnFleteDisable:boolean = false;
       this.dataCantidadCotizada = this.data.priceTotal;
       this._ToolServices.presentToast("Precio del Envio "+ this._ToolServices.monedaChange( 3, 2, ( this.data.totalFlete ) ) + " Transportadora "+  this.data.transportadora );
     }else{
+      this.data.totalFlete = 0;
+      this.data.transportadora = '';
+      this.suma();
       this.contraentregaAlert = true;
     }
-    console.log("*****600", this.data)
+  }
+
+  cleanData( dataArray ) {
+    return dataArray.map(item => {
+      let cleanedItem = {};
+      for (let key in item) {
+        if (item.hasOwnProperty(key)) {
+          let value = item[key];
+          if (value !== undefined && !isNaN(value)) {
+            cleanedItem[key] = value;
+          }
+        }
+      }
+      return cleanedItem;
+    });
+  }
+
+  handleOpenPhoto(){
+    const dialogRef = this.dialog.open(ListGaleryLandingComponent,{
+      data: {data: this.dataPro.listColor },
+      width: "100%",
+      height: "auto"
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      console.log(`Dialog result:`, result );
+      if( !result ) return false;
+      for( let row of result ){
+        this.listDataAggregate.push( { ref: "REFERENCIA "+row.talla, foto: row.foto, amountAd: Number( row.cantidad ), talla: row.talla, id: this._ToolServices.codigo(), price: this.price } );
+      }
+      this.suma();
+      this._ToolServices.presentToast("Producto Agregado al Carrito")
+      setTimeout(()=>this.scrollToNextStep(), 1000 )
+    });
   }
 
 }
