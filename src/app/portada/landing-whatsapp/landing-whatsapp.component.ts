@@ -398,10 +398,11 @@ export class LandingWhatsappComponent implements OnInit {
     url = "https://ginga.com.co/pedidosweb/api/lokompro/pedidolw.php";
     fetch( url,options)
     .then(response => response.json())
-    .then(data => { //console.log("api pedidoslw",data)
+    .then( async (data) => { //console.log("api pedidoslw",data)
       if(data.response == "ok"){
         console.log("Pedido Realizado")
-        this.handleEndOrder()
+        try { await this.ProcessNextUpdateVentaL( { id: pedido.id, notifiedWeb: 0 } );
+        } catch (error) { }
       }
       // else{
       //   console.log("problema")
