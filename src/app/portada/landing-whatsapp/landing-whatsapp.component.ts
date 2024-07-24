@@ -639,13 +639,14 @@ Monto a cancelar: ${ this._ToolServices.monedaChange( 3,2, ( this.data.totalAPag
 
   handleSelectDepartament(){
     let filterR = this.listCiudades.find( row => row.id_ciudad == this.data.departamento )
-    console.log("***566", this.data, filterR )
+    //console.log("***566", this.data, filterR )
     if( filterR ){
+      this.data.departament = filterR.departamento;
       this.listCiudadesRSelect = filterR.ciudadesList
     }
   }
   async handleProcesFlete( opt:boolean = true ){
-    console.log("*¨**574", this.data, this.listCiudadesRSelect );
+    //console.log("*¨**574", this.data, this.listCiudadesRSelect );
     let dataFletePrice = [];
     let filterR = this.listCiudadesRSelect.find( row => row.id_ciudad == this.data.ciudades );
     if( filterR ){
@@ -703,6 +704,7 @@ Monto a cancelar: ${ this._ToolServices.monedaChange( 3,2, ( this.data.totalAPag
     return dataArray.map(item => {
       let cleanedItem = {};
       for (let key in item) {
+        if( key === 'transportadora') cleanedItem[key] = item[key];
         if (item.hasOwnProperty(key)) {
           let value = item[key];
           if (value !== undefined && !isNaN(value)) {
@@ -725,7 +727,7 @@ Monto a cancelar: ${ this._ToolServices.monedaChange( 3,2, ( this.data.totalAPag
       console.log(`Dialog result:`, result );
       if( !result ) return false;
       for( let row of result ){
-        this.listDataAggregate.push( { ref: "REFERENCIA "+row.talla, foto: row.foto, amountAd: Number( row.cantidad ), talla: row.talla, id: this._ToolServices.codigo(), price: this.price } );
+        this.listDataAggregate.push( { ref: row.ref, foto: row.foto, amountAd: Number( row.cantidad ), talla: row.talla, id: this._ToolServices.codigo(), price: this.price } );
       }
       this.suma();
       this._ToolServices.presentToast("Producto Agregado al Carrito")
