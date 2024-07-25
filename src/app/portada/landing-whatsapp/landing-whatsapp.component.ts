@@ -330,7 +330,7 @@ export class LandingWhatsappComponent implements OnInit {
     }
     dataEnd.totalFlete = this.data.totalFlete;
     this.suma();
-    if( this.contraentregaAlert === true ) dataEnd.contraEntrega = 1;
+    if( this.contraentregaAlert === true || dataEnd.totalFlete === 0 ) dataEnd.contraEntrega = 1;
     else dataEnd.contraEntrega = 0;
     this.ProcessNextUpdateVentaL( dataEnd )
     let result = await this._ToolServices.modaHtmlEnd( dataEnd );
@@ -484,7 +484,7 @@ Monto a cancelar: ${ this._ToolServices.monedaChange( 3,2, ( this.data.totalAPag
 
 ⏳ Tiempo de entrega: 2 a 8 días hábiles (depende de tu ubicación y transportadora).
 
-🤝 en el transcurso del día te enviaremos la guía de tu pedido`)}`;
+🤝 Su guía será enviada apenas su pedido esté en despacho.`)}`;
     window.open( urlWhatsapp );
     this.data = {};
     this.listDataAggregate = [];

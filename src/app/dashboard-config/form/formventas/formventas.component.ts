@@ -552,6 +552,7 @@ export class FormventasComponent implements OnInit {
 
   updates( opt:boolean = false ) {
     if( !opt ) if (!this.superSub) if ( ( this.clone.ven_estado == 1 || this.clone.ven_estado == 2 || this.clone.ven_estado == 3 || this.clone.ven_estado == 4 ) || ( this.clone.ven_numero_guia ) ) { this._tools.presentToast("Error no puedes ya editar la venta ya esta aprobada"); return false; }
+    console.log("************DATA", this.data )
     let data = _.clone( this.data );
     /*data = _.omit( data, ['usu_clave_int']);
     if( this.superSub == false ) {
@@ -623,6 +624,7 @@ export class FormventasComponent implements OnInit {
     dialogRef.afterClosed().subscribe(result => {
       console.log(`Dialog result: ${result}`);
       if( !result ) return false;
+      if( !result.data.id ) return false;
       this.data.ven_numero_guia = result.nRemesa;
       this.data.ven_imagen_guia = result.urlRotulos;
       if( this.data.transportadoraSelect === "CORDINADORA") this.imprimirGuia();
