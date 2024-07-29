@@ -99,6 +99,36 @@ export class FormVentasVeraComponent implements OnInit {
 
   }
 
+  handleOrdenP(){
+    this.pedidoGuardar( this.data );
+  }
+
+    //edu
+    pedidoGuardar(pedido){
+      //console.log("pedido", pedido)
+      const options = {
+        method : "POST",
+        headers : {
+          "Content-Type" : "application/json"
+        },
+        body : JSON.stringify(pedido)
+      }
+      let url = "http://localhost/pedidosweb/api/lokompro/pedidolw.php";
+      url = "https://ginga.com.co/pedidosweb/api/lokompro/pedidolw.php";
+      fetch( url,options)
+      .then(response => response.json())
+      .then( async (data) => { //console.log("api pedidoslw",data)
+        if(data.response == "ok"){
+          console.log("Pedido Realizado")
+          this._tools.presentToast(data.msj);
+          this.data.notifiedWeb = 0;
+          this.updates();
+        }else{
+          this._tools.presentToast(data.msj);
+        }
+      })
+    }
+
   submit(){
     console.log(this.data.cat_activo)
     // if(this.data.cat_activo) this.data.cat_activo = 0;
