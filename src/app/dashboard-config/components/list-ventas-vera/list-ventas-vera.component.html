@@ -75,6 +75,7 @@
                         <img src="./assets/imagenes/colombia.jpg" alt="" *ngIf="row['paisCreado'] === 'Colombia'" style="width: 100%; height: 50px;">
                         <img src="./assets/imagenes/panama.jpg" alt="" *ngIf="row['paisCreado'] === 'Panama'" style="width: 100%; height: 50px;">
                       </td>
+                      <td>{{ row['notifiedWeb'] === 0 ? "SI": "NO"}}</td>
                       <td>{{ row['createdAt'] | date:'medium' }}</td>
 
                     </tr>

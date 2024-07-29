@@ -30,7 +30,7 @@ export class ListVentasVeraComponent implements OnInit {
     where:{ },
     limit: 100
   };
-  Header:any = [ 'Acciones','Nombre','Numero','Ciudad','Barrio', 'Pais','Creado' ];
+  Header:any = [ 'Acciones','Nombre','Numero','Ciudad','Barrio', 'Pais','Notificado Pedidos Web','Creado' ];
   $:any;
   public datoBusqueda = '';
   count:number = 0;

@@ -129,4 +129,7 @@
         <span *ngIf="!id">Guardar Cambios</span>
         <span *ngIf="id">Actulizar Cambios</span>
     </button>
+    <button mat-button color="warn" *ngIf="data.notifiedWeb === 1">
+      <span>Venta no Registrada en Pedidos Web</span>
+  </button>
 </mat-dialog-actions>
