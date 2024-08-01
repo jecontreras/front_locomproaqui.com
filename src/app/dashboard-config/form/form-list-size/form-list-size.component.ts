@@ -157,7 +157,7 @@ export class FormListSizeComponent implements OnInit {
     return new Promise(resolve =>{
       let data = {
         id: item.id,
-        tal_sw_activo: 1
+        tal_sw_activo: 0
       }
       this._tipoTalla.updateTalla( data ).subscribe(( res:any )=>{
         this._tools.tooast( { title: "Eliminado" });
@@ -168,6 +168,7 @@ export class FormListSizeComponent implements OnInit {
 
   async handleOrdenate( item ){
     return new Promise(resolve =>{
+      if( !item.id ) return resolve( false );
       let data = {
         id: item.id,
         ordenar: item.ordenar

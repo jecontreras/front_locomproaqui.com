@@ -36,7 +36,7 @@ export class PerfilComponent implements OnInit {
   };
   files: File[] = [];
   list_files: any = [];
-  urlTienda: string = `${URLFRON}/portada/index/`;
+  urlTienda: string = `${URLFRON}/front/index/`;
   urlRegistro: string = `${URLFRON}/singUp/vendedor/`;
   restaure: any = {};
   disableRestaure: boolean = false;

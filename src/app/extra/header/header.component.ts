@@ -124,7 +124,7 @@ export class HeaderComponent implements OnInit {
       this.disabledSearch = window.innerWidth <= 600 ? true : false;
 
       if( this.dataUser.id ){
-        console.log("datauser", this.dataUser)
+        //console.log("datauser", this.dataUser)
         this.rolUser = this.dataUser.usu_perfil.prf_descripcion;
         this.activando = false;
         if(this.dataUser.usu_perfil.prf_descripcion == 'administrador') this.activando = true;
@@ -140,7 +140,7 @@ export class HeaderComponent implements OnInit {
         if( this.porcentajeUser > this.dataUser.porcentaje ) this.porcentajeMostrar = this.porcentajeUser;
         else this.porcentajeMostrar = this.dataUser.porcentaje;
         this.usuPerfil = this.dataUser.usu_perfil.id
-        console.log("usuperfil", this.usuPerfil)
+        //console.log("usuperfil", this.usuPerfil)
       }
       this.submitChat();
     });

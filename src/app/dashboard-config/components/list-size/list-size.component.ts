@@ -53,8 +53,11 @@ export class ListSizeComponent implements OnInit {
       console.log(`Dialog result: ${result}`);
     });
   }
-  delete(obj:any, idx:any){
-    obj.cat_activo = 2;
+  async delete(obj:any, idx:any){
+    let alert:any = await  this._tools.confirm({title:"Importante", detalle:"Deseas! Eliminar esta talla", confir:"Si Acepto"});
+    console.log("***", alert)
+    if( alert.dismiss == "cancel" ) return false;
+    obj.tit_sw_activo = 0;
     this._tipoTalla.update(obj).subscribe((res:any)=>{
       this.dataTable.dataRows.splice(idx, 1);
       this._tools.presentToast("Eliminado")

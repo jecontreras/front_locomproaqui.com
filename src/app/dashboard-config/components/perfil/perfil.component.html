@@ -21,6 +21,7 @@
                             </h6>
                             <div>
                                 <button (click)="copiarLink()"
+                                    *ngIf="textPerfil !== 'proveedor'"
                                     class="btn btn-primary btn-just-icon btn-round saltoButton">TRAER CLIENTES A MI
                                     TIENDA</button>
                                 <button (click)="copiarLinkRegistro()"
