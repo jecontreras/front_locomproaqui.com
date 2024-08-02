@@ -156,15 +156,20 @@ export class ListVentasVeraComponent implements OnInit {
           }
         },
         {
-          numero: {
-            contains: this.datoBusqueda|| ''
-          }
-        },
-        {
           ciudad: {
             contains: this.datoBusqueda|| ''
           }
         },
+        {
+          code: {
+            contains: this.datoBusqueda|| ''
+          }
+        },
+        {
+          transportadora: {
+            contains: this.datoBusqueda|| ''
+          }
+        }
       ];
     }
     this.cargarTodos();

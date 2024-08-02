@@ -69,10 +69,13 @@
               <button (click)="crearAnt(row)" class="btn btn-primary btn-just-icon btn-round">
                 <i class="material-icons">remove_red_eye</i>
               </button>
-              <button (click)="handleDelete(row, idx)" class="btn btn-danger btn-just-icon btn-round">
+              <button *ngIf="!_dataConfig.view" (click)="handleInactivate(row, idx)" class="btn btn-warning btn-just-icon btn-round" title="Inactivar" >
+                <i class="material-icons">developer_board_off</i>
+              </button>
+              <button *ngIf="_dataConfig.view" (click)="handleDelete(row, idx)" class="btn btn-danger btn-just-icon btn-round">
                 <i class="material-icons">delete_forever</i>
               </button>
-              <button (click)="handleDouble(row)" class="btn btn-warning btn-just-icon btn-round" [disabled]="row.btnDisabled">
+              <button *ngIf="_dataConfig.view" (click)="handleDouble(row)" class="btn btn-warning btn-just-icon btn-round" [disabled]="row.btnDisabled">
                 Duplicar
               </button>
               <div *ngIf="_dataConfig.view === 'check' && rolName === 'administrador'">

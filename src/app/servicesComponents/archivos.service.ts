@@ -22,6 +22,11 @@ export class ArchivosService {
     return this._model.querys('archivos/fileTotal',query, 'post');
   }
 
+  createGif(query:any){
+    //this.FileFirebase( query );
+    return this._model.querys('archivos/fileGif',query, 'post');
+  }
+
   getBase64(file) {
     return new Promise((resolve, reject) => {
       const reader = new FileReader();

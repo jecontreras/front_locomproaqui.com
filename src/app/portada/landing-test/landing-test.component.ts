@@ -9,15 +9,13 @@ import { DialogPedidoArmaComponent } from '../dialog-pedido-arma/dialog-pedido-a
 import { Indicativo } from 'src/app/JSON/indicativo';
 import { departamento } from 'src/app/JSON/departamentos';
 import * as _ from 'lodash';
-import { AlertDialogLocationComponent } from '../alert-dialog-location/alert-dialog-location.component';
 
 @Component({
-  selector: 'app-landing-whatsapp',
-  templateUrl: './landing-whatsapp.component.html',
-  styleUrls: ['./landing-whatsapp.component.scss']
+  selector: 'app-landing-test',
+  templateUrl: './landing-test.component.html',
+  styleUrls: ['./landing-test.component.scss']
 })
-export class LandingWhatsappComponent implements OnInit {
-
+export class LandingTestComponent implements OnInit {
   dataPro:any = {};
   listGaleria:any = [];
   viewPhoto:string;
@@ -41,9 +39,7 @@ export class LandingWhatsappComponent implements OnInit {
   finalizarBoton: boolean = false;
   contraentregaAlert: boolean = false;
   price:number = 15500;
-  code:string = "COP";
-  dataCantidadCotizada:number;
-
+  code:string = "COP"
   constructor(
     private _productServices: ProductoService,
     public _ToolServices: ToolsService,
@@ -55,7 +51,18 @@ export class LandingWhatsappComponent implements OnInit {
 
   async ngOnInit() {
     this.dataInit( true );
-    setTimeout(()=> this.requestLocationPermission(), 2000 );
+  }
+  getLocation() {
+    this._ToolServices.getPosition().then((position) => {
+      const latitude = position.coords.latitude;
+      const longitude = position.coords.longitude;
+      console.log("Latitude: " + latitude + " Longitude: " + longitude);
+      this.data.latitude  = latitude;
+      this.data.longitude = longitude;
+      // Aquí puedes enviar la ubicación al servidor o usarla como desees
+    }).catch((error) => {
+      console.error("Error getting location: ", error);
+    });
   }
 
   async dataInit( off = true ){
@@ -107,32 +114,9 @@ export class LandingWhatsappComponent implements OnInit {
       }
       this.listGaleria.sort(() => this.getRandomNumber());
     } catch (error) { }
+    setTimeout(()=> this.getLocation(), 5000 );
     //console.log("****", this.dataPro, this.listGaleria)
     //console.log("list ciudades", this.listCiudades)
-  }
-
-  requestLocationPermission() {
-    const dialogRef = this.dialog.open(AlertDialogLocationComponent);
-
-    dialogRef.afterClosed().subscribe(result => {
-      if (result) {
-        this.getLocation();
-      } else {
-        console.log('Location permission denied');
-      }
-    });
-  }
-  getLocation() {
-    this._ToolServices.getPosition().then((position) => {
-      const latitude = position.coords.latitude;
-      const longitude = position.coords.longitude;
-      console.log("Latitude: " + latitude + " Longitude: " + longitude);
-      this.data.latitude  = latitude;
-      this.data.longitude = longitude;
-      // Aquí puedes enviar la ubicación al servidor o usarla como desees
-    }).catch((error) => {
-      console.error("Error getting location: ", error);
-    });
   }
 
   getVentaCode(){
@@ -295,9 +279,7 @@ export class LandingWhatsappComponent implements OnInit {
     dataEnd.paisCreado = this.namePais;
     dataEnd.numberCreado = this.numberId;
     this.suma();
-    if( !this.contraentregaAlert ) {
-      if( this.dataCantidadCotizada !== dataEnd.priceTotal ) await this.handleProcesFlete( false );
-    }
+    if( !this.contraentregaAlert ) await this.handleProcesFlete( false );
     dataEnd.totalFlete = this.data.totalFlete;
     this.suma();
     if( this.contraentregaAlert === true ) dataEnd.contraEntrega = 1;
@@ -434,7 +416,6 @@ export class LandingWhatsappComponent implements OnInit {
   }
 
   openWhatsapp( data:any ){
-    console.log("*****473", data)
     let urlWhatsapp = `https://wa.me/57${ this.numberId }?text=${ encodeURIComponent(` Cod: 785
 ¡Gracias por tu compra, ${ data.nombre }!🤩
 
@@ -447,6 +428,7 @@ WhatsApp: ${ data.numero}
 Dirección: ${ data.direccion }
 Ciudad: ${ data.ciudad }
 Cantidad de pares: * ${ this.data.countItem } *
+* Transportadora: * ${ this.data.transportadora }
 Valor de productos: ${ this._ToolServices.monedaChange(3,2,( ( this.data.totalAPagar -  this.data.totalFlete ) || 0 )) }
 Valor de flete: ${ this._ToolServices.monedaChange( 3,2, ( this.data.totalFlete || 0 ) ) }
 Monto a cancelar: ${ this._ToolServices.monedaChange( 3,2, ( this.data.totalAPagar || 0 ) ) } ¡Pagas al recibir!
@@ -532,23 +514,20 @@ btnFleteDisable:boolean = false;
         sumaFlete = 9000;
       }
       if( ev.transportadora === "InterRapidisimo"){
-        if ( this.data.sumAmount >= 1 && this.data.sumAmount <= 12 )  {
-          data.peso = 1;
-        }
-        if ( this.data.sumAmount >= 13 && this.data.sumAmount <= 17 )  {
+        if ( this.data.sumAmount >= 6 && this.data.sumAmount <= 17 )  {
           data.peso = 2;
         }
         if ( this.data.sumAmount >= 18 && this.data.sumAmount <= 25 )  {
-          data.peso = 3;
-        }
-        if ( this.data.sumAmount >= 26 && this.data.sumAmount <= 32 )  {
           data.peso = 4;
         }
-        if ( this.data.sumAmount >= 33 && this.data.sumAmount <= 38 )  {
+        if ( this.data.sumAmount >= 26 && this.data.sumAmount <= 32 )  {
           data.peso = 5;
         }
-        if ( this.data.sumAmount >= 39 && this.data.sumAmount <= 44 )  {
+        if ( this.data.sumAmount >= 33 && this.data.sumAmount <= 38 )  {
           data.peso = 6;
+        }
+        if ( this.data.sumAmount >= 39 && this.data.sumAmount <= 44 )  {
+          data.peso = 7;
         }
       }
       this.data.af = sumaFlete; //el AF
@@ -564,7 +543,7 @@ btnFleteDisable:boolean = false;
       this.data.totalFlete = Number(this.data.totalFlete.toFixed(2));
       this.data.totalFlete = this.redondeaAlAlza(this.data.totalFlete,1000);
       console.log("redondeado",this.data.totalFlete )
-      this.data.totalFlete += 3000;
+      this.data.totalFlete += 5000
       console.log("aumento 5k", this.data.totalFlete)
       console.log("af", sumaFlete )
       this.data.totalFlete += sumaFlete
@@ -617,18 +596,7 @@ btnFleteDisable:boolean = false;
     console.log("*¨**574", this.data, this.listCiudadesRSelect );
     let dataFletePrice = [];
     let filterR = this.listCiudadesRSelect.find( row => row.id_ciudad == this.data.ciudades );
-    if( this.namePais === 'Colombia'){
-      if( opt === true ){
-        this.data.ciudad = {
-          ciudad_full: filterR.ciudad_full,
-          id_ciudad: filterR.id_ciudad,
-        };
-      }
-    }
-    if( this.namePais === 'Panama'){
-      this.data.ciudad = filterR.ciudad_full
-      this.data.codeCiudad = Number( filterR.id_ciudad )
-    }
+    console.log("****", filterR)
     if( this.listDataAggregate.length === 0 ) return true;
     if( filterR ){
       let dataF:any = {};
@@ -642,21 +610,29 @@ btnFleteDisable:boolean = false;
           };
           let r = await this.precioRutulo( dataF, false )
           if( r === false ) continue;
-          dataFletePrice.push( { ...dataF, price: r, recaudo: this.data.priceTotal, countPares: this.data.sumAmount } );
+          dataFletePrice.push( { ...dataF, price: r } );
           if( index >=2 ) break; // Consulta con 3 transportadoras
           index++;
         }
       }
     }
     let valAlto = _.orderBy(dataFletePrice, ['price'], ['asc']); // ORdenar Cual es el menos Caro
-    console.log("*****************650********", valAlto );
+    if( this.namePais === 'Colombia'){
+      if( opt === true ){
+        this.data.ciudad = {
+          ciudad_full: filterR.ciudad_full,
+          id_ciudad: filterR.id_ciudad,
+        };
+      }
+    }
+    if( this.namePais === 'Panama'){
+      this.data.ciudad = filterR.ciudad_full
+      this.data.codeCiudad = Number( filterR.id_ciudad )
+    }
     if( valAlto[0] ){
-      this.data.dataTridyCosto = valAlto || [];
       this.data.transportadora = valAlto[0].transportadora;
       this.data.totalFlete = ( valAlto[0].price ) + ( ( valAlto[valAlto.length - 1 ].price ) * 10 / 100 );
-      //this.data.totalFlete = this.redondeaAlAlza(this.data.totalFlete,1000);
       this.suma();
-      this.dataCantidadCotizada = this.data.priceTotal;
       this._ToolServices.presentToast("Precio del Envio "+ this._ToolServices.monedaChange( 3, 2, ( this.data.totalFlete ) ) + " Transportadora "+  this.data.transportadora );
     }else{
       this.contraentregaAlert = true;
