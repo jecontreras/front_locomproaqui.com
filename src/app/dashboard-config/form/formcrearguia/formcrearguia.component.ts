@@ -176,9 +176,9 @@ export class FormcrearguiaComponent implements OnInit {
     this._ventas.createFelte( this.data2 ).subscribe( ( res:any ) => {
       res = res.data;
       console.log( res );
-      if( res.status !== 200 ) this._tools.basicIcons({ header: "Error!", subheader: "No pudimos crear el flete por favor actualizar pagina" });
-      this._tools.basicIcons({ header: "Exitoso!", subheader: "Creacion de flete creado exitoso #remesa " + res.nRemesa });
       this.btndisabled = false;
+      if( res.status !== 200 || res === false ) return this._tools.basicIcons({ header: "Error!", subheader: "No pudimos crear el flete por favor actualizar pagina" });
+      this._tools.basicIcons({ header: "Exitoso!", subheader: "Creacion de flete creado exitoso #remesa " + res.nRemesa });
       //if( res.transportadoraSelect == "CORDINADORA") if( res.urlRotulos ) this._tools.downloadPdf( res.urlRotulos, res.nRemesa);
       this.dialogRef.close( res );
     },(error)=> { this.btndisabled = false;  this._tools.basicIcons({ header: "Error!", subheader: "No pudimos crear el flete por favor actualizar pagina" }); } );

@@ -7,6 +7,6 @@ import { Component } from '@angular/core';
 })
 export class PublicoComponent {
   constructor(){
-    console.log("triple hp")
+    console.log("publico Component")
   }
 }

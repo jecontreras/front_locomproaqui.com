@@ -5,6 +5,7 @@ import { ToolsService } from 'src/app/services/tools.service';
 import { ArchivosService } from 'src/app/servicesComponents/archivos.service';
 import { VentasService } from 'src/app/servicesComponents/ventas.service';
 import * as _ from 'lodash';
+import { latLng, tileLayer, marker, icon, Marker } from 'leaflet';
 
 @Component({
   selector: 'app-form-ventas-vera',
@@ -16,7 +17,7 @@ export class FormVentasVeraComponent implements OnInit {
   files: File[] = [];
   list_files: any = [];
   data:any = {
-    
+
   };
   listCategorias:any = [];
   id:any;
@@ -29,6 +30,15 @@ export class FormVentasVeraComponent implements OnInit {
 
   readonly separatorKeysCodes = [ENTER, COMMA] as const;
   opcionCurrencys: any = {};
+  options = {
+    layers: [
+      tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', { maxZoom: 18, attribution: '© OpenStreetMap contributors' })
+    ],
+    zoom: 13,
+    center: latLng(40.730610, -73.935242) // Valores iniciales, puedes cambiarlos luego
+  };
+
+  layers: Marker[] = [];
 
   constructor(
     public dialog: MatDialog,
@@ -37,7 +47,7 @@ export class FormVentasVeraComponent implements OnInit {
     public dialogRef: MatDialogRef<FormVentasVeraComponent>,
     @Inject(MAT_DIALOG_DATA) public datas: any,
     private _archivos: ArchivosService
-  ) { 
+  ) {
     this.opcionCurrencys = this._tools.currency;
   }
 
@@ -46,6 +56,22 @@ export class FormVentasVeraComponent implements OnInit {
       this.data = _.clone(this.datas.datos);
       this.id = this.data.id;
       this.titulo = "Actualizar";
+
+      const latitude = this.data.latitude; // Asegúrate de que estos nombres coincidan con tu estructura de datos
+      const longitude = this.data.longitude;
+
+      this.layers = [
+        marker([ latitude, longitude ], {
+          icon: icon({
+            iconSize: [25, 41],
+            iconAnchor: [13, 41],
+            iconUrl: './assets/flecha.png',
+          })
+        })
+      ];
+
+      this.options.center = latLng( latitude, longitude ); // Recentrar el mapa en la nueva ubicación
+
       this.data.totalArticulo= this.data.totalAPagar - this.data.totalFlete;
     }else{this.id = ""}
   }
@@ -72,6 +98,36 @@ export class FormVentasVeraComponent implements OnInit {
     },(error)=>{console.error(error); this._tools.presentToast("Error de servidor")});
 
   }
+
+  handleOrdenP(){
+    this.pedidoGuardar( this.data );
+  }
+
+    //edu
+    pedidoGuardar(pedido){
+      //console.log("pedido", pedido)
+      const options = {
+        method : "POST",
+        headers : {
+          "Content-Type" : "application/json"
+        },
+        body : JSON.stringify(pedido)
+      }
+      let url = "http://localhost/pedidosweb/api/lokompro/pedidolw.php";
+      url = "https://ginga.com.co/pedidosweb/api/lokompro/pedidolw.php";
+      fetch( url,options)
+      .then(response => response.json())
+      .then( async (data) => { //console.log("api pedidoslw",data)
+        if(data.response == "ok"){
+          console.log("Pedido Realizado")
+          this._tools.presentToast(data.msj);
+          this.data.notifiedWeb = 0;
+          this.updates();
+        }else{
+          this._tools.presentToast(data.msj);
+        }
+      })
+    }
 
   submit(){
     console.log(this.data.cat_activo)

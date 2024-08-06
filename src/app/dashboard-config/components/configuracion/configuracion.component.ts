@@ -32,6 +32,7 @@ export class ConfiguracionComponent implements OnInit {
 
   ngOnInit(): void {
     this.getComentario();
+    this.getConfig();
   }
 
   guardar() {
@@ -40,13 +41,26 @@ export class ConfiguracionComponent implements OnInit {
       clInformacion: this.data.clInformacion,
       cdPedidos: this.data.cdPedidos,
       cdVentas: this.data.cdVentas,
-      cdRetiros: this.data.cdRetiros
+      cdRetiros: this.data.cdRetiros,
+      txtRegistroPWhatsapp: this.data.txtRegistroPWhatsapp,
+      txtRegistroVWhatsapp:  this.data.txtRegistroVWhatsapp,
+      txtVentasVWhatsapp:  this.data.txtVentasVWhatsapp,
+      txtVentasPWhatsapp: this.data.txtVentasPWhatsapp,
+      txtRetirosPWhatsapp:  this.data.txtRetirosPWhatsapp,
+      txtRetirosVWhatsapp:  this.data.txtRetirosVWhatsapp
     };
     this._admin.update( data ).subscribe(( res:any )=>{
       let accion = new ConfiguracionAction( res, 'post' );
       this._store.dispatch( accion );
       this._tools.tooast( { title: "Actualizado..."} );
     },( )=> this._tools.tooast( { title: "Erro al actualizar", icon: "error" } ) );
+  }
+
+  getConfig(){
+    this._admin.get( { where: { }} ).subscribe(res =>{
+      res = res.data;
+      this.data = res[0] || this.data;
+    })
   }
 
   getComentario(){

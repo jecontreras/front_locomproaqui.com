@@ -218,7 +218,7 @@ export class TableProductComponent implements OnInit {
             if( item.cantidad && item.check ) row['cantidadTallas']+= Number( item.cantidad || 0 );
           }
         }
-      } catch (error) { console.error("ERROR Controlado", error )}
+      } catch (error) { /*console.error("ERROR Controlado", error )*/}
     }
   }
 

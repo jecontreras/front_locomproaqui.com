@@ -48,6 +48,7 @@ export class HeaderComponent implements OnInit {
   events: string[] = [];
   urlwhat:string;
   userId:any;
+  userCabeza: any;
   opened:boolean;
   dataInfo:any = {};
   isHandset$:any = false;
@@ -107,6 +108,7 @@ export class HeaderComponent implements OnInit {
       this.listCart = store.cart || [];
       try { this.validatorVist = this.listCart[0].coinShop === true ? false : true; } catch (error) { }
       this.userId = store.usercabeza || {};
+      this.userCabeza = store.usercabeza || { "fake_id" : 0 };
       this.dataUser = store.user || {};
       this.userPr = store.userpr || {};
       this.querysSale.where.creacion = this.dataUser.id;
@@ -122,9 +124,9 @@ export class HeaderComponent implements OnInit {
       }
       //console.log( window.innerWidth )
       this.disabledSearch = window.innerWidth <= 600 ? true : false;
-       
+
       if( this.dataUser.id ){
-        console.log("datauser", this.dataUser)
+        //console.log("datauser", this.dataUser)
         this.rolUser = this.dataUser.usu_perfil.prf_descripcion;
         this.activando = false;
         if(this.dataUser.usu_perfil.prf_descripcion == 'administrador') this.activando = true;
@@ -140,7 +142,7 @@ export class HeaderComponent implements OnInit {
         if( this.porcentajeUser > this.dataUser.porcentaje ) this.porcentajeMostrar = this.porcentajeUser;
         else this.porcentajeMostrar = this.dataUser.porcentaje;
         this.usuPerfil = this.dataUser.usu_perfil.id
-        console.log("usuperfil", this.usuPerfil)
+        //console.log("usuperfil", this.usuPerfil)
       }
       this.submitChat();
     });
@@ -154,6 +156,7 @@ export class HeaderComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.listMenus();
     this.loadCoin();
     this.routName = window.location.pathname;
     this.urlTienda += this.dataUser.usu_telefono;
@@ -165,7 +168,7 @@ export class HeaderComponent implements OnInit {
     }*/
     //console.log( this.isHandset$, this.breakpoint, window.innerWidth )
 
-    // setInterval(()=> {
+    setInterval(()=> {
       this.routName = ( window.location.pathname.split("/"))[1];
       try {
         //console.log( this.nav)
@@ -179,7 +182,7 @@ export class HeaderComponent implements OnInit {
         //console.log("***144",color, this.dataUser )
         this.nav.nativeElement.style.backgroundColor = color;
       } catch (error) {}
-    // }, 1000 );
+    }, 1000 );
 
     try {
       if( this.dataUser.estado === 0 && this.dataUser.usu_perfil.prf_descripcion === 'proveedor' ){
@@ -242,22 +245,22 @@ export class HeaderComponent implements OnInit {
       //console.log(error)
     }
     //console.log("***149", this.rolUser)
-    this.listMenus();
     if( this.dataUser.id )this.getCarrito();
     if( this.dataUser.id ) this.getAlert();
     this.getEventos();
 
-    this.billeteraCalcular()
+    if( this.dataUser.id ) this.billeteraCalcular()
   }
 
   billeteraCalcular(){
-    let query = { usu_id : 0, usu_perfil : 0}
+      let query = { usu_id : 0, usu_perfil : 0}
       let totalCompletas =0
       let totalDespachado = 0
       let totalPdtePagoTrans = 0
-      query.usu_id = this.userId.id
+      query.usu_id = this.dataUser.id
       query.usu_perfil = this.dataUser.usu_perfil.id
-      console.log(" billeteraCalcular() query", query)
+      //console.log(" billeteraCalcular() query", query)
+      //console.log("usercabeza", this.userCabeza)
       this._productos.getVentas( query ).subscribe(res=>{
       //console.log("getSales res", res)
       for( let row of res.data ){
@@ -268,7 +271,7 @@ export class HeaderComponent implements OnInit {
             }else{
               totalPdtePagoTrans += row.ven_totaldistribuidor
             }
-          } 
+          }
           if(row.ven_estado == 3) totalDespachado += row.ven_totaldistribuidor
         }
         if(query.usu_perfil == 1 ){ //vendedor
@@ -277,7 +280,7 @@ export class HeaderComponent implements OnInit {
               totalCompletas += row.ven_ganancias
             }else
               totalPdtePagoTrans += row.ven_ganancias
-          } 
+          }
           if(row.ven_estado == 3) totalDespachado += row.ven_ganacias
         }
       };
@@ -876,8 +879,8 @@ export class HeaderComponent implements OnInit {
 
   navegar( item:any, obj:any = null ){
     //console.log("*", item, item.url[1])
-    for( let row of this.menus ) row.check = false;
-    item.check = true;
+    //if( item.check === true ) for( let row of this.menus ) row.check = false;
+    item.check = !item.check;
     if( obj ) obj.check = true;
     if( item.url == 'handleShop()' ) return this.handleShop();
     if( item.submenus ) if( item.submenus.length >0 ) return false;

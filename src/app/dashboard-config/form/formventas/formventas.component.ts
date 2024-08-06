@@ -239,9 +239,16 @@ export class FormventasComponent implements OnInit {
     this.files = [event.addedFiles[0]];
     if( this.id ) if( this.files.length > 0 ) this.subirFile( 'ven_imagen_conversacion' );
   }
-
-  onChangeSearch( ev:any ){
-    //console.log( ev )
+  listCiudadesF = [];
+  onChangeSearch( val:any ){
+    //console.log( val, this.listCiudades )
+    if (val) {
+      this.listCiudadesF = this.listCiudades.filter((ciudad) =>
+        ciudad.city.toLowerCase().includes(val.toLowerCase())
+      );
+    } else {
+      this.listCiudadesF = [];
+    }
   }
 
   onRemove(event) {
@@ -358,7 +365,7 @@ export class FormventasComponent implements OnInit {
     }
   }
 
-  async submit() { 
+  async submit() {
     this.disabledButton = true; //desactivo boton para evitar doble registro
     //console.log( this.data.ven_tipo == 'pago_anticipado', !this.data.ven_imagen_conversacion, this.data )
     if( this.data.ven_tipo == 'pago_anticipado' && !this.data.ven_imagen_conversacion ) {
@@ -545,6 +552,7 @@ export class FormventasComponent implements OnInit {
 
   updates( opt:boolean = false ) {
     if( !opt ) if (!this.superSub) if ( ( this.clone.ven_estado == 1 || this.clone.ven_estado == 2 || this.clone.ven_estado == 3 || this.clone.ven_estado == 4 ) || ( this.clone.ven_numero_guia ) ) { this._tools.presentToast("Error no puedes ya editar la venta ya esta aprobada"); return false; }
+    console.log("************DATA", this.data )
     let data = _.clone( this.data );
     /*data = _.omit( data, ['usu_clave_int']);
     if( this.superSub == false ) {
@@ -616,6 +624,7 @@ export class FormventasComponent implements OnInit {
     dialogRef.afterClosed().subscribe(result => {
       console.log(`Dialog result: ${result}`);
       if( !result ) return false;
+      if( !result.data.id ) return false;
       this.data.ven_numero_guia = result.nRemesa;
       this.data.ven_imagen_guia = result.urlRotulos;
       if( this.data.transportadoraSelect === "CORDINADORA") this.imprimirGuia();
@@ -679,10 +688,10 @@ export class FormventasComponent implements OnInit {
   }
 
   async precioRutulo( ev:any ){
-    //console.log( ev );
+    console.log( ev, this.data );
     if( this.superSub == false && this.data.ven_numero_guia ) return this._tools.confirm( { title: "Lo sentimos tienes una guia generada ya", detalle: "1.Toca cancelar la guia si te quedo mal. 2.hablar con el servicio al cliente", icon: "error" } );
-    if( this.disabledButton ) return false;
-    this.disabledButton = true;
+    /*if( this.disabledButton ) return false;
+    this.disabledButton = true;*/
     if( this.id && ( this.data.ven_estado == 1 && this.data.ven_estado == 2 && this.data.ven_estado == 3 && this.data.ven_estado == 4 ) ) { this.disabledButton = false; return false;}
     if( ev.state ) if( ev ) this.data.ciudadDestino = ev;
     let result:any;
@@ -744,6 +753,7 @@ export class FormventasComponent implements OnInit {
         this.tablet.listRow = res.data || [];
         this.tablet.listRow = _.filter( this.tablet.listRow, ( item:any )=> item.fleteTotal > 0 );
         //console.log( "****", res, this.tablet)
+        if( this.tablet.listRow.length === 0 ) this.errorCotisa = "Siento que la bodega no tenga transportador activo, comuníquese con el servicio al cliente."
         try {
           this.selectTrans( res.data[2] );
         } catch (error) {}
@@ -807,6 +817,7 @@ export class FormventasComponent implements OnInit {
 
     dialogRef.afterClosed().subscribe( async ( result ) => {
       console.log(`Dialog result: ${result}`);
+      this.suma();
     });
   }
 

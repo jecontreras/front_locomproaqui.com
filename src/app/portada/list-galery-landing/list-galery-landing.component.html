@@ -1,0 +1,67 @@
+<h2 mat-dialog-title>
+  <div class="d-flex justify-content-between">
+    <div>
+      Lista de Galeria
+    </div>
+    <div></div>
+    <div>
+      <button type="button" class="btn btn-primary" (click)="handleView()">
+        <span *ngIf="checkView === 'one'">Productos seleccionado</span>
+        <span *ngIf="checkView === 'two'">Atras</span>
+      </button>
+    </div>
+  </div>
+</h2>
+
+<mat-dialog-content class="mat-typography">
+
+  <div class="row">
+    <div class="col-12" *ngIf="checkView === 'one'">
+      <div class="row" style="margin: 0;">
+        <div class="col-12" *ngFor="let row of listColor">
+          <h1 class="text-pink"> <strong> {{ row.talla }} </strong> </h1>
+          <div class="row" style="margin: 0;">
+            <div class="col-md-3 col-sm-6 mb-4 col-6" *ngFor="let item of row.galeriaList">
+
+              <div class="card custom-card">
+                <img [src]="item.foto" class="card-img-top">
+              </div>
+              <div class="card-body">
+                <button type="button" class="btn btn-warning" (click)="handleProccesMount( item, row )">Seleccionar</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-12" *ngIf="checkView === 'two'">
+      <div class="row" style="margin: 0;">
+        <div class="col-md-3 col-sm-6 mb-4 col-6" *ngFor="let item of listSelect">
+
+          <div class="card custom-card">
+            <img [src]="item.foto" class="card-img-top">
+          </div>
+          <div class="card-body">
+            <span>Cantidad {{ item.cantidad }} </span>
+            <button type="button" class="btn btn-danger" (click)="handleDropPhoto( item )">Quitar</button>
+          </div>
+        </div>
+        <div class="col-12">
+          <div class="alert alert-primary" role="alert" *ngIf="listSelect.length === 0">
+            ¡No Has Seleccionado ningun Producto!
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+</mat-dialog-content>
+
+
+<mat-dialog-actions align="end">
+  <button mat-button mat-dialog-close mat-raised-button color="warn">Cerrar</button>
+  <button mat-button cdkFocusInitial mat-raised-button color="primary" (click)="handleEnd()">
+      <span>Confirmar fotos seleccionadas</span>
+  </button>
+</mat-dialog-actions>

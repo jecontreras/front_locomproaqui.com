@@ -85,13 +85,13 @@
                                 <div class="col-12" style="text-align: center;">
                                   <section class="paddinLader">
                                     <label for="exampleFormControlSelect1">Colores disponibles:</label>
-                                  <select class="form-control form-control-sm text-align" [(ngModel)]="data.color"
-                                      (change)="colorSeleccionado( );">
-                                      <option value="null">Todos</option>
-                                      <option [value]="item.talla" *ngFor="let item of data.listColor">
-                                        {{ item.talla }}
-                                      </option>
-                                  </select>
+                                    <select class="form-control form-control-sm text-align" [(ngModel)]="data.color"
+                                        (change)="colorSeleccionado( );" id="sel_color">
+                                        <option value="null">Todos</option>
+                                        <option [value]="item.talla" *ngFor="let item of data.listColor">
+                                          {{ item.talla }}
+                                        </option>
+                                    </select>
                                   </section>
                                 </div>
                                 <div class="col-12" style="text-align: center;">

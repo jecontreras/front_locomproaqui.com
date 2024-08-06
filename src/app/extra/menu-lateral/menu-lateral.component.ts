@@ -22,6 +22,7 @@ export class MenuLateralComponent implements OnInit {
   @ViewChild('color4',{ static: false } ) private color4: any
   RouterName:string;
   RouterName2:string;
+  RouterName3:any;
   urlWhatsapp1:string = "https://wa.me/573112128943?text=Hola Servicio al cliente"
 
   constructor(
@@ -32,26 +33,22 @@ export class MenuLateralComponent implements OnInit {
       if(!store) return false;
       this.userId = store.usercabeza || {};
       this.dataUser = store.user || {};
-      this.rellenoRedes();
-    });
-
-    //EDU ene26
-    this.whatsappContact = "0000";
-    this._store.subscribe((store: any) => {
-    try{
-      this.whatsappContact = store.name.configuracion.cdVentas
+      if( store.configuracion ) this.whatsappContact = store.configuracion.cdVentas
       try{
         if(store.name.user.usu_perfil.id == 5)
           this.whatsappContact = store.name.configuracion.clInformacion
       }catch(err){ console.log("vendedor", this.whatsappContact ) }
-      //console.log("stores", store)
-    }catch(err){ console.log("visitante") }
-    })
+
+      this.rellenoRedes();
+    });
   }
 
   ngOnInit() {
+    this.urlWhatsapp1 = `https://wa.me/57${ this.whatsappContact }?text=Hola Servicio al cliente`
     this.RouterName = location.pathname;
     this.RouterName2 = ( this.RouterName.split("/") )[2];
+    this.RouterName3 = ( this.RouterName.split("/") )[1];
+    console.log("*********55", this.RouterName, this.RouterName3, this.whatsappContact)
     // setInterval(()=> {
       let color:string = ( this.dataUser.usu_color || "#02a0e3" );
 
@@ -70,7 +67,7 @@ export class MenuLateralComponent implements OnInit {
     if(this.dataUser.id || !this.userId.id) {
       this.urlFacebook = `http://bit.ly/NUESTROGRUPOENFACEBOOK`;
       this.urlInstagram = `http://bit.ly/INSTAGRAMLOKOMPROAQUI`;
-      this.urlWhatsapp = "https://wa.me/573213692393?text=Hola Servicio al cliente";
+      this.urlWhatsapp = `https://wa.me/57${ this.dataUser.usu_telefono }?text=Hola Servicio al cliente`;
       this.urlYoutube = `http://bit.ly/YOUTUBEZAFIRO`;
     }else{
       this.urlFacebook = this.userId.url_facebook || "";

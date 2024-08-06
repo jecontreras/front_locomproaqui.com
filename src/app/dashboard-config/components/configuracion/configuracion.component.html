@@ -11,20 +11,44 @@
     <div class="row py-3">
         <div class="col-6">
             <label for="exampleFormControlInput1">Numero de celular de informacion</label>
-            <input type="text" [(ngModel)]="data.clInformacion" class="form-control form-control-sm">
+            <input type="number" [(ngModel)]="data.clInformacion" class="form-control form-control-sm">
         </div>
-        <!-- <div class="col-6">
+        <div class="col-6">
             <label for="exampleFormControlInput1">Numero de celular de Pedidos</label>
-            <input type="text" [(ngModel)]="data.cdPedidos" class="form-control form-control-sm">
-        </div> -->
+            <input type="number" [(ngModel)]="data.cdPedidos" class="form-control form-control-sm">
+        </div>
         <div class="col-6">
             <label for="exampleFormControlInput1">Numero de celular de Ventas</label>
-            <input type="text" [(ngModel)]="data.cdVentas" class="form-control form-control-sm">
+            <input type="number" [(ngModel)]="data.cdVentas" class="form-control form-control-sm">
         </div>
-        <!-- <div class="col-6">
+        <div class="col-6">
             <label for="exampleFormControlInput1">Numero de celular de Retiros dinero</label>
-            <input type="text" [(ngModel)]="data.cdRetiros" class="form-control form-control-sm">
-        </div> -->
+            <input type="number" [(ngModel)]="data.cdRetiros" class="form-control form-control-sm">
+        </div>
+        <div class="col-6">
+          <label for="exampleFormControlInput1">Texto Para Registros de Usuarios Proveedor</label>
+          <textarea class="form-control" [(ngModel)]="data.txtRegistroPWhatsapp" rows="3"></textarea>
+        </div>
+        <div class="col-6">
+          <label for="exampleFormControlInput1">Texto Para Registros de Usuarios Vendedor</label>
+          <textarea class="form-control"[(ngModel)]="data.txtRegistroVWhatsapp" rows="3"></textarea>
+        </div>
+        <div class="col-6">
+          <label for="exampleFormControlInput1">Texto Para Ventas Vendedor</label>
+          <textarea class="form-control" rows="3" [(ngModel)]="data.txtVentasVWhatsapp"></textarea>
+        </div>
+        <div class="col-6">
+          <label for="exampleFormControlInput1">Texto Para Ventas Proveedor</label>
+          <textarea class="form-control" rows="3" [(ngModel)]="data.txtVentasPWhatsapp"></textarea>
+        </div>
+        <div class="col-6">
+          <label for="exampleFormControlInput1">Texto Retiros de Dinero Proveedor</label>
+          <textarea class="form-control" rows="3" [(ngModel)]="data.txtRetirosPWhatsapp"></textarea>
+        </div>
+        <div class="col-6">
+          <label for="exampleFormControlInput1">Texto Retiros de Dinero Vendedor</label>
+          <textarea class="form-control" [(ngModel)]="data.txtRetirosVWhatsapp" rows="3"></textarea>
+        </div>
     </div>
     <div class="row py-3">
         <div class="col-6">

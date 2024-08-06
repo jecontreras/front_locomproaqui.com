@@ -7,6 +7,7 @@
                 <option type="number" value="0">Pendiente</option>
                 <option type="number" value="1">Preparación</option>
                 <option type="number" value="2">Despachado</option>
+                <option type="number" value="3">Cancelado</option>
             </select>
         </div>
         <div class="form-group col-12 col-sm-6">
@@ -77,6 +78,27 @@
               <input matInput [(ngModel)]="data.paisCreado" placeholder="Pais de origen" disabled type="text">
           </mat-form-field>
         </div>
+        <div class="form-group col-12 col-sm-6">
+          <mat-form-field class="example-full-width">
+              <mat-label>Latitude</mat-label>
+              <input matInput [(ngModel)]="data.latitude" placeholder="Latitude" disabled type="text">
+          </mat-form-field>
+        </div>
+        <div class="form-group col-12 col-sm-6">
+          <mat-form-field class="example-full-width">
+              <mat-label>Longitude</mat-label>
+              <input matInput [(ngModel)]="data.longitude" placeholder="Longitud" disabled type="text">
+          </mat-form-field>
+        </div>
+        <div class="col-12" *ngIf="data.longitude">
+          <div style="height: 500px;">
+            <div leaflet
+                 [leafletOptions]="options"
+                 [leafletLayers]="layers">
+            </div>
+          </div>
+
+        </div>
         <div class="col-12">
             <div class="row">
                 <div class="col-12">
@@ -107,4 +129,7 @@
         <span *ngIf="!id">Guardar Cambios</span>
         <span *ngIf="id">Actulizar Cambios</span>
     </button>
+    <button mat-button color="warn" *ngIf="data.notifiedWeb === 1" (click)="handleOrdenP()">
+      <span>Venta no Registrada en Pedidos Web</span>
+  </button>
 </mat-dialog-actions>

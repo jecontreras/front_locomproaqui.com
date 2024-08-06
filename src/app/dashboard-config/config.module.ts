@@ -72,6 +72,7 @@ import { RechargeComponent } from './components/recharge/recharge.component';
 import { StoreProductActivatedComponent } from './components/store-product-activated/store-product-activated.component';
 import { ListVentasVeraComponent } from './components/list-ventas-vera/list-ventas-vera.component';
 import { FormVentasVeraComponent } from './form/form-ventas-vera/form-ventas-vera.component';
+import { LeafletModule } from '@asymmetrik/ngx-leaflet';
 
 @NgModule({
   entryComponents: [
@@ -165,7 +166,8 @@ import { FormVentasVeraComponent } from './form/form-ventas-vera/form-ventas-ver
     NgImageSliderModule,
     NgxImageZoomModule,
     AutocompleteLibModule,
-    MatVideoModule
+    MatVideoModule,
+    LeafletModule
   ],
   exports: [
     FormcategoriasComponent,

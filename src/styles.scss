@@ -17,6 +17,14 @@ html, body {
   font-family: 'Axiforma';
   src: url('./assets/fonts/axiforma/Axiforma-Regular.ttf');
 }
+@import "~leaflet/dist/leaflet.css";
+
+.leaflet-container {
+  height: 500px;
+  width: 100%;
+}
+
+
 .select-with-arrow {
   position: relative;
 }
