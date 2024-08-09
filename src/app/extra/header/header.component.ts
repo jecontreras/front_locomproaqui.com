@@ -48,6 +48,7 @@ export class HeaderComponent implements OnInit {
   events: string[] = [];
   urlwhat:string;
   userId:any;
+  userCabeza: any;
   opened:boolean;
   dataInfo:any = {};
   isHandset$:any = false;
@@ -107,6 +108,7 @@ export class HeaderComponent implements OnInit {
       this.listCart = store.cart || [];
       try { this.validatorVist = this.listCart[0].coinShop === true ? false : true; } catch (error) { }
       this.userId = store.usercabeza || {};
+      this.userCabeza = store.usercabeza || { "fake_id" : 0 };
       this.dataUser = store.user || {};
       this.userPr = store.userpr || {};
       this.querysSale.where.creacion = this.dataUser.id;
@@ -251,13 +253,14 @@ export class HeaderComponent implements OnInit {
   }
 
   billeteraCalcular(){
-    let query = { usu_id : 0, usu_perfil : 0}
+      let query = { usu_id : 0, usu_perfil : 0}
       let totalCompletas =0
       let totalDespachado = 0
       let totalPdtePagoTrans = 0
-      query.usu_id = this.userId.id
+      query.usu_id = this.dataUser.id
       query.usu_perfil = this.dataUser.usu_perfil.id
-      console.log(" billeteraCalcular() query", query)
+      //console.log(" billeteraCalcular() query", query)
+      //console.log("usercabeza", this.userCabeza)
       this._productos.getVentas( query ).subscribe(res=>{
       //console.log("getSales res", res)
       for( let row of res.data ){

@@ -1,4 +1,4 @@
-import { Component, OnInit, Inject, ViewChild } from '@angular/core';
+import { Component, OnInit, Inject, ViewChild, ElementRef } from '@angular/core';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
 import { Store } from '@ngrx/store';
 import { CartAction } from 'src/app/redux/app.actions';
@@ -41,6 +41,7 @@ export class ViewProductosComponent implements OnInit {
   imageObject: any = [];
 
   @ViewChild('nav', { static: true }) ds: NgImageSliderComponent;
+  @ViewChild('colorSelect') colorSelect: ElementRef;
   sliderWidth: Number = 300;
   sliderImageWidth: Number = 90;
   sliderImageHeight: Number = 100;
@@ -223,7 +224,11 @@ export class ViewProductosComponent implements OnInit {
 
   async AgregarCart( opt:any ){
     if( this.disabledPr == false ) return this._tools.tooast({ title: "lo sentimos pero no se puedes vender este producto en este precio", icon: "warning" });
-    if(  !this.data.color ) return this._tools.tooast({ title: "Lo sentimos tienes que seleccionar un color", icon: "warning" });
+    if(  !this.data.color ) { 
+        const el = document.getElementById("sel_color")
+        el.focus()
+        return this._tools.tooast({ title: "Lo sentimos!  Tienes que seleccionar un color", icon: "warning" });
+      }
     if(  this.seleccionnTalla.cantidad < this.data.cantidadAdquirir ) return this._tools.tooast({ title: "Lo sentimos en estos momento no tenemos en stock", icon: "warning" });
     if (!this.data.tallas) {
       try {

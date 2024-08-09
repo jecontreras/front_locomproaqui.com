@@ -7,6 +7,6 @@ import { Component } from '@angular/core';
 })
 export class TiendaComponent {
   constructor(){
-    console.log("triple hp")
+    console.log("Tienda Component")
   }
 }

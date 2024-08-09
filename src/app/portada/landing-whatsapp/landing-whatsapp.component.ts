@@ -687,6 +687,7 @@ Monto a cancelar: ${ this._ToolServices.monedaChange( 3,2, ( this.data.totalAPag
       this.data.dataTridyCosto = valAlto || [];
       this.data.transportadora = valAlto[0].transportadora;
       this.data.totalFlete = ( valAlto[0].price ) + ( ( valAlto[valAlto.length - 1 ].price ) * 10 / 100 );
+      valAlto[0].price = this.data.totalFlete;
       //this.data.totalFlete = this.redondeaAlAlza(this.data.totalFlete,1000);
       this.suma();
       this.dataCantidadCotizada = this.data.priceTotal;
