@@ -683,7 +683,6 @@ Monto a cancelar: ${ this._ToolServices.monedaChange( 3,2, ( this.data.totalAPag
     let valAlto = _.orderBy(dataFletePrice, ['price'], ['asc']); // ORdenar Cual es el menos Caro
     valAlto = this.cleanData( valAlto ); // elimina los undefinde y los Nan
     valAlto = valAlto.filter( valAlto => valAlto.price ) // Busca los que si tienen precio
-    //console.log("*****************650********", valAlto );
     if( valAlto[0] ){
       this.data.dataTridyCosto = valAlto || [];
       this.data.transportadora = valAlto[0].transportadora;
@@ -698,6 +697,7 @@ Monto a cancelar: ${ this._ToolServices.monedaChange( 3,2, ( this.data.totalAPag
       this.suma();
       this.contraentregaAlert = true;
     }
+    console.log("*****************650********", valAlto, this.data );
   }
 
   cleanData( dataArray ) {
