@@ -58,18 +58,19 @@ export class LoginsComponent implements OnInit {
     this.borrarCache();
     this.data.usu_email = this.data.usu_email.trim();
     this._user.login(this.data).subscribe((res:any)=>{
-      // console.log("user", res);
+      //console.log("user", res);
       this.disableSubmit = true;
       if(res.success){
         //localStorage.setItem('user', JSON.stringify(res.data));
         let accion = new UserAction( res.data, 'post');
-        // console.log("user action", res.data)
+        console.log("user action", res.data)
         this._store.dispatch(accion);
         accion = new TokenAction( { token: res.data.tokens }, 'post');
         this._store.dispatch( accion );
         try {
           if( res.data.usu_perfil.prf_descripcion === 'vendedor') this._router.navigate(['/articulo']);
           if( res.data.usu_perfil.prf_descripcion === 'proveedor') this._router.navigate(['/infoSupplier']);
+          if( res.data.usu_perfil.id == 2) this._router.navigate(['/infoSupplier']);
         } catch (error) {
           this._router.navigate(['/pedido']);
         }

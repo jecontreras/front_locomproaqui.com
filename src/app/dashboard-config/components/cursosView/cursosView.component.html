@@ -12,6 +12,21 @@
                 <h2>{{ dataSelec.titulo }}</h2>
                 <p [innerHtml]="dataSelec.descripcion"></p>
             </section>
+            <div *ngIf="this.dataUser.usu_perfil.id==2">
+                <form>
+                    <div class="form-group">
+                        <label>Titulo</label>
+                        <input [(ngModel)]="this.dataSelec.titulo" [ngModelOptions]="{standalone: true}" type="text" class="form-control" >
+                    </div>
+                    <div class="form-group">
+                        <label>Descripcion</label>
+                        <textarea [(ngModel)]="dataSelec.descripcion"  [ngModelOptions]="{standalone: true}" class="form-control" >{{ dataSelec.descripcion }}</textarea>
+                    </div>
+                    <div>
+                        <input (click)="actualizar()" value="Actualizar" class="btn btn-info" type="button">
+                    </div>
+                </form>
+            </div>
         </div>
         <div class="col-12 col-sm-4 scrols">
             <li class="list-group list-group-flush">
