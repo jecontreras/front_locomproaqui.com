@@ -370,6 +370,7 @@ export class LandingWhatsappComponent implements OnInit {
     }
     let url = "http://localhost/pedidosweb/api/lokompro/celularConfirmar.php";
     url = "https://ginga.com.co/pedidosweb/api/lokompro/celularConfirmar.php";
+    url = "https://y79.ae1.mytemp.website/api/lokompro/celularConfirmar.php";
     fetch( url,options)
     .then(response => response.json())
     .then(data => { console.log("api pedidosweb",data)
@@ -396,6 +397,8 @@ export class LandingWhatsappComponent implements OnInit {
     }
     let url = "http://localhost/pedidosweb/api/lokompro/pedidolw.php";
     url = "https://ginga.com.co/pedidosweb/api/lokompro/pedidolw.php";
+    url = "https://y79.ae1.mytemp.website/api/lokompro/pedidolw.php";
+    
     fetch( url,options)
     .then(response => response.json())
     .then( async (data) => { //console.log("api pedidoslw",data)
