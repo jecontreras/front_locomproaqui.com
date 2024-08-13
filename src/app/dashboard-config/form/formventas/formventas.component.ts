@@ -553,6 +553,12 @@ export class FormventasComponent implements OnInit {
   updates( opt:boolean = false ) {
     if( !opt ) if (!this.superSub) if ( ( this.clone.ven_estado == 1 || this.clone.ven_estado == 2 || this.clone.ven_estado == 3 || this.clone.ven_estado == 4 ) || ( this.clone.ven_numero_guia ) ) { this._tools.presentToast("Error no puedes ya editar la venta ya esta aprobada"); return false; }
     console.log("************DATA", this.data )
+    try {
+      if( this.data.ciudadDestino.code ){
+        this.data.codeCiudad = this.data.ciudadDestino.code;
+        this.data.ciudadDestino = this.data.ciudadDestino.name;
+      }
+    } catch (error) { }
     let data = _.clone( this.data );
     /*data = _.omit( data, ['usu_clave_int']);
     if( this.superSub == false ) {
@@ -624,7 +630,7 @@ export class FormventasComponent implements OnInit {
     dialogRef.afterClosed().subscribe(result => {
       console.log(`Dialog result: ${result}`);
       if( !result ) return false;
-      if( !result.data.id ) return false;
+      if( !result.id ) return false;
       this.data.ven_numero_guia = result.nRemesa;
       this.data.ven_imagen_guia = result.urlRotulos;
       if( this.data.transportadoraSelect === "CORDINADORA") this.imprimirGuia();
@@ -669,7 +675,7 @@ export class FormventasComponent implements OnInit {
         });
       }
     }
-    if( this.data.transportadoraSelect == "CORDINADORA" || this.data.transportadoraSelect == "INTERRAPIDISIMO"){
+    if( this.data.transportadoraSelect == "CORDINADORA" || this.data.transportadoraSelect == "INTERRAPIDISIMO" || this.data.transportadoraSelect == "SERVIENTREGA" ){
       this._ventas.imprimirFlete( {
         codigo_remision: this.data.ven_numero_guia,
         transportadoraSelect: this.data.transportadoraSelect

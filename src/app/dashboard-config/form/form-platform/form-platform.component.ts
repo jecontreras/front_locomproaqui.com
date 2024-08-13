@@ -46,8 +46,11 @@ export class FormPlatformComponent implements OnInit {
   ngOnInit(): void {
     if(Object.keys(this.datas.datos).length > 0) {
       this.data = _.clone(this.datas.datos);
+      console.log("******49", this.data )
       this.id = this.data.id;
-      this.data.direccion = this.data.user.usu_direccion
+      try {
+        this.data.direccion = this.data.user.usu_direccion
+      } catch (error) { }
     }else{
       this.data.email = this.dataUser.usu_email;
       this.data.nombreEmpresa = this.dataUser.usu_usuario;
@@ -69,6 +72,11 @@ export class FormPlatformComponent implements OnInit {
 
   onChangeSearch( ev:any ){
     //console.log( ev )
+  }
+
+  handleSelectCity( ev:any ){
+    console.log("******78", ev)
+    this.data.ciudadOrigen = ev.code;
   }
 
   submit(){

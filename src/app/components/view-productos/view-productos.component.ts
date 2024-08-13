@@ -224,7 +224,7 @@ export class ViewProductosComponent implements OnInit {
 
   async AgregarCart( opt:any ){
     if( this.disabledPr == false ) return this._tools.tooast({ title: "lo sentimos pero no se puedes vender este producto en este precio", icon: "warning" });
-    if(  !this.data.color ) { 
+    if(  !this.data.color ) {
         const el = document.getElementById("sel_color")
         el.focus()
         return this._tools.tooast({ title: "Lo sentimos!  Tienes que seleccionar un color", icon: "warning" });
@@ -273,7 +273,8 @@ export class ViewProductosComponent implements OnInit {
       precioReal: this.data.precioProveedor,
       coinShop: this.coinShop,
       bodegaName: this.data.pro_usu_creacion.usu_usuario,
-      idBodega: this.data.pro_usu_creacion.id
+      idBodega: this.data.pro_usu_creacion.id,
+      pro_usu_creacion: this.data.pro_usu_creacion
     };
     if( this.listCart.length >= 1 ) {
       let validate = this.validateArticleStore( data );
