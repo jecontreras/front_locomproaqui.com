@@ -38,6 +38,7 @@
     text-align: center;
     padding: 14px;
     text-decoration: none;
+    font-size: 9px;
   }
 
   div.scrollmenu a:hover {
@@ -60,32 +61,32 @@
   /*box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.3); /* Agrega una sombra al botón */
   transition: background-color 0.3s, color 0.3s, transform 0.3s; /* Agrega una transición para la sombra */
   }
-  
+
   .ulM{
     padding: 2px;
     display: flex;
     margin: auto;
-    
+
   }
-  
+
   .iphone-menu a:hover {
   background-color: #02a0e3; /* Cambia el color de fondo al pasar el mouse */
   color: #fff; /* Cambia el color del texto al pasar el mouse */
   box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.5); /* Aumenta la sombra al pasar el mouse */
   }
-  
+
   /* Estilos para hacerlo responsive */
   @media screen and (max-width: 768px) {
   .iphone-menu .ulM {
       text-align: center; /* Centra los elementos de la lista horizontalmente */
-      
+
   }
-  
+
   .iphone-menu li {
       display: inline-block; /* Cambia a elementos de lista en línea */
       margin: -17px -6px;
   }
-  
+
   .iphone-menu a {
       font-size: 14px; /* Reduce el tamaño de fuente en dispositivos móviles */
       padding: 0; /* Reduce el espaciado interior del botón */

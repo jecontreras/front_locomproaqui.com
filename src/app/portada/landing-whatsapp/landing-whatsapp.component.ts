@@ -398,7 +398,7 @@ export class LandingWhatsappComponent implements OnInit {
     let url = "http://localhost/pedidosweb/api/lokompro/pedidolw.php";
     url = "https://ginga.com.co/pedidosweb/api/lokompro/pedidolw.php";
     url = "https://y79.ae1.mytemp.website/api/lokompro/pedidolw.php";
-    
+
     fetch( url,options)
     .then(response => response.json())
     .then( async (data) => { //console.log("api pedidoslw",data)
@@ -564,26 +564,6 @@ Monto a cancelar: ${ this._ToolServices.monedaChange( 3,2, ( this.data.totalAPag
         data.peso = 9;
         data.alto= 9;
         sumaFlete = 9000;
-      }
-      if( ev.transportadora === "InterRapidisimo"){
-        if ( this.data.sumAmount >= 1 && this.data.sumAmount <= 12 )  {
-          data.peso = 1;
-        }
-        if ( this.data.sumAmount >= 13 && this.data.sumAmount <= 17 )  {
-          data.peso = 2;
-        }
-        if ( this.data.sumAmount >= 18 && this.data.sumAmount <= 25 )  {
-          data.peso = 3;
-        }
-        if ( this.data.sumAmount >= 26 && this.data.sumAmount <= 32 )  {
-          data.peso = 4;
-        }
-        if ( this.data.sumAmount >= 33 && this.data.sumAmount <= 38 )  {
-          data.peso = 5;
-        }
-        if ( this.data.sumAmount >= 39 && this.data.sumAmount <= 44 )  {
-          data.peso = 6;
-        }
       }
       this.data.af = sumaFlete; //el AF
       this.btnDisabled = true;

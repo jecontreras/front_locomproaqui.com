@@ -62,7 +62,7 @@ export class ViewProductosComponent implements OnInit {
   coinShop:boolean = false;
   titleButton:string = "Confirmar pedido";
   disabledView:string = "normal";
-  breakpoint: number;
+  breakpoint: number = 6;
   trHeight:number = 430;
   listCart = [];
   constructor(
@@ -121,13 +121,17 @@ export class ViewProductosComponent implements OnInit {
       console.log("*CONTROLE EL ERROR", error)
       this.disabledSelect = false;
     }
-
+    this.handleNextWidth();
     setTimeout(()=>{
-      try {
-        this.breakpoint = (window.innerWidth <= 500) ? 1 : 6;
-        if( this.breakpoint === 6 ) this.trHeight = 700;
-      } catch (error) { }
+      this.handleNextWidth();
      },2000 );
+  }
+
+  handleNextWidth(){
+    try {
+      this.breakpoint = (window.innerWidth <= 500) ? 1 : 6;
+      if( this.breakpoint === 6 ) this.trHeight = 700;
+    } catch (error) { }
   }
 
   handleImageError(event: any) {

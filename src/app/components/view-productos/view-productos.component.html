@@ -40,11 +40,12 @@
 </div>
   </div>
 </div>
+
 <mat-dialog-content class="mat-typography">
   <div class="container scrollTodo" [style.max-height.px]="trHeight" style="overflow-y: auto;">
     <div class="row">
       <div class="col-12 col-sm-6" style="border-radius: 20px;">
-        <div class="container shadow" style="height: 100%;">
+        <div class="container shadow">
           <div class="content" style="width: 100%;">
             <div class="row ">
               <div class="col-12 borderBotton">
@@ -73,7 +74,7 @@
 
 
         <div class="col-12 col-sm-6" style="border-radius: 20px; max-height: 442px; overflow-y: auto;">
-            <div class="container shadow" style="height: 100%;">
+            <div class="container shadow">
                 <div class="content" style="width: 100%;">
                   <div class="row ">
                     <div class="col-12">
@@ -125,7 +126,7 @@
                                 <div class="col-12" *ngIf="!data.coinShop">
                                   <section class="paddinLader">
                                     <label>Lo Vendes en:</label>
-                                    <input currencyMask [(ngModel)]="data.encuanto" class="form-control form-control-sm text-align" [options]="opcionCurrencys" (blur)="validando()"/>
+                                    <input currencyMask [(ngModel)]="data.encuanto" [disabled]="disabledView === 'store'" class="form-control form-control-sm text-align" [options]="opcionCurrencys" (blur)="validando()"/>
                                   </section>
                                 </div>
                               </div>
@@ -200,25 +201,6 @@
                 </div>
             </div>
         </div>
-        <section *ngIf="breakpoint === 1" style="text-align: center;">
-          <button type="button" class="btn btn-success m-1" *ngIf="disabledView === 'createPrice'" (click)="handleAddStore()">
-            Actualizar Precio
-          </button>
-
-          <button cdkFocusInitial (click)="handleAddStore()" type="button" class="btn btn-primary m-1" *ngIf="disabledView === 'store' && dataUser.id">
-            Agregar a mi Tienda
-          </button>
-
-          <button type="button" class="btn btn-danger m-1" *ngIf="disabledView === 'createPrice'" (click)="handleDroppArticle()">
-            Quitar de mi Tienda
-          </button>
-
-          <a *ngIf="data['pro_categoria']" target="_blank" [routerLink]="[ '/listproduct/categoria', data['pro_categoria'].id ] " class="btn btn-primary m-1"> ver productos similares </a>
-
-          <button cdkFocusInitial (click)="AgregarCart(false)" type="button" class="btn btn-primary m-1" *ngIf="(disabledView !== 'store') && (disabledView !== 'createPrice')">
-            {{ titleButton }}
-          </button>
-        </section>
     </div>
   </div>
 </mat-dialog-content>
@@ -249,5 +231,25 @@
         </button>
       </div>
     </div>
+    <section *ngIf="breakpoint === 1" style="text-align: center;">
+      <button type="button" class="btn btn-success m-1" *ngIf="disabledView === 'createPrice'" (click)="handleAddStore()">
+        Actualizar Precio
+      </button>
+
+      <button cdkFocusInitial (click)="handleAddStore()" type="button" class="btn btn-success m-1" *ngIf="disabledView === 'store' && dataUser.id">
+        Agregar a mi Tienda
+      </button>
+
+      <button type="button" class="btn btn-danger m-1" *ngIf="disabledView === 'createPrice'" (click)="handleDroppArticle()">
+        Quitar de mi Tienda
+      </button>
+
+      <a *ngIf="data['pro_categoria']" target="_blank" [routerLink]="[ '/listproduct/categoria', data['pro_categoria'].id ] " class="btn btn-primary m-1"> ver productos similares </a>
+
+      <button cdkFocusInitial (click)="AgregarCart(false)" type="button" class="btn btn-primary m-1" *ngIf="(disabledView !== 'store') && (disabledView !== 'createPrice')">
+        {{ titleButton }}
+      </button>
+    </section>
 </mat-dialog-actions>
+
 

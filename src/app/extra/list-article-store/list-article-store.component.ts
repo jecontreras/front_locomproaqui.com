@@ -214,7 +214,7 @@ export class ListArticleStoreComponent implements OnInit {
       item.view = 'store';
     }else item.coinShop = false;
     const dialogRef = this.dialog.open(ViewProductosComponent, {
-      width: this.breakpoint == 6 ? '75%' : "100%",
+
       data: { datos: item }
     });
 
