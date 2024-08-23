@@ -153,13 +153,13 @@
                           <div class="col-12" style="border-radius: 20px;">
                             <div class="d-flex justify-content-around">
                               <div style="    padding: 0 5px;">
-                                <button (click)="shareUrl()" type="button" class="btn btn-success">
+                                <button (click)="shareUrl()" type="button" class="btn btn-success" style="font-size: 9px;">
                                   Compartir link
                                 </button>
                               </div>
                               <div></div>
                               <div style="    padding: 0 5px;">
-                                <button (click)="openUrl( )" type="button" class="btn btn-primary" *ngIf="dataUser.id">
+                                <button (click)="openUrl( )" type="button" class="btn btn-primary" *ngIf="dataUser.id" style="font-size: 9px;">
                                   Piezas gráficas
                                 </button>
                               </div>
@@ -231,25 +231,22 @@
         </button>
       </div>
     </div>
-    <section *ngIf="breakpoint === 1" style="text-align: center;">
-      <button type="button" class="btn btn-success m-1" *ngIf="disabledView === 'createPrice'" (click)="handleAddStore()">
+    <div class="d-flex bd-highlight" *ngIf="breakpoint === 1">
+
+      <button style="font-size: 9px;" type="button" class="btn btn-success m-1" *ngIf="disabledView === 'createPrice'" (click)="handleAddStore()">
         Actualizar Precio
       </button>
-
-      <button cdkFocusInitial (click)="handleAddStore()" type="button" class="btn btn-success m-1" *ngIf="disabledView === 'store' && dataUser.id">
+      <button style="font-size: 9px;" cdkFocusInitial (click)="handleAddStore()" type="button" class="btn btn-success m-1" *ngIf="disabledView === 'store' && dataUser.id">
         Agregar a mi Tienda
       </button>
-
-      <button type="button" class="btn btn-danger m-1" *ngIf="disabledView === 'createPrice'" (click)="handleDroppArticle()">
+      <button style="font-size: 9px;" type="button" class="btn btn-danger m-1" *ngIf="disabledView === 'createPrice'" (click)="handleDroppArticle()">
         Quitar de mi Tienda
       </button>
-
-      <a *ngIf="data['pro_categoria']" target="_blank" [routerLink]="[ '/listproduct/categoria', data['pro_categoria'].id ] " class="btn btn-primary m-1"> ver productos similares </a>
-
-      <button cdkFocusInitial (click)="AgregarCart(false)" type="button" class="btn btn-primary m-1" *ngIf="(disabledView !== 'store') && (disabledView !== 'createPrice')">
+      <button style="font-size: 9px;" cdkFocusInitial (click)="AgregarCart(false)" type="button" class="btn btn-primary m-1" *ngIf="(disabledView !== 'store') && (disabledView !== 'createPrice')">
         {{ titleButton }}
       </button>
-    </section>
+      <a *ngIf="data['pro_categoria']" target="_blank" [routerLink]="[ '/listproduct/categoria', data['pro_categoria'].id ] " class="btn btn-primary m-1" style="font-size: 9px;"> ver productos similares</a>
+    </div>
 </mat-dialog-actions>
 
 
