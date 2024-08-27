@@ -21,7 +21,7 @@ declare const $: any;
   styleUrls: ['./referidos.component.scss']
 })
 export class ReferidosComponent implements OnInit {
-  
+
   dataTable: DataTable;
   pagina = 10;
   paginas = 0;
@@ -63,14 +63,15 @@ export class ReferidosComponent implements OnInit {
     };
     this.cargarTodos();
   }
-  
+
   getTabas(){
     this.tabsList = [
       {
         index: 0,
         query:{
           where:{},
-          page: 0
+          page: 0,
+          limit: 10000000
         },
         count: 0,
         dataRows: []
@@ -79,7 +80,8 @@ export class ReferidosComponent implements OnInit {
         index: 1,
         query:{
           where:{},
-          page: 0
+          page: 0,
+          limit: 10000000
         },
         count: 0,
         dataRows: []
@@ -88,7 +90,8 @@ export class ReferidosComponent implements OnInit {
         index: 2,
         query:{
           where:{},
-          page: 0
+          page: 0,
+          limit: 10000000
         },
         count: 0,
         dataRows: []
@@ -97,7 +100,8 @@ export class ReferidosComponent implements OnInit {
         index: 3,
         query:{
           where:{},
-          page: 0
+          page: 0,
+          limit: 10000000
         },
         count: 0,
         dataRows: []
@@ -106,7 +110,8 @@ export class ReferidosComponent implements OnInit {
         index: 4,
         query:{
           where:{},
-          page: 0
+          page: 0,
+          limit: 10000000
         },
         count: 0,
         dataRows: []
@@ -118,7 +123,7 @@ export class ReferidosComponent implements OnInit {
     console.log("***", ev)
     this.disabledTabs = true;
     this.index = ev.index;
-    this.notscrolly = true 
+    this.notscrolly = true
     this.notEmptyPost = true;
     this.armandoIndex()
     this.cargarTodos();
@@ -158,7 +163,7 @@ export class ReferidosComponent implements OnInit {
         this.disabledTabs = false;
         this.loader = false;
           this.spinner.hide();
-          
+
           if (response.data.length === 0 ) {
             this.notEmptyPost =  false;
           }
@@ -171,7 +176,7 @@ export class ReferidosComponent implements OnInit {
 
   buscar() {
     this.loader = false;
-    this.notscrolly = true 
+    this.notscrolly = true
     this.notEmptyPost = true;
     //console.log(this.datoBusqueda);
     this.datoBusqueda = this.datoBusqueda.trim();

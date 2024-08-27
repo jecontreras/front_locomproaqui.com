@@ -536,8 +536,8 @@ export class HeaderComponent implements OnInit {
         nombre: 'Productos',
         disable: ( this.rolUser != 'proveedor' ),
         disabled: true,
-        url: '/pedidos',
-        submenus: submenus
+        url: '/config/store/product',
+        submenus: []
       },
       {
         icons: 'menu_book',
