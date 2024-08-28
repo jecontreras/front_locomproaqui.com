@@ -48,7 +48,7 @@ export class MenuLateralComponent implements OnInit {
     this.RouterName = location.pathname;
     this.RouterName2 = ( this.RouterName.split("/") )[2];
     this.RouterName3 = ( this.RouterName.split("/") )[1];
-    console.log("*********55", this.RouterName, this.RouterName3, this.whatsappContact)
+    console.log("*********55", this.RouterName, this.RouterName.split("/"), this.whatsappContact, this.RouterName2)
     // setInterval(()=> {
       let color:string = ( this.dataUser.usu_color || "#02a0e3" );
 

@@ -45,14 +45,14 @@
     </div>
   </div>
 
-  <div class="whatsapp-button">
+  <div class="whatsapp-button" *ngIf="( RouterName3 !== 'front' && RouterName2 !== 'landingWhatsapp' )">
     <a [href]='urlWhatsapp1'
-      *ngIf="( RouterName3 !== 'front' && RouterName2 !== 'landingWhatsapp' )"
        target="_blank">
       <img src="./assets/icons/whatsapp.png" alt="" style="width: 30px;">
     </a>
+  </div>
+  <div class="whatsapp-button" *ngIf="RouterName3 === 'front' && RouterName2 !== 'landingWhatsapp'">
     <a [href]='urlWhatsapp'
-      *ngIf="RouterName3 === 'front'"
        target="_blank">
       <img src="./assets/icons/whatsapp.png" alt="" style="width: 30px;">
     </a>
