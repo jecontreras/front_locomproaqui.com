@@ -1,0 +1,63 @@
+<h2 mat-dialog-title>{{ titulo }} Testimonio</h2>
+<mat-dialog-content class="mat-typography">
+    <div class="form row">
+        <div class="form-group col-md-12">
+            <div class="mx-auto" style="width: 200px;" *ngIf="data.foto">
+              <h4>Foto de perfil</h4>
+                <img style="    width: 100%; height: auto;" [src]="data.foto" class="fotoCategoria">
+            </div>
+            <div class="form-group">
+              <label for="exampleFormControlFile1">Subir foto perfil</label>
+              <input type="file" class="form-control-file" id="exampleFormControlFile1" (change)="handleFileOne($event)" accept="image/*">
+            </div>
+        </div>
+        <div class="form-group col-12">
+            <label for="exampleFormControlInput1">Nombre</label>
+            <input type="text" [(ngModel)]="data.nombre" class="form-control form-control-sm">
+        </div>
+        <div class="form-group col-12">
+            <label for="exampleFormControlInput1">Testimonio</label>
+            <textarea class="form-control" [(ngModel)]="data.descripcion" rows="3"></textarea>
+        </div>
+        <div class="form-group col-12">
+            <label for="exampleFormControlInput1">Producto</label>
+            <select class="form-control form-control-sm" [(ngModel)]="data.productos">
+                <option [value]="item.id" *ngFor="let item of listProductos">{{ item.pro_nombre }}</option>
+            </select>
+        </div>
+        <div class="form-group col-12" *ngIf="data.fotoEvidence">
+          <img [src]="data.fotoEvidence" alt="">
+        </div>
+        <div class="form-group col-12">
+
+            <div class="row">
+                <label class="col" >Subir Evidencia</label>
+                <button class="btn btn-success btn-just-icon btn-round" (click)="subirFile('fotoEvidence')" *ngIf="files.length > 0">
+                    Subir Evidencia
+                </button>
+            </div>
+
+            <ngx-dropzone (change)="onSelect($event)">
+                <ngx-dropzone-label>Abrir archivos</ngx-dropzone-label>
+                <ngx-dropzone-image-preview ngProjectAs="ngx-dropzone-preview" *ngFor="let f of files"
+                    [file]="f" [removable]="true" (removed)="onRemove(f)" multiple="false">
+                    <ngx-dropzone-label>{{ f.name }} ({{ f.type }})</ngx-dropzone-label>
+                </ngx-dropzone-image-preview>
+            </ngx-dropzone>
+        </div>
+        <div class="form-group col-12">
+            <label for="exampleFormControlInput1">Estado de la categoria</label>
+            <select class="form-control form-control-sm" [(ngModel)]="data.estado">
+                <option type="number" value="0">Activo</option>
+                <option type="number" value="1">Eliminado</option>
+            </select>
+        </div>
+    </div>
+</mat-dialog-content>
+<mat-dialog-actions align="end">
+  <button mat-button mat-dialog-close>Cerrar</button>
+  <button mat-button cdkFocusInitial (click)="submit()">
+      <span *ngIf="!id" class="btn btn-success">Guardar Cambios</span>
+      <span *ngIf="id" class="btn btn-warning">Actualizar Cambios</span>
+  </button>
+</mat-dialog-actions>

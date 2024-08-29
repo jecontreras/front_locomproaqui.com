@@ -24,51 +24,68 @@
   border-radius: 10px;
 }
 
-.testimonial-section {
-  background-color: black;
-  color: white;
-  padding: 20px;
+@keyframes kreep {
+  0% {-webkit-transform: scale(1.1,.9);
+      transform: scale(1.1,.9);}
+ 50% { -webkit-transform: scale(.9,1.1) translateY(-.5rem)}
+ 70% { -webkit-transform: scale(1);
+       transform: scale(1);}
 }
 
-.testimonial-section h2 {
-  text-align: center;
-  margin-bottom: 20px;
+.kreep {
+  display: inline-block;
+  /*name-duration-function(ease,eas-in,linear)-delay-count-direction */
+  animation: kreep 0.7s ease 2s infinite alternate;
 }
 
-.testimonial-list {
-  list-style: none;
-  padding: 0;
+@keyframes wiggle {
+  2% {
+    -webkit-transform: translateX(3px) rotate(2deg);
+    transform: translateX(3px) rotate(2deg);
+  }
+  4% {
+    -webkit-transform: translateX(-3px) rotate(-2deg);
+    transform: translateX(-3px) rotate(-2deg);
+  }
+  6% {
+    -webkit-transform: translateX(3px) rotate(2deg);
+    transform: translateX(3px) rotate(2deg);
+  }
+  8% {
+    -webkit-transform: translateX(-3px) rotate(-2deg);
+    transform: translateX(-3px) rotate(-2deg);
+  }
+  10% {
+    -webkit-transform: translateX(2px) rotate(1deg);
+    transform: translateX(2px) rotate(1deg);
+  }
+  12% {
+    -webkit-transform: translateX(-2px) rotate(-1deg);
+    transform: translateX(-2px) rotate(-1deg);
+  }
+  14% {
+    -webkit-transform: translateX(2px) rotate(1deg);
+    transform: translateX(2px) rotate(1deg);
+  }
+  16% {
+    -webkit-transform: translateX(-2px) rotate(-1deg);
+    transform: translateX(-2px) rotate(-1deg);
+  }
+  18% {
+    -webkit-transform: translateX(1px) rotate(0);
+    transform: translateX(1px) rotate(0);
+  }
+  20% {
+    -webkit-transform: translateX(-1px) rotate(0);
+    transform: translateX(-1px) rotate(0);
+  }
 }
 
-.testimonial-item {
-  display: flex;
-  align-items: center;
-  margin-bottom: 20px;
+.wiggle {
+  display: inline-block;
+  animation: wiggle 2.7s infinite;
 }
 
-.testimonial-image img {
-  width: 60px;
-  height: 60px;
-  border-radius: 50%;
-}
-
-.testimonial-content {
-  margin-left: 20px;
-}
-
-.testimonial-author {
-  font-weight: bold;
-}
-
-.testimonial-date {
-  font-size: 12px;
-  margin-bottom: 5px;
-}
-
-.testimonial-rating {
-  color: #ffd700; /* Color dorado para las estrellas (amarillo) */
-}
-
-.testimonial-description {
-  font-size: 14px;
+.wiggle:hover {
+  animation: none;
 }
