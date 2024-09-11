@@ -385,7 +385,7 @@ export class CatalogoComponent implements OnInit {
   }
 
   comprarArticulo(){
-    let url = `https://wa.me/57${ this.tiendaInfo.usu_telefono }?text=${encodeURIComponent(` Hola servicio al cliente necesito mas informacion gracias`)}`;
+    let url = `https://wa.me/${ ( Number( this.tiendaInfo.usu_indicativo ) || 57 ) }${ this.tiendaInfo.usu_telefono }?text=${encodeURIComponent(` Hola servicio al cliente necesito mas informacion gracias`)}`;
     window.open( url, "Mas Informacion", "width=640, height=480");
   }
 
