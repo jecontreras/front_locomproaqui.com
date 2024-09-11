@@ -64,7 +64,7 @@ export class MenuLateralComponent implements OnInit {
     // }, 100 )
   }
   rellenoRedes(){
-    if(this.dataUser.id || !this.userId.id) {
+    if(this.dataUser.id && !this.userId.id) {
       this.urlFacebook = `http://bit.ly/NUESTROGRUPOENFACEBOOK`;
       this.urlInstagram = `http://bit.ly/INSTAGRAMLOKOMPROAQUI`;
       this.urlWhatsapp = `https://wa.me/57${ this.dataUser.usu_telefono }?text=Hola Servicio al cliente`;
@@ -73,7 +73,7 @@ export class MenuLateralComponent implements OnInit {
       this.urlFacebook = this.userId.url_facebook || "";
       this.urlInstagram = this.userId.url_instagram || "";
       let validateNum = String( this.userId.usu_telefono );
-      if( validateNum.length <= 10 ) validateNum = "+57"+validateNum;
+      if( validateNum.length <= 10 ) validateNum = ( this.userId.usu_indicativo || "+57" )+validateNum;
       this.urlWhatsapp = `https://wa.me/${ validateNum }?text=Hola Servicio al cliente` || "";
       this.urlYoutube = this.userId.url_youtube || "";
     }
