@@ -41,9 +41,9 @@ export class LandingWhatsappComponent implements OnInit {
   namePais:string = "Colombia";
   finalizarBoton: boolean = false;
   contraentregaAlert: boolean = false;
-  price:number = 15500;
+  price:number = 16000;
   code:string = "COP";
-  price2:number = 15500;
+  price2:number = 16000;
   dataCantidadCotizada:number;
   btnFleteDisable:boolean = false;
 
@@ -81,7 +81,7 @@ export class LandingWhatsappComponent implements OnInit {
         }else{
           this.price = this.dataPro.pro_vendedor;
           this.code = "COP";
-          this.price2 = 15500;
+          this.price2 = 16000;
         }
       }
     } catch (error) {
