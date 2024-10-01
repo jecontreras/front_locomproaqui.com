@@ -46,6 +46,7 @@ export class LandingWhatsappComponent implements OnInit {
   price2:number = 16000;
   dataCantidadCotizada:number;
   btnFleteDisable:boolean = false;
+  urlWhatsapp:string = "https://wa.me/573133680357?text=Hola Servicio al cliente"
 
   constructor(
     private _productServices: ProductoService,

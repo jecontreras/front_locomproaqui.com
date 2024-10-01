@@ -293,3 +293,29 @@ body, html {
   background-color: #f14e95;
   border-color: #f14e95;
 }
+
+.whatsapp-button {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  background-color: #25d366; /* Ajusta el color de fondo de acuerdo a tus preferencias */
+  color: #fff; /* Ajusta el color del texto para que sea legible en el fondo */
+  padding: 10px;
+  border-radius: 50%;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+  cursor: pointer;
+  text-align: center;
+  font-size: 18px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-decoration: none;
+}
+
+.whatsapp-button i {
+  margin-bottom: 5px;
+}
+
+.whatsapp-button {
+  z-index: 999; /* O un número más alto si es necesario */
+}

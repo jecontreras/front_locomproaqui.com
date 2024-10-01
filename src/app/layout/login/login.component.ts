@@ -110,8 +110,8 @@ export class LoginsComponent implements OnInit {
   }*/
 
   async openRecuperacion( ){
-    let alertInput:any  = await this._tools.alertInput( { title: "Escriba tu correo electronico"} );
-    if( !alertInput.value )  return this._tools.tooast({ title:"Por Favor Escriba tu correo electronico?" ,icon: "error" });
+    let alertInput:any  = await this._tools.alertInput( { title: "Escriba tu correo electronico || tu numero de celular"} );
+    if( !alertInput.value )  return this._tools.tooast({ title:"Por Favor Escriba tu correo electronico || tu numero de celular?" ,icon: "error" });
     this.data.usu_email = alertInput.value;
     if( this.disabled ) return false;
     this.disabled = true;
@@ -129,6 +129,6 @@ export class LoginsComponent implements OnInit {
     localStorage.removeItem('user');
   }
 
-  
+
 
 }
