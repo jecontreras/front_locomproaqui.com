@@ -118,7 +118,7 @@
               <div class="row" style="margin: 0;">
                 <div class="col-md-3 col-sm-6 mb-4 col-6" *ngFor="let row of dataPro.listColor">
                   <div class="card custom-card">
-                    <img [src]="row.foto" class="card-img-top" alt="Ref 10">
+                    <img [src]="row.foto" class="card-img-top" alt="Ref 10" (click)="handleOpenPhoto()">
                     <div class="card-body">
                       <h6 class="text-dark"> {{ row.talla }} </h6>
                       <mat-form-field class="anchosP" *ngIf="row.detailsP">
@@ -264,6 +264,17 @@
                       </div>
                     </div>
                     <input type="number" class="form-control" placeholder="Número de Llamada" [(ngModel)]="data.celL">
+                  </div>
+                </div>
+                <div class="col-auto">
+                  <label class="sr-only" for="inlineFormInputGroup">Correo Electronico</label>
+                  <div class="input-group mb-2">
+                    <div class="input-group-prepend">
+                      <div class="input-group-text">
+                        <mat-icon> email</mat-icon>
+                      </div>
+                    </div>
+                    <input type="email" class="form-control" placeholder="Correo electronico si tienes" [(ngModel)]="data.email">
                   </div>
                 </div>
                 <div class="col-auto">
@@ -452,7 +463,7 @@
         <img src="./assets/icons/whatsapp.png" alt="" style="width: 30px;">
       </a>
     </div>
-  
+
   </mat-drawer-content>
 </mat-drawer-container>
 
