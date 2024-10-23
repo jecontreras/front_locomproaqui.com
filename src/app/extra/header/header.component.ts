@@ -704,7 +704,7 @@ export class HeaderComponent implements OnInit {
       {
         icons: 'storefront',
         nombre: 'Ventas Vera',
-        disable: this.rolUser == 'administrador',
+        disable: ( this.rolUser == 'administrador' || this.rolUser == 'vendedor' ),
         url: '/config/ventasVictorVera',
         submenus:[]
       },

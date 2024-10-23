@@ -11,6 +11,7 @@ import { departamento } from 'src/app/JSON/departamentos';
 import * as _ from 'lodash';
 import { AlertDialogLocationComponent } from '../alert-dialog-location/alert-dialog-location.component';
 import { ListGaleryLandingComponent } from '../list-galery-landing/list-galery-landing.component';
+import { UsuariosService } from 'src/app/servicesComponents/usuarios.service';
 
 @Component({
   selector: 'app-landing-whatsapp',
@@ -44,9 +45,11 @@ export class LandingWhatsappComponent implements OnInit {
   price:number = 15999;
   code:string = "COP";
   price2:number = 15999;
+  price3:number = 25000;
   dataCantidadCotizada:number;
   btnFleteDisable:boolean = false;
-  urlWhatsapp:string = "https://wa.me/573133680357?text=Hola Servicio al cliente"
+  urlWhatsapp:string = "https://wa.me/573133680357?text=Hola Servicio al cliente";
+  idVendedor:number;
 
   constructor(
     private _productServices: ProductoService,
@@ -54,7 +57,8 @@ export class LandingWhatsappComponent implements OnInit {
     private _ventas: VentasService,
     private activate: ActivatedRoute,
     public dialog: MatDialog,
-    private Router: Router
+    private Router: Router,
+    private _user: UsuariosService
   ) { }
 
   async ngOnInit() {
@@ -63,15 +67,24 @@ export class LandingWhatsappComponent implements OnInit {
   }
 
   async dataInit( off = true ){
-    if( off ) this.dataPro = await this.getProduct();
-    //console.log("articulos", this.dataPro)
-    this.viewPhoto = this.dataPro.foto;
     this.codeId = this.activate.snapshot.paramMap.get('code');
     let formatN = this.activate.snapshot.paramMap.get('number');
     //console.log("**********48", this.activate.snapshot.paramMap, formatN)
     try {
       this.numberId = ( formatN.split("&") )[1];
       this.indicativoId = ( formatN.split("&") )[0]
+    } catch (error) {
+      this.numberId = "3108131582";
+      this.indicativoId = "COL";
+      this.price = this.dataPro.pro_vendedor;
+    }
+    let userIdCode:any = await this.getIdNumberUser();
+    console.log("********93", userIdCode)
+    this.idVendedor = userIdCode.id;
+    if( off ) this.dataPro = await this.getProduct( this.idVendedor );
+    //console.log("articulos", this.dataPro)
+    this.viewPhoto = this.dataPro.foto;
+    try {
       let filterNamePais = this.listIndiPais.find( row => row.iso3 === this.indicativoId );
       if( filterNamePais ) {
         this.namePais = filterNamePais.name;
@@ -82,7 +95,8 @@ export class LandingWhatsappComponent implements OnInit {
         }else{
           this.price = this.dataPro.pro_vendedor;
           this.code = "COP";
-          this.price2 = 15999;
+          this.price2 = this.dataPro.pro_vendedor;
+          this.price3 = this.dataPro.pro_uni_venta;
         }
       }
     } catch (error) {
@@ -115,6 +129,14 @@ export class LandingWhatsappComponent implements OnInit {
     } catch (error) { }
     //console.log("****", this.dataPro, this.listGaleria)
     //console.log("list ciudades", this.listCiudades)
+  }
+
+  getIdNumberUser(){
+    return new Promise( resolve =>{
+      this._user.get( { where: { usu_telefono: this.numberId } } ).subscribe( res =>{
+        resolve( res.data[0] || { id: 1 } );
+      } );
+    } );
   }
 
   checkLocationPermission() {
@@ -191,9 +213,10 @@ export class LandingWhatsappComponent implements OnInit {
   showPreviousPhoto() {
     this.currentIndex = (this.currentIndex - 1 + this.listGaleria.length) % this.listGaleria.length;
   }
-  getProduct(){
+
+  getProduct( userId:number ){
     return new Promise( resolve =>{
-      this._productServices.get( { where: { id: 1456 } } ).subscribe( res => resolve( res.data[0] ), error => resolve( error ) );
+      this._productServices.getStore( { where: { article: 1456, user: userId } } ).subscribe( res => resolve( res.data[0] ), error => resolve( error ) );
     })
   }
 
@@ -437,8 +460,9 @@ export class LandingWhatsappComponent implements OnInit {
       "countItem": 0,
       "totalFlete": 0,
       "totalAPagar": 0,
-      paisCreado: this.namePais,
-      numberCreado: this.numberId
+      "paisCreado": this.namePais,
+      "numberCreado": this.numberId,
+      "user": this.idVendedor
    };
    this._ventas.createVentasL( dats ).subscribe( res =>{
     if( res ){

@@ -152,6 +152,7 @@ export class ViewProductosComponent implements OnInit {
         //el precio configurado del vendedor
         this.data.idPrice = res.price; //console.log("res.price", res.price)
         this.data.encuanto = res.price;
+        this.data.encuanto2 = res.price2;
       }
     });
   }
@@ -451,9 +452,9 @@ export class ViewProductosComponent implements OnInit {
   async handleAddStore(){
     let coinAlert = await this._tools.alertInput({
       // title: "Valor a Vender <br>¡sin puntos solo numerico!",
-      title: "Lo vas a vender en",
+      title: this.data.id === 1456 ? "Vender de 1 - 5 en cuanto" :"Lo vas a vender en",
       input: "text",
-      value: String( this.data.pro_uni_venta ),
+      value: String( this.data.encuanto || this.data.pro_uni_venta ),
       confirme: "Agregar"
     });
     console.log("***383", coinAlert);
@@ -464,14 +465,30 @@ export class ViewProductosComponent implements OnInit {
     if( !coinAlert || coinAlert == "" ) return false
     else{
       console.log("nuevoValor", nuevoValor)
-      if(nuevoValor <= (this.data.pro_vendedorCompra + 15000))
+      if(nuevoValor <= (this.data.pro_vendedorCompra))
         return this._tools.error({ icon: "error",title: "Importante", mensaje: "Lo Sentimos. Tu nuevo valor es menor al precio de distribuidor.", footer: "Recuerda que también debes calcular el precio del envio" } )
       else{
+        let coinAlert2:any = 0;
+        if( this.data.id === 1456 ){
+          coinAlert2 = await this._tools.alertInput({
+            // title: "Valor a Vender <br>¡sin puntos solo numerico!",
+            title: "Vender de 6 - en adelante",
+            input: "text",
+            value: String( this.data.encuanto2 || this.data.pro_uni_venta ),
+            confirme: "Agregar"
+          });
+          console.log("***383", coinAlert2);
+          console.log("coin alert", coinAlert2)
+          coinAlert2 = Number( coinAlert2['value']);
+        }
+
         let data = {
           article: this.data.id,
           user: this.dataUser.id,
-          price: coinAlert
+          price: coinAlert,
+          price2: coinAlert2
         };
+
         this._products.createPrice( data ).subscribe( res =>{
           this._tools.tooast({ title: "Completo", detalle: "Este Producto ha sido Agregado a tu Cuenta."})
           this.dialogRef.close('creo');

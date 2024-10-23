@@ -6,6 +6,8 @@ import { ArchivosService } from 'src/app/servicesComponents/archivos.service';
 import { VentasService } from 'src/app/servicesComponents/ventas.service';
 import * as _ from 'lodash';
 import { latLng, tileLayer, marker, icon, Marker } from 'leaflet';
+import { STORAGES } from 'src/app/interfaces/sotarage';
+import { Store } from '@ngrx/store';
 
 @Component({
   selector: 'app-form-ventas-vera',
@@ -39,6 +41,8 @@ export class FormVentasVeraComponent implements OnInit {
   };
 
   layers: Marker[] = [];
+  dataUser:any = {};
+  rolName:string = "";
 
   constructor(
     public dialog: MatDialog,
@@ -46,8 +50,19 @@ export class FormVentasVeraComponent implements OnInit {
     private _tools: ToolsService,
     public dialogRef: MatDialogRef<FormVentasVeraComponent>,
     @Inject(MAT_DIALOG_DATA) public datas: any,
-    private _archivos: ArchivosService
+    private _archivos: ArchivosService,
+    private _store: Store<STORAGES>,
   ) {
+    this._store.subscribe((store: any) => {
+      console.log(store);
+      store = store.name;
+      this.dataUser = store.user || {};
+      try {
+        this.rolName = this.dataUser.usu_perfil.prf_descripcion;
+      } catch (error) {
+        
+      }
+    });
     this.opcionCurrencys = this._tools.currency;
   }
 

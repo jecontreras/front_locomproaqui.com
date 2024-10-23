@@ -135,10 +135,12 @@
         <span *ngIf="!id">Guardar Cambios</span>
         <span *ngIf="id">Actulizar Cambios</span>
     </button>
-    <button mat-button color="warn" *ngIf="data.notifiedWeb === 1" (click)="handleOrdenP()">
-      <span>Venta no Registrada en Pedidos Web</span>
-    </button>
-    <button mat-button color="warn" *ngIf="data.notifiedWeb === 0" (click)="handleOrdenP()">
-      <span>Venta Registrada Volver a registrar en Pedidos Web</span>
-    </button>
+    <span *ngIf="rolName=== 'administrador'">
+        <button mat-button color="warn" *ngIf="data.notifiedWeb === 1" (click)="handleOrdenP()">
+            <span>Venta no Registrada en Pedidos Web</span>
+          </button>
+          <button mat-button color="warn" *ngIf="data.notifiedWeb === 0" (click)="handleOrdenP()">
+            <span>Venta Registrada Volver a registrar en Pedidos Web</span>
+          </button>
+    </span>
 </mat-dialog-actions>

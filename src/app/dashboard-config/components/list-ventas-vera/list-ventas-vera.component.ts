@@ -3,6 +3,8 @@ import { MatDialog } from '@angular/material';
 import { ToolsService } from 'src/app/services/tools.service';
 import { VentasService } from 'src/app/servicesComponents/ventas.service';
 import { FormVentasVeraComponent } from '../../form/form-ventas-vera/form-ventas-vera.component';
+import { STORAGES } from 'src/app/interfaces/sotarage';
+import { Store } from '@ngrx/store';
 
 
 declare interface DataTable {
@@ -34,14 +36,23 @@ export class ListVentasVeraComponent implements OnInit {
   $:any;
   public datoBusqueda = '';
   count:number = 0;
+  dataUser:any = {};
 
   constructor(
     private _ventasSerices: VentasService,
     public dialog: MatDialog,
-    private _tools: ToolsService
-  ) { }
+    private _tools: ToolsService,
+    private _store: Store<STORAGES>,
+  ) { 
+    this._store.subscribe((store: any) => {
+      console.log(store);
+      store = store.name;
+      this.dataUser = store.user || {};
+    });
+  }
 
   ngOnInit() {
+    this.query.where.user = this.dataUser.id;
     this.cargarTodos();
   }
 

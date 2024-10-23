@@ -13,6 +13,9 @@ export class ProductoService {
   get(query:any){
     return this._model.querys('tblproductos/querys',query, 'post');
   }
+  getVendedor(query:any){
+    return this._model.querys('tblproductos/querys',query, 'post');
+  }
   getSimply(query:any){
     return this._model.querys('tblproductos/getSimply',query, 'post');
   }

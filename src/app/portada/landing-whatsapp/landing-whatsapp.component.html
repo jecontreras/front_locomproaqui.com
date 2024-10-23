@@ -61,10 +61,10 @@
                           PERSONAL
                         </h6>
                         <p class="card-text" style="text-align: center; color: white;">
-                          Si lo que quieres es realizar tu compra para tu uso de 1 a 5 pares te saldria la unidad en $25.000.
+                          Si lo que quieres es realizar tu compra para tu uso de 1 a 5 pares te saldria la unidad en {{ _ToolServices.monedaChange( 3,2, ( this.price3 || 0 ), code ) }}.
                         </p>
                         <p class="card-link" style="text-align: center; color: white;">
-                          Ejemplo: 2 pares por $50.000 + envió.
+                          Ejemplo: 2 pares por {{ _ToolServices.monedaChange( 3,2, ( this.price3 * 2 || 0 ), code ) }} + envió.
                         </p>
                       </div>
                     </div>
@@ -91,7 +91,7 @@
                   <div  style="width: 100%">
                     <div class="card-body" style="padding: 12px 31px !important;">
                       <p class="card-text" style="text-align: center;     font-size: 16px;">
-                        <strong>Recuerda</strong> que para que <strong>aplique</strong> el precio de <strong>{{ _ToolServices.monedaChange( 3,2, ( this.price2 || 0 ), code ) }} </strong> la compra <strong>mínima</strong> debe <strong>ser</strong> de <strong>6 pares</strong> <span *ngIf="namePais === 'Colombia'"> en adelante de lo <strong>contrario</strong> de 1 a 5 el <strong>valor</strong> unidad seria <strong>$25.000</strong></span>
+                        <strong>Recuerda</strong> que para que <strong>aplique</strong> el precio de <strong>{{ _ToolServices.monedaChange( 3,2, ( this.price2 || 0 ), code ) }} </strong> la compra <strong>mínima</strong> debe <strong>ser</strong> de <strong>6 pares</strong> <span *ngIf="namePais === 'Colombia'"> en adelante de lo <strong>contrario</strong> de 1 a 5 el <strong>valor</strong> unidad seria <strong>{{ _ToolServices.monedaChange( 3,2, ( this.price3 || 0 ), code ) }}</strong></span>
                       </p>
                     </div>
                   </div>
