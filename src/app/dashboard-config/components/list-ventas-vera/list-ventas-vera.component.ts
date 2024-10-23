@@ -52,7 +52,6 @@ export class ListVentasVeraComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.query.where.user = this.dataUser.id;
     this.cargarTodos();
   }
 
@@ -81,6 +80,7 @@ export class ListVentasVeraComponent implements OnInit {
 
   cargarTodos() {
     this.query.where.nombre = { '!=' : ['.'] }
+    this.query.where.user = this.dataUser.id;
     this._ventasSerices.getVentasL(this.query)
     .subscribe(
       (response: any) => {
