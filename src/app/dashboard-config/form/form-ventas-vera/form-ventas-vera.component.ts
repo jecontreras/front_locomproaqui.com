@@ -29,6 +29,7 @@ export class FormVentasVeraComponent implements OnInit {
   selectable = true;
   removable = true;
   addOnBlur = true;
+  viewMapa = false;
 
   readonly separatorKeysCodes = [ENTER, COMMA] as const;
   opcionCurrencys: any = {};

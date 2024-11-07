@@ -64,8 +64,11 @@ export class ListVentasVeraComponent implements OnInit {
       console.log(`Dialog result: ${result}`);
     });
   }
-  delete(obj:any, idx:any){
-    this._ventasSerices.delete(obj).subscribe((res:any)=>{
+  async delete(obj:any, idx:any){
+    let alert:any = await  this._tools.confirm({title:"Importante", detalle:"Deseas! Elimiar Venta", confir:"Si Acepto"});
+    //console.log("***", alert)
+    if( alert.dismiss == "cancel" ) return false;
+    this._ventasSerices.deleteVentasL(obj).subscribe((res:any)=>{
       this.dataTable.dataRows.splice(idx, 1);
       this._tools.presentToast("Eliminado")
     },(error)=>{console.error(error); this._tools.presentToast("Error de servidor") })
@@ -80,7 +83,7 @@ export class ListVentasVeraComponent implements OnInit {
 
   cargarTodos() {
     this.query.where.nombre = { '!=' : ['.'] }
-    this.query.where.user = this.dataUser.id;
+     this.query.where.user = this.dataUser.id;
     this._ventasSerices.getVentasL(this.query)
     .subscribe(
       (response: any) => {

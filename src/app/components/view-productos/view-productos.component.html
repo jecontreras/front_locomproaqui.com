@@ -217,7 +217,7 @@
           Agregar a mi Tienda
         </button>
       </div>
-      <div *ngIf="disabledView === 'createPrice'">
+      <div *ngIf="( disabledView === 'createPrice' ) && ( this.data.id !== 1456 )">
         <button type="button" class="btn btn-danger" (click)="handleDroppArticle()" style="padding: 2% 50px;">
           Quitar de mi Tienda
         </button>
@@ -239,7 +239,7 @@
       <button style="font-size: 9px;" cdkFocusInitial (click)="handleAddStore()" type="button" class="btn btn-success m-1" *ngIf="disabledView === 'store' && dataUser.id">
         Agregar a mi Tienda
       </button>
-      <button style="font-size: 9px;" type="button" class="btn btn-danger m-1" *ngIf="disabledView === 'createPrice'" (click)="handleDroppArticle()">
+      <button style="font-size: 9px;" type="button" class="btn btn-danger m-1" *ngIf="( disabledView === 'createPrice' ) && ( this.data.id !== 1456 ) " (click)="handleDroppArticle()">
         Quitar de mi Tienda
       </button>
       <button style="font-size: 9px;" cdkFocusInitial (click)="AgregarCart(false)" type="button" class="btn btn-primary m-1" *ngIf="(disabledView !== 'store') && (disabledView !== 'createPrice')">

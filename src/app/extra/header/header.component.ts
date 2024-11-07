@@ -521,7 +521,7 @@ export class HeaderComponent implements OnInit {
   }
 
   async listMenus(){
-    let submenus = await this.getCategorias();
+    //let submenus = await this.getCategorias();
     //console.log( submenus );
     this.menus = [
       {
@@ -537,6 +537,14 @@ export class HeaderComponent implements OnInit {
         disable: ( this.rolUser != 'proveedor' ),
         disabled: true,
         url: '/config/store/product',
+        submenus: []
+      },
+      {
+        icons: 'menu_book',
+        nombre: 'packs sandalias',
+        disable: ( this.rolUser != 'proveedor' ),
+        disabled: true,
+        url: '/config/store/product/maximoda',
         submenus: []
       },
       {
@@ -703,7 +711,7 @@ export class HeaderComponent implements OnInit {
       },
       {
         icons: 'storefront',
-        nombre: 'Ventas Vera',
+        nombre: 'Ventas de Sandalias',
         disable: ( this.rolUser == 'administrador' || this.rolUser == 'vendedor' ),
         url: '/config/ventasVictorVera',
         submenus:[]

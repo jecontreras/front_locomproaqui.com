@@ -76,6 +76,9 @@ export class VentasService {
   updateVentasL(query:any){
     return this._model.querys('ventaLandazury/'+query.id,query, 'put');
   }
+  deleteVentasL(query:any){
+    return this._model.querys('ventaLandazury/'+query.id,query, 'delete');
+  }
   getCiudadesTridy(query:any){
     return this._model.querysFlete('CiudadesTridy/querys',query, 'post');
   }

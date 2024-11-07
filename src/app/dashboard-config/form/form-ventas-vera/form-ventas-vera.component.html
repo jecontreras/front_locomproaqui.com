@@ -85,18 +85,17 @@
           </mat-form-field>
         </div>
         <div class="form-group col-12 col-sm-6">
-          <mat-form-field class="example-full-width">
-              <mat-label>Latitude</mat-label>
-              <input matInput [(ngModel)]="data.latitude" placeholder="Latitude" disabled type="text">
-          </mat-form-field>
-        </div>
-        <div class="form-group col-12 col-sm-6">
-          <mat-form-field class="example-full-width">
-              <mat-label>Longitude</mat-label>
-              <input matInput [(ngModel)]="data.longitude" placeholder="Longitud" disabled type="text">
-          </mat-form-field>
-        </div>
-        <div class="col-12" *ngIf="data.longitude">
+            <mat-form-field class="example-full-width">
+                <mat-label>Dueño de la venta</mat-label>
+                <input matInput [(ngModel)]="data.listUser.usu_email" placeholder="Dueño de la venta" disabled type="text">
+            </mat-form-field>
+          </div>
+        <div class="form-group col-12 col-sm-6" *ngIf="data.longitude">
+            <button mat-button color="warn" (click)="viewMapa= !viewMapa">
+                <span>Ver Mapa</span>
+              </button>
+          </div>
+        <div class="col-12" *ngIf="viewMapa">
           <div style="height: 500px;">
             <div leaflet
                  [leafletOptions]="options"

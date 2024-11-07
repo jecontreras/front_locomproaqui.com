@@ -158,7 +158,10 @@ export class ViewProductosComponent implements OnInit {
   }
 
   shareUrl( ){
-    const url = window.location.origin+"/front/catalogo/"+this.data.id+"/"+this.dataUser.usu_telefono;
+    let url = "";
+    if( this.data.id === 1456 ){
+      url = window.location.origin+"/front/landingWhatsapp/3J6C22/COP&"+this.dataUser.usu_telefono;
+    }else url = window.location.origin+"/front/catalogo/"+this.data.id+"/"+this.dataUser.usu_telefono;
     this._tools.handleCopyHolder( url );
     return url;
   }

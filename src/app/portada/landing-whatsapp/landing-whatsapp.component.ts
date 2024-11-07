@@ -369,7 +369,7 @@ export class LandingWhatsappComponent implements OnInit {
     let url = "https://wa.me/573228174758?text=";
      window.open( url );
     }, 9000 );*/
-    this.pedidoGuardar(dataEnd)
+    if( this.idVendedor === 1) this.pedidoGuardar(dataEnd);
   }
 
   ProcessNextUpdateVentaL( dataEnd ){
