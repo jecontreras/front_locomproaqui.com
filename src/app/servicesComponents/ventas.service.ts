@@ -13,6 +13,9 @@ export class VentasService {
   get(query:any){
     return this._model.querys('tblventas/querys',query, 'post');
   }
+  getDBI(query:any){
+    return this._model.querys('ventasDBI/querys',query, 'post');
+  }
   create(query:any){
     return this._model.querys('tblventas',query, 'post');
   }

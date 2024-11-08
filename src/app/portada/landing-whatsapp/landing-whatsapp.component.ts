@@ -278,7 +278,7 @@ export class LandingWhatsappComponent implements OnInit {
       row.cantidadAd = result.value;
     }
     if( !item.detailsP.foto ) return this._ToolServices.presentToast("Tenemos problemas, seleccionar una foto")
-    this.listDataAggregate.push( { ref: item.talla, foto: item.detailsP.foto, amountAd: Number( row.amountAd ), talla: row.tal_descripcion, id: this._ToolServices.codigo(), price: this.price } );
+    this.listDataAggregate.push( { ref: item.talla, foto: item.detailsP.foto, amountAd: Number( row.amountAd ), talla: row.tal_descripcion, id: this._ToolServices.codigo(), price: this.price, idArticle: this.dataPro.id } );
     //console.log("***114", this.listDataAggregate)
     this.suma();
     this._ToolServices.presentToast("Producto Agregado al Carrito")
@@ -731,7 +731,7 @@ Monto a cancelar: ${ this._ToolServices.monedaChange( 3,2, ( this.data.totalAPag
       console.log(`Dialog result:`, result );
       if( !result ) return false;
       for( let row of result ){
-        this.listDataAggregate.push( { ref: row.ref, foto: row.foto, amountAd: Number( row.cantidad ), talla: row.talla, id: this._ToolServices.codigo(), price: this.price } );
+        this.listDataAggregate.push( { ref: row.ref, foto: row.foto, amountAd: Number( row.cantidad ), talla: row.talla, id: this._ToolServices.codigo(), price: this.price, idArticle: this.dataPro.id } );
       }
       this.suma();
       this._ToolServices.presentToast("Producto Agregado al Carrito")

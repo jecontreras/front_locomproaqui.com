@@ -8,6 +8,8 @@ import * as _ from 'lodash';
 import { latLng, tileLayer, marker, icon, Marker } from 'leaflet';
 import { STORAGES } from 'src/app/interfaces/sotarage';
 import { Store } from '@ngrx/store';
+import * as moment from 'moment';
+import { FormPosiblesVentasComponent } from '../form-posibles-ventas/form-posibles-ventas.component';
 
 @Component({
   selector: 'app-form-ventas-vera',
@@ -53,9 +55,9 @@ export class FormVentasVeraComponent implements OnInit {
     @Inject(MAT_DIALOG_DATA) public datas: any,
     private _archivos: ArchivosService,
     private _store: Store<STORAGES>,
+    private _ventas: VentasService
   ) {
     this._store.subscribe((store: any) => {
-      console.log(store);
       store = store.name;
       this.dataUser = store.user || {};
       try {
@@ -174,6 +176,69 @@ export class FormVentasVeraComponent implements OnInit {
 
   submitState(){
 
+  }
+
+  async createVentasPosible(){
+    let formsData:any = {
+      "ven_tipo": "whatsapp",
+      "usu_clave_int": this.dataUser.id,
+      "ven_usu_creacion": this.dataUser.usu_email,
+      "ven_fecha_venta": moment().format("DD/MM/YYYY"),
+      "cob_num_cedula_cliente": this.data.celL,
+      "ven_nombre_cliente": this.data.nombre,
+      "ven_telefono_cliente": this.data.celL,
+      "ven_ciudad": this.data.ciudad,
+      "ven_barrio": this.data.direccion,
+      "ven_direccion_cliente": this.data.direccion,
+      "ven_cantidad": this.data.countItem,
+      "ven_tallas": '',
+      "ven_precio": ( this.data.totalAPagar - ( this.data.totalFlete || 0 )),
+      "ven_total": ( this.data.totalAPagar ) || 0,
+      "ven_ganancias": 0,
+      "ven_observacion": "",
+      "nombreProducto": "Sandalias",
+      "ven_estado": 5,
+      "create": moment().format("DD/MM/YYYY"),
+      "apartamento": this.data.departament || '',
+      "departamento": this.data.departament || '',
+      "ven_imagen_producto": this.data.foto || '',
+      "idVentasLandazury": this.data.id
+    };
+    let validVenta = await this.handleValidVentaDbi();
+    if( !validVenta ){
+      validVenta = await this.handleCreateVentaDbi( formsData );
+      validVenta = await this.handleValidVentaDbi();
+    }
+    this.crear( validVenta );
+  }
+
+  handleValidVentaDbi(){
+    return new Promise( resolve =>{
+      this._ventas.getDBI( { where: { idVentasLandazury: this.data.id } } ).subscribe( res =>{
+        res = res.data[0];
+        if( res ) resolve( res )
+        else resolve( false );
+      },()=> resolve( false) );
+    });
+  }
+  handleCreateVentaDbi( formsData ){
+    return new Promise( resolve =>{
+      this._ventas.create2( formsData ).subscribe(( res:any )=>{
+        this._tools.presentToast("Siguiente");
+        resolve( res );
+      },( error:any )=> { resolve( false ); } );
+    });
+  }
+
+  crear(obj:any){
+    obj.listArticleB = this.data.listProduct;
+    const dialogRef = this.dialog.open(FormPosiblesVentasComponent,{
+      data: {datos: obj || {}}
+    });
+
+    dialogRef.afterClosed().subscribe( async ( result ) => {
+      console.log(`Dialog result: ${result}`);
+    });
   }
 
 

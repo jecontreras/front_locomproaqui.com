@@ -134,6 +134,11 @@
         <span *ngIf="!id">Guardar Cambios</span>
         <span *ngIf="id">Actulizar Cambios</span>
     </button>
+    <span *ngIf="rolName !== 'administrador'">
+        <button mat-button color="warn" (click)="createVentasPosible()">
+            <span>Registrar Venta</span>
+          </button>
+    </span>
     <span *ngIf="rolName=== 'administrador'">
         <button mat-button color="warn" *ngIf="data.notifiedWeb === 1" (click)="handleOrdenP()">
             <span>Venta no Registrada en Pedidos Web</span>
