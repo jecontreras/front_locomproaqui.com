@@ -110,10 +110,11 @@ export class FormPosiblesVentasComponent implements OnInit {
         color: item.ref,
         tallaSelect: item.talla,
         costo: productAd.pro_vendedorCompra,
-        loVendio: item.price,
+        loVendio: item.loVendio,
         bodegaName: productAd.pro_usu_creacion.usu_usuario,
         pro_vendedorCompra: productAd.pro_vendedorCompra,
-        pro_vendedor: productAd.pro_vendedorCompra
+        pro_vendedor: productAd.pro_vendedorCompra,
+        idBodega: productAd.pro_usu_creacion.id
       };
       console.log("***116", dataP)
       this.listCarrito.push( dataP );
@@ -145,6 +146,7 @@ export class FormPosiblesVentasComponent implements OnInit {
         item.costo = item.pro_vendedorCompra;
         item.loVendio = this.data.ven_precio;
         item.bodegaName = item.pro_usu_creacion.usu_usuario,
+        item.idBodega = item.pro_usu_creacion.id;
         this.listCarrito.push( item );
         console.log("****79", this.listCarrito )
         this.proveedorContacto = item.pro_usu_creacion.usu_telefono
@@ -224,6 +226,7 @@ export class FormPosiblesVentasComponent implements OnInit {
         "txtDice": this.textData,
         "txtNotas": "ok",
       };
+      if( this.listCarrito[0] ) data.userStore= this.listCarrito[0].idBodega,
 
       this._ventas.getFleteValor( data ).subscribe(( res:any )=>{
         this.tablet.listRow = res.data || [];
@@ -289,15 +292,17 @@ export class FormPosiblesVentasComponent implements OnInit {
       // else
 
       //console.log("ven_ganacias",row.loVendio, row.costo)
-      this.data.ven_ganancias+= ( ( row.loVendio  ) - row.costo ) || 0;
+      //this.data.ven_ganancias+= ( ( row.loVendio  ) - row.costo ) || 0;
 
     }
 
     this.data.ven_totalDistribuidor = total;
-    this.data.ven_total = total1;
+    this.data.ven_total = this.data.ven_total || total1;
+    this.data.ven_ganancias = ( this.data.ven_total ) - ( this.data.ven_totalDistribuidor );
+    //if( this.data.ven_total ) this.data.ven_ganancias = this.data.ven_ganancias;
     //calcular ganancias
     console.log("this.data.ven_ganancias - this.data.fleteValor", this.data.ven_ganancias, this.data.fleteValor)
-    this.data.ven_ganancias = this.data.ven_ganancias - this.data.fleteValor
+    this.data.ven_ganancias = this.data.ven_ganancias - ( this.data.fleteValor || 0 );
     console.log("suma ven_ganancias", this.data.ven_ganancias)
     //console.log( this.dataUser, this.namePorcentaje )
     //EDU se comenta- por que el procesos debe ser de la manera definida por victor
@@ -393,7 +398,8 @@ export class FormPosiblesVentasComponent implements OnInit {
       "create": this.data.ven_fecha_venta,
       "ven_empresa": this.data.ven_empresa,
       "listaArticulo": this.listCarrito,
-      "historySettlementFletes": this.data.historySettlementFletes
+      "historySettlementFletes": this.data.historySettlementFletes,
+      "pro_usu_creacion": this.dataUser
     }
     console.log("****306", data )
     this._ventas.create( data ).subscribe( async (res: any) => {
@@ -445,7 +451,7 @@ export class FormPosiblesVentasComponent implements OnInit {
       this._store.dispatch(accion);
       this.datas.estado = 3;
       await this.handleUpdate( this.datas );
-      this.dialogRef.close('creo');
+      this.dialogRef.close(res);
      });
   }
 
