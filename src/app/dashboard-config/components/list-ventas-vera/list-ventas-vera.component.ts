@@ -62,6 +62,7 @@ export class ListVentasVeraComponent implements OnInit {
 
     dialogRef.afterClosed().subscribe(result => {
       console.log(`Dialog result: ${result}`);
+      if( result ) obj.estado = result.estado;
     });
   }
   async delete(obj:any, idx:any){

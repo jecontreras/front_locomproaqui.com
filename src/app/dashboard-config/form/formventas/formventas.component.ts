@@ -289,7 +289,7 @@ export class FormventasComponent implements OnInit {
   }
 
   suma() {
-    //console.log( this.data, this.listCarrito, this.namePorcentaje );
+    console.log( this.data, this.listCarrito, this.namePorcentaje );
     //if( this.superSub == false && this.id ) return false;
     if( this.id ) return this.sumaIds();
     let total: number = 0;
@@ -307,7 +307,6 @@ export class FormventasComponent implements OnInit {
       else this.data.ven_ganancias+= ( ( row.loVendio  ) - row.costoTotal ) || 0;
 
     }
-
     this.data.ven_totalDistribuidor = total;
     this.data.ven_total = total1;
     //console.log( this.dataUser, this.namePorcentaje )
@@ -315,6 +314,7 @@ export class FormventasComponent implements OnInit {
     else {
       if( this.data.cubreEnvio == 'tienda') {
         this.data.ven_ganancias = ( ( this.data.ven_ganancias - ( this.data.fleteValor || 0  ) ) || 0 );
+        console.log("****99", this.data.ven_ganacias )
         if( this.data.ven_ganancias <= 0 ) {
           this.data.ven_total = this.data.ven_total + ( this.data.fleteValor || 0 ) ;
           this.data.ven_ganancias = 0;
@@ -350,8 +350,9 @@ export class FormventasComponent implements OnInit {
     }
 
     this.data.ven_totalDistribuidor = total;
+    if( this.data.ven_total ) this.data.ven_ganancias = this.clone.ven_total;
     this.data.ven_total = total1;
-    //console.log( this.dataUser, namePorcentaje )
+    console.log( this.dataUser, namePorcentaje,this.data.ven_ganancias )
     if ( namePorcentaje == 1 ) this.data.ven_ganancias = (total * ( this.dataUser.porcentaje || 10 ) / 100 );
     else {
       if( this.data.cubreEnvio == 'tienda') {

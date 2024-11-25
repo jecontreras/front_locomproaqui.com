@@ -12,6 +12,7 @@ import * as _ from 'lodash';
 import { AlertDialogLocationComponent } from '../alert-dialog-location/alert-dialog-location.component';
 import { ListGaleryLandingComponent } from '../list-galery-landing/list-galery-landing.component';
 import { UsuariosService } from 'src/app/servicesComponents/usuarios.service';
+import * as moment from 'moment';
 
 @Component({
   selector: 'app-landing-whatsapp',
@@ -278,7 +279,7 @@ export class LandingWhatsappComponent implements OnInit {
       row.cantidadAd = result.value;
     }
     if( !item.detailsP.foto ) return this._ToolServices.presentToast("Tenemos problemas, seleccionar una foto")
-    this.listDataAggregate.push( { ref: item.talla, foto: item.detailsP.foto, amountAd: Number( row.amountAd ), talla: row.tal_descripcion, id: this._ToolServices.codigo(), price: this.price } );
+    this.listDataAggregate.push( { ref: item.talla, foto: item.detailsP.foto, amountAd: Number( row.amountAd ), talla: row.tal_descripcion, id: this._ToolServices.codigo(), price: this.price, idArticle: this.dataPro.id } );
     //console.log("***114", this.listDataAggregate)
     this.suma();
     this._ToolServices.presentToast("Producto Agregado al Carrito")
@@ -290,7 +291,7 @@ export class LandingWhatsappComponent implements OnInit {
     //console.log("****186", sumPrice, this.namePais)
     for( let row of this.listDataAggregate ) {
       row.price = this.price;
-      this.data.sumAmount+= Number( row.amountAd )
+      this.data.sumAmount+= Number( row.amountAd ) 
     }
     if( this.data.sumAmount >= 6 ) {
       if( this.namePais === 'Panama') this.finalizarBoton = false;
@@ -310,6 +311,7 @@ export class LandingWhatsappComponent implements OnInit {
     }
     this.data.countItem = this.data.sumAmount;
     this.data.totalAPagar = this.data.priceTotal + ( this.data.totalFlete || 0 );
+
   }
 
   //edu
@@ -351,7 +353,8 @@ export class LandingWhatsappComponent implements OnInit {
     this.suma();
     if( this.contraentregaAlert === true || dataEnd.totalFlete === 0 ) dataEnd.contraEntrega = 1;
     else dataEnd.contraEntrega = 0;
-    this.ProcessNextUpdateVentaL( dataEnd )
+    this.ProcessNextUpdateVentaL( dataEnd );
+
     let result = await this._ToolServices.modaHtmlEnd( dataEnd );
     if( !result ) {this.btnDisabled = false; this.view = 'three'; return this._ToolServices.presentToast("Editar Tu Pedido..."); }
     let res:any = await this.ProcessNextUpdateVentaL( dataEnd );
@@ -360,6 +363,8 @@ export class LandingWhatsappComponent implements OnInit {
     if( !res.id ) { this._ToolServices.presentToast("Ok, tenemos problemas con tu envío, por favor recargar tu página!"); this.btnDisabled = false; return false; };
     this.data = res;
     if( this.numberId ) this.openWhatsapp( res );
+    if( this.idVendedor === 1) this.pedidoGuardar(dataEnd);
+    else this.handleSavedLoko( dataEnd );
     this._ToolServices.presentToast("Tu pedido ha sido enviado correctamente gracias por tu compra.!");
     this.btnDisabled = false;
     //this.data = [];
@@ -369,7 +374,59 @@ export class LandingWhatsappComponent implements OnInit {
     let url = "https://wa.me/573228174758?text=";
      window.open( url );
     }, 9000 );*/
-    if( this.idVendedor === 1) this.pedidoGuardar(dataEnd);
+  }
+
+  handleSavedLoko( data:any ){
+    console.log("****377", data, this.dataPro, this.listDataAggregate )
+    let queryData = {
+      "ven_tipo": "contraEntrega",
+      "usu_clave_int": this.idVendedor,
+      "ven_usu_creacion": "joseeduar147@gmail.com",
+      "ven_fecha_venta": moment().format("YYYY-MM-DD"),
+      "cubreEnvio": "tienda",
+      "ven_ganancias": ( this.dataPro.pro_vendedorCompra * data.countItem )- - data.totalAPagar,
+      "ven_totalDistribuidor": ( this.dataPro.pro_vendedorCompra * data.countItem ) || 0,
+      "ven_total": data.totalAPagar,
+      "fleteValor": 0,
+      "ciudadDestino": data.ciudad,
+      "ven_barrio": data.barrio,
+      "ven_direccion_cliente": data.direccion,
+      "cob_num_cedula_cliente": data.numero,
+      "ven_nombre_cliente": data.nombre,
+      "ven_telefono_cliente": data.celL,
+      "codeCiudad": data.codeCiudad,
+      "pesoVolumen": 0,
+      "transportadoraSelect": "",
+      "fleteManejo": "",
+      "flteTotal": 0,
+      "historySettlementFletes": "",
+      "ven_estado": 0,
+      "create": moment().format("YYYY-MM-DD"),
+      "ven_empresa": 1,
+      "listaArticulo": []
+    };
+    for( let item of data.listProduct ){
+      queryData.listaArticulo.push(
+        {
+          "colorSelect": item.ref,
+          "articulo": item.idArticle,
+          "codigoImg": item.id,
+          "titulo": "SANDALIAS PLANAS",
+          "color": item.ref + " " + item.talla,
+          "tallaSelect": item.talla,
+          "foto": item.foto,
+          "cantidad": item.amountAd,
+          "costo": this.dataPro.pro_vendedor,
+          "loVendio": data.totalAPagar / data.countItem,
+          "comision": 0,
+          "pro_vendedorCompra": this.dataPro.pro_vendedorCompra
+        }
+      );
+    }
+    console.log("****424", queryData )
+    this._ventas.create( queryData ).subscribe((res: any) => {
+      console.log("***426", res)
+    });
   }
 
   ProcessNextUpdateVentaL( dataEnd ){
@@ -731,7 +788,7 @@ Monto a cancelar: ${ this._ToolServices.monedaChange( 3,2, ( this.data.totalAPag
       console.log(`Dialog result:`, result );
       if( !result ) return false;
       for( let row of result ){
-        this.listDataAggregate.push( { ref: row.ref, foto: row.foto, amountAd: Number( row.cantidad ), talla: row.talla, id: this._ToolServices.codigo(), price: this.price } );
+        this.listDataAggregate.push( { ref: row.ref, foto: row.foto, amountAd: Number( row.cantidad ), talla: row.talla, id: this._ToolServices.codigo(), price: this.price, idArticle: this.dataPro.id } );
       }
       this.suma();
       this._ToolServices.presentToast("Producto Agregado al Carrito")

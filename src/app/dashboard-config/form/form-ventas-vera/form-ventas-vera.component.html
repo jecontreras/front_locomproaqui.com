@@ -4,9 +4,9 @@
         <div class="form-group col-12 col-sm-6">
             <label for="exampleFormControlSelect1">Estado de la Venta</label>
             <select class="form-control form-control-sm" [(ngModel)]="data.estado" (change)="submitState()">
-                <option type="number" value="0">Pendiente</option>
-                <option type="number" value="1">Preparación</option>
-                <option type="number" value="2">Despachado</option>
+                <option type="number" value="0">Por montar en plataforma</option>
+                <option type="number" value="1">Pedido montado en plataforma </option>
+                <!--<option type="number" value="2">Este pedido ya fue despachado</option>-->
                 <option type="number" value="3">Cancelado</option>
             </select>
         </div>
@@ -134,6 +134,12 @@
         <span *ngIf="!id">Guardar Cambios</span>
         <span *ngIf="id">Actulizar Cambios</span>
     </button>
+    <span *ngIf="rolName !== 'administrador'">
+        <button mat-button color="warn" (click)="createVentasPosible()" *ngIf="data.estado !== 1 ">
+            <span>Registrar Venta</span>
+        </button>
+        <span *ngIf="data.estado === 1">Venta Ya Registrada en Lokomproaqui</span>
+    </span>
     <span *ngIf="rolName=== 'administrador'">
         <button mat-button color="warn" *ngIf="data.notifiedWeb === 1" (click)="handleOrdenP()">
             <span>Venta no Registrada en Pedidos Web</span>

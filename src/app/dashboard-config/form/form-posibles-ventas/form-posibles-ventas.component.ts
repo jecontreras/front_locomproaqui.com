@@ -69,6 +69,7 @@ export class FormPosiblesVentasComponent implements OnInit {
   }
 
   async ngOnInit() {
+    console.log("***72", this.datas)
     this.opcionCurrencys = this._tools.currency;
     this.getDetails();
     await this.getCiudades();
@@ -87,22 +88,73 @@ export class FormPosiblesVentasComponent implements OnInit {
   }
 
   getArticulo(){
-    this._producto.get( { where: { id: this.data.pro_clave_int } } ).subscribe( res =>{
-      res = res.data[0];
-      res.codigoImg = this.data.nombreProducto;
-      res.cantidad = this.data.ven_cantidad;
-      res.colorSelect = this.data.ven_observacion;
-      res.color = this.data.ven_observacion;
-      res.tallaSelect = this.data.ven_tallas;
-      res.costo = res.pro_vendedorCompra;
-      res.loVendio = this.data.ven_precio;
-      res.bodegaName = res.pro_usu_creacion.usu_usuario,
-      this.listCarrito.push( res );
-      console.log("****79", this.listCarrito )
-      this.proveedorContacto = res.pro_usu_creacion.usu_telefono
-      this.proveedorNombre = res.bodegaName
-      this.productoFoto = res.foto
+    if( this.data.pro_clave_int ) this.handleProcessArticleId( this.data.pro_clave_int );
+    else this.handleProcessArticleArm();
+  }
+
+  async handleProcessArticleArm( ){
+    let id = 1456;
+    try {
+      id = this.datas.datos.listArticleB[0].idArticle || 1456;
+    } catch (error) {
+      id = 1456;
+    }
+    for( let item of this.datas.datos.listArticleB ){
+      let productAd:any = await this.getIdRProduct( id );
+      let dataP ={
+        ...item,
+        id: id,
+        codigoImg: item.foto,
+        cantidad: item.amountAd,
+        colorSelect: item.ref,
+        color: item.ref,
+        tallaSelect: item.talla,
+        costo: productAd.pro_vendedorCompra,
+        loVendio: item.loVendio,
+        bodegaName: productAd.pro_usu_creacion.usu_usuario,
+        pro_vendedorCompra: productAd.pro_vendedorCompra,
+        pro_vendedor: productAd.pro_vendedorCompra,
+        idBodega: productAd.pro_usu_creacion.id
+      };
+      console.log("***116", dataP)
+      this.listCarrito.push( dataP );
+      this.proveedorContacto = productAd.pro_usu_creacion.usu_telefono
+      this.proveedorNombre = productAd.bodegaName
+      this.productoFoto = productAd.foto
+    }
+    this.suma();
+  }
+
+  getIdRProduct( id ){
+    return new Promise( resolve => {
+      this._producto.get( { where: { id: id } } ).subscribe( res =>{
+        res = res.data[0];
+        resolve( res );
+      });
     });
+  }
+
+  handleProcessArticleId( id ){
+    this._producto.get( { where: { id: id } } ).subscribe( res =>{
+      res = res.data;
+      for( let item of res ){
+        item.codigoImg = this.data.nombreProducto;
+        item.cantidad = this.data.ven_cantidad;
+        item.colorSelect = this.data.ven_observacion;
+        item.color = this.data.ven_observacion;
+        item.tallaSelect = this.data.ven_tallas;
+        item.costo = item.pro_vendedorCompra;
+        item.loVendio = this.data.ven_precio;
+        item.bodegaName = item.pro_usu_creacion.usu_usuario,
+        item.idBodega = item.pro_usu_creacion.id;
+        this.listCarrito.push( item );
+        console.log("****79", this.listCarrito )
+        this.proveedorContacto = item.pro_usu_creacion.usu_telefono
+        this.proveedorNombre = item.bodegaName
+        this.productoFoto = item.foto
+      }
+    });
+    this.suma();
   }
 
   async getCiudades(){
@@ -174,6 +226,7 @@ export class FormPosiblesVentasComponent implements OnInit {
         "txtDice": this.textData,
         "txtNotas": "ok",
       };
+      if( this.listCarrito[0] ) data.userStore= this.listCarrito[0].idBodega,
 
       this._ventas.getFleteValor( data ).subscribe(( res:any )=>{
         this.tablet.listRow = res.data || [];
@@ -231,7 +284,7 @@ export class FormPosiblesVentasComponent implements OnInit {
       if (!row.costo || !row.cantidad) continue;
       total += ( Number( row.costo ) * Number( row.cantidad ) );
       if( !row.id ) row.loVendio = row.costoTotal;
-      if( row.costoTotal === 0 ) row.costoTotal = ( row.costo * row.cantidad ) || 0;
+      if( row.costoTotal === 0 || !row.costoTotal ) row.costoTotal = ( row.costo * row.cantidad ) || 0;
       total1 += ( Number( row.loVendio ) );
       //console.log("********", row );
       //EDU se ajusta por manera definida por victor
@@ -239,15 +292,17 @@ export class FormPosiblesVentasComponent implements OnInit {
       // else
 
       //console.log("ven_ganacias",row.loVendio, row.costo)
-      this.data.ven_ganancias+= ( ( row.loVendio  ) - row.costo ) || 0;
+      //this.data.ven_ganancias+= ( ( row.loVendio  ) - row.costo ) || 0;
 
     }
 
     this.data.ven_totalDistribuidor = total;
-    this.data.ven_total = total1;
+    this.data.ven_total = this.data.ven_total || total1;
+    this.data.ven_ganancias = ( this.data.ven_total ) - ( this.data.ven_totalDistribuidor );
+    //if( this.data.ven_total ) this.data.ven_ganancias = this.data.ven_ganancias;
     //calcular ganancias
     console.log("this.data.ven_ganancias - this.data.fleteValor", this.data.ven_ganancias, this.data.fleteValor)
-    this.data.ven_ganancias = this.data.ven_ganancias - this.data.fleteValor
+    this.data.ven_ganancias = this.data.ven_ganancias - ( this.data.fleteValor || 0 );
     console.log("suma ven_ganancias", this.data.ven_ganancias)
     //console.log( this.dataUser, this.namePorcentaje )
     //EDU se comenta- por que el procesos debe ser de la manera definida por victor
@@ -276,7 +331,7 @@ export class FormPosiblesVentasComponent implements OnInit {
       if (!row.costo || !row.cantidad) continue;
       total += ( Number( row.costo ) * Number( row.cantidad ) );
       if( !row.id ) row.loVendio = row.costoTotal;
-      if( row.costoTotal === 0 ) row.costoTotal = ( row.costo * row.cantidad ) || 0;
+      if( row.costoTotal === 0 || !row.costoTotal ) row.costoTotal = ( row.costo * row.cantidad ) || 0;
       total1 += ( Number( row.loVendio ) );
       //console.log("********", row );
       if ( namePorcentaje == 1 ) row.comision = ( row.costoTotal * ( this.dataUser.porcentaje || 10 ) / 100 );
@@ -343,7 +398,8 @@ export class FormPosiblesVentasComponent implements OnInit {
       "create": this.data.ven_fecha_venta,
       "ven_empresa": this.data.ven_empresa,
       "listaArticulo": this.listCarrito,
-      "historySettlementFletes": this.data.historySettlementFletes
+      "historySettlementFletes": this.data.historySettlementFletes,
+      "pro_usu_creacion": this.dataUser
     }
     console.log("****306", data )
     this._ventas.create( data ).subscribe( async (res: any) => {
@@ -395,7 +451,7 @@ export class FormPosiblesVentasComponent implements OnInit {
       this._store.dispatch(accion);
       this.datas.estado = 3;
       await this.handleUpdate( this.datas );
-      this.dialogRef.close('creo');
+      this.dialogRef.close(res);
      });
   }
 
