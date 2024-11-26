@@ -139,11 +139,15 @@ export class FormventasComponent implements OnInit {
       if( this.data.ven_imagen_guia ) this.viewRotulo( this.data.ven_imagen_guia );
       await this.getArticulos();
       this.data.ciudadDestino = this.data.ciudadDestino;
+      this.suma();
+      if( !this.data.transportadoraSelect ) this.data.ciudadDestino = '';
       let filtro:any = this.getHistorySettlementFletes();
-      //let filtro:any = await this.PrecioContraEntrega();
-      filtro = _.find( this.tablet.listRow, ( row:any ) => row.slug === this.clone.transportadoraSelect );
-      //console.log("MEN", filtro, this.clone, this.data)
-      if( filtro ) if( filtro.slug ) this.selectTrans( filtro, true );
+      if( filtro ) {
+        //let filtro:any = await this.PrecioContraEntrega();
+        filtro = _.find( this.tablet.listRow, ( row:any ) => row.slug === this.clone.transportadoraSelect );
+        //console.log("MEN", filtro, this.clone, this.data)
+        if( filtro ) if( filtro.slug ) this.selectTrans( filtro, true );
+      }
     } else {
       this.id = "";
       this.data.usu_clave_int = this.dataUser.id;
@@ -168,7 +172,7 @@ export class FormventasComponent implements OnInit {
 
   getHistorySettlementFletes(){
     return new Promise( resolve =>{
-      this._historySettlementFletes.get({ venta: this.id, user: this.dataUser.id, estado: 0 }).subscribe(res=>{
+      this._historySettlementFletes.get({ where: { venta: this.id, user: this.dataUser.id, estado: 0 } }).subscribe(res=>{
         res = res.data[0];
         if( !res ) return resolve( false);
         this.tablet.listRow = [JSON.parse( res.dataTxt )]
@@ -289,7 +293,7 @@ export class FormventasComponent implements OnInit {
   }
 
   suma() {
-    console.log( this.data, this.listCarrito, this.namePorcentaje );
+    //console.log( this.data, this.listCarrito, this.namePorcentaje );
     //if( this.superSub == false && this.id ) return false;
     if( this.id ) return this.sumaIds();
     let total: number = 0;
@@ -340,17 +344,17 @@ export class FormventasComponent implements OnInit {
     for (let row of this.listCarrito) {
       if (!row.costo || !row.cantidad) continue;
       total += ( Number( row.costo ) * Number( row.cantidad ) );
-      if( !row.id ) row.loVendio = row.costoTotal;
+      //if( !row.id ) row.loVendio = row.costoTotal;
       if( row.costoTotal === 0 ) row.costoTotal = ( row.costo * row.cantidad ) || 0;
-      total1 += ( Number( row.loVendio ) );
-      //console.log("********", row );
+      total1 += ( Number( row.loVendio * row.cantidad) );
+      //console.log("********", row, total1 );
       if ( namePorcentaje == 1 ) row.comision = ( row.costoTotal * ( this.dataUser.porcentaje || 10 ) / 100 );
-      else this.data.ven_ganancias+= ( ( row.loVendio  ) - row.costoTotal ) || 0;
+      else this.data.ven_ganancias+= ( ( row.loVendio * row.cantidad  ) - ( row.costo * row.cantidad) ) || 0;
 
     }
 
     this.data.ven_totalDistribuidor = total;
-    if( this.data.ven_total ) this.data.ven_ganancias = this.clone.ven_total;
+    //if( this.data.ven_total ) this.data.ven_ganancias = this.clone.ven_total;
     this.data.ven_total = total1;
     console.log( this.dataUser, namePorcentaje,this.data.ven_ganancias )
     if ( namePorcentaje == 1 ) this.data.ven_ganancias = (total * ( this.dataUser.porcentaje || 10 ) / 100 );

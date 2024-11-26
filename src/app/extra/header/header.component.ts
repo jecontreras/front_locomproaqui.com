@@ -568,16 +568,16 @@ export class HeaderComponent implements OnInit {
         url: '/storeProductActivated/'+this.dataUser.id,
         submenus: []
       },
-      {
+      /*{
         icons: 'local_grocery_store',
-        nombre: 'Autorizar Despacho',
+        nombre: 'Historial de Ventas',
         disable: ( this.rolUser !== 'visitante' ) && ( this.rolUser != 'proveedor' ),
         url: '/config/ventasPosibles',
         submenus:[]
-      },
+      },*/
       {
         icons: 'local_grocery_store',
-        nombre: 'Historial de Ventas',
+        nombre: 'Autorizar Despacho',
         disable: ( this.rolUser !== 'visitante' ) && ( this.rolUser != 'proveedor' ),
         url: '/config/ventas',
         submenus:[]

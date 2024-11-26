@@ -384,7 +384,7 @@ export class LandingWhatsappComponent implements OnInit {
       "ven_usu_creacion": "joseeduar147@gmail.com",
       "ven_fecha_venta": moment().format("YYYY-MM-DD"),
       "cubreEnvio": "tienda",
-      "ven_ganancias": ( this.dataPro.pro_vendedorCompra * data.countItem )- - data.totalAPagar,
+      "ven_ganancias": data.totalAPagar - ( this.dataPro.pro_vendedorCompra * data.countItem ),
       "ven_totalDistribuidor": ( this.dataPro.pro_vendedorCompra * data.countItem ) || 0,
       "ven_total": data.totalAPagar,
       "fleteValor": 0,
