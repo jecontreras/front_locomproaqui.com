@@ -6,11 +6,8 @@ export const environment = {
   production: false,
   //url: "https://lokomproaqui.herokuapp.com",
   //url: "https://apilokomprojs-7681dc4951e1.herokuapp.com",
-  url: "https://apilokomproaqui1-6b558870f260.herokuapp.com",
-  //url : "http://localhost:1337",
-  //url : "https://apilokomproaqui1-9219656b6da1.herokuapp.com",
-  //urlEnvios: "https://1337-jecontreras-backenvios-w7x5q2a4c9r.ws-us115.gitpod.io",
-  urlEnvios: "https://apienviosrapidos1-6de692d2f911.herokuapp.com",
+  url : "https://apilokomproaqui3-8479ed1ed46c.herokuapp.com",
+  urlEnvios: "https://apienviosrapidos1-52a38e8052ee.herokuapp.com",
   urlFront: "http://localhost:4200",
   keyEpayco: "fd1fee1f6f008ddf010440f8c092a2cb",
   estadoPruebaPagos: true
