@@ -285,7 +285,7 @@ export class LandingTestComponent implements OnInit {
     if( this.contraentregaAlert === true ) dataEnd.contraEntrega = 1;
     else dataEnd.contraEntrega = 0;
     this.ProcessNextUpdateVentaL( dataEnd )
-    let result = await this._ToolServices.modaHtmlEnd( dataEnd );
+    let result = await this._ToolServices.modaHtmlEnd( dataEnd, this.dataPro );
     if( !result ) {this.btnDisabled = false; this.view = 'three'; return this._ToolServices.presentToast("Editar Tu Pedido..."); }
     let res:any = await this.ProcessNextUpdateVentaL( dataEnd );
     //console.log("*****101", res)

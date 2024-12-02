@@ -107,7 +107,7 @@ export class ToolsService {
     });
 
   }
-  modaHtmlEnd( data ){
+  modaHtmlEnd( data, dataPro ){
     return new Promise(resolve => {
       if( data.contraEntrega === 0 ){
         Swal.fire({
@@ -136,7 +136,7 @@ export class ToolsService {
               <label>Precio Articulos: </label> <span> ${  this.monedaChange( 3, 2, ( data.priceTotal || 0 ) ) }</span>
             </div>
             <div class="col-12">
-              <label>Precio de Envio: </label> <span> ${  this.monedaChange( 3, 2, ( data.totalFlete || 0 ) ) }</span>
+              <label>Precio de Envio: </label> <span> ${  dataPro.cobreEnvio === 0 ? ( this.monedaChange( 3, 2, ( data.totalFlete || 0 ) ) ) : "Gratis" }</span>
             </div>
             <div class="col-12">
               <label>Precio Total a Pagar: </label> <span> ${  this.monedaChange( 3, 2, ( Number( data.totalAPagar ) || 0 ) ) }</span>
