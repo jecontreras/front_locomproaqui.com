@@ -651,21 +651,30 @@ Monto a cancelar: ${ this._ToolServices.monedaChange( 3,2, ( this.data.totalAPag
       }
       this.data.af = sumaFlete; //el AF
       this.btnDisabled = true;
-      //this._ToolServices.presentToast( "Estamos consultando tu flete esperé un momento, gracias..." );
+      this._ToolServices.presentToast( "Estamos consultando tu flete esperé un momento, gracias..." );
       let res:any = await this.getTridy( data );
       if( res.data === "Cannot find table 0." ) res = await this.getTridy( data );
       if( res.data === "Cannot find table 0." )  { this.btnDisabled = false; this.data.totalFlete = 0; this.contraentregaAlert = true; resolve( false ); return this._ToolServices.presentToast( "Ok Tenemos Problemas Con Las Cotizaciones de Flete lo sentimos, un asesor se comunicar contigo gracias que pena la molestia" )  }
       /*data.valor_recaudar = ( Number( ( res.data || 0 ) ) + sumaFlete ) ;
       res = await this.getTridy( data );*/
       this.data.totalFlete = Number( ( res.data || 0 ) ) ;
+      //console.log("res triidy", this.data.totalFlete)
       this.data.totalFlete = Number(this.data.totalFlete.toFixed(2));
       this.data.totalFlete = this.redondeaAlAlza(this.data.totalFlete,1000);
-      //this.data.totalFlete += sumaFlete;
+      //console.log("redondeado",this.data.totalFlete )
+      this.data.totalFlete += 3000;
+      //console.log("aumento 5k", this.data.totalFlete)
+      //console.log("af", sumaFlete )
+      this.data.totalFlete += sumaFlete
+      //console.log("con AF" , this.data.totalFlete)
+      // this.data.totalFlete += data.valor_recaudar
+      //console.log("transportadora", this.data.transportadora)
+      //console.log(this.data.totalFlete); // Muestra 1.78
       if( !res.data ){
         this.data.totalFlete = 0;
       }
       //this._ToolServices.basic("Precio del Envio "+ this._ToolServices.monedaChange( 3, 2, ( this.data.totalFlete ) ) + " Transportadora "+  ev.transportadora );
-      //if( opt === true ) this._ToolServices.presentToast("Precio del Envio "+ this._ToolServices.monedaChange( 3, 2, ( this.data.totalFlete ) ) + " Transportadora "+  ev.transportadora );
+      if( opt === true ) this._ToolServices.presentToast("Precio del Envio "+ this._ToolServices.monedaChange( 3, 2, ( this.data.totalFlete ) ) + " Transportadora "+  ev.transportadora );
       this.suma();
       this.btnDisabled = false;
       resolve( this.data.totalFlete );
@@ -744,12 +753,12 @@ Monto a cancelar: ${ this._ToolServices.monedaChange( 3,2, ( this.data.totalAPag
     if( valAlto[0] ){
       this.data.dataTridyCosto = valAlto || [];
       this.data.transportadora = valAlto[0].transportadora;
-      this.data.totalFlete = valAlto[0].price;
+      this.data.totalFlete = ( valAlto[0].price ) + ( ( valAlto[valAlto.length - 1 ].price ) * 10 / 100 );
       valAlto[0].price = this.data.totalFlete;
       //this.data.totalFlete = this.redondeaAlAlza(this.data.totalFlete,1000);
       this.suma();
       this.dataCantidadCotizada = this.data.priceTotal;
-      //if( this.dataPro.cobreEnvio === 0 ) this._ToolServices.presentToast("Precio del Envio "+ this._ToolServices.monedaChange( 3, 2, ( this.data.totalFlete ) ) + " Transportadora "+  this.data.transportadora );
+      this._ToolServices.presentToast("Precio del Envio "+ this._ToolServices.monedaChange( 3, 2, ( this.data.totalFlete ) ) + " Transportadora "+  this.data.transportadora );
     }else{
       this.data.totalFlete = 0;
       this.data.transportadora = '';
