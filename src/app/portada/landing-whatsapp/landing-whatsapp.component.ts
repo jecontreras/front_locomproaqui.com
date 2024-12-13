@@ -369,8 +369,8 @@ export class LandingWhatsappComponent implements OnInit {
     if( !res.id ) { this._ToolServices.presentToast("Ok, tenemos problemas con tu envío, por favor recargar tu página!"); this.btnDisabled = false; return false; };
     this.data = res;
     if( this.numberId ) this.openWhatsapp( res );
-    if( this.idVendedor === 1) this.pedidoGuardar(dataEnd);
-    else this.handleSavedLoko( dataEnd );
+    this.pedidoGuardar(dataEnd);
+    if( this.idVendedor !== 1 )  this.handleSavedLoko( dataEnd );
     this._ToolServices.presentToast("Tu pedido ha sido enviado correctamente gracias por tu compra.!");
     this.btnDisabled = false;
     //this.data = [];
