@@ -32,11 +32,12 @@ export class ListVentasVeraComponent implements OnInit {
     where:{ },
     limit: 100
   };
-  Header:any = [ 'Acciones','Nombre','Numero','Ciudad','Barrio', 'Pais','Notificado Pedidos Web','Creado' ];
+  Header:any = [ 'Acciones','Nombre','Numero','Ciudad','Barrio','User Venta', 'Pais','Notificado Pedidos Web','Creado' ];
   $:any;
   public datoBusqueda = '';
   count:number = 0;
   dataUser:any = {};
+  rolName:string;
 
   constructor(
     private _ventasSerices: VentasService,
@@ -48,6 +49,7 @@ export class ListVentasVeraComponent implements OnInit {
       console.log(store);
       store = store.name;
       this.dataUser = store.user || {};
+      this.rolName = store.user.usu_perfil.prf_descripcion;
     });
   }
 
@@ -84,7 +86,7 @@ export class ListVentasVeraComponent implements OnInit {
 
   cargarTodos() {
     this.query.where.nombre = { '!=' : ['.'] }
-     this.query.where.user = this.dataUser.id;
+     if( this.rolName !== 'administrador' ) this.query.where.user = this.dataUser.id;
     this._ventasSerices.getVentasL(this.query)
     .subscribe(
       (response: any) => {

@@ -71,6 +71,7 @@
                       <td>{{row['numero']}}</td>
                       <td>{{row['ciudad']}}</td>
                       <td>{{ row['barrio']  }}</td>
+                      <td>{{ row['listUser']?.usu_email  }}</td>
                       <td>
                         <img src="./assets/imagenes/colombia.jpg" alt="" *ngIf="row['paisCreado'] === 'Colombia'" style="width: 100%; height: 50px;">
                         <img src="./assets/imagenes/panama.jpg" alt="" *ngIf="row['paisCreado'] === 'Panama'" style="width: 100%; height: 50px;">
