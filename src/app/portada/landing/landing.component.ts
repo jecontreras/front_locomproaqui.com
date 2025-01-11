@@ -132,7 +132,7 @@ export class LandingComponent implements OnInit {
       //this._ToolServices.basic("Precio del Envio "+ this._ToolServices.monedaChange( 3, 2, ( this.data.totalFlete ) ) + " Transportadora "+  ev.transportadora );
       if( opt === true ) this._ToolServices.presentToast("Precio del Envio "+ this._ToolServices.monedaChange( 3, 2, ( this.data.totalFlete ) ) + " Transportadora "+  ev.transportadora );
       this.btnDisabled = false;
-      resolve( this.data.totalFlete );
+      resolve( Number( res.data) );
     })
   }
 
@@ -188,6 +188,7 @@ export class LandingComponent implements OnInit {
           };
           let r = await this.precioRutulo( dataF, false )
           if( r === false ) continue;
+          console.log("***r", r );
           dataFletePrice.push( { ...dataF, price: r, recaudo: this.data.priceTotal, countPares: this.data.sumAmount } );
           //if( index >=3 ) break; // Consulta con 3 transportadoras
           index++;
@@ -201,7 +202,7 @@ export class LandingComponent implements OnInit {
       this.data.dataTridyCosto = valAlto || [];
       this.data.transportadora = valAlto[0].transportadora;
       //this.data.totalFlete = ( valAlto[0].price ) + ( ( valAlto[valAlto.length - 1 ].price ) * 10 / 100 );
-      valAlto[0].price = this.data.totalFlete;
+      //valAlto[0].price = this.data.totalFlete;
       //this.data.totalFlete = this.redondeaAlAlza(this.data.totalFlete,1000);
       this.dataCantidadCotizada = this.data.priceTotal;
       this._ToolServices.presentToast("Precio del Envio "+ this._ToolServices.monedaChange( 3, 2, ( this.data.totalFlete ) ) + " Transportadora "+  this.data.transportadora );
