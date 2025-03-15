@@ -47,7 +47,7 @@
     "firebase-tools": "^13.10.2",
     "hammerjs": "^2.0.8",
     "jquery": "^3.5.1",
-    "lodash": "^4.17.15",
+    "lodash": "^4.17.21",
     "mat-video": "^2.8.1",
     "material-icons": "^1.11.2",
     "memory-cache": "^0.2.0",
